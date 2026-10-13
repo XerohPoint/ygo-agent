@@ -1644,7 +1644,7 @@ inline std::vector<PlayMode> parse_play_modes(const std::string &play_mode) {
 // rules = 0, Default
 // rules = 4, Link
 // rules = 5, MR5
-constexpr int32_t rules_ = 5;
+constexpr int32_t rules_ = 1;
 constexpr int32_t duel_options_ = ((rules_ & 0xFF) << 16) + (0 & 0xFFFF);
 
 
