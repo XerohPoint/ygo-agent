@@ -1389,3 +1389,12 @@ attribution, production replay, and unique/balanced/disjoint training/evaluation
 seeds. The full suite now passes 540 cases. See
 [edison-rl-pilot.md](edison-rl-pilot.md) for the bounded training run and held-out
 benchmark results.
+
+
+## PPO replication controls (083E)
+
+Test 083E verifies optimizer-seed configuration, different seeded hidden weights
+with the same initial uniform policy, correct run-level sample statistics, and
+rejection of failed/incomplete replication sets. The full suite now passes
+541 cases. See [edison-rl-replication.md](edison-rl-replication.md) for the fixed
+three-seed study.

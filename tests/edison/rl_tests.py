@@ -99,12 +99,50 @@ def seed_partition():
     assert sum(row["games"] for row in rows if row["opponent"]=="heuristic")==384
     assert sum(row["games"] for row in rows if row["seat"]==0)==384
 
+def replication_config():
+    from train_context_rl import parse_args
+    from replicate_context_rl import aggregate, SEEDS
+    assert parse_args([]).optimizer_seed==1701
+    previous=None
+    for seed in SEEDS:
+        args=parse_args(["--optimizer-seed",str(seed),"--certification","current.json"])
+        assert args.optimizer_seed==seed and args.certification==Path("current.json")
+        model=RLModel(args.optimizer_seed)
+        if previous is not None: assert not np.array_equal(model.p["w"],previous)
+        previous=model.p["w"].copy()
+        # Different initial hidden parameters still define the same uniform policy.
+        x=np.arange(3*FEATURES,dtype=np.float32).reshape(3,FEATURES)/100
+        probabilities,_,_=distribution(model.forward(x)[0],np.array([0,3]))
+        assert np.allclose(probabilities,1/3)
+    # Run-level variability must not treat repeated held-out games as new
+    # independent runs, or silently drop failed replications.
+    trials=[]
+    for seed,rate in zip(SEEDS,(0.5,0.6,0.7)):
+        evaluations={name:{"win_rate":value,"executions":384,"completion_rate":1,
+                          "repeatability":True} for name,value in (
+            ("final-vs-random",rate),("initial-vs-random",0.4),
+            ("final-vs-heuristic",rate-0.4),("initial-vs-heuristic",0.05),
+            ("heuristic-vs-random",0.95))}
+        trials.append({"optimizer_seed":seed,"status":"PASS","evaluations":evaluations,
+            "training_games":768,"training_learner_decisions":100,"training_seconds":60,
+            "training_completion_rate":1,"rounds":[{"optimization_replay":True}]})
+    result=aggregate(trials,trials[0])
+    metric=result["opponents"]["random"]
+    assert np.isclose(metric["win_rate"]["mean"],0.6)
+    assert np.isclose(metric["win_rate"]["sample_stddev"],0.1)
+    assert metric["improved_runs"]==3 and result["total_executions"]==8064
+    trials[-1]["status"]="FAIL"
+    try: aggregate(trials,trials[0])
+    except ValueError: pass
+    else: raise AssertionError("Failed replication silently included")
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument("--fail-fast",action="store_true")
     args=parser.parse_args();passed=failed=0
     for label,fn in (("A - PPO GRADIENTS",gradients),("B - CONTEXT SCHEMA AND CHECKPOINT",schema),
                      ("C - PRODUCTION RL ROLLOUT",production),
-                     ("D - DISJOINT BALANCED SEED SCHEDULE",seed_partition)):
+                     ("D - DISJOINT BALANCED SEED SCHEDULE",seed_partition),
+                     ("E - REPLICATION CONFIGURATION AND STATISTICS",replication_config)):
         print("EDISON RULE TEST 083"+label)
         try: fn();passed+=1;print("RESULT: PASS")
         except Exception as error:

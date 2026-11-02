@@ -1,0 +1,328 @@
+{
+  "replications": 3,
+  "optimizer_seeds": [
+    1702,
+    1703,
+    1704
+  ],
+  "opponents": {
+    "random": {
+      "games_per_run": 192,
+      "win_rate": {
+        "mean": 0.7013888888888888,
+        "sample_stddev": 0.06213725752837949,
+        "minimum": 0.6510416666666666,
+        "maximum": 0.7708333333333334
+      },
+      "gain_over_initial": {
+        "mean": 0.20659722222222218,
+        "sample_stddev": 0.06213725752837949,
+        "minimum": 0.15624999999999994,
+        "maximum": 0.2760416666666667
+      },
+      "improved_runs": 3,
+      "pilot_win_rate": 0.671875,
+      "including_pilot_win_rate": {
+        "mean": 0.6940104166666666,
+        "sample_stddev": 0.05283742289421254,
+        "minimum": 0.6510416666666666,
+        "maximum": 0.7708333333333334
+      },
+      "serial_decisions_per_second": {
+        "mean": 2273.691499668352,
+        "sample_stddev": 31.552065716900113,
+        "minimum": 2247.3145972586,
+        "maximum": 2308.6452240268873
+      },
+      "parallel_decisions_per_second": {
+        "mean": 4177.342931334593,
+        "sample_stddev": 55.01809586016074,
+        "minimum": 4141.935509254385,
+        "maximum": 4240.727346378722
+      }
+    },
+    "heuristic": {
+      "games_per_run": 192,
+      "win_rate": {
+        "mean": 0.16493055555555555,
+        "sample_stddev": 0.028685263267115107,
+        "minimum": 0.14583333333333334,
+        "maximum": 0.19791666666666666
+      },
+      "gain_over_initial": {
+        "mean": 0.10243055555555555,
+        "sample_stddev": 0.028685263267115107,
+        "minimum": 0.08333333333333334,
+        "maximum": 0.13541666666666666
+      },
+      "improved_runs": 3,
+      "pilot_win_rate": 0.171875,
+      "including_pilot_win_rate": {
+        "mean": 0.16666666666666666,
+        "sample_stddev": 0.02367739877948933,
+        "minimum": 0.14583333333333334,
+        "maximum": 0.19791666666666666
+      },
+      "serial_decisions_per_second": {
+        "mean": 2191.621875863717,
+        "sample_stddev": 25.213251524166985,
+        "minimum": 2162.6639888630443,
+        "maximum": 2208.706320805833
+      },
+      "parallel_decisions_per_second": {
+        "mean": 3893.7588007735226,
+        "sample_stddev": 34.98031831381592,
+        "minimum": 3855.629920089608,
+        "maximum": 3924.3672444366734
+      }
+    }
+  },
+  "training_games": 2304,
+  "learner_decisions": 192018,
+  "training_seconds": {
+    "mean": 62.51005134866622,
+    "sample_stddev": 1.8853785344619076,
+    "minimum": 61.13200106399745,
+    "maximum": 64.65866043099959
+  },
+  "evaluation_executions": 5760,
+  "total_executions": 8064,
+  "completion_rate": 1.0,
+  "evaluation_replay": true,
+  "optimizer_replay": true,
+  "status": "PASS",
+  "client_date": "2026-11-02",
+  "pilot_checkpoint": "7f02418692b0519144caa86f57e305e86d6604c4",
+  "certification": {
+    "passed": 541,
+    "failed": 0,
+    "identical_replays": true
+  },
+  "runs": [
+    {
+      "optimizer_seed": 1702,
+      "training_seconds": 64.65866043099959,
+      "learner_decisions": 64797,
+      "evaluations": {
+        "initial-vs-random": {
+          "wins": 95,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.4947916666666667,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 2968.7467563057453,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.006644052002229728,
+          "serial_decisions_per_second": 2307.329900466879,
+          "parallel_decisions_per_second": 4161.749723106682
+        },
+        "initial-vs-heuristic": {
+          "wins": 12,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.0625,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 2777.0332604191462,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.005679320005583577,
+          "serial_decisions_per_second": 2182.0371723855956,
+          "parallel_decisions_per_second": 3818.1682017764188
+        },
+        "final-vs-random": {
+          "wins": 131,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.6822916666666666,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 2915.55302495678,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.00602911900205072,
+          "serial_decisions_per_second": 2247.3145972586,
+          "parallel_decisions_per_second": 4149.365938370674
+        },
+        "final-vs-heuristic": {
+          "wins": 28,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.14583333333333334,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 2771.028503661699,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.005201002997637261,
+          "serial_decisions_per_second": 2162.6639888630443,
+          "parallel_decisions_per_second": 3855.629920089608
+        },
+        "heuristic-vs-random": {
+          "wins": 184,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.9583333333333334,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 3248.2963914617344,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.005286598003294785,
+          "serial_decisions_per_second": 2468.994698308418,
+          "parallel_decisions_per_second": 4746.44006016774
+        }
+      },
+      "training_decisions_per_second": 3282.3564392323005
+    },
+    {
+      "optimizer_seed": 1703,
+      "training_seconds": 61.739492551001604,
+      "learner_decisions": 63628,
+      "evaluations": {
+        "initial-vs-random": {
+          "wins": 95,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.4947916666666667,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 3006.0026767219897,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.005324646997905802,
+          "serial_decisions_per_second": 2320.823433730302,
+          "parallel_decisions_per_second": 4265.231701059658
+        },
+        "initial-vs-heuristic": {
+          "wins": 12,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.0625,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 2767.0328749560354,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.006369004004227463,
+          "serial_decisions_per_second": 2173.0943493131267,
+          "parallel_decisions_per_second": 3807.7455149140123
+        },
+        "final-vs-random": {
+          "wins": 125,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.6510416666666666,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 2989.701633056165,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.004879399995843414,
+          "serial_decisions_per_second": 2308.6452240268873,
+          "parallel_decisions_per_second": 4240.727346378722
+        },
+        "final-vs-heuristic": {
+          "wins": 29,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.15104166666666666,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 2816.3040112062126,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.0046059890009928495,
+          "serial_decisions_per_second": 2203.4953179222734,
+          "parallel_decisions_per_second": 3901.279237794287
+        },
+        "heuristic-vs-random": {
+          "wins": 184,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.9583333333333334,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 3351.1253659927656,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.007005603001744021,
+          "serial_decisions_per_second": 2537.5940307882834,
+          "parallel_decisions_per_second": 4932.416754303064
+        }
+      },
+      "training_decisions_per_second": 3366.5667686356037
+    },
+    {
+      "optimizer_seed": 1704,
+      "training_seconds": 61.13200106399745,
+      "learner_decisions": 63593,
+      "evaluations": {
+        "initial-vs-random": {
+          "wins": 95,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.4947916666666667,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 2949.095363021084,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.005279881996102631,
+          "serial_decisions_per_second": 2286.9887240606995,
+          "parallel_decisions_per_second": 4150.792173324088
+        },
+        "initial-vs-heuristic": {
+          "wins": 12,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.0625,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 2695.647065452007,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.005716111001675017,
+          "serial_decisions_per_second": 2141.8108431211417,
+          "parallel_decisions_per_second": 3635.8050301455723
+        },
+        "final-vs-random": {
+          "wins": 148,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.7708333333333334,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 2928.6360001531625,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.005237720004515722,
+          "serial_decisions_per_second": 2265.1146777195695,
+          "parallel_decisions_per_second": 4141.935509254385
+        },
+        "final-vs-heuristic": {
+          "wins": 38,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.19791666666666666,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 2826.567999142505,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.005132111000420991,
+          "serial_decisions_per_second": 2208.706320805833,
+          "parallel_decisions_per_second": 3924.3672444366734
+        },
+        "heuristic-vs-random": {
+          "wins": 184,
+          "games": 192,
+          "executions": 384,
+          "win_rate": 0.9583333333333334,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "decisions_per_second": 3455.084966870088,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.005453770005260594,
+          "serial_decisions_per_second": 2605.6088795842065,
+          "parallel_decisions_per_second": 5126.37774824108
+        }
+      },
+      "training_decisions_per_second": 3385.194215122752
+    }
+  ],
+  "training_decisions_per_second": {
+    "mean": 3344.705807663552,
+    "sample_stddev": 54.793505532041486,
+    "minimum": 3282.3564392323005,
+    "maximum": 3385.194215122752
+  }
+}

@@ -88,11 +88,22 @@ def update(model,optimizer,data,seed):
     assert all(np.isfinite(p).all() for p in model.p.values())
     return history
 
-def main():
+def parse_args(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output",type=Path,default=ROOT/"build/edison-rl")
-    args=parser.parse_args();output=args.output.resolve();output.mkdir(parents=True,exist_ok=True)
-    gates=gate(output/"certification/report.json")
+    parser.add_argument("--optimizer-seed",type=int,default=OPTIMIZER_SEED,
+                        help="Hidden-layer initialization and minibatch-shuffle seed; duel seeds stay fixed")
+    parser.add_argument("--certification",type=Path,
+                        help="Use a shared current certification report")
+    args=parser.parse_args(argv)
+    if not 0 <= args.optimizer_seed < 2**32-ROUNDS:
+        parser.error("--optimizer-seed must be a nonnegative 32-bit seed with room for round offsets")
+    return args
+
+def main():
+    args=parse_args();output=args.output.resolve();output.mkdir(parents=True,exist_ok=True)
+    optimizer_seed=args.optimizer_seed
+    gates=gate(args.certification.resolve() if args.certification else output/"certification/report.json")
     rows=schedule()
     report={"status":"RUNNING","algorithm":"episodic clipped PPO",
         "feature_schema":"edison_context_ppo_v1","features":128,"hidden_units":32,
@@ -103,7 +114,7 @@ def main():
         "optimizer":{"name":"Adam","learning_rate":0.002,"minibatch_decisions":256,
                      "epochs_max":4,"clip":0.2,"entropy_coefficient":0.01,
                      "value_coefficient":0.5,"gradient_norm":0.5,"epoch_kl_stop":0.03},
-        "optimizer_seed":OPTIMIZER_SEED,"schedule":rows,"held_out_seed":TEST_BASE,
+        "optimizer_seed":optimizer_seed,"schedule":rows,"held_out_seed":TEST_BASE,
         "held_out_seeds_per_cell":EVAL_COUNT,"checkpoint_selection":"fixed final round; no evaluation-based selection",
         "gates":gates,"rounds":[],"evaluations":{}}
     path=output/"report.json"
@@ -111,8 +122,8 @@ def main():
     save()
     started=time.perf_counter()
     try:
-        model=RLModel(OPTIMIZER_SEED);optimizer=Adam(model)
-        model.save(output/"initial.json",{"round":0,"seed":OPTIMIZER_SEED})
+        model=RLModel(optimizer_seed);optimizer=Adam(model)
+        model.save(output/"initial.json",{"round":0,"seed":optimizer_seed})
         current=output/"initial.json"
         for iteration in range(ROUNDS):
             paths=[];cells=[];round_start=time.perf_counter()
@@ -127,15 +138,15 @@ def main():
             data=load_rollouts(paths,model)
             duplicate_model,duplicate_optimizer=copy.deepcopy(model),copy.deepcopy(optimizer)
             before=time.perf_counter()
-            history=update(model,optimizer,data,OPTIMIZER_SEED+iteration)
-            repeat=update(duplicate_model,duplicate_optimizer,data,OPTIMIZER_SEED+iteration)
+            history=update(model,optimizer,data,optimizer_seed+iteration)
+            repeat=update(duplicate_model,duplicate_optimizer,data,optimizer_seed+iteration)
             assert history==repeat and all(np.array_equal(model.p[k],duplicate_model.p[k]) for k in model.p)
             assert optimizer.t==duplicate_optimizer.t
             assert all(np.array_equal(optimizer.m[k],duplicate_optimizer.m[k]) and
                        np.array_equal(optimizer.v[k],duplicate_optimizer.v[k]) for k in model.p)
             update_seconds=time.perf_counter()-before
             current=output/f"checkpoint-{iteration+1}.json"
-            model.save(current,{"round":iteration+1,"optimizer_seed":OPTIMIZER_SEED,"gamma":1})
+            model.save(current,{"round":iteration+1,"optimizer_seed":optimizer_seed,"gamma":1})
             opt_path=output/f"optimizer-{iteration+1}.npz"
             np.savez_compressed(opt_path,t=np.asarray(optimizer.t),
                 **{"m_"+k:v for k,v in optimizer.m.items()},

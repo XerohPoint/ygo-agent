@@ -156,3 +156,8 @@ To evaluate the saved final policy separately:
 
 Checkpoint format and feature schema are versioned. The older 64-feature
 imitation checkpoint remains a separate policy and is not accepted as an RL model.
+
+
+The pilot is checkpointed in **7f02418**. A subsequent fixed-budget study tests
+optimizer seeds 1702, 1703 and 1704 without changing its benchmarks or evaluation
+seeds; see [edison-rl-replication.md](edison-rl-replication.md).
