@@ -1,4 +1,5 @@
 #include "harness.h"
+#include "decision_context_tests.h"
 #include "ygoenv/ygopro/observation_visibility.h"
 #include "trigger_tests.h"
 #include "optional_trigger_tests.h"
@@ -1102,6 +1103,17 @@ int main(int argc, char** argv) {
       require(observation_card_hidden(LOCATION_DECK,POS_FACEDOWN_DEFENSE,true,false,true),
               "Opponent search permission leaked");
     });
+    test("EDISON RULE TEST 081A - DECISION HINT LIFECYCLE",
+         "Hints are recipient-scoped and consumed once; private card-code hints and stale selections are suppressed.",
+         [&] { decision_hint_lifecycle(); });
+    for(bool historical : {false,true}) {
+      test(historical?"EDISON RULE TEST 081B - COST AND TARGET CONTEXT":"CONTROL 081B - RULE 5 COST AND TARGET CONTEXT",
+           "Brionac discard subgroup waits in cost; its return selection waits in activation setup.",
+           [&] { decision_brionac_stages(assets,historical?options:5<<16,trace); });
+      test(historical?"EDISON RULE TEST 081C - RESOLVING DISCARD CONTEXT":"CONTROL 081C - RULE 5 RESOLVING DISCARD CONTEXT",
+           "Dark World Dealings discards during its operation, not as an activation cost.",
+           [&] { decision_operation_stage(assets,historical?options:5<<16,trace); });
+    }
     require(total > 0, "No certification cases matched the requested test number");
     std::cout << "\nSUMMARY: " << total - failures << " PASS, " << failures << " FAIL\n";
     return failures ? 1 : 0;

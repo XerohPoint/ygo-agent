@@ -37,6 +37,7 @@
 #include "deck_validation.h"
 #include "deck_file.h"
 #include "observation_visibility.h"
+#include "decision_context.h"
 
 // clang-format on
 
@@ -1554,6 +1555,8 @@ public:
     return MakeDict(
         "obs:cards_"_.Bind(Spec<uint8_t>({conf["max_cards"_] * 2, 41})),
         "obs:global_"_.Bind(Spec<uint8_t>({23})),
+        "obs:decision_"_.Bind(Spec<int>({12})),
+        "obs:selection_"_.Bind(Spec<uint8_t>({conf["max_cards"_] * 2, 3})),
         "obs:actions_"_.Bind(
             Spec<uint8_t>({conf["max_options"_], n_action_feats})),
         "obs:h_actions_"_.Bind(
@@ -1694,6 +1697,8 @@ protected:
 
   std::unordered_set<std::string> revealed_;
 
+  DecisionContext decision_;
+
   // multi select
   int ms_idx_ = -1;
   int ms_mode_ = 0;
@@ -1822,6 +1827,7 @@ public:
 
     turn_count_ = 0;
     ms_idx_ = -1;
+    decision_.reset();
 
     history_actions_1_.Zero();
     history_actions_2_.Zero();
@@ -1957,6 +1963,7 @@ public:
     ms_max_ = max;
     ms_must_ = must;
     ms_specs_ = specs;
+    decision_.candidates = specs;
     ms_r_idxs_.clear();
     ms_spec2idx_.clear();
 
@@ -2044,6 +2051,7 @@ public:
       throw std::runtime_error("Spec not found");
     }
     ms_r_idxs_.push_back(idx);
+    decision_.selected.push_back(action.spec_);
     std::vector<std::vector<int>> combs;
     for (auto &c : ms_combs_) {
       if (c[0] == idx) {
@@ -2093,6 +2101,7 @@ public:
       idx = get_ms_spec_idx(action.spec_);
       if (idx != -1) {
         ms_r_idxs_.push_back(idx);
+        decision_.selected.push_back(action.spec_);
       } else {
         // TODO(2): find the root cause
         std::vector<std::string> specs;
@@ -2368,6 +2377,7 @@ public:
     }
 
     _set_obs_actions(state["obs:actions_"_], legal_actions_);
+    _set_obs_decision(state, spec_infos);
 
     // write history actions
 
@@ -2395,6 +2405,47 @@ public:
 private:
   using SpecInfos = ankerl::unordered_dense::map<std::string, SpecInfo>;
 
+  void _set_obs_decision(State& state, const SpecInfos& specs) {
+    auto& context=state["obs:decision_"_];
+    auto& selection=state["obs:selection_"_];
+    context[0]=1; // additive observation schema version
+    if (!decision_.active) return;
+    context[1]=decision_.hint;
+    auto execution=decision_execution_context(pduel_);
+    context[2]=int(execution.stage);
+    card* source=execution.source;
+    if (decision_.hint==549)
+      source=reinterpret_cast<duel*>(pduel_)->game_field->core.attacker;
+    if (source && source->current.location) {
+      auto spec=ls_to_spec(source->current.location,source->current.sequence,0,
+                           source->current.controler!=to_play_);
+      auto it=specs.find(spec);
+      // A source pointer must never expose a private identity or even point to
+      // a specific hidden hand/deck row.
+      if (it!=specs.end() && it->second.cid) context[3]=it->second.index;
+    }
+    context[4]=decision_.minimum;
+    context[5]=decision_.maximum;
+    context[6]=decision_.selected.size();
+    context[7]=decision_.mandatory.size();
+    context[10]=decision_.sum_target;
+    context[11]=1;
+    for (const auto& action:legal_actions_) {
+      if (action.finish_) context[8]=1;
+      if (action.act_==ActionAct::Cancel) context[9]=1;
+      if (action.spec_index_) selection(action.spec_index_-1,0)=1;
+    }
+    auto mark=[&](const std::vector<std::string>& group,int column) {
+      for (const auto& spec:group) {
+        auto it=specs.find(spec);
+        if (it==specs.end()) throw std::runtime_error("Selection card missing from observation");
+        selection(it->second.index-1,column)=1;
+      }
+    };
+    mark(decision_.selected,1);
+    mark(decision_.mandatory,2);
+  }
+
   // Explicit reveals are scoped to their recipient and absolute card location.
   std::string reveal_key(PlayerId viewer, PlayerId controller,
                          uint8_t location, uint8_t sequence) {
@@ -2408,6 +2459,7 @@ private:
     bool own_search = false;
     if (!opponent && c.location_ == LOCATION_DECK) {
       auto spec = c.get_spec(false);
+      own_search = decision_.knows_candidate(spec);
       for (const auto& action : legal_actions_)
         if (action.spec_ == spec) { own_search = true; break; }
     }
@@ -2942,6 +2994,7 @@ private:
             continue;
           }
         }
+        if (!decision_.active) decision_.pending_hints.fill(0);
         if ((play_mode_ == kSelfPlay) || (to_play_ == ai_player_)) {
           if (legal_actions_.size() == 1) {
             callback_(0);
@@ -3216,6 +3269,10 @@ private:
   // 3. update to_play_ and options_ if need action
   void handle_message() {
     msg_ = int(data_[dp_++]);
+    decision_.clear_selection();
+    if (msg_ == MSG_NEW_TURN || msg_ == MSG_NEW_PHASE || msg_ == MSG_CHAIN_END ||
+        msg_ == MSG_CHAIN_SOLVED || msg_ == MSG_WIN)
+      decision_.pending_hints.fill(0);
     // Conservative forgetting prevents a location reveal from identifying a
     // different card after movement or randomization.
     if (msg_ == MSG_MOVE || msg_ == MSG_SHUFFLE_HAND || msg_ == MSG_SHUFFLE_DECK ||
@@ -3455,6 +3512,7 @@ private:
       auto player = read_u8();
       auto value = read_u32();
 
+      if (hint_type == HINT_SELECTMSG) decision_.hint_for(player, value);
       if (hint_type == HINT_SELECTMSG && value == 501) {
         discard_hand_ = true;
       }
@@ -4168,12 +4226,12 @@ private:
         }
       };
     } else if (msg_ == MSG_SELECT_UNSELECT_CARD) {
-      // TODO: add feature of selected cards (also for multi select)
       auto player = read_u8();
       bool finishable = read_u8();
       bool cancelable = read_u8();
       auto min = read_u8();
       auto max = read_u8();
+      decision_.begin(player, msg_, min, max);
       auto select_size = read_u8();
 
       std::vector<std::string> select_specs;
@@ -4206,8 +4264,14 @@ private:
 
       auto unselect_size = read_u8();
 
-      // unselect not allowed (no regrets)
-      dp_ += 8 * unselect_size;
+      // Keep the existing no-unselect action policy, but expose the core's
+      // actual selected group. Do not infer it from earlier client choices.
+      for (int i=0; i<unselect_size; ++i) {
+        read_u32(); // never trust an unredacted protocol card code
+        auto controller=read_u8(), loc=read_u8(), seq=read_u8(), pos=read_u8();
+        decision_.selected.push_back(ls_to_spec(loc,seq,pos,controller!=player));
+      }
+      decision_.candidates = select_specs;
 
       for (int j = 0; j < select_specs.size(); ++j) {
         legal_actions_.push_back(LegalAction::from_spec(select_specs[j]));
@@ -4235,6 +4299,7 @@ private:
       bool cancelable = read_u8();
       auto min = read_u8();
       auto max = read_u8();
+      decision_.begin(player, msg_, min, max);
       auto size = read_u8();
 
       if (min == 0) {
@@ -4316,6 +4381,7 @@ private:
       bool cancelable = read_u8();
       auto min = read_u8();
       auto max = read_u8();
+      decision_.begin(player, msg_, min, max);
       auto size = read_u8();
 
       if (min == 0) {
@@ -4402,6 +4468,8 @@ private:
       int _min = read_u8();
       int _max = read_u8();
       auto must_select_size = read_u8();
+      decision_.begin(player, msg_, _min, _max);
+      decision_.sum_target = val;
 
       if (mode == 0) {
         if (must_select_size > 2) {
@@ -4429,6 +4497,8 @@ private:
           auto param = read_u32();
           Card card = get_card(controller, loc, seq);
           must_select.push_back(card);
+          decision_.mandatory.push_back(card.get_spec(player));
+          decision_.selected.push_back(card.get_spec(player));
           expected -= (param & 0xff);
         }
         auto& pl = players_[player];
@@ -4448,6 +4518,8 @@ private:
           auto param = read_u32();
 
           auto spec = ls_to_spec(loc, seq, 0, controller != player);
+          decision_.mandatory.push_back(spec);
+          decision_.selected.push_back(spec);
           expected -= (param & 0xff);
         }
       }

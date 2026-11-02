@@ -30,7 +30,8 @@ def evaluate(output,count=32,seed=20110424,challenger="heuristic",opponent="rand
             "source_sha256":{str(p.relative_to(ROOT)):digest(p) for p in [
                 ROOT/"ygoai/edison_policy.py",Path(__file__),Path(__file__).with_name("agent_match.py"),
                 ROOT/"ygoenv/ygoenv/ygopro/ygopro.h",
-                ROOT/"ygoenv/ygoenv/ygopro/observation_visibility.h"]}}
+                ROOT/"ygoenv/ygoenv/ygopro/observation_visibility.h",
+                ROOT/"ygoenv/ygoenv/ygopro/decision_context.h"]}}
     if model: report["model_sha256"]=digest(model)
     path=output/"report.json"
     def save(): path.write_text(json.dumps(report,indent=2)+"\n")
@@ -72,7 +73,7 @@ def main():
     p.add_argument("--output",type=Path,default=ROOT/"build/edison-agents/evaluation")
     p.add_argument("--count",type=int,default=32)
     p.add_argument("--seed",type=int,default=20110424)
-    p.add_argument("--challenger",default="heuristic",choices=["random","heuristic","learned"])
+    p.add_argument("--challenger",default="heuristic",choices=["random","heuristic","learned","context"])
     p.add_argument("--opponent",default="random",choices=["random","heuristic"])
     p.add_argument("--model",type=Path)
     a=p.parse_args()

@@ -67,6 +67,7 @@ def main():
         sources = [ROOT / "xmake.lua", ROOT / "ygoenv/ygoenv/ygopro/ygopro.h",
                    ROOT / "ygoenv/ygoenv/ygopro/duel_config.h",
                    ROOT / "ygoenv/ygoenv/ygopro/observation_visibility.h",
+                   ROOT / "ygoenv/ygoenv/ygopro/decision_context.h",
                    ROOT / "ygoenv/ygoenv/ygopro/historical_scripts.h",
                    ROOT / "ygoenv/ygoenv/ygopro/script_loader.h",
                    ROOT / "ygoenv/ygoenv/ygopro/deck_validation.h",
@@ -81,8 +82,8 @@ def main():
             command.append(f"--test={args.test_id}")
         if args.fail_fast:
             command.append("--fail-fast")
-        commands = [] if args.test_id in ("042", "077", "078", "079") else [command]
-        if args.test_id in (None, "042", "077", "078", "079"):
+        commands = [] if args.test_id in ("042", "077", "078", "079", "082") else [command]
+        if args.test_id in (None, "042", "077", "078", "079", "082"):
             production = sorted((ROOT / "build/linux/x86_64/release").glob("ygopro_ygoenv*.so"))
             if len(production) != 1:
                 raise RuntimeError("Build the production module before production certification")
@@ -106,13 +107,16 @@ def main():
             commands.append(probe)
         if args.test_id in (None, "078"):
             commands.append([sys.executable, str(Path(__file__).with_name("production_observation_tests.py"))])
-        if args.test_id in (None, "079"):
+        if args.test_id in (None, "079", "082"):
             agent_lock = json.loads(Path(__file__).with_name("agent_assets.lock.json").read_text())
             report["agent_assets_sha256"] = agent_lock
             for relative, expected in agent_lock.items():
                 if digest(ROOT / relative) != expected:
                     raise RuntimeError("Agent asset hash mismatch: "+relative)
-            commands.append([sys.executable, str(Path(__file__).with_name("agent_policy_tests.py"))])
+            if args.test_id in (None, "079"):
+                commands.append([sys.executable, str(Path(__file__).with_name("agent_policy_tests.py"))])
+            if args.test_id in (None, "082"):
+                commands.append([sys.executable, str(Path(__file__).with_name("production_context_tests.py"))])
         report["command"] = commands[0]
         report["commands"] = commands
         outputs = []

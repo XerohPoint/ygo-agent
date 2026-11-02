@@ -171,3 +171,49 @@ class Heuristic:
             self.effect=self.metadata.get(cid,{}).get("name","")
         elif int(a[3]) in (1,8):
             self.attacker=0
+
+
+class ContextHeuristic(Heuristic):
+    """Opt-in context consumer; the frozen heuristic/64-feature model is unchanged.
+
+    Stage 1 means the core is executing a cost callback. Stage 2 is activation
+    setup, which is not a promise that a selection formally targets. Stage 3 is
+    an operation callback (including summoning procedures).
+    """
+    def choose(self, cards, glob, actions, decision, selection):
+        if self.weights is not None:
+            raise ValueError("The context policy has no trained feature schema yet")
+        # Attack attribution comes from the current observation, not the last
+        # action remembered across intervening chains or another player's turn.
+        self.attacker=0
+        scores,features=self.analyze(cards,glob,actions)
+        if decision[0]!=1:
+            raise ValueError("Unsupported decision-context schema")
+        if decision[11]:
+            hint,stage,source=map(int,(decision[1],decision[2],decision[3]))
+            attacker=power(cards[source-1]) if source else 0
+            for i,a in enumerate(actions):
+                if not a[0]:
+                    continue
+                row=int(a[0])-1
+                c=cards[row]
+                value=max(power(c),power(c,14))/1000
+                enemy=bool(c[4])
+                if hint==549 and source:
+                    defense=power(c,12 if int(c[5])==1 else 14) if u16(c,0) else 1900
+                    scores[i]=10+(attacker-defense)/1000
+                elif stage==1 or hint in (500,501,511,512,513,531,533):
+                    scores[i]=(10+value) if enemy else -value
+                elif hint in (502,503,505,507,520,551):
+                    scores[i]=(10+value) if enemy else -value
+                elif hint in (506,508,509):
+                    scores[i]=3+value
+                elif hint==504 and stage==3:
+                    # Sending cards during resolution can set up grave effects;
+                    # generic value ranking needs card-specific planning.
+                    pass
+                if selection[row,1]:
+                    scores[i]=-100  # selected cards are not new selections
+        choice=int(np.argmax(scores))
+        self.observe(cards,actions[choice])
+        return choice,features,choice

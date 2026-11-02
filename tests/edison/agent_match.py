@@ -25,7 +25,7 @@ def worker(args):
     import numpy as np
     import ygoenv
     import sqlite3
-    from ygoai.edison_policy import Heuristic
+    from ygoai.edison_policy import Heuristic, ContextHeuristic
     from ygoenv.ygopro import init_module
     init_module(str(ROOT / "assets/locale/en/cards.cdb"),
                 str(PROFILE),
@@ -46,7 +46,9 @@ def worker(args):
             (code,)).fetchone()
         metadata[cid]={"code":code,"name":name,"atk":atk,"def":defense,"level":level&255}
     weights=np.asarray(json.loads(args.model.read_text())["weights"],dtype=np.float32) if args.model else None
-    agents=[[Heuristic(metadata,args.seed+eid*2+p,
+    if args.collect and "context" in (args.policy0,args.policy1):
+        raise ValueError("Context policy collection needs a new learned feature schema")
+    agents=[[(ContextHeuristic if (args.policy0,args.policy1)[p]=="context" else Heuristic)(metadata,args.seed+eid*2+p,
                        weights if (args.policy0,args.policy1)[p]=="learned" else None)
              for p in range(2)] for eid in range(args.num_envs)]
     samples,labels,offsets,game_ids=[],[],[0],[]
@@ -58,6 +60,8 @@ def worker(args):
         PROFILE.read_text().splitlines())}
     interactions = [{} for _ in rng]
     prompt_counts = {}
+    context_counts = {}
+    selected_seen=mandatory_seen=hidden_selected_seen=0
     max_choices = 0
     longest_step = 0.0
     start = time.perf_counter()
@@ -83,6 +87,33 @@ def worker(args):
                     if a[0]:
                         assert int(a[0])<=len(cards)
                         assert tuple(a[1:3])==tuple(cards[int(a[0])-1,:2]), "Action/card identity mismatch"
+                context=obs["decision_"][row]
+                selection=obs["selection_"][row]
+                assert context[0]==1 and context.shape==(12,)
+                assert selection.shape==(len(cards),3) and np.all(selection<=1)
+                assert int(context[6])==int(selection[:,1].sum())
+                assert int(context[7])==int(selection[:,2].sum())
+                assert np.all(selection[:,2]<=selection[:,1])
+                assert not np.any(selection[cards[:,2]==0]), "Selection points to padding"
+                if context[11]:
+                    assert context[1]==0 or 500<=context[1]<=575, "Private hint payload"
+                    assert context[2] in (0,1,2,3)
+                    assert context[4]>=0 and context[5]>=context[4]
+                    if context[3]:
+                        assert identities[int(context[3])-1]>0, "Source reveals a private row"
+                    expected_candidates=np.zeros(len(cards),dtype=np.uint8)
+                    for a in offered:
+                        if a[0]: expected_candidates[int(a[0])-1]=1
+                    assert np.array_equal(selection[:,0],expected_candidates)
+                    assert context[8]==bool(np.any(offered[:,5]))
+                    assert context[9]==bool(np.any(offered[:,4]==9))
+                    key=f"{int(context[1])}:{int(context[2])}:{int(offered[0,3])}"
+                    context_counts[key]=context_counts.get(key,0)+1
+                    selected_seen+=int(context[6]>0)
+                    mandatory_seen+=int(context[7]>0)
+                    hidden_selected_seen+=int(np.any(selection[identities==0,1]))
+                else:
+                    assert not np.any(context[1:]) and not np.any(selection), "Stale selection context"
                 max_choices = max(max_choices, count)
                 player = int(info["to_play"][row])
                 assert player in (0, 1)
@@ -90,8 +121,9 @@ def worker(args):
                 if policy=="random":
                     action=rng[eid].randrange(count)
                 else:
+                    context_args=(context,selection) if policy=="context" else ()
                     action,features,label=agents[eid][player].choose(
-                        cards,obs["global_"][row],offered)
+                        cards,obs["global_"][row],offered,*context_args)
                     if args.collect:
                         samples.extend(features)
                         labels.append(label)
@@ -102,7 +134,7 @@ def worker(args):
                 # Ignore padding/history buffers. Hash all visible card features,
                 # global game features, and the exact offered action rows.
                 state_hash = hashlib.sha256()
-                for key in ("cards_", "global_"):
+                for key in ("cards_", "global_", "decision_", "selection_"):
                     state_hash.update(np.ascontiguousarray(obs[key][row]).tobytes())
                 offered = np.ascontiguousarray(obs["actions_"][row, :count])
                 state_hash.update(offered.tobytes())
@@ -112,7 +144,10 @@ def worker(args):
                 interactions[eid][interaction] = interactions[eid].get(interaction, 0)+1
                 record = {"env": eid, "step": steps[eid], "to_play": player,
                           "options": count, "action": action,
-                          "offered": offered.tolist(), "state": state_hash.hexdigest()}
+                          "offered": offered.tolist(), "state": state_hash.hexdigest(),
+                          "decision": context.tolist(),
+                          "selected_rows": (np.flatnonzero(selection[:,1])+1).tolist(),
+                          "mandatory_rows": (np.flatnonzero(selection[:,2])+1).tolist()}
                 line = json.dumps(record, sort_keys=True, separators=(",", ":"))
                 hashes[eid].update(line.encode())
                 log.write(line + "\n")
@@ -127,6 +162,7 @@ def worker(args):
             keep = []
             for row, eid in enumerate(np.asarray(info["env_id"]).tolist()):
                 if terminated[row]:
+                    assert not np.any(obs["decision_"][row]) and not np.any(obs["selection_"][row])
                     reward = float(rewards[row])
                     winner=int(info["winner"][row])
                     assert winner in (0,1,2)
@@ -158,7 +194,10 @@ def worker(args):
               "decisions_per_second": sum(steps)/elapsed,
               "duels_per_second": len(results)/elapsed,
               "longest_step_seconds": longest_step, "max_options_seen": max_choices,
-              "prompt_counts": prompt_counts}
+              "prompt_counts": prompt_counts,
+              "context_counts":dict(sorted(context_counts.items())),
+              "selected_prompts":selected_seen, "mandatory_prompts":mandatory_seen,
+              "hidden_selected_prompts":hidden_selected_seen}
     (args.output / f"worker-{args.worker}.json").write_text(json.dumps(report, indent=2)+"\n")
 
 def run_worker(seed, num_envs, threads, deck1, deck2, output, run=1,
@@ -195,8 +234,8 @@ def main():
     parser.add_argument("--threads",type=int,default=4)
     parser.add_argument("--deck1",default="blackwing")
     parser.add_argument("--deck2",default="frog_monarch")
-    parser.add_argument("--policy0",choices=["random","heuristic","learned"],default="heuristic")
-    parser.add_argument("--policy1",choices=["random","heuristic","learned"],default="random")
+    parser.add_argument("--policy0",choices=["random","heuristic","learned","context"],default="heuristic")
+    parser.add_argument("--policy1",choices=["random","heuristic","learned","context"],default="random")
     parser.add_argument("--model",type=Path)
     parser.add_argument("--collect",action="store_true")
     parser.add_argument("--verbose",action="store_true")

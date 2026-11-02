@@ -1368,3 +1368,14 @@ parallel determinism and relative worker-output paths. Test 080 checks shared
 visibility rules for hidden zones, searches, explicit reveals, facedown cards
 and public overlays. The full suite now contains 527 passing cases.
 See [edison-agents.md](edison-agents.md) for evaluation, stress, training and evidence.
+
+
+## Decision-context additions (081–082)
+
+Test 081 validates recipient-scoped hint lifecycle, private hint redaction,
+Brionac cost/target stages, and resolving discards, with Edison and Rule 5
+controls. Test 082 exercises context-sensitive policy choices, real production
+selection/mask/privacy behavior, retained selections, mandatory materials,
+serial/parallel replay and frozen-policy compatibility. The full suite now
+contains 536 passing cases. Schema, limitations and evidence are documented in
+[edison-decision-context.md](edison-decision-context.md).

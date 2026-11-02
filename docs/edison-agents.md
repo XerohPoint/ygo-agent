@@ -1,5 +1,9 @@
 # Edison heuristic and learning baseline
 
+This document records checkpoint **e8a8b67**. The subsequent additive observation
+schema and opt-in context consumer are documented in
+[edison-decision-context.md](edison-decision-context.md).
+
 The production environment now supports an audited public-observation heuristic,
 a uniform-random benchmark, and a small CPU behavior-cloning pilot. The original
 random checkpoint is preserved in [edison-baseline.md](edison-baseline.md).
