@@ -1379,3 +1379,13 @@ selection/mask/privacy behavior, retained selections, mandatory materials,
 serial/parallel replay and frozen-policy compatibility. The full suite now
 contains 536 passing cases. Schema, limitations and evidence are documented in
 [edison-decision-context.md](edison-decision-context.md).
+
+
+## Context-aware PPO regression additions (083)
+
+Test 083 validates PPO gradients and clipping, context feature/privacy contracts,
+checkpoint round trips, legal stochastic sampling, learner-seat outcome
+attribution, production replay, and unique/balanced/disjoint training/evaluation
+seeds. The full suite now passes 540 cases. See
+[edison-rl-pilot.md](edison-rl-pilot.md) for the bounded training run and held-out
+benchmark results.

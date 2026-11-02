@@ -132,3 +132,8 @@ From the repository root with pinned assets and dependencies installed:
 
 Focused regressions use run.py --test 081 or --test 082. No new training run or
 replacement of the frozen learned weights is part of this change.
+
+
+A subsequent versioned learner consumes these observations in the
+[context-aware PPO pilot](edison-rl-pilot.md). The context checkpoint's original
+64-feature model and benchmark results remain unchanged.

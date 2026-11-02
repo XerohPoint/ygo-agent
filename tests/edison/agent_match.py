@@ -45,12 +45,22 @@ def worker(args):
             "select name,atk,def,level from datas join texts using(id) where id=?",
             (code,)).fetchone()
         metadata[cid]={"code":code,"name":name,"atk":atk,"def":defense,"level":level&255}
-    weights=np.asarray(json.loads(args.model.read_text())["weights"],dtype=np.float32) if args.model else None
+    from ygoai.edison_rl import RLModel, RLAgent
+    has_rl="rl" in (args.policy0,args.policy1)
+    if has_rl and args.model is None: raise ValueError("RL policy requires a checkpoint")
+    if has_rl and args.collect: raise ValueError("Use RL rollouts, not imitation labels")
+    if args.rl_rollout and (args.policy0,args.policy1).count("rl")!=1:
+        raise ValueError("RL rollout requires exactly one learner seat")
+    rl_model=RLModel.load(args.model) if has_rl else None
+    weights=np.asarray(json.loads(args.model.read_text())["weights"],dtype=np.float32) if args.model and not has_rl else None
     if args.collect and "context" in (args.policy0,args.policy1):
         raise ValueError("Context policy collection needs a new learned feature schema")
-    agents=[[(ContextHeuristic if (args.policy0,args.policy1)[p]=="context" else Heuristic)(metadata,args.seed+eid*2+p,
-                       weights if (args.policy0,args.policy1)[p]=="learned" else None)
+    agents=[[(RLAgent(metadata,args.seed+eid*2+p,rl_model)
+              if (args.policy0,args.policy1)[p]=="rl" else
+              (ContextHeuristic if (args.policy0,args.policy1)[p]=="context" else Heuristic)(
+                  metadata,args.seed+eid*2+p,weights if (args.policy0,args.policy1)[p]=="learned" else None))
              for p in range(2)] for eid in range(args.num_envs)]
+    rl_x,rl_offsets,rl_actions,rl_logp,rl_values,rl_games,rl_players=[],[0],[],[],[],[],[]
     samples,labels,offsets,game_ids=[],[],[0],[]
     rng = [random.Random((args.seed+i) ^ 0xED150) for i in range(args.num_envs)]
     hashes = [hashlib.sha256() for _ in rng]
@@ -120,6 +130,13 @@ def worker(args):
                 policy=(args.policy0,args.policy1)[player]
                 if policy=="random":
                     action=rng[eid].randrange(count)
+                elif policy=="rl":
+                    action,features,old_logp,value=agents[eid][player].choose(
+                        cards,obs["global_"][row],offered,context,selection)
+                    if args.rl_rollout:
+                        rl_x.extend(features);rl_offsets.append(len(rl_x))
+                        rl_actions.append(action);rl_logp.append(old_logp);rl_values.append(value)
+                        rl_games.append(eid);rl_players.append(player)
                 else:
                     context_args=(context,selection) if policy=="context" else ()
                     action,features,label=agents[eid][player].choose(
@@ -185,7 +202,18 @@ def worker(args):
         np.savez_compressed(args.output/f"samples-{args.worker}.npz",
             features=np.asarray(samples,dtype=np.float32),labels=np.asarray(labels),
             offsets=np.asarray(offsets),game_ids=np.asarray(game_ids))
+    if args.rl_rollout:
+        returns=[0 if results[eid]["winner"]==2 else
+                 1 if results[eid]["winner"]==player else -1
+                 for eid,player in zip(rl_games,rl_players)]
+        np.savez_compressed(args.output/f"rollout-{args.worker}.npz",
+            features=np.asarray(rl_x,dtype=np.float32),offsets=np.asarray(rl_offsets),
+            actions=np.asarray(rl_actions),logp=np.asarray(rl_logp),
+            values=np.asarray(rl_values),returns=np.asarray(returns,dtype=np.float64),
+            game_ids=np.asarray(rl_games),players=np.asarray(rl_players))
     report = {"status": "PASS",
+              "rl_model_sha256":digest(args.model) if has_rl else None,
+              "learner_decisions":len(rl_actions),
               "configuration":{"seed":args.seed,"num_envs":args.num_envs,"threads":args.threads,
                                "deck0":args.deck1,"deck1":args.deck2,
                                "policy0":args.policy0,"policy1":args.policy1},
@@ -201,15 +229,16 @@ def worker(args):
     (args.output / f"worker-{args.worker}.json").write_text(json.dumps(report, indent=2)+"\n")
 
 def run_worker(seed, num_envs, threads, deck1, deck2, output, run=1,
-               policy0="heuristic", policy1="random", model=None, collect=False):
+               policy0="heuristic", policy1="random", model=None, collect=False, rl_rollout=False):
     output=output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     cmd = [sys.executable, str(Path(__file__).resolve()), "--worker", str(run),
            "--seed", str(seed), "--num-envs", str(num_envs), "--threads", str(threads),
            "--deck1", deck1, "--deck2", deck2, "--output", str(output)]
     cmd += ["--policy0",policy0,"--policy1",policy1]
-    if model: cmd += ["--model",str(model)]
+    if model: cmd += ["--model",str(Path(model).resolve())]
     if collect: cmd.append("--collect")
+    if rl_rollout: cmd.append("--rl-rollout")
     process = subprocess.run(cmd, cwd=ROOT/"scripts", capture_output=True,
                              text=True, timeout=180)
     (output/f"stdout-{run}.txt").write_text(process.stdout)
@@ -224,6 +253,8 @@ def run_worker(seed, num_envs, threads, deck1, deck2, output, run=1,
     result=json.loads((output/f"worker-{run}.json").read_text())
     assert result["configuration"]=={"seed":seed,"num_envs":num_envs,"threads":threads,
         "deck0":deck1,"deck1":deck2,"policy0":policy0,"policy1":policy1}, "Worker configuration mismatch"
+    if "rl" in (policy0,policy1):
+        assert result["rl_model_sha256"]==digest(Path(model)), "Worker used a different RL checkpoint"
     return result
 
 def main():
@@ -234,10 +265,11 @@ def main():
     parser.add_argument("--threads",type=int,default=4)
     parser.add_argument("--deck1",default="blackwing")
     parser.add_argument("--deck2",default="frog_monarch")
-    parser.add_argument("--policy0",choices=["random","heuristic","learned","context"],default="heuristic")
-    parser.add_argument("--policy1",choices=["random","heuristic","learned","context"],default="random")
+    parser.add_argument("--policy0",choices=["random","heuristic","learned","context","rl"],default="heuristic")
+    parser.add_argument("--policy1",choices=["random","heuristic","learned","context","rl"],default="random")
     parser.add_argument("--model",type=Path)
     parser.add_argument("--collect",action="store_true")
+    parser.add_argument("--rl-rollout",action="store_true")
     parser.add_argument("--verbose",action="store_true")
     parser.add_argument("--output",type=Path,default=ROOT/"build/edison-agents/probe")
     args=parser.parse_args()

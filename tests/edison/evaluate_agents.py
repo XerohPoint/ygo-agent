@@ -19,6 +19,7 @@ def wilson(wins,total):
 
 def evaluate(output,count=32,seed=20110424,challenger="heuristic",opponent="random",model=None):
     output=output.resolve()
+    if model: model=Path(model).resolve()
     output.mkdir(parents=True,exist_ok=True)
     lock=json.loads((ROOT/"tests/edison/agent_assets.lock.json").read_text())
     for path,expected in lock.items():
@@ -28,7 +29,7 @@ def evaluate(output,count=32,seed=20110424,challenger="heuristic",opponent="rand
             "assets_sha256":lock,
             "production_binary_sha256":digest(next((ROOT/"ygoenv/ygoenv/ygopro").glob("ygopro_ygoenv*.so"))),
             "source_sha256":{str(p.relative_to(ROOT)):digest(p) for p in [
-                ROOT/"ygoai/edison_policy.py",Path(__file__),Path(__file__).with_name("agent_match.py"),
+                ROOT/"ygoai/edison_policy.py",ROOT/"ygoai/edison_rl.py",Path(__file__),Path(__file__).with_name("agent_match.py"),
                 ROOT/"ygoenv/ygoenv/ygopro/ygopro.h",
                 ROOT/"ygoenv/ygoenv/ygopro/observation_visibility.h",
                 ROOT/"ygoenv/ygoenv/ygopro/decision_context.h"]}}
@@ -73,7 +74,7 @@ def main():
     p.add_argument("--output",type=Path,default=ROOT/"build/edison-agents/evaluation")
     p.add_argument("--count",type=int,default=32)
     p.add_argument("--seed",type=int,default=20110424)
-    p.add_argument("--challenger",default="heuristic",choices=["random","heuristic","learned","context"])
+    p.add_argument("--challenger",default="heuristic",choices=["random","heuristic","learned","context","rl"])
     p.add_argument("--opponent",default="random",choices=["random","heuristic"])
     p.add_argument("--model",type=Path)
     a=p.parse_args()

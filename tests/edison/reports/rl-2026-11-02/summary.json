@@ -1,0 +1,515 @@
+{
+  "status": "PASS",
+  "base_commit": "9fa3b58edc859963f4a817441f13bbf5e3b637a3",
+  "algorithm": "episodic clipped PPO",
+  "feature_schema": "edison_context_ppo_v1",
+  "training": {
+    "games": 768,
+    "learner_decisions": 63870,
+    "wall_seconds": 60.918968038997264,
+    "completion_rate": 1.0,
+    "optimizer_replay": true,
+    "rounds": [
+      {
+        "round": 1,
+        "opponent": "random",
+        "games": 96,
+        "wins": 44,
+        "completion_rate": 1.0,
+        "learner_decisions": 12326,
+        "decisions": 24795,
+        "rollout_seconds": 6.89274715299689,
+        "decisions_per_second": 3597.2594742894944,
+        "optimization_seconds_including_replay": 0.7951291279969155,
+        "wall_seconds": 9.590445267996984,
+        "optimization_replay": true,
+        "model_sha256": "ae061492e536d5a501a2c2100ce3aee54a0d58d495e57d4b76c68a9f7fa75d8d",
+        "optimizer_sha256": "9856775b2a3fe110a79f225d6e6610870ad6dbeddd83969ff453c5316532f047",
+        "history": [
+          {
+            "loss": 0.2267225333747652,
+            "entropy": 1.1664824321507523,
+            "approx_kl": 4.0363939912826694e-05,
+            "clip_fraction": 0.0,
+            "value_mse": 0.9547924708649467,
+            "epoch": 1
+          },
+          {
+            "loss": 0.21951326341382027,
+            "entropy": 1.1652885380821925,
+            "approx_kl": 0.0012504842793561559,
+            "clip_fraction": 0.0,
+            "value_mse": 0.9299088891870528,
+            "epoch": 2
+          },
+          {
+            "loss": 0.21414114090635694,
+            "entropy": 1.1641545391992199,
+            "approx_kl": 0.0023996421940251198,
+            "clip_fraction": 0.006023915241997492,
+            "value_mse": 0.9135112500759672,
+            "epoch": 3
+          },
+          {
+            "loss": 0.20967944907299452,
+            "entropy": 1.163917823297134,
+            "approx_kl": 0.002624467133026268,
+            "clip_fraction": 0.018531299688562576,
+            "value_mse": 0.8986903771857652,
+            "epoch": 4
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "opponent": "heuristic",
+        "games": 96,
+        "wins": 3,
+        "completion_rate": 1.0,
+        "learner_decisions": 4723,
+        "decisions": 13771,
+        "rollout_seconds": 4.167123239996727,
+        "decisions_per_second": 3304.677881331587,
+        "optimization_seconds_including_replay": 0.26442308600235265,
+        "wall_seconds": 6.128906548998202,
+        "optimization_replay": true,
+        "model_sha256": "b50ad4d4e90c0e04e1530dff8351861e6a07a9a736c4169f6167a5ab957b3103",
+        "optimizer_sha256": "b8045fe7d599a0775840e56f3e8e52ac59fed1b45c99764676ca43876cbff1c2",
+        "history": [
+          {
+            "loss": 0.02325062714856857,
+            "entropy": 1.2290748799679132,
+            "approx_kl": 0.0004907991737936724,
+            "clip_fraction": 0.0,
+            "value_mse": 0.14085081958833007,
+            "epoch": 1
+          },
+          {
+            "loss": 0.01686529816423188,
+            "entropy": 1.228884352347996,
+            "approx_kl": 0.0001721647513691134,
+            "clip_fraction": 0.0,
+            "value_mse": 0.11943347920172483,
+            "epoch": 2
+          },
+          {
+            "loss": 0.015460505327975133,
+            "entropy": 1.2263809043548075,
+            "approx_kl": 0.0018325258261114074,
+            "clip_fraction": 0.0,
+            "value_mse": 0.1186641230552084,
+            "epoch": 3
+          },
+          {
+            "loss": 0.014403100972281285,
+            "entropy": 1.2224705360153578,
+            "approx_kl": 0.0047009315716963086,
+            "clip_fraction": 0.03443287646998329,
+            "value_mse": 0.11844436704234941,
+            "epoch": 4
+          }
+        ]
+      },
+      {
+        "round": 3,
+        "opponent": "random",
+        "games": 96,
+        "wins": 50,
+        "completion_rate": 1.0,
+        "learner_decisions": 11565,
+        "decisions": 22672,
+        "rollout_seconds": 6.513587738001661,
+        "decisions_per_second": 3480.7238210251953,
+        "optimization_seconds_including_replay": 0.7831838979982422,
+        "wall_seconds": 9.210395845999301,
+        "optimization_replay": true,
+        "model_sha256": "691428a2822d66108b1dd089b69e228e895581bdd38546f3e7bdd82afe9b298c",
+        "optimizer_sha256": "449e49f8ba3e014084be3b764fd5358af7fc97e9e17f5815430df22625ccd423",
+        "history": [
+          {
+            "loss": 0.21135395917640573,
+            "entropy": 1.1404741346960765,
+            "approx_kl": 0.004841587138204425,
+            "clip_fraction": 0.03352774518910258,
+            "value_mse": 0.903678217384853,
+            "epoch": 1
+          },
+          {
+            "loss": 0.20339342693150392,
+            "entropy": 1.1435516508855523,
+            "approx_kl": 0.00387791215885791,
+            "clip_fraction": 0.01819949211338305,
+            "value_mse": 0.8756757732767474,
+            "epoch": 2
+          },
+          {
+            "loss": 0.20001491534709892,
+            "entropy": 1.1420248085219913,
+            "approx_kl": 0.0051799327276476894,
+            "clip_fraction": 0.035560892599658694,
+            "value_mse": 0.8637821100907432,
+            "epoch": 3
+          },
+          {
+            "loss": 0.19748083526243862,
+            "entropy": 1.14203374406754,
+            "approx_kl": 0.005110703805575916,
+            "clip_fraction": 0.034282280205873095,
+            "value_mse": 0.8549482724057077,
+            "epoch": 4
+          }
+        ]
+      },
+      {
+        "round": 4,
+        "opponent": "heuristic",
+        "games": 96,
+        "wins": 8,
+        "completion_rate": 1.0,
+        "learner_decisions": 4790,
+        "decisions": 14456,
+        "rollout_seconds": 4.456071136009996,
+        "decisions_per_second": 3244.113381220396,
+        "optimization_seconds_including_replay": 0.26478081499953987,
+        "wall_seconds": 6.4546385670037125,
+        "optimization_replay": true,
+        "model_sha256": "1922c5695b3225983868d416b6578ac9bbd148823453054d40ad62ef74b7060a",
+        "optimizer_sha256": "df0e09c58fd14bc82e77b5c5776011b9c5b0850ace8dd9cd2a88ad37fe97cc7c",
+        "history": [
+          {
+            "loss": 0.05548850204147611,
+            "entropy": 1.1942320145658503,
+            "approx_kl": 0.00021689919241094004,
+            "clip_fraction": 0.0,
+            "value_mse": 0.2716135776786825,
+            "epoch": 1
+          },
+          {
+            "loss": 0.053194341088819014,
+            "entropy": 1.1978556118276664,
+            "approx_kl": 0.00075763940290116,
+            "clip_fraction": 0.0,
+            "value_mse": 0.2657234361162495,
+            "epoch": 2
+          },
+          {
+            "loss": 0.05121501481750628,
+            "entropy": 1.197982284216098,
+            "approx_kl": 0.0011143027062333907,
+            "clip_fraction": 0.00015782828282828284,
+            "value_mse": 0.260778937031077,
+            "epoch": 3
+          },
+          {
+            "loss": 0.04914189081100214,
+            "entropy": 1.1956093802725498,
+            "approx_kl": 0.0014397485804926017,
+            "clip_fraction": 0.002846278872257628,
+            "value_mse": 0.25597847470700624,
+            "epoch": 4
+          }
+        ]
+      },
+      {
+        "round": 5,
+        "opponent": "random",
+        "games": 96,
+        "wins": 62,
+        "completion_rate": 1.0,
+        "learner_decisions": 10780,
+        "decisions": 21519,
+        "rollout_seconds": 6.019660286016006,
+        "decisions_per_second": 3574.786446004236,
+        "optimization_seconds_including_replay": 0.7224126260043704,
+        "wall_seconds": 8.582150702000945,
+        "optimization_replay": true,
+        "model_sha256": "c2a3c6eeefe3bf3628a74927712295a4bf1a289a7b97d84700e345f32d25afd9",
+        "optimizer_sha256": "5602b73d8816c7b27ce51515b16b630e259a8286f31ac7167bdeb75d1cd4cd98",
+        "history": [
+          {
+            "loss": 0.2028253413196398,
+            "entropy": 1.1201276161622793,
+            "approx_kl": 0.0023476390027621255,
+            "clip_fraction": 0.013102294077685307,
+            "value_mse": 0.8643665769724642,
+            "epoch": 1
+          },
+          {
+            "loss": 0.19182106209587782,
+            "entropy": 1.1272144052735065,
+            "approx_kl": 0.0018892517878376354,
+            "clip_fraction": 0.00653236026603696,
+            "value_mse": 0.8251761627113929,
+            "epoch": 2
+          },
+          {
+            "loss": 0.18957164288278194,
+            "entropy": 1.1294755180023923,
+            "approx_kl": 0.0026521655284150116,
+            "clip_fraction": 0.005746576346409926,
+            "value_mse": 0.819179063354078,
+            "epoch": 3
+          },
+          {
+            "loss": 0.18831550756176246,
+            "entropy": 1.1306380799977211,
+            "approx_kl": 0.0028529475506772297,
+            "clip_fraction": 0.008594763762621633,
+            "value_mse": 0.815467852176139,
+            "epoch": 4
+          }
+        ]
+      },
+      {
+        "round": 6,
+        "opponent": "heuristic",
+        "games": 96,
+        "wins": 8,
+        "completion_rate": 1.0,
+        "learner_decisions": 4777,
+        "decisions": 14301,
+        "rollout_seconds": 4.268324286000279,
+        "decisions_per_second": 3350.4951924355883,
+        "optimization_seconds_including_replay": 0.2597119160054717,
+        "wall_seconds": 6.259336376999272,
+        "optimization_replay": true,
+        "model_sha256": "85b6c5c75a66cd495a6b0513274b9e91a77b8ffd0d3748f701889a0fee5b08a7",
+        "optimizer_sha256": "b4e0035643469b23226a9f98d237168848a237ac16deeeca759bf6de93c55ed1",
+        "history": [
+          {
+            "loss": 0.06377231435815958,
+            "entropy": 1.1964280952847974,
+            "approx_kl": 0.0012663873882835185,
+            "clip_fraction": 0.0006448412698412698,
+            "value_mse": 0.30694476160210205,
+            "epoch": 1
+          },
+          {
+            "loss": 0.049532033575888014,
+            "entropy": 1.191019768086191,
+            "approx_kl": 0.003354457344667665,
+            "clip_fraction": 0.0338685446807013,
+            "value_mse": 0.2529798753812225,
+            "epoch": 2
+          },
+          {
+            "loss": 0.047924200532868305,
+            "entropy": 1.1876781828447038,
+            "approx_kl": 0.004664510482056374,
+            "clip_fraction": 0.05391806336338213,
+            "value_mse": 0.24970351825496814,
+            "epoch": 3
+          },
+          {
+            "loss": 0.045843875648138147,
+            "entropy": 1.1866259909677161,
+            "approx_kl": 0.005037042588893783,
+            "clip_fraction": 0.06049082919353557,
+            "value_mse": 0.24410561921044188,
+            "epoch": 4
+          }
+        ]
+      },
+      {
+        "round": 7,
+        "opponent": "random",
+        "games": 96,
+        "wins": 61,
+        "completion_rate": 1.0,
+        "learner_decisions": 10382,
+        "decisions": 20122,
+        "rollout_seconds": 5.942172520990425,
+        "decisions_per_second": 3386.303566401017,
+        "optimization_seconds_including_replay": 0.6988748389994726,
+        "wall_seconds": 8.533975476995693,
+        "optimization_replay": true,
+        "model_sha256": "fc274dabce33488601d812ca2254f26ee4ee0487252b8980acceb567410bf1d3",
+        "optimizer_sha256": "0ca71cf1fb33546f0c07b58ef4bc47d84b38afb213d47954eed0354a20613698",
+        "history": [
+          {
+            "loss": 0.1803692042169829,
+            "entropy": 1.1115693146868963,
+            "approx_kl": 0.0004447148592807038,
+            "clip_fraction": 0.0,
+            "value_mse": 0.7715139667686338,
+            "epoch": 1
+          },
+          {
+            "loss": 0.16703941461488364,
+            "entropy": 1.1066547231277508,
+            "approx_kl": 0.0020760583199221933,
+            "clip_fraction": 0.013988965032358013,
+            "value_mse": 0.7251146156555256,
+            "epoch": 2
+          },
+          {
+            "loss": 0.16403379291831424,
+            "entropy": 1.105357301120262,
+            "approx_kl": 0.0024553061095031097,
+            "clip_fraction": 0.011095329843381425,
+            "value_mse": 0.7160198606918751,
+            "epoch": 3
+          },
+          {
+            "loss": 0.16237891584265102,
+            "entropy": 1.0937013346294817,
+            "approx_kl": 0.0043694375836172885,
+            "clip_fraction": 0.03489805550964635,
+            "value_mse": 0.7086866840052712,
+            "epoch": 4
+          }
+        ]
+      },
+      {
+        "round": 8,
+        "opponent": "heuristic",
+        "games": 96,
+        "wins": 12,
+        "completion_rate": 1.0,
+        "learner_decisions": 4527,
+        "decisions": 12413,
+        "rollout_seconds": 3.9004641019928386,
+        "decisions_per_second": 3182.4418006200613,
+        "optimization_seconds_including_replay": 0.24888262800232042,
+        "wall_seconds": 5.935526215995196,
+        "optimization_replay": true,
+        "model_sha256": "ddb9b3f05d8d7908575fe5b944d93f42414a1993955096979fbd13c88a1b4398",
+        "optimizer_sha256": "7fec523b2258984ede33ac973a86b2489dfd005f799b9bc3c7a7c2d570630952",
+        "history": [
+          {
+            "loss": 0.08827797685913688,
+            "entropy": 1.143772073889917,
+            "approx_kl": 0.0021718101915977235,
+            "clip_fraction": 0.020759926591123832,
+            "value_mse": 0.40259655991581456,
+            "epoch": 1
+          },
+          {
+            "loss": 0.0773021249774627,
+            "entropy": 1.1471497778681057,
+            "approx_kl": 0.002016657987356338,
+            "clip_fraction": 0.00998114062712822,
+            "value_mse": 0.3633435231251784,
+            "epoch": 2
+          },
+          {
+            "loss": 0.07482514525819106,
+            "entropy": 1.1484244595950388,
+            "approx_kl": 0.0020625258499922653,
+            "clip_fraction": 0.009795104068702393,
+            "value_mse": 0.3553569899051905,
+            "epoch": 3
+          },
+          {
+            "loss": 0.07246178437414097,
+            "entropy": 1.151649879770628,
+            "approx_kl": 0.0019992615127295576,
+            "clip_fraction": 0.00979662341833111,
+            "value_mse": 0.3468855188937401,
+            "epoch": 4
+          }
+        ]
+      }
+    ],
+    "rollout_decisions_per_second": 3416.7098177180014
+  },
+  "certification": {
+    "passed": 540,
+    "failed": 0,
+    "identical_replays": true
+  },
+  "evaluations": {
+    "initial-vs-random": {
+      "games": 192,
+      "executions": 384,
+      "wins": 95,
+      "win_rate": 0.4947916666666667,
+      "win_rate_wilson_95": [
+        0.4248692545478394,
+        0.5649184105856153
+      ],
+      "completion_rate": 1.0,
+      "repeatability": true,
+      "decisions_per_second": 2973.1770395628896,
+      "max_options_seen": 24,
+      "longest_step_seconds": 0.006185943995660637,
+      "serial_decisions_per_second": 2304.6526356226436,
+      "parallel_decisions_per_second": 4188.021554615816
+    },
+    "initial-vs-heuristic": {
+      "games": 192,
+      "executions": 384,
+      "wins": 12,
+      "win_rate": 0.0625,
+      "win_rate_wilson_95": [
+        0.03611029002738631,
+        0.10605358118281621
+      ],
+      "completion_rate": 1.0,
+      "repeatability": true,
+      "decisions_per_second": 2740.501853392685,
+      "max_options_seen": 24,
+      "longest_step_seconds": 0.0057574089951231144,
+      "serial_decisions_per_second": 2139.1343373681975,
+      "parallel_decisions_per_second": 3812.2175188374545
+    },
+    "final-vs-random": {
+      "games": 192,
+      "executions": 384,
+      "wins": 129,
+      "win_rate": 0.671875,
+      "win_rate_wilson_95": [
+        0.6026562942994619,
+        0.73435075629653
+      ],
+      "completion_rate": 1.0,
+      "repeatability": true,
+      "decisions_per_second": 2877.4770205808445,
+      "max_options_seen": 24,
+      "longest_step_seconds": 0.005095674001495354,
+      "serial_decisions_per_second": 2222.3344129821726,
+      "parallel_decisions_per_second": 4080.366030141025
+    },
+    "final-vs-heuristic": {
+      "games": 192,
+      "executions": 384,
+      "wins": 33,
+      "win_rate": 0.171875,
+      "win_rate_wilson_95": [
+        0.1250814752043684,
+        0.2315414282032835
+      ],
+      "completion_rate": 1.0,
+      "repeatability": true,
+      "decisions_per_second": 2775.6693919389313,
+      "max_options_seen": 24,
+      "longest_step_seconds": 0.005200249994231854,
+      "serial_decisions_per_second": 2161.9002154532745,
+      "parallel_decisions_per_second": 3876.1061598903525
+    },
+    "heuristic-vs-random": {
+      "games": 192,
+      "executions": 384,
+      "wins": 184,
+      "win_rate": 0.9583333333333334,
+      "win_rate_wilson_95": [
+        0.9199471090362051,
+        0.9787383592197733
+      ],
+      "completion_rate": 1.0,
+      "repeatability": true,
+      "decisions_per_second": 3342.4268391931378,
+      "max_options_seen": 24,
+      "longest_step_seconds": 0.006100118996982928,
+      "serial_decisions_per_second": 2521.569651126651,
+      "parallel_decisions_per_second": 4955.665500125428
+    }
+  },
+  "executions": {
+    "training": 768,
+    "evaluation": 1920,
+    "total": 2688,
+    "completed": 2688
+  },
+  "context_weight_change_l2": 5.864122389781862
+}
