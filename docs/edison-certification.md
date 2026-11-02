@@ -1398,3 +1398,10 @@ with the same initial uniform policy, correct run-level sample statistics, and
 rejection of failed/incomplete replication sets. The full suite now passes
 541 cases. See [edison-rl-replication.md](edison-rl-replication.md) for the fixed
 three-seed study.
+
+## PPO budget and evaluation isolation (083F)
+
+Test 083F verifies the 3,072-duel schedule preserves the 768-duel prefix, balances
+seats/opponents, separates new training, validation and final-test seeds, and
+rejects a changed frozen checkpoint. The full suite now passes 542 cases.
+See [edison-rl-budget.md](edison-rl-budget.md) for the controlled budget study.

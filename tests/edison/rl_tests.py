@@ -136,13 +136,41 @@ def replication_config():
     except ValueError: pass
     else: raise AssertionError("Failed replication silently included")
 
+def budget_protocol():
+    from train_context_rl import schedule,parse_args
+    from budget_context_rl import protocol,seal_models,verify_seal,SEEDS,CHECKPOINTS
+    spec=protocol();rows=spec["schedule"]
+    assert parse_args([]).rounds==8 and not parse_args([]).skip_evaluation
+    args=parse_args(["--rounds","32","--skip-evaluation"])
+    assert args.rounds==32 and args.skip_evaluation
+    assert rows[:96]==schedule() and sum(r["games"] for r in rows)==3072
+    for opponent in ("random","heuristic"):
+        assert sum(r["games"] for r in rows if r["opponent"]==opponent)==1536
+    for seat in (0,1):
+        assert sum(r["games"] for r in rows if r["seat"]==seat)==1536
+    assert spec["validation_seed"]!=spec["test_seed"]
+    # Test leakage guard: modifying a frozen checkpoint must fail closed.
+    with tempfile.TemporaryDirectory() as tmp:
+        root=Path(tmp)
+        for seed in SEEDS:
+            (root/f"seed-{seed}").mkdir()
+            for c in CHECKPOINTS:
+                name="initial.json" if c==0 else f"checkpoint-{c}.json"
+                (root/f"seed-{seed}"/name).write_text(str((seed,c)))
+        seal=seal_models(root);verify_seal(root,seal)
+        (root/f"seed-{SEEDS[0]}"/"checkpoint-32.json").write_text("changed")
+        try: verify_seal(root,seal)
+        except ValueError: pass
+        else: raise AssertionError("Frozen checkpoint mutation accepted")
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument("--fail-fast",action="store_true")
     args=parser.parse_args();passed=failed=0
     for label,fn in (("A - PPO GRADIENTS",gradients),("B - CONTEXT SCHEMA AND CHECKPOINT",schema),
                      ("C - PRODUCTION RL ROLLOUT",production),
                      ("D - DISJOINT BALANCED SEED SCHEDULE",seed_partition),
-                     ("E - REPLICATION CONFIGURATION AND STATISTICS",replication_config)):
+                     ("E - REPLICATION CONFIGURATION AND STATISTICS",replication_config),
+                     ("F - BUDGET STUDY PARTITIONS AND CHECKPOINT FREEZE",budget_protocol)):
         print("EDISON RULE TEST 083"+label)
         try: fn();passed+=1;print("RESULT: PASS")
         except Exception as error:

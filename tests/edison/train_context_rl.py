@@ -18,16 +18,17 @@ GAMES_PER_CELL=8
 EVAL_COUNT=16
 OPTIMIZER_SEED=1701
 
-def schedule():
+def schedule(rounds=ROUNDS):
+    if rounds not in (8,32): raise ValueError("Supported budgets are 8 or 32 rounds")
     rows=[]
-    for iteration in range(ROUNDS):
+    for iteration in range(rounds):
         for cell,(decks,seat) in enumerate(itertools.product(itertools.permutations(DECKS,2),(0,1))):
             rows.append({"round":iteration,"cell":cell,"deck0":decks[0],"deck1":decks[1],
                 "seat":seat,"opponent":"random" if iteration%2==0 else "heuristic",
-                "seed":TRAIN_BASE+iteration*100000+cell*1000,"games":GAMES_PER_CELL})
+                "seed":(TRAIN_BASE+iteration*100000 if iteration<8 else 30000000+(iteration-8)*100000)+cell*1000,"games":GAMES_PER_CELL})
     training={row["seed"]+i for row in rows for i in range(row["games"])}
     held_out=set(range(TEST_BASE,TEST_BASE+EVAL_COUNT))
-    assert not training&held_out and len(training)==768
+    assert not training&held_out and len(training)==rounds*96
     return rows
 
 def gate(path):
@@ -95,8 +96,11 @@ def parse_args(argv=None):
                         help="Hidden-layer initialization and minibatch-shuffle seed; duel seeds stay fixed")
     parser.add_argument("--certification",type=Path,
                         help="Use a shared current certification report")
+    parser.add_argument("--rounds",type=int,choices=(8,32),default=ROUNDS)
+    parser.add_argument("--skip-evaluation",action="store_true",
+                        help="Collect training only; study runner owns validation/final test separation")
     args=parser.parse_args(argv)
-    if not 0 <= args.optimizer_seed < 2**32-ROUNDS:
+    if not 0 <= args.optimizer_seed < 2**32-args.rounds:
         parser.error("--optimizer-seed must be a nonnegative 32-bit seed with room for round offsets")
     return args
 
@@ -104,7 +108,7 @@ def main():
     args=parse_args();output=args.output.resolve();output.mkdir(parents=True,exist_ok=True)
     optimizer_seed=args.optimizer_seed
     gates=gate(args.certification.resolve() if args.certification else output/"certification/report.json")
-    rows=schedule()
+    rows=schedule(args.rounds)
     report={"status":"RUNNING","algorithm":"episodic clipped PPO",
         "feature_schema":"edison_context_ppo_v1","features":128,"hidden_units":32,
         "initialization":"uniform actor, random hidden layer, zero critic; no imitation warm start",
@@ -125,7 +129,7 @@ def main():
         model=RLModel(optimizer_seed);optimizer=Adam(model)
         model.save(output/"initial.json",{"round":0,"seed":optimizer_seed})
         current=output/"initial.json"
-        for iteration in range(ROUNDS):
+        for iteration in range(args.rounds):
             paths=[];cells=[];round_start=time.perf_counter()
             for row in [r for r in rows if r["round"]==iteration]:
                 cell=output/f"training/round-{iteration+1}/cell-{row['cell']:02d}"
@@ -162,7 +166,7 @@ def main():
                 "model_sha256":digest(current),"optimizer_sha256":digest(opt_path),
                 "history":history,"cells":cells}
             report["rounds"].append(round_report);save()
-            print(f"Round {iteration+1}/8: {wins}/96 wins vs {round_report['opponent']}; "
+            print(f"Round {iteration+1}/{args.rounds}: {wins}/96 wins vs {round_report['opponent']}; "
                   f"{len(data[2])} learner decisions; {decisions/rollout_seconds:.0f} decisions/s; update replay PASS",flush=True)
         report["training_seconds"]=time.perf_counter()-started
         report["final_checkpoint"]=str(current.relative_to(ROOT))
@@ -171,6 +175,10 @@ def main():
         report["training_learner_decisions"]=sum(v["learner_decisions"] for v in report["rounds"])
         report["training_completion_rate"]=1.0
         save()
+        if args.skip_evaluation:
+            report["evaluation_status"]="deferred to study runner"
+            report["status"]="PASS"
+            return
         # Evaluation happens only after all training. Both checkpoints and the
         # frozen benchmark use identical held-out seed/deck/seat matrices.
         for name,challenger,opponent,checkpoint in (

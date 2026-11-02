@@ -1,0 +1,4347 @@
+{
+  "opponents": {
+    "random": {
+      "initial_win_rate": {
+        "mean": 0.5364583333333334,
+        "sample_stddev": 0.0,
+        "minimum": 0.5364583333333334,
+        "maximum": 0.5364583333333334
+      },
+      "short_win_rate": {
+        "mean": 0.6927083333333333,
+        "sample_stddev": 0.04510548978043952,
+        "minimum": 0.6666666666666666,
+        "maximum": 0.7447916666666666
+      },
+      "long_win_rate": {
+        "mean": 0.8784722222222222,
+        "sample_stddev": 0.013107351450122812,
+        "minimum": 0.8645833333333334,
+        "maximum": 0.890625
+      },
+      "paired_gain": {
+        "mean": 0.18576388888888895,
+        "sample_stddev": 0.057370526534230214,
+        "minimum": 0.11979166666666674,
+        "maximum": 0.22395833333333337
+      },
+      "improved_runs": 3,
+      "serial_decisions_per_second": {
+        "mean": 2027.1639427279472,
+        "sample_stddev": 96.45335631803009,
+        "minimum": 1918.7297183861422,
+        "maximum": 2103.398415970427
+      },
+      "parallel_decisions_per_second": {
+        "mean": 3654.4331639755196,
+        "sample_stddev": 182.25671273845194,
+        "minimum": 3444.3445426785033,
+        "maximum": 3770.182040909767
+      }
+    },
+    "heuristic": {
+      "initial_win_rate": {
+        "mean": 0.015625,
+        "sample_stddev": 0.0,
+        "minimum": 0.015625,
+        "maximum": 0.015625
+      },
+      "short_win_rate": {
+        "mean": 0.140625,
+        "sample_stddev": 0.05412658773652741,
+        "minimum": 0.109375,
+        "maximum": 0.203125
+      },
+      "long_win_rate": {
+        "mean": 0.296875,
+        "sample_stddev": 0.018778912893041597,
+        "minimum": 0.28125,
+        "maximum": 0.3177083333333333
+      },
+      "paired_gain": {
+        "mean": 0.15625,
+        "sample_stddev": 0.03645833333333335,
+        "minimum": 0.11458333333333331,
+        "maximum": 0.18229166666666669
+      },
+      "improved_runs": 3,
+      "serial_decisions_per_second": {
+        "mean": 2098.525105766612,
+        "sample_stddev": 81.81619836899812,
+        "minimum": 2005.0473086267332,
+        "maximum": 2157.1095265691097
+      },
+      "parallel_decisions_per_second": {
+        "mean": 3697.6993876929214,
+        "sample_stddev": 114.04741545343208,
+        "minimum": 3568.81044010139,
+        "maximum": 3785.5434846302755
+      }
+    }
+  },
+  "validation_curve": {
+    "random": {
+      "0": {
+        "mean": 0.4479166666666667,
+        "sample_stddev": 0.0,
+        "minimum": 0.4479166666666667,
+        "maximum": 0.4479166666666667
+      },
+      "768": {
+        "mean": 0.670138888888889,
+        "sample_stddev": 0.06103609663627413,
+        "minimum": 0.625,
+        "maximum": 0.7395833333333334
+      },
+      "1536": {
+        "mean": 0.798611111111111,
+        "sample_stddev": 0.04209845712841023,
+        "minimum": 0.7604166666666666,
+        "maximum": 0.84375
+      },
+      "2304": {
+        "mean": 0.8298611111111112,
+        "sample_stddev": 0.04697135159190515,
+        "minimum": 0.78125,
+        "maximum": 0.875
+      },
+      "3072": {
+        "mean": 0.857638888888889,
+        "sample_stddev": 0.03348489847566999,
+        "minimum": 0.8333333333333334,
+        "maximum": 0.8958333333333334
+      }
+    },
+    "heuristic": {
+      "0": {
+        "mean": 0.07291666666666667,
+        "sample_stddev": 0.0,
+        "minimum": 0.07291666666666667,
+        "maximum": 0.07291666666666667
+      },
+      "768": {
+        "mean": 0.09375,
+        "sample_stddev": 0.03755782578608322,
+        "minimum": 0.052083333333333336,
+        "maximum": 0.125
+      },
+      "1536": {
+        "mean": 0.19444444444444445,
+        "sample_stddev": 0.04209845712841022,
+        "minimum": 0.15625,
+        "maximum": 0.23958333333333334
+      },
+      "2304": {
+        "mean": 0.24305555555555555,
+        "sample_stddev": 0.03182344232608221,
+        "minimum": 0.20833333333333334,
+        "maximum": 0.2708333333333333
+      },
+      "3072": {
+        "mean": 0.3055555555555556,
+        "sample_stddev": 0.0781828489527618,
+        "minimum": 0.2604166666666667,
+        "maximum": 0.3958333333333333
+      }
+    }
+  },
+  "training_games": 9216,
+  "training_seconds": {
+    "mean": 223.6100936523338,
+    "sample_stddev": 1.7897439835067652,
+    "minimum": 221.75926614100172,
+    "maximum": 225.3317559049974
+  },
+  "evaluation_executions": 13824,
+  "completion_rate": 1.0,
+  "evaluation_replay": true,
+  "optimizer_replay": true,
+  "total_executions": 23040,
+  "status": "PASS",
+  "client_date": "2026-11-02",
+  "baseline_checkpoint": "f19798b7576fb73178b2a82623f0c4134518fc56",
+  "certification": {
+    "passed": 542,
+    "failed": 0,
+    "identical_replays": true
+  },
+  "protocol": {
+    "optimizer_seeds": [
+      1702,
+      1703,
+      1704
+    ],
+    "training_games_per_run": 3072,
+    "rounds": 32,
+    "validation_checkpoints": [
+      0,
+      8,
+      16,
+      24,
+      32
+    ],
+    "validation_seed": 40000000,
+    "validation_seeds_per_cell": 8,
+    "test_seed": 50000000,
+    "test_seeds_per_cell": 16,
+    "selection": "fixed round 32; compare round 8 on identical fresh test seeds",
+    "execution_order": "all training, all validation, freeze manifest, then final test",
+    "sampling": "stochastic legal-action sampling, fixed per-duel sampling seeds",
+    "schedule": [
+      {
+        "round": 0,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21000000,
+        "games": 8
+      },
+      {
+        "round": 0,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21001000,
+        "games": 8
+      },
+      {
+        "round": 0,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21002000,
+        "games": 8
+      },
+      {
+        "round": 0,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21003000,
+        "games": 8
+      },
+      {
+        "round": 0,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21004000,
+        "games": 8
+      },
+      {
+        "round": 0,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21005000,
+        "games": 8
+      },
+      {
+        "round": 0,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21006000,
+        "games": 8
+      },
+      {
+        "round": 0,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21007000,
+        "games": 8
+      },
+      {
+        "round": 0,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21008000,
+        "games": 8
+      },
+      {
+        "round": 0,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21009000,
+        "games": 8
+      },
+      {
+        "round": 0,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21010000,
+        "games": 8
+      },
+      {
+        "round": 0,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21011000,
+        "games": 8
+      },
+      {
+        "round": 1,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21100000,
+        "games": 8
+      },
+      {
+        "round": 1,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21101000,
+        "games": 8
+      },
+      {
+        "round": 1,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21102000,
+        "games": 8
+      },
+      {
+        "round": 1,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21103000,
+        "games": 8
+      },
+      {
+        "round": 1,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21104000,
+        "games": 8
+      },
+      {
+        "round": 1,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21105000,
+        "games": 8
+      },
+      {
+        "round": 1,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21106000,
+        "games": 8
+      },
+      {
+        "round": 1,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21107000,
+        "games": 8
+      },
+      {
+        "round": 1,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21108000,
+        "games": 8
+      },
+      {
+        "round": 1,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21109000,
+        "games": 8
+      },
+      {
+        "round": 1,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21110000,
+        "games": 8
+      },
+      {
+        "round": 1,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21111000,
+        "games": 8
+      },
+      {
+        "round": 2,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21200000,
+        "games": 8
+      },
+      {
+        "round": 2,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21201000,
+        "games": 8
+      },
+      {
+        "round": 2,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21202000,
+        "games": 8
+      },
+      {
+        "round": 2,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21203000,
+        "games": 8
+      },
+      {
+        "round": 2,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21204000,
+        "games": 8
+      },
+      {
+        "round": 2,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21205000,
+        "games": 8
+      },
+      {
+        "round": 2,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21206000,
+        "games": 8
+      },
+      {
+        "round": 2,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21207000,
+        "games": 8
+      },
+      {
+        "round": 2,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21208000,
+        "games": 8
+      },
+      {
+        "round": 2,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21209000,
+        "games": 8
+      },
+      {
+        "round": 2,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21210000,
+        "games": 8
+      },
+      {
+        "round": 2,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21211000,
+        "games": 8
+      },
+      {
+        "round": 3,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21300000,
+        "games": 8
+      },
+      {
+        "round": 3,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21301000,
+        "games": 8
+      },
+      {
+        "round": 3,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21302000,
+        "games": 8
+      },
+      {
+        "round": 3,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21303000,
+        "games": 8
+      },
+      {
+        "round": 3,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21304000,
+        "games": 8
+      },
+      {
+        "round": 3,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21305000,
+        "games": 8
+      },
+      {
+        "round": 3,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21306000,
+        "games": 8
+      },
+      {
+        "round": 3,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21307000,
+        "games": 8
+      },
+      {
+        "round": 3,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21308000,
+        "games": 8
+      },
+      {
+        "round": 3,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21309000,
+        "games": 8
+      },
+      {
+        "round": 3,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21310000,
+        "games": 8
+      },
+      {
+        "round": 3,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21311000,
+        "games": 8
+      },
+      {
+        "round": 4,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21400000,
+        "games": 8
+      },
+      {
+        "round": 4,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21401000,
+        "games": 8
+      },
+      {
+        "round": 4,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21402000,
+        "games": 8
+      },
+      {
+        "round": 4,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21403000,
+        "games": 8
+      },
+      {
+        "round": 4,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21404000,
+        "games": 8
+      },
+      {
+        "round": 4,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21405000,
+        "games": 8
+      },
+      {
+        "round": 4,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21406000,
+        "games": 8
+      },
+      {
+        "round": 4,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21407000,
+        "games": 8
+      },
+      {
+        "round": 4,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21408000,
+        "games": 8
+      },
+      {
+        "round": 4,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21409000,
+        "games": 8
+      },
+      {
+        "round": 4,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21410000,
+        "games": 8
+      },
+      {
+        "round": 4,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21411000,
+        "games": 8
+      },
+      {
+        "round": 5,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21500000,
+        "games": 8
+      },
+      {
+        "round": 5,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21501000,
+        "games": 8
+      },
+      {
+        "round": 5,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21502000,
+        "games": 8
+      },
+      {
+        "round": 5,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21503000,
+        "games": 8
+      },
+      {
+        "round": 5,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21504000,
+        "games": 8
+      },
+      {
+        "round": 5,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21505000,
+        "games": 8
+      },
+      {
+        "round": 5,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21506000,
+        "games": 8
+      },
+      {
+        "round": 5,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21507000,
+        "games": 8
+      },
+      {
+        "round": 5,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21508000,
+        "games": 8
+      },
+      {
+        "round": 5,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21509000,
+        "games": 8
+      },
+      {
+        "round": 5,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21510000,
+        "games": 8
+      },
+      {
+        "round": 5,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21511000,
+        "games": 8
+      },
+      {
+        "round": 6,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21600000,
+        "games": 8
+      },
+      {
+        "round": 6,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21601000,
+        "games": 8
+      },
+      {
+        "round": 6,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21602000,
+        "games": 8
+      },
+      {
+        "round": 6,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21603000,
+        "games": 8
+      },
+      {
+        "round": 6,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21604000,
+        "games": 8
+      },
+      {
+        "round": 6,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21605000,
+        "games": 8
+      },
+      {
+        "round": 6,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21606000,
+        "games": 8
+      },
+      {
+        "round": 6,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21607000,
+        "games": 8
+      },
+      {
+        "round": 6,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21608000,
+        "games": 8
+      },
+      {
+        "round": 6,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21609000,
+        "games": 8
+      },
+      {
+        "round": 6,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 21610000,
+        "games": 8
+      },
+      {
+        "round": 6,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 21611000,
+        "games": 8
+      },
+      {
+        "round": 7,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21700000,
+        "games": 8
+      },
+      {
+        "round": 7,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21701000,
+        "games": 8
+      },
+      {
+        "round": 7,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21702000,
+        "games": 8
+      },
+      {
+        "round": 7,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21703000,
+        "games": 8
+      },
+      {
+        "round": 7,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21704000,
+        "games": 8
+      },
+      {
+        "round": 7,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21705000,
+        "games": 8
+      },
+      {
+        "round": 7,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21706000,
+        "games": 8
+      },
+      {
+        "round": 7,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21707000,
+        "games": 8
+      },
+      {
+        "round": 7,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21708000,
+        "games": 8
+      },
+      {
+        "round": 7,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21709000,
+        "games": 8
+      },
+      {
+        "round": 7,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 21710000,
+        "games": 8
+      },
+      {
+        "round": 7,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 21711000,
+        "games": 8
+      },
+      {
+        "round": 8,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30000000,
+        "games": 8
+      },
+      {
+        "round": 8,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30001000,
+        "games": 8
+      },
+      {
+        "round": 8,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30002000,
+        "games": 8
+      },
+      {
+        "round": 8,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30003000,
+        "games": 8
+      },
+      {
+        "round": 8,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30004000,
+        "games": 8
+      },
+      {
+        "round": 8,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30005000,
+        "games": 8
+      },
+      {
+        "round": 8,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30006000,
+        "games": 8
+      },
+      {
+        "round": 8,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30007000,
+        "games": 8
+      },
+      {
+        "round": 8,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30008000,
+        "games": 8
+      },
+      {
+        "round": 8,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30009000,
+        "games": 8
+      },
+      {
+        "round": 8,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30010000,
+        "games": 8
+      },
+      {
+        "round": 8,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30011000,
+        "games": 8
+      },
+      {
+        "round": 9,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30100000,
+        "games": 8
+      },
+      {
+        "round": 9,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30101000,
+        "games": 8
+      },
+      {
+        "round": 9,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30102000,
+        "games": 8
+      },
+      {
+        "round": 9,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30103000,
+        "games": 8
+      },
+      {
+        "round": 9,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30104000,
+        "games": 8
+      },
+      {
+        "round": 9,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30105000,
+        "games": 8
+      },
+      {
+        "round": 9,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30106000,
+        "games": 8
+      },
+      {
+        "round": 9,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30107000,
+        "games": 8
+      },
+      {
+        "round": 9,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30108000,
+        "games": 8
+      },
+      {
+        "round": 9,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30109000,
+        "games": 8
+      },
+      {
+        "round": 9,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30110000,
+        "games": 8
+      },
+      {
+        "round": 9,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30111000,
+        "games": 8
+      },
+      {
+        "round": 10,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30200000,
+        "games": 8
+      },
+      {
+        "round": 10,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30201000,
+        "games": 8
+      },
+      {
+        "round": 10,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30202000,
+        "games": 8
+      },
+      {
+        "round": 10,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30203000,
+        "games": 8
+      },
+      {
+        "round": 10,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30204000,
+        "games": 8
+      },
+      {
+        "round": 10,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30205000,
+        "games": 8
+      },
+      {
+        "round": 10,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30206000,
+        "games": 8
+      },
+      {
+        "round": 10,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30207000,
+        "games": 8
+      },
+      {
+        "round": 10,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30208000,
+        "games": 8
+      },
+      {
+        "round": 10,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30209000,
+        "games": 8
+      },
+      {
+        "round": 10,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30210000,
+        "games": 8
+      },
+      {
+        "round": 10,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30211000,
+        "games": 8
+      },
+      {
+        "round": 11,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30300000,
+        "games": 8
+      },
+      {
+        "round": 11,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30301000,
+        "games": 8
+      },
+      {
+        "round": 11,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30302000,
+        "games": 8
+      },
+      {
+        "round": 11,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30303000,
+        "games": 8
+      },
+      {
+        "round": 11,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30304000,
+        "games": 8
+      },
+      {
+        "round": 11,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30305000,
+        "games": 8
+      },
+      {
+        "round": 11,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30306000,
+        "games": 8
+      },
+      {
+        "round": 11,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30307000,
+        "games": 8
+      },
+      {
+        "round": 11,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30308000,
+        "games": 8
+      },
+      {
+        "round": 11,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30309000,
+        "games": 8
+      },
+      {
+        "round": 11,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30310000,
+        "games": 8
+      },
+      {
+        "round": 11,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30311000,
+        "games": 8
+      },
+      {
+        "round": 12,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30400000,
+        "games": 8
+      },
+      {
+        "round": 12,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30401000,
+        "games": 8
+      },
+      {
+        "round": 12,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30402000,
+        "games": 8
+      },
+      {
+        "round": 12,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30403000,
+        "games": 8
+      },
+      {
+        "round": 12,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30404000,
+        "games": 8
+      },
+      {
+        "round": 12,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30405000,
+        "games": 8
+      },
+      {
+        "round": 12,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30406000,
+        "games": 8
+      },
+      {
+        "round": 12,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30407000,
+        "games": 8
+      },
+      {
+        "round": 12,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30408000,
+        "games": 8
+      },
+      {
+        "round": 12,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30409000,
+        "games": 8
+      },
+      {
+        "round": 12,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30410000,
+        "games": 8
+      },
+      {
+        "round": 12,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30411000,
+        "games": 8
+      },
+      {
+        "round": 13,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30500000,
+        "games": 8
+      },
+      {
+        "round": 13,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30501000,
+        "games": 8
+      },
+      {
+        "round": 13,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30502000,
+        "games": 8
+      },
+      {
+        "round": 13,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30503000,
+        "games": 8
+      },
+      {
+        "round": 13,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30504000,
+        "games": 8
+      },
+      {
+        "round": 13,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30505000,
+        "games": 8
+      },
+      {
+        "round": 13,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30506000,
+        "games": 8
+      },
+      {
+        "round": 13,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30507000,
+        "games": 8
+      },
+      {
+        "round": 13,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30508000,
+        "games": 8
+      },
+      {
+        "round": 13,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30509000,
+        "games": 8
+      },
+      {
+        "round": 13,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30510000,
+        "games": 8
+      },
+      {
+        "round": 13,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30511000,
+        "games": 8
+      },
+      {
+        "round": 14,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30600000,
+        "games": 8
+      },
+      {
+        "round": 14,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30601000,
+        "games": 8
+      },
+      {
+        "round": 14,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30602000,
+        "games": 8
+      },
+      {
+        "round": 14,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30603000,
+        "games": 8
+      },
+      {
+        "round": 14,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30604000,
+        "games": 8
+      },
+      {
+        "round": 14,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30605000,
+        "games": 8
+      },
+      {
+        "round": 14,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30606000,
+        "games": 8
+      },
+      {
+        "round": 14,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30607000,
+        "games": 8
+      },
+      {
+        "round": 14,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30608000,
+        "games": 8
+      },
+      {
+        "round": 14,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30609000,
+        "games": 8
+      },
+      {
+        "round": 14,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30610000,
+        "games": 8
+      },
+      {
+        "round": 14,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30611000,
+        "games": 8
+      },
+      {
+        "round": 15,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30700000,
+        "games": 8
+      },
+      {
+        "round": 15,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30701000,
+        "games": 8
+      },
+      {
+        "round": 15,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30702000,
+        "games": 8
+      },
+      {
+        "round": 15,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30703000,
+        "games": 8
+      },
+      {
+        "round": 15,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30704000,
+        "games": 8
+      },
+      {
+        "round": 15,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30705000,
+        "games": 8
+      },
+      {
+        "round": 15,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30706000,
+        "games": 8
+      },
+      {
+        "round": 15,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30707000,
+        "games": 8
+      },
+      {
+        "round": 15,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30708000,
+        "games": 8
+      },
+      {
+        "round": 15,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30709000,
+        "games": 8
+      },
+      {
+        "round": 15,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30710000,
+        "games": 8
+      },
+      {
+        "round": 15,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30711000,
+        "games": 8
+      },
+      {
+        "round": 16,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30800000,
+        "games": 8
+      },
+      {
+        "round": 16,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30801000,
+        "games": 8
+      },
+      {
+        "round": 16,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30802000,
+        "games": 8
+      },
+      {
+        "round": 16,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30803000,
+        "games": 8
+      },
+      {
+        "round": 16,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30804000,
+        "games": 8
+      },
+      {
+        "round": 16,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30805000,
+        "games": 8
+      },
+      {
+        "round": 16,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30806000,
+        "games": 8
+      },
+      {
+        "round": 16,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30807000,
+        "games": 8
+      },
+      {
+        "round": 16,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30808000,
+        "games": 8
+      },
+      {
+        "round": 16,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30809000,
+        "games": 8
+      },
+      {
+        "round": 16,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 30810000,
+        "games": 8
+      },
+      {
+        "round": 16,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 30811000,
+        "games": 8
+      },
+      {
+        "round": 17,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30900000,
+        "games": 8
+      },
+      {
+        "round": 17,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30901000,
+        "games": 8
+      },
+      {
+        "round": 17,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30902000,
+        "games": 8
+      },
+      {
+        "round": 17,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30903000,
+        "games": 8
+      },
+      {
+        "round": 17,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30904000,
+        "games": 8
+      },
+      {
+        "round": 17,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30905000,
+        "games": 8
+      },
+      {
+        "round": 17,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30906000,
+        "games": 8
+      },
+      {
+        "round": 17,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30907000,
+        "games": 8
+      },
+      {
+        "round": 17,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30908000,
+        "games": 8
+      },
+      {
+        "round": 17,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30909000,
+        "games": 8
+      },
+      {
+        "round": 17,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 30910000,
+        "games": 8
+      },
+      {
+        "round": 17,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 30911000,
+        "games": 8
+      },
+      {
+        "round": 18,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31000000,
+        "games": 8
+      },
+      {
+        "round": 18,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31001000,
+        "games": 8
+      },
+      {
+        "round": 18,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31002000,
+        "games": 8
+      },
+      {
+        "round": 18,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31003000,
+        "games": 8
+      },
+      {
+        "round": 18,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31004000,
+        "games": 8
+      },
+      {
+        "round": 18,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31005000,
+        "games": 8
+      },
+      {
+        "round": 18,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31006000,
+        "games": 8
+      },
+      {
+        "round": 18,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31007000,
+        "games": 8
+      },
+      {
+        "round": 18,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31008000,
+        "games": 8
+      },
+      {
+        "round": 18,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31009000,
+        "games": 8
+      },
+      {
+        "round": 18,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31010000,
+        "games": 8
+      },
+      {
+        "round": 18,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31011000,
+        "games": 8
+      },
+      {
+        "round": 19,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31100000,
+        "games": 8
+      },
+      {
+        "round": 19,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31101000,
+        "games": 8
+      },
+      {
+        "round": 19,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31102000,
+        "games": 8
+      },
+      {
+        "round": 19,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31103000,
+        "games": 8
+      },
+      {
+        "round": 19,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31104000,
+        "games": 8
+      },
+      {
+        "round": 19,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31105000,
+        "games": 8
+      },
+      {
+        "round": 19,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31106000,
+        "games": 8
+      },
+      {
+        "round": 19,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31107000,
+        "games": 8
+      },
+      {
+        "round": 19,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31108000,
+        "games": 8
+      },
+      {
+        "round": 19,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31109000,
+        "games": 8
+      },
+      {
+        "round": 19,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31110000,
+        "games": 8
+      },
+      {
+        "round": 19,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31111000,
+        "games": 8
+      },
+      {
+        "round": 20,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31200000,
+        "games": 8
+      },
+      {
+        "round": 20,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31201000,
+        "games": 8
+      },
+      {
+        "round": 20,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31202000,
+        "games": 8
+      },
+      {
+        "round": 20,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31203000,
+        "games": 8
+      },
+      {
+        "round": 20,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31204000,
+        "games": 8
+      },
+      {
+        "round": 20,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31205000,
+        "games": 8
+      },
+      {
+        "round": 20,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31206000,
+        "games": 8
+      },
+      {
+        "round": 20,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31207000,
+        "games": 8
+      },
+      {
+        "round": 20,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31208000,
+        "games": 8
+      },
+      {
+        "round": 20,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31209000,
+        "games": 8
+      },
+      {
+        "round": 20,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31210000,
+        "games": 8
+      },
+      {
+        "round": 20,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31211000,
+        "games": 8
+      },
+      {
+        "round": 21,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31300000,
+        "games": 8
+      },
+      {
+        "round": 21,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31301000,
+        "games": 8
+      },
+      {
+        "round": 21,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31302000,
+        "games": 8
+      },
+      {
+        "round": 21,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31303000,
+        "games": 8
+      },
+      {
+        "round": 21,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31304000,
+        "games": 8
+      },
+      {
+        "round": 21,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31305000,
+        "games": 8
+      },
+      {
+        "round": 21,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31306000,
+        "games": 8
+      },
+      {
+        "round": 21,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31307000,
+        "games": 8
+      },
+      {
+        "round": 21,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31308000,
+        "games": 8
+      },
+      {
+        "round": 21,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31309000,
+        "games": 8
+      },
+      {
+        "round": 21,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31310000,
+        "games": 8
+      },
+      {
+        "round": 21,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31311000,
+        "games": 8
+      },
+      {
+        "round": 22,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31400000,
+        "games": 8
+      },
+      {
+        "round": 22,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31401000,
+        "games": 8
+      },
+      {
+        "round": 22,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31402000,
+        "games": 8
+      },
+      {
+        "round": 22,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31403000,
+        "games": 8
+      },
+      {
+        "round": 22,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31404000,
+        "games": 8
+      },
+      {
+        "round": 22,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31405000,
+        "games": 8
+      },
+      {
+        "round": 22,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31406000,
+        "games": 8
+      },
+      {
+        "round": 22,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31407000,
+        "games": 8
+      },
+      {
+        "round": 22,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31408000,
+        "games": 8
+      },
+      {
+        "round": 22,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31409000,
+        "games": 8
+      },
+      {
+        "round": 22,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31410000,
+        "games": 8
+      },
+      {
+        "round": 22,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31411000,
+        "games": 8
+      },
+      {
+        "round": 23,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31500000,
+        "games": 8
+      },
+      {
+        "round": 23,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31501000,
+        "games": 8
+      },
+      {
+        "round": 23,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31502000,
+        "games": 8
+      },
+      {
+        "round": 23,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31503000,
+        "games": 8
+      },
+      {
+        "round": 23,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31504000,
+        "games": 8
+      },
+      {
+        "round": 23,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31505000,
+        "games": 8
+      },
+      {
+        "round": 23,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31506000,
+        "games": 8
+      },
+      {
+        "round": 23,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31507000,
+        "games": 8
+      },
+      {
+        "round": 23,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31508000,
+        "games": 8
+      },
+      {
+        "round": 23,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31509000,
+        "games": 8
+      },
+      {
+        "round": 23,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31510000,
+        "games": 8
+      },
+      {
+        "round": 23,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31511000,
+        "games": 8
+      },
+      {
+        "round": 24,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31600000,
+        "games": 8
+      },
+      {
+        "round": 24,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31601000,
+        "games": 8
+      },
+      {
+        "round": 24,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31602000,
+        "games": 8
+      },
+      {
+        "round": 24,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31603000,
+        "games": 8
+      },
+      {
+        "round": 24,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31604000,
+        "games": 8
+      },
+      {
+        "round": 24,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31605000,
+        "games": 8
+      },
+      {
+        "round": 24,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31606000,
+        "games": 8
+      },
+      {
+        "round": 24,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31607000,
+        "games": 8
+      },
+      {
+        "round": 24,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31608000,
+        "games": 8
+      },
+      {
+        "round": 24,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31609000,
+        "games": 8
+      },
+      {
+        "round": 24,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31610000,
+        "games": 8
+      },
+      {
+        "round": 24,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31611000,
+        "games": 8
+      },
+      {
+        "round": 25,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31700000,
+        "games": 8
+      },
+      {
+        "round": 25,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31701000,
+        "games": 8
+      },
+      {
+        "round": 25,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31702000,
+        "games": 8
+      },
+      {
+        "round": 25,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31703000,
+        "games": 8
+      },
+      {
+        "round": 25,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31704000,
+        "games": 8
+      },
+      {
+        "round": 25,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31705000,
+        "games": 8
+      },
+      {
+        "round": 25,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31706000,
+        "games": 8
+      },
+      {
+        "round": 25,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31707000,
+        "games": 8
+      },
+      {
+        "round": 25,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31708000,
+        "games": 8
+      },
+      {
+        "round": 25,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31709000,
+        "games": 8
+      },
+      {
+        "round": 25,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31710000,
+        "games": 8
+      },
+      {
+        "round": 25,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31711000,
+        "games": 8
+      },
+      {
+        "round": 26,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31800000,
+        "games": 8
+      },
+      {
+        "round": 26,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31801000,
+        "games": 8
+      },
+      {
+        "round": 26,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31802000,
+        "games": 8
+      },
+      {
+        "round": 26,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31803000,
+        "games": 8
+      },
+      {
+        "round": 26,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31804000,
+        "games": 8
+      },
+      {
+        "round": 26,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31805000,
+        "games": 8
+      },
+      {
+        "round": 26,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31806000,
+        "games": 8
+      },
+      {
+        "round": 26,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31807000,
+        "games": 8
+      },
+      {
+        "round": 26,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31808000,
+        "games": 8
+      },
+      {
+        "round": 26,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31809000,
+        "games": 8
+      },
+      {
+        "round": 26,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 31810000,
+        "games": 8
+      },
+      {
+        "round": 26,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 31811000,
+        "games": 8
+      },
+      {
+        "round": 27,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31900000,
+        "games": 8
+      },
+      {
+        "round": 27,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31901000,
+        "games": 8
+      },
+      {
+        "round": 27,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31902000,
+        "games": 8
+      },
+      {
+        "round": 27,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31903000,
+        "games": 8
+      },
+      {
+        "round": 27,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31904000,
+        "games": 8
+      },
+      {
+        "round": 27,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31905000,
+        "games": 8
+      },
+      {
+        "round": 27,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31906000,
+        "games": 8
+      },
+      {
+        "round": 27,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31907000,
+        "games": 8
+      },
+      {
+        "round": 27,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31908000,
+        "games": 8
+      },
+      {
+        "round": 27,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31909000,
+        "games": 8
+      },
+      {
+        "round": 27,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 31910000,
+        "games": 8
+      },
+      {
+        "round": 27,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 31911000,
+        "games": 8
+      },
+      {
+        "round": 28,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 32000000,
+        "games": 8
+      },
+      {
+        "round": 28,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 32001000,
+        "games": 8
+      },
+      {
+        "round": 28,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 32002000,
+        "games": 8
+      },
+      {
+        "round": 28,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 32003000,
+        "games": 8
+      },
+      {
+        "round": 28,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 32004000,
+        "games": 8
+      },
+      {
+        "round": 28,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 32005000,
+        "games": 8
+      },
+      {
+        "round": 28,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 32006000,
+        "games": 8
+      },
+      {
+        "round": 28,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 32007000,
+        "games": 8
+      },
+      {
+        "round": 28,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 32008000,
+        "games": 8
+      },
+      {
+        "round": 28,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 32009000,
+        "games": 8
+      },
+      {
+        "round": 28,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 32010000,
+        "games": 8
+      },
+      {
+        "round": 28,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 32011000,
+        "games": 8
+      },
+      {
+        "round": 29,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 32100000,
+        "games": 8
+      },
+      {
+        "round": 29,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 32101000,
+        "games": 8
+      },
+      {
+        "round": 29,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 32102000,
+        "games": 8
+      },
+      {
+        "round": 29,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 32103000,
+        "games": 8
+      },
+      {
+        "round": 29,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 32104000,
+        "games": 8
+      },
+      {
+        "round": 29,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 32105000,
+        "games": 8
+      },
+      {
+        "round": 29,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 32106000,
+        "games": 8
+      },
+      {
+        "round": 29,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 32107000,
+        "games": 8
+      },
+      {
+        "round": 29,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 32108000,
+        "games": 8
+      },
+      {
+        "round": 29,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 32109000,
+        "games": 8
+      },
+      {
+        "round": 29,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 32110000,
+        "games": 8
+      },
+      {
+        "round": 29,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 32111000,
+        "games": 8
+      },
+      {
+        "round": 30,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 32200000,
+        "games": 8
+      },
+      {
+        "round": 30,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 32201000,
+        "games": 8
+      },
+      {
+        "round": 30,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 32202000,
+        "games": 8
+      },
+      {
+        "round": 30,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 32203000,
+        "games": 8
+      },
+      {
+        "round": 30,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 32204000,
+        "games": 8
+      },
+      {
+        "round": 30,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 32205000,
+        "games": 8
+      },
+      {
+        "round": 30,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 32206000,
+        "games": 8
+      },
+      {
+        "round": 30,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 32207000,
+        "games": 8
+      },
+      {
+        "round": 30,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 32208000,
+        "games": 8
+      },
+      {
+        "round": 30,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 32209000,
+        "games": 8
+      },
+      {
+        "round": 30,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "random",
+        "seed": 32210000,
+        "games": 8
+      },
+      {
+        "round": 30,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "random",
+        "seed": 32211000,
+        "games": 8
+      },
+      {
+        "round": 31,
+        "cell": 0,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 32300000,
+        "games": 8
+      },
+      {
+        "round": 31,
+        "cell": 1,
+        "deck0": "blackwing",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 32301000,
+        "games": 8
+      },
+      {
+        "round": 31,
+        "cell": 2,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 32302000,
+        "games": 8
+      },
+      {
+        "round": 31,
+        "cell": 3,
+        "deck0": "blackwing",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 32303000,
+        "games": 8
+      },
+      {
+        "round": 31,
+        "cell": 4,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 32304000,
+        "games": 8
+      },
+      {
+        "round": 31,
+        "cell": 5,
+        "deck0": "frog_monarch",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 32305000,
+        "games": 8
+      },
+      {
+        "round": 31,
+        "cell": 6,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 32306000,
+        "games": 8
+      },
+      {
+        "round": 31,
+        "cell": 7,
+        "deck0": "frog_monarch",
+        "deck1": "machina_gadget",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 32307000,
+        "games": 8
+      },
+      {
+        "round": 31,
+        "cell": 8,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 32308000,
+        "games": 8
+      },
+      {
+        "round": 31,
+        "cell": 9,
+        "deck0": "machina_gadget",
+        "deck1": "blackwing",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 32309000,
+        "games": 8
+      },
+      {
+        "round": 31,
+        "cell": 10,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 0,
+        "opponent": "heuristic",
+        "seed": 32310000,
+        "games": 8
+      },
+      {
+        "round": 31,
+        "cell": 11,
+        "deck0": "machina_gadget",
+        "deck1": "frog_monarch",
+        "seat": 1,
+        "opponent": "heuristic",
+        "seed": 32311000,
+        "games": 8
+      }
+    ]
+  },
+  "runs": [
+    {
+      "optimizer_seed": 1702,
+      "status": "PASS",
+      "games": 3072,
+      "seconds": 221.75926614100172,
+      "learner_decisions": 225180,
+      "completion_rate": 1.0,
+      "optimizer_replay": true,
+      "short_prefix_matches": true,
+      "report_sha256": "f603d6af3a469940f8b6e64feeb94535492ae9002efeea9f1f567ac771899059",
+      "test": {
+        "round-0-vs-random": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 103,
+          "win_rate": 0.5364583333333334,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 25,
+          "longest_step_seconds": 0.017766910001228098,
+          "serial_decisions_per_second": 1836.479885383827,
+          "parallel_decisions_per_second": 3174.614784388465
+        },
+        "round-0-vs-heuristic": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 3,
+          "win_rate": 0.015625,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.02125812399754068,
+          "serial_decisions_per_second": 1701.555164478023,
+          "parallel_decisions_per_second": 2454.8905267416203
+        },
+        "round-8-vs-random": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 128,
+          "win_rate": 0.6666666666666666,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 25,
+          "longest_step_seconds": 0.026280136000423227,
+          "serial_decisions_per_second": 1870.0711403049183,
+          "parallel_decisions_per_second": 3084.4597269661026
+        },
+        "round-8-vs-heuristic": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 21,
+          "win_rate": 0.109375,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.035373457998503,
+          "serial_decisions_per_second": 1744.3693338534852,
+          "parallel_decisions_per_second": 3029.337629253541
+        },
+        "round-32-vs-random": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 169,
+          "win_rate": 0.8802083333333334,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 25,
+          "longest_step_seconds": 0.021240645997750107,
+          "serial_decisions_per_second": 1918.7297183861422,
+          "parallel_decisions_per_second": 3444.3445426785033
+        },
+        "round-32-vs-heuristic": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 56,
+          "win_rate": 0.2916666666666667,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 25,
+          "longest_step_seconds": 0.007285044004675001,
+          "serial_decisions_per_second": 2005.0473086267332,
+          "parallel_decisions_per_second": 3568.81044010139
+        },
+        "heuristic-vs-random": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 185,
+          "win_rate": 0.9635416666666666,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.00502448900078889,
+          "serial_decisions_per_second": 2560.051952855998,
+          "parallel_decisions_per_second": 5053.992888283029
+        }
+      }
+    },
+    {
+      "optimizer_seed": 1703,
+      "status": "PASS",
+      "games": 3072,
+      "seconds": 225.3317559049974,
+      "learner_decisions": 225412,
+      "completion_rate": 1.0,
+      "optimizer_replay": true,
+      "short_prefix_matches": true,
+      "report_sha256": "e11c77188c5a2735c8ccd902869ff67d60ea27bcabe43fd66ba2dbe22c14dc9f",
+      "test": {
+        "round-0-vs-random": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 103,
+          "win_rate": 0.5364583333333334,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 25,
+          "longest_step_seconds": 0.02440418799960753,
+          "serial_decisions_per_second": 2210.0821045309062,
+          "parallel_decisions_per_second": 3834.3981857139884
+        },
+        "round-0-vs-heuristic": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 3,
+          "win_rate": 0.015625,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.03523927000060212,
+          "serial_decisions_per_second": 1869.8069448879453,
+          "parallel_decisions_per_second": 3194.7627137187765
+        },
+        "round-8-vs-random": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 128,
+          "win_rate": 0.6666666666666666,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 25,
+          "longest_step_seconds": 0.02265869999973802,
+          "serial_decisions_per_second": 2057.9148053092745,
+          "parallel_decisions_per_second": 3773.2493741458534
+        },
+        "round-8-vs-heuristic": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 21,
+          "win_rate": 0.109375,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.020381864997034427,
+          "serial_decisions_per_second": 1726.234701191846,
+          "parallel_decisions_per_second": 3208.478837579361
+        },
+        "round-32-vs-random": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 171,
+          "win_rate": 0.890625,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.006586976996914018,
+          "serial_decisions_per_second": 2103.398415970427,
+          "parallel_decisions_per_second": 3748.7729083382883
+        },
+        "round-32-vs-heuristic": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 54,
+          "win_rate": 0.28125,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 23,
+          "longest_step_seconds": 0.005941228999290615,
+          "serial_decisions_per_second": 2133.418482103992,
+          "parallel_decisions_per_second": 3785.5434846302755
+        },
+        "heuristic-vs-random": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 185,
+          "win_rate": 0.9635416666666666,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.006537093002407346,
+          "serial_decisions_per_second": 2396.160485858375,
+          "parallel_decisions_per_second": 4804.732153919561
+        }
+      }
+    },
+    {
+      "optimizer_seed": 1704,
+      "status": "PASS",
+      "games": 3072,
+      "seconds": 223.73925891100225,
+      "learner_decisions": 222044,
+      "completion_rate": 1.0,
+      "optimizer_replay": true,
+      "short_prefix_matches": true,
+      "report_sha256": "3f1e0158109df38835ca81c50e76cc8aee047c0cab3397ffd032df2954a8083c",
+      "test": {
+        "round-0-vs-random": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 103,
+          "win_rate": 0.5364583333333334,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 25,
+          "longest_step_seconds": 0.00611991200275952,
+          "serial_decisions_per_second": 2300.3134681914466,
+          "parallel_decisions_per_second": 4143.657611294869
+        },
+        "round-0-vs-heuristic": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 3,
+          "win_rate": 0.015625,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.022595424998144154,
+          "serial_decisions_per_second": 2062.7306700750246,
+          "parallel_decisions_per_second": 3602.225188468913
+        },
+        "round-8-vs-random": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 143,
+          "win_rate": 0.7447916666666666,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.005503677006345242,
+          "serial_decisions_per_second": 2235.9829541660974,
+          "parallel_decisions_per_second": 4107.81708126108
+        },
+        "round-8-vs-heuristic": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 39,
+          "win_rate": 0.203125,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.00885524800105486,
+          "serial_decisions_per_second": 2072.9117499777167,
+          "parallel_decisions_per_second": 3538.704600894714
+        },
+        "round-32-vs-random": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 166,
+          "win_rate": 0.8645833333333334,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.005751930992119014,
+          "serial_decisions_per_second": 2059.3636938272725,
+          "parallel_decisions_per_second": 3770.182040909767
+        },
+        "round-32-vs-heuristic": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 61,
+          "win_rate": 0.3177083333333333,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.0051762229995802045,
+          "serial_decisions_per_second": 2157.1095265691097,
+          "parallel_decisions_per_second": 3738.744238347099
+        },
+        "heuristic-vs-random": {
+          "status": "PASS",
+          "games": 192,
+          "executions": 384,
+          "wins": 185,
+          "win_rate": 0.9635416666666666,
+          "completion_rate": 1.0,
+          "repeatability": true,
+          "max_options_seen": 24,
+          "longest_step_seconds": 0.010530343002756126,
+          "serial_decisions_per_second": 2473.2722893915634,
+          "parallel_decisions_per_second": 4715.523283332786
+        }
+      }
+    }
+  ]
+}

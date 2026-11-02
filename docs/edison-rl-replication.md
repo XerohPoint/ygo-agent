@@ -133,3 +133,6 @@ A single seed can be reproduced separately:
 
 Focused regression testing uses run.py --test 083. The original pilot evidence
 under tests/edison/reports/rl-2026-11-02 remains unchanged.
+
+The subsequent [budget study](edison-rl-budget.md) compares 768 and 3,072 duels
+using separate validation and fresh final-test seeds with the same policy.
