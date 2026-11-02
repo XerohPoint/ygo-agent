@@ -6,9 +6,16 @@ package("ygopro-core")
     add_versions("0.0.1", "6ed45241ab9360fd832dbc5fe913aa0017f577fc")
     add_versions("0.0.2", "f96929650ff8685b82fd48670126eae406366734")
 
+    add_configs("edison_early_trigger", {description = "Enable Rule 1 chronological trigger groups", default = false, type = "boolean"})
+
     add_deps("lua")
 
     on_install("linux", function (package)
+        if package:config("edison_early_trigger") then
+            local patch = path.join(package:scriptdir(), "early-trigger.patch")
+            os.vrunv("git", {"apply", "--check", patch})
+            os.vrunv("git", {"apply", patch})
+        end
         io.writefile("xmake.lua", [[
             add_rules("mode.debug", "mode.release")
             add_requires("lua")

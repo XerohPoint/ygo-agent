@@ -32,6 +32,10 @@
 #include "ygopro-core/card_data.h"
 #include "ygopro-core/duel.h"
 #include "ygopro-core/ocgapi.h"
+#include "duel_config.h"
+#include "script_loader.h"
+#include "deck_validation.h"
+#include "deck_file.h"
 
 // clang-format on
 
@@ -518,58 +522,13 @@ spec_to_ls(uint8_t player, const std::string spec) {
 
 static std::tuple<std::vector<uint32>, std::vector<uint32>, std::vector<uint32>> read_decks(const std::string &fp) {
   std::ifstream file(fp);
-  std::string line;
-  std::vector<uint32> main_deck, extra_deck, side_deck;
-  bool found_extra = false;
-
-  if (file.is_open()) {
-    // Read the main deck
-    while (std::getline(file, line)) {
-      if (line.find("side") != std::string::npos) {
-        break;
-      }
-      if (line.find("extra") != std::string::npos) {
-        found_extra = true;
-        break;
-      }
-      // Check if line contains only digits
-      if (std::all_of(line.begin(), line.end(), ::isdigit)) {
-        main_deck.push_back(std::stoul(line));
-      }
-    }
-
-    if (main_deck.size() < 40) {
-      std::string err = fmt::format("Main deck must contain at least 40 cards, found: {}, file: {}", main_deck.size(), fp);
-      throw std::runtime_error(err);
-    }
-
-    // Read the extra deck
-    if (found_extra) {
-      while (std::getline(file, line)) {
-        if (line.find("side") != std::string::npos) {
-          break;
-        }
-        // Check if line contains only digits
-        if (std::all_of(line.begin(), line.end(), ::isdigit)) {
-          extra_deck.push_back(std::stoul(line));
-        }
-      }
-    }
-
-    // Read the side deck
-    while (std::getline(file, line)) {
-      // Check if line contains only digits
-      if (std::all_of(line.begin(), line.end(), ::isdigit)) {
-        side_deck.push_back(std::stoul(line));
-      }
-    }
-
-    file.close();
-  } else {
-    throw std::runtime_error(fmt::format("Unable to open deck file: {}", fp));
+  if(!file) throw std::runtime_error("Unable to open deck file: "+fp);
+  try {
+    auto deck=ygopro::deck_rules::read_stream(file);
+    return {std::move(deck[0]),std::move(deck[1]),std::move(deck[2])};
+  } catch(const std::exception& error) {
+    throw std::runtime_error(std::string(error.what())+", file: "+fp);
   }
-
-  return std::make_tuple(main_deck, extra_deck, side_deck);
 }
 
 template <class K = uint8_t>
@@ -1366,20 +1325,6 @@ inline uint32 card_reader_callback(CardCode code, card_data *card) {
   return 0;
 }
 
-inline byte *read_card_script(const std::string &path, int *lenptr) {
-  std::ifstream file(path, std::ios::binary);
-  if (!file) {
-    *lenptr = 0;
-    return nullptr;
-  }
-  file.seekg(0, std::ios::end);
-  int len = file.tellg();
-  file.seekg(0, std::ios::beg);
-  byte *buf = new byte[len];
-  file.read((char *)buf, len);
-  *lenptr = len;
-  return buf;
-}
 
 inline byte *script_reader_callback(const char *name, int *lenptr) {
   std::string path(name);
@@ -1395,6 +1340,12 @@ inline byte *script_reader_callback(const char *name, int *lenptr) {
 static void init_module(const std::string &db_path,
                         const std::string &code_list_file,
                         const std::map<std::string, std::string> &decks) {
+  bool has_playable=false;
+  for(const auto& [name,path]:decks) {
+    if(name.empty()) throw std::runtime_error("Deck name cannot be empty");
+    if(name.front()!='_') has_playable=true;
+  }
+  if(!has_playable) throw std::runtime_error("No playable decks supplied");
   // parse code from code_list_file
   SQLite::Database db(db_path, SQLite::OPEN_READONLY);
 
@@ -1429,7 +1380,19 @@ static void init_module(const std::string &db_path,
   // fmt::println("load {} cards in {}ms", cards_data_.size(), milliseconds);
 
   for (const auto &[name, deck] : decks) {
+    // Reserved resource lists are not duel decks. All card metadata/scripts
+    // are already loaded from code_list_file, including token resources.
+    if(name.front()=='_') continue;
     auto [main_deck, extra_deck, side_deck] = read_decks(deck);
+    auto lookup=[&](uint32_t code) -> ygopro::deck_rules::Card {
+      SQLite::Statement query(db,"SELECT id,alias,type,ot FROM datas WHERE id=?");
+      query.bind(1,static_cast<int64_t>(code));
+      if(!query.executeStep()) return {};
+      return {query.getColumn(0).getUInt(),query.getColumn(1).getUInt(),
+              query.getColumn(2).getUInt(),query.getColumn(3).getUInt()};
+    };
+    auto legality=ygopro::deck_rules::validate({main_deck,extra_deck,side_deck},duel_config::rules,lookup);
+    if(!legality) throw std::runtime_error(ygopro::deck_rules::describe(legality)+", file: "+deck);
     main_decks_[name] = main_deck;
     extra_decks_[name] = extra_deck;
     if (name[0] != '_') {
@@ -1644,17 +1607,17 @@ inline std::vector<PlayMode> parse_play_modes(const std::string &play_mode) {
 // rules = 0, Default
 // rules = 4, Link
 // rules = 5, MR5
-constexpr int32_t rules_ = 1;
-constexpr int32_t duel_options_ = ((rules_ & 0xFF) << 16) + (0 & 0xFFFF);
+constexpr int32_t rules_ = duel_config::rules;
+constexpr int32_t duel_options_ = duel_config::options;
 
 
 class YGOProEnvImpl {
 protected:
   const EnvSpec<YGOProEnvFns> spec_;
 
-  constexpr static int init_lp_ = 8000;
-  constexpr static int startcount_ = 5;
-  constexpr static int drawcount_ = 1;
+  constexpr static int init_lp_ = duel_config::starting_lp;
+  constexpr static int startcount_ = duel_config::opening_hand;
+  constexpr static int drawcount_ = duel_config::draw_count;
 
   const std::string deck1_;
   const std::string deck2_;
@@ -2967,6 +2930,8 @@ private:
   load_deck(
     intptr_t pduel, PlayerId player, std::mt19937& gen, bool shuffle = true) const {
     std::string deck_name = player == 0 ? deck1_ : deck2_;
+    if(deck_name.empty() || deck_name.front()=='_')
+      throw std::runtime_error("A reserved resource list is not a playable deck");
 
     if (deck_name == "random") {
       // generate random deck name

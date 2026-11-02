@@ -1,0 +1,260 @@
+{
+  "purpose": "Fixed legal integration fixtures and uniform-random playing baseline; no tournament-strength claim",
+  "decks": {
+    "blackwing": {
+      "main": [
+        [
+          3,
+          "Blackwing - Shura the Blue Flame"
+        ],
+        [
+          3,
+          "Blackwing - Bora the Spear"
+        ],
+        [
+          3,
+          "Blackwing - Kalut the Moon Shadow"
+        ],
+        [
+          2,
+          "Blackwing - Blizzard the Far North"
+        ],
+        [
+          1,
+          "Blackwing - Gale the Whirlwind"
+        ],
+        [
+          1,
+          "Blackwing - Vayu the Emblem of Honor"
+        ],
+        [
+          3,
+          "Blackwing - Sirocco the Dawn"
+        ],
+        [
+          1,
+          "Dark Armed Dragon"
+        ],
+        [
+          1,
+          "Dark Grepher"
+        ],
+        [
+          1,
+          "Plaguespreader Zombie"
+        ],
+        [
+          1,
+          "Sangan"
+        ],
+        [
+          2,
+          "Black Whirlwind"
+        ],
+        [
+          1,
+          "Allure of Darkness"
+        ],
+        [
+          1,
+          "Heavy Storm"
+        ],
+        [
+          1,
+          "Mystical Space Typhoon"
+        ],
+        [
+          1,
+          "Brain Control"
+        ],
+        [
+          3,
+          "Book of Moon"
+        ],
+        [
+          1,
+          "Mind Control"
+        ],
+        [
+          3,
+          "Icarus Attack"
+        ],
+        [
+          2,
+          "Bottomless Trap Hole"
+        ],
+        [
+          1,
+          "Mirror Force"
+        ],
+        [
+          1,
+          "Torrential Tribute"
+        ],
+        [
+          1,
+          "Solemn Judgment"
+        ],
+        [
+          1,
+          "Trap Dustshoot"
+        ],
+        [
+          1,
+          "Royal Oppression"
+        ]
+      ],
+      "extra": [
+        [
+          1,
+          "Armory Arm"
+        ],
+        [
+          1,
+          "Ally of Justice Catastor"
+        ],
+        [
+          1,
+          "Magical Android"
+        ],
+        [
+          1,
+          "Brionac, Dragon of the Ice Barrier"
+        ],
+        [
+          1,
+          "Goyo Guardian"
+        ],
+        [
+          1,
+          "Black Rose Dragon"
+        ],
+        [
+          1,
+          "Stardust Dragon"
+        ],
+        [
+          1,
+          "Colossal Fighter"
+        ],
+        [
+          1,
+          "Dark End Dragon"
+        ],
+        [
+          1,
+          "Blackwing - Silverwind the Ascendant"
+        ],
+        [
+          2,
+          "Blackwing Armed Wing"
+        ],
+        [
+          2,
+          "Blackwing Armor Master"
+        ],
+        [
+          1,
+          "Thought Ruler Archfiend"
+        ]
+      ]
+    },
+    "frog_monarch": {
+      "main": [
+        [
+          3,
+          "Swap Frog"
+        ],
+        [
+          3,
+          "Dupe Frog"
+        ],
+        [
+          2,
+          "Treeborn Frog"
+        ],
+        [
+          3,
+          "Substitoad"
+        ],
+        [
+          3,
+          "Caius the Shadow Monarch"
+        ],
+        [
+          3,
+          "Raiza the Storm Monarch"
+        ],
+        [
+          2,
+          "Thestalos the Firestorm Monarch"
+        ],
+        [
+          2,
+          "Light and Darkness Dragon"
+        ],
+        [
+          1,
+          "Tragoedia"
+        ],
+        [
+          1,
+          "Gorz the Emissary of Darkness"
+        ],
+        [
+          3,
+          "Battle Fader"
+        ],
+        [
+          3,
+          "Soul Exchange"
+        ],
+        [
+          3,
+          "Enemy Controller"
+        ],
+        [
+          1,
+          "Brain Control"
+        ],
+        [
+          1,
+          "Heavy Storm"
+        ],
+        [
+          1,
+          "Mystical Space Typhoon"
+        ],
+        [
+          1,
+          "Foolish Burial"
+        ],
+        [
+          1,
+          "One for One"
+        ],
+        [
+          1,
+          "Trap Dustshoot"
+        ],
+        [
+          1,
+          "Torrential Tribute"
+        ],
+        [
+          1,
+          "Mirror Force"
+        ]
+      ],
+      "extra": []
+    }
+  },
+  "resource_codes": [
+    44330099,
+    84451804
+  ],
+  "resource_notes": {
+    "84451804": "Dupe Frog changes its name to Des Frog while face-up; observation metadata dependency.",
+    "44330099": "Gorz effect token."
+  }
+}

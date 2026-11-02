@@ -1,0 +1,293 @@
+diff --git a/field.h b/field.h
+index d7f6109..6b2b37a 100644
+--- a/field.h
++++ b/field.h
+@@ -36,6 +36,8 @@ class effect;
+ bool check_playerid(int32 playerid);
+ 
+ struct tevent {
++	// Events raised before the same instant-event flush are simultaneous.
++	uint64_t trigger_group{ 0 };
+ 	card* trigger_card{ nullptr };
+ 	group* event_cards{ nullptr };
+ 	effect* reason_effect{ nullptr };
+@@ -308,6 +310,8 @@ struct processor {
+ 	int32 last_select_hint[2]{ 0 };
+ 	int32 duel_options{ 0 };
+ 	int32 duel_rule{ CURRENT_RULE };
++	uint64_t trigger_group{ 1 };
++	uint64_t early_trigger_group{ 0 };
+ 	uint32 copy_reset{ 0 };
+ 	int32 copy_reset_count{ 0 };
+ 	uint32 last_control_changed_id{ 0 };
+diff --git a/processor.cpp b/processor.cpp
+index 2ff811f..df7f4e6 100644
+--- a/processor.cpp
++++ b/processor.cpp
+@@ -891,6 +891,7 @@ int32 field::execute_target(uint16 step, effect * triggering_effect, uint8 trigg
+ }
+ void field::raise_event(card* event_card, uint32 event_code, effect* reason_effect, uint32 reason, uint8 reason_player, uint8 event_player, uint32 event_value) {
+ 	tevent new_event;
++	new_event.trigger_group = core.trigger_group;
+ 	new_event.trigger_card = 0;
+ 	if (event_card) {
+ 		group* pgroup = pduel->new_group(event_card);
+@@ -908,6 +909,7 @@ void field::raise_event(card* event_card, uint32 event_code, effect* reason_effe
+ }
+ void field::raise_event(card_set* event_cards, uint32 event_code, effect* reason_effect, uint32 reason, uint8 reason_player, uint8 event_player, uint32 event_value) {
+ 	tevent new_event;
++	new_event.trigger_group = core.trigger_group;
+ 	new_event.trigger_card = 0;
+ 	if (event_cards) {
+ 		group* pgroup = pduel->new_group(*event_cards);
+@@ -925,6 +927,7 @@ void field::raise_event(card_set* event_cards, uint32 event_code, effect* reason
+ }
+ void field::raise_single_event(card* trigger_card, card_set* event_cards, uint32 event_code, effect * reason_effect, uint32 reason, uint8 reason_player, uint8 event_player, uint32 event_value) {
+ 	tevent new_event;
++	new_event.trigger_group = core.trigger_group;
+ 	new_event.trigger_card = trigger_card;
+ 	if (event_cards) {
+ 		group* pgroup = pduel->new_group(*event_cards);
+@@ -1284,6 +1287,21 @@ int32 field::process_phase_event(int16 step, int32 phase) {
+ 	return TRUE;
+ }
+ int32 field::process_point_event(int16 step, int32 skip_trigger, int32 skip_freechain, int32 skip_new) {
++	// Edison Early Trigger: finish all SEGOC groups for an earlier event
++	// batch before considering a later batch. Modern rules keep the old path.
++	auto earliest_group = [this]() {
++		uint64_t first = UINT64_MAX;
++		for(const auto& ch : core.new_fchain_s)
++			first = std::min(first, ch.evt.trigger_group);
++		for(const auto& ch : core.new_ochain_s)
++			first = std::min(first, ch.evt.trigger_group);
++		return first;
++	};
++	auto has_group = [this](const chain_list& chains) {
++		return std::any_of(chains.begin(), chains.end(), [this](const chain& ch) {
++			return core.duel_rule != 1 || ch.evt.trigger_group == core.early_trigger_group;
++		});
++	};
+ 	switch(step) {
+ 	case 0: {
+ 		core.select_chains.clear();
+@@ -1294,6 +1312,8 @@ int32 field::process_point_event(int16 step, int32 skip_trigger, int32 skip_free
+ 		}
+ 		core.new_fchain_s.splice(core.new_fchain_s.begin(), core.new_fchain);
+ 		core.new_ochain_s.splice(core.new_ochain_s.begin(), core.new_ochain);
++		if(core.duel_rule == 1)
++			core.early_trigger_group = earliest_group();
+ 		core.full_event.splice(core.full_event.end(), core.delayed_activate_event);
+ 		core.delayed_quick.clear();
+ 		core.delayed_quick_tmp.swap(core.delayed_quick);
+@@ -1308,6 +1328,10 @@ int32 field::process_point_event(int16 step, int32 skip_trigger, int32 skip_free
+ 		//forced trigger
+ 		core.select_chains.clear();
+ 		for (auto clit = core.new_fchain_s.begin(); clit != core.new_fchain_s.end(); ) {
++			if(core.duel_rule == 1 && clit->evt.trigger_group != core.early_trigger_group) {
++				++clit;
++				continue;
++			}
+ 			effect* peffect = clit->triggering_effect;
+ 			card* phandler = peffect->get_handler();
+ 			if(phandler->is_has_relation(*clit)) //work around: position and control should be refreshed before raising event
+@@ -1339,7 +1363,7 @@ int32 field::process_point_event(int16 step, int32 skip_trigger, int32 skip_free
+ 	}
+ 	case 3: {
+ 		if(returns.ivalue[0] == -1) {
+-			if(core.new_fchain_s.size()) {
++			if(has_group(core.new_fchain_s)) {
+ 				core.current_player = 1 - infos.turn_player;
+ 				core.units.begin()->step = 1;
+ 			} else {
+@@ -1362,6 +1386,10 @@ int32 field::process_point_event(int16 step, int32 skip_trigger, int32 skip_free
+ 		//optional trigger
+ 		core.select_chains.clear();
+ 		for (auto clit = core.new_ochain_s.begin(); clit != core.new_ochain_s.end(); ) {
++			if(core.duel_rule == 1 && clit->evt.trigger_group != core.early_trigger_group) {
++				++clit;
++				continue;
++			}
+ 			effect* peffect = clit->triggering_effect;
+ 			card* phandler = peffect->get_handler();
+ 			if(phandler->is_has_relation(*clit)) //work around: position and control should be refreshed before raising event
+@@ -1415,7 +1443,7 @@ int32 field::process_point_event(int16 step, int32 skip_trigger, int32 skip_free
+ 				ch.triggering_effect->active_type = 0;
+ 				core.new_ochain_s.remove_if([chain_id = ch.chain_id](chain ch) { return ch.chain_id == chain_id; });
+ 			}
+-			if(core.new_ochain_s.size()) {
++			if(has_group(core.new_ochain_s)) {
+ 				core.current_player = 1 - infos.turn_player;
+ 				core.units.begin()->step = 3;
+ 			} else {
+@@ -1437,6 +1465,12 @@ int32 field::process_point_event(int16 step, int32 skip_trigger, int32 skip_free
+ 		return FALSE;
+ 	}
+ 	case 7: {
++		if(core.duel_rule == 1 && (!core.new_fchain_s.empty() || !core.new_ochain_s.empty())) {
++			core.early_trigger_group = earliest_group();
++			core.current_player = infos.turn_player;
++			core.units.begin()->step = 1;
++			return FALSE;
++		}
+ 		core.select_chains.clear();
+ 		return FALSE;
+ 	}
+@@ -1809,6 +1843,8 @@ int32 field::process_quick_effect(int16 step, int32 skip_freechain, uint8 priori
+ 	return TRUE;
+ }
+ int32 field::process_instant_event() {
++	// Single-card and group notifications raised together share one epoch.
++	++core.trigger_group;
+ 	if (core.queue_event.size() == 0)
+ 		return TRUE;
+ 	chain newchain;
+@@ -4374,6 +4410,13 @@ int32 field::solve_chain(uint16 step, uint32 chainend_arg1, uint32 chainend_arg2
+ 	case 1: {
+ 		effect* peffect = cait->triggering_effect;
+ 		if(cait->flag & CHAIN_DISABLE_ACTIVATE && is_chain_negatable(cait->chain_count)) {
++			// Edison mandatory phase triggers must resolve once. Activation
++			// negation leaves that obligation pending; effect negation does not.
++			if(core.duel_rule == 1 && peffect->get_code_type() == CODE_PHASE
++				&& (peffect->type & EFFECT_TYPE_TRIGGER_F)
++				&& peffect->is_flag(EFFECT_FLAG_COUNT_LIMIT)
++				&& peffect->count_code == 0 && peffect->count_limit_max == 1)
++				peffect->recharge();
+ 			remove_oath_effect(peffect);
+ 			if(peffect->is_flag(EFFECT_FLAG_COUNT_LIMIT) && (peffect->count_code & EFFECT_COUNT_CODE_OATH)) {
+ 				dec_effect_code(peffect->count_code, cait->triggering_player);
+diff --git a/field.cpp b/field.cpp
+index 9824051..7b3a341 100644
+--- a/field.cpp
++++ b/field.cpp
+@@ -1714,7 +1714,11 @@ int32 field::get_release_list(lua_State* L, uint8 playerid, card_set* release_li
+ 			    && (!use_con || pduel->lua->check_filter(L, pcard, fun, exarg))) {
+ 			pcard->release_param = 1;
+ 			if(pcard->is_affected_by_effect(EFFECT_EXTRA_RELEASE)) {
+-				if(ex_list)
++				// In Edison, Soul Exchange grants an optional tribute.
++				if(core.duel_rule == 1) {
++					if(release_list)
++						release_list->insert(pcard);
++				} else if(ex_list)
+ 					ex_list->insert(pcard);
+ 				++rcount;
+ 			} else {
+@@ -1792,7 +1796,10 @@ int32 field::get_summon_release_list(card* target, card_set* release_list, card_
+ 				release_list->insert(pcard);
+ 			rcount += pcard->release_param;
+ 		} else if(pcard->is_affected_by_effect(EFFECT_EXTRA_RELEASE)) {
+-			if(ex_list)
++			if(core.duel_rule == 1) {
++				if(release_list)
++					release_list->insert(pcard);
++			} else if(ex_list)
+ 				ex_list->insert(pcard);
+ 			rcount += pcard->release_param;
+ 		} else {
+@@ -3577,6 +3584,11 @@ int32 field::check_nonpublic_trigger(chain& ch) {
+ 			&& phandler->is_has_relation(ch) && (ch.triggering_location & (LOCATION_HAND | LOCATION_DECK))
+ 			|| (peffect->range & (LOCATION_HAND | LOCATION_DECK)))) {
+ 		ch.flag |= CHAIN_HAND_TRIGGER;
++		// Edison hand triggers participate in their chronological SEGOC group.
++		// Do not also queue them for quick effects: declining must stay final.
++		if(core.duel_rule == 1 && ch.triggering_location == LOCATION_HAND
++			&& (!peffect->range || peffect->in_range(ch)))
++			return TRUE;
+ 		core.new_ochain_h.push_back(ch);
+ 		if(ch.triggering_location == LOCATION_HAND && phandler->is_position(POS_FACEDOWN)
+ 			|| ch.triggering_location == LOCATION_DECK
+diff --git a/libeffect.cpp b/libeffect.cpp
+index a59398f..e46c2d9 100644
+--- a/libeffect.cpp
++++ b/libeffect.cpp
+@@ -128,6 +128,18 @@ int32 scriptlib::effect_set_count_limit(lua_State *L) {
+ 	peffect->count_code = code;
+ 	return 0;
+ }
++// Historical scripts may explicitly remove the default phase activation limit.
++// Call after RegisterEffect, which otherwise installs that default.
++int32 scriptlib::effect_remove_count_limit(lua_State *L) {
++	check_param_count(L, 1);
++	check_param(L, PARAM_TYPE_EFFECT, 1);
++	effect* peffect = *(effect**) lua_touserdata(L, 1);
++	peffect->flag[0] &= ~EFFECT_FLAG_COUNT_LIMIT;
++	peffect->count_limit = 0;
++	peffect->count_limit_max = 0;
++	peffect->count_code = 0;
++	return 0;
++}
+ int32 scriptlib::effect_set_reset(lua_State *L) {
+ 	check_param_count(L, 2);
+ 	check_param(L, PARAM_TYPE_EFFECT, 1);
+@@ -591,6 +603,7 @@ static const struct luaL_Reg effectlib[] = {
+ 	{ "SetTargetRange", scriptlib::effect_set_target_range },
+ 	{ "SetAbsoluteRange", scriptlib::effect_set_absolute_range },
+ 	{ "SetCountLimit", scriptlib::effect_set_count_limit },
++	{ "RemoveCountLimit", scriptlib::effect_remove_count_limit },
+ 	{ "SetReset", scriptlib::effect_set_reset },
+ 	{ "SetType", scriptlib::effect_set_type },
+ 	{ "SetProperty", scriptlib::effect_set_property },
+diff --git a/scriptlib.h b/scriptlib.h
+index 2255dda..28dab48 100644
+--- a/scriptlib.h
++++ b/scriptlib.h
+@@ -310,6 +310,7 @@ public:
+ 	static int32 effect_set_target_range(lua_State *L);
+ 	static int32 effect_set_absolute_range(lua_State *L);
+ 	static int32 effect_set_count_limit(lua_State *L);
++	static int32 effect_remove_count_limit(lua_State *L);
+ 	static int32 effect_set_reset(lua_State *L);
+ 	static int32 effect_set_type(lua_State *L);
+ 	static int32 effect_set_property(lua_State *L);
+diff --git a/libduel.cpp b/libduel.cpp
+index 10e0247..58050df 100644
+--- a/libduel.cpp
++++ b/libduel.cpp
+@@ -301,9 +301,12 @@ int32 scriptlib::duel_summon(lua_State *L) {
+ 	pduel->game_field->core.summon_cancelable = FALSE;
+ 	if(pduel->game_field->core.current_chain.size()) {
+ 		pduel->game_field->summon(playerid, pcard, peffect, ignore_count, min_tribute, zone, SUMMON_IN_CHAIN);
+-		pduel->game_field->core.summon_reserved = pduel->game_field->core.subunits.back();
+-		pduel->game_field->core.subunits.pop_back();
+-		pduel->game_field->core.summoning_card = pcard;
++		// Edison summons/sets occur during resolution; later rules defer them.
++		if(pduel->game_field->core.duel_rule != 1) {
++			pduel->game_field->core.summon_reserved = pduel->game_field->core.subunits.back();
++			pduel->game_field->core.subunits.pop_back();
++			pduel->game_field->core.summoning_card = pcard;
++		}
+ 	}
+ 	else {
+ 		pduel->game_field->summon(playerid, pcard, peffect, ignore_count, min_tribute, zone, SUMMON_IN_IDLE);
+@@ -374,9 +377,12 @@ int32 scriptlib::duel_synchro_summon(lua_State *L) {
+ 	pduel->game_field->core.summon_cancelable = FALSE;
+ 	if(pduel->game_field->core.current_chain.size()) {
+ 		pduel->game_field->special_summon_rule(playerid, pcard, SUMMON_TYPE_SYNCHRO, SUMMON_IN_CHAIN);
+-		pduel->game_field->core.summon_reserved = pduel->game_field->core.subunits.back();
+-		pduel->game_field->core.subunits.pop_back();
+-		pduel->game_field->core.summoning_card = pcard;
++		// Edison summons/sets occur during resolution; later rules defer them.
++		if(pduel->game_field->core.duel_rule != 1) {
++			pduel->game_field->core.summon_reserved = pduel->game_field->core.subunits.back();
++			pduel->game_field->core.subunits.pop_back();
++			pduel->game_field->core.summoning_card = pcard;
++		}
+ 	}
+ 	else {
+ 		pduel->game_field->special_summon_rule(playerid, pcard, SUMMON_TYPE_SYNCHRO, SUMMON_IN_IDLE);
+@@ -495,9 +501,12 @@ int32 scriptlib::duel_setm(lua_State *L) {
+ 	pduel->game_field->core.summon_cancelable = FALSE;
+ 	if(pduel->game_field->core.current_chain.size()) {
+ 		pduel->game_field->mset(playerid, pcard, peffect, ignore_count, min_tribute, zone, SUMMON_IN_CHAIN);
+-		pduel->game_field->core.summon_reserved = pduel->game_field->core.subunits.back();
+-		pduel->game_field->core.subunits.pop_back();
+-		pduel->game_field->core.summoning_card = pcard;
++		// Edison summons/sets occur during resolution; later rules defer them.
++		if(pduel->game_field->core.duel_rule != 1) {
++			pduel->game_field->core.summon_reserved = pduel->game_field->core.subunits.back();
++			pduel->game_field->core.subunits.pop_back();
++			pduel->game_field->core.summoning_card = pcard;
++		}
+ 	}
+ 	else {
+ 		pduel->game_field->mset(playerid, pcard, peffect, ignore_count, min_tribute, zone, SUMMON_IN_IDLE);

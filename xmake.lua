@@ -2,8 +2,10 @@ add_rules("mode.debug", "mode.release")
 
 add_repositories("my-repo repo")
 
+add_requires("ygopro-core 0.0.2", {configs = {edison_early_trigger = true}})
+
 add_requires(
-    "ygopro-core 0.0.2", "pybind11 2.13.*", "fmt 10.2.*", "glog 0.6.0",
+    "pybind11 2.13.*", "fmt 10.2.*", "glog 0.6.0",
     "sqlite3 3.43.0+200", "concurrentqueue 1.0.4", "unordered_dense 4.4.*",
     "sqlitecpp 3.2.1")
 
@@ -60,6 +62,15 @@ target("edopro_ygoenv")
         print("Copy target to " .. install_target)
     end)
 
+
+-- Opt-in certification executable; never part of the self-play API.
+target("edison_rules")
+    set_kind("binary")
+    set_default(false)
+    set_languages("c++17")
+    add_files("tests/edison/*.cpp")
+    add_includedirs("ygoenv")
+    add_packages("ygopro-core", "sqlitecpp")
 
 target("alphazero_mcts")
     add_rules("python.library")

@@ -1,0 +1,22 @@
+{
+  "python": "3.10.12",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "dependencies": {
+    "numpy": "1.26.4",
+    "gym": "0.26.2",
+    "gymnasium": "1.4.0",
+    "optree": "0.20.0",
+    "ygoenv": "0.0.1"
+  },
+  "compiler": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "parent_commit": "76f72e3ac2c067d8edeaf885521ee9a084a6d436",
+  "certification_passes": 519,
+  "certification_failures": 0,
+  "unique_seeded_matchup_duels": 64,
+  "baseline_execution_count": 162,
+  "snapshot_files_sha256": {
+    "playing-baseline.json": "8dcd25809a3a5ec6f504e7e77a40c6d45557c3fc895e4e22b362ad86b0708b79",
+    "certification.json": "fdc0c9866f987486d32e6681a0d064b43f0e46b9dc39192fca41cfd6b4984ecb",
+    "certification-trace.txt.gz": "fafb9658614781fca76e5187ca1643793756fe9ae545612e19b9068391198aff"
+  }
+}
