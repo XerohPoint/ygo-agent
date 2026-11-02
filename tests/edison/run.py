@@ -66,11 +66,13 @@ def main():
         report["binary_sha256"] = digest(args.binary)
         sources = [ROOT / "xmake.lua", ROOT / "ygoenv/ygoenv/ygopro/ygopro.h",
                    ROOT / "ygoenv/ygoenv/ygopro/duel_config.h",
+                   ROOT / "ygoenv/ygoenv/ygopro/observation_visibility.h",
                    ROOT / "ygoenv/ygoenv/ygopro/historical_scripts.h",
                    ROOT / "ygoenv/ygoenv/ygopro/script_loader.h",
                    ROOT / "ygoenv/ygoenv/ygopro/deck_validation.h",
                    ROOT / "ygoenv/ygoenv/ygopro/deck_file.h",
                    ROOT / "ygoenv/ygoenv/ygopro/edison_legality_data.h"]
+        sources += [ROOT / "ygoai/edison_policy.py"]
         sources += sorted(p for p in Path(__file__).parent.iterdir()
                           if p.suffix in (".h", ".cpp", ".py"))
         report["source_sha256"] = {str(path.relative_to(ROOT)): digest(path) for path in sources}
@@ -79,8 +81,8 @@ def main():
             command.append(f"--test={args.test_id}")
         if args.fail_fast:
             command.append("--fail-fast")
-        commands = [] if args.test_id in ("042", "077") else [command]
-        if args.test_id in (None, "042", "077"):
+        commands = [] if args.test_id in ("042", "077", "078", "079") else [command]
+        if args.test_id in (None, "042", "077", "078", "079"):
             production = sorted((ROOT / "build/linux/x86_64/release").glob("ygopro_ygoenv*.so"))
             if len(production) != 1:
                 raise RuntimeError("Build the production module before production certification")
@@ -102,6 +104,15 @@ def main():
             if args.fail_fast:
                 probe.append("--fail-fast")
             commands.append(probe)
+        if args.test_id in (None, "078"):
+            commands.append([sys.executable, str(Path(__file__).with_name("production_observation_tests.py"))])
+        if args.test_id in (None, "079"):
+            agent_lock = json.loads(Path(__file__).with_name("agent_assets.lock.json").read_text())
+            report["agent_assets_sha256"] = agent_lock
+            for relative, expected in agent_lock.items():
+                if digest(ROOT / relative) != expected:
+                    raise RuntimeError("Agent asset hash mismatch: "+relative)
+            commands.append([sys.executable, str(Path(__file__).with_name("agent_policy_tests.py"))])
         report["command"] = commands[0]
         report["commands"] = commands
         outputs = []

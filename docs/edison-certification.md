@@ -1357,3 +1357,14 @@ The runner fingerprints all Python/C++ fixture sources automatically and include
 **507 native + 10 ingestion + 2 production interaction = 519 PASS**.
 Both full traces are identical. The full run and 162-execution playing baseline
 are archived with the checkpoint; see edison-baseline.md.
+
+
+## Observation and agent regression additions (078–080)
+
+Test 078 checks production identities, private initial zones, action references
+and overflow, both budget limits, zero-reward truncation, and reset. Test 079
+checks heuristic decisions, actual Machina Gearframe search interactions,
+parallel determinism and relative worker-output paths. Test 080 checks shared
+visibility rules for hidden zones, searches, explicit reveals, facedown cards
+and public overlays. The full suite now contains 527 passing cases.
+See [edison-agents.md](edison-agents.md) for evaluation, stress, training and evidence.

@@ -1,0 +1,106 @@
+{
+  "purpose": "Constructed legal integration fixture, not a tournament deck recommendation",
+  "decks": {
+    "machina_gadget": {
+      "main": [
+        [
+          3,
+          "Machina Gearframe"
+        ],
+        [
+          3,
+          "Machina Fortress"
+        ],
+        [
+          2,
+          "Machina Peacekeeper"
+        ],
+        [
+          2,
+          "Red Gadget"
+        ],
+        [
+          2,
+          "Yellow Gadget"
+        ],
+        [
+          2,
+          "Green Gadget"
+        ],
+        [
+          2,
+          "Cyber Dragon"
+        ],
+        [
+          1,
+          "Sangan"
+        ],
+        [
+          1,
+          "Tragoedia"
+        ],
+        [
+          1,
+          "Gorz the Emissary of Darkness"
+        ],
+        [
+          3,
+          "Fissure"
+        ],
+        [
+          3,
+          "Smashing Ground"
+        ],
+        [
+          1,
+          "Limiter Removal"
+        ],
+        [
+          1,
+          "Heavy Storm"
+        ],
+        [
+          1,
+          "Mystical Space Typhoon"
+        ],
+        [
+          1,
+          "Brain Control"
+        ],
+        [
+          2,
+          "Book of Moon"
+        ],
+        [
+          2,
+          "Bottomless Trap Hole"
+        ],
+        [
+          2,
+          "Dimensional Prison"
+        ],
+        [
+          1,
+          "Mirror Force"
+        ],
+        [
+          1,
+          "Torrential Tribute"
+        ],
+        [
+          1,
+          "Solemn Judgment"
+        ],
+        [
+          1,
+          "Trap Dustshoot"
+        ],
+        [
+          1,
+          "Compulsory Evacuation Device"
+        ]
+      ],
+      "extra": []
+    }
+  }
+}

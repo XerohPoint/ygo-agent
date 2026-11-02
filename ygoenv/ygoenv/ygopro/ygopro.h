@@ -36,6 +36,7 @@
 #include "script_loader.h"
 #include "deck_validation.h"
 #include "deck_file.h"
+#include "observation_visibility.h"
 
 // clang-format on
 
@@ -1558,7 +1559,10 @@ public:
         "obs:h_actions_"_.Bind(
             Spec<uint8_t>({conf["n_history_actions"_], n_action_feats + 2})),
         "obs:mask_"_.Bind(Spec<uint8_t>({conf["max_cards"_] * 2, 14})),
-        "info:num_options"_.Bind(Spec<int>({}, {0, conf["max_options"_] - 1})),
+        "info:num_options"_.Bind(Spec<int>({}, {0, conf["max_options"_]})),
+        "info:legal_options"_.Bind(Spec<int>({})),
+        "info:action_overflow"_.Bind(Spec<int>({}, {0, 1})),
+        "info:winner"_.Bind(Spec<int>({}, {-1, 2})),
         "info:to_play"_.Bind(Spec<int>({}, {0, 1})),
         "info:is_selfplay"_.Bind(Spec<int>({}, {0, 1})),
         "info:win_reason"_.Bind(Spec<int>({}, {-1, 1})),
@@ -1721,6 +1725,7 @@ public:
   // step return
   float ret_reward_ = 0;
   int ret_win_reason_ = 0;
+  bool ret_truncated_ = false;
 
   YGOProEnvImpl();
 
@@ -1926,6 +1931,8 @@ public:
     duel_started_ = true;
     eng_flag_ = 0;
     winner_ = 255;
+    ret_truncated_ = false;
+    revealed_.clear();
     win_reason_ = 255;
     discard_hand_ = false;
 
@@ -2196,16 +2203,19 @@ public:
     }
 
     step_count_++;
-    if (!done_ && (step_count_ >= spec_.config["max_steps"_])) {
-      PlayerId winner = lp_[0] > lp_[1] ? 0 : 1;
-      _duel_end(winner, 0x01);
+    if (!done_ && (step_count_ >= spec_.config["max_steps"_] ||
+                   step_count_ >= spec_.config["max_episode_steps"_])) {
+      // Budget exhaustion is a truncation, never an inferred LP win.
+      ret_truncated_ = true;
+      YGO_EndDuel(pduel_);
+      duel_started_ = false;
       done_ = true;
       legal_actions_.clear();
     }
 
     float reward = 0;
     int reason = 0;
-    if (done_) {
+    if (done_ && !ret_truncated_ && winner_ < 2) {
       float base_reward;
       if (greedy_reward_) {
         if (winner_ == 0) {
@@ -2254,15 +2264,16 @@ public:
         reason = -1;
       }
 
-      if (record_) {
-        if (!is_recording || fp_ == nullptr) {
-          throw std::runtime_error("Recording is not started");
-        }
-        fclose(fp_);
-        is_recording = false;
-      }
     }
-
+    // Recordings must close on draws and budget truncations as well as wins.
+    if (done_ && record_) {
+      if (!is_recording || fp_ == nullptr) {
+        throw std::runtime_error("Recording is not started");
+      }
+      fclose(fp_);
+      fp_ = nullptr;
+      is_recording = false;
+    }
 
     // update_time_stat(start, step_time_count_, step_time_);
     // step_time_count_++;
@@ -2300,6 +2311,10 @@ public:
     state["info:to_play"_] = int(to_play_);
     state["info:is_selfplay"_] = int(play_mode_ == kSelfPlay);
     state["info:win_reason"_] = win_reason;
+    state["info:winner"_] = done_ && !ret_truncated_ && winner_ <= 2 ? int(winner_) : -1;
+    state["info:legal_options"_] = n_options;
+    state["info:action_overflow"_] = int(n_options > max_options());
+    state["trunc"_] = ret_truncated_;
     if (reward != 0.0) {
       state["info:step_time"_][0] = 0;
       state["info:step_time"_][1] = 0;
@@ -2347,9 +2362,8 @@ public:
       if (!spec.empty()) {
         const auto& spec_info = find_spec_info(spec_infos, spec);
         action.spec_index_ = spec_info.index;
-        if (action.cid_ == 0) {
-          action.cid_ = spec_info.cid;
-        }
+        // Core prompts may carry identities for private target cards.
+        action.cid_ = spec_info.cid;
       }
     }
 
@@ -2381,55 +2395,50 @@ public:
 private:
   using SpecInfos = ankerl::unordered_dense::map<std::string, SpecInfo>;
 
+  // Explicit reveals are scoped to their recipient and absolute card location.
+  std::string reveal_key(PlayerId viewer, PlayerId controller,
+                         uint8_t location, uint8_t sequence) {
+    return std::to_string(viewer) + ":" + std::to_string(controller) + ":" +
+           std::to_string(location) + ":" + std::to_string(sequence);
+  }
+
+  bool card_hidden(const Card& c, PlayerId viewer) {
+    bool opponent = c.controler_ != viewer;
+    bool revealed = revealed_.count(reveal_key(viewer, c.controler_, c.location_, c.sequence_));
+    bool own_search = false;
+    if (!opponent && c.location_ == LOCATION_DECK) {
+      auto spec = c.get_spec(false);
+      for (const auto& action : legal_actions_)
+        if (action.spec_ == spec) { own_search = true; break; }
+    }
+    return observation_card_hidden(c.location_, c.position_, opponent, revealed, own_search);
+  }
+
   std::tuple<SpecInfos, std::vector<int>> _set_obs_cards(TArray<uint8_t> &f_cards, PlayerId to_play) {
     SpecInfos spec_infos;
     std::vector<int> loc_n_cards;
     int offset = 0;
-    for (auto pi = 0; pi < 2; pi++) {
-      const PlayerId player = (to_play + pi) % 2;
-      const bool opponent = pi == 1;
-      std::vector<std::pair<uint8_t, bool>> configs = {
-          {LOCATION_DECK, true},   {LOCATION_HAND, true},
-          {LOCATION_MZONE, false}, {LOCATION_SZONE, false},
-          {LOCATION_GRAVE, false}, {LOCATION_REMOVED, false},
-          {LOCATION_EXTRA, true},
-      };
-      for (auto &[location, hidden_for_opponent] : configs) {
-        // check this
-        if (opponent && (revealed_.size() != 0)) {
-          hidden_for_opponent = false;
+    for (int pi = 0; pi < 2; ++pi) {
+      PlayerId player = (to_play + pi) % 2;
+      for (uint8_t location : {LOCATION_DECK, LOCATION_HAND, LOCATION_MZONE,
+                              LOCATION_SZONE, LOCATION_GRAVE, LOCATION_REMOVED, LOCATION_EXTRA}) {
+        auto cards = get_cards_in_location(player, location);
+        loc_n_cards.push_back(cards.size());
+        if (location == LOCATION_DECK) {
+          // Publish searchable cards in identity order, never draw order.
+          std::stable_sort(cards.begin(), cards.end(), [&](const Card& a, const Card& b) {
+            bool ah = card_hidden(a, to_play), bh = card_hidden(b, to_play);
+            if (ah != bh) return !ah;
+            return !ah && a.code_ < b.code_;
+          });
         }
-        if (opponent && hidden_for_opponent) {
-          auto n_cards = YGO_QueryFieldCount(pduel_, player, location);
-          loc_n_cards.push_back(n_cards);
-          for (auto i = 0; i < n_cards; i++) {
-            f_cards(offset, 2) = location_to_id(location);
-            f_cards(offset, 4) = 1;
-            offset++;
-          }
-        } else {
-          std::vector<Card> cards = get_cards_in_location(player, location);
-          int n_cards = cards.size();
-          loc_n_cards.push_back(n_cards);
-          for (int i = 0; i < n_cards; ++i) {
-            const auto &c = cards[i];
-            auto spec = c.get_spec(opponent);
-            bool hide = false;
-            if (opponent) {
-              hide = c.position_ & POS_FACEDOWN;
-              if (revealed_.find(spec) != revealed_.end()) {
-                hide = false;
-              }
-            }
-            CardId card_id = 0;
-            if (!hide) {
-              card_id = c_get_card_id(c.code_);
-            }
-            _set_obs_card_(f_cards, offset, c, hide);
-            offset++;
-
-            spec_infos[spec] = {static_cast<uint16_t>(offset), card_id};
-          }
+        for (const auto& c : cards) {
+          if (offset >= f_cards.Shape()[0])
+            throw std::runtime_error("Observation card capacity exceeded");
+          bool hide = card_hidden(c, to_play);
+          CardId cid = hide ? 0 : c_get_card_id(c.code_);
+          _set_obs_card_(f_cards, offset, c, hide, cid);
+          spec_infos[c.get_spec(pi == 1)] = {static_cast<uint16_t>(++offset), cid};
         }
       }
     }
@@ -2465,51 +2474,19 @@ private:
     SpecInfos spec_infos;
     std::vector<int> loc_n_cards;
     int offset = 0;
-    for (auto pi = 0; pi < 2; pi++) {
-      const PlayerId player = (to_play + pi) % 2;
-      const bool opponent = pi == 1;
-      std::vector<std::pair<uint8_t, bool>> configs = {
-          {LOCATION_DECK, true},   {LOCATION_HAND, true},
-          {LOCATION_MZONE, false}, {LOCATION_SZONE, false},
-          {LOCATION_GRAVE, false}, {LOCATION_REMOVED, false},
-          {LOCATION_EXTRA, true},
-      };
-      for (auto &[location, hidden_for_opponent] : configs) {
-        // check this
-        if (opponent && (revealed_.size() != 0)) {
-          hidden_for_opponent = false;
-        }
-        if (opponent && hidden_for_opponent) {
-          auto n_cards = YGO_QueryFieldCount(pduel_, player, location);
-          loc_n_cards.push_back(n_cards);
-          for (auto i = 0; i < n_cards; i++) {
-            mask(offset, 1) = 1;
-            mask(offset, 3) = 1;
-            offset++;
-          }
-        } else {
-          std::vector<Card> cards = get_cards_in_location(player, location);
-          int n_cards = cards.size();
-          loc_n_cards.push_back(n_cards);
-          for (int i = 0; i < n_cards; ++i) {
-            const auto &c = cards[i];
-            auto spec = c.get_spec(opponent);
-            bool hide = false;
-            if (opponent) {
-              hide = c.position_ & POS_FACEDOWN;
-              if (revealed_.find(spec) != revealed_.end()) {
-                hide = false;
-              }
-            }
-            CardId card_id = 0;
-            if (!hide) {
-              card_id = c_get_card_id(c.code_);
-            }
-            _set_obs_mask_(mask, offset, c, hide);
-            offset++;
-
-            spec_infos[spec] = {static_cast<uint16_t>(offset), card_id};
-          }
+    for (int pi = 0; pi < 2; ++pi) {
+      PlayerId player = (to_play + pi) % 2;
+      for (uint8_t location : {LOCATION_DECK, LOCATION_HAND, LOCATION_MZONE,
+                              LOCATION_SZONE, LOCATION_GRAVE, LOCATION_REMOVED, LOCATION_EXTRA}) {
+        auto cards = get_cards_in_location(player, location);
+        loc_n_cards.push_back(cards.size());
+        for (const auto& c : cards) {
+          if (offset >= mask.Shape()[0])
+            throw std::runtime_error("Observation card capacity exceeded");
+          bool hide = card_hidden(c, to_play);
+          CardId cid = hide ? 0 : c_get_card_id(c.code_);
+          _set_obs_mask_(mask, offset, c, hide, cid);
+          spec_infos[c.get_spec(pi == 1)] = {static_cast<uint16_t>(++offset), cid};
         }
       }
     }
@@ -2771,38 +2748,11 @@ private:
   }
 
   CardId spec_to_card_id(const std::string &spec, PlayerId player) {
-    int offset = 0;
-    bool opponent = false;
-    if (spec[0] == 'o') {
-      player = 1 - player;
-      opponent = true;
-      offset++;
-    }
-    auto [loc, seq, pos] = spec_to_ls(spec.substr(offset));
-    if (opponent) {
-      bool hidden_for_opponent = true;
-      if (
-        loc == LOCATION_MZONE || loc == LOCATION_SZONE ||
-        loc == LOCATION_GRAVE || loc == LOCATION_REMOVED) {
-        hidden_for_opponent = false;
-      }
-      if (revealed_.size() != 0) {
-        hidden_for_opponent = false;
-      }
-      if (hidden_for_opponent) {
-        return 0;
-      }
-      Card c = get_card(player, loc, seq);
-      bool hide = c.position_ & POS_FACEDOWN;
-      if (revealed_.find(spec) != revealed_.end()) {
-        hide = false;
-      }
-      CardId card_id = 0;
-      if (!hide) {
-        card_id = c_get_card_id(c.code_);
-      }
-    }
-    return c_get_card_id(get_card_code(player, loc, seq));
+    if (spec.empty()) return 0;
+    bool opponent = spec[0] == 'o';
+    auto [loc, seq, pos] = spec_to_ls(spec.substr(opponent ? 1 : 0));
+    auto c = get_card(opponent ? 1-player : player, loc, seq);
+    return card_hidden(c, player) ? 0 : c_get_card_id(c.code_);
   }
 
   void _set_obs_actions(TArray<uint8_t> &feat, const std::vector<LegalAction> &actions) {
@@ -2997,7 +2947,7 @@ private:
             callback_(0);
             auto la = legal_actions_[0];
             la.msg_ = msg_;
-            if (la.cid_ == 0 && !la.spec_.empty()) {
+            if (!la.spec_.empty()) {
               la.cid_ = spec_to_card_id(la.spec_, to_play_);
             }
             update_history_actions(to_play_, la);
@@ -3266,6 +3216,12 @@ private:
   // 3. update to_play_ and options_ if need action
   void handle_message() {
     msg_ = int(data_[dp_++]);
+    // Conservative forgetting prevents a location reveal from identifying a
+    // different card after movement or randomization.
+    if (msg_ == MSG_MOVE || msg_ == MSG_SHUFFLE_HAND || msg_ == MSG_SHUFFLE_DECK ||
+        msg_ == MSG_SHUFFLE_EXTRA || msg_ == MSG_SWAP || msg_ == MSG_SET ||
+        msg_ == MSG_SHUFFLE_SET_CARD || msg_ == MSG_SWAP_GRAVE_DECK || msg_ == MSG_POS_CHANGE)
+      revealed_.clear();
     legal_actions_ = {};
 
     if (verbose_) {
@@ -3709,7 +3665,7 @@ private:
         if (verbose_) {
           cards.push_back(get_card(c, loc, seq));
         }
-        revealed_.insert(ls_to_spec(loc, seq, 0, c == player));
+        revealed_.insert(reveal_key(player, c, loc, seq));
       }
       if (!verbose_) {
         return;
@@ -4113,15 +4069,11 @@ private:
     } else if (msg_ == MSG_WIN) {
       auto player = read_u8();
       auto reason = read_u8();
-      auto& winner = players_[player];
-      auto& loser = players_[1 - player];
-
       _duel_end(player, reason);
-
-      auto l_reason = reason_to_string(reason);
-      if (verbose_) {
-        winner->notify("You won (" + l_reason + ").");
-        loser->notify("You lost (" + l_reason + ").");
+      if (verbose_ && player < 2) {
+        auto l_reason = reason_to_string(reason);
+        players_[player]->notify("You won (" + l_reason + ").");
+        players_[1-player]->notify("You lost (" + l_reason + ").");
       }
     } else if (msg_ == MSG_RETRY) {
       throw std::runtime_error("Retry");
@@ -5288,10 +5240,14 @@ public:
     }
     done_ = true;
     State state = Allocate();
-    state["reward"_] = 1.0;
+    state["reward"_] = 0.0;
+    state["trunc"_] = true;
+    state["info:winner"_] = -1;
+    state["info:legal_options"_] = 0;
+    state["info:action_overflow"_] = 0;
     state["info:to_play"_] = 1;
     state["info:is_selfplay"_] = 1;
-    state["info:win_reason"_] = 1;
+    state["info:win_reason"_] = 0;
     state["info:num_options"_] = 1;
     state["obs:global_"_][22] = uint8_t(1);
   }
@@ -5306,6 +5262,7 @@ public:
       throw std::runtime_error("Reset timeout");
     }
 
+    fut.get();
     auto &env_impl = env_impls_[idx];
     elapsed_step_ = 0;
     done_ = false;
@@ -5335,7 +5292,7 @@ public:
       fmt::println("Env {} timeout, new env created", env_id_);
     } else {
       auto& env_impl = env_impls_[idx];
-      done_ = env_impl.ret_reward_ != 0;
+      done_ = env_impl.done();
       State state = Allocate();
       env_impl.WriteState(state);
     }

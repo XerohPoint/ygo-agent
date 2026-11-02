@@ -1,0 +1,598 @@
+{
+  "status": "PASS",
+  "certification": {
+    "passed": 527,
+    "failed": 0,
+    "identical_replays": true
+  },
+  "evaluations": {
+    "heuristic_vs_random": {
+      "status": "PASS",
+      "games": 384,
+      "executions": 768,
+      "wins": 358,
+      "win_rate": 0.9322916666666666,
+      "win_rate_wilson_95": [
+        0.9026408754028389,
+        0.953378695473519
+      ],
+      "completion_rate": 1.0,
+      "repeatability": true,
+      "decisions_per_second": 3595.341946062228,
+      "max_options_seen": 22,
+      "longest_step_seconds": 0.01573576100054197,
+      "serial_decisions_per_second": 2548.610197310175,
+      "parallel_decisions_per_second": 6101.10968390835,
+      "cells": [
+        {
+          "deck0": "blackwing",
+          "deck1": "frog_monarch",
+          "seat": 0,
+          "wins": 32,
+          "games": 32
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "frog_monarch",
+          "seat": 1,
+          "wins": 27,
+          "games": 32
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "machina_gadget",
+          "seat": 0,
+          "wins": 32,
+          "games": 32
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "machina_gadget",
+          "seat": 1,
+          "wins": 32,
+          "games": 32
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "blackwing",
+          "seat": 0,
+          "wins": 30,
+          "games": 32
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "blackwing",
+          "seat": 1,
+          "wins": 32,
+          "games": 32
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "machina_gadget",
+          "seat": 0,
+          "wins": 21,
+          "games": 32
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "machina_gadget",
+          "seat": 1,
+          "wins": 32,
+          "games": 32
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "blackwing",
+          "seat": 0,
+          "wins": 32,
+          "games": 32
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "blackwing",
+          "seat": 1,
+          "wins": 30,
+          "games": 32
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "frog_monarch",
+          "seat": 0,
+          "wins": 32,
+          "games": 32
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "frog_monarch",
+          "seat": 1,
+          "wins": 26,
+          "games": 32
+        }
+      ]
+    },
+    "random_selfplay": {
+      "status": "PASS",
+      "games": 576,
+      "executions": 1152,
+      "wins": 297,
+      "win_rate": 0.515625,
+      "win_rate_wilson_95": [
+        0.47484338260700787,
+        0.5561995780912242
+      ],
+      "completion_rate": 1.0,
+      "repeatability": true,
+      "decisions_per_second": 4786.745472164502,
+      "max_options_seen": 24,
+      "longest_step_seconds": 0.049236663995543495,
+      "serial_decisions_per_second": 3095.634349308358,
+      "parallel_decisions_per_second": 10550.209085867928,
+      "cells": [
+        {
+          "deck0": "blackwing",
+          "deck1": "blackwing",
+          "seat": 0,
+          "wins": 39,
+          "games": 64
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "frog_monarch",
+          "seat": 0,
+          "wins": 47,
+          "games": 64
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "machina_gadget",
+          "seat": 0,
+          "wins": 25,
+          "games": 64
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "blackwing",
+          "seat": 0,
+          "wins": 18,
+          "games": 64
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "frog_monarch",
+          "seat": 0,
+          "wins": 37,
+          "games": 64
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "machina_gadget",
+          "seat": 0,
+          "wins": 9,
+          "games": 64
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "blackwing",
+          "seat": 0,
+          "wins": 38,
+          "games": 64
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "frog_monarch",
+          "seat": 0,
+          "wins": 49,
+          "games": 64
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "machina_gadget",
+          "seat": 0,
+          "wins": 35,
+          "games": 64
+        }
+      ]
+    },
+    "heuristic_selfplay": {
+      "status": "PASS",
+      "games": 288,
+      "executions": 576,
+      "wins": 163,
+      "win_rate": 0.5659722222222222,
+      "win_rate_wilson_95": [
+        0.5082329974060685,
+        0.6219746220697019
+      ],
+      "completion_rate": 1.0,
+      "repeatability": true,
+      "decisions_per_second": 3361.8994087486153,
+      "max_options_seen": 17,
+      "longest_step_seconds": 0.012116580001020338,
+      "serial_decisions_per_second": 2417.6987394125563,
+      "parallel_decisions_per_second": 5516.166004982534,
+      "cells": [
+        {
+          "deck0": "blackwing",
+          "deck1": "blackwing",
+          "seat": 0,
+          "wins": 21,
+          "games": 32
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "frog_monarch",
+          "seat": 0,
+          "wins": 19,
+          "games": 32
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "machina_gadget",
+          "seat": 0,
+          "wins": 15,
+          "games": 32
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "blackwing",
+          "seat": 0,
+          "wins": 13,
+          "games": 32
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "frog_monarch",
+          "seat": 0,
+          "wins": 22,
+          "games": 32
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "machina_gadget",
+          "seat": 0,
+          "wins": 6,
+          "games": 32
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "blackwing",
+          "seat": 0,
+          "wins": 22,
+          "games": 32
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "frog_monarch",
+          "seat": 0,
+          "wins": 27,
+          "games": 32
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "machina_gadget",
+          "seat": 0,
+          "wins": 18,
+          "games": 32
+        }
+      ]
+    },
+    "learned_vs_random": {
+      "status": "PASS",
+      "games": 192,
+      "executions": 384,
+      "wins": 165,
+      "win_rate": 0.859375,
+      "win_rate_wilson_95": [
+        0.8031293858263988,
+        0.9015217199652206
+      ],
+      "completion_rate": 1.0,
+      "repeatability": true,
+      "decisions_per_second": 3848.892631336855,
+      "max_options_seen": 22,
+      "longest_step_seconds": 0.004993442002160009,
+      "serial_decisions_per_second": 2775.63516022874,
+      "parallel_decisions_per_second": 6275.412197749331,
+      "cells": [
+        {
+          "deck0": "blackwing",
+          "deck1": "frog_monarch",
+          "seat": 0,
+          "wins": 16,
+          "games": 16
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "frog_monarch",
+          "seat": 1,
+          "wins": 12,
+          "games": 16
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "machina_gadget",
+          "seat": 0,
+          "wins": 10,
+          "games": 16
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "machina_gadget",
+          "seat": 1,
+          "wins": 16,
+          "games": 16
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "blackwing",
+          "seat": 0,
+          "wins": 13,
+          "games": 16
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "blackwing",
+          "seat": 1,
+          "wins": 15,
+          "games": 16
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "machina_gadget",
+          "seat": 0,
+          "wins": 12,
+          "games": 16
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "machina_gadget",
+          "seat": 1,
+          "wins": 16,
+          "games": 16
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "blackwing",
+          "seat": 0,
+          "wins": 15,
+          "games": 16
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "blackwing",
+          "seat": 1,
+          "wins": 12,
+          "games": 16
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "frog_monarch",
+          "seat": 0,
+          "wins": 16,
+          "games": 16
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "frog_monarch",
+          "seat": 1,
+          "wins": 12,
+          "games": 16
+        }
+      ]
+    },
+    "learned_vs_heuristic": {
+      "status": "PASS",
+      "games": 192,
+      "executions": 384,
+      "wins": 67,
+      "win_rate": 0.3489583333333333,
+      "win_rate_wilson_95": [
+        0.28509874156217146,
+        0.4187435473080174
+      ],
+      "completion_rate": 1.0,
+      "repeatability": true,
+      "decisions_per_second": 3576.5287276970853,
+      "max_options_seen": 17,
+      "longest_step_seconds": 0.00472683700354537,
+      "serial_decisions_per_second": 2650.020261284059,
+      "parallel_decisions_per_second": 5499.163754879314,
+      "cells": [
+        {
+          "deck0": "blackwing",
+          "deck1": "frog_monarch",
+          "seat": 0,
+          "wins": 6,
+          "games": 16
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "frog_monarch",
+          "seat": 1,
+          "wins": 4,
+          "games": 16
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "machina_gadget",
+          "seat": 0,
+          "wins": 2,
+          "games": 16
+        },
+        {
+          "deck0": "blackwing",
+          "deck1": "machina_gadget",
+          "seat": 1,
+          "wins": 8,
+          "games": 16
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "blackwing",
+          "seat": 0,
+          "wins": 3,
+          "games": 16
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "blackwing",
+          "seat": 1,
+          "wins": 5,
+          "games": 16
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "machina_gadget",
+          "seat": 0,
+          "wins": 0,
+          "games": 16
+        },
+        {
+          "deck0": "frog_monarch",
+          "deck1": "machina_gadget",
+          "seat": 1,
+          "wins": 14,
+          "games": 16
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "blackwing",
+          "seat": 0,
+          "wins": 9,
+          "games": 16
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "blackwing",
+          "seat": 1,
+          "wins": 2,
+          "games": 16
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "frog_monarch",
+          "seat": 0,
+          "wins": 13,
+          "games": 16
+        },
+        {
+          "deck0": "machina_gadget",
+          "deck1": "frog_monarch",
+          "seat": 1,
+          "wins": 1,
+          "games": 16
+        }
+      ]
+    }
+  },
+  "training": {
+    "status": "PASS",
+    "method": "linear masked-softmax behavior cloning",
+    "gates_sha256": {
+      "certification": "ccecedb732f63c67d8b68d801031a5b347efa10bdffb48ca7ef97b8bb4c1ca1f",
+      "evaluation": "8541916240490419d35b2bf8eb705ee7a24558ed8a435c7d61fb19b961942d3c",
+      "stress-random": "97b47321bf2bf10b25328821ef2ccab97764fbf1b5ca39b74743450b001c8f70",
+      "stress-heuristic": "ff2e67ba88c09053c12cee0b0fde3eb486a612fcf3d90ffae52a563a9da88fa5"
+    },
+    "training_seed": 20200424,
+    "evaluation_seed": 20110424,
+    "epochs": 120,
+    "learning_rate": 0.4,
+    "l2": 0.0001,
+    "features": 64,
+    "validation": "env IDs 12-15; whole held-out games",
+    "numpy_version": "1.26.4",
+    "source_sha256": "1e76578cea72cd2e71cb521ef865874bff53e8a64d180eea2467b0524b1ade3b",
+    "training_decisions": 11005,
+    "validation_decisions": 4886,
+    "training_games": 72,
+    "validation_games": 24,
+    "history": [
+      {
+        "epoch": 1,
+        "train": {
+          "loss": 0.9937315583229065,
+          "accuracy": 0.693139482053612
+        },
+        "validation": {
+          "loss": 0.9158735275268555,
+          "accuracy": 0.7460090053213262
+        }
+      },
+      {
+        "epoch": 20,
+        "train": {
+          "loss": 0.7726247310638428,
+          "accuracy": 0.8208087233075875
+        },
+        "validation": {
+          "loss": 0.6486182808876038,
+          "accuracy": 0.8499795333606222
+        }
+      },
+      {
+        "epoch": 60,
+        "train": {
+          "loss": 0.657480776309967,
+          "accuracy": 0.8657882780554294
+        },
+        "validation": {
+          "loss": 0.5399381518363953,
+          "accuracy": 0.8845681539091281
+        }
+      },
+      {
+        "epoch": 120,
+        "train": {
+          "loss": 0.5940079092979431,
+          "accuracy": 0.872694229895502
+        },
+        "validation": {
+          "loss": 0.48397716879844666,
+          "accuracy": 0.8882521489971347
+        }
+      }
+    ],
+    "optimization_seconds": 0.39507270499598235,
+    "optimizer_repeatability": true,
+    "dataset_sha256": {
+      "build/edison-agents/training/blackwing-frog_monarch/samples-1.npz": "0143df5c679a85a974104c1ebf26a904b633711967eba85a2fe0d46fd0c50daa",
+      "build/edison-agents/training/blackwing-machina_gadget/samples-1.npz": "0099d727f7d7ff2cc80618814e470bdc3bb52d64a38cab97509df13071f43c84",
+      "build/edison-agents/training/frog_monarch-blackwing/samples-1.npz": "52ca3611ab64b9ee491c07c258fde457a24bb6938f21b231604a34ef39cc9d02",
+      "build/edison-agents/training/frog_monarch-machina_gadget/samples-1.npz": "6ccd8be72a109730ecba4bee4e0bd63c81d57c2f89c5d35fedb1665ba5a2ee51",
+      "build/edison-agents/training/machina_gadget-blackwing/samples-1.npz": "bb41358207c23ecbd189e6491e3f4ebef882d708c5ee280089a859b3b2e8b9f5",
+      "build/edison-agents/training/machina_gadget-frog_monarch/samples-1.npz": "d2b533acc5b8e6296aa3dc156d6665a242f3b73e8a59ea70dc01fd65db811fd1"
+    },
+    "model_sha256": "d4adf0d4efb05b380d1d88fdaf04e3316e141ea07fb96fbb417a662c28902e22",
+    "vs_random": {
+      "games": 192,
+      "executions": 384,
+      "wins": 165,
+      "win_rate": 0.859375,
+      "completion_rate": 1.0,
+      "repeatability": true,
+      "decisions_per_second": 3848.892631336855
+    },
+    "vs_heuristic": {
+      "games": 192,
+      "executions": 384,
+      "wins": 67,
+      "win_rate": 0.3489583333333333,
+      "completion_rate": 1.0,
+      "repeatability": true,
+      "decisions_per_second": 3576.5287276970853
+    }
+  },
+  "matched_heuristic_vs_random": {
+    "games": 192,
+    "wins": 180,
+    "win_rate": 0.9375
+  },
+  "execution_counts": {
+    "gates": 2496,
+    "training_collection": 96,
+    "learned_evaluation": 768,
+    "total": 3360,
+    "natural_completions": 3360
+  }
+}

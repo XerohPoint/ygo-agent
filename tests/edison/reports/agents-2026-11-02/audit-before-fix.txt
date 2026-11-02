@@ -1,0 +1,46 @@
+EDISON RULE TEST 078A - VISIBLE
+RESULT: FAIL
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/home/mada/ygo-agent/tests/edison/production_observation_tests.py", line 66, in <module>
+    raise SystemExit(main())
+  File "/home/mada/ygo-agent/tests/edison/production_observation_tests.py", line 49, in main
+    probe(args.probe)
+  File "/home/mada/ygo-agent/tests/edison/production_observation_tests.py", line 33, in probe
+    assert len(hand) >= 5 and np.all(hand[:,0].astype(int)*256+hand[:,1] > 0), "Visible hand identity missing"
+AssertionError: Visible hand identity missing
+
+EDISON RULE TEST 078B - OVERFLOW
+RESULT: FAIL
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/home/mada/ygo-agent/tests/edison/production_observation_tests.py", line 66, in <module>
+    raise SystemExit(main())
+  File "/home/mada/ygo-agent/tests/edison/production_observation_tests.py", line 49, in main
+    probe(args.probe)
+  File "/home/mada/ygo-agent/tests/edison/production_observation_tests.py", line 23, in probe
+    assert info["action_overflow"][0] == 1
+KeyError: 'action_overflow'
+
+EDISON RULE TEST 078C - LIMIT
+RESULT: FAIL
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/home/mada/ygo-agent/tests/edison/production_observation_tests.py", line 66, in <module>
+    raise SystemExit(main())
+  File "/home/mada/ygo-agent/tests/edison/production_observation_tests.py", line 49, in main
+    probe(args.probe)
+  File "/home/mada/ygo-agent/tests/edison/production_observation_tests.py", line 28, in probe
+    assert truncated[0] and not terminated[0], (terminated, truncated)
+AssertionError: (array([ True]), array([False]))
+
+SUMMARY: 0 PASS, 3 FAIL

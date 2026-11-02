@@ -1,4 +1,5 @@
 #include "harness.h"
+#include "ygoenv/ygopro/observation_visibility.h"
 #include "trigger_tests.h"
 #include "optional_trigger_tests.h"
 #include "damage_step_tests.h"
@@ -1077,6 +1078,30 @@ int main(int argc, char** argv) {
         swap_after_extra(assets,historical?options:5<<16,historical,trace);
       });
     }
+    test("EDISON RULE TEST 080 - OBSERVATION KNOWLEDGE BOUNDARIES",
+         "A single recipient-scoped reveal does not reveal adjacent cards; searches, facedown cards, and overlays.", [&] {
+      using ygopro::observation_card_hidden;
+      for (bool opponent : {false,true}) {
+        require(observation_card_hidden(LOCATION_DECK,POS_FACEDOWN_DEFENSE,opponent,false,false),
+                "Unsearched deck leaked");
+        require(!observation_card_hidden(LOCATION_HAND,POS_FACEDOWN_DEFENSE,opponent,true,false),
+                "Explicitly revealed card hidden");
+        require(observation_card_hidden(LOCATION_HAND,POS_FACEDOWN_DEFENSE,opponent,false,false)==opponent,
+                "Unrevealed adjacent hand card visibility");
+        require(observation_card_hidden(LOCATION_EXTRA,POS_FACEDOWN_DEFENSE,opponent,false,false)==opponent,
+                "Private Extra Deck visibility");
+        require(observation_card_hidden(LOCATION_MZONE,POS_FACEDOWN_DEFENSE,opponent,false,false)==opponent,
+                "Facedown monster visibility");
+        require(!observation_card_hidden(LOCATION_MZONE,POS_FACEUP_ATTACK,opponent,false,false),
+                "Public monster hidden");
+        require(!observation_card_hidden(LOCATION_OVERLAY|LOCATION_MZONE,POS_FACEDOWN_DEFENSE,opponent,false,false),
+                "Public overlay hidden");
+      }
+      require(!observation_card_hidden(LOCATION_DECK,POS_FACEDOWN_DEFENSE,false,false,true),
+              "Own search candidate hidden");
+      require(observation_card_hidden(LOCATION_DECK,POS_FACEDOWN_DEFENSE,true,false,true),
+              "Opponent search permission leaked");
+    });
     require(total > 0, "No certification cases matched the requested test number");
     std::cout << "\nSUMMARY: " << total - failures << " PASS, " << failures << " FAIL\n";
     return failures ? 1 : 0;

@@ -1,5 +1,8 @@
 # Edison production baseline
 
+This document records checkpoint d657dde. The subsequent audited heuristic,
+expanded stress tests and training pilot are in [edison-agents.md](edison-agents.md).
+
 The full certification suite passes **519 cases, 0 failures** on the final build:
 507 native cases, 10 production deck-ingestion cases, and 2 production interaction
 cases. Both complete output traces are identical.
