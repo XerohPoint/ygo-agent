@@ -11,7 +11,12 @@ from ygoai.edison_policy import Heuristic, power, u16
 
 FEATURES=128
 HIDDEN=32
+INPUT_MODES=("full","context_masked_v1")
+# Only decision/selection-derived inputs, including their interactions.
+# Retain independent public features 0:64, 112:121, and 125:128.
+CONTEXT_COLUMNS=tuple(range(64,112))+tuple(range(121,125))
 FORMAT="edison_context_ppo_v1"
+MASKED_FORMAT="edison_context_masked_ppo_v1"
 HINTS=(0,500,501,502,503,504,505,506,507,508,509,510,511,512,513,520,528,531,533,549,551,560)
 
 class ContextEncoder(Heuristic):
@@ -62,7 +67,9 @@ class ContextEncoder(Heuristic):
 class RLModel:
     shapes={"w":(FEATURES,HIDDEN),"b":(HIDDEN,),"out":(HIDDEN,),
             "v":(FEATURES,),"vb":(1,)}
-    def __init__(self,seed=1701,params=None):
+    def __init__(self,seed=1701,params=None,input_mode="full"):
+        if input_mode not in INPUT_MODES: raise ValueError("Unknown RL input mode")
+        self.input_mode=input_mode
         rng=np.random.default_rng(seed)
         self.p=({"w":rng.normal(0,1/np.sqrt(FEATURES),(FEATURES,HIDDEN)),
                  "b":np.zeros(HIDDEN),"out":np.zeros(HIDDEN),
@@ -74,24 +81,37 @@ class RLModel:
             if self.p[k].shape!=shape or not np.isfinite(self.p[k]).all():
                 raise ValueError("Invalid model parameter: "+k)
 
+    def mask_features(self,x):
+        if self.input_mode=="full": return x
+        x=x.copy();x[...,list(CONTEXT_COLUMNS)]=0
+        return x
+
     def forward(self,x):
+        x=self.mask_features(x)
         h=np.tanh(x@self.p["w"]+self.p["b"])
         return h@self.p["out"],h
 
     def value(self,state):
-        return np.tanh(state@self.p["v"]+self.p["vb"][0])
+        return np.tanh(self.mask_features(state)@self.p["v"]+self.p["vb"][0])
 
     def save(self,path,metadata=None):
-        Path(path).write_text(json.dumps({"format":FORMAT,"features":FEATURES,
+        data={"format":FORMAT,"features":FEATURES,
             "observation_schema":1,"params":{k:v.tolist() for k,v in self.p.items()},
-            "metadata":metadata or {}},separators=(",",":"))+"\n")
+            "metadata":metadata or {}}
+        # Preserve legacy full-context checkpoint bytes and default behavior.
+        if self.input_mode!="full":
+            data["format"]=MASKED_FORMAT
+            data["input_mode"]=self.input_mode
+        Path(path).write_text(json.dumps(data,separators=(",",":"))+"\n")
 
     @classmethod
     def load(cls,path):
         data=json.loads(Path(path).read_text())
-        if data.get("format")!=FORMAT or data.get("features")!=FEATURES or data.get("observation_schema")!=1:
+        mode=data.get("input_mode","full")
+        expected=FORMAT if mode=="full" else MASKED_FORMAT
+        if data.get("format")!=expected or data.get("features")!=FEATURES or data.get("observation_schema")!=1:
             raise ValueError("Incompatible RL checkpoint")
-        return cls(params=data["params"])
+        return cls(params=data["params"],input_mode=data.get("input_mode","full"))
 
 def distribution(logits,offsets):
     """Segmented softmax: no padding and no probability on unoffered actions."""
@@ -110,7 +130,7 @@ class RLAgent:
         self.rng=np.random.default_rng(seed^0x50504F)
 
     def choose(self,cards,glob,actions,decision,selection):
-        x=self.encoder.encode(cards,glob,actions,decision,selection)
+        x=self.model.mask_features(self.encoder.encode(cards,glob,actions,decision,selection))
         logits,_=self.model.forward(x)
         probs,logp,_=distribution(logits,np.array([0,len(x)]))
         choice=int(self.rng.choice(len(x),p=probs))
@@ -120,6 +140,7 @@ class RLAgent:
 
 def ppo_loss_grad(model,x,offsets,actions,old_logp,advantages,returns,
                   weights,clip=0.2,entropy_coef=0.01,value_coef=0.5):
+    x=model.mask_features(x)
     logits,h=model.forward(x)
     probs,logp,groups=distribution(logits,offsets)
     target=offsets[:-1]+actions

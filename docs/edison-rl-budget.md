@@ -138,3 +138,6 @@ The completed archive is under tests/edison/reports/rl-budget-2026-11-02. Report
 per-cell and per-duel outcomes, source/binary/asset fingerprints, model and optimizer
 hashes, the pretest manifest, and replay checks. Runtime logs and complete rollouts
 remain in build/edison-rl-budget.
+
+The subsequent [context ablation](edison-rl-ablation.md) compares these immutable
+full-context checkpoints with matched masked-context training on fresh test seeds.

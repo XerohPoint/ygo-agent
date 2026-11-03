@@ -1405,3 +1405,11 @@ Test 083F verifies the 3,072-duel schedule preserves the 768-duel prefix, balanc
 seats/opponents, separates new training, validation and final-test seeds, and
 rejects a changed frozen checkpoint. The full suite now passes 542 cases.
 See [edison-rl-budget.md](edison-rl-budget.md) for the controlled budget study.
+
+## Decision-context ablation (083G–H)
+
+Test 083G covers explicit context masking, gradient invariance, checkpoint mode
+persistence and legacy full-context compatibility. Test 083H checks production
+rollout masking, identical initial full/masked trajectories and thread-count replay
+for both learner seats. The full suite now passes 544 cases. See
+[edison-rl-ablation.md](edison-rl-ablation.md) for the paired study.

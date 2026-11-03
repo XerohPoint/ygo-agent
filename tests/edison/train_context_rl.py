@@ -53,6 +53,7 @@ def load_rollouts(paths,model):
             returns.extend(d["returns"]);games.extend(d["game_ids"]+game_offset)
             game_offset+=GAMES_PER_CELL
     x=np.concatenate(features);sizes=np.asarray(sizes)
+    assert np.array_equal(x,model.mask_features(x)), "Rollout contains masked context inputs"
     offsets=np.r_[0,np.cumsum(sizes)]
     actions=np.asarray(actions);logp=np.asarray(logp)
     returns=np.asarray(returns);games=np.asarray(games)
@@ -99,6 +100,7 @@ def parse_args(argv=None):
     parser.add_argument("--rounds",type=int,choices=(8,32),default=ROUNDS)
     parser.add_argument("--skip-evaluation",action="store_true",
                         help="Collect training only; study runner owns validation/final test separation")
+    parser.add_argument("--input-mode",choices=("full","context_masked_v1"),default="full")
     args=parser.parse_args(argv)
     if not 0 <= args.optimizer_seed < 2**32-args.rounds:
         parser.error("--optimizer-seed must be a nonnegative 32-bit seed with room for round offsets")
@@ -111,6 +113,7 @@ def main():
     rows=schedule(args.rounds)
     report={"status":"RUNNING","algorithm":"episodic clipped PPO",
         "feature_schema":"edison_context_ppo_v1","features":128,"hidden_units":32,
+        "input_mode":args.input_mode,
         "initialization":"uniform actor, random hidden layer, zero critic; no imitation warm start",
         "reward":"natural outcome from learner seat: win +1, loss -1, draw 0",
         "gamma":1.0,"advantage":"Monte Carlo outcome minus frozen rollout critic, weighted normalization",
@@ -126,7 +129,7 @@ def main():
     save()
     started=time.perf_counter()
     try:
-        model=RLModel(optimizer_seed);optimizer=Adam(model)
+        model=RLModel(optimizer_seed,input_mode=args.input_mode);optimizer=Adam(model)
         model.save(output/"initial.json",{"round":0,"seed":optimizer_seed})
         current=output/"initial.json"
         for iteration in range(args.rounds):

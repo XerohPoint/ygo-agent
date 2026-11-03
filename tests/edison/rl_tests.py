@@ -163,6 +163,94 @@ def budget_protocol():
         except ValueError: pass
         else: raise AssertionError("Frozen checkpoint mutation accepted")
 
+def context_mask_math():
+    import json
+    from ygoai.edison_rl import CONTEXT_COLUMNS,FORMAT,MASKED_FORMAT
+    from train_context_rl import parse_args
+    from ablate_context_rl import protocol
+    spec=protocol()
+    assert spec["test_seed"]==60000000 and spec["mask_columns"]==list(CONTEXT_COLUMNS)
+    assert parse_args([]).input_mode=="full"
+    assert parse_args(["--input-mode","context_masked_v1"]).input_mode=="context_masked_v1"
+    rng=np.random.default_rng(73);full=RLModel(23)
+    full.p["out"][:]=rng.normal(0,0.2,32);full.p["v"][:]=rng.normal(0,0.2,FEATURES)
+    masked=RLModel(params={k:v.copy() for k,v in full.p.items()},input_mode="context_masked_v1")
+    x=rng.normal(0,0.3,(7,FEATURES));changed=x.copy()
+    changed[:,list(CONTEXT_COLUMNS)]+=rng.normal(0,2,(7,len(CONTEXT_COLUMNS)))
+    kept=sorted(set(range(FEATURES))-set(CONTEXT_COLUMNS))
+    assert len(CONTEXT_COLUMNS)==52
+    assert np.array_equal(masked.mask_features(x)[:,kept],x[:,kept])
+    assert np.array_equal(masked.forward(x)[0],masked.forward(changed)[0])
+    assert masked.value(x.mean(0))==masked.value(changed.mean(0))
+    assert not np.array_equal(full.forward(x)[0],full.forward(changed)[0])
+    assert np.array_equal(full.forward(x)[0],np.tanh(x@full.p["w"]+full.p["b"])@full.p["out"])
+    offsets=np.array([0,2,7]);actions=np.array([1,3])
+    _,lp,_=distribution(masked.forward(x)[0],offsets)
+    old=lp[offsets[:-1]+actions];advantages=np.array([0.7,-0.4])
+    returns=np.array([1.,-1.]);weights=np.array([0.3,0.7])
+    def objective(): return ppo_loss_grad(masked,x,offsets,actions,old,advantages,returns,weights)
+    _,grad,_=objective()
+    assert np.count_nonzero(grad["w"][list(CONTEXT_COLUMNS)])==0
+    assert np.count_nonzero(grad["v"][list(CONTEXT_COLUMNS)])==0
+    for key,index in (("w",(64,2)),("w",(3,2)),("v",(121,)),("v",(4,))):
+        original=masked.p[key][index];eps=1e-5
+        masked.p[key][index]=original+eps;plus=objective()[0]
+        masked.p[key][index]=original-eps;minus=objective()[0]
+        masked.p[key][index]=original
+        assert np.isclose((plus-minus)/(2*eps),grad[key][index],atol=2e-7,rtol=2e-4)
+    cards=np.array([card(1,2400),card(2,1800,enemy=1)])
+    glob=np.zeros(23,dtype=np.uint8)
+    actions_obs=np.array([action(1,0,msg=3),action(2,1,msg=3)])
+    context=np.zeros(12,dtype=np.int32);context[0]=1;context[1]=549;context[3]=1
+    selection=np.zeros((2,3),dtype=np.uint8)
+    encoder=ContextEncoder({})
+    a=encoder.encode(cards,glob,actions_obs,context,selection)
+    context[1]=502;context[2]=2;context[3]=2;context[4:]=1;selection[:]=1
+    b=encoder.encode(cards,glob,actions_obs,context,selection)
+    assert not np.array_equal(a,b)
+    assert np.array_equal(masked.mask_features(a),masked.mask_features(b))
+    with tempfile.TemporaryDirectory() as tmp:
+        path=Path(tmp)/"model.json";masked.save(path)
+        assert RLModel.load(path).input_mode=="context_masked_v1"
+        data=json.loads(path.read_text())
+        assert data["format"]==MASKED_FORMAT and data["format"]!=FORMAT
+        inconsistent=dict(data);inconsistent["format"]=FORMAT
+        path.write_text(json.dumps(inconsistent))
+        try: RLModel.load(path)
+        except ValueError: pass
+        else: raise AssertionError("Masked checkpoint with legacy format accepted")
+        data["input_mode"]="unknown"
+        path.write_text(json.dumps(data))
+        try: RLModel.load(path)
+        except ValueError: pass
+        else: raise AssertionError("Unknown input mode accepted")
+        archived=ROOT/"tests/edison/reports/rl-budget-2026-11-02/seed-1702/final-policy.json"
+        data=json.loads(archived.read_text());old=RLModel.load(archived)
+        assert old.input_mode=="full"
+        old.save(path,data["metadata"])
+        assert path.read_bytes()==archived.read_bytes()
+
+def context_mask_production():
+    from ygoai.edison_rl import CONTEXT_COLUMNS
+    with tempfile.TemporaryDirectory(prefix="edison-mask-test-") as tmp:
+        root=Path(tmp)
+        full=root/"full.json";masked=root/"masked.json"
+        RLModel(31).save(full);RLModel(31,input_mode="context_masked_v1").save(masked)
+        for seat in (0,1):
+            policies=("rl","heuristic") if seat==0 else ("heuristic","rl")
+            outputs=[]
+            for label,model,threads in (("full",full,1),("masked-one",masked,1),("masked-many",masked,4)):
+                folder=root/f"{seat}-{label}"
+                outputs.append(run_worker(20310424,4,threads,"blackwing","frog_monarch",folder,
+                    policy0=policies[0],policy1=policies[1],model=model,rl_rollout=True))
+            assert outputs[0]["duels"]==outputs[1]["duels"]==outputs[2]["duels"]
+            with np.load(root/f"{seat}-full/rollout-1.npz") as a, np.load(root/f"{seat}-masked-one/rollout-1.npz") as b:
+                expected=a["features"].copy();expected[:,list(CONTEXT_COLUMNS)]=0
+                assert np.array_equal(expected,b["features"])
+                for key in ("offsets","actions","logp","returns","game_ids","players"):
+                    assert np.array_equal(a[key],b[key]),key
+                assert np.count_nonzero(a["features"][:,list(CONTEXT_COLUMNS)])>0
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument("--fail-fast",action="store_true")
     args=parser.parse_args();passed=failed=0
@@ -170,7 +258,9 @@ def main():
                      ("C - PRODUCTION RL ROLLOUT",production),
                      ("D - DISJOINT BALANCED SEED SCHEDULE",seed_partition),
                      ("E - REPLICATION CONFIGURATION AND STATISTICS",replication_config),
-                     ("F - BUDGET STUDY PARTITIONS AND CHECKPOINT FREEZE",budget_protocol)):
+                     ("F - BUDGET STUDY PARTITIONS AND CHECKPOINT FREEZE",budget_protocol),
+                     ("G - CONTEXT MASK GRADIENTS AND CHECKPOINT COMPATIBILITY",context_mask_math),
+                     ("H - MASKED PRODUCTION ROLLOUT AND REPLAY",context_mask_production)):
         print("EDISON RULE TEST 083"+label)
         try: fn();passed+=1;print("RESULT: PASS")
         except Exception as error:
