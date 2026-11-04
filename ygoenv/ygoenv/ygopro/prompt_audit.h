@@ -25,6 +25,7 @@ struct PromptAuditOption {
   uint32_t code;
   int controller, location, sequence;
   int position;  // -1 when the message does not carry it.
+  bool mandatory;
 };
 
 class PromptAudit {
@@ -44,7 +45,6 @@ public:
     SelectedChecked,   // cards the prompt lists as already selected or mandatory
     SelectedMismatch,  // such a card's row shows another card, is unflagged, or is in another zone
     FaceMismatch,      // a Deck option's row disagrees with the prompt on face-up or face-down
-    HiddenPointer,     // a hidden opposing Deck option's row is not the next blank row
     NFields
   };
 
@@ -61,7 +61,8 @@ public:
     return value;
   }
 
-  std::vector<PromptAuditOption> options;
+  std::vector<PromptAuditOption> options;  // Offered, in prompt order.
+  std::vector<PromptAuditOption> listed;   // Listed by the prompt as already selected or mandatory.
   std::map<std::string, std::array<uint64_t, NFields>> counts;
   uint64_t decisions = 0, card_decisions = 0;
   // Own-Deck rows shown in a prompt beyond its candidates and explicit reveals.
@@ -71,6 +72,11 @@ public:
   uint64_t order_pairs_same = 0, order_top_first_same = 0;
   std::vector<std::string> mismatches;
   uint64_t mismatch_total = 0;
+
+  void clear_prompt() {
+    options.clear();
+    listed.clear();
+  }
 
   const PromptAuditOption* find(const std::string& spec) const {
     for (const auto& option : options)

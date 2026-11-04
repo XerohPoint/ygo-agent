@@ -94,7 +94,7 @@ def main():
             command.append(f"--test={args.test_id}")
         if args.fail_fast:
             command.append("--fail-fast")
-        production_tests = ("042", "077", "078", "079", "082", "083", "084", "085", "086", "087")
+        production_tests = ("042", "077", "078", "079", "082", "083", "084", "085", "086", "087", "088")
         commands = [] if args.test_id in production_tests else [command]
         if args.test_id in (None, *production_tests):
             production = sorted((ROOT / "build/linux/x86_64/release").glob("ygopro_ygoenv*.so"))
@@ -124,7 +124,7 @@ def main():
             commands.append(probe)
         if args.test_id in (None, "078"):
             commands.append([sys.executable, str(Path(__file__).with_name("production_observation_tests.py"))])
-        if args.test_id in (None, "079", "082", "083", "084", "085", "086", "087"):
+        if args.test_id in (None, "079", "082", "083", "084", "085", "086", "087", "088"):
             agent_lock = json.loads(Path(__file__).with_name("agent_assets.lock.json").read_text())
             report["agent_assets_sha256"] = agent_lock
             for relative, expected in agent_lock.items():
@@ -144,6 +144,8 @@ def main():
                 commands.append([sys.executable, str(Path(__file__).with_name("production_deck_label_tests.py"))])
             if args.test_id in (None, "087"):
                 commands.append([sys.executable, str(Path(__file__).with_name("production_deck_order_tests.py"))])
+            if args.test_id in (None, "088"):
+                commands.append([sys.executable, str(Path(__file__).with_name("production_deck_void_tests.py"))])
         report["command"] = commands[0]
         report["commands"] = commands
         outputs = []
@@ -152,7 +154,9 @@ def main():
             output = ""
             returncode = 0
             for selected_command in commands:
-                result = subprocess.run(selected_command, cwd=ROOT, text=True, capture_output=True, timeout=30)
+                # Test 088 restarts a worker for each case.
+                limit = 240 if selected_command[-1].endswith("production_deck_void_tests.py") else 30
+                result = subprocess.run(selected_command, cwd=ROOT, text=True, capture_output=True, timeout=limit)
                 output += result.stdout + result.stderr
                 returncode = returncode or result.returncode
                 if args.fail_fast and result.returncode:

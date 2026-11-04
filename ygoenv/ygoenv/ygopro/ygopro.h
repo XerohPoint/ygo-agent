@@ -1905,8 +1905,8 @@ protected:
 
   DecisionContext decision_;
   PromptAudit audit_;
-  // Order in which this prompt bound Deck cards, by controller and real sequence.
-  std::map<std::pair<int, uint8_t>, int> deck_bind_rank_;
+  // Order in which this prompt bound own Deck cards, by real sequence.
+  std::map<uint8_t, int> deck_bind_rank_;
 
   // multi select
   int ms_idx_ = -1;
@@ -2044,7 +2044,7 @@ public:
     decision_.reset();
     if (PromptAudit::on()) {
       audit_flush();
-      audit_.options.clear();
+      audit_.clear_prompt();
     }
 
     history_actions_1_.Zero();
@@ -2672,7 +2672,14 @@ private:
   void audit_note(const std::string& spec, uint32_t code, int controller, int location,
                   int sequence, int position) {
     if (PromptAudit::on())
-      audit_.options.push_back({spec, code & 0x7fffffff, controller, location, sequence, position});
+      audit_.options.push_back({spec, code & 0x7fffffff, controller, location, sequence, position, false});
+  }
+
+  // A card the prompt itself lists as already selected or mandatory, in prompt order.
+  void audit_note_listed(const std::string& spec, uint32_t code, int controller, int location,
+                         int sequence, int position, bool mandatory) {
+    if (PromptAudit::on())
+      audit_.listed.push_back({spec, code & 0x7fffffff, controller, location, sequence, position, mandatory});
   }
 
   void audit_flush() {
@@ -2702,7 +2709,7 @@ private:
   // where the viewer may legitimately not know it, and only while it stays hidden.
   bool audit_private(const PromptAuditOption& option) {
     if (option.controller == to_play_ || (option.location & LOCATION_OVERLAY)) return false;
-    if (option.location & (LOCATION_DECK | LOCATION_HAND | LOCATION_EXTRA)) return true;
+    if (option.location & (LOCATION_HAND | LOCATION_EXTRA)) return true;
     int position = option.position;
     if (position < 0) position = get_card(option.controller, option.location, option.sequence).position_;
     return position & POS_FACEDOWN;
@@ -2735,80 +2742,56 @@ private:
         key, option->code, expected, int(action.cid_), turn_count_));
   }
 
-  // Cards the prompt lists as already selected or mandatory have no action row of their own.
+  // Selected and mandatory cards have no action row of their own. Each is compared with the prompt's
+  // raw entry for it, not with whatever its spec resolves to: a bad spec may name another candidate.
   void audit_selected(State& state, const SpecInfos& specs, std::map<int, std::set<std::string>>& row_specs,
                       std::string& trace) {
     auto& cards = state["obs:cards_"_];
     auto& selection = state["obs:selection_"_];
-    std::set<std::string> seen;
-    auto check = [&](const std::vector<std::string>& group, bool mandatory) {
-      for (const auto& spec : group) {
-        if (!seen.insert(spec).second) continue;
-        const auto* option = audit_.find(spec);
-        std::string key = option ? audit_key(*option) : msg_to_string(msg_) + "|unmatched|";
-        audit_.bump(key, PromptAudit::SelectedChecked);
-        if (!option) {
-          audit_.bump(key, PromptAudit::SelectedMismatch);
-          continue;
+    auto check = [&](const std::string& spec, const PromptAuditOption* raw, bool mandatory) {
+      std::string key = raw ? audit_key(*raw) : msg_to_string(msg_) + "|unmatched|";
+      audit_.bump(key, PromptAudit::SelectedChecked);
+      auto it = specs.find(spec);
+      const int row = it == specs.end() ? 0 : int(it->second.index);
+      const int shown = row > 0 ? int(uint8_t(cards(row - 1, 0))) * 256 + int(uint8_t(cards(row - 1, 1))) : -1;
+      const int expected = raw ? audit_expected_id(*raw) : -1;
+      const bool exempt = raw && shown == 0 && audit_private(*raw);
+      bool bad = !raw || row <= 0 || (!exempt && expected >= 0 && shown != expected);
+      if (row > 0) {
+        row_specs[row].insert(spec);
+        bad = bad || !uint8_t(selection(row - 1, 1)) || (mandatory && !uint8_t(selection(row - 1, 2)));
+        if (raw) {
+          bad = bad || uint8_t(cards(row - 1, 2)) != location_to_id(raw->location & 0x7f) ||
+                uint8_t(cards(row - 1, 4)) != (raw->controller != to_play_ ? 1 : 0);
         }
-        auto it = specs.find(spec);
-        const int row = it == specs.end() ? 0 : int(it->second.index);
-        const int shown = row > 0 ? int(uint8_t(cards(row - 1, 0))) * 256 + int(uint8_t(cards(row - 1, 1))) : -1;
-        const int expected = audit_expected_id(*option);
-        const bool exempt = shown == 0 && audit_private(*option);
-        bool bad = row <= 0 || (!exempt && expected >= 0 && shown != expected);
-        if (row > 0) {
-          bad = bad || uint8_t(cards(row - 1, 2)) != location_to_id(option->location & 0x7f) ||
-                uint8_t(cards(row - 1, 4)) != (option->controller != to_play_ ? 1 : 0) ||
-                !uint8_t(selection(row - 1, 1)) || (mandatory && !uint8_t(selection(row - 1, 2)));
-          row_specs[row].insert(spec);
-        }
-        if (bad) {
-          audit_.bump(key, PromptAudit::SelectedMismatch);
-          audit_.record_mismatch(fmt::format(
-              "{{\"kind\":\"selected\",\"key\":\"{}\",\"code\":{},\"expected_id\":{},\"row\":{},\"row_id\":{},\"turn\":{}}}",
-              key, option->code, expected, row, shown, turn_count_));
-        }
-        if (PromptAudit::tracing()) {
-          trace += fmt::format("{}{{\"spec_kind\":\"{}\",\"code\":{},\"expected_id\":{},\"row\":{},\"row_id\":{},\"mandatory\":{},\"exempt\":{}}}",
-                               trace.empty() ? "" : ",", audit_location(option->location), option->code, expected, row, shown, mandatory, exempt);
-        }
+      }
+      for (const auto& action : legal_actions_) bad = bad || action.spec_ == spec;  // Also still offered.
+      if (bad) {
+        audit_.bump(key, PromptAudit::SelectedMismatch);
+        audit_.record_mismatch(fmt::format(
+            "{{\"kind\":\"selected\",\"key\":\"{}\",\"code\":{},\"expected_id\":{},\"row\":{},\"row_id\":{},\"turn\":{}}}",
+            key, raw ? raw->code : 0, expected, row, shown, turn_count_));
+      }
+      if (PromptAudit::tracing() && raw) {
+        trace += fmt::format("{}{{\"spec_kind\":\"{}\",\"code\":{},\"expected_id\":{},\"row\":{},\"row_id\":{},\"mandatory\":{},\"exempt\":{},\"position\":{}}}",
+                             trace.empty() ? "" : ",", audit_location(raw->location), raw->code, expected, row, shown, mandatory, exempt, raw->position);
       }
     };
-    check(decision_.mandatory, true);
-    check(decision_.selected, false);
-  }
-
-  // A blank opposing Deck row says nothing by itself, so only its place could expose a position.
-  // The k-th hidden option must point at the k-th blank row, whatever its real sequence is.
-  void audit_hidden_pointers(State& state) {
-    auto& cards = state["obs:cards_"_];
-    int first_blank = 0;
-    for (int row = 0; row < cards.Shape()[0]; ++row) {
-      if (uint8_t(cards(row, 2)) == location_to_id(LOCATION_DECK) && uint8_t(cards(row, 4)) == 1 &&
-          !uint8_t(cards(row, 0)) && !uint8_t(cards(row, 1))) {
-        first_blank = row + 1;
-        break;
-      }
+    // decision_.selected starts with the prompt's listed cards, in prompt order, then the picks.
+    const auto& listed = audit_.listed;
+    if (decision_.selected.size() < listed.size()) audit_.bump(msg_to_string(msg_) + "|unmatched|", PromptAudit::SelectedMismatch);
+    for (size_t i = 0; i < decision_.selected.size(); ++i) {
+      if (i < listed.size()) check(decision_.selected[i], &listed[i], listed[i].mandatory);
+      else check(decision_.selected[i], audit_.find(decision_.selected[i]), false);
     }
-    int next = first_blank;
-    for (const auto& action : legal_actions_) {
-      if (action.spec_.empty() || action.spec_[0] != 'o') continue;
-      const auto* option = audit_.find(action.spec_);
-      if (!option || option->location != LOCATION_DECK || action.cid_) continue;
-      if (action.spec_index_ != next) {
-        audit_.bump(audit_key(*option), PromptAudit::HiddenPointer);
-        audit_.record_mismatch(fmt::format(
-            "{{\"kind\":\"hidden_pointer\",\"key\":\"{}\",\"row\":{},\"expected_row\":{},\"real_sequence\":{},\"turn\":{}}}",
-            audit_key(*option), action.spec_index_, next, option->sequence, turn_count_));
-      }
-      next++;
-    }
+    size_t mandatory = 0;
+    for (const auto& entry : listed) mandatory += entry.mandatory;
+    if (decision_.mandatory.size() != mandatory) audit_.bump(msg_to_string(msg_) + "|unmatched|", PromptAudit::SelectedMismatch);
   }
 
   void audit_decision(State& state, const SpecInfos& specs) {
     audit_.decisions++;
-    if (audit_.options.empty()) return;
+    if (audit_.options.empty() && audit_.listed.empty()) return;
     audit_.card_decisions++;
     auto& cards = state["obs:cards_"_];
     const bool card_choice = msg_ == MSG_SELECT_CARD || msg_ == MSG_SELECT_UNSELECT_CARD ||
@@ -2875,30 +2858,37 @@ private:
     }
     for (const auto& [key, unused] : seen_keys) audit_.bump(key, PromptAudit::Steps);
     audit_selected(state, specs, row_specs, selected_trace);
-    audit_hidden_pointers(state);
     if (card_choice) {
       for (const auto& [row, group] : row_specs) {
         if (group.size() > 1) audit_.bump(msg_to_string(msg_) + "|shared|", PromptAudit::SharedRow, group.size() - 1);
       }
     }
-    // Deck rows the prompt does not account for. A reveal and a candidate of one code can be the same
-    // card, so per code the prompt accounts for the larger of the two counts, never their sum.
-    std::map<uint32_t, int> listed, revealed_copies, visible_copies;
-    for (const auto& option : audit_.options)
-      if (option.location == LOCATION_DECK && option.controller == to_play_) listed[option.code]++;
+    // Deck rows the prompt does not account for. A reveal and a candidate of one code and face state can
+    // be the same card, so each such group accounts for the larger of the two counts, never their sum.
+    using CopyKind = std::pair<uint32_t, bool>;  // Code, face-up.
+    std::map<CopyKind, int> candidates, revealed_copies, visible_copies;
+    auto count_candidates = [&](const std::vector<PromptAuditOption>& group) {
+      for (const auto& option : group)
+        if (option.location == LOCATION_DECK && option.controller == to_play_)
+          candidates[{option.code, bool(option.position & POS_FACEUP)}]++;
+    };
+    count_candidates(audit_.options);
+    count_candidates(audit_.listed);
     std::string visible, revealed_rows;
     for (const auto& c : get_cards_in_location(to_play_, LOCATION_DECK)) {
       if (card_hidden(c, to_play_)) continue;
+      const CopyKind kind{c.code_, bool(c.position_ & POS_FACEUP)};
       if (PromptAudit::tracing()) visible += (visible.empty() ? "" : ",") + std::to_string(c.code_);
-      visible_copies[c.code_]++;
+      visible_copies[kind]++;
       if (revealed_.count(reveal_key(to_play_, c.controler_, c.location_, c.sequence_))) {
-        revealed_copies[c.code_]++;
-        if (PromptAudit::tracing()) revealed_rows += (revealed_rows.empty() ? "" : ",") + std::to_string(c.code_);
+        revealed_copies[kind]++;
+        if (PromptAudit::tracing())
+          revealed_rows += fmt::format("{}[{},{}]", revealed_rows.empty() ? "" : ",", c.code_, int(kind.second));
       }
     }
     uint64_t extra = 0;
-    for (const auto& [code, copies] : visible_copies) {
-      const int accounted = std::max(listed[code], revealed_copies[code]);
+    for (const auto& [kind, copies] : visible_copies) {
+      const int accounted = std::max(candidates[kind], revealed_copies[kind]);
       if (copies > accounted) extra += copies - accounted;
     }
     if (extra) {
@@ -2937,10 +2927,13 @@ private:
         if (uint8_t(selection(row, 2)))
           mandatory += (mandatory.empty() ? "" : ",") + std::to_string(row + 1);
       }
-      // True positions of the prompt's Deck cards. They are here to prove two duels really differ.
-      for (const auto* c : reinterpret_cast<duel*>(pduel_)->game_field->core.select_cards) {
-        if (c->current.location == LOCATION_DECK)
-          sequences += (sequences.empty() ? "" : ",") + std::to_string(int(c->current.sequence));
+      // True positions of the prompt's Deck cards, to prove two duels really differ. The core's list
+      // is current only at a prompt that lists cards from it.
+      if ((msg_ == MSG_SELECT_CARD || msg_ == MSG_SELECT_UNSELECT_CARD) && !candidates.empty()) {
+        for (const auto* c : reinterpret_cast<duel*>(pduel_)->game_field->core.select_cards) {
+          if (c->current.location == LOCATION_DECK)
+            sequences += (sequences.empty() ? "" : ",") + std::to_string(int(c->current.sequence));
+        }
       }
       audit_.write_line(fmt::format(
           "{{\"type\":\"decision\",\"msg\":\"{}\",\"player\":{},\"turn\":{},\"options\":[{}],\"selected\":[{}],\"visible_own_deck\":[{}],"
@@ -2950,8 +2943,8 @@ private:
   }
 
   int deck_bind_rank(const Card& c) const {
-    auto it = deck_bind_rank_.find(std::make_pair(int(c.controler_), uint8_t(c.sequence_)));
-    return it == deck_bind_rank_.end() ? std::numeric_limits<int>::max() : it->second;
+    auto it = deck_bind_rank_.find(uint8_t(c.sequence_));
+    return c.controler_ != to_play_ || it == deck_bind_rank_.end() ? std::numeric_limits<int>::max() : it->second;
   }
 
   // Explicit reveals are scoped to their recipient and absolute card location.
@@ -3888,10 +3881,7 @@ private:
   // a code it takes one with the prompt's face state, then one this player has already been shown,
   // so binding never reveals more than the prompt does. Same-code rows look identical and carry no
   // position, so which physical copy backs an option exposes nothing, and deck_bind_rank_ keeps
-  // copies in binding order, so the pairing of options with rows exposes nothing either.
-  //
-  // An opposing Deck card arrives with its real sequence. While hidden it is bound to the next blank
-  // row of that Deck, since a blank row's place is all that could give the sequence away. The
+  // copies in binding order, so the pairing of options with rows exposes nothing either. The
   // response is always the option's index in the prompt. No other card's code may reach an
   // observation, since the protocol does not redact codes of face-down or private opposing cards.
   struct DeckCopy {
@@ -3902,35 +3892,14 @@ private:
   struct DeckOptionBinder {
     bool loaded = false;
     std::map<CardCode, std::vector<DeckCopy>> unbound;
-    std::array<bool, 2> opposing_loaded{};
-    std::array<std::vector<uint8_t>, 2> opposing_blank;
   };
 
+  // MSG_SELECT_CARD and MSG_SELECT_UNSELECT_CARD only.
   std::string prompt_spec(DeckOptionBinder& binder, PlayerId player, CardCode code, PlayerId controller,
-                          uint8_t loc, uint8_t seq, uint8_t pos, bool has_position = true) {
+                          uint8_t loc, uint8_t seq, uint8_t pos) {
+    reject_deck_card(loc, controller != player);
     if (loc != LOCATION_DECK) {
       return ls_to_spec(loc, seq, pos, controller != player);
-    }
-    if (controller != player) {
-      if (revealed_.count(reveal_key(player, controller, loc, seq))) {
-        deck_bind_rank_.emplace(std::make_pair(int(controller), seq), int(deck_bind_rank_.size()));
-        return ls_to_spec(loc, seq, pos, true);
-      }
-      if (!binder.opposing_loaded[controller]) {
-        binder.opposing_loaded[controller] = true;
-        for (const auto& c : get_cards_in_location(controller, LOCATION_DECK)) {
-          if (!revealed_.count(reveal_key(player, controller, loc, c.sequence_))) {
-            binder.opposing_blank[controller].push_back(c.sequence_);
-          }
-        }
-      }
-      auto& blank = binder.opposing_blank[controller];
-      if (blank.empty()) {
-        throw std::runtime_error("Opposing Deck candidate has no blank row");
-      }
-      const uint8_t row_sequence = blank.front();
-      blank.erase(blank.begin());
-      return ls_to_spec(LOCATION_DECK, row_sequence, 0, true);
     }
     if (!binder.loaded) {
       binder.loaded = true;
@@ -3943,28 +3912,26 @@ private:
     if (copies.empty()) {
       throw std::runtime_error("Deck candidate " + std::to_string(code) + " has no unbound Deck card");
     }
-    // Tribute and Sum prompts carry no position, so face state decides nothing there.
     const bool prompt_face_up = pos & POS_FACEUP;
     auto cost = [&](const DeckCopy& copy) {
-      return std::make_pair(has_position && copy.face_up != prompt_face_up, !copy.revealed);
+      return std::make_pair(copy.face_up != prompt_face_up, !copy.revealed);
     };
     auto best = std::min_element(copies.begin(), copies.end(), [&](const DeckCopy& a, const DeckCopy& b) {
       return cost(a) < cost(b);
     });
     const uint8_t real = best->sequence;
     copies.erase(best);
-    deck_bind_rank_.emplace(std::make_pair(int(player), real), int(deck_bind_rank_.size()));
+    deck_bind_rank_.emplace(real, int(deck_bind_rank_.size()));
     return ls_to_spec(LOCATION_DECK, real, 0, false);
   }
 
-  // For display only. An own Deck card's sequence here is masked, so it cannot be looked up.
-  Card prompt_card(PlayerId player, CardCode code, PlayerId controller, uint8_t loc, uint8_t seq) {
-    if (loc != LOCATION_DECK || controller != player) return get_card(controller, loc, seq);
-    Card card = c_get_card(code);
-    card.controler_ = controller;
-    card.location_ = loc;
-    card.sequence_ = seq;
-    return card;
+  // These prompts have no way to show this Deck card safely. An opposing card's option or row gives
+  // away its real position, and Tribute and Sum carry no position to bind by. No pool card is known
+  // to produce one, so the duel aborts and its cell voids. See docs/edison-deck-labels.md.
+  void reject_deck_card(uint8_t loc, bool rejected) {
+    if (loc == LOCATION_DECK && rejected) {
+      throw std::runtime_error("Deck card in unsupported prompt: " + msg_to_string(msg_));
+    }
   }
 
   std::vector<Card> read_cardlist(bool extra = false, bool extra8 = false) {
@@ -4049,7 +4016,7 @@ private:
     msg_ = int(data_[dp_++]);
     decision_.clear_selection();
     deck_bind_rank_.clear();
-    if (PromptAudit::on()) audit_.options.clear();
+    if (PromptAudit::on()) audit_.clear_prompt();
     if (msg_ == MSG_NEW_TURN || msg_ == MSG_NEW_PHASE || msg_ == MSG_CHAIN_END ||
         msg_ == MSG_CHAIN_SOLVED || msg_ == MSG_WIN)
       decision_.pending_hints.fill(0);
@@ -5087,7 +5054,7 @@ private:
         auto code=read_u32();
         auto controller=read_u8(), loc=read_u8(), seq=read_u8(), pos=read_u8();
         decision_.selected.push_back(prompt_spec(deck_binder,player,code,controller,loc,seq,pos));
-        audit_note(decision_.selected.back(), code, controller, loc, seq, pos);
+        audit_note_listed(decision_.selected.back(), code, controller, loc, seq, pos, false);
       }
       decision_.candidates = select_specs;
 
@@ -5214,31 +5181,29 @@ private:
       release_params.reserve(size);
       std::vector<std::string> specs;
       specs.reserve(size);
-      DeckOptionBinder deck_binder;
       if (verbose_) {
         std::vector<Card> cards;
-        std::vector<std::string> bound_specs;
         for (int i = 0; i < size; ++i) {
           auto code = read_u32();
           auto controller = read_u8();
           auto loc = read_u8();
           auto seq = read_u8();
           auto release_param = read_u8();
-          auto bound = prompt_spec(deck_binder, player, code, controller, loc, seq, 0, false);
-          Card card = prompt_card(player, code, controller, loc, seq);
+          reject_deck_card(loc, true);
+          Card card = get_card(controller, loc, seq);
           cards.push_back(card);
-          bound_specs.push_back(bound);
           release_params.push_back(release_param);
-          audit_note(bound, code, controller, loc, seq, -1);
+          audit_note(card.get_spec(player), code, controller, loc, seq, -1);
         }
         auto& pl = players_[player];
         pl->notify("Select " + std::to_string(min) + " to " +
                    std::to_string(max) +
                    " cards to tribute separated by spaces:");
-        for (size_t i = 0; i < cards.size(); ++i) {
-          specs.push_back(bound_specs[i]);
+        for (const auto &card : cards) {
+          auto spec = card.get_spec(player);
+          specs.push_back(spec);
           pl->notify(
-            fmt::format("{}: {} ({})", specs.size(), cards[i].name_, cards[i].get_spec(player)));
+            fmt::format("{}: {} ({})", specs.size(), card.name_, spec));
         }
       } else {
         for (int i = 0; i < size; ++i) {
@@ -5248,7 +5213,8 @@ private:
           auto seq = read_u8();
           auto release_param = read_u8();
 
-          auto spec = prompt_spec(deck_binder, player, code, controller, loc, seq, 0, false);
+          reject_deck_card(loc, true);
+          auto spec = ls_to_spec(loc, seq, 0, controller != player);
           specs.push_back(spec);
           audit_note(spec, code, controller, loc, seq, -1);
 
@@ -5312,7 +5278,6 @@ private:
       std::vector<std::string> select_specs;
 
       int expected = val;
-      DeckOptionBinder deck_binder;
       if (verbose_) {
         std::vector<Card> must_select;
         must_select.reserve(must_select_size);
@@ -5322,12 +5287,12 @@ private:
           auto loc = read_u8();
           auto seq = read_u8();
           auto param = read_u32();
-          auto bound = prompt_spec(deck_binder, player, code, controller, loc, seq, 0, false);
-          Card card = prompt_card(player, code, controller, loc, seq);
+          reject_deck_card(loc, true);
+          Card card = get_card(controller, loc, seq);
           must_select.push_back(card);
-          decision_.mandatory.push_back(bound);
-          decision_.selected.push_back(bound);
-          audit_note(bound, code, controller, loc, seq, -1);
+          decision_.mandatory.push_back(card.get_spec(player));
+          decision_.selected.push_back(card.get_spec(player));
+          audit_note_listed(card.get_spec(player), code, controller, loc, seq, -1, true);
           expected -= (param & 0xff);
         }
         auto& pl = players_[player];
@@ -5346,10 +5311,11 @@ private:
           auto seq = read_u8();
           auto param = read_u32();
 
-          auto spec = prompt_spec(deck_binder, player, code, controller, loc, seq, 0, false);
+          reject_deck_card(loc, true);
+          auto spec = ls_to_spec(loc, seq, 0, controller != player);
           decision_.mandatory.push_back(spec);
           decision_.selected.push_back(spec);
-          audit_note(spec, code, controller, loc, seq, -1);
+          audit_note_listed(spec, code, controller, loc, seq, -1, true);
           expected -= (param & 0xff);
         }
       }
@@ -5361,25 +5327,24 @@ private:
       if (verbose_) {
         std::vector<Card> select;
         select.reserve(select_size);
-        std::vector<std::string> bound_specs;
         for (int i = 0; i < select_size; ++i) {
           auto code = read_u32();
           auto controller = read_u8();
           auto loc = read_u8();
           auto seq = read_u8();
           auto param = read_u32();
-          auto bound = prompt_spec(deck_binder, player, code, controller, loc, seq, 0, false);
-          Card card = prompt_card(player, code, controller, loc, seq);
+          reject_deck_card(loc, true);
+          Card card = get_card(controller, loc, seq);
           select.push_back(card);
-          bound_specs.push_back(bound);
           select_params.push_back(param);
-          audit_note(bound, code, controller, loc, seq, -1);
+          audit_note(card.get_spec(player), code, controller, loc, seq, -1);
         }
         auto& pl = players_[player];
-        for (size_t i = 0; i < select.size(); ++i) {
-          select_specs.push_back(bound_specs[i]);
+        for (const auto &card : select) {
+          auto spec = card.get_spec(player);
+          select_specs.push_back(spec);
           pl->notify(
-            fmt::format("{}: {} ({})", select_specs.size(), select[i].name_, select[i].get_spec(player)));
+            fmt::format("{}: {} ({})", select_specs.size(), card.name_, spec));
         }
       } else {
         for (int i = 0; i < select_size; ++i) {
@@ -5389,7 +5354,8 @@ private:
           auto seq = read_u8();
           auto param = read_u32();
 
-          auto spec = prompt_spec(deck_binder, player, code, controller, loc, seq, 0, false);
+          reject_deck_card(loc, true);
+          auto spec = ls_to_spec(loc, seq, 0, controller != player);
           select_specs.push_back(spec);
           select_params.push_back(param);
           audit_note(spec, code, controller, loc, seq, -1);
@@ -5447,6 +5413,7 @@ private:
         uint8_t loc = read_u8();
         uint8_t seq = read_u8();
         uint8_t pos = read_u8();
+        reject_deck_card(loc, c != player);
         specs.push_back(ls_to_spec(loc, seq, pos, c != player));
         audit_note(specs.back(), code, c, loc, seq, pos);
         uint32_t desc = read_u32();
@@ -5573,6 +5540,7 @@ private:
       auto seq = read_u8();
       auto pos = read_u8();
       auto desc = read_u32();
+      reject_deck_card(loc, ct != player);
       std::string spec = ls_to_spec(loc, seq, pos, ct != player);
       audit_note(spec, code, ct, loc, seq, pos);
       auto [code_d, eff_idx] = unpack_desc(code, desc);

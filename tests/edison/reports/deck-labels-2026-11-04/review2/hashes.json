@@ -1,0 +1,20 @@
+{
+ "production_module": {
+  "before_any_fix": "67423a99970519fb10fb0a484a4b1af331c77623dc318610b3e0d2de375dd95e",
+  "045c1d0": "b0f7f47fdf9a37e2868706875c5bf043d3b82ef332adffbfd1f86ea44c67a2b4",
+  "5152981": "9c3edea35be47785b9798072914aa7c9eee27d3893479cff859546429e72296e",
+  "this_commit": "b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f",
+  "imported": "b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f"
+ },
+ "control_modules": {
+  "old-logic": "8b3e867ec97201808bff661245745b68530f19475249e180e20adddda59f0760",
+  "binding-045c1d0": "d3ed5ca8009251ef3433964aa07576e49c0fd8caac561488489d3d83289c9053",
+  "mutant-face": "f15b3cc60c56d98b01e37fbcb5ad312f5a599f5490c95ee0dcad1b61099d87d1",
+  "mutant-selected": "a1f22f7eed33005f1fc176dea15e3f02e6bd9ff0cbe7b9cc45ca86f380daeb32"
+ },
+ "edison_rules": "6df1bd58680d681624c02e5bd8ec19159b96cc4204b4af6a543ed7c30b411778",
+ "edison_conformance": "ac41e4d3ea72a4d6711c970c2e74602a5aaacafff6234eb759e7c74c0d5a8066",
+ "fingerprints": {
+  "sources": 110
+ }
+}

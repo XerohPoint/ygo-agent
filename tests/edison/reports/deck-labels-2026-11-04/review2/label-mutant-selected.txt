@@ -1,0 +1,40 @@
+EDISON RULE TEST 086A - SUBSTITOAD, MIXED DECK
+Observed: reached in duel 1; 103 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086B - SWAP FROG, DECK OR FIELD
+Observed: reached in duel 1; 83 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086C - DUPLICATES OF ONE CODE
+Observed: reached in duel 1; 234 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086D - A NON-CANDIDATE STAYS HIDDEN
+Observed: reached in duel 1; 94 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086E - TWO PICKS FROM THE DECK
+Observed: reached in duel 1; 341 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086F - UNSELECT LIST FROM THE DECK
+RESULT: FAIL — Worker exited 1: /worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 264, in worker
+AssertionError: A selected card shares a row with an option: [6]
+EDISON RULE TEST 086G - A LONE CANDIDATE IN HISTORY
+Observed: reached in duel 1; 224 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086H - THE OPPONENT CHOOSES FROM THEIR OWN DECK
+Observed: reached in duel 1; 42 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086K - A COPY ALREADY REVEALED
+Observed: reached in duel 1; 48 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086L - A FACE-UP COPY IN THE DECK
+Observed: reached in duel 2; 385 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086N - A REVEALED FACE-UP COPY AND TWO FACE-DOWN CANDIDATES
+Observed: reached in duel 1; 149 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086J - THE VERBOSE PARSER AGREES
+Observed: 756 decisions identical.
+RESULT: PASS
+EDISON RULE TEST 086M - THE AUDIT COMMANDS FAIL CLOSED
+Observed: every bad report is rejected and the clean one is accepted.
+RESULT: PASS
+SUMMARY: 12 PASS, 1 FAIL

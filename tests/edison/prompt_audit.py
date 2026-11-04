@@ -24,9 +24,9 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[2]
 FIELDS = ("steps", "options", "hidden", "label_mismatch", "row_mismatch", "zone_mismatch", "shared_row",
           "lone_options", "lone_mismatch", "unknown_code", "private_shown", "selected_checked", "selected_mismatch",
-          "face_mismatch", "hidden_pointer")
+          "face_mismatch")
 MISMATCH_FIELDS = ("label_mismatch", "row_mismatch", "zone_mismatch", "shared_row", "lone_mismatch", "private_shown",
-                   "selected_mismatch", "face_mismatch", "hidden_pointer")
+                   "selected_mismatch", "face_mismatch")
 
 
 def read_records(directory):
@@ -148,6 +148,11 @@ def verdict_summary(report, min_duels, min_decisions, min_deck_options):
     problems = []
     if report["mismatch_total"]:
         problems.append(f"{report['mismatch_total']} mismatch records")
+    # Counted from the rows, as C++ can bump a counter without writing a record.
+    for field in MISMATCH_FIELDS:
+        total = sum(row[field] for row in report["by_kind"].values())
+        if total:
+            problems.append(f"{total} {field.replace('_', ' ')}")
     if report["extra_visible_own_deck_rows"]:
         problems.append(f"{report['extra_visible_own_deck_rows']} extra Deck rows")
     unknown = sum(row["unknown_code"] for row in report["by_kind"].values())
@@ -158,6 +163,17 @@ def verdict_summary(report, min_duels, min_decisions, min_deck_options):
                               ("Deck options", deck_options, min_deck_options)):
         if have < least:
             problems.append(f"only {have} {name}, below the minimum of {least}")
+    return problems
+
+
+def verdict_labels(counts, differential, games):
+    """Every game audited and every Deck label right, on a run that reached Deck prompts."""
+    problems = verdict_summary(differential, games, 1, 1)
+    prompts, right = counts.get("deck_prompts", 0), counts.get("label_right", 0)
+    if not prompts:
+        problems.append("no Deck prompt was measured")
+    if right != prompts:
+        problems.append(f"{prompts - right} of {prompts} labels wrong")
     return problems
 
 

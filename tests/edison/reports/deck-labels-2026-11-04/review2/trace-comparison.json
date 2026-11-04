@@ -1,0 +1,48 @@
+{
+ "certification": {
+  "cases_old": 567,
+  "cases_new": 593,
+  "only_new": [
+   "EDISON RULE TEST 086A",
+   "EDISON RULE TEST 086B",
+   "EDISON RULE TEST 086C",
+   "EDISON RULE TEST 086D",
+   "EDISON RULE TEST 086E",
+   "EDISON RULE TEST 086F",
+   "EDISON RULE TEST 086G",
+   "EDISON RULE TEST 086H",
+   "EDISON RULE TEST 086J",
+   "EDISON RULE TEST 086K",
+   "EDISON RULE TEST 086L",
+   "EDISON RULE TEST 086M",
+   "EDISON RULE TEST 086N",
+   "EDISON RULE TEST 087A",
+   "EDISON RULE TEST 087B",
+   "EDISON RULE TEST 087C",
+   "EDISON RULE TEST 087E",
+   "EDISON RULE TEST 088A",
+   "EDISON RULE TEST 088B",
+   "EDISON RULE TEST 088C",
+   "EDISON RULE TEST 088D",
+   "EDISON RULE TEST 088E",
+   "EDISON RULE TEST 088F",
+   "EDISON RULE TEST 088G",
+   "EDISON RULE TEST 088H",
+   "EDISON RULE TEST 088Z"
+  ],
+  "only_old": [],
+  "rule5_cases": 245,
+  "rule5_trace_differs": [],
+  "edison_cases": 322,
+  "edison_trace_differs": [],
+  "new_cases_failing": []
+ },
+ "conformance": {
+  "tests_old": 114,
+  "tests_new": 114,
+  "test_files_differ": [],
+  "only_old": [],
+  "only_new": [],
+  "results.json_identical": true
+ }
+}

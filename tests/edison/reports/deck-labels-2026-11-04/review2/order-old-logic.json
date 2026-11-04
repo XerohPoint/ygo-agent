@@ -1,0 +1,20 @@
+{
+ "seeds": [
+  80820000,
+  80821000
+ ],
+ "cases": {
+  "A": {
+   "failure": "Observations depend on hidden Deck order: {'decision': 3, 'fields': ['cards_', 'actions_'], 'msg': 'select_card', 'labels_a': [135, 214, 71, 232, 230, 139, 171, 95], 'labels_b': [214, 135, 368, 95, 106, 171, 139, 232]}"
+  },
+  "B": {
+   "failure": "Observations depend on hidden Deck order: {'decision': 1, 'fields': ['actions_'], 'msg': 'select_card', 'labels_a': [230, 252], 'labels_b': [252, 230]}"
+  },
+  "C": {
+   "failure": "Observations depend on hidden Deck order: {'decision': 2, 'fields': ['actions_'], 'msg': 'select_unselect_card', 'labels_a': [244, 311, 171, 425, 420, 252, 307, 221], 'labels_b': [311, 244, 3, 221, 228, 307, 252, 425]}"
+  },
+  "E": {
+   "failure": "Observations depend on hidden Deck order: {'decision': 2, 'fields': ['actions_'], 'msg': 'select_card', 'labels_a': [228, 244], 'labels_b': [244, 228]}"
+  }
+ }
+}

@@ -1,0 +1,71 @@
+{
+ "seeds": [
+  80500000,
+  80501535
+ ],
+ "games": 1536,
+ "checkpoints": [
+  "/home/mada/ygo-agent/build/edison-gauntlet-training-2026-11-04/runs/gauntlet-1702/checkpoint-1280",
+  "/home/mada/ygo-agent/build/edison-gauntlet-training-2026-11-04/runs/gauntlet-1703/checkpoint-1280",
+  "/home/mada/ygo-agent/build/edison-gauntlet-training-2026-11-04/runs/gauntlet-1704/checkpoint-1280"
+ ],
+ "module": "checkout",
+ "counts": {
+  "select_prompts_seen": 2087,
+  "deck_prompts_seen": 1313,
+  "options_shown": 7376,
+  "options_frog_label": 7376,
+  "chance_x1000": 272635,
+  "last_card_prompts": 1390,
+  "last_card_prompt_right": 1321,
+  "deck_prompts": 1313,
+  "label_right": 1313
+ },
+ "last_card_prompt_right_percent": 95.04,
+ "label_right_percent": 100.0,
+ "chance_percent": 20.76,
+ "frog_label_percent": 100.0,
+ "differential": {
+  "duels": 1536,
+  "decisions": 275183,
+  "decisions_listing_cards": 216834,
+  "mismatch_total": 0,
+  "by_field": {
+   "label_mismatch": 0,
+   "row_mismatch": 0,
+   "zone_mismatch": 0,
+   "shared_row": 0,
+   "lone_mismatch": 0,
+   "private_shown": 0,
+   "selected_mismatch": 0,
+   "face_mismatch": 0
+  },
+  "own_deck_prompt_order": {
+   "pairs_distinct": 144625,
+   "top_first_distinct": 72299,
+   "pairs_same": 22490,
+   "top_first_same": 22490
+  },
+  "extra_visible_own_deck_rows": 0,
+  "prompts_with_extra_rows": 0
+ },
+ "differential_deck": {
+  "select_card|deck|own": {
+   "steps": 5842,
+   "options": 38429,
+   "hidden": 0,
+   "label_mismatch": 0,
+   "row_mismatch": 0,
+   "zone_mismatch": 0,
+   "shared_row": 0,
+   "lone_options": 244,
+   "lone_mismatch": 0,
+   "unknown_code": 0,
+   "private_shown": 0,
+   "selected_checked": 0,
+   "selected_mismatch": 0,
+   "face_mismatch": 0
+  }
+ },
+ "problems": []
+}

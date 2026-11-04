@@ -1,0 +1,40 @@
+{
+ "seeds": [
+  80820000,
+  80821000
+ ],
+ "cases": {
+  "A": {
+   "own_deck": 4,
+   "mixed": 2,
+   "selected": 0,
+   "revealed": 0,
+   "decisions": 18,
+   "prompts_with_different_true_sequences": 4
+  },
+  "B": {
+   "own_deck": 4,
+   "mixed": 0,
+   "selected": 2,
+   "revealed": 0,
+   "decisions": 8,
+   "prompts_with_different_true_sequences": 4
+  },
+  "C": {
+   "own_deck": 4,
+   "mixed": 0,
+   "selected": 2,
+   "revealed": 0,
+   "decisions": 14,
+   "prompts_with_different_true_sequences": 4
+  },
+  "E": {
+   "own_deck": 2,
+   "mixed": 0,
+   "selected": 0,
+   "revealed": 2,
+   "decisions": 8,
+   "prompts_with_different_true_sequences": 2
+  }
+ }
+}

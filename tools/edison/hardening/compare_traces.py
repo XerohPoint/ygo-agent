@@ -38,6 +38,7 @@ def certification(old_dir, new_dir):
     report["rule5_trace_differs"] = [name for name in rule5 if old[name] != new[name]]
     report["edison_cases"] = len(edison)
     report["edison_trace_differs"] = [name for name in edison if old[name] != new[name]]
+    report["new_cases_failing"] = [name for name in report["only_new"] if "RESULT: FAIL" in new[name]]
     return report
 
 
@@ -65,7 +66,8 @@ def main():
     print(json.dumps(report, indent=1))
     # Rule 5 and Edison traces of earlier cases must match.
     certification_report, conformance_report = report["certification"], report["conformance"]
-    problems = certification_report["rule5_trace_differs"] + certification_report["edison_trace_differs"] + certification_report["only_old"]
+    problems = (certification_report["rule5_trace_differs"] + certification_report["edison_trace_differs"] +
+                certification_report["only_old"] + certification_report["new_cases_failing"])
     problems += conformance_report["test_files_differ"] + conformance_report["only_old"]
     if not conformance_report["results.json_identical"]:
         problems.append("conformance results.json")

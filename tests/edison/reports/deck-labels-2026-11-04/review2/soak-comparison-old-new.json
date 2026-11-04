@@ -1,0 +1,39 @@
+{
+ "stages": {
+  "lists": {
+   "duels_old": 504,
+   "duels_new": 504,
+   "rule_differences": 0,
+   "first_differences": [],
+   "chosen_actions_differ": 0,
+   "label_traces_differ": 486
+  },
+  "sidein": {
+   "duels_old": 504,
+   "duels_new": 504,
+   "rule_differences": 0,
+   "first_differences": [],
+   "chosen_actions_differ": 0,
+   "label_traces_differ": 440
+  },
+  "targets": {
+   "duels_old": 1368,
+   "duels_new": 1368,
+   "rule_differences": 0,
+   "first_differences": [],
+   "chosen_actions_differ": 0,
+   "label_traces_differ": 226
+  },
+  "uniform": {
+   "duels_old": 1000,
+   "duels_new": 1000,
+   "rule_differences": 0,
+   "first_differences": [],
+   "chosen_actions_differ": 0,
+   "label_traces_differ": 148
+  }
+ },
+ "identical": true,
+ "problems": [],
+ "passed": true
+}

@@ -164,7 +164,7 @@ def main():
             for counts in pool.map(play, plan):
                 totals.update(counts)
         sys.path.insert(0, str(ROOT / "tests/edison"))
-        from prompt_audit import summarize
+        from prompt_audit import summarize, verdict_labels
         differential = summarize([tmp])
     right, prompts = totals["label_right"], totals["deck_prompts"]
     report = {"seeds": [args.seed, seed - 1], "games": len(plan) * args.games, "checkpoints": sorted({p["checkpoint"] for p in plan}),
@@ -178,15 +178,7 @@ def main():
               "differential_deck": {key: row for key, row in differential["by_kind"].items() if "|deck|" in key}}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=1) + "\n")
-    problems = []
-    if not prompts:
-        problems.append("no Deck prompt was measured")
-    if right != prompts:
-        problems.append(f"{prompts - right} of {prompts} labels wrong")
-    if differential["mismatch_total"] or differential["extra_visible_own_deck_rows"]:
-        problems.append(f"{differential['mismatch_total']} differential mismatches, {differential['extra_visible_own_deck_rows']} extra rows")
-    if not differential["duels"]:
-        problems.append("the differential saw no duels")
+    problems = verdict_labels(totals, differential, len(plan) * args.games)
     report["problems"] = problems
     args.output.write_text(json.dumps(report, indent=1) + "\n")
     print(json.dumps(report, indent=1))

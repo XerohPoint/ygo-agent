@@ -1,0 +1,13 @@
+EDISON RULE TEST 087A - SUBSTITOAD AND SWAP FROG
+Observed: {'own_deck': 4, 'mixed': 2, 'selected': 0, 'revealed': 0, 'decisions': 18, 'prompts_with_different_true_sequences': 4}
+RESULT: PASS
+EDISON RULE TEST 087B - TWO PICKS FROM THE DECK
+Observed: {'own_deck': 4, 'mixed': 0, 'selected': 2, 'revealed': 0, 'decisions': 8, 'prompts_with_different_true_sequences': 4}
+RESULT: PASS
+EDISON RULE TEST 087C - UNSELECT LIST FROM THE DECK
+Observed: {'own_deck': 4, 'mixed': 0, 'selected': 2, 'revealed': 0, 'decisions': 14, 'prompts_with_different_true_sequences': 4}
+RESULT: PASS
+EDISON RULE TEST 087E - A COPY ALREADY REVEALED
+Observed: {'own_deck': 2, 'mixed': 0, 'selected': 0, 'revealed': 2, 'decisions': 8, 'prompts_with_different_true_sequences': 2}
+RESULT: PASS
+SUMMARY: 4 PASS, 0 FAIL

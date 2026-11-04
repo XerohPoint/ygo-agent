@@ -1426,11 +1426,12 @@ policies checked on every decision, and confirms all 18 gauntlet lists pass prod
 against a baseline regenerated after the rule fixes, because those fixes change seeded games on purpose. The full suite
 now passes 567 cases. See [edison-hardening.md](edison-hardening.md) for the changes, evidence and limits.
 
-## Deck option labels (086–087)
+## Deck option labels (086–088)
 
 Test 086 plays Deck prompts through production and compares each option with the card code in the engine's own prompt, through the
 test-only differential in `prompt_audit.h`. It covers mixed Deck contents, Deck-or-field prompts, duplicates, non-candidates, two picks,
-unselect lists, lone options, the other seat's selection, revealed and face-up copies, and blank opposing Deck pointers, with guards for
-the verbose parser and for the audit commands' verdicts. Test 087 plays one seed with two hidden Deck orders and requires byte-identical
-policy inputs throughout the first turn. Test 082D now compares against a baseline regenerated after the fix, because its interaction
-counts record the labels shown. The full suite now passes 585 cases. See [edison-deck-labels.md](edison-deck-labels.md).
+unselect lists, lone options, the other seat's selection, and revealed and face-up copies, with guards for the verbose parser and for the
+audit commands' verdicts. Test 087 plays one seed with two hidden Deck orders and requires byte-identical policy inputs throughout the
+first turn. Test 088 plants the prompts that cannot show a Deck card safely and requires each to void its cell through a real actor worker.
+Test 082D now compares against a baseline regenerated after the fix, because its interaction counts record the labels shown. The full
+suite now passes 593 cases. See [edison-deck-labels.md](edison-deck-labels.md).

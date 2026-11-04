@@ -354,9 +354,10 @@ class Worker:
     actors keep the CPU environment that holds the certified native module.
     """
 
-    def __init__(self, log_dir, index, start_timeout=120, python=None):
+    def __init__(self, log_dir, index, start_timeout=120, python=None, cwd=None):
         self.log_dir, self.index, self.start_timeout = Path(log_dir), index, start_timeout
         self.python = python or sys.executable
+        self.cwd = cwd or ROOT / "scripts"  # Tests point this at a directory of planted scripts.
         self.start()
 
     def start(self):
@@ -366,7 +367,7 @@ class Worker:
         reply_r, reply_w = os.pipe()
         self.process = subprocess.Popen(
             [self.python, str(Path(__file__).resolve()), "--serve", str(reply_w)],
-            cwd=ROOT / "scripts", stdin=subprocess.PIPE, stdout=self.log, stderr=subprocess.STDOUT, text=True,
+            cwd=self.cwd, stdin=subprocess.PIPE, stdout=self.log, stderr=subprocess.STDOUT, text=True,
             env=configure_child_environment(), pass_fds=(reply_w,))
         os.close(reply_w)
         self.reply = os.fdopen(reply_r, "r", buffering=1)

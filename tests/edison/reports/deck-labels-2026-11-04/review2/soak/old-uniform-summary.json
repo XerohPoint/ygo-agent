@@ -1,0 +1,65 @@
+{
+ "stage": "uniform",
+ "first_seed": 80430000,
+ "last_seed": 80430999,
+ "planned": 1000,
+ "finished": 1000,
+ "statuses": {
+  "ok": 1000
+ },
+ "crashes": 0,
+ "crash_signatures": {},
+ "diagnostic_lines": {
+  "[ygopro-core] Error: diagnostic type 1: [string \"./script/c93671934.lua\"]:30: attempt to index a nil value": 1
+ },
+ "other_output_lines": {},
+ "contract_violations": {},
+ "decisions": 156763,
+ "prompt_rows_by_msg_id": {
+  "1": 83522,
+  "2": 7614,
+  "3": 8259,
+  "4": 2776,
+  "5": 1059,
+  "6": 1192,
+  "7": 566,
+  "8": 21503,
+  "9": 122,
+  "10": 586,
+  "11": 28733,
+  "12": 23,
+  "13": 80,
+  "14": 115,
+  "15": 93,
+  "16": 471,
+  "17": 49
+ },
+ "max_options": 34,
+ "max_repeat": 5,
+ "elapsed_seconds": 21.3,
+ "lists": [],
+ "prompt_audit": {
+  "duels": 1000,
+  "decisions": 156763,
+  "mismatch_total": 2602,
+  "by_field": {
+   "label_mismatch": 2244,
+   "row_mismatch": 2244,
+   "zone_mismatch": 0,
+   "shared_row": 0,
+   "lone_mismatch": 91,
+   "private_shown": 0,
+   "selected_mismatch": 84,
+   "face_mismatch": 0
+  },
+  "extra_visible_own_deck_rows": 949
+ },
+ "prompt_audit_problems": [
+  "2602 mismatch records",
+  "2244 label mismatch",
+  "2244 row mismatch",
+  "91 lone mismatch",
+  "84 selected mismatch",
+  "949 extra Deck rows"
+ ]
+}

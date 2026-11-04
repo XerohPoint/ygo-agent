@@ -23,7 +23,7 @@ sys.path.append(str(ROOT))
 sys.path.insert(0, str(ROOT / "ygoenv"))
 sys.path.insert(0, str(ROOT / "tools/edison/pool_audit"))
 from production_prompt_tests import DB, MARKERS, code_list, code_of  # noqa: E402
-from production_deck_label_tests import DUPE, OPPOSING_DECK, REVEALED_COPY, UPSTART, overlay_scripts  # noqa: E402
+from production_deck_label_tests import DUPE, REVEALED_COPY, UPSTART, overlay_scripts  # noqa: E402
 
 SEEDS = (80820000, 80821000)
 MAX_OPTIONS = 256
@@ -39,7 +39,6 @@ CASES = {
     "B": ("TWO PICKS FROM THE DECK", ["Thunder Dragon"], [("Thunder Dragon", 2)], [], ["Thunder Dragon"], ["Thunder Dragon"], None, {"own_deck": 1, "selected": 1}),
     "C": ("UNSELECT LIST FROM THE DECK", ["Advanced Ritual Art", "Demise, King of Armageddon"], [], [],
           ["Advanced Ritual Art"], [], None, {"own_deck": 2, "selected": 1}),
-    "D": ("THE OPPONENT'S DECK", ["Upstart Goblin"], [], [("Upstart Goblin", 3)], ["Upstart Goblin"], [], OPPOSING_DECK, {"opposing_deck": 1}),
     "E": ("A COPY ALREADY REVEALED", ["Upstart Goblin"], [("Dupe Frog", 3)], [], ["Upstart Goblin"], [], REVEALED_COPY, {"own_deck": 1, "revealed": 1}),
 }
 
@@ -196,12 +195,14 @@ def worker(case, codes, directory, seed, so):
                         "options": [(e["spec_kind"], e["controller"] == shown["player"]) for e in shown["options"]] if shown else [],
                         "selected": len(shown["selected"]) if shown else 0,
                         "revealed": len(shown["revealed_own_deck"]) if shown else 0,
-                        "sequences": shown["deck_sequences"] if shown else [],
+                        "sequences": shown["deck_sequences"] if shown else [],  # Filled only at own Deck listing prompts.
                         "extra_rows": shown["extra_rows"] if shown else 0,
                         "real": [e["prompt_sequence"] for e in shown["options"] if e["spec_kind"] == "deck"] if shown else [],
                         "labels": ids})
             obs, _, terminated, truncated, info = env.step(np.asarray([action]), np.asarray(info["env_id"]))
-            if terminated[0] or truncated[0]:
+            if truncated[0]:
+                raise RuntimeError("Duel truncated, so the first turn was not compared in full")
+            if terminated[0]:
                 return out
 
     first, second = run("a"), run("b")
@@ -219,13 +220,12 @@ def compare(case, first, second):
             fields = [key for key in a["digests"] if a["digests"][key] != b["digests"][key]]
             differences.append({"decision": index, "fields": fields, "msg": a["msg"], "labels_a": a["labels"][:8], "labels_b": b["labels"][:8]})
             break
-        if a["sequences"] != b["sequences"]:
+        if ["deck", True] in a["options"] and a["sequences"] != b["sequences"]:
             moved += 1
     assert len(first) == len(second), f"Different number of first-turn decisions: {len(first)}, {len(second)}"
     assert not differences, f"Observations depend on hidden Deck order: {differences[0]}"
     own = [row for row in first if ["deck", True] in row["options"]]
-    opposing = [row for row in first if ["deck", False] in row["options"]]
-    counts = {"own_deck": len(own), "opposing_deck": len(opposing),
+    counts = {"own_deck": len(own),
               "mixed": sum(["mzone", True] in row["options"] for row in own),
               "selected": sum(row["selected"] > 0 for row in own), "revealed": sum(row["revealed"] > 0 for row in own)}
     for key, least in needed.items():

@@ -236,7 +236,7 @@ def main():
     (args.output / "summary.json").write_text(json.dumps(summary, indent=1) + "\n")
     (args.output / "crashes.json").write_text(json.dumps(crashes, indent=0) + "\n")
     print(json.dumps(summary, indent=1))
-    clean = not crashes and not diagnostics and not violations and set(statuses) <= {"ok"} and len(finished) == len(duels) and not audit_problems
+    clean = bool(duels) and not crashes and not diagnostics and not violations and set(statuses) <= {"ok"} and len(finished) == len(duels) and not audit_problems
     print("SOAK: " + ("CLEAN" if clean else "NEEDS REVIEW"))
     return 0 if clean else 1
 

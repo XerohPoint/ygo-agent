@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Test 086: at a Deck prompt each option shows the card the engine offered, and nothing more.
 
+Prompts that cannot show a Deck card safely void instead: see production_deck_void_tests.py.
+
 Each case plays seeded duels through production init_module and env.step until it reaches its
 prompt. The expected identities come from the prompt's own card codes, through the test-only
 differential in prompt_audit.h. These fail on the build before docs/edison-deck-labels.md, where
@@ -26,8 +28,7 @@ SEED = 80810000
 MAX_OPTIONS = 256
 MAX_DUELS = 40
 DECK_LOCATION, MZONE_LOCATION = 1, 3  # Column 2 of a card row.
-FACE_DOWN_ROW = 2  # Column 5 of a Deck row, position_to_id(POS_FACEDOWN).
-GRAVE_LOCATION = 5
+POS_FACE_UP = 0x5
 ACT_SET, ACT_SPSUMMON, ACT_SUMMON, ACT_ACTIVATE = 1, 3, 4, 8
 CARD_PROMPT = 3  # Column 3 of an action row, in _msgs order.
 FROGS = [("Substitoad", 3), ("Swap Frog", 3), ("Dupe Frog", 3), ("Treeborn Frog", 2)]
@@ -44,18 +45,18 @@ CASES = {
     "F": ("UNSELECT LIST FROM THE DECK", "both lists of the prompt map to distinct rows showing their cards", [("Advanced Ritual Art", 1), ("Demise, King of Armageddon", 3)], ["Advanced Ritual Art", "Demise, King of Armageddon"], "unselect"),
     "G": ("A LONE CANDIDATE IN HISTORY", "an option answered with no decision records the true card", [("Substitoad", 2), ("Dupe Frog", 1)], ["Substitoad"], "lone"),
     "H": ("THE OPPONENT CHOOSES FROM THEIR OWN DECK", "the selecting seat sees its own candidates", EQUIPS, ["Arsenal Robber"], "other_seat"),
-    "I": ("CHOOSING FROM THE OPPONENT'S DECK", "options stay blank and point at the first blank rows, whatever their real sequence; a planted script, since no pool card does this", [("Upstart Goblin", 3)], ["Upstart Goblin"], "opponent_deck"),
     "K": ("A COPY ALREADY REVEALED", "binding uses the revealed copy, so no further copy is shown; a planted script with Dark Tinker's reveal", [("Upstart Goblin", 3), ("Dupe Frog", 3)], ["Upstart Goblin"], "revealed_copy"),
     "L": ("A FACE-UP COPY IN THE DECK", "a face-up candidate binds to a face-up copy; a planted script with ReverseInDeck", [("Upstart Goblin", 3), ("Dupe Frog", 3)], ["Upstart Goblin"], "face_up_copy"),
+    "N": ("A REVEALED FACE-UP COPY AND TWO FACE-DOWN CANDIDATES", "all three copies show, and that is not extra; a planted script", [("Upstart Goblin", 3), ("Dupe Frog", 3)], ["Upstart Goblin"], "reveal_and_candidates"),
 }
 UPSTART = 70368879
 DUPE = 46239604
 
 
-def plant(target, operation):
-    """A Spell whose effect is this Lua, in place of Upstart Goblin's script."""
+def plant(target, operation, code=UPSTART):
+    """A Spell whose effect is this Lua, in place of the script of a Spell with no historical override."""
     return f"""
-function c70368879.initial_effect(c)
+function c{code}.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -70,10 +71,6 @@ end
 """
 
 
-# Candidates are only the Upstart Goblins, so where their rows fall would show where they sit.
-OPPOSING_DECK = plant(f"Duel.IsExistingMatchingCard(Card.IsCode,tp,0,LOCATION_DECK,2,nil,{UPSTART})",
-                      f"local g=Duel.SelectMatchingCard(tp,Card.IsCode,tp,0,LOCATION_DECK,1,1,nil,{UPSTART}) "
-                      "if g:GetCount()>0 then Duel.SendtoGrave(g,REASON_EFFECT) end")
 # Dark Tinker's reveal, ConfirmCards on one own Deck card with no move after it, then a Deck prompt.
 REVEALED_COPY = plant(f"Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_DECK,0,nil,{DUPE})>=3",
                       f"local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_DECK,0,nil,{DUPE}) "
@@ -88,7 +85,14 @@ FACE_UP_COPY = plant(f"Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_DECK,0
                      "local b=g:GetMaxGroup(Card.GetSequence):GetFirst() b:ReverseInDeck() "
                      f"local s=Duel.SelectMatchingCard(tp,function(c) return c:IsCode({DUPE}) and c:IsPosition(POS_FACEUP) end,tp,LOCATION_DECK,0,1,1,nil) "
                      "Duel.SendtoGrave(s,REASON_EFFECT)")
-PLANTS = {"I": OPPOSING_DECK, "K": REVEALED_COPY, "L": FACE_UP_COPY}
+# Dark Tinker's reveal of a face-up copy, with the other two copies offered. Nothing here is extra.
+REVEAL_AND_CANDIDATES = plant(f"Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_DECK,0,nil,{DUPE})>=3",
+                              f"local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_DECK,0,nil,{DUPE}) "
+                              "local tc=g:GetMaxGroup(Card.GetSequence):GetFirst() tc:ReverseInDeck() "
+                              "Duel.ConfirmCards(tp,tc) "
+                              f"local s=Duel.SelectMatchingCard(tp,function(c) return c:IsCode({DUPE}) and c~=tc end,tp,LOCATION_DECK,0,1,1,nil) "
+                              "Duel.SendtoGrave(s,REASON_EFFECT)")
+PLANTS = {"K": REVEALED_COPY, "L": FACE_UP_COPY, "N": REVEAL_AND_CANDIDATES}
 
 
 def write_deck(db, path, cards):
@@ -107,15 +111,15 @@ def write_deck(db, path, cards):
     path.write_text("#main\n" + "\n".join(map(str, main)) + "\n#extra\n!side\n")
 
 
-def overlay_scripts(root, script):
+def overlay_scripts(root, script, code=UPSTART):
     """A copy of the script directory, as links, with one card's file planted."""
     target = root / "script"
     target.mkdir(parents=True)
     source = (ROOT / "scripts/script").resolve()
     for path in source.iterdir():
-        if path.suffix == ".lua" and path.name != f"c{UPSTART}.lua":
+        if path.suffix == ".lua" and path.name != f"c{code}.lua":
             (target / path.name).symlink_to(path)
-    (target / f"c{UPSTART}.lua").write_text(script)
+    (target / f"c{code}.lua").write_text(script)
     return root
 
 
@@ -135,10 +139,7 @@ def check_decision(line, obs, count, id_to_code):
         assert int(action[0]) == entry["row"] and row_id(action[1:3]) == entry["id"], f"Audit disagrees with actions_: {entry}"
         row = cards[entry["row"] - 1]
         own = entry["controller"] == line["player"]
-        if entry["spec_kind"] == "deck" and not own:
-            assert entry["exempt"] and entry["id"] == 0 and row_id(row) == 0, f"Opposing Deck option shows a card: {entry}"
-            assert int(row[2]) == DECK_LOCATION and int(row[4]) == 1, f"Opposing Deck option's row is elsewhere: {entry}"
-            continue
+        assert own or entry["spec_kind"] != "deck", f"An opposing Deck card reached an observation: {entry}"
         if entry["exempt"]:
             continue
         assert entry["id"] == entry["expected_id"], f"Option labelled {entry['id']}, engine offered {entry['expected_id']}: {entry}"
@@ -169,13 +170,22 @@ def check_decision(line, obs, count, id_to_code):
     selected = [entry["row"] for entry in selected_entries if entry["spec_kind"] == "deck" and int(cards[entry["row"] - 1, 4]) == 0]
     expected = sorted([entry["row"] for entry in deck_options] + selected)
     shown_rows = {index: cid for index, cid in visible}
+    # Blank rows are face-down, so a row like them is the copy a face-up candidate must not take.
+    blank_face = next((int(row[5]) for _, row in own_deck if not row_id(row)), None)
+    if blank_face:
+        for entry in deck_options:
+            row_down = int(cards[entry["row"] - 1, 5]) == blank_face
+            assert row_down == (not entry["position"] & POS_FACE_UP), f"A candidate binds to a copy with the other face state: {entry}"
+    # A row beyond the candidates must be a reveal the candidates of that code and face state did not use.
     leftover = [index for index, _ in visible if index not in expected]
-    allowed = Counter(line["revealed_own_deck"])
-    bound_codes = Counter(entry["code"] for entry in deck_options)
+    def kind_of(row_number):
+        return (id_to_code[row_id(cards[row_number - 1])], int(int(cards[row_number - 1, 5]) != blank_face))
+    allowed = Counter(tuple(item) for item in line["revealed_own_deck"])
+    bound = Counter(kind_of(row) for row in expected if row in shown_rows)
     for index in leftover:
-        code = id_to_code[shown_rows[index]]
-        assert allowed[code] > bound_codes[code], f"Deck row {index} is visible, and neither a candidate nor a reveal: {visible}, candidates {expected}"
-        bound_codes[code] += 1
+        kind = kind_of(index)
+        assert allowed[kind] > bound[kind], f"Deck row {index} is visible, and neither a candidate nor a reveal: {visible}, candidates {expected}"
+        bound[kind] += 1
     assert not [row for row in expected if row not in shown_rows], f"A candidate's row is blank: {visible}, candidates {expected}"
     assert line["extra_rows"] == 0, f"{line['extra_rows']} Deck rows shown beyond the prompt"
     for index, row in own_deck:
@@ -189,7 +199,7 @@ def check_decision(line, obs, count, id_to_code):
         codes = [id_to_code[cid] for _, cid in visible]
         assert codes == sorted(codes), f"Visible Deck rows are not in identity order: {codes}"
     return {"deck_options": deck_options, "selected": selected, "kinds": {entry["spec_kind"] for entry in entries},
-            "visible": [cid for _, cid in visible]}
+            "visible": [cid for _, cid in visible], "blank_face": blank_face}
 
 
 def worker(label, codes, deck, so):
@@ -234,7 +244,6 @@ def worker(label, codes, deck, so):
         rng = random.Random(seed ^ 0xED150)
         obs, info = env.reset()
         picked, pending_lone = {}, {}
-        grave_expected = None
         activator = None
         while True:
             count = int(info["num_options"][0])
@@ -244,14 +253,6 @@ def worker(label, codes, deck, so):
             offered = obs["actions_"][0, :count]
             decisions += 1
             seat = int(info["to_play"][0])
-            if grave_expected:
-                # The response is still the option's index, so the card the engine moves is a candidate.
-                owner, code_id, before_count = grave_expected
-                relative = 0 if owner == seat else 1
-                now = sum(int(row[2]) == GRAVE_LOCATION and int(row[4]) == relative and row_id(row) == code_id for row in obs["cards_"][0])
-                assert now == before_count + 1, f"The pick did not reach the Graveyard: {before_count} copies before, {now} after"
-                grave_expected = None
-                seen.add("moved")
             lines = new_lines()
             for record in lines:
                 if record["type"] == "duel":
@@ -286,25 +287,16 @@ def worker(label, codes, deck, so):
                     seen.add("evidence")
                 if evidence == "other_seat" and deck_options and activator == 1 - shown["player"]:
                     seen.add("evidence")
-                if evidence == "opponent_deck":
-                    blank = [entry for entry in shown["options"] if entry["spec_kind"] == "deck" and entry["controller"] != shown["player"]]
-                    if blank:
-                        cards = obs["cards_"][0]
-                        hidden = [row for row in cards if int(row[2]) == DECK_LOCATION]
-                        assert not any(row_id(row) for row in hidden), "A Deck row is visible at a prompt on the opposing Deck"
-                        rows = [index + 1 for index, row in enumerate(cards) if int(row[2]) == DECK_LOCATION and int(row[4]) == 1]
-                        pointers = [entry["row"] for entry in blank]
-                        assert pointers == rows[:len(pointers)], f"Blank options point at rows {pointers}, which depend on real sequences {[entry['prompt_sequence'] for entry in blank]}; first blank rows are {rows[:len(pointers)]}"
-                        seen.add("evidence")
-                        upstart = code_to_id[UPSTART]
-                        grave_expected = (1 - shown["player"], upstart, sum(int(row[2]) == GRAVE_LOCATION and int(row[4]) == 1 and row_id(row) == upstart for row in cards))
                 if evidence == "revealed_copy" and deck_options and shown["revealed_own_deck"]:
                     copies = sum(cid == deck_options[0]["id"] for cid in result["visible"])
                     assert copies == len(deck_options), f"{copies} copies shown for {len(deck_options)} candidates and one reveal"
                     seen.add("evidence")
-                if evidence == "face_up_copy" and deck_options and all(entry["position"] & 5 for entry in deck_options):
-                    for entry in deck_options:
-                        assert int(obs["cards_"][0][entry["row"] - 1, 5]) != FACE_DOWN_ROW, f"A face-up candidate binds to a face-down copy: {entry}"
+                if evidence == "face_up_copy" and deck_options and all(entry["position"] & POS_FACE_UP for entry in deck_options):
+                    assert result["blank_face"], "No blank Deck row to compare with"
+                    seen.add("evidence")
+                if evidence == "reveal_and_candidates" and len(deck_options) == 2 and shown["revealed_own_deck"]:
+                    copies = sum(cid == deck_options[0]["id"] for cid in result["visible"])
+                    assert copies == 3, f"{copies} copies shown for 2 face-down candidates and a revealed face-up copy"
                     seen.add("evidence")
             seat = int(info["to_play"][0])
             history = obs["h_actions_"][0]
@@ -354,8 +346,6 @@ def worker(label, codes, deck, so):
                 break
         if {"deck prompt", "history"} <= seen:
             seen.add("evidence")
-        if evidence == "opponent_deck" and "moved" not in seen:
-            seen.discard("evidence")
         if "evidence" in seen:
             break
     print(json.dumps({"seen": sorted(seen), "duels": duel + 1, "decisions": decisions, "checked": checked}))
@@ -493,10 +483,43 @@ def main():
             assert exit_code("summarize", str(tmp / "good")) == 0, "A clean audit failed"
             assert exit_code("summarize", str(tmp / "good"), "--min-duels", "2") == 1, "An audit below its minimum passed"
             assert exit_code("compare-soak", str(tmp / "empty"), str(tmp / "empty")) == 1, "An empty soak comparison passed"
+            # A counter that C++ can bump with no mismatch record is still a failure.
+            for position, name in ((6, "shared row"), (12, "selected mismatch"), (13, "face mismatch")):
+                row = [1, 1] + [0] * 12
+                row[position] = 1
+                (tmp / "counter").mkdir(exist_ok=True)
+                (tmp / "counter/audit-1.jsonl").write_text(json.dumps({**record, "mismatch_total": 0, "mismatches": [], "counts": {"select_card|deck|own": row}}) + "\n")
+                assert exit_code("summarize", str(tmp / "counter")) == 1, f"A {name} with no record passed"
+            done = subprocess.run([sys.executable, str(ROOT / "tools/edison/hardening/soak.py"), "--stage", "uniform", "--count", "0", "--seed", "80400000",
+                                   "--output", str(tmp / "empty-soak")], capture_output=True, text=True, timeout=25)
+            assert done.returncode == 1 and "CLEAN" not in done.stdout, "A soak with no duels reported clean"
+            # compare_traces.py: a new case that fails is a failure, and an empty comparison is too.
+            for name in ("old", "new", "conformance"):
+                (tmp / name).mkdir()
+            (tmp / "conformance/results.json").write_text("{}")
+            (tmp / "conformance/test-1.txt").write_text("same")
+            (tmp / "old/run-1.txt").write_text("EDISON RULE TEST 001A - X\nRESULT: PASS\n")
+            def compare(new_text):
+                (tmp / "new/run-1.txt").write_text(new_text)
+                return subprocess.run([sys.executable, str(ROOT / "tools/edison/hardening/compare_traces.py"), "--certification", str(tmp / "old"), str(tmp / "new"),
+                                       "--conformance", str(tmp / "conformance"), str(tmp / "conformance"), "--output", str(tmp / "traces.json")],
+                                      capture_output=True, text=True, timeout=20).returncode
+            same = "EDISON RULE TEST 001A - X\nRESULT: PASS\n"
+            assert compare(same) == 0, "Identical traces failed"
+            assert compare(same + "EDISON RULE TEST 002A - Y\nRESULT: PASS\n") == 0, "A passing new case failed"
+            assert compare(same + "EDISON RULE TEST 002A - Y\nRESULT: FAIL - bad\n") == 1, "A failing new case passed"
+            assert compare("EDISON RULE TEST 001A - X\nRESULT: FAIL - bad\n") == 1, "A changed earlier trace passed"
         assert prompt_audit.verdict_no_effect({"pairings": [{"deck0": "a", "deck1": "b", "identical": False, "audit_saw_duels": 1, "audit_saw_decisions": 1}]}), "Differing traces passed"
         assert prompt_audit.verdict_no_effect({"pairings": []}), "No pairings passed"
         assert prompt_audit.verdict_fields({"only_expected_fields_changed": False, "pairings": [{"decisions": 1, "own_deck_option_decisions": 1}]}), "Unexpected field changes passed"
         assert prompt_audit.verdict_fields({"only_expected_fields_changed": True, "pairings": [{"decisions": 1, "own_deck_option_decisions": 0}]}), "A comparison reaching no Deck prompt passed"
+        clean = prompt_audit.summarize([])
+        clean.update(duels=2, decisions=9, by_kind={"select_card|deck|own": dict(zip(prompt_audit.FIELDS, [1, 1] + [0] * 12))})
+        counts = {"deck_prompts": 3, "label_right": 3}
+        assert not prompt_audit.verdict_labels(counts, clean, 2), f"A clean label check failed: {prompt_audit.verdict_labels(counts, clean, 2)}"
+        assert prompt_audit.verdict_labels(counts, clean, 3), "A label check with incomplete audit coverage passed"
+        assert prompt_audit.verdict_labels({"deck_prompts": 0, "label_right": 0}, clean, 2), "A label check with no prompts passed"
+        assert prompt_audit.verdict_labels({"deck_prompts": 3, "label_right": 2}, clean, 2), "A wrong label passed"
         print("Observed: every bad report is rejected and the clean one is accepted.")
         print("RESULT: PASS")
         passed += 1
