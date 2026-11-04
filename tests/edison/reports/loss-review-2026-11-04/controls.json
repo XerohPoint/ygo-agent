@@ -1,0 +1,68 @@
+{
+ "first_offered_action_wins": 19,
+ "first_offered_action_games": 96,
+ "by_mirror_start": {
+  "sampled_4_streams": {
+   "mirror_won": {
+    "win": 266,
+    "loss": 310,
+    "draw": 0
+   },
+   "mirror_lost": {
+    "win": 74,
+    "loss": 502,
+    "draw": 0
+   }
+  },
+  "greedy": {
+   "mirror_won": {
+    "win": 98,
+    "loss": 46,
+    "draw": 0
+   },
+   "mirror_lost": {
+    "win": 34,
+    "loss": 110,
+    "draw": 0
+   }
+  }
+ },
+ "same_start_sampled_vs_greedy": {
+  "sampled_win_greedy_win": 64,
+  "sampled_loss_greedy_win": 68,
+  "sampled_loss_greedy_loss": 132,
+  "sampled_win_greedy_loss": 24
+ },
+ "own_turns": 1939,
+ "hand_over_6_at_last_decision_of_own_turn": 1,
+ "double_normal_summon_labels": {
+  "swap_frog_same_turn": 16,
+  "no_swap_frog": [
+   [
+    "1702/blackwing-machina_gadget-seat1/40000004",
+    "learner",
+    16
+   ],
+   [
+    "1703/frog_monarch-machina_gadget-seat1/40000001",
+    "opponent",
+    17
+   ],
+   [
+    "1704/blackwing-frog_monarch-seat0/40000001",
+    "opponent",
+    16
+   ],
+   [
+    "1704/blackwing-machina_gadget-seat0/40000001",
+    "learner",
+    17
+   ],
+   [
+    "1704/machina_gadget-blackwing-seat0/40000001",
+    "opponent",
+    22
+   ]
+  ]
+ }
+}

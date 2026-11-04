@@ -1,0 +1,238 @@
+{
+ "decisions": 14844,
+ "steps": 2500,
+ "aliasing": {
+  "prompts": 10854,
+  "with_alias": 1436,
+  "with_alias_idle": 953,
+  "prompts_idle": 5101,
+  "with_alias_chain": 22,
+  "prompts_chain": 1286,
+  "with_alias_select_position": 0,
+  "prompts_select_position": 709,
+  "with_alias_select_card": 409,
+  "prompts_select_card": 1340,
+  "with_alias_effect_yn": 0,
+  "prompts_effect_yn": 790,
+  "with_alias_battle": 7,
+  "prompts_battle": 1249,
+  "with_alias_select_sum": 0,
+  "prompts_select_sum": 9,
+  "with_alias_select_unselect": 4,
+  "prompts_select_unselect": 214,
+  "with_alias_select_tribute": 0,
+  "prompts_select_tribute": 108,
+  "with_alias_option": 41,
+  "prompts_option": 47,
+  "with_alias_yes_no": 0,
+  "prompts_yes_no": 1
+ },
+ "alias_examples": [
+  [
+   "idle: Heavy Storm = Icarus Attack (set)",
+   54
+  ],
+  [
+   "idle: Fissure = Mirror Force (set)",
+   46
+  ],
+  [
+   "idle: Mind Control = Icarus Attack (set)",
+   45
+  ],
+  [
+   "idle: Icarus Attack = Mirror Force (set)",
+   43
+  ],
+  [
+   "select_card: Raiza the Storm Monarch = Caius the Shadow Monarch (none)",
+   41
+  ],
+  [
+   "idle: Bottomless Trap Hole = Icarus Attack (set)",
+   35
+  ],
+  [
+   "select_card: Caius the Shadow Monarch = Raiza the Storm Monarch (none)",
+   34
+  ],
+  [
+   "idle: Book of Moon = Fissure (set)",
+   34
+  ],
+  [
+   "idle: Icarus Attack = Black Whirlwind (set)",
+   32
+  ],
+  [
+   "idle: Torrential Tribute = Icarus Attack (set)",
+   31
+  ],
+  [
+   "idle: Icarus Attack = Bottomless Trap Hole (set)",
+   31
+  ],
+  [
+   "idle: Mind Control = Mirror Force (set)",
+   31
+  ],
+  [
+   "idle: Enemy Controller = Foolish Burial (set)",
+   30
+  ],
+  [
+   "idle: Bottomless Trap Hole = Mirror Force (set)",
+   28
+  ],
+  [
+   "idle: Mirror Force = Bottomless Trap Hole (set)",
+   28
+  ],
+  [
+   "idle: Mirror Force = Icarus Attack (set)",
+   27
+  ],
+  [
+   "select_card: Raiza the Storm Monarch = Thestalos the Firestorm Monarch (none)",
+   27
+  ],
+  [
+   "idle: Mirror Force = Fissure (set)",
+   26
+  ],
+  [
+   "select_card: Caius the Shadow Monarch = Thestalos the Firestorm Monarch (none)",
+   25
+  ],
+  [
+   "idle: Soul Exchange = Trap Dustshoot (set)",
+   24
+  ],
+  [
+   "select_card: Thestalos the Firestorm Monarch = Caius the Shadow Monarch (none)",
+   24
+  ],
+  [
+   "idle: Heavy Storm = Royal Oppression (set)",
+   23
+  ],
+  [
+   "select_card: Thestalos the Firestorm Monarch = Raiza the Storm Monarch (none)",
+   22
+  ],
+  [
+   "idle: Torrential Tribute = Mirror Force (set)",
+   22
+  ],
+  [
+   "idle: Caius the Shadow Monarch = Raiza the Storm Monarch (normal_summon)",
+   21
+  ]
+ ],
+ "fits": [
+  {
+   "fold": 0,
+   "init": 0,
+   "train_agreement": 0.9658,
+   "heldout_agreement": 0.9335,
+   "heldout_by_msg": {
+    "battle": 0.9967,
+    "chain": 1.0,
+    "effect_yn": 1.0,
+    "idle": 0.8963,
+    "option": 1.0,
+    "select_card": 0.9318,
+    "select_position": 0.8689,
+    "select_sum": 1.0,
+    "select_tribute": 0.95,
+    "select_unselect": 0.9867
+   }
+  },
+  {
+   "fold": 1,
+   "init": 0,
+   "train_agreement": 0.9745,
+   "heldout_agreement": 0.9137,
+   "heldout_by_msg": {
+    "battle": 0.982,
+    "chain": 1.0,
+    "effect_yn": 1.0,
+    "idle": 0.8557,
+    "option": 1.0,
+    "select_card": 0.9521,
+    "select_position": 0.866,
+    "select_sum": 1.0,
+    "select_tribute": 0.9286,
+    "select_unselect": 0.9767,
+    "yes_no": 1.0
+   }
+  },
+  {
+   "fold": 2,
+   "init": 0,
+   "train_agreement": 0.9687,
+   "heldout_agreement": 0.9182,
+   "heldout_by_msg": {
+    "battle": 0.9834,
+    "chain": 0.9935,
+    "effect_yn": 1.0,
+    "idle": 0.9076,
+    "option": 0.75,
+    "select_card": 0.8694,
+    "select_position": 0.8089,
+    "select_sum": 0.6667,
+    "select_tribute": 0.7241,
+    "select_unselect": 0.898
+   }
+  },
+  {
+   "fold": 3,
+   "init": 0,
+   "train_agreement": 0.9701,
+   "heldout_agreement": 0.9247,
+   "heldout_by_msg": {
+    "battle": 0.9677,
+    "chain": 0.9966,
+    "effect_yn": 1.0,
+    "idle": 0.9078,
+    "option": 1.0,
+    "select_card": 0.9196,
+    "select_position": 0.7657,
+    "select_tribute": 0.8235,
+    "select_unselect": 0.9574
+   }
+  }
+ ],
+ "played_games": 96,
+ "played_wins": 41,
+ "played_by_deck": {
+  "blackwing": {
+   "wins": 16,
+   "games": 32
+  },
+  "frog_monarch": {
+   "wins": 7,
+   "games": 32
+  },
+  "machina_gadget": {
+   "wins": 18,
+   "games": 32
+  }
+ },
+ "played_by_seat": {
+  "0": {
+   "wins": 24,
+   "games": 48
+  },
+  "1": {
+   "wins": 17,
+   "games": 48
+  }
+ },
+ "played_by_init": {
+  "0": {
+   "wins": 41,
+   "games": 96
+  }
+ }
+}

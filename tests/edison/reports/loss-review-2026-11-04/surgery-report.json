@@ -1,0 +1,622 @@
+{
+ "baseline_streams": [
+  "plain",
+  "surgery/resample-1",
+  "surgery/resample-2",
+  "surgery/resample-3"
+ ],
+ "baseline_mean_wins": 85.0,
+ "baseline_stream_wins": {
+  "plain": 88,
+  "surgery/resample-1": 82,
+  "surgery/resample-2": 82,
+  "surgery/resample-3": 88
+ },
+ "variants": {
+  "argmax": {
+   "wins": 132,
+   "games": 288,
+   "rate": 0.4583,
+   "gain_vs_baseline_mean": 0.1632,
+   "bootstrap_95": [
+    0.1042,
+    0.2257
+   ],
+   "gain_by_optimizer": {
+    "1702": 0.1354,
+    "1703": 0.2005,
+    "1704": 0.1536
+   },
+   "median_decisions": 114,
+   "max_decisions": 517,
+   "splits": {
+    "deck": {
+     "blackwing": 0.3854,
+     "frog_monarch": 0.2917,
+     "machina_gadget": 0.6979
+    },
+    "seat": {
+     "0": 0.5208,
+     "1": 0.3958
+    },
+    "opp_deck": {
+     "blackwing": 0.3854,
+     "frog_monarch": 0.7188,
+     "machina_gadget": 0.2708
+    },
+    "deck_seat": {
+     "blackwing seat0": 0.5,
+     "blackwing seat1": 0.2708,
+     "frog_monarch seat0": 0.3333,
+     "frog_monarch seat1": 0.25,
+     "machina_gadget seat0": 0.7292,
+     "machina_gadget seat1": 0.6667
+    }
+   }
+  },
+  "hybrid:idle": {
+   "wins": 120,
+   "games": 288,
+   "rate": 0.4167,
+   "gain_vs_baseline_mean": 0.1215,
+   "bootstrap_95": [
+    0.0547,
+    0.1901
+   ],
+   "gain_by_optimizer": {
+    "1702": 0.1875,
+    "1703": 0.0755,
+    "1704": 0.1016
+   },
+   "median_decisions": 107,
+   "max_decisions": 392,
+   "splits": {
+    "deck": {
+     "blackwing": 0.3229,
+     "frog_monarch": 0.1979,
+     "machina_gadget": 0.7292
+    },
+    "seat": {
+     "0": 0.4653,
+     "1": 0.3681
+    },
+    "opp_deck": {
+     "blackwing": 0.4479,
+     "frog_monarch": 0.6562,
+     "machina_gadget": 0.1458
+    },
+    "deck_seat": {
+     "blackwing seat0": 0.4167,
+     "blackwing seat1": 0.2292,
+     "frog_monarch seat0": 0.2708,
+     "frog_monarch seat1": 0.125,
+     "machina_gadget seat0": 0.7083,
+     "machina_gadget seat1": 0.75
+    }
+   }
+  },
+  "hybrid:battle": {
+   "wins": 95,
+   "games": 288,
+   "rate": 0.3299,
+   "gain_vs_baseline_mean": 0.0347,
+   "bootstrap_95": [
+    -0.0043,
+    0.0738
+   ],
+   "gain_by_optimizer": {
+    "1702": 0.0,
+    "1703": 0.0234,
+    "1704": 0.0807
+   },
+   "median_decisions": 130,
+   "max_decisions": 483,
+   "splits": {
+    "deck": {
+     "blackwing": 0.3021,
+     "frog_monarch": 0.1667,
+     "machina_gadget": 0.5208
+    },
+    "seat": {
+     "0": 0.3958,
+     "1": 0.2639
+    },
+    "opp_deck": {
+     "blackwing": 0.25,
+     "frog_monarch": 0.625,
+     "machina_gadget": 0.1146
+    },
+    "deck_seat": {
+     "blackwing seat0": 0.4167,
+     "blackwing seat1": 0.1875,
+     "frog_monarch seat0": 0.1458,
+     "frog_monarch seat1": 0.1875,
+     "machina_gadget seat0": 0.625,
+     "machina_gadget seat1": 0.4167
+    }
+   }
+  },
+  "hybrid:chain": {
+   "wins": 86,
+   "games": 288,
+   "rate": 0.2986,
+   "gain_vs_baseline_mean": 0.0035,
+   "bootstrap_95": [
+    -0.0477,
+    0.0556
+   ],
+   "gain_by_optimizer": {
+    "1702": -0.0104,
+    "1703": 0.0234,
+    "1704": -0.0026
+   },
+   "median_decisions": 139,
+   "max_decisions": 495,
+   "splits": {
+    "deck": {
+     "blackwing": 0.2917,
+     "frog_monarch": 0.1146,
+     "machina_gadget": 0.4896
+    },
+    "seat": {
+     "0": 0.3194,
+     "1": 0.2778
+    },
+    "opp_deck": {
+     "blackwing": 0.1979,
+     "frog_monarch": 0.5521,
+     "machina_gadget": 0.1458
+    },
+    "deck_seat": {
+     "blackwing seat0": 0.3333,
+     "blackwing seat1": 0.25,
+     "frog_monarch seat0": 0.125,
+     "frog_monarch seat1": 0.1042,
+     "machina_gadget seat0": 0.5,
+     "machina_gadget seat1": 0.4792
+    }
+   }
+  },
+  "hybrid:select": {
+   "wins": 96,
+   "games": 288,
+   "rate": 0.3333,
+   "gain_vs_baseline_mean": 0.0382,
+   "bootstrap_95": [
+    -0.013,
+    0.0929
+   ],
+   "gain_by_optimizer": {
+    "1702": 0.0208,
+    "1703": 0.0026,
+    "1704": 0.0911
+   },
+   "median_decisions": 131,
+   "max_decisions": 505,
+   "splits": {
+    "deck": {
+     "blackwing": 0.3021,
+     "frog_monarch": 0.2083,
+     "machina_gadget": 0.4896
+    },
+    "seat": {
+     "0": 0.3889,
+     "1": 0.2778
+    },
+    "opp_deck": {
+     "blackwing": 0.2188,
+     "frog_monarch": 0.5833,
+     "machina_gadget": 0.1979
+    },
+    "deck_seat": {
+     "blackwing seat0": 0.3333,
+     "blackwing seat1": 0.2708,
+     "frog_monarch seat0": 0.1875,
+     "frog_monarch seat1": 0.2292,
+     "machina_gadget seat0": 0.6458,
+     "machina_gadget seat1": 0.3333
+    }
+   }
+  },
+  "hybrid:other": {
+   "wins": 94,
+   "games": 288,
+   "rate": 0.3264,
+   "gain_vs_baseline_mean": 0.0312,
+   "bootstrap_95": [
+    -0.0208,
+    0.0842
+   ],
+   "gain_by_optimizer": {
+    "1702": 0.0312,
+    "1703": -0.0078,
+    "1704": 0.0703
+   },
+   "median_decisions": 132,
+   "max_decisions": 504,
+   "splits": {
+    "deck": {
+     "blackwing": 0.2917,
+     "frog_monarch": 0.1771,
+     "machina_gadget": 0.5104
+    },
+    "seat": {
+     "0": 0.3819,
+     "1": 0.2708
+    },
+    "opp_deck": {
+     "blackwing": 0.1979,
+     "frog_monarch": 0.5938,
+     "machina_gadget": 0.1875
+    },
+    "deck_seat": {
+     "blackwing seat0": 0.4375,
+     "blackwing seat1": 0.1458,
+     "frog_monarch seat0": 0.1667,
+     "frog_monarch seat1": 0.1875,
+     "machina_gadget seat0": 0.5417,
+     "machina_gadget seat1": 0.4792
+    }
+   }
+  },
+  "argmax:idle": {
+   "wins": 102,
+   "games": 288,
+   "rate": 0.3542,
+   "gain_vs_baseline_mean": 0.059,
+   "bootstrap_95": [
+    0.0113,
+    0.1076
+   ],
+   "gain_by_optimizer": {
+    "1702": 0.0729,
+    "1703": 0.0443,
+    "1704": 0.0599
+   },
+   "median_decisions": 113,
+   "max_decisions": 502,
+   "splits": {
+    "deck": {
+     "blackwing": 0.3125,
+     "frog_monarch": 0.1562,
+     "machina_gadget": 0.5938
+    },
+    "seat": {
+     "0": 0.3819,
+     "1": 0.3264
+    },
+    "opp_deck": {
+     "blackwing": 0.2708,
+     "frog_monarch": 0.6354,
+     "machina_gadget": 0.1562
+    },
+    "deck_seat": {
+     "blackwing seat0": 0.3542,
+     "blackwing seat1": 0.2708,
+     "frog_monarch seat0": 0.1667,
+     "frog_monarch seat1": 0.1458,
+     "machina_gadget seat0": 0.625,
+     "machina_gadget seat1": 0.5625
+    }
+   }
+  },
+  "argmax:battle": {
+   "wins": 87,
+   "games": 288,
+   "rate": 0.3021,
+   "gain_vs_baseline_mean": 0.0069,
+   "bootstrap_95": [
+    -0.0312,
+    0.0469
+   ],
+   "gain_by_optimizer": {
+    "1702": -0.0208,
+    "1703": 0.0026,
+    "1704": 0.0391
+   },
+   "median_decisions": 124,
+   "max_decisions": 505,
+   "splits": {
+    "deck": {
+     "blackwing": 0.25,
+     "frog_monarch": 0.125,
+     "machina_gadget": 0.5312
+    },
+    "seat": {
+     "0": 0.375,
+     "1": 0.2292
+    },
+    "opp_deck": {
+     "blackwing": 0.2188,
+     "frog_monarch": 0.6042,
+     "machina_gadget": 0.0833
+    },
+    "deck_seat": {
+     "blackwing seat0": 0.375,
+     "blackwing seat1": 0.125,
+     "frog_monarch seat0": 0.1042,
+     "frog_monarch seat1": 0.1458,
+     "machina_gadget seat0": 0.6458,
+     "machina_gadget seat1": 0.4167
+    }
+   }
+  },
+  "argmax:chain": {
+   "wins": 89,
+   "games": 288,
+   "rate": 0.309,
+   "gain_vs_baseline_mean": 0.0139,
+   "bootstrap_95": [
+    -0.0295,
+    0.0564
+   ],
+   "gain_by_optimizer": {
+    "1702": 0.0312,
+    "1703": -0.0286,
+    "1704": 0.0391
+   },
+   "median_decisions": 124,
+   "max_decisions": 505,
+   "splits": {
+    "deck": {
+     "blackwing": 0.2708,
+     "frog_monarch": 0.1667,
+     "machina_gadget": 0.4896
+    },
+    "seat": {
+     "0": 0.3611,
+     "1": 0.2569
+    },
+    "opp_deck": {
+     "blackwing": 0.1667,
+     "frog_monarch": 0.6354,
+     "machina_gadget": 0.125
+    },
+    "deck_seat": {
+     "blackwing seat0": 0.3333,
+     "blackwing seat1": 0.2083,
+     "frog_monarch seat0": 0.1667,
+     "frog_monarch seat1": 0.1667,
+     "machina_gadget seat0": 0.5833,
+     "machina_gadget seat1": 0.3958
+    }
+   }
+  },
+  "argmax:select": {
+   "wins": 82,
+   "games": 288,
+   "rate": 0.2847,
+   "gain_vs_baseline_mean": -0.0104,
+   "bootstrap_95": [
+    -0.0547,
+    0.0356
+   ],
+   "gain_by_optimizer": {
+    "1702": -0.0208,
+    "1703": -0.0078,
+    "1704": -0.0026
+   },
+   "median_decisions": 128,
+   "max_decisions": 505,
+   "splits": {
+    "deck": {
+     "blackwing": 0.2188,
+     "frog_monarch": 0.1562,
+     "machina_gadget": 0.4792
+    },
+    "seat": {
+     "0": 0.3403,
+     "1": 0.2292
+    },
+    "opp_deck": {
+     "blackwing": 0.1875,
+     "frog_monarch": 0.5312,
+     "machina_gadget": 0.1354
+    },
+    "deck_seat": {
+     "blackwing seat0": 0.2708,
+     "blackwing seat1": 0.1667,
+     "frog_monarch seat0": 0.125,
+     "frog_monarch seat1": 0.1875,
+     "machina_gadget seat0": 0.625,
+     "machina_gadget seat1": 0.3333
+    }
+   }
+  },
+  "argmax:other": {
+   "wins": 90,
+   "games": 288,
+   "rate": 0.3125,
+   "gain_vs_baseline_mean": 0.0174,
+   "bootstrap_95": [
+    -0.0339,
+    0.066
+   ],
+   "gain_by_optimizer": {
+    "1702": 0.0104,
+    "1703": 0.0234,
+    "1704": 0.0182
+   },
+   "median_decisions": 119,
+   "max_decisions": 522,
+   "splits": {
+    "deck": {
+     "blackwing": 0.25,
+     "frog_monarch": 0.125,
+     "machina_gadget": 0.5625
+    },
+    "seat": {
+     "0": 0.3889,
+     "1": 0.2361
+    },
+    "opp_deck": {
+     "blackwing": 0.2396,
+     "frog_monarch": 0.6042,
+     "machina_gadget": 0.0938
+    },
+    "deck_seat": {
+     "blackwing seat0": 0.375,
+     "blackwing seat1": 0.125,
+     "frog_monarch seat0": 0.1667,
+     "frog_monarch seat1": 0.0833,
+     "machina_gadget seat0": 0.625,
+     "machina_gadget seat1": 0.5
+    }
+   }
+  }
+ },
+ "note": "Bootstrap resamples 96 (pairing, seat, duel seed) units with their 3 optimizers. It ignores optimizer-seed variance and treats the validation seeds as a sample; descriptive only.",
+ "baseline_by_optimizer": {
+  "1702": 26.0,
+  "1703": 26.75,
+  "1704": 32.25
+ },
+ "baseline_splits": {
+  "deck": {
+   "blackwing": 0.2552,
+   "frog_monarch": 0.1146,
+   "machina_gadget": 0.5156
+  },
+  "seat": {
+   "0": 0.3403,
+   "1": 0.25
+  },
+  "opp_deck": {
+   "blackwing": 0.2005,
+   "frog_monarch": 0.5729,
+   "machina_gadget": 0.112
+  },
+  "deck_seat": {
+   "blackwing seat0": 0.3125,
+   "blackwing seat1": 0.1979,
+   "frog_monarch seat0": 0.0938,
+   "frog_monarch seat1": 0.1354,
+   "machina_gadget seat0": 0.6146,
+   "machina_gadget seat1": 0.4167
+  }
+ },
+ "control_heuristic_mirror": {
+  "winners": {
+   "blackwing (seat0) vs frog_monarch (seat1)": [
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "blackwing (seat0) vs machina_gadget (seat1)": [
+    0,
+    0,
+    1,
+    0,
+    1,
+    1,
+    1,
+    0
+   ],
+   "frog_monarch (seat0) vs blackwing (seat1)": [
+    0,
+    1,
+    1,
+    0,
+    1,
+    1,
+    0,
+    1
+   ],
+   "frog_monarch (seat0) vs machina_gadget (seat1)": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "machina_gadget (seat0) vs blackwing (seat1)": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   "machina_gadget (seat0) vs frog_monarch (seat1)": [
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    1,
+    0
+   ]
+  },
+  "by_deck": {
+   "blackwing": [
+    16,
+    32
+   ],
+   "blackwing seat0": [
+    10,
+    16
+   ],
+   "frog_monarch": [
+    7,
+    32
+   ],
+   "frog_monarch seat1": [
+    4,
+    16
+   ],
+   "machina_gadget": [
+    25,
+    32
+   ],
+   "machina_gadget seat1": [
+    12,
+    16
+   ],
+   "frog_monarch seat0": [
+    3,
+    16
+   ],
+   "blackwing seat1": [
+    6,
+    16
+   ],
+   "machina_gadget seat0": [
+    13,
+    16
+   ]
+  },
+  "seat0_wins": 26,
+  "games": 48
+ },
+ "vs_random": {
+  "sampled@random": {
+   "wins_by_optimizer": {
+    "1702": 80,
+    "1703": 86,
+    "1704": 81
+   },
+   "wins": 247,
+   "games": 288
+  },
+  "argmax@random": {
+   "wins_by_optimizer": {
+    "1702": 83,
+    "1703": 90,
+    "1704": 86
+   },
+   "wins": 259,
+   "games": 288
+  }
+ }
+}

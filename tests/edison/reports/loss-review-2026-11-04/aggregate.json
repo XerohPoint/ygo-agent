@@ -1,0 +1,2245 @@
+{
+ "note": "all 288 games; post-hoc detectors labelled in report",
+ "outcomes": {
+  "win": 88,
+  "loss": 200
+ },
+ "win_reason": {
+  "win": {
+   "1": 88
+  },
+  "loss": {
+   "1": 200
+  }
+ },
+ "by_optimizer": {
+  "1702": {
+   "wins": 25,
+   "games": 96,
+   "rate": 0.2604
+  },
+  "1703": {
+   "wins": 25,
+   "games": 96,
+   "rate": 0.2604
+  },
+  "1704": {
+   "wins": 38,
+   "games": 96,
+   "rate": 0.3958
+  }
+ },
+ "by_deck": {
+  "blackwing": {
+   "wins": 25,
+   "games": 96,
+   "rate": 0.2604
+  },
+  "frog_monarch": {
+   "wins": 15,
+   "games": 96,
+   "rate": 0.1562
+  },
+  "machina_gadget": {
+   "wins": 48,
+   "games": 96,
+   "rate": 0.5
+  }
+ },
+ "by_seat": {
+  "0": {
+   "wins": 54,
+   "games": 144,
+   "rate": 0.375
+  },
+  "1": {
+   "wins": 34,
+   "games": 144,
+   "rate": 0.2361
+  }
+ },
+ "by_opp_deck": {
+  "blackwing": {
+   "wins": 18,
+   "games": 96,
+   "rate": 0.1875
+  },
+  "frog_monarch": {
+   "wins": 58,
+   "games": 96,
+   "rate": 0.6042
+  },
+  "machina_gadget": {
+   "wins": 12,
+   "games": 96,
+   "rate": 0.125
+  }
+ },
+ "by_matchup": {
+  "blackwing vs frog_monarch": {
+   "wins": 20,
+   "games": 48,
+   "rate": 0.4167
+  },
+  "blackwing vs machina_gadget": {
+   "wins": 5,
+   "games": 48,
+   "rate": 0.1042
+  },
+  "frog_monarch vs blackwing": {
+   "wins": 8,
+   "games": 48,
+   "rate": 0.1667
+  },
+  "frog_monarch vs machina_gadget": {
+   "wins": 7,
+   "games": 48,
+   "rate": 0.1458
+  },
+  "machina_gadget vs blackwing": {
+   "wins": 10,
+   "games": 48,
+   "rate": 0.2083
+  },
+  "machina_gadget vs frog_monarch": {
+   "wins": 38,
+   "games": 48,
+   "rate": 0.7917
+  }
+ },
+ "by_deck_seat": {
+  "blackwing seat0": {
+   "wins": 17,
+   "games": 48,
+   "rate": 0.3542
+  },
+  "blackwing seat1": {
+   "wins": 8,
+   "games": 48,
+   "rate": 0.1667
+  },
+  "frog_monarch seat0": {
+   "wins": 6,
+   "games": 48,
+   "rate": 0.125
+  },
+  "frog_monarch seat1": {
+   "wins": 9,
+   "games": 48,
+   "rate": 0.1875
+  },
+  "machina_gadget seat0": {
+   "wins": 31,
+   "games": 48,
+   "rate": 0.6458
+  },
+  "machina_gadget seat1": {
+   "wins": 17,
+   "games": 48,
+   "rate": 0.3542
+  }
+ },
+ "by_seed": {
+  "40000000": {
+   "wins": 14,
+   "games": 36,
+   "rate": 0.3889
+  },
+  "40000001": {
+   "wins": 7,
+   "games": 36,
+   "rate": 0.1944
+  },
+  "40000002": {
+   "wins": 12,
+   "games": 36,
+   "rate": 0.3333
+  },
+  "40000003": {
+   "wins": 10,
+   "games": 36,
+   "rate": 0.2778
+  },
+  "40000004": {
+   "wins": 12,
+   "games": 36,
+   "rate": 0.3333
+  },
+  "40000005": {
+   "wins": 12,
+   "games": 36,
+   "rate": 0.3333
+  },
+  "40000006": {
+   "wins": 11,
+   "games": 36,
+   "rate": 0.3056
+  },
+  "40000007": {
+   "wins": 10,
+   "games": 36,
+   "rate": 0.2778
+  }
+ },
+ "first_damage": {
+  "win": {
+   "opp": 41,
+   "both": 15,
+   "me": 32
+  },
+  "loss": {
+   "me": 136,
+   "both": 25,
+   "null": 2,
+   "opp": 37
+  }
+ },
+ "summary_win": {
+  "games": 88,
+  "decisions": {
+   "mean": 190.36,
+   "median": 177,
+   "min": 46,
+   "max": 439
+  },
+  "learner_decisions": {
+   "mean": 65.25,
+   "median": 65,
+   "min": 23,
+   "max": 115
+  },
+  "turns": {
+   "mean": 16.01,
+   "median": 16,
+   "min": 3,
+   "max": 33
+  },
+  "my_turns": {
+   "mean": 8.26,
+   "median": 8,
+   "min": 2,
+   "max": 17
+  },
+  "learner_ns": {
+   "mean": 5.01,
+   "median": 5,
+   "min": 0,
+   "max": 11
+  },
+  "learner_ss": {
+   "mean": 1.51,
+   "median": 1,
+   "min": 0,
+   "max": 5
+  },
+  "learner_mset": {
+   "mean": 0.74,
+   "median": 1,
+   "min": 0,
+   "max": 5
+  },
+  "learner_activate": {
+   "mean": 10.84,
+   "median": 11,
+   "min": 2,
+   "max": 22
+  },
+  "per_game_mean": {
+   "activate_total": 10.83,
+   "activate_unsafe": 2.989,
+   "agree": 29.545,
+   "attack_declared_all_known": 2.239,
+   "attack_declared_no_favourable": 0.239,
+   "attack_into_facedown": 0.011,
+   "attack_target_prompts": 0.489,
+   "attacks_declared": 2.409,
+   "attacks_with_target_known": 0.477,
+   "battle_attack_offered": 6.932,
+   "battle_attack_taken": 6.386,
+   "battle_direct_offered": 4.125,
+   "battle_direct_taken": 3.977,
+   "big_gap": 9.841,
+   "black_rose_nuke": 0.011,
+   "black_rose_self_hurt": 0.011,
+   "chain_safe_offered": 2.648,
+   "chain_safe_taken": 2.432,
+   "chain_unsafe_offered": 2.58,
+   "chain_unsafe_taken": 2.08,
+   "choice_prompts": 48.943,
+   "deviate_battle": 1.193,
+   "deviate_chain": 1.0,
+   "deviate_idle": 10.977,
+   "deviate_other": 1.25,
+   "deviate_select": 3.761,
+   "deviate_to_lower_score": 10.034,
+   "direct_attacks_declared": 3.977,
+   "draw_phase_activation": 1.386,
+   "draw_phase_activation_from_hand": 0.807,
+   "end_turn_idle": 2.307,
+   "end_turn_with_set_offered": 1.136,
+   "enemy_controller": 0.25,
+   "enemy_controller_draw_phase": 0.136,
+   "enemy_controller_opp_turn": 0.091,
+   "enemy_target_max": 0.023,
+   "enemy_target_min": 0.011,
+   "enemy_target_prompts": 0.034,
+   "expected_deviate_battle_x1000": 1123.568,
+   "expected_deviate_chain_x1000": 984.761,
+   "expected_deviate_idle_x1000": 10851.216,
+   "expected_deviate_other_x1000": 1352.443,
+   "expected_deviate_select_x1000": 3684.068,
+   "gap_sum": 130.713,
+   "heavy_storm": 0.239,
+   "heavy_storm_self_hurt": 0.023,
+   "heuristic_top_max": 0.034,
+   "idle_action_offered": 19.011,
+   "idle_ns_offered": 8.114,
+   "idle_ns_taken": 5.011,
+   "idle_pass": 4.034,
+   "idle_ss_offered": 3.602,
+   "idle_ss_taken": 1.511,
+   "low_p": 2.5,
+   "low_p_vs_modal": 0.92,
+   "ns_highest": 1.5,
+   "ns_lowest": 1.159,
+   "ns_multi": 2.477,
+   "opp_activate": 3.023,
+   "opp_attack": 1.023,
+   "opp_changes_position": 0.261,
+   "opp_direct_attack": 1.523,
+   "opp_normal_summon": 4.886,
+   "opp_selects": 2.443,
+   "opp_sets_monster": 0.102,
+   "opp_sets_spell_trap": 4.182,
+   "opp_special_summon": 0.58,
+   "opp_to_battle": 5.398,
+   "opp_to_end": 5.08,
+   "opp_to_main2": 3.864,
+   "pass_empty_board_with_summon": 0.409,
+   "position_defense_highatk": 0.0,
+   "position_prompts": 2.989,
+   "prompts_battle": 6.932,
+   "prompts_chain": 5.227,
+   "prompts_idle": 23.057,
+   "prompts_other": 6.602,
+   "prompts_select": 7.125,
+   "solemn": 0.216,
+   "solemn_lp_paid": 713.636,
+   "solemn_on_normal_summon": 0.17,
+   "solemn_on_own_card": 0.045,
+   "soul_exchange": 0.068,
+   "soul_exchange_followed_by_tribute_summon": 0.023,
+   "suicide_attacks": 0.045,
+   "t1_attack": 0.182,
+   "t1_field_end": 1.148,
+   "t1_oppfield_end": 0.261,
+   "t1_seen": 1.0,
+   "t1_summon_or_set_monster": 0.898,
+   "t2_attack": 0.659,
+   "t2_field_end": 1.227,
+   "t2_oppfield_end": 0.5,
+   "t2_seen": 1.0,
+   "t2_summon_or_set_monster": 0.864,
+   "t3_attack": 0.682,
+   "t3_field_end": 1.273,
+   "t3_oppfield_end": 0.545,
+   "t3_seen": 0.977,
+   "t3_summon_or_set_monster": 0.761,
+   "t4_attack": 0.648,
+   "t4_field_end": 1.545,
+   "t4_oppfield_end": 0.375,
+   "t4_seen": 0.977,
+   "t4_summon_or_set_monster": 0.727,
+   "t5_attack": 0.58,
+   "t5_field_end": 1.25,
+   "t5_oppfield_end": 0.33,
+   "t5_seen": 0.864,
+   "t5_summon_or_set_monster": 0.636,
+   "t6_attack": 0.42,
+   "t6_field_end": 1.068,
+   "t6_oppfield_end": 0.386,
+   "t6_seen": 0.75,
+   "t6_summon_or_set_monster": 0.466,
+   "torrential": 0.216,
+   "torrential_self_hurt": 0.057
+  }
+ },
+ "summary_loss": {
+  "games": 200,
+  "decisions": {
+   "mean": 126.31,
+   "median": 105,
+   "min": 40,
+   "max": 505
+  },
+  "learner_decisions": {
+   "mean": 45.51,
+   "median": 40,
+   "min": 9,
+   "max": 124
+  },
+  "turns": {
+   "mean": 12.91,
+   "median": 11,
+   "min": 4,
+   "max": 39
+  },
+  "my_turns": {
+   "mean": 6.06,
+   "median": 5,
+   "min": 1,
+   "max": 19
+  },
+  "learner_ns": {
+   "mean": 3.54,
+   "median": 3,
+   "min": 0,
+   "max": 12
+  },
+  "learner_ss": {
+   "mean": 0.91,
+   "median": 1,
+   "min": 0,
+   "max": 4
+  },
+  "learner_mset": {
+   "mean": 0.73,
+   "median": 0,
+   "min": 0,
+   "max": 5
+  },
+  "learner_activate": {
+   "mean": 7.94,
+   "median": 7,
+   "min": 1,
+   "max": 21
+  },
+  "per_game_mean": {
+   "activate_total": 7.94,
+   "activate_unsafe": 2.94,
+   "agree": 18.14,
+   "attack_declared_all_known": 1.305,
+   "attack_declared_no_favourable": 0.49,
+   "attack_into_facedown": 0.005,
+   "attack_target_prompts": 0.56,
+   "attacks_declared": 1.395,
+   "attacks_with_target_known": 0.555,
+   "battle_attack_offered": 3.195,
+   "battle_attack_taken": 2.43,
+   "battle_direct_offered": 1.12,
+   "battle_direct_taken": 1.035,
+   "big_gap": 7.865,
+   "black_rose_nuke": 0.015,
+   "black_rose_self_hurt": 0.015,
+   "chain_safe_offered": 1.84,
+   "chain_safe_taken": 1.725,
+   "chain_unsafe_offered": 2.285,
+   "chain_unsafe_taken": 1.69,
+   "choice_prompts": 32.735,
+   "deviate_battle": 0.72,
+   "deviate_chain": 0.93,
+   "deviate_idle": 7.73,
+   "deviate_other": 1.285,
+   "deviate_select": 2.9,
+   "deviate_to_lower_score": 7.445,
+   "direct_attacks_declared": 1.035,
+   "draw_phase_activation": 1.39,
+   "draw_phase_activation_from_hand": 0.88,
+   "end_turn_idle": 1.43,
+   "end_turn_with_set_offered": 0.67,
+   "enemy_controller": 0.685,
+   "enemy_controller_draw_phase": 0.47,
+   "enemy_controller_opp_turn": 0.19,
+   "enemy_target_max": 0.095,
+   "enemy_target_min": 0.125,
+   "enemy_target_prompts": 0.25,
+   "expected_deviate_battle_x1000": 613.06,
+   "expected_deviate_chain_x1000": 891.865,
+   "expected_deviate_idle_x1000": 7408.175,
+   "expected_deviate_other_x1000": 1189.645,
+   "expected_deviate_select_x1000": 2801.495,
+   "gap_sum": 97.451,
+   "heavy_storm": 0.26,
+   "heavy_storm_self_hurt": 0.085,
+   "heuristic_top_max": 0.25,
+   "idle_action_offered": 13.815,
+   "idle_ns_offered": 5.83,
+   "idle_ns_taken": 3.54,
+   "idle_pass": 2.66,
+   "idle_ss_offered": 2.365,
+   "idle_ss_taken": 0.905,
+   "low_p": 2.125,
+   "low_p_vs_modal": 0.665,
+   "ns_highest": 0.98,
+   "ns_lowest": 0.955,
+   "ns_multi": 1.835,
+   "opp_activate": 4.435,
+   "opp_attack": 1.69,
+   "opp_changes_position": 0.815,
+   "opp_direct_attack": 3.69,
+   "opp_normal_summon": 4.53,
+   "opp_selects": 3.41,
+   "opp_sets_monster": 0.115,
+   "opp_sets_spell_trap": 3.405,
+   "opp_special_summon": 1.565,
+   "opp_to_battle": 4.605,
+   "opp_to_end": 3.4,
+   "opp_to_main2": 1.43,
+   "pass_empty_board_with_summon": 0.305,
+   "position_defense_highatk": 0.0,
+   "position_prompts": 2.23,
+   "prompts_battle": 3.195,
+   "prompts_chain": 4.13,
+   "prompts_idle": 15.36,
+   "prompts_other": 4.83,
+   "prompts_select": 5.22,
+   "solemn": 0.18,
+   "solemn_lp_paid": 582.5,
+   "solemn_on_activate": 0.02,
+   "solemn_on_normal_summon": 0.095,
+   "solemn_on_own_card": 0.06,
+   "solemn_on_sets_spell_trap": 0.005,
+   "soul_exchange": 0.13,
+   "soul_exchange_followed_by_tribute_summon": 0.015,
+   "suicide_attacks": 0.17,
+   "t1_attack": 0.195,
+   "t1_field_end": 1.025,
+   "t1_oppfield_end": 0.43,
+   "t1_seen": 1.0,
+   "t1_summon_or_set_monster": 0.905,
+   "t2_attack": 0.45,
+   "t2_field_end": 0.965,
+   "t2_oppfield_end": 0.69,
+   "t2_seen": 0.995,
+   "t2_summon_or_set_monster": 0.835,
+   "t3_attack": 0.405,
+   "t3_field_end": 0.87,
+   "t3_oppfield_end": 0.935,
+   "t3_seen": 0.935,
+   "t3_summon_or_set_monster": 0.735,
+   "t4_attack": 0.345,
+   "t4_field_end": 0.69,
+   "t4_oppfield_end": 0.7,
+   "t4_seen": 0.735,
+   "t4_summon_or_set_monster": 0.54,
+   "t5_attack": 0.23,
+   "t5_field_end": 0.455,
+   "t5_oppfield_end": 0.515,
+   "t5_seen": 0.565,
+   "t5_summon_or_set_monster": 0.35,
+   "t6_attack": 0.115,
+   "t6_field_end": 0.365,
+   "t6_oppfield_end": 0.415,
+   "t6_seen": 0.44,
+   "t6_summon_or_set_monster": 0.235,
+   "torrential": 0.18,
+   "torrential_self_hurt": 0.02
+  }
+ },
+ "decisions_by_msg": {
+  "battle": {
+   "win": {
+    "prompts": 610,
+    "agree": 0.8344,
+    "mean_gap": 1.0993,
+    "gap_ge5": 0.0951,
+    "mean_maxp": 0.8379,
+    "modal_agree": 0.918,
+    "p_lt_10": 0.0295
+   },
+   "loss": {
+    "prompts": 639,
+    "agree": 0.7183,
+    "mean_gap": 2.07,
+    "gap_ge5": 0.2551,
+    "mean_maxp": 0.8081,
+    "modal_agree": 0.7559,
+    "p_lt_10": 0.0313
+   }
+  },
+  "chain": {
+   "win": {
+    "prompts": 460,
+    "agree": 0.5609,
+    "mean_gap": 1.7391,
+    "gap_ge5": 0.0543,
+    "mean_maxp": 0.8116,
+    "modal_agree": 0.5109,
+    "p_lt_10": 0.0087
+   },
+   "loss": {
+    "prompts": 826,
+    "agree": 0.5605,
+    "mean_gap": 1.6271,
+    "gap_ge5": 0.0387,
+    "mean_maxp": 0.784,
+    "modal_agree": 0.4528,
+    "p_lt_10": 0.0145
+   }
+  },
+  "effect_yn": {
+   "win": {
+    "prompts": 308,
+    "agree": 0.9058,
+    "mean_gap": 0.9935,
+    "gap_ge5": 0.0909,
+    "mean_maxp": 0.9026,
+    "modal_agree": 0.9805,
+    "p_lt_10": 0.0097
+   },
+   "loss": {
+    "prompts": 482,
+    "agree": 0.8278,
+    "mean_gap": 1.8402,
+    "gap_ge5": 0.166,
+    "mean_maxp": 0.8629,
+    "modal_agree": 0.9876,
+    "p_lt_10": 0.0207
+   }
+  },
+  "idle": {
+   "win": {
+    "prompts": 2029,
+    "agree": 0.5071,
+    "mean_gap": 4.3365,
+    "gap_ge5": 0.3243,
+    "mean_maxp": 0.5294,
+    "modal_agree": 0.6363,
+    "p_lt_10": 0.0813
+   },
+   "loss": {
+    "prompts": 3072,
+    "agree": 0.4762,
+    "mean_gap": 4.58,
+    "gap_ge5": 0.3516,
+    "mean_maxp": 0.5177,
+    "modal_agree": 0.6615,
+    "p_lt_10": 0.0918
+   }
+  },
+  "option": {
+   "loss": {
+    "prompts": 38,
+    "agree": 1.0,
+    "mean_gap": 0.0,
+    "gap_ge5": 0.0,
+    "mean_maxp": 0.5106,
+    "modal_agree": 1.0,
+    "p_lt_10": 0.0
+   },
+   "win": {
+    "prompts": 9,
+    "agree": 1.0,
+    "mean_gap": 0.0,
+    "gap_ge5": 0.0,
+    "mean_maxp": 0.511,
+    "modal_agree": 1.0,
+    "p_lt_10": 0.0
+   }
+  },
+  "select_card": {
+   "win": {
+    "prompts": 453,
+    "agree": 0.521,
+    "mean_gap": 0.9647,
+    "gap_ge5": 0.0353,
+    "mean_maxp": 0.4448,
+    "modal_agree": 0.6909,
+    "p_lt_10": 0.0618
+   },
+   "loss": {
+    "prompts": 887,
+    "agree": 0.5096,
+    "mean_gap": 0.9883,
+    "gap_ge5": 0.0372,
+    "mean_maxp": 0.4457,
+    "modal_agree": 0.6156,
+    "p_lt_10": 0.1116
+   }
+  },
+  "select_position": {
+   "win": {
+    "prompts": 263,
+    "agree": 0.6958,
+    "mean_gap": 1.5209,
+    "gap_ge5": 0.3042,
+    "mean_maxp": 0.6788,
+    "modal_agree": 0.4981,
+    "p_lt_10": 0.0038
+   },
+   "loss": {
+    "prompts": 446,
+    "agree": 0.5919,
+    "mean_gap": 2.0404,
+    "gap_ge5": 0.4081,
+    "mean_maxp": 0.6564,
+    "modal_agree": 0.3565,
+    "p_lt_10": 0.0045
+   }
+  },
+  "select_sum": {
+   "win": {
+    "prompts": 5,
+    "agree": 1.0,
+    "mean_gap": 0.0,
+    "gap_ge5": 0.0,
+    "mean_maxp": 0.5149,
+    "modal_agree": 1.0,
+    "p_lt_10": 0.0
+   },
+   "loss": {
+    "prompts": 4,
+    "agree": 0.75,
+    "mean_gap": 0.05,
+    "gap_ge5": 0.0,
+    "mean_maxp": 0.4906,
+    "modal_agree": 0.75,
+    "p_lt_10": 0.0
+   }
+  },
+  "select_tribute": {
+   "loss": {
+    "prompts": 46,
+    "agree": 0.7609,
+    "mean_gap": 0.2826,
+    "gap_ge5": 0.0,
+    "mean_maxp": 0.6445,
+    "modal_agree": 0.913,
+    "p_lt_10": 0.0
+   },
+   "win": {
+    "prompts": 62,
+    "agree": 0.6129,
+    "mean_gap": 0.4435,
+    "gap_ge5": 0.0,
+    "mean_maxp": 0.6522,
+    "modal_agree": 0.8548,
+    "p_lt_10": 0.0161
+   }
+  },
+  "select_unselect": {
+   "win": {
+    "prompts": 107,
+    "agree": 0.4953,
+    "mean_gap": 0.5888,
+    "gap_ge5": 0.0093,
+    "mean_maxp": 0.5448,
+    "modal_agree": 0.3832,
+    "p_lt_10": 0.0
+   },
+   "loss": {
+    "prompts": 107,
+    "agree": 0.486,
+    "mean_gap": 0.6271,
+    "gap_ge5": 0.028,
+    "mean_maxp": 0.5305,
+    "modal_agree": 0.4579,
+    "p_lt_10": 0.0
+   }
+  },
+  "yes_no": {
+   "win": {
+    "prompts": 1,
+    "agree": 1.0,
+    "mean_gap": 0.0,
+    "gap_ge5": 0.0,
+    "mean_maxp": 0.8401,
+    "modal_agree": 1.0,
+    "p_lt_10": 0.0
+   }
+  }
+ },
+ "decisions_by_class_deck": {
+  "battle|blackwing": {
+   "win": {
+    "prompts": 162,
+    "agree": 0.8395,
+    "mean_gap": 1.0485,
+    "gap_ge5": 0.0926,
+    "mean_maxp": 0.8528,
+    "modal_agree": 0.9198,
+    "p_lt_10": 0.0309
+   },
+   "loss": {
+    "prompts": 203,
+    "agree": 0.7241,
+    "mean_gap": 1.8596,
+    "gap_ge5": 0.2414,
+    "mean_maxp": 0.8102,
+    "modal_agree": 0.7537,
+    "p_lt_10": 0.0148
+   }
+  },
+  "battle|frog_monarch": {
+   "loss": {
+    "prompts": 230,
+    "agree": 0.6652,
+    "mean_gap": 2.533,
+    "gap_ge5": 0.3217,
+    "mean_maxp": 0.7836,
+    "modal_agree": 0.7217,
+    "p_lt_10": 0.0304
+   },
+   "win": {
+    "prompts": 136,
+    "agree": 0.8235,
+    "mean_gap": 1.4118,
+    "gap_ge5": 0.1471,
+    "mean_maxp": 0.8132,
+    "modal_agree": 0.875,
+    "p_lt_10": 0.0074
+   }
+  },
+  "battle|machina_gadget": {
+   "loss": {
+    "prompts": 206,
+    "agree": 0.7718,
+    "mean_gap": 1.7602,
+    "gap_ge5": 0.1942,
+    "mean_maxp": 0.8333,
+    "modal_agree": 0.7961,
+    "p_lt_10": 0.0485
+   },
+   "win": {
+    "prompts": 312,
+    "agree": 0.8365,
+    "mean_gap": 0.9894,
+    "gap_ge5": 0.0737,
+    "mean_maxp": 0.8409,
+    "modal_agree": 0.9359,
+    "p_lt_10": 0.0385
+   }
+  },
+  "chain|blackwing": {
+   "win": {
+    "prompts": 159,
+    "agree": 0.4906,
+    "mean_gap": 1.9245,
+    "gap_ge5": 0.0503,
+    "mean_maxp": 0.8024,
+    "modal_agree": 0.4151,
+    "p_lt_10": 0.0
+   },
+   "loss": {
+    "prompts": 293,
+    "agree": 0.6143,
+    "mean_gap": 1.3481,
+    "gap_ge5": 0.0239,
+    "mean_maxp": 0.8183,
+    "modal_agree": 0.5085,
+    "p_lt_10": 0.0171
+   }
+  },
+  "chain|frog_monarch": {
+   "loss": {
+    "prompts": 304,
+    "agree": 0.4243,
+    "mean_gap": 2.1711,
+    "gap_ge5": 0.0559,
+    "mean_maxp": 0.7074,
+    "modal_agree": 0.2697,
+    "p_lt_10": 0.0132
+   },
+   "win": {
+    "prompts": 70,
+    "agree": 0.4429,
+    "mean_gap": 2.4,
+    "gap_ge5": 0.1,
+    "mean_maxp": 0.7114,
+    "modal_agree": 0.3857,
+    "p_lt_10": 0.0143
+   }
+  },
+  "chain|machina_gadget": {
+   "loss": {
+    "prompts": 229,
+    "agree": 0.6725,
+    "mean_gap": 1.262,
+    "gap_ge5": 0.0349,
+    "mean_maxp": 0.8421,
+    "modal_agree": 0.6245,
+    "p_lt_10": 0.0131
+   },
+   "win": {
+    "prompts": 231,
+    "agree": 0.645,
+    "mean_gap": 1.4113,
+    "gap_ge5": 0.0433,
+    "mean_maxp": 0.8483,
+    "modal_agree": 0.6147,
+    "p_lt_10": 0.013
+   }
+  },
+  "idle|blackwing": {
+   "win": {
+    "prompts": 630,
+    "agree": 0.4968,
+    "mean_gap": 4.1559,
+    "gap_ge5": 0.3111,
+    "mean_maxp": 0.5246,
+    "modal_agree": 0.6492,
+    "p_lt_10": 0.0889
+   },
+   "loss": {
+    "prompts": 1165,
+    "agree": 0.4867,
+    "mean_gap": 4.4258,
+    "gap_ge5": 0.3339,
+    "mean_maxp": 0.514,
+    "modal_agree": 0.6704,
+    "p_lt_10": 0.0953
+   }
+  },
+  "idle|frog_monarch": {
+   "loss": {
+    "prompts": 983,
+    "agree": 0.4771,
+    "mean_gap": 4.5973,
+    "gap_ge5": 0.3642,
+    "mean_maxp": 0.501,
+    "modal_agree": 0.7121,
+    "p_lt_10": 0.0936
+   },
+   "win": {
+    "prompts": 357,
+    "agree": 0.5406,
+    "mean_gap": 4.4395,
+    "gap_ge5": 0.3109,
+    "mean_maxp": 0.5255,
+    "modal_agree": 0.7227,
+    "p_lt_10": 0.0896
+   }
+  },
+  "idle|machina_gadget": {
+   "loss": {
+    "prompts": 924,
+    "agree": 0.4621,
+    "mean_gap": 4.756,
+    "gap_ge5": 0.3604,
+    "mean_maxp": 0.5402,
+    "modal_agree": 0.5963,
+    "p_lt_10": 0.0855
+   },
+   "win": {
+    "prompts": 1042,
+    "agree": 0.5019,
+    "mean_gap": 4.4104,
+    "gap_ge5": 0.3369,
+    "mean_maxp": 0.5336,
+    "modal_agree": 0.5988,
+    "p_lt_10": 0.0739
+   }
+  },
+  "other|blackwing": {
+   "win": {
+    "prompts": 95,
+    "agree": 0.8632,
+    "mean_gap": 0.7895,
+    "gap_ge5": 0.1263,
+    "mean_maxp": 0.8217,
+    "modal_agree": 0.8316,
+    "p_lt_10": 0.0105
+   },
+   "loss": {
+    "prompts": 159,
+    "agree": 0.6667,
+    "mean_gap": 2.195,
+    "gap_ge5": 0.3145,
+    "mean_maxp": 0.7783,
+    "modal_agree": 0.7987,
+    "p_lt_10": 0.0063
+   }
+  },
+  "other|frog_monarch": {
+   "loss": {
+    "prompts": 562,
+    "agree": 0.7046,
+    "mean_gap": 1.9858,
+    "gap_ge5": 0.2954,
+    "mean_maxp": 0.7136,
+    "modal_agree": 0.5747,
+    "p_lt_10": 0.0107
+   },
+   "win": {
+    "prompts": 218,
+    "agree": 0.7248,
+    "mean_gap": 1.6835,
+    "gap_ge5": 0.2752,
+    "mean_maxp": 0.7311,
+    "modal_agree": 0.5505,
+    "p_lt_10": 0.0046
+   }
+  },
+  "other|machina_gadget": {
+   "loss": {
+    "prompts": 245,
+    "agree": 0.8122,
+    "mean_gap": 1.3551,
+    "gap_ge5": 0.1878,
+    "mean_maxp": 0.8296,
+    "modal_agree": 0.9102,
+    "p_lt_10": 0.0204
+   },
+   "win": {
+    "prompts": 268,
+    "agree": 0.8657,
+    "mean_gap": 0.9851,
+    "gap_ge5": 0.1343,
+    "mean_maxp": 0.8378,
+    "modal_agree": 0.9104,
+    "p_lt_10": 0.0075
+   }
+  },
+  "select|blackwing": {
+   "win": {
+    "prompts": 167,
+    "agree": 0.5928,
+    "mean_gap": 0.909,
+    "gap_ge5": 0.0479,
+    "mean_maxp": 0.4543,
+    "modal_agree": 0.7605,
+    "p_lt_10": 0.0898
+   },
+   "loss": {
+    "prompts": 296,
+    "agree": 0.6453,
+    "mean_gap": 0.8845,
+    "gap_ge5": 0.0574,
+    "mean_maxp": 0.5199,
+    "modal_agree": 0.7568,
+    "p_lt_10": 0.0777
+   }
+  },
+  "select|frog_monarch": {
+   "loss": {
+    "prompts": 497,
+    "agree": 0.4266,
+    "mean_gap": 1.0966,
+    "gap_ge5": 0.0362,
+    "mean_maxp": 0.4111,
+    "modal_agree": 0.5231,
+    "p_lt_10": 0.1509
+   },
+   "win": {
+    "prompts": 191,
+    "agree": 0.4921,
+    "mean_gap": 1.0953,
+    "gap_ge5": 0.0419,
+    "mean_maxp": 0.459,
+    "modal_agree": 0.6545,
+    "p_lt_10": 0.0628
+   }
+  },
+  "select|machina_gadget": {
+   "loss": {
+    "prompts": 251,
+    "agree": 0.5538,
+    "mean_gap": 0.598,
+    "gap_ge5": 0.004,
+    "mean_maxp": 0.4999,
+    "modal_agree": 0.6215,
+    "p_lt_10": 0.004
+   },
+   "win": {
+    "prompts": 269,
+    "agree": 0.5167,
+    "mean_gap": 0.619,
+    "gap_ge5": 0.0037,
+    "mean_maxp": 0.5178,
+    "modal_agree": 0.5948,
+    "p_lt_10": 0.0074
+   }
+  }
+ },
+ "decisions_by_class_seat": {
+  "battle|seat0": {
+   "win": {
+    "prompts": 345,
+    "agree": 0.858,
+    "mean_gap": 0.6974,
+    "gap_ge5": 0.0667,
+    "mean_maxp": 0.845,
+    "modal_agree": 0.9362,
+    "p_lt_10": 0.0174
+   },
+   "loss": {
+    "prompts": 294,
+    "agree": 0.7483,
+    "mean_gap": 1.7966,
+    "gap_ge5": 0.2211,
+    "mean_maxp": 0.8155,
+    "modal_agree": 0.7755,
+    "p_lt_10": 0.017
+   }
+  },
+  "battle|seat1": {
+   "loss": {
+    "prompts": 345,
+    "agree": 0.6928,
+    "mean_gap": 2.3029,
+    "gap_ge5": 0.2841,
+    "mean_maxp": 0.8018,
+    "modal_agree": 0.7391,
+    "p_lt_10": 0.0435
+   },
+   "win": {
+    "prompts": 265,
+    "agree": 0.8038,
+    "mean_gap": 1.6225,
+    "gap_ge5": 0.1321,
+    "mean_maxp": 0.8286,
+    "modal_agree": 0.8943,
+    "p_lt_10": 0.0453
+   }
+  },
+  "chain|seat0": {
+   "win": {
+    "prompts": 265,
+    "agree": 0.5736,
+    "mean_gap": 1.5509,
+    "gap_ge5": 0.034,
+    "mean_maxp": 0.8146,
+    "modal_agree": 0.483,
+    "p_lt_10": 0.0113
+   },
+   "loss": {
+    "prompts": 368,
+    "agree": 0.5543,
+    "mean_gap": 1.7255,
+    "gap_ge5": 0.0489,
+    "mean_maxp": 0.7721,
+    "modal_agree": 0.4674,
+    "p_lt_10": 0.019
+   }
+  },
+  "chain|seat1": {
+   "loss": {
+    "prompts": 458,
+    "agree": 0.5655,
+    "mean_gap": 1.548,
+    "gap_ge5": 0.0306,
+    "mean_maxp": 0.7937,
+    "modal_agree": 0.441,
+    "p_lt_10": 0.0109
+   },
+   "win": {
+    "prompts": 195,
+    "agree": 0.5436,
+    "mean_gap": 1.9949,
+    "gap_ge5": 0.0821,
+    "mean_maxp": 0.8076,
+    "modal_agree": 0.5487,
+    "p_lt_10": 0.0051
+   }
+  },
+  "idle|seat0": {
+   "win": {
+    "prompts": 1197,
+    "agree": 0.4954,
+    "mean_gap": 4.4477,
+    "gap_ge5": 0.3266,
+    "mean_maxp": 0.5152,
+    "modal_agree": 0.6174,
+    "p_lt_10": 0.0794
+   },
+   "loss": {
+    "prompts": 1465,
+    "agree": 0.4676,
+    "mean_gap": 4.7395,
+    "gap_ge5": 0.359,
+    "mean_maxp": 0.5023,
+    "modal_agree": 0.6812,
+    "p_lt_10": 0.0962
+   }
+  },
+  "idle|seat1": {
+   "loss": {
+    "prompts": 1607,
+    "agree": 0.4841,
+    "mean_gap": 4.4345,
+    "gap_ge5": 0.3447,
+    "mean_maxp": 0.5317,
+    "modal_agree": 0.6434,
+    "p_lt_10": 0.0877
+   },
+   "win": {
+    "prompts": 832,
+    "agree": 0.524,
+    "mean_gap": 4.1764,
+    "gap_ge5": 0.3209,
+    "mean_maxp": 0.5497,
+    "modal_agree": 0.6635,
+    "p_lt_10": 0.0841
+   }
+  },
+  "other|seat0": {
+   "win": {
+    "prompts": 343,
+    "agree": 0.8192,
+    "mean_gap": 1.2566,
+    "gap_ge5": 0.1808,
+    "mean_maxp": 0.8024,
+    "modal_agree": 0.7959,
+    "p_lt_10": 0.0058
+   },
+   "loss": {
+    "prompts": 506,
+    "agree": 0.7451,
+    "mean_gap": 1.664,
+    "gap_ge5": 0.249,
+    "mean_maxp": 0.747,
+    "modal_agree": 0.7055,
+    "p_lt_10": 0.0059
+   }
+  },
+  "other|seat1": {
+   "loss": {
+    "prompts": 460,
+    "agree": 0.7043,
+    "mean_gap": 2.0761,
+    "gap_ge5": 0.2957,
+    "mean_maxp": 0.761,
+    "modal_agree": 0.687,
+    "p_lt_10": 0.0196
+   },
+   "win": {
+    "prompts": 238,
+    "agree": 0.8025,
+    "mean_gap": 1.1555,
+    "gap_ge5": 0.1933,
+    "mean_maxp": 0.7847,
+    "modal_agree": 0.7143,
+    "p_lt_10": 0.0084
+   }
+  },
+  "select|seat0": {
+   "win": {
+    "prompts": 370,
+    "agree": 0.5405,
+    "mean_gap": 0.8422,
+    "gap_ge5": 0.0243,
+    "mean_maxp": 0.4774,
+    "modal_agree": 0.6568,
+    "p_lt_10": 0.0514
+   },
+   "loss": {
+    "prompts": 520,
+    "agree": 0.5077,
+    "mean_gap": 0.9849,
+    "gap_ge5": 0.0442,
+    "mean_maxp": 0.4692,
+    "modal_agree": 0.6096,
+    "p_lt_10": 0.1
+   }
+  },
+  "select|seat1": {
+   "loss": {
+    "prompts": 524,
+    "agree": 0.5305,
+    "mean_gap": 0.8488,
+    "gap_ge5": 0.0248,
+    "mean_maxp": 0.4575,
+    "modal_agree": 0.6164,
+    "p_lt_10": 0.0897
+   },
+   "win": {
+    "prompts": 257,
+    "agree": 0.5136,
+    "mean_gap": 0.8401,
+    "gap_ge5": 0.0311,
+    "mean_maxp": 0.4909,
+    "modal_agree": 0.6576,
+    "p_lt_10": 0.0389
+   }
+  }
+ },
+ "decisions_by_phase": {
+  "battle-start": {
+   "win": {
+    "prompts": 849,
+    "agree": 0.7974,
+    "mean_gap": 1.0772,
+    "gap_ge5": 0.0954,
+    "mean_maxp": 0.8055,
+    "modal_agree": 0.8504,
+    "p_lt_10": 0.0247
+   },
+   "loss": {
+    "prompts": 1078,
+    "agree": 0.7022,
+    "mean_gap": 1.7599,
+    "gap_ge5": 0.2078,
+    "mean_maxp": 0.7609,
+    "modal_agree": 0.7421,
+    "p_lt_10": 0.0288
+   }
+  },
+  "draw": {
+   "win": {
+    "prompts": 222,
+    "agree": 0.6216,
+    "mean_gap": 1.4509,
+    "gap_ge5": 0.0541,
+    "mean_maxp": 0.7259,
+    "modal_agree": 0.6441,
+    "p_lt_10": 0.0225
+   },
+   "loss": {
+    "prompts": 475,
+    "agree": 0.6295,
+    "mean_gap": 1.3057,
+    "gap_ge5": 0.0358,
+    "mean_maxp": 0.7077,
+    "modal_agree": 0.56,
+    "p_lt_10": 0.0147
+   }
+  },
+  "end": {
+   "loss": {
+    "prompts": 1,
+    "agree": 1.0,
+    "mean_gap": 0.0,
+    "gap_ge5": 0.0,
+    "mean_maxp": 0.7047,
+    "modal_agree": 1.0,
+    "p_lt_10": 0.0
+   }
+  },
+  "main1": {
+   "win": {
+    "prompts": 2699,
+    "agree": 0.5539,
+    "mean_gap": 3.0923,
+    "gap_ge5": 0.213,
+    "mean_maxp": 0.5725,
+    "modal_agree": 0.674,
+    "p_lt_10": 0.0685
+   },
+   "loss": {
+    "prompts": 4091,
+    "agree": 0.5114,
+    "mean_gap": 3.3725,
+    "gap_ge5": 0.2518,
+    "mean_maxp": 0.5557,
+    "modal_agree": 0.6431,
+    "p_lt_10": 0.0875
+   }
+  },
+  "main2": {
+   "win": {
+    "prompts": 422,
+    "agree": 0.5213,
+    "mean_gap": 3.8415,
+    "gap_ge5": 0.3697,
+    "mean_maxp": 0.6127,
+    "modal_agree": 0.4858,
+    "p_lt_10": 0.019
+   },
+   "loss": {
+    "prompts": 665,
+    "agree": 0.4947,
+    "mean_gap": 3.8525,
+    "gap_ge5": 0.3353,
+    "mean_maxp": 0.5858,
+    "modal_agree": 0.5774,
+    "p_lt_10": 0.0391
+   }
+  },
+  "standby": {
+   "loss": {
+    "prompts": 237,
+    "agree": 0.6329,
+    "mean_gap": 2.5916,
+    "gap_ge5": 0.3333,
+    "mean_maxp": 0.6175,
+    "modal_agree": 0.5063,
+    "p_lt_10": 0.0127
+   },
+   "win": {
+    "prompts": 115,
+    "agree": 0.6087,
+    "mean_gap": 2.6,
+    "gap_ge5": 0.3652,
+    "mean_maxp": 0.6493,
+    "modal_agree": 0.4522,
+    "p_lt_10": 0.0087
+   }
+  }
+ },
+ "decisions_by_turn": {
+  "T01-05": {
+   "win": {
+    "prompts": 1590,
+    "agree": 0.5786,
+    "mean_gap": 2.8997,
+    "gap_ge5": 0.1981,
+    "mean_maxp": 0.5933,
+    "modal_agree": 0.639,
+    "p_lt_10": 0.0629
+   },
+   "loss": {
+    "prompts": 3243,
+    "agree": 0.5307,
+    "mean_gap": 3.0699,
+    "gap_ge5": 0.234,
+    "mean_maxp": 0.5678,
+    "modal_agree": 0.6001,
+    "p_lt_10": 0.074
+   }
+  },
+  "T06-10": {
+   "win": {
+    "prompts": 1121,
+    "agree": 0.6155,
+    "mean_gap": 2.7232,
+    "gap_ge5": 0.2177,
+    "mean_maxp": 0.652,
+    "modal_agree": 0.7163,
+    "p_lt_10": 0.0482
+   },
+   "loss": {
+    "prompts": 1622,
+    "agree": 0.582,
+    "mean_gap": 2.6645,
+    "gap_ge5": 0.2287,
+    "mean_maxp": 0.6428,
+    "modal_agree": 0.6899,
+    "p_lt_10": 0.0524
+   }
+  },
+  "T11-15": {
+   "win": {
+    "prompts": 736,
+    "agree": 0.625,
+    "mean_gap": 2.3804,
+    "gap_ge5": 0.1848,
+    "mean_maxp": 0.6545,
+    "modal_agree": 0.7065,
+    "p_lt_10": 0.0394
+   },
+   "loss": {
+    "prompts": 790,
+    "agree": 0.5671,
+    "mean_gap": 3.1277,
+    "gap_ge5": 0.257,
+    "mean_maxp": 0.6481,
+    "modal_agree": 0.6734,
+    "p_lt_10": 0.0709
+   }
+  },
+  "T16-20": {
+   "loss": {
+    "prompts": 553,
+    "agree": 0.5859,
+    "mean_gap": 3.1013,
+    "gap_ge5": 0.2712,
+    "mean_maxp": 0.6478,
+    "modal_agree": 0.6944,
+    "p_lt_10": 0.0488
+   },
+   "win": {
+    "prompts": 512,
+    "agree": 0.6445,
+    "mean_gap": 2.2096,
+    "gap_ge5": 0.1738,
+    "mean_maxp": 0.6705,
+    "modal_agree": 0.7129,
+    "p_lt_10": 0.0371
+   }
+  },
+  "T21-25": {
+   "loss": {
+    "prompts": 339,
+    "agree": 0.5634,
+    "mean_gap": 3.0292,
+    "gap_ge5": 0.2655,
+    "mean_maxp": 0.6249,
+    "modal_agree": 0.6519,
+    "p_lt_10": 0.0501
+   },
+   "win": {
+    "prompts": 348,
+    "agree": 0.5747,
+    "mean_gap": 2.7477,
+    "gap_ge5": 0.2356,
+    "mean_maxp": 0.6439,
+    "modal_agree": 0.681,
+    "p_lt_10": 0.0517
+   }
+  }
+ },
+ "decisions_by_my_turn_class": {
+  "opp|chain": {
+   "win": {
+    "prompts": 182,
+    "agree": 0.5989,
+    "mean_gap": 1.467,
+    "gap_ge5": 0.033,
+    "mean_maxp": 0.8622,
+    "modal_agree": 0.5604,
+    "p_lt_10": 0.0
+   },
+   "loss": {
+    "prompts": 341,
+    "agree": 0.5836,
+    "mean_gap": 1.39,
+    "gap_ge5": 0.0176,
+    "mean_maxp": 0.8411,
+    "modal_agree": 0.4604,
+    "p_lt_10": 0.0117
+   }
+  },
+  "opp|other": {
+   "loss": {
+    "prompts": 203,
+    "agree": 0.7882,
+    "mean_gap": 1.4729,
+    "gap_ge5": 0.2118,
+    "mean_maxp": 0.747,
+    "modal_agree": 0.7044,
+    "p_lt_10": 0.0197
+   },
+   "win": {
+    "prompts": 88,
+    "agree": 0.8068,
+    "mean_gap": 1.1705,
+    "gap_ge5": 0.1932,
+    "mean_maxp": 0.7704,
+    "modal_agree": 0.6705,
+    "p_lt_10": 0.0227
+   }
+  },
+  "opp|select": {
+   "win": {
+    "prompts": 83,
+    "agree": 0.6145,
+    "mean_gap": 0.6373,
+    "gap_ge5": 0.012,
+    "mean_maxp": 0.4826,
+    "modal_agree": 0.7229,
+    "p_lt_10": 0.0241
+   },
+   "loss": {
+    "prompts": 148,
+    "agree": 0.5473,
+    "mean_gap": 1.0723,
+    "gap_ge5": 0.0405,
+    "mean_maxp": 0.458,
+    "modal_agree": 0.6554,
+    "p_lt_10": 0.027
+   }
+  },
+  "own|battle": {
+   "win": {
+    "prompts": 610,
+    "agree": 0.8344,
+    "mean_gap": 1.0993,
+    "gap_ge5": 0.0951,
+    "mean_maxp": 0.8379,
+    "modal_agree": 0.918,
+    "p_lt_10": 0.0295
+   },
+   "loss": {
+    "prompts": 639,
+    "agree": 0.7183,
+    "mean_gap": 2.07,
+    "gap_ge5": 0.2551,
+    "mean_maxp": 0.8081,
+    "modal_agree": 0.7559,
+    "p_lt_10": 0.0313
+   }
+  },
+  "own|chain": {
+   "win": {
+    "prompts": 278,
+    "agree": 0.536,
+    "mean_gap": 1.9173,
+    "gap_ge5": 0.0683,
+    "mean_maxp": 0.7785,
+    "modal_agree": 0.4784,
+    "p_lt_10": 0.0144
+   },
+   "loss": {
+    "prompts": 485,
+    "agree": 0.5443,
+    "mean_gap": 1.7938,
+    "gap_ge5": 0.0536,
+    "mean_maxp": 0.7439,
+    "modal_agree": 0.4474,
+    "p_lt_10": 0.0165
+   }
+  },
+  "own|idle": {
+   "win": {
+    "prompts": 2029,
+    "agree": 0.5071,
+    "mean_gap": 4.3365,
+    "gap_ge5": 0.3243,
+    "mean_maxp": 0.5294,
+    "modal_agree": 0.6363,
+    "p_lt_10": 0.0813
+   },
+   "loss": {
+    "prompts": 3072,
+    "agree": 0.4762,
+    "mean_gap": 4.58,
+    "gap_ge5": 0.3516,
+    "mean_maxp": 0.5177,
+    "modal_agree": 0.6615,
+    "p_lt_10": 0.0918
+   }
+  },
+  "own|other": {
+   "win": {
+    "prompts": 493,
+    "agree": 0.8134,
+    "mean_gap": 1.2231,
+    "gap_ge5": 0.1846,
+    "mean_maxp": 0.7996,
+    "modal_agree": 0.7789,
+    "p_lt_10": 0.0041
+   },
+   "loss": {
+    "prompts": 763,
+    "agree": 0.709,
+    "mean_gap": 1.9633,
+    "gap_ge5": 0.287,
+    "mean_maxp": 0.7555,
+    "modal_agree": 0.6946,
+    "p_lt_10": 0.0105
+   }
+  },
+  "own|select": {
+   "win": {
+    "prompts": 544,
+    "agree": 0.5165,
+    "mean_gap": 0.8724,
+    "gap_ge5": 0.0294,
+    "mean_maxp": 0.483,
+    "modal_agree": 0.6471,
+    "p_lt_10": 0.0496
+   },
+   "loss": {
+    "prompts": 896,
+    "agree": 0.5145,
+    "mean_gap": 0.8908,
+    "gap_ge5": 0.0335,
+    "mean_maxp": 0.4642,
+    "modal_agree": 0.606,
+    "p_lt_10": 0.106
+   }
+  }
+ },
+ "disagreements": [
+  {
+   "label": "select_card: heuristic none / learner none",
+   "per_loss": 2.175,
+   "per_win": 2.466,
+   "losses_count": 435,
+   "wins_count": 217,
+   "total_gap": 1313.6
+  },
+  {
+   "label": "chain: heuristic decline / learner activate",
+   "per_loss": 1.69,
+   "per_win": 2.08,
+   "losses_count": 338,
+   "wins_count": 183,
+   "total_gap": 1654.0
+  },
+  {
+   "label": "select_position: heuristic none / learner none",
+   "per_loss": 0.91,
+   "per_win": 0.909,
+   "losses_count": 182,
+   "wins_count": 80,
+   "total_gap": 1310.0
+  },
+  {
+   "label": "idle: heuristic normal_summon / learner normal_summon",
+   "per_loss": 0.76,
+   "per_win": 0.852,
+   "losses_count": 152,
+   "wins_count": 75,
+   "total_gap": 383.8
+  },
+  {
+   "label": "idle: heuristic normal_summon / learner monster_set",
+   "per_loss": 0.695,
+   "per_win": 0.67,
+   "losses_count": 139,
+   "wins_count": 59,
+   "total_gap": 1915.8
+  },
+  {
+   "label": "battle: heuristic to_main2 / learner attack",
+   "per_loss": 0.595,
+   "per_win": 0.295,
+   "losses_count": 119,
+   "wins_count": 26,
+   "total_gap": 870.0
+  },
+  {
+   "label": "idle: heuristic set / learner to_battle",
+   "per_loss": 0.58,
+   "per_win": 0.898,
+   "losses_count": 116,
+   "wins_count": 79,
+   "total_gap": 390.0
+  },
+  {
+   "label": "idle: heuristic set / learner to_end",
+   "per_loss": 0.425,
+   "per_win": 0.625,
+   "losses_count": 85,
+   "wins_count": 55,
+   "total_gap": 980.0
+  },
+  {
+   "label": "idle: heuristic normal_summon / learner set",
+   "per_loss": 0.405,
+   "per_win": 0.398,
+   "losses_count": 81,
+   "wins_count": 35,
+   "total_gap": 1891.7
+  },
+  {
+   "label": "effect_yn: heuristic activate / learner decline",
+   "per_loss": 0.39,
+   "per_win": 0.261,
+   "losses_count": 78,
+   "wins_count": 23,
+   "total_gap": 1111.0
+  },
+  {
+   "label": "idle: heuristic to_battle / learner activate",
+   "per_loss": 0.385,
+   "per_win": 0.261,
+   "losses_count": 77,
+   "wins_count": 23,
+   "total_gap": 828.0
+  },
+  {
+   "label": "idle: heuristic normal_summon / learner activate",
+   "per_loss": 0.365,
+   "per_win": 0.489,
+   "losses_count": 73,
+   "wins_count": 43,
+   "total_gap": 1595.6
+  },
+  {
+   "label": "idle: heuristic reposition / learner to_battle",
+   "per_loss": 0.335,
+   "per_win": 0.773,
+   "losses_count": 67,
+   "wins_count": 68,
+   "total_gap": 405.0
+  },
+  {
+   "label": "idle: heuristic to_battle / learner reposition",
+   "per_loss": 0.29,
+   "per_win": 0.58,
+   "losses_count": 58,
+   "wins_count": 51,
+   "total_gap": 999.0
+  },
+  {
+   "label": "idle: heuristic normal_summon / learner to_battle",
+   "per_loss": 0.28,
+   "per_win": 0.443,
+   "losses_count": 56,
+   "wins_count": 39,
+   "total_gap": 1542.1
+  },
+  {
+   "label": "idle: heuristic special_summon / learner set",
+   "per_loss": 0.275,
+   "per_win": 0.375,
+   "losses_count": 55,
+   "wins_count": 33,
+   "total_gap": 1514.9
+  },
+  {
+   "label": "idle: heuristic activate / learner set",
+   "per_loss": 0.275,
+   "per_win": 0.341,
+   "losses_count": 55,
+   "wins_count": 30,
+   "total_gap": 763.0
+  },
+  {
+   "label": "idle: heuristic special_summon / learner normal_summon",
+   "per_loss": 0.275,
+   "per_win": 0.489,
+   "losses_count": 55,
+   "wins_count": 43,
+   "total_gap": 140.2
+  },
+  {
+   "label": "select_unselect: heuristic none / learner none",
+   "per_loss": 0.275,
+   "per_win": 0.614,
+   "losses_count": 55,
+   "wins_count": 54,
+   "total_gap": 130.1
+  },
+  {
+   "label": "idle: heuristic reposition / learner to_end",
+   "per_loss": 0.27,
+   "per_win": 0.659,
+   "losses_count": 54,
+   "wins_count": 58,
+   "total_gap": 896.0
+  },
+  {
+   "label": "idle: heuristic set / learner activate",
+   "per_loss": 0.23,
+   "per_win": 0.148,
+   "losses_count": 46,
+   "wins_count": 13,
+   "total_gap": 597.0
+  },
+  {
+   "label": "idle: heuristic special_summon / learner activate",
+   "per_loss": 0.2,
+   "per_win": 0.205,
+   "losses_count": 40,
+   "wins_count": 18,
+   "total_gap": 781.3
+  },
+  {
+   "label": "idle: heuristic to_end / learner activate",
+   "per_loss": 0.195,
+   "per_win": 0.136,
+   "losses_count": 39,
+   "wins_count": 12,
+   "total_gap": 167.0
+  },
+  {
+   "label": "idle: heuristic special_summon / learner to_battle",
+   "per_loss": 0.185,
+   "per_win": 0.273,
+   "losses_count": 37,
+   "wins_count": 24,
+   "total_gap": 1044.7
+  },
+  {
+   "label": "idle: heuristic to_battle / learner set",
+   "per_loss": 0.175,
+   "per_win": 0.159,
+   "losses_count": 35,
+   "wins_count": 14,
+   "total_gap": 343.0
+  },
+  {
+   "label": "idle: heuristic set / learner set",
+   "per_loss": 0.155,
+   "per_win": 0.182,
+   "losses_count": 31,
+   "wins_count": 16,
+   "total_gap": 423.0
+  },
+  {
+   "label": "idle: heuristic reposition / learner set",
+   "per_loss": 0.145,
+   "per_win": 0.352,
+   "losses_count": 29,
+   "wins_count": 31,
+   "total_gap": 168.0
+  },
+  {
+   "label": "idle: heuristic normal_summon / learner to_end",
+   "per_loss": 0.14,
+   "per_win": 0.136,
+   "losses_count": 28,
+   "wins_count": 12,
+   "total_gap": 833.8
+  },
+  {
+   "label": "idle: heuristic special_summon / learner to_end",
+   "per_loss": 0.125,
+   "per_win": 0.261,
+   "losses_count": 25,
+   "wins_count": 23,
+   "total_gap": 1057.1
+  },
+  {
+   "label": "chain: heuristic activate / learner decline",
+   "per_loss": 0.115,
+   "per_win": 0.216,
+   "losses_count": 23,
+   "wins_count": 19,
+   "total_gap": 462.0
+  },
+  {
+   "label": "idle: heuristic special_summon / learner special_summon",
+   "per_loss": 0.11,
+   "per_win": 0.136,
+   "losses_count": 22,
+   "wins_count": 12,
+   "total_gap": 14.8
+  },
+  {
+   "label": "idle: heuristic activate / learner to_battle",
+   "per_loss": 0.11,
+   "per_win": 0.33,
+   "losses_count": 22,
+   "wins_count": 29,
+   "total_gap": 306.0
+  },
+  {
+   "label": "battle: heuristic attack / learner to_main2",
+   "per_loss": 0.09,
+   "per_win": 0.091,
+   "losses_count": 18,
+   "wins_count": 8,
+   "total_gap": 383.2
+  },
+  {
+   "label": "idle: heuristic to_end / learner reposition",
+   "per_loss": 0.09,
+   "per_win": 0.045,
+   "losses_count": 18,
+   "wins_count": 4,
+   "total_gap": 88.0
+  },
+  {
+   "label": "battle: heuristic direct_attack / learner to_main2",
+   "per_loss": 0.08,
+   "per_win": 0.148,
+   "losses_count": 16,
+   "wins_count": 13,
+   "total_gap": 438.7
+  },
+  {
+   "label": "idle: heuristic normal_summon / learner reposition",
+   "per_loss": 0.08,
+   "per_win": 0.216,
+   "losses_count": 16,
+   "wins_count": 19,
+   "total_gap": 810.8
+  },
+  {
+   "label": "idle: heuristic activate / learner to_end",
+   "per_loss": 0.075,
+   "per_win": 0.091,
+   "losses_count": 15,
+   "wins_count": 8,
+   "total_gap": 253.0
+  },
+  {
+   "label": "idle: heuristic activate / learner reposition",
+   "per_loss": 0.075,
+   "per_win": 0.102,
+   "losses_count": 15,
+   "wins_count": 9,
+   "total_gap": 318.0
+  },
+  {
+   "label": "idle: heuristic to_end / learner set",
+   "per_loss": 0.07,
+   "per_win": 0.114,
+   "losses_count": 14,
+   "wins_count": 10,
+   "total_gap": 48.0
+  },
+  {
+   "label": "idle: heuristic reposition / learner activate",
+   "per_loss": 0.055,
+   "per_win": 0.045,
+   "losses_count": 11,
+   "wins_count": 4,
+   "total_gap": 165.0
+  }
+ ],
+ "activations_by_card": {
+  "Swap Frog": {
+   "activate_loss": 140,
+   "unsafe": 84,
+   "activate_win": 70
+  },
+  "Enemy Controller": {
+   "activate_loss": 137,
+   "unsafe": 112,
+   "activate_win": 22
+  },
+  "Book of Moon": {
+   "activate_loss": 88,
+   "unsafe": 40,
+   "activate_win": 66
+  },
+  "Treeborn Frog": {
+   "activate_loss": 94,
+   "unsafe": 15,
+   "activate_win": 57
+  },
+  "Black Whirlwind": {
+   "activate_win": 54,
+   "unsafe": 19,
+   "activate_loss": 57
+  },
+  "Machina Gearframe": {
+   "activate_loss": 48,
+   "unsafe": 10,
+   "activate_win": 71
+  },
+  "Heavy Storm": {
+   "activate_loss": 52,
+   "unsafe": 41,
+   "activate_win": 21
+  },
+  "Solemn Judgment": {
+   "activate_loss": 36,
+   "unsafe": 55,
+   "activate_win": 19
+  },
+  "Substitoad": {
+   "activate_loss": 45,
+   "unsafe": 55,
+   "activate_win": 10
+  },
+  "Torrential Tribute": {
+   "activate_win": 19,
+   "unsafe": 48,
+   "activate_loss": 36
+  },
+  "Smashing Ground": {
+   "activate_loss": 42,
+   "unsafe": 24,
+   "activate_win": 35
+  },
+  "Tragoedia": {
+   "activate_loss": 53,
+   "unsafe": 3,
+   "activate_win": 39
+  },
+  "Blackwing - Sirocco the Dawn": {
+   "activate_win": 20,
+   "unsafe": 47,
+   "activate_loss": 27
+  },
+  "Icarus Attack": {
+   "activate_win": 20,
+   "unsafe": 22,
+   "activate_loss": 50
+  },
+  "Foolish Burial": {
+   "activate_loss": 39,
+   "unsafe": 43,
+   "activate_win": 4
+  },
+  "Brain Control": {
+   "activate_loss": 38,
+   "unsafe": 27,
+   "activate_win": 19
+  },
+  "Fissure": {
+   "activate_loss": 32,
+   "unsafe": 13,
+   "activate_win": 35
+  },
+  "Mystical Space Typhoon": {
+   "activate_loss": 55,
+   "unsafe": 8,
+   "activate_win": 16
+  },
+  "Machina Peacekeeper": {
+   "activate_loss": 35,
+   "unsafe": 3,
+   "activate_win": 36
+  },
+  "Bottomless Trap Hole": {
+   "activate_loss": 43,
+   "unsafe": 0,
+   "activate_win": 29
+  },
+  "Trap Dustshoot": {
+   "activate_loss": 22,
+   "unsafe": 34,
+   "activate_win": 12
+  },
+  "Soul Exchange": {
+   "activate_loss": 26,
+   "unsafe": 32,
+   "activate_win": 6
+  },
+  "Mirror Force": {
+   "activate_loss": 39,
+   "unsafe": 0,
+   "activate_win": 24
+  },
+  "Mind Control": {
+   "activate_loss": 34,
+   "unsafe": 18,
+   "activate_win": 7
+  },
+  "Dupe Frog": {
+   "activate_loss": 40,
+   "unsafe": 0,
+   "activate_win": 14
+  },
+  "Royal Oppression": {
+   "activate_win": 13,
+   "unsafe": 27,
+   "activate_loss": 14
+  },
+  "One for One": {
+   "activate_win": 7,
+   "unsafe": 26,
+   "activate_loss": 19
+  },
+  "Red Gadget": {
+   "activate_loss": 26,
+   "unsafe": 0,
+   "activate_win": 26
+  },
+  "Yellow Gadget": {
+   "activate_loss": 27,
+   "unsafe": 0,
+   "activate_win": 25
+  },
+  "Green Gadget": {
+   "activate_loss": 22,
+   "unsafe": 0,
+   "activate_win": 29
+  },
+  "Limiter Removal": {
+   "activate_loss": 10,
+   "unsafe": 25,
+   "activate_win": 15
+  },
+  "Dark Grepher": {
+   "activate_loss": 17,
+   "unsafe": 24,
+   "activate_win": 7
+  },
+  "Blackwing - Gale the Whirlwind": {
+   "activate_loss": 15,
+   "unsafe": 18,
+   "activate_win": 3
+  },
+  "Plaguespreader Zombie": {
+   "activate_loss": 12,
+   "unsafe": 16,
+   "activate_win": 4
+  },
+  "Compulsory Evacuation Device": {
+   "activate_loss": 13,
+   "unsafe": 8,
+   "activate_win": 9
+  },
+  "Blackwing - Kalut the Moon Shadow": {
+   "activate_win": 13,
+   "unsafe": 14,
+   "activate_loss": 1
+  },
+  "Blackwing - Vayu the Emblem of Honor": {
+   "activate_loss": 12,
+   "unsafe": 5,
+   "activate_win": 10
+  },
+  "Dimensional Prison": {
+   "activate_loss": 10,
+   "unsafe": 0,
+   "activate_win": 17
+  },
+  "Allure of Darkness": {
+   "activate_loss": 12,
+   "unsafe": 8,
+   "activate_win": 6
+  },
+  "Blackwing - Blizzard the Far North": {
+   "activate_win": 7,
+   "unsafe": 0,
+   "activate_loss": 18
+  },
+  "Battle Fader": {
+   "activate_loss": 16,
+   "unsafe": 0,
+   "activate_win": 6
+  },
+  "Gorz the Emissary of Darkness": {
+   "activate_loss": 14,
+   "unsafe": 0,
+   "activate_win": 7
+  },
+  "Dark Armed Dragon": {
+   "activate_loss": 5,
+   "unsafe": 6,
+   "activate_win": 10
+  },
+  "Blackwing - Shura the Blue Flame": {
+   "activate_win": 8,
+   "unsafe": 5,
+   "activate_loss": 3
+  },
+  "Brionac, Dragon of the Ice Barrier": {
+   "activate_win": 3,
+   "unsafe": 2,
+   "activate_loss": 8
+  },
+  "Black Rose Dragon": {
+   "activate_loss": 3,
+   "unsafe": 4,
+   "activate_win": 1
+  },
+  "Dark End Dragon": {
+   "activate_win": 1,
+   "unsafe": 2,
+   "activate_loss": 1
+  },
+  "Goyo Guardian": {
+   "activate_win": 1,
+   "unsafe": 0,
+   "activate_loss": 2
+  }
+ },
+ "lp_lead": {
+  "T01": {
+   "even_win": 173,
+   "ahead_win": 69,
+   "even_loss": 391,
+   "behind_loss": 231,
+   "behind_win": 61,
+   "ahead_loss": 71
+  },
+  "T06": {
+   "ahead_win": 129,
+   "behind_loss": 329,
+   "ahead_loss": 80,
+   "behind_win": 103,
+   "even_loss": 40,
+   "even_win": 27
+  },
+  "T11": {
+   "ahead_win": 104,
+   "behind_loss": 177,
+   "ahead_loss": 56,
+   "behind_win": 66,
+   "even_win": 9,
+   "even_loss": 7
+  },
+  "T16": {
+   "ahead_loss": 36,
+   "behind_win": 48,
+   "ahead_win": 73,
+   "behind_loss": 106,
+   "even_loss": 1,
+   "even_win": 1
+  },
+  "T21": {
+   "ahead_loss": 27,
+   "ahead_win": 34,
+   "even_win": 1,
+   "behind_loss": 38,
+   "behind_win": 19
+  },
+  "T26": {
+   "ahead_win": 16,
+   "behind_loss": 28,
+   "ahead_loss": 2,
+   "behind_win": 3,
+   "even_loss": 1
+  }
+ }
+}

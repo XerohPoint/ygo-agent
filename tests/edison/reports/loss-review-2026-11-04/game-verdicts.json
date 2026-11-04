@@ -1,0 +1,212 @@
+[
+ {
+  "tier": "A",
+  "game": "1702/blackwing-frog_monarch-seat0/40000006",
+  "read": "full compact log",
+  "verdict": "policy choice",
+  "note": "Ahead on board, #40 activates Black Rose Dragon's destroy-all (p=.51; heuristic declines) with BRD 2400 and set Icarus Attack against one Swap Frog. Own board gone; Caius and Raiza finish it."
+ },
+ {
+  "tier": "A",
+  "game": "1702/machina_gadget-blackwing-seat1/40000007",
+  "read": "full compact log",
+  "verdict": "ordinary outcome uncertainty",
+  "note": "Even at 7200/6700 on turn 6 with Armor Master. Opposing Torrential and Dimensional Prison plus removal draws grind it down over 33 turns. Minor: Armor Master kept in DEF."
+ },
+ {
+  "tier": "A",
+  "game": "1702/frog_monarch-machina_gadget-seat0/40000002",
+  "read": "full compact log",
+  "verdict": "policy choice",
+  "note": "Holds Raiza for 13 turns while Normal Summoning Dupe and Treeborn Frogs (near-uniform p). #85-87 Soul Exchange on Sangan with no Tribute Summon after. #101 Raiza returns own Treeborn (p=.04)."
+ },
+ {
+  "tier": "A",
+  "game": "1702/machina_gadget-frog_monarch-seat1/40000002",
+  "read": "full compact log",
+  "verdict": "policy choice",
+  "note": "Hard start (Fortress, Sangan, 3 sets on turn 1), but #12 Enemy Controller at Draw Phase on Sangan and #17-19 Soul Exchange on Sangan then #20 ends turn holding Raiza. Lost turn 5."
+ },
+ {
+  "tier": "A",
+  "game": "1702/machina_gadget-blackwing-seat0/40000002",
+  "read": "full compact log",
+  "verdict": "policy choice",
+  "note": "Ahead 8000/5800 on turn 9: #70 tributes Gearframe 1800 for Tragoedia (p=.55), #76 Heavy Storm hits only own Mirror Force and Dustshoot (p=.38), #78 0-ATK Tragoedia attacks Kalut (p=.51)."
+ },
+ {
+  "tier": "A",
+  "game": "1702/blackwing-machina_gadget-seat1/40000000",
+  "read": "full compact log",
+  "verdict": "ordinary outcome uncertainty",
+  "note": "No summonable monster in 15 turns except Gorz, which needs an empty field. Secondary: #62 Solemn Judgment on Kalut, 6200 to 3100; set Fissure blocks Gorz all game."
+ },
+ {
+  "tier": "A",
+  "game": "1703/blackwing-machina_gadget-seat0/40000000",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "policy choice",
+  "note": "Opening hand of five Blackwings, but MSET Shura (#54 p=.09), no SS Bora (#38), MSET Blizzard (#79). Opponent falls to 4300, then spell-only draws and loss on turn 28."
+ },
+ {
+  "tier": "A",
+  "game": "1703/machina_gadget-blackwing-seat1/40000005",
+  "read": "full compact log",
+  "verdict": "policy choice",
+  "note": "#36-38 Icarus Attack tributes own Blizzard and must also destroy own Solemn Judgment to kill a Red Gadget. #44 Heavy Storm with only own Black Whirlwind on field. Then few monsters drawn."
+ },
+ {
+  "tier": "A",
+  "game": "1703/frog_monarch-blackwing-seat0/40000003",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "policy choice",
+  "note": "#28 NS Dupe Frog (p=.14) over Thestalos; Dupe Frog attacks (#35, #38); #137 repositions Caius to DEF; #171 declines Battle Fader (p=.12) while taking direct attacks."
+ },
+ {
+  "tier": "A",
+  "game": "1703/blackwing-frog_monarch-seat1/40000004",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "policy choice",
+  "note": "Close at 4200/3900 on turn 12. #99 tributes Raiza and Gorz for Light and Darkness Dragon (p=.55), answered by Book of Moon. Earlier low-probability misses #70 (p=.04), #88 (p=.04)."
+ },
+ {
+  "tier": "A",
+  "game": "1703/machina_gadget-blackwing-seat0/40000000",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "ordinary outcome uncertainty",
+  "note": "Ahead 4400/900 on turn 11. Opponent stabilizes with Book of Moon and Icarus; learner draws Gorz, MST, Bottomless, Yellow Gadget and loses narrowly with opponent still at 900."
+ },
+ {
+  "tier": "A",
+  "game": "1703/blackwing-machina_gadget-seat1/40000003",
+  "read": "full compact log",
+  "verdict": "policy choice",
+  "note": "#21 Compulsory Evacuation Device at Draw Phase, #23 Solemn Judgment (p=.71) negates its own Compulsory, paying 4000 LP. Chain contents are not in the observation."
+ },
+ {
+  "tier": "A",
+  "game": "1704/blackwing-frog_monarch-seat0/40000005",
+  "read": "full compact log",
+  "verdict": "policy choice",
+  "note": "#38-40 discards entire hand to Brionac (finish offered at p<=.14), then Mirror Force takes the board on turn 7 with nothing left in hand."
+ },
+ {
+  "tier": "A",
+  "game": "1704/frog_monarch-blackwing-seat1/40000004",
+  "read": "full compact log",
+  "verdict": "policy choice",
+  "note": "#20 Icarus Attack at Draw Phase tributes own Shura (p=.97); #26 Solemn Judgment on Treeborn Frog, 8000 to 4000 (p=.93); direct attacks finish it by turn 7."
+ },
+ {
+  "tier": "A",
+  "game": "1704/frog_monarch-blackwing-seat0/40000006",
+  "read": "full compact log",
+  "verdict": "policy choice",
+  "note": "Hard start (Armor Master, Brain Control on turn 2). #44 repositions Caius to DEF; #62-65 Enemy Controller at Draw Phase tributes Caius 2400 to borrow Shura 1800."
+ },
+ {
+  "tier": "A",
+  "game": "1704/machina_gadget-frog_monarch-seat1/40000002",
+  "read": "full compact log",
+  "verdict": "ordinary outcome uncertainty",
+  "note": "Same start as the 1702 game. A sound line (#35-39 Soul Exchange into Caius banishing Fortress) meets two Bottomless Trap Holes after Mirror Force. Secondary: #21 Dupe Frog attack."
+ },
+ {
+  "tier": "A",
+  "game": "1704/machina_gadget-blackwing-seat0/40000001",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "policy choice",
+  "note": "Ahead 8000/1900 on turn 17 and loses. Skips a direct attack (#83 p=.07), discards Cyber Dragon to Fortress (#147), #171 repositions Gorz, #173 attacks Shura with an equal token."
+ },
+ {
+  "tier": "A",
+  "game": "1704/blackwing-machina_gadget-seat1/40000000",
+  "read": "full compact log",
+  "verdict": "ordinary outcome uncertainty",
+  "note": "Same start as the 1702 game: only Gorz among monsters for 15 turns. Secondary: Solemn Judgment on Kalut, 4800 to 2400."
+ },
+ {
+  "tier": "B-short",
+  "game": "1704/machina_gadget-blackwing-seat1/40000001",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "policy choice",
+  "note": "Hard start (two Fortress on turn 1). #12 sets Bottomless (p=.02) instead of a summon, #16 Heavy Storm, #32 and #34 attack 1700 and 1400 into 2500. Over in 5 turns."
+ },
+ {
+  "tier": "B-long",
+  "game": "1704/blackwing-machina_gadget-seat0/40000006",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "policy choice",
+  "note": "Same opening hand as the first game above. MSET Kalut (#114, #177), skips Mind Control (#145, #150), never damages the opponent in 20 turns."
+ },
+ {
+  "tier": "B-short",
+  "game": "1702/blackwing-frog_monarch-seat1/40000000",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "policy choice",
+  "note": "#11 and #41 attack with 0-ATK Battle Fader (p=.62, .23); Foolish Burial sends Soul Exchange (#22); Light and Darkness Dragon and Thestalos stay in hand."
+ },
+ {
+  "tier": "B-long",
+  "game": "1702/frog_monarch-blackwing-seat0/40000005",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "policy choice",
+  "note": "481 decisions. Two Light and Darkness Dragons stuck in hand for most of it; MSET Caius (#237 p=.05), skips Heavy Storm activation (#279, #284)."
+ },
+ {
+  "tier": "B-short",
+  "game": "1704/blackwing-machina_gadget-seat1/40000003",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "policy choice",
+  "note": "Same start as the 1703 game and the same self-negation: #21 Compulsory, #22 Solemn Judgment (p=.91 each), 8000 to 4000."
+ },
+ {
+  "tier": "B-long",
+  "game": "1704/machina_gadget-blackwing-seat0/40000003",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "policy choice",
+  "note": "505 decisions of attrition against two Black Whirlwinds. #45 attacks with 0-ATK Tragoedia (p=.89), holds Dimensional Prison unset (#87, #128 p=.70), Solemn at 2900."
+ },
+ {
+  "tier": "C-win",
+  "game": "1702/blackwing-frog_monarch-seat0/40000000",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "win",
+  "note": "Direct attacks from Shura and Sirocco decide it. Set instead of Heavy Storm (#139), Torrential Tribute taken on own board. Mistakes are present."
+ },
+ {
+  "tier": "C-win",
+  "game": "1703/frog_monarch-blackwing-seat1/40000007",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "win",
+  "note": "Close race with Light and Darkness Dragon. Declines Bottomless (#227 p=.15) and Whirlwind (#236). Low-probability reposition #135."
+ },
+ {
+  "tier": "C-win",
+  "game": "1704/frog_monarch-blackwing-seat0/40000003",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "win",
+  "note": "Historical rule example: Treeborn Frog retries into Light and Darkness Dragon (#67-76, p=.96), dropping own LADD from 2800 to 800. Wins anyway."
+ },
+ {
+  "tier": "C-win",
+  "game": "1702/blackwing-frog_monarch-seat1/40000004",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "win",
+  "note": "Long; Caius and Raiza give direct damage. Many low-probability repositions and a 0-ATK direct attack (#134)."
+ },
+ {
+  "tier": "C-win",
+  "game": "1703/machina_gadget-frog_monarch-seat0/40000006",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "win",
+  "note": "62 decisions. Fortress, Green Gadget, then Gorz by tribute (#26). Favourable fixture matchup."
+ },
+ {
+  "tier": "C-win",
+  "game": "1704/frog_monarch-machina_gadget-seat1/40000006",
+  "read": "filtered view (turn boards, public events, decisions with p<0.15 or score gap>=5)",
+  "verdict": "win",
+  "note": "Wins at 300 LP. #107 skips a Cyber Dragon attack (p=.03), #138 attack into Caius (p=.68). Thin margin."
+ }
+]
