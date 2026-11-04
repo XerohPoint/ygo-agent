@@ -41,6 +41,10 @@ public:
     AutoMismatch,   // such an option recorded a card id other than the prompt's code
     UnknownCode,    // the prompt's code is outside the code list
     PrivateShown,   // a private opposing option shows an identity with no recorded reveal
+    SelectedChecked,   // cards the prompt lists as already selected or mandatory
+    SelectedMismatch,  // such a card's row shows another card, is unflagged, or is in another zone
+    FaceMismatch,      // a Deck option's row disagrees with the prompt on face-up or face-down
+    HiddenPointer,     // a hidden opposing Deck option's row is not the next blank row
     NFields
   };
 

@@ -6,7 +6,7 @@ label on the option a player chose matches the card the engine then asks to plac
 prompt reads directly from its own code. The prompt differential runs alongside, for every prompt.
 Win rates are deliberately not reported: these networks trained on wrong labels.
 
-Seed block 80100000 and up. Point --so at another module file to run the same games on that build.
+Seeds 80100000 to 80999999. Point --so at another module file to run the same games on that build.
 """
 import argparse
 import collections
@@ -146,8 +146,8 @@ def main():
     parser.add_argument("--so", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    if not 80100000 <= args.seed < 80200000:
-        parser.error("This check's seeds stay inside the 80100000 block")
+    if not 80100000 <= args.seed < 81000000:
+        parser.error("This check's seeds stay inside the 80100000 to 80999999 range")
     plan, seed = [], args.seed
     for optimizer in (1702, 1703, 1704):
         for seat in (0, 1):
@@ -173,13 +173,25 @@ def main():
               "label_right_percent": round(100 * right / prompts, 2) if prompts else None,
               "chance_percent": round(100 * totals["chance_x1000"] / 1000 / totals["deck_prompts_seen"], 2) if totals["deck_prompts_seen"] else None,
               "frog_label_percent": round(100 * totals["options_frog_label"] / totals["options_shown"], 2) if totals["options_shown"] else None,
-              "differential": {key: differential[key] for key in ("duels", "decisions", "decisions_listing_cards", "mismatch_total", "by_field",
+              "differential": {key: differential[key] for key in ("duels", "decisions", "decisions_listing_cards", "mismatch_total", "by_field", "own_deck_prompt_order",
                                                                   "extra_visible_own_deck_rows", "prompts_with_extra_rows")},
               "differential_deck": {key: row for key, row in differential["by_kind"].items() if "|deck|" in key}}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=1) + "\n")
+    problems = []
+    if not prompts:
+        problems.append("no Deck prompt was measured")
+    if right != prompts:
+        problems.append(f"{prompts - right} of {prompts} labels wrong")
+    if differential["mismatch_total"] or differential["extra_visible_own_deck_rows"]:
+        problems.append(f"{differential['mismatch_total']} differential mismatches, {differential['extra_visible_own_deck_rows']} extra rows")
+    if not differential["duels"]:
+        problems.append("the differential saw no duels")
+    report["problems"] = problems
+    args.output.write_text(json.dumps(report, indent=1) + "\n")
     print(json.dumps(report, indent=1))
-    return 0
+    print(("FAILED: " + "; ".join(problems)) if problems else "PASSED")
+    return 1 if problems else 0
 
 
 if __name__ == "__main__":

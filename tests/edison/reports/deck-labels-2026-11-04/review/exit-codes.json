@@ -1,0 +1,62 @@
+{
+ "evidence_of_first_round": {
+  "summarize-old": 1,
+  "summarize-new": 0,
+  "summarize-empty": 1,
+  "summarize-missing": 1,
+  "summarize-below-minimum": 1,
+  "compare-soak": 0,
+  "compare-soak-empty": 1,
+  "compare-traces": 0
+ },
+ "last_lines": {
+  "compare-soak-empty": "FAILED: lists: no duels (0 old, 0 new); sidein: no duels (0 old, 0 new); targets: no duels (0 old, 0 new); uniform: no duels (0 old, 0 new)",
+  "compare-soak": "PASSED",
+  "compare-traces": "PASSED",
+  "summarize-below-minimum": "FAILED: only 504 duels, below the minimum of 100000",
+  "summarize-empty": "FAILED: only 0 duels, below the minimum of 1; only 0 decisions, below the minimum of 1; only 0 Deck options, below the minimum of 1",
+  "summarize-missing": "FAILED: only 0 duels, below the minimum of 1; only 0 decisions, below the minimum of 1; only 0 Deck options, below the minimum of 1",
+  "summarize-new": "PASSED",
+  "summarize-old": "FAILED: 41438 mismatch records; 22522 extra Deck rows"
+ },
+ "this_round": {
+  "differential-new": 0,
+  "differential-prev": 0,
+  "differential-old": 1,
+  "compare-soak-old-new": 0,
+  "compare-soak-prev-new": 0,
+  "compare-fields-certified-new": 0,
+  "compare-fields-prev-new": 0,
+  "compare-fields-certified-oldlogic": 0,
+  "no-effect-new": 0,
+  "compare-traces": 0,
+  "labels-new": 0,
+  "labels-old": 1,
+  "soak-new": [
+   0,
+   0,
+   0,
+   0
+  ],
+  "soak-prev": [
+   0,
+   0,
+   0,
+   0
+  ],
+  "soak-old": [
+   1,
+   1,
+   1,
+   1
+  ],
+  "fixtures-086-new": 0,
+  "fixtures-087-new": 0,
+  "fixtures-086-prev": 1,
+  "fixtures-087-prev": 1,
+  "fixtures-086-old": 1,
+  "fixtures-087-old": 1,
+  "fixtures-086-mutant": 1,
+  "fixtures-087-mutant": 0
+ }
+}

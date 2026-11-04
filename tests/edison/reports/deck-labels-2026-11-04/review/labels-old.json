@@ -1,0 +1,76 @@
+{
+ "seeds": [
+  80300000,
+  80301535
+ ],
+ "games": 1536,
+ "checkpoints": [
+  "/home/mada/ygo-agent/build/edison-gauntlet-training-2026-11-04/runs/gauntlet-1702/checkpoint-1280",
+  "/home/mada/ygo-agent/build/edison-gauntlet-training-2026-11-04/runs/gauntlet-1703/checkpoint-1280",
+  "/home/mada/ygo-agent/build/edison-gauntlet-training-2026-11-04/runs/gauntlet-1704/checkpoint-1280"
+ ],
+ "module": "/home/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/build/deck-labels2/old-logic-module/ygopro_ygoenv.cpython-310-x86_64-linux-gnu.so",
+ "counts": {
+  "select_prompts_seen": 2268,
+  "deck_prompts_seen": 1372,
+  "options_shown": 7518,
+  "options_frog_label": 1805,
+  "chance_x1000": 293495,
+  "last_card_prompts": 1444,
+  "last_card_prompt_right": 57,
+  "deck_prompts": 1372,
+  "label_right": 45
+ },
+ "last_card_prompt_right_percent": 3.95,
+ "label_right_percent": 3.28,
+ "chance_percent": 21.39,
+ "frog_label_percent": 24.01,
+ "differential": {
+  "duels": 1536,
+  "decisions": 282939,
+  "decisions_listing_cards": 220379,
+  "mismatch_total": 39184,
+  "by_field": {
+   "label_mismatch": 33223,
+   "row_mismatch": 33223,
+   "zone_mismatch": 0,
+   "shared_row": 0,
+   "lone_mismatch": 244,
+   "private_shown": 0,
+   "selected_mismatch": 0,
+   "face_mismatch": 0,
+   "hidden_pointer": 0
+  },
+  "own_deck_prompt_order": {
+   "pairs_distinct": 130568,
+   "top_first_distinct": 64906,
+   "pairs_same": 20882,
+   "top_first_same": 20882
+  },
+  "extra_visible_own_deck_rows": 24673,
+  "prompts_with_extra_rows": 5717
+ },
+ "differential_deck": {
+  "select_card|deck|own": {
+   "steps": 5728,
+   "options": 35783,
+   "hidden": 0,
+   "label_mismatch": 33223,
+   "row_mismatch": 33223,
+   "zone_mismatch": 0,
+   "shared_row": 0,
+   "lone_options": 252,
+   "lone_mismatch": 244,
+   "unknown_code": 0,
+   "private_shown": 0,
+   "selected_checked": 0,
+   "selected_mismatch": 0,
+   "face_mismatch": 0,
+   "hidden_pointer": 0
+  }
+ },
+ "problems": [
+  "1327 of 1372 labels wrong",
+  "39184 differential mismatches, 24673 extra rows"
+ ]
+}

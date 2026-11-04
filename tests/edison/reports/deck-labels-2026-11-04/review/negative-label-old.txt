@@ -1,0 +1,40 @@
+EDISON RULE TEST 086A - SUBSTITOAD, MIXED DECK
+RESULT: FAIL — Worker exited 1: e/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 144, in check_decision
+AssertionError: Option labelled 490, engine offered 513: {'spec_kind': 'deck', 'code': 12538374, 'expected_id': 513, 'id': 490, 'row': 4, 'row_id': 490, 'controller': 0, 'location': 1, 'prompt_sequence': 0, 'position': 8, 'exempt': False}
+EDISON RULE TEST 086B - SWAP FROG, DECK OR FIELD
+RESULT: FAIL — Worker exited 1: e/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 144, in check_decision
+AssertionError: Option labelled 252, engine offered 851: {'spec_kind': 'deck', 'code': 20663556, 'expected_id': 851, 'id': 252, 'row': 4, 'row_id': 252, 'controller': 0, 'location': 1, 'prompt_sequence': 1, 'position': 8, 'exempt': False}
+EDISON RULE TEST 086C - DUPLICATES OF ONE CODE
+RESULT: FAIL — Worker exited 1: home/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 144, in check_decision
+AssertionError: Option labelled 68, engine offered 513: {'spec_kind': 'deck', 'code': 12538374, 'expected_id': 513, 'id': 68, 'row': 2, 'row_id': 68, 'controller': 0, 'location': 1, 'prompt_sequence': 0, 'position': 8, 'exempt': False}
+EDISON RULE TEST 086D - A NON-CANDIDATE STAYS HIDDEN
+RESULT: FAIL — Worker exited 1: e/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 144, in check_decision
+AssertionError: Option labelled 107, engine offered 513: {'spec_kind': 'deck', 'code': 12538374, 'expected_id': 513, 'id': 107, 'row': 1, 'row_id': 107, 'controller': 0, 'location': 1, 'prompt_sequence': 0, 'position': 8, 'exempt': False}
+EDISON RULE TEST 086E - TWO PICKS FROM THE DECK
+RESULT: FAIL — Worker exited 1: mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 144, in check_decision
+AssertionError: Option labelled 471, engine offered 1305: {'spec_kind': 'deck', 'code': 31786629, 'expected_id': 1305, 'id': 471, 'row': 1, 'row_id': 471, 'controller': 0, 'location': 1, 'prompt_sequence': 1, 'position': 8, 'exempt': False}
+EDISON RULE TEST 086F - UNSELECT LIST FROM THE DECK
+RESULT: FAIL — Worker exited 1: /mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 144, in check_decision
+AssertionError: Option labelled 311, engine offered 568: {'spec_kind': 'deck', 'code': 14037717, 'expected_id': 568, 'id': 311, 'row': 17, 'row_id': 311, 'controller': 0, 'location': 1, 'prompt_sequence': 0, 'position': 8, 'exempt': False}
+EDISON RULE TEST 086G - A LONE CANDIDATE IN HISTORY
+RESULT: FAIL — Worker exited 1: 9d808e2199553/tests/edison/production_deck_label_tests.py", line 417, in main
+AssertionError: Newest card prompt in history is not the lone card 1922
+EDISON RULE TEST 086H - THE OPPONENT CHOOSES FROM THEIR OWN DECK
+RESULT: FAIL — Worker exited 1: mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 144, in check_decision
+AssertionError: Option labelled 350, engine offered 4021: {'spec_kind': 'deck', 'code': 99597615, 'expected_id': 4021, 'id': 350, 'row': 2, 'row_id': 350, 'controller': 0, 'location': 1, 'prompt_sequence': 1, 'position': 8, 'exempt': False}
+EDISON RULE TEST 086I - CHOOSING FROM THE OPPONENT'S DECK
+RESULT: FAIL — Worker exited 1: .deck, args.so)
+AssertionError: Blank options point at rows [61, 59, 50], which depend on real sequences [20, 18, 9]; first blank rows are [41, 42, 43]
+EDISON RULE TEST 086K - A COPY ALREADY REVEALED
+RESULT: FAIL — Worker exited 1: mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 144, in check_decision
+AssertionError: Option labelled 307, engine offered 1922: {'spec_kind': 'deck', 'code': 46239604, 'expected_id': 1922, 'id': 307, 'row': 2, 'row_id': 307, 'controller': 0, 'location': 1, 'prompt_sequence': 0, 'position': 8, 'exempt': False}
+EDISON RULE TEST 086L - A FACE-UP COPY IN THE DECK
+RESULT: FAIL — Worker exited 1: mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 144, in check_decision
+AssertionError: Option labelled 420, engine offered 1922: {'spec_kind': 'deck', 'code': 46239604, 'expected_id': 1922, 'id': 420, 'row': 1, 'row_id': 420, 'controller': 1, 'location': 1, 'prompt_sequence': 0, 'position': 4, 'exempt': False}
+EDISON RULE TEST 086J - THE VERBOSE PARSER AGREES
+Observed: 756 decisions identical.
+RESULT: PASS
+EDISON RULE TEST 086M - THE AUDIT COMMANDS FAIL CLOSED
+Observed: every bad report is rejected and the clean one is accepted.
+RESULT: PASS
+SUMMARY: 2 PASS, 11 FAIL

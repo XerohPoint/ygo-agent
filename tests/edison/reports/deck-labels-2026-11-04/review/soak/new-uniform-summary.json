@@ -1,0 +1,57 @@
+{
+ "stage": "uniform",
+ "first_seed": 80220000,
+ "last_seed": 80220999,
+ "planned": 1000,
+ "finished": 1000,
+ "statuses": {
+  "ok": 1000
+ },
+ "crashes": 0,
+ "crash_signatures": {},
+ "diagnostic_lines": {},
+ "other_output_lines": {},
+ "contract_violations": {},
+ "decisions": 156757,
+ "prompt_rows_by_msg_id": {
+  "1": 83686,
+  "2": 7414,
+  "3": 8394,
+  "4": 2843,
+  "5": 954,
+  "6": 1253,
+  "7": 483,
+  "8": 21545,
+  "9": 147,
+  "10": 506,
+  "11": 28729,
+  "12": 21,
+  "13": 113,
+  "14": 85,
+  "15": 68,
+  "16": 456,
+  "17": 60
+ },
+ "max_options": 44,
+ "max_repeat": 6,
+ "elapsed_seconds": 22.7,
+ "lists": [],
+ "prompt_audit": {
+  "duels": 1000,
+  "decisions": 156757,
+  "mismatch_total": 0,
+  "by_field": {
+   "label_mismatch": 0,
+   "row_mismatch": 0,
+   "zone_mismatch": 0,
+   "shared_row": 0,
+   "lone_mismatch": 0,
+   "private_shown": 0,
+   "selected_mismatch": 0,
+   "face_mismatch": 0,
+   "hidden_pointer": 0
+  },
+  "extra_visible_own_deck_rows": 0
+ },
+ "prompt_audit_problems": []
+}

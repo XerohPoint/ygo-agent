@@ -1,0 +1,40 @@
+EDISON RULE TEST 086A - SUBSTITOAD, MIXED DECK
+Observed: reached in duel 1; 103 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086B - SWAP FROG, DECK OR FIELD
+Observed: reached in duel 1; 83 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086C - DUPLICATES OF ONE CODE
+Observed: reached in duel 1; 234 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086D - A NON-CANDIDATE STAYS HIDDEN
+Observed: reached in duel 1; 94 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086E - TWO PICKS FROM THE DECK
+Observed: reached in duel 1; 341 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086F - UNSELECT LIST FROM THE DECK
+Observed: reached in duel 4; 505 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086G - A LONE CANDIDATE IN HISTORY
+Observed: reached in duel 1; 224 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086H - THE OPPONENT CHOOSES FROM THEIR OWN DECK
+Observed: reached in duel 1; 42 card-listing decisions compared with the prompt.
+RESULT: PASS
+EDISON RULE TEST 086I - CHOOSING FROM THE OPPONENT'S DECK
+RESULT: FAIL — Worker exited 1: .deck, args.so)
+AssertionError: Blank options point at rows [61, 59, 50], which depend on real sequences [20, 18, 9]; first blank rows are [41, 42, 43]
+EDISON RULE TEST 086K - A COPY ALREADY REVEALED
+RESULT: FAIL — Worker exited 1: ne 268, in worker
+AssertionError: Deck row 3 is visible, and neither a candidate nor a reveal: [(1, 1922), (2, 1922), (3, 1922)], candidates [1, 2]
+EDISON RULE TEST 086L - A FACE-UP COPY IN THE DECK
+RESULT: FAIL — Worker exited 1: me/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 349, in worker
+AssertionError: Differential mismatches: [{'kind': 'option', 'key': 'select_card|deck|own', 'code': 46239604, 'expected_id': 1922, 'id': 1922, 'row': 1, 'row_id': 1922, 'label_bad': False, 'row_bad': False, 'zone_bad': False, 'face_bad': True, 'prompt_sequence': 0, 'turn': 2}]
+EDISON RULE TEST 086J - THE VERBOSE PARSER AGREES
+Observed: 756 decisions identical.
+RESULT: PASS
+EDISON RULE TEST 086M - THE AUDIT COMMANDS FAIL CLOSED
+Observed: every bad report is rejected and the clean one is accepted.
+RESULT: PASS
+SUMMARY: 10 PASS, 3 FAIL

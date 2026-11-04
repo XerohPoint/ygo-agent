@@ -23,8 +23,10 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
 FIELDS = ("steps", "options", "hidden", "label_mismatch", "row_mismatch", "zone_mismatch", "shared_row",
-          "lone_options", "lone_mismatch", "unknown_code", "private_shown")
-MISMATCH_FIELDS = ("label_mismatch", "row_mismatch", "zone_mismatch", "shared_row", "lone_mismatch", "private_shown")
+          "lone_options", "lone_mismatch", "unknown_code", "private_shown", "selected_checked", "selected_mismatch",
+          "face_mismatch", "hidden_pointer")
+MISMATCH_FIELDS = ("label_mismatch", "row_mismatch", "zone_mismatch", "shared_row", "lone_mismatch", "private_shown",
+                   "selected_mismatch", "face_mismatch", "hidden_pointer")
 
 
 def read_records(directory):
@@ -139,6 +141,58 @@ def no_effect(seed, games, so):
                                    "audit_saw_duels": summary["duels"]})
     report["identical"] = all(row["identical"] for row in report["pairings"])
     return report
+
+
+def verdict_summary(report, min_duels, min_decisions, min_deck_options):
+    """Why this differential does not pass, as a list: mismatches, or too little coverage to mean anything."""
+    problems = []
+    if report["mismatch_total"]:
+        problems.append(f"{report['mismatch_total']} mismatch records")
+    if report["extra_visible_own_deck_rows"]:
+        problems.append(f"{report['extra_visible_own_deck_rows']} extra Deck rows")
+    unknown = sum(row["unknown_code"] for row in report["by_kind"].values())
+    if unknown:
+        problems.append(f"{unknown} options with no prompt code to compare")
+    deck_options = sum(row["options"] + row["lone_options"] for key, row in report["by_kind"].items() if "|deck|" in key)
+    for name, have, least in (("duels", report["duels"], min_duels), ("decisions", report["decisions"], min_decisions),
+                              ("Deck options", deck_options, min_deck_options)):
+        if have < least:
+            problems.append(f"only {have} {name}, below the minimum of {least}")
+    return problems
+
+
+def verdict_no_effect(report):
+    problems = [f"{row['deck0']} against {row['deck1']}: traces differ" for row in report["pairings"] if not row["identical"]]
+    if not report["pairings"]:
+        problems.append("no pairings ran")
+    problems += [f"{row['deck0']} against {row['deck1']}: the audit saw nothing" for row in report["pairings"]
+                 if not row["audit_saw_duels"] or not row["audit_saw_decisions"]]
+    return problems
+
+
+def verdict_soak(report):
+    problems = []
+    for stage, row in report["stages"].items():
+        if not row["duels_old"] or not row["duels_new"]:
+            problems.append(f"{stage}: no duels ({row['duels_old']} old, {row['duels_new']} new)")
+        if row["duels_old"] != row["duels_new"]:
+            problems.append(f"{stage}: {row['duels_old']} old duels, {row['duels_new']} new")
+        if row["rule_differences"]:
+            problems.append(f"{stage}: {row['rule_differences']} rule differences")
+        if row["chosen_actions_differ"]:
+            problems.append(f"{stage}: chosen actions differ in {row['chosen_actions_differ']} duels")
+    return problems
+
+
+def verdict_fields(report):
+    problems = []
+    if not report["only_expected_fields_changed"]:
+        problems.append("fields outside own Deck prompts changed")
+    if not report["pairings"] or not all(row["decisions"] for row in report["pairings"]):
+        problems.append("a pairing played no decisions")
+    if not sum(row["own_deck_option_decisions"] for row in report["pairings"]):
+        problems.append("no own Deck prompt was reached, so nothing was compared")
+    return problems
 
 
 def soak_records(stage):
@@ -274,6 +328,9 @@ def main():
     summary = sub.add_parser("summarize")
     summary.add_argument("directories", nargs="+", type=Path)
     summary.add_argument("--output", type=Path)
+    summary.add_argument("--min-duels", type=int, default=1)
+    summary.add_argument("--min-decisions", type=int, default=1)
+    summary.add_argument("--min-deck-options", type=int, default=1)
     effect = sub.add_parser("no-effect")
     effect.add_argument("--seed", type=int, required=True)
     effect.add_argument("--games", type=int, default=8)
@@ -310,18 +367,25 @@ def main():
         return 0
     if args.command == "summarize":
         report = summarize(args.directories)
+        problems = verdict_summary(report, args.min_duels, args.min_decisions, args.min_deck_options)
     elif args.command == "no-effect":
         report = no_effect(args.seed, args.games, args.so)
+        problems = verdict_no_effect(report)
     elif args.command == "compare-soak":
         report = compare_soak(args.old, args.new)
+        problems = verdict_soak(report)
     else:
         report = compare_fields(args.old, args.new, args.seed, args.games)
+        problems = verdict_fields(report)
+    report["problems"] = problems
+    report["passed"] = not problems
     text = json.dumps(report, indent=1)
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(text + "\n")
     print(text)
-    return 0
+    print(("FAILED: " + "; ".join(problems)) if problems else "PASSED")
+    return 1 if problems else 0
 
 
 if __name__ == "__main__":

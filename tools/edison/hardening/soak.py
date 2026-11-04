@@ -224,10 +224,19 @@ def main():
                "max_repeat": max((r["max_repeat"] for r in finished), default=0),
                "elapsed_seconds": round(time.time() - started, 1),
                "lists": sorted({n for d in duels for n in d.get("lists", [])})}
+    audit_problems = []
+    if audit_dir:
+        sys.path.insert(0, str(ROOT / "tests/edison"))
+        from prompt_audit import summarize, verdict_summary
+        differential = summarize([audit_dir])
+        # A stage that plays Deck-less lists may see no Deck option, so only duels and decisions are required.
+        audit_problems = verdict_summary(differential, len(finished), 1, 0)
+        summary["prompt_audit"] = {key: differential[key] for key in ("duels", "decisions", "mismatch_total", "by_field", "extra_visible_own_deck_rows")}
+        summary["prompt_audit_problems"] = audit_problems
     (args.output / "summary.json").write_text(json.dumps(summary, indent=1) + "\n")
     (args.output / "crashes.json").write_text(json.dumps(crashes, indent=0) + "\n")
     print(json.dumps(summary, indent=1))
-    clean = not crashes and not diagnostics and not violations and set(statuses) <= {"ok"} and len(finished) == len(duels)
+    clean = not crashes and not diagnostics and not violations and set(statuses) <= {"ok"} and len(finished) == len(duels) and not audit_problems
     print("SOAK: " + ("CLEAN" if clean else "NEEDS REVIEW"))
     return 0 if clean else 1
 

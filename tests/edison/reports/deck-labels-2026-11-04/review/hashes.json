@@ -1,0 +1,29 @@
+{
+ "first_fix_commit": "045c1d0",
+ "production_module": {
+  "certified_before_any_fix": "67423a99970519fb10fb0a484a4b1af331c77623dc318610b3e0d2de375dd95e",
+  "commit_045c1d0": "b0f7f47fdf9a37e2868706875c5bf043d3b82ef332adffbfd1f86ea44c67a2b4",
+  "this_commit": "9c3edea35be47785b9798072914aa7c9eee27d3893479cff859546429e72296e"
+ },
+ "negative_control_modules": {
+  "old_logic_with_this_audit": "b1ac8aca6db3018e635518590dda431a2e309bf1dec2b084185cad72aef12418",
+  "binding_of_045c1d0_with_this_audit": "2b2686ab1478974e2e75f20ac91e8e30991730640a501d30481693e538bc910d",
+  "mutant_selected_cards_masked": "10723c3254c572492ad5e6618271958137a71f244a306d62f1a57b19ae2037a0"
+ },
+ "edison_rules": "6df1bd58680d681624c02e5bd8ec19159b96cc4204b4af6a543ed7c30b411778",
+ "edison_conformance": "ac41e4d3ea72a4d6711c970c2e74602a5aaacafff6234eb759e7c74c0d5a8066",
+ "imported_module": "9c3edea35be47785b9798072914aa7c9eee27d3893479cff859546429e72296e",
+ "fingerprints": {
+  "sources": 109,
+  "sources_at_045c1d0": 108,
+  "changed_since": [
+   "tests/edison/production_deck_label_tests.py",
+   "tests/edison/production_deck_order_tests.py",
+   "tests/edison/prompt_audit.py",
+   "tests/edison/run.py",
+   "ygoenv/ygoenv/ygopro/prompt_audit.h",
+   "ygoenv/ygoenv/ygopro/ygopro.h"
+  ]
+ },
+ "core_hardening_patch_sha256": "9adf1905ebb577cdbd13dbf51737eb28cd07dfb0cf088b2275d0c6e0d3a1fff5"
+}

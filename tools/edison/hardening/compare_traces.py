@@ -63,7 +63,16 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=1) + "\n")
     print(json.dumps(report, indent=1))
-    return 0
+    # Rule 5 and Edison traces of earlier cases must match.
+    certification_report, conformance_report = report["certification"], report["conformance"]
+    problems = certification_report["rule5_trace_differs"] + certification_report["edison_trace_differs"] + certification_report["only_old"]
+    problems += conformance_report["test_files_differ"] + conformance_report["only_old"]
+    if not conformance_report["results.json_identical"]:
+        problems.append("conformance results.json")
+    if not certification_report["cases_old"] or not conformance_report["tests_old"]:
+        problems.append("nothing compared")
+    print(("FAILED: " + ", ".join(problems)) if problems else "PASSED")
+    return 1 if problems else 0
 
 
 if __name__ == "__main__":
