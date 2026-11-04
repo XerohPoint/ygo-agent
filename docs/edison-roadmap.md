@@ -54,7 +54,7 @@ mechanics, announced around June 2025. That exemption comes from one fan-run pos
 | [Format Library deck gallery](https://formatlibrary.com/deck-gallery/edison) and its public API | Gauntlet decks with Side decks | In use (M0) |
 | Format Library replay metadata | Archetype share and human matchup results | [Collected](../tests/edison/reports/metagame-replays-2026-11-04/summary.json) |
 | Dueling Book replay contents | Move-level human games | **Blocked**: needs a token; requires permission |
-| Commentated replay reviews (YouTube): IMNerd, E3 Yugioh | Curated position test suite with human reasoning | Planned; frames and captions readable in a browser, tested on 3 frames of one video |
+| Commentated replay reviews (YouTube): IMNerd, E3 Yugioh | Curated position test suite with human reasoning | [Pilot](edison-position-suite.md): 8 positions from one video; cannot run automatically until a position loader exists |
 
 Replay metadata covers 697 of 698 listed games from 85 events. Blackwing (22.7%) and
 Vayu Turbo (22.4%) lead by appearance. No fixture deck covers Vayu Turbo. Published

@@ -1,0 +1,209 @@
+{
+ "schema": 1,
+ "source": {
+  "video": "https://www.youtube.com/watch?v=aFDk3-ZgjY4",
+  "title": "Diva Hero vs Vayu Turbo | IMN Finals Tournament Match | Yugioh Edison Format",
+  "channel": "IMNerd (Frazier Smith)",
+  "reviewed": "2026-11-04",
+  "match": "Vayu Turbo won game 1; Diva Hero won games 2 and 3"
+ },
+ "notes": [
+  "Commentary and viewer views are paraphrased human opinion, not ground truth.",
+  "Each position is read from video frames and auto-captions, then checked against the board and duel log.",
+  "actor_knows is the only part an engine may see. replay_only is what the replay view adds and must never be given to a policy.",
+  "Timestamps are approximate, within about 15 seconds.",
+  "Hand lists are read from a cropped view. hand_complete says whether every card in the hand was confirmed."
+ ],
+ "positions": [
+  {
+   "id": "imn-aFDk3-g1-dustshoot-pick",
+   "game": 1,
+   "time": "2:01",
+   "actor": "Vayu Turbo",
+   "decision": "Choose which monster Trap Dustshoot shuffles from the revealed hand",
+   "actor_knows": {
+    "lp": {"self": 8000, "opponent": 8000},
+    "phase": "Opponent Standby Phase",
+    "own_field": {"set_monsters": ["Ryko, Lightsworn Hunter"], "spell_trap": ["Trap Dustshoot (activated)", "Torrential Tribute (set)"]},
+    "own_hand": ["Return from the Different Dimension", "Deck Devastation Virus", "Allure of Darkness"],
+    "hand_complete": false,
+    "revealed_opponent_hand": ["Heavy Storm", "Dark Grepher", "Deep Sea Diva", "Gold Sarcophagus", "Elemental HERO Stratos", "Return from the Different Dimension"],
+    "opponent_field": {}
+   },
+   "replay_only": {},
+   "options": ["Dark Grepher", "Deep Sea Diva", "Elemental HERO Stratos"],
+   "played": "Elemental HERO Stratos",
+   "played_evidence": "Stratos is absent from the next visible hand; the other five cards remain.",
+   "commentary": {"stance": "neutral", "summary": "Calls all three good options and weighs how each runs into the set Torrential Tribute and Ryko."},
+   "confidence": "high"
+  },
+  {
+   "id": "imn-aFDk3-g1-sarcophagus-pick",
+   "game": 1,
+   "time": "2:15",
+   "actor": "Diva Hero",
+   "decision": "Choose the card to banish with Gold Sarcophagus",
+   "actor_knows": {
+    "lp": {"self": 8000, "opponent": 8000},
+    "phase": "Own Main Phase 1",
+    "own_field": {"spell_trap": ["Gold Sarcophagus (activated)"]},
+    "own_hand": ["Deep Sea Diva", "Heavy Storm", "Return from the Different Dimension", "Dark Grepher"],
+    "hand_complete": true,
+    "opponent_field": {"set_monsters": 1, "set_spell_trap": 1},
+    "opponent_graveyard": ["Trap Dustshoot"]
+   },
+   "replay_only": {"opponent_set_monster": "Ryko, Lightsworn Hunter", "opponent_set_spell_trap": "Torrential Tribute"},
+   "options": null,
+   "options_note": "Any card left in the deck. The full decklist is not captured here.",
+   "played": "Reinforcement of the Army",
+   "commentary": {"stance": "considers_alternative", "alternative": "Future Fusion", "summary": "Raises Future Fusion to send Destiny HERO - Malicious, then discusses why the player chose Reinforcement of the Army instead. Part of this reasoning was lost between captions."},
+   "confidence": "medium"
+  },
+  {
+   "id": "imn-aFDk3-g1-set-torrential",
+   "game": 1,
+   "time": "3:31",
+   "actor": "Diva Hero",
+   "decision": "Main Phase play with a suspected Ryko on the opposing field",
+   "actor_knows": {
+    "lp": {"self": 8000, "opponent": 8000},
+    "phase": "Own Main Phase 1",
+    "own_hand": ["Dark Grepher", "Torrential Tribute", "Heavy Storm", "Return from the Different Dimension", "Deep Sea Diva"],
+    "hand_complete": true,
+    "own_graveyard": ["Gold Sarcophagus"],
+    "own_banished": ["Reinforcement of the Army"],
+    "opponent_field": {"set_monsters": 1, "set_spell_trap": 1},
+    "opponent_graveyard": ["Trap Dustshoot"]
+   },
+   "replay_only": {"opponent_set_monster": "Ryko, Lightsworn Hunter", "opponent_set_spell_trap": "Torrential Tribute"},
+   "options": null,
+   "options_note": "Includes setting Torrential Tribute, activating Heavy Storm, summoning Deep Sea Diva, or combinations.",
+   "played": "Set Torrential Tribute and pass without summoning",
+   "commentary": {"stance": "skeptical", "summary": "Reads the set monster as probably Ryko and questions exposing Torrential Tribute to it."},
+   "what_happened": "On the next turn Torrential Tribute is in the actor's Graveyard and the opponent's Graveyard has grown, consistent with Ryko destroying it and milling.",
+   "confidence": "high"
+  },
+  {
+   "id": "imn-aFDk3-g1-heavy-storm",
+   "game": 1,
+   "time": "4:40",
+   "actor": "Diva Hero",
+   "decision": "Activate Heavy Storm into four set cards before summoning",
+   "actor_knows": {
+    "lp": {"self": 8000, "opponent": 8000},
+    "phase": "Own Main Phase 1",
+    "own_hand": ["Dark Grepher", "Heavy Storm", "Return from the Different Dimension", "Deep Sea Diva", "Mirror Force", "Elemental HERO Stratos"],
+    "hand_complete": false,
+    "opponent_field": {"set_spell_trap": 4}
+   },
+   "replay_only": {"opponent_set_spell_trap_includes": ["Solemn Judgment", "Deck Devastation Virus"]},
+   "options": null,
+   "played": "Activate Heavy Storm",
+   "commentary": {"stance": "descriptive", "summary": "Points out the Heavy Storm runs into Solemn Judgment; gives no clear verdict on the play."},
+   "what_happened": "Solemn Judgment negates it, taking the opponent to 4000. Stratos then searches Destiny HERO - Malicious.",
+   "confidence": "medium"
+  },
+  {
+   "id": "imn-aFDk3-g3-dustshoot-pick",
+   "game": 3,
+   "time": "16:55",
+   "actor": "Vayu Turbo",
+   "decision": "Choose which monster Trap Dustshoot shuffles from the revealed hand",
+   "actor_knows": {
+    "lp": {"self": 8000, "opponent": 8000},
+    "phase": "Opponent Standby Phase",
+    "own_field": {"monsters": ["Blackwing Armed Wing", "Dark Grepher"], "spell_trap": ["Trap Dustshoot (activated)", "Pulling the Rug (set)"]},
+    "own_hand": ["Bottomless Trap Hole", "D.D. Crow"],
+    "hand_complete": true,
+    "revealed_opponent_hand": ["Dimensional Prison", "Destiny HERO - Malicious", "Miracle Fusion", "Dark Grepher", "Deep Sea Diva", "Mind Control"],
+    "opponent_field": {}
+   },
+   "replay_only": {},
+   "options": ["Destiny HERO - Malicious", "Dark Grepher", "Deep Sea Diva"],
+   "played": "Dark Grepher",
+   "commentary": {"stance": "approves", "summary": "Treats taking Dark Grepher as a strong pick."},
+   "viewer_comment": {"stance": "disagrees", "alternative": "Destiny HERO - Malicious", "summary": "One viewer argues Malicious was better because it leaves Grepher, Miracle Fusion and Mind Control much weaker."},
+   "confidence": "high"
+  },
+  {
+   "id": "imn-aFDk3-g3-mind-control",
+   "game": 3,
+   "time": "17:25",
+   "actor": "Diva Hero",
+   "decision": "Follow-up after Pulling the Rug stops Deep Sea Diva's effect, with Mind Control available",
+   "actor_knows": {
+    "lp": {"self": 8000, "opponent": 8000},
+    "phase": "Own Main Phase 1",
+    "own_field": {"monsters": ["Deep Sea Diva"]},
+    "own_hand": ["Destiny HERO - Malicious", "Dimensional Prison", "Mind Control", "Miracle Fusion"],
+    "hand_complete": true,
+    "opponent_field": {"monsters": ["Blackwing Armed Wing", "Dark Grepher"]},
+    "opponent_graveyard": ["Trap Dustshoot", "Pulling the Rug"]
+   },
+   "replay_only": {"opponent_hand": ["Bottomless Trap Hole", "D.D. Crow"]},
+   "options": null,
+   "options_note": "Mind Control could target either opposing monster. Mind Control's monster cannot attack.",
+   "played": "Mind Control on Dark Grepher, discard Malicious to send Plaguespreader Zombie, then Miracle Fusion for Elemental HERO Absolute Zero",
+   "commentary": {"stance": "approves", "summary": "Follows the line as a natural answer to losing Grepher, and notes Zero can attack while the controlled monster cannot."},
+   "what_happened": "Absolute Zero (2500) attacks and destroys Blackwing Armed Wing.",
+   "confidence": "medium"
+  },
+  {
+   "id": "imn-aFDk3-g3-hold-bottomless",
+   "game": 3,
+   "time": "19:10",
+   "actor": "Vayu Turbo",
+   "decision": "Respond to the Summon of Elemental HERO Stratos with a set Bottomless Trap Hole, or hold it",
+   "actor_knows": {
+    "lp": {"self": 7800, "opponent": 8000},
+    "phase": "Opponent Main Phase 1",
+    "own_field": {"spell_trap": ["Bottomless Trap Hole (set)"]},
+    "own_hand": null,
+    "hand_complete": false,
+    "opponent_field": {"monsters": ["Elemental HERO Stratos"], "set_spell_trap": 1},
+    "opponent_graveyard": ["Miracle Fusion"]
+   },
+   "replay_only": {"opponent_set_spell_trap": "Dimensional Prison"},
+   "options": ["Activate Bottomless Trap Hole", "Do not activate"],
+   "played": "Do not activate",
+   "commentary": {"stance": "unclear", "summary": "Remarks that Bottomless is not used on Stratos and that its value has changed; the caption ends before the full reasoning."},
+   "what_happened": "Stratos searches Elemental HERO Neos Alius and attacks for 1800.",
+   "identification_note": "The set card is identified from face-down artwork in this replay view and the caption; confirm before relying on it.",
+   "confidence": "medium"
+  },
+  {
+   "id": "imn-aFDk3-g3-set-grepher",
+   "game": 3,
+   "time": "20:01",
+   "actor": "Diva Hero",
+   "decision": "Main Phase 2 play after attacking, holding Dark Grepher and Elemental HERO Neos Alius",
+   "actor_knows": {
+    "lp": {"self": 8000, "opponent": 4200},
+    "phase": "Own Main Phase 2",
+    "own_field": {"monsters": ["Elemental HERO Stratos"], "spell_trap_visible": ["Dimensional Prison (set)"]},
+    "own_hand": ["Elemental HERO Neos Alius", "Dark Grepher"],
+    "hand_complete": true,
+    "opponent_field": {"set_spell_trap": 2}
+   },
+   "replay_only": {},
+   "options": null,
+   "options_note": "Includes setting Dark Grepher, summoning Neos Alius, or adding no monster.",
+   "played": "Set Dark Grepher, keeping Neos Alius",
+   "commentary": {"stance": "unsure_then_rationalizes", "summary": "First says the reason is unclear, then suggests it can draw out Torrential Tribute and leave Neos Alius as a follow-up."},
+   "confidence": "medium"
+  }
+ ],
+ "rejected": [
+  {
+   "time": "12:00",
+   "game": 2,
+   "topic": "Stardust Dragon and Absolute Zero attack sequence",
+   "reason": "Could not determine which card Stardust Dragon responded to. Dimensional Prison banishes rather than destroys, so it should not qualify for Stardust's effect, yet the commentary centers on it. Recording this would mean guessing."
+  }
+ ],
+ "not_reviewed_leads": [
+  {"time": "6:53", "game": 1, "topic": "A viewer says sending Plaguespreader Zombie into Goyo Guardian wins here"},
+  {"time": "8:31", "game": 1, "topic": "Attacking again into Stardust Dragon against a possible Dimensional Prison"},
+  {"time": "15:31", "game": 2, "topic": "Whether to expose a monster to Dimensional Prison"}
+ ]
+}
