@@ -110,6 +110,10 @@ games, so they are only as trustworthy as the play policy underneath them.
 - **Keep the network on CPU for search, and use the GPU for training.** A leaf evaluation at 0.19 ms inline beats any plausible GPU round trip. The
   next search dependency is a native forward pass.
 - **Greedy play needs a repetition guard outside the fixtures.** Free negated effects can loop to the decision limit, which matches open defect D12.
+- **M1 final test: not met.** [The report](edison-learner.md#long-gauntlet-run-and-m1-final-test) has gauntlet-trained networks at 71.3% on the gauntlet and 55.9% on fixtures against the heuristic on fresh seeds, with Blackwing,
+  Frog Monarch and one optimizer's lower bound below 50%. They were still rising at the end of training.
+- **Fix Deck option labels before more training.** [The defect](edison-learner.md#known-defect-deck-option-labels) shows policies the wrong cards at Deck prompts and exposes hidden Deck cards to their owner. It voids the claim that policies
+  use public information only, for every result so far. Retrain and re-evaluate on fresh seeds afterward. Test expert lines such as [the Substitoad line](edison-learner.md#the-substitoad-line) again then.
 - **Open: loading a position from a real external game.** Replay needs private data and construction
   fails, so M6 and the position suite need their own solution.
 
