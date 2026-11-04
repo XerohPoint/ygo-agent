@@ -98,6 +98,11 @@ games, so they are only as trustworthy as the play policy underneath them.
 - **Hardening comes before the wider pool or siding.** Production ignores Lua errors because it never
   installs a message handler, and 114 confirmed cards crash the interface through unhandled prompts
   such as coin, dice and declarations. The gauntlet's Main and Extra avoid these, but Side decks do not.
+- **Hardening landed; old win rates no longer compare.** [The hardening report](edison-hardening.md) covers Lua
+  errors, rule fixes, prompts and legality, with 567 certification cases passing. Rule changes alter seeded games,
+  so re-baseline before comparing with any earlier result. The forward-model test bed still links the older core.
+- **Open rule questions for the owner:** D1 (chain order across SEGOC steps) and D4 (Ignition priority after declining
+  a Summon trigger). The written sources conflict on both, and the simulator is unchanged on them.
 - **Open: loading a position from a real external game.** Replay needs private data and construction
   fails, so M6 and the position suite need their own solution.
 

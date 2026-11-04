@@ -82,6 +82,12 @@ def main():
         sources += sorted(p for p in Path(__file__).parent.iterdir()
                           if p.suffix in (".h", ".cpp", ".py"))
         report["source_sha256"] = {str(path.relative_to(ROOT)): digest(path) for path in sources}
+        native = [p for p in sources if p.suffix in (".h", ".cpp", ".lua")] + [patch, hardening, recipe]
+        def require_current(built):
+            stale = [str(p.relative_to(ROOT)) for p in native if p.stat().st_mtime > built.stat().st_mtime]
+            if stale:
+                raise RuntimeError(f"{built} is older than its sources; rebuild it first: {stale[:5]}")
+        require_current(args.binary)
         command = [str(args.binary.resolve()), str(args.database.resolve()), str(args.scripts.resolve()), "--trace"]
         if args.test_id is not None:
             command.append(f"--test={args.test_id}")
@@ -93,6 +99,10 @@ def main():
             production = sorted((ROOT / "build/linux/x86_64/release").glob("ygopro_ygoenv*.so"))
             if len(production) != 1:
                 raise RuntimeError("Build the production module before production certification")
+            require_current(production[0])
+            imported = ROOT / "ygoenv/ygoenv/ygopro" / production[0].name
+            if digest(imported) != digest(production[0]):
+                raise RuntimeError("The module Python imports differs from the built production module")
             report["production_binary"] = str(production[0])
             report["production_binary_sha256"] = digest(production[0])
             report["token_resource_sha256"] = digest(ROOT / "assets/deck/unsupported/_tokens.ydk")
