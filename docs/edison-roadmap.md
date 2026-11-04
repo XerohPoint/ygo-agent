@@ -54,7 +54,7 @@ mechanics, announced around June 2025. That exemption comes from one fan-run pos
 | [Format Library deck gallery](https://formatlibrary.com/deck-gallery/edison) and its public API | Gauntlet decks with Side decks | In use (M0) |
 | Format Library replay metadata | Archetype share and human matchup results | [Collected](../tests/edison/reports/metagame-replays-2026-11-04/summary.json) |
 | Dueling Book replay contents | Move-level human games | **Blocked**: needs a token; requires permission |
-| YouTube matches | Human review of positions | Not planned as a dataset; costly to extract |
+| Commentated replay reviews (YouTube) | Curated position test suite with human reasoning | Planned; no suitable videos identified yet |
 
 Replay metadata covers 697 of 698 listed games from 85 events. Blackwing (22.7%) and
 Vayu Turbo (22.4%) lead by appearance. No fixture deck covers Vayu Turbo. Published
@@ -68,6 +68,12 @@ Dueling Book is also a manual simulator without a rules engine, so its logs woul
 not map directly onto simulator actions and may contain rewinds or illegal plays.
 If obtained, they could support imitation warm starts and a "does the engine agree
 with strong players?" benchmark.
+
+Commentated reviews serve a different purpose: a small hand-curated suite, similar
+to chess test positions, that records the board, the options, the commentator's
+preferred play and their reason. Commentators can be wrong, so these are human
+opinions to compare against, not ground truth, and too few to train a network on.
+Keep our own short notes and links rather than republishing transcripts or video.
 
 ## Order of work
 
