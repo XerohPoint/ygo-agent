@@ -1,0 +1,96 @@
+{
+ "format": "edison_learner_codes_v1",
+ "note": "Line number is the card id. Never edit in place: a new pool gets a new list and checkpoints fail closed on a hash mismatch.",
+ "codes": 509,
+ "sha256": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab",
+ "from_decks": 248,
+ "tokens": 238,
+ "other_closure": 23,
+ "scripts_sha": "see tests/edison/assets.lock.json for pinned scripts",
+ "decks": {
+  "blackwing": {
+   "path": "assets/edison/decks/blackwing.ydk",
+   "sha256": "9e401c1c94478c5949c75bffdcd6d233df70b769ee5f42c3403fb44986af0a8e"
+  },
+  "frog_monarch": {
+   "path": "assets/edison/decks/frog_monarch.ydk",
+   "sha256": "8e86edd984770caf2f272d8deae95ee6dd69b259f79bd03c06869654880cd4df"
+  },
+  "machina_gadget": {
+   "path": "assets/edison/agent_decks/machina_gadget.ydk",
+   "sha256": "65fa51f100a7fc3d99b2f2cb9721f7d5a58da18510c18a4d13af8e3d5020414e"
+  },
+  "g_blackwing": {
+   "path": "assets/edison/gauntlet_candidates/blackwing.ydk",
+   "sha256": "899a35cc61506830d96032efc296fd238728991e352cae59f47733c4bece1c77"
+  },
+  "g_vayu_turbo": {
+   "path": "assets/edison/gauntlet_candidates/vayu_turbo.ydk",
+   "sha256": "0146fe083c441e892c5a46e9ffb3d2ebccd9a610766f8187b21e67b2d2473608"
+  },
+  "g_hero_frog": {
+   "path": "assets/edison/gauntlet_candidates/hero_frog.ydk",
+   "sha256": "7c7857019eb82f9c5341b8caf2fa2b33b0e9e339dab8290bda8d259e0829ab39"
+  },
+  "g_gladiator_beast": {
+   "path": "assets/edison/gauntlet_candidates/gladiator_beast.ydk",
+   "sha256": "58c18c1d82ed0df75d44b72930d3ca7b47d0616f92b8648a3f3d7e4ed4734219"
+  },
+  "g_frog_monarch": {
+   "path": "assets/edison/gauntlet_candidates/frog_monarch.ydk",
+   "sha256": "46bca5372c28f07153465c28ddf627e92dbdd734e4c6c7c3407f9e71cc98ca02"
+  },
+  "g_dragon_turbo": {
+   "path": "assets/edison/gauntlet_candidates/dragon_turbo.ydk",
+   "sha256": "64918f1826c1e2b8f1a48bb6af508a5b27e8d083257c208069de75371bf3f014"
+  },
+  "g_lightsworn": {
+   "path": "assets/edison/gauntlet_candidates/lightsworn.ydk",
+   "sha256": "33d1796a8523649972b527405a53f8066bdf4fb4252a645b88a01d15169ccbf8"
+  },
+  "g_frog_otk": {
+   "path": "assets/edison/gauntlet_candidates/frog_otk.ydk",
+   "sha256": "fd3041c2d71e6710f15c3a07cad908dc64049cd76822d3e729197c81fc02bc37"
+  },
+  "g_diva_hero_beat": {
+   "path": "assets/edison/gauntlet_candidates/diva_hero_beat.ydk",
+   "sha256": "99947e76a68008c82bd0780c62692934080302f199b92690e374b2000bc78e97"
+  },
+  "g_gigavise": {
+   "path": "build/edison-learner-2026-11-04/decks/g_gigavise.ydk",
+   "sha256": "e618098237053f56d9ffb83f44af0b684230d749c75f80350d047b89c0f0e851"
+  },
+  "g_machina_control": {
+   "path": "build/edison-learner-2026-11-04/decks/g_machina_control.ydk",
+   "sha256": "ec0b728745633bb4e50296d13a23ca9f6f3a0417dae670e195e5ad5e761886fa"
+  },
+  "g_diva_hero": {
+   "path": "assets/edison/gauntlet_candidates/diva_hero.ydk",
+   "sha256": "129cfa73a8e13532a3ce147c3da436f7aee96d81c0f887c5808e7b5ccfccf322"
+  },
+  "g_zombie_teledad": {
+   "path": "assets/edison/gauntlet_candidates/zombie_teledad.ydk",
+   "sha256": "7bcf8419fce7f83cdb29c75fac1e22b2b2f53cc1bd941cd9ba35977a75b27836"
+  },
+  "g_diva_frog": {
+   "path": "assets/edison/gauntlet_candidates/diva_frog.ydk",
+   "sha256": "d7b6a809d8c2d9ae563a51b0cf40d4d17e06d132b76b32fc3e6c32f05b699365"
+  },
+  "g_hero_beat": {
+   "path": "assets/edison/gauntlet_candidates/hero_beat.ydk",
+   "sha256": "43ba0206f53a4ad58f4f086c49a628373d598b41ea54fcedb1b452041e7e213a"
+  },
+  "g_lightsworn_fairy": {
+   "path": "assets/edison/gauntlet_candidates/lightsworn_fairy.ydk",
+   "sha256": "b48b8448a7444c2d55e56cff2744101871c4ebb7ce477129a9155c50ac4cefac"
+  },
+  "g_quickdraw_plant": {
+   "path": "assets/edison/gauntlet_candidates/quickdraw_plant.ydk",
+   "sha256": "1a7a3d84ef5c9ccf464570e7d2cb5843feaddd36b557281c28511f854cfbf25d"
+  },
+  "g_vayu_turbo_ddev08": {
+   "path": "assets/edison/gauntlet_candidates/vayu_turbo_ddev08.ydk",
+   "sha256": "ac9c93c24c49af7f265c03eb36fe03886692d66a134b255fb2b5cc8ced45384f"
+  }
+ }
+}

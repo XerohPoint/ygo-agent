@@ -1,0 +1,1709 @@
+{
+"control-on-gauntlet": {
+"seed": 73910000,
+"seeds_per_cell": 8,
+"decks": "gauntlet",
+"greedy": true,
+"total": {
+"heuristic-mirror|heuristic": {
+"wins": 672,
+"losses": 672,
+"draws": 0,
+"games": 1344,
+"void_games": 0,
+"decisions": 245168,
+"win_rate": 0.5
+}
+},
+"void_cells": [],
+"replayed_cells": 0,
+"replay_mismatches": [],
+"decisions": 245168,
+"elapsed_seconds": 16.892570691998117,
+"policy_sha256": {
+"heuristic-mirror": null
+}
+},
+"control-pilot": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"heuristic-mirror|heuristic": {
+"wins": 384,
+"losses": 384,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 114202,
+"win_rate": 0.5
+}
+},
+"void_cells": [],
+"replayed_cells": 2,
+"replay_mismatches": [],
+"decisions": 114202,
+"elapsed_seconds": 28.98550086800242,
+"policy_sha256": {
+"heuristic-mirror": null
+}
+},
+"control-random-pilot": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"heuristic-vs-random|random": {
+"wins": 738,
+"losses": 30,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 114038,
+"win_rate": 0.9609
+}
+},
+"void_cells": [],
+"replayed_cells": 0,
+"replay_mismatches": [],
+"decisions": 114038,
+"elapsed_seconds": 31.75530359800905,
+"policy_sha256": {
+"heuristic-vs-random": null
+}
+},
+"control-validation": {
+"seed": 40000000,
+"seeds_per_cell": 8,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"heuristic-mirror|heuristic": {
+"wins": 48,
+"losses": 48,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 14496,
+"win_rate": 0.5
+}
+},
+"void_cells": [],
+"replayed_cells": 2,
+"replay_mismatches": [],
+"decisions": 14496,
+"elapsed_seconds": 4.192235211987281,
+"policy_sha256": {
+"heuristic-mirror": null
+}
+},
+"gauntlet-net-on-fixtures": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"gauntlet160-1702|heuristic": {
+"wins": 323,
+"losses": 445,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 125889,
+"win_rate": 0.4206
+},
+"gauntlet160-1702|random": {
+"wins": 731,
+"losses": 37,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 131583,
+"win_rate": 0.9518
+},
+"gauntlet160-1703|heuristic": {
+"wins": 337,
+"losses": 431,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 148269,
+"win_rate": 0.4388
+},
+"gauntlet160-1703|random": {
+"wins": 731,
+"losses": 37,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 137201,
+"win_rate": 0.9518
+},
+"gauntlet160-1704|heuristic": {
+"wins": 341,
+"losses": 427,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 130129,
+"win_rate": 0.444
+},
+"gauntlet160-1704|random": {
+"wins": 720,
+"losses": 48,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 142479,
+"win_rate": 0.9375
+}
+},
+"void_cells": [],
+"replayed_cells": 0,
+"replay_mismatches": [],
+"decisions": 815550,
+"elapsed_seconds": 114.11143282000558,
+"policy_sha256": {
+"gauntlet160-1702": "e8579318a97d793cdb26b62f350b94284370a403291e4fc588ffeda0607a150e",
+"gauntlet160-1703": "ab79d80bdb4e70aaf2ab7847268af77ecef61acf383f483d0c86b35d0cde6431",
+"gauntlet160-1704": "23ee9629f2d66df2fb857f63040eeb74bd0c951b1eec3b26a42d8ebb1c9e17f2"
+}
+},
+"gauntlet-net-on-gauntlet": {
+"seed": 73910000,
+"seeds_per_cell": 8,
+"decks": "gauntlet",
+"greedy": true,
+"total": {
+"gauntlet160-1702|heuristic": {
+"wins": 708,
+"losses": 628,
+"draws": 0,
+"games": 1336,
+"void_games": 8,
+"decisions": 277896,
+"win_rate": 0.5299
+},
+"gauntlet160-1703|heuristic": {
+"wins": 770,
+"losses": 574,
+"draws": 0,
+"games": 1344,
+"void_games": 0,
+"decisions": 312849,
+"win_rate": 0.5729
+},
+"gauntlet160-1704|heuristic": {
+"wins": 752,
+"losses": 576,
+"draws": 0,
+"games": 1328,
+"void_games": 16,
+"decisions": 280167,
+"win_rate": 0.5663
+}
+},
+"void_cells": [
+[
+"gauntlet160-1702",
+"heuristic",
+"g_hero_frog",
+"g_lightsworn",
+1,
+"ContractError: decision limit; not a completed duel"
+],
+[
+"gauntlet160-1704",
+"heuristic",
+"g_hero_frog",
+"g_lightsworn",
+1,
+"ContractError: decision limit; not a completed duel"
+],
+[
+"gauntlet160-1704",
+"heuristic",
+"g_hero_frog",
+"g_machina_control",
+1,
+"ContractError: decision limit; not a completed duel"
+]
+],
+"replayed_cells": 8,
+"replay_mismatches": [],
+"decisions": 870912,
+"elapsed_seconds": 173.34738400697825,
+"policy_sha256": {
+"gauntlet160-1702": "e8579318a97d793cdb26b62f350b94284370a403291e4fc588ffeda0607a150e",
+"gauntlet160-1703": "ab79d80bdb4e70aaf2ab7847268af77ecef61acf383f483d0c86b35d0cde6431",
+"gauntlet160-1704": "23ee9629f2d66df2fb857f63040eeb74bd0c951b1eec3b26a42d8ebb1c9e17f2"
+}
+},
+"league-net-on-gauntlet": {
+"seed": 73910000,
+"seeds_per_cell": 8,
+"decks": "gauntlet",
+"greedy": true,
+"total": {
+"league320-1702|heuristic": {
+"wins": 619,
+"losses": 709,
+"draws": 0,
+"games": 1328,
+"void_games": 16,
+"decisions": 311442,
+"win_rate": 0.4661
+},
+"league320-1703|heuristic": {
+"wins": 570,
+"losses": 750,
+"draws": 0,
+"games": 1320,
+"void_games": 24,
+"decisions": 256065,
+"win_rate": 0.4318
+},
+"league320-1704|heuristic": {
+"wins": 597,
+"losses": 739,
+"draws": 0,
+"games": 1336,
+"void_games": 8,
+"decisions": 278449,
+"win_rate": 0.4469
+}
+},
+"void_cells": [
+[
+"league320-1702",
+"heuristic",
+"g_hero_frog",
+"g_lightsworn",
+1,
+"ContractError: decision limit; not a completed duel"
+],
+[
+"league320-1702",
+"heuristic",
+"g_hero_frog",
+"g_lightsworn_fairy",
+1,
+"ContractError: decision limit; not a completed duel"
+],
+[
+"league320-1703",
+"heuristic",
+"g_hero_beat",
+"g_hero_frog",
+0,
+"ContractError: decision limit; not a completed duel"
+],
+[
+"league320-1703",
+"heuristic",
+"g_hero_frog",
+"g_lightsworn",
+1,
+"ContractError: decision limit; not a completed duel"
+],
+[
+"league320-1703",
+"heuristic",
+"g_hero_frog",
+"g_lightsworn_fairy",
+1,
+"ContractError: decision limit; not a completed duel"
+],
+[
+"league320-1704",
+"heuristic",
+"g_hero_frog",
+"g_lightsworn",
+1,
+"ContractError: decision limit; not a completed duel"
+]
+],
+"replayed_cells": 0,
+"replay_mismatches": [],
+"decisions": 845956,
+"elapsed_seconds": 193.77249837497948,
+"policy_sha256": {
+"league320-1702": "78fe4e9e7307e05a8c7b26b7f4626613dec4a8dcc7abaf9b822c5cadd60dd031",
+"league320-1703": "24eef8b40438e9dd5d707761c7189108ae0eb8be924451b9e1f92a39950b346e",
+"league320-1704": "0eb224e08fe4e68d1a27f3a8ab77d125b254aba6b57d57c8f38f4b5694e57780"
+}
+},
+"league160-pilot": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league160-1702|heuristic": {
+"wins": 385,
+"losses": 383,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 134879,
+"win_rate": 0.5013
+},
+"league160-1702|random": {
+"wins": 745,
+"losses": 23,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 126945,
+"win_rate": 0.9701
+},
+"league160-1703|heuristic": {
+"wins": 388,
+"losses": 380,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 155945,
+"win_rate": 0.5052
+},
+"league160-1703|random": {
+"wins": 741,
+"losses": 27,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 127942,
+"win_rate": 0.9648
+},
+"league160-1704|heuristic": {
+"wins": 374,
+"losses": 394,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 145176,
+"win_rate": 0.487
+},
+"league160-1704|random": {
+"wins": 739,
+"losses": 29,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 128486,
+"win_rate": 0.9622
+}
+},
+"void_cells": [],
+"replayed_cells": 3,
+"replay_mismatches": [],
+"decisions": 819373,
+"elapsed_seconds": 371.5295177740045,
+"policy_sha256": {
+"league160-1702": "d4ae15eb57c161e51b60c7c13f0a9740713108b93c779d1139a4d0b159702403",
+"league160-1703": "9b9c0301ecc34a6441b79fb7be9779a2ae24c74eb9d1d0019ba5daf7d8993b22",
+"league160-1704": "3789b1aebfe698e5e4ed0e135d9003222f62c08ee9da7877912b53308e6f3c1b"
+}
+},
+"league160-validation": {
+"seed": 40000000,
+"seeds_per_cell": 8,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league160-1702|heuristic": {
+"wins": 47,
+"losses": 49,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 16080,
+"win_rate": 0.4896
+},
+"league160-1702|random": {
+"wins": 91,
+"losses": 5,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 16858,
+"win_rate": 0.9479
+},
+"league160-1703|heuristic": {
+"wins": 45,
+"losses": 51,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 18947,
+"win_rate": 0.4688
+},
+"league160-1703|random": {
+"wins": 94,
+"losses": 2,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 16034,
+"win_rate": 0.9792
+},
+"league160-1704|heuristic": {
+"wins": 50,
+"losses": 46,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 17861,
+"win_rate": 0.5208
+},
+"league160-1704|random": {
+"wins": 91,
+"losses": 5,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 17321,
+"win_rate": 0.9479
+}
+},
+"void_cells": [],
+"replayed_cells": 6,
+"replay_mismatches": [],
+"decisions": 103101,
+"elapsed_seconds": 97.70485069102142,
+"policy_sha256": {
+"league160-1702": "d4ae15eb57c161e51b60c7c13f0a9740713108b93c779d1139a4d0b159702403",
+"league160-1703": "9b9c0301ecc34a6441b79fb7be9779a2ae24c74eb9d1d0019ba5daf7d8993b22",
+"league160-1704": "3789b1aebfe698e5e4ed0e135d9003222f62c08ee9da7877912b53308e6f3c1b"
+}
+},
+"league160-vs-numpy-pilot-1702": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league160-1702|numpy-1702": {
+"wins": 473,
+"losses": 295,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 97866,
+"win_rate": 0.6159
+}
+},
+"void_cells": [],
+"replayed_cells": 1,
+"replay_mismatches": [],
+"decisions": 97866,
+"elapsed_seconds": 64.56142459699186,
+"policy_sha256": {
+"league160-1702": "d4ae15eb57c161e51b60c7c13f0a9740713108b93c779d1139a4d0b159702403"
+}
+},
+"league160-vs-numpy-pilot-1703": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league160-1703|numpy-1703": {
+"wins": 371,
+"losses": 397,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 110612,
+"win_rate": 0.4831
+}
+},
+"void_cells": [],
+"replayed_cells": 1,
+"replay_mismatches": [],
+"decisions": 110612,
+"elapsed_seconds": 71.00425226500374,
+"policy_sha256": {
+"league160-1703": "9b9c0301ecc34a6441b79fb7be9779a2ae24c74eb9d1d0019ba5daf7d8993b22"
+}
+},
+"league160-vs-numpy-pilot-1704": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league160-1704|numpy-1704": {
+"wins": 410,
+"losses": 358,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 95319,
+"win_rate": 0.5339
+}
+},
+"void_cells": [],
+"replayed_cells": 1,
+"replay_mismatches": [],
+"decisions": 95319,
+"elapsed_seconds": 61.68046496200259,
+"policy_sha256": {
+"league160-1704": "3789b1aebfe698e5e4ed0e135d9003222f62c08ee9da7877912b53308e6f3c1b"
+}
+},
+"league32-pilot": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league32-1702|heuristic": {
+"wins": 259,
+"losses": 509,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 120187,
+"win_rate": 0.3372
+},
+"league32-1702|random": {
+"wins": 721,
+"losses": 47,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 120123,
+"win_rate": 0.9388
+},
+"league32-1703|heuristic": {
+"wins": 235,
+"losses": 533,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 135994,
+"win_rate": 0.306
+},
+"league32-1703|random": {
+"wins": 671,
+"losses": 97,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 120749,
+"win_rate": 0.8737
+},
+"league32-1704|heuristic": {
+"wins": 261,
+"losses": 507,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 123461,
+"win_rate": 0.3398
+},
+"league32-1704|random": {
+"wins": 714,
+"losses": 54,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 126516,
+"win_rate": 0.9297
+}
+},
+"void_cells": [],
+"replayed_cells": 3,
+"replay_mismatches": [],
+"decisions": 747030,
+"elapsed_seconds": 336.56538735100185,
+"policy_sha256": {
+"league32-1702": "5f25d826239a656fe55e7ffa88f5e8b6106bc698eb4f5fb4d827ffd8c8376e60",
+"league32-1703": "01e1c8cc5b3a7666bfe3e297a84ccc76fbb6a20e235dc062b235c07d59f17e57",
+"league32-1704": "54ca9e4caecfc25603c540691b1cd44e4899cc81610c3f14dd091c9d5c64b631"
+}
+},
+"league32-sampled-pilot": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": false,
+"total": {
+"league32-1702|heuristic": {
+"wins": 193,
+"losses": 575,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 113844,
+"win_rate": 0.2513
+},
+"league32-1702|random": {
+"wins": 666,
+"losses": 102,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 130370,
+"win_rate": 0.8672
+},
+"league32-1703|heuristic": {
+"wins": 202,
+"losses": 566,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 113123,
+"win_rate": 0.263
+},
+"league32-1703|random": {
+"wins": 647,
+"losses": 121,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 125248,
+"win_rate": 0.8424
+},
+"league32-1704|heuristic": {
+"wins": 180,
+"losses": 588,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 117327,
+"win_rate": 0.2344
+},
+"league32-1704|random": {
+"wins": 656,
+"losses": 112,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 132291,
+"win_rate": 0.8542
+}
+},
+"void_cells": [],
+"replayed_cells": 0,
+"replay_mismatches": [],
+"decisions": 732203,
+"elapsed_seconds": 99.49118680000538,
+"policy_sha256": {
+"league32-1702": "5f25d826239a656fe55e7ffa88f5e8b6106bc698eb4f5fb4d827ffd8c8376e60",
+"league32-1703": "01e1c8cc5b3a7666bfe3e297a84ccc76fbb6a20e235dc062b235c07d59f17e57",
+"league32-1704": "54ca9e4caecfc25603c540691b1cd44e4899cc81610c3f14dd091c9d5c64b631"
+}
+},
+"league32-validation": {
+"seed": 40000000,
+"seeds_per_cell": 8,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league32-1702|heuristic": {
+"wins": 34,
+"losses": 62,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 16853,
+"win_rate": 0.3542
+},
+"league32-1702|random": {
+"wins": 92,
+"losses": 4,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 14996,
+"win_rate": 0.9583
+},
+"league32-1703|heuristic": {
+"wins": 34,
+"losses": 62,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 17997,
+"win_rate": 0.3542
+},
+"league32-1703|random": {
+"wins": 83,
+"losses": 13,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 14876,
+"win_rate": 0.8646
+},
+"league32-1704|heuristic": {
+"wins": 34,
+"losses": 62,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 16714,
+"win_rate": 0.3542
+},
+"league32-1704|random": {
+"wins": 83,
+"losses": 13,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 15596,
+"win_rate": 0.8646
+}
+},
+"void_cells": [],
+"replayed_cells": 6,
+"replay_mismatches": [],
+"decisions": 97032,
+"elapsed_seconds": 87.07528523899964,
+"policy_sha256": {
+"league32-1702": "5f25d826239a656fe55e7ffa88f5e8b6106bc698eb4f5fb4d827ffd8c8376e60",
+"league32-1703": "01e1c8cc5b3a7666bfe3e297a84ccc76fbb6a20e235dc062b235c07d59f17e57",
+"league32-1704": "54ca9e4caecfc25603c540691b1cd44e4899cc81610c3f14dd091c9d5c64b631"
+}
+},
+"league32-vs-numpy-pilot-1702": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league32-1702|numpy-1702": {
+"wins": 360,
+"losses": 408,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 84601,
+"win_rate": 0.4688
+}
+},
+"void_cells": [],
+"replayed_cells": 1,
+"replay_mismatches": [],
+"decisions": 84601,
+"elapsed_seconds": 57.83079534699209,
+"policy_sha256": {
+"league32-1702": "5f25d826239a656fe55e7ffa88f5e8b6106bc698eb4f5fb4d827ffd8c8376e60"
+}
+},
+"league32-vs-numpy-pilot-1703": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league32-1703|numpy-1703": {
+"wins": 299,
+"losses": 469,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 91920,
+"win_rate": 0.3893
+}
+},
+"void_cells": [],
+"replayed_cells": 1,
+"replay_mismatches": [],
+"decisions": 91920,
+"elapsed_seconds": 58.86651572099072,
+"policy_sha256": {
+"league32-1703": "01e1c8cc5b3a7666bfe3e297a84ccc76fbb6a20e235dc062b235c07d59f17e57"
+}
+},
+"league32-vs-numpy-pilot-1704": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league32-1704|numpy-1704": {
+"wins": 327,
+"losses": 441,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 86674,
+"win_rate": 0.4258
+}
+},
+"void_cells": [],
+"replayed_cells": 1,
+"replay_mismatches": [],
+"decisions": 86674,
+"elapsed_seconds": 57.45830982498592,
+"policy_sha256": {
+"league32-1704": "54ca9e4caecfc25603c540691b1cd44e4899cc81610c3f14dd091c9d5c64b631"
+}
+},
+"league320-pilot": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league320-1702|heuristic": {
+"wins": 375,
+"losses": 393,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 154489,
+"win_rate": 0.4883
+},
+"league320-1702|random": {
+"wins": 750,
+"losses": 18,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 133159,
+"win_rate": 0.9766
+},
+"league320-1703|heuristic": {
+"wins": 381,
+"losses": 387,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 144402,
+"win_rate": 0.4961
+},
+"league320-1703|random": {
+"wins": 748,
+"losses": 20,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 122304,
+"win_rate": 0.974
+},
+"league320-1704|heuristic": {
+"wins": 419,
+"losses": 349,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 158408,
+"win_rate": 0.5456
+},
+"league320-1704|random": {
+"wins": 743,
+"losses": 25,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 132165,
+"win_rate": 0.9674
+}
+},
+"void_cells": [],
+"replayed_cells": 3,
+"replay_mismatches": [],
+"decisions": 844927,
+"elapsed_seconds": 115.23823585000355,
+"policy_sha256": {
+"league320-1702": "78fe4e9e7307e05a8c7b26b7f4626613dec4a8dcc7abaf9b822c5cadd60dd031",
+"league320-1703": "24eef8b40438e9dd5d707761c7189108ae0eb8be924451b9e1f92a39950b346e",
+"league320-1704": "0eb224e08fe4e68d1a27f3a8ab77d125b254aba6b57d57c8f38f4b5694e57780"
+}
+},
+"league320-sampled-pilot": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": false,
+"total": {
+"league320-1702|heuristic": {
+"wins": 376,
+"losses": 392,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 129747,
+"win_rate": 0.4896
+},
+"league320-1702|random": {
+"wins": 748,
+"losses": 20,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 118336,
+"win_rate": 0.974
+},
+"league320-1703|heuristic": {
+"wins": 334,
+"losses": 434,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 117028,
+"win_rate": 0.4349
+},
+"league320-1703|random": {
+"wins": 734,
+"losses": 34,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 112216,
+"win_rate": 0.9557
+},
+"league320-1704|heuristic": {
+"wins": 361,
+"losses": 407,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 134873,
+"win_rate": 0.4701
+},
+"league320-1704|random": {
+"wins": 737,
+"losses": 31,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 130607,
+"win_rate": 0.9596
+}
+},
+"void_cells": [],
+"replayed_cells": 0,
+"replay_mismatches": [],
+"decisions": 742807,
+"elapsed_seconds": 101.53851185800158,
+"policy_sha256": {
+"league320-1702": "78fe4e9e7307e05a8c7b26b7f4626613dec4a8dcc7abaf9b822c5cadd60dd031",
+"league320-1703": "24eef8b40438e9dd5d707761c7189108ae0eb8be924451b9e1f92a39950b346e",
+"league320-1704": "0eb224e08fe4e68d1a27f3a8ab77d125b254aba6b57d57c8f38f4b5694e57780"
+}
+},
+"league320-validation": {
+"seed": 40000000,
+"seeds_per_cell": 8,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league320-1702|heuristic": {
+"wins": 49,
+"losses": 47,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 19619,
+"win_rate": 0.5104
+},
+"league320-1702|random": {
+"wins": 94,
+"losses": 2,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 16143,
+"win_rate": 0.9792
+},
+"league320-1703|heuristic": {
+"wins": 53,
+"losses": 43,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 18283,
+"win_rate": 0.5521
+},
+"league320-1703|random": {
+"wins": 96,
+"losses": 0,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 15953,
+"win_rate": 1.0
+},
+"league320-1704|heuristic": {
+"wins": 46,
+"losses": 50,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 20673,
+"win_rate": 0.4792
+},
+"league320-1704|random": {
+"wins": 93,
+"losses": 3,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 17442,
+"win_rate": 0.9688
+}
+},
+"void_cells": [],
+"replayed_cells": 6,
+"replay_mismatches": [],
+"decisions": 108113,
+"elapsed_seconds": 34.001098409993574,
+"policy_sha256": {
+"league320-1702": "78fe4e9e7307e05a8c7b26b7f4626613dec4a8dcc7abaf9b822c5cadd60dd031",
+"league320-1703": "24eef8b40438e9dd5d707761c7189108ae0eb8be924451b9e1f92a39950b346e",
+"league320-1704": "0eb224e08fe4e68d1a27f3a8ab77d125b254aba6b57d57c8f38f4b5694e57780"
+}
+},
+"league320-vs-numpy-pilot-1702": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league320-1702|numpy-1702": {
+"wins": 500,
+"losses": 268,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 106313,
+"win_rate": 0.651
+}
+},
+"void_cells": [],
+"replayed_cells": 1,
+"replay_mismatches": [],
+"decisions": 106313,
+"elapsed_seconds": 28.99139108901727,
+"policy_sha256": {
+"league320-1702": "78fe4e9e7307e05a8c7b26b7f4626613dec4a8dcc7abaf9b822c5cadd60dd031"
+}
+},
+"league320-vs-numpy-pilot-1703": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league320-1703|numpy-1703": {
+"wins": 414,
+"losses": 354,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 101648,
+"win_rate": 0.5391
+}
+},
+"void_cells": [],
+"replayed_cells": 1,
+"replay_mismatches": [],
+"decisions": 101648,
+"elapsed_seconds": 29.537945643009152,
+"policy_sha256": {
+"league320-1703": "24eef8b40438e9dd5d707761c7189108ae0eb8be924451b9e1f92a39950b346e"
+}
+},
+"league320-vs-numpy-pilot-1704": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league320-1704|numpy-1704": {
+"wins": 456,
+"losses": 312,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 101991,
+"win_rate": 0.5938
+}
+},
+"void_cells": [],
+"replayed_cells": 1,
+"replay_mismatches": [],
+"decisions": 101991,
+"elapsed_seconds": 27.894111865985906,
+"policy_sha256": {
+"league320-1704": "0eb224e08fe4e68d1a27f3a8ab77d125b254aba6b57d57c8f38f4b5694e57780"
+}
+},
+"league8-pilot": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league8-1702|heuristic": {
+"wins": 158,
+"losses": 610,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 107815,
+"win_rate": 0.2057
+},
+"league8-1703|heuristic": {
+"wins": 126,
+"losses": 642,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 103738,
+"win_rate": 0.1641
+},
+"league8-1704|heuristic": {
+"wins": 97,
+"losses": 671,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 133063,
+"win_rate": 0.1263
+}
+},
+"void_cells": [],
+"replayed_cells": 0,
+"replay_mismatches": [],
+"decisions": 344616,
+"elapsed_seconds": 152.16360562999034,
+"policy_sha256": {
+"league8-1702": "6e26c44b3aad9527cb8e8016962e7c76ddfa867d385af1557a114387135a29e9",
+"league8-1703": "5f31dd4bf2b58196bf5d86982c34c4a2f42273abf96de83b953892f143a40222",
+"league8-1704": "4eb4d813533fdf22b8dc836ba499db077c0447e50e02bbd04d13b6bdfee54b05"
+}
+},
+"league80-pilot": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"league80-1702|heuristic": {
+"wins": 332,
+"losses": 436,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 141521,
+"win_rate": 0.4323
+},
+"league80-1703|heuristic": {
+"wins": 341,
+"losses": 427,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 146559,
+"win_rate": 0.444
+},
+"league80-1704|heuristic": {
+"wins": 297,
+"losses": 471,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 140672,
+"win_rate": 0.3867
+}
+},
+"void_cells": [],
+"replayed_cells": 0,
+"replay_mismatches": [],
+"decisions": 428752,
+"elapsed_seconds": 197.1693817260093,
+"policy_sha256": {
+"league80-1702": "f0df051af319f6b4be09353cc2e5689404692b17da26937a8bf9f73fdc575504",
+"league80-1703": "eff39f721d194e96b94609b767c1a639519165ba5ad1b9457fbc48595c0148ca",
+"league80-1704": "cb76e93fbc5f7481ad76cf169a739f157403c5ff0189b170415bb1ad9b36f07b"
+}
+},
+"numpy-on-gauntlet": {
+"seed": 73910000,
+"seeds_per_cell": 8,
+"decks": "gauntlet",
+"greedy": true,
+"total": {
+"numpy-1702|heuristic": {
+"wins": 673,
+"losses": 671,
+"draws": 0,
+"games": 1344,
+"void_games": 0,
+"decisions": 192568,
+"win_rate": 0.5007
+},
+"numpy-1703|heuristic": {
+"wins": 764,
+"losses": 580,
+"draws": 0,
+"games": 1344,
+"void_games": 0,
+"decisions": 200386,
+"win_rate": 0.5685
+},
+"numpy-1704|heuristic": {
+"wins": 767,
+"losses": 577,
+"draws": 0,
+"games": 1344,
+"void_games": 0,
+"decisions": 189721,
+"win_rate": 0.5707
+}
+},
+"void_cells": [],
+"replayed_cells": 0,
+"replay_mismatches": [],
+"decisions": 582675,
+"elapsed_seconds": 45.258005532989046,
+"policy_sha256": {
+"numpy-1702": null,
+"numpy-1703": null,
+"numpy-1704": null
+}
+},
+"numpy-pilot": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"numpy-1702|heuristic": {
+"wins": 321,
+"losses": 447,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 90887,
+"win_rate": 0.418
+},
+"numpy-1702|random": {
+"wins": 686,
+"losses": 82,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 89095,
+"win_rate": 0.8932
+},
+"numpy-1703|heuristic": {
+"wins": 395,
+"losses": 373,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 94994,
+"win_rate": 0.5143
+},
+"numpy-1703|random": {
+"wins": 732,
+"losses": 36,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 89391,
+"win_rate": 0.9531
+},
+"numpy-1704|heuristic": {
+"wins": 326,
+"losses": 442,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 91376,
+"win_rate": 0.4245
+},
+"numpy-1704|random": {
+"wins": 717,
+"losses": 51,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 85599,
+"win_rate": 0.9336
+}
+},
+"void_cells": [],
+"replayed_cells": 3,
+"replay_mismatches": [],
+"decisions": 541342,
+"elapsed_seconds": 155.70276462601032,
+"policy_sha256": {
+"numpy-1702": null,
+"numpy-1703": null,
+"numpy-1704": null
+}
+},
+"numpy-sampled-pilot": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": false,
+"total": {
+"numpy-1702|heuristic": {
+"wins": 225,
+"losses": 543,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 101848,
+"win_rate": 0.293
+},
+"numpy-1702|random": {
+"wins": 670,
+"losses": 98,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 115879,
+"win_rate": 0.8724
+},
+"numpy-1703|heuristic": {
+"wins": 221,
+"losses": 547,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 105733,
+"win_rate": 0.2878
+},
+"numpy-1703|random": {
+"wins": 683,
+"losses": 85,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 121585,
+"win_rate": 0.8893
+},
+"numpy-1704|heuristic": {
+"wins": 265,
+"losses": 503,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 105696,
+"win_rate": 0.3451
+},
+"numpy-1704|random": {
+"wins": 658,
+"losses": 110,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 112073,
+"win_rate": 0.8568
+}
+},
+"void_cells": [],
+"replayed_cells": 0,
+"replay_mismatches": [],
+"decisions": 662814,
+"elapsed_seconds": 43.99610930698691,
+"policy_sha256": {
+"numpy-1702": null,
+"numpy-1703": null,
+"numpy-1704": null
+}
+},
+"numpy-validation": {
+"seed": 40000000,
+"seeds_per_cell": 8,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"numpy-1702|heuristic": {
+"wins": 39,
+"losses": 57,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 12099,
+"win_rate": 0.4062
+},
+"numpy-1702|random": {
+"wins": 83,
+"losses": 13,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 11308,
+"win_rate": 0.8646
+},
+"numpy-1703|heuristic": {
+"wins": 46,
+"losses": 50,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 12352,
+"win_rate": 0.4792
+},
+"numpy-1703|random": {
+"wins": 90,
+"losses": 6,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 11260,
+"win_rate": 0.9375
+},
+"numpy-1704|heuristic": {
+"wins": 47,
+"losses": 49,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 12340,
+"win_rate": 0.4896
+},
+"numpy-1704|random": {
+"wins": 86,
+"losses": 10,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 10761,
+"win_rate": 0.8958
+}
+},
+"void_cells": [],
+"replayed_cells": 6,
+"replay_mismatches": [],
+"decisions": 70120,
+"elapsed_seconds": 20.024742913985392,
+"policy_sha256": {
+"numpy-1702": null,
+"numpy-1703": null,
+"numpy-1704": null
+}
+},
+"schedule32-pilot": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"schedule32-1702|heuristic": {
+"wins": 235,
+"losses": 533,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 112862,
+"win_rate": 0.306
+},
+"schedule32-1702|random": {
+"wins": 653,
+"losses": 115,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 118096,
+"win_rate": 0.8503
+},
+"schedule32-1703|heuristic": {
+"wins": 228,
+"losses": 540,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 106994,
+"win_rate": 0.2969
+},
+"schedule32-1703|random": {
+"wins": 664,
+"losses": 104,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 127136,
+"win_rate": 0.8646
+},
+"schedule32-1704|heuristic": {
+"wins": 162,
+"losses": 606,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 105254,
+"win_rate": 0.2109
+},
+"schedule32-1704|random": {
+"wins": 578,
+"losses": 190,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 131527,
+"win_rate": 0.7526
+}
+},
+"void_cells": [],
+"replayed_cells": 3,
+"replay_mismatches": [],
+"decisions": 701869,
+"elapsed_seconds": 317.9812990039936,
+"policy_sha256": {
+"schedule32-1702": "902e69c3ff737f45009d7eb552761d608d47c22278327423798a7f1dafc502e3",
+"schedule32-1703": "2271d9242775bbfe104be650d8a8d67de19560e723c5d9669702303eaa0c362c",
+"schedule32-1704": "8857d651065a1c5942696b279cfcaff383164a83b6c434d6777b93aad1628531"
+}
+},
+"schedule32-validation": {
+"seed": 40000000,
+"seeds_per_cell": 8,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"schedule32-1702|heuristic": {
+"wins": 27,
+"losses": 69,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 14520,
+"win_rate": 0.2812
+},
+"schedule32-1702|random": {
+"wins": 87,
+"losses": 9,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 14797,
+"win_rate": 0.9062
+},
+"schedule32-1703|heuristic": {
+"wins": 30,
+"losses": 66,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 14540,
+"win_rate": 0.3125
+},
+"schedule32-1703|random": {
+"wins": 80,
+"losses": 16,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 15410,
+"win_rate": 0.8333
+},
+"schedule32-1704|heuristic": {
+"wins": 28,
+"losses": 68,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 13856,
+"win_rate": 0.2917
+},
+"schedule32-1704|random": {
+"wins": 73,
+"losses": 23,
+"draws": 0,
+"games": 96,
+"void_games": 0,
+"decisions": 17237,
+"win_rate": 0.7604
+}
+},
+"void_cells": [],
+"replayed_cells": 6,
+"replay_mismatches": [],
+"decisions": 90360,
+"elapsed_seconds": 81.65699272899656,
+"policy_sha256": {
+"schedule32-1702": "902e69c3ff737f45009d7eb552761d608d47c22278327423798a7f1dafc502e3",
+"schedule32-1703": "2271d9242775bbfe104be650d8a8d67de19560e723c5d9669702303eaa0c362c",
+"schedule32-1704": "8857d651065a1c5942696b279cfcaff383164a83b6c434d6777b93aad1628531"
+}
+},
+"schedule32-vs-numpy-pilot-1702": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"schedule32-1702|numpy-1702": {
+"wins": 326,
+"losses": 442,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 83369,
+"win_rate": 0.4245
+}
+},
+"void_cells": [],
+"replayed_cells": 1,
+"replay_mismatches": [],
+"decisions": 83369,
+"elapsed_seconds": 53.855913489998784,
+"policy_sha256": {
+"schedule32-1702": "902e69c3ff737f45009d7eb552761d608d47c22278327423798a7f1dafc502e3"
+}
+},
+"schedule32-vs-numpy-pilot-1703": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"schedule32-1703|numpy-1703": {
+"wins": 233,
+"losses": 535,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 82870,
+"win_rate": 0.3034
+}
+},
+"void_cells": [],
+"replayed_cells": 1,
+"replay_mismatches": [],
+"decisions": 82870,
+"elapsed_seconds": 55.01991627900861,
+"policy_sha256": {
+"schedule32-1703": "2271d9242775bbfe104be650d8a8d67de19560e723c5d9669702303eaa0c362c"
+}
+},
+"schedule32-vs-numpy-pilot-1704": {
+"seed": 73900000,
+"seeds_per_cell": 64,
+"decks": "fixtures",
+"greedy": true,
+"total": {
+"schedule32-1704|numpy-1704": {
+"wins": 235,
+"losses": 533,
+"draws": 0,
+"games": 768,
+"void_games": 0,
+"decisions": 75179,
+"win_rate": 0.306
+}
+},
+"void_cells": [],
+"replayed_cells": 1,
+"replay_mismatches": [],
+"decisions": 75179,
+"elapsed_seconds": 50.611327826976776,
+"policy_sha256": {
+"schedule32-1704": "8857d651065a1c5942696b279cfcaff383164a83b6c434d6777b93aad1628531"
+}
+}
+}

@@ -1,0 +1,4508 @@
+{
+ "rows_are_shared_env_seeds": "Optimizers share starts, so these are not independent tournament samples.",
+ "control_heuristic_mirror_pilot": {
+  "wins": 384,
+  "games": 768,
+  "rate": 0.5,
+  "void_games": 0,
+  "seat0": {
+   "wins": 192,
+   "games": 384,
+   "rate": 0.5
+  },
+  "seat1": {
+   "wins": 192,
+   "games": 384,
+   "rate": 0.5
+  },
+  "by_deck": {
+   "blackwing": {
+    "wins": 135,
+    "games": 256,
+    "rate": 0.5273
+   },
+   "frog_monarch": {
+    "wins": 62,
+    "games": 256,
+    "rate": 0.2422
+   },
+   "machina_gadget": {
+    "wins": 187,
+    "games": 256,
+    "rate": 0.7305
+   }
+  }
+ },
+ "control_heuristic_mirror_validation": {
+  "wins": 48,
+  "games": 96,
+  "rate": 0.5,
+  "void_games": 0,
+  "seat0": {
+   "wins": 26,
+   "games": 48,
+   "rate": 0.5417
+  },
+  "seat1": {
+   "wins": 22,
+   "games": 48,
+   "rate": 0.4583
+  },
+  "by_deck": {
+   "blackwing": {
+    "wins": 16,
+    "games": 32,
+    "rate": 0.5
+   },
+   "frog_monarch": {
+    "wins": 7,
+    "games": 32,
+    "rate": 0.2188
+   },
+   "machina_gadget": {
+    "wins": 25,
+    "games": 32,
+    "rate": 0.7812
+   }
+  }
+ },
+ "control_heuristic_vs_random_pilot": {
+  "wins": 738,
+  "games": 768,
+  "rate": 0.9609,
+  "void_games": 0,
+  "seat0": {
+   "wins": 368,
+   "games": 384,
+   "rate": 0.9583
+  },
+  "seat1": {
+   "wins": 370,
+   "games": 384,
+   "rate": 0.9635
+  },
+  "by_deck": {
+   "blackwing": {
+    "wins": 255,
+    "games": 256,
+    "rate": 0.9961
+   },
+   "frog_monarch": {
+    "wins": 227,
+    "games": 256,
+    "rate": 0.8867
+   },
+   "machina_gadget": {
+    "wins": 256,
+    "games": 256,
+    "rate": 1.0
+   }
+  }
+ },
+ "numpy": {
+  "pilot": {
+   "heuristic": {
+    "1702": {
+     "wins": 321,
+     "games": 768,
+     "rate": 0.418,
+     "void_games": 0,
+     "seat0": {
+      "wins": 157,
+      "games": 384,
+      "rate": 0.4089
+     },
+     "seat1": {
+      "wins": 164,
+      "games": 384,
+      "rate": 0.4271
+     },
+     "by_deck": {
+      "blackwing": {
+       "wins": 103,
+       "games": 256,
+       "rate": 0.4023
+      },
+      "frog_monarch": {
+       "wins": 59,
+       "games": 256,
+       "rate": 0.2305
+      },
+      "machina_gadget": {
+       "wins": 159,
+       "games": 256,
+       "rate": 0.6211
+      }
+     }
+    },
+    "1703": {
+     "wins": 395,
+     "games": 768,
+     "rate": 0.5143,
+     "void_games": 0,
+     "seat0": {
+      "wins": 195,
+      "games": 384,
+      "rate": 0.5078
+     },
+     "seat1": {
+      "wins": 200,
+      "games": 384,
+      "rate": 0.5208
+     },
+     "by_deck": {
+      "blackwing": {
+       "wins": 110,
+       "games": 256,
+       "rate": 0.4297
+      },
+      "frog_monarch": {
+       "wins": 87,
+       "games": 256,
+       "rate": 0.3398
+      },
+      "machina_gadget": {
+       "wins": 198,
+       "games": 256,
+       "rate": 0.7734
+      }
+     }
+    },
+    "1704": {
+     "wins": 326,
+     "games": 768,
+     "rate": 0.4245,
+     "void_games": 0,
+     "seat0": {
+      "wins": 168,
+      "games": 384,
+      "rate": 0.4375
+     },
+     "seat1": {
+      "wins": 158,
+      "games": 384,
+      "rate": 0.4115
+     },
+     "by_deck": {
+      "blackwing": {
+       "wins": 84,
+       "games": 256,
+       "rate": 0.3281
+      },
+      "frog_monarch": {
+       "wins": 71,
+       "games": 256,
+       "rate": 0.2773
+      },
+      "machina_gadget": {
+       "wins": 171,
+       "games": 256,
+       "rate": 0.668
+      }
+     }
+    }
+   },
+   "random": {
+    "1702": {
+     "wins": 686,
+     "games": 768,
+     "rate": 0.8932,
+     "void_games": 0,
+     "seat0": {
+      "wins": 346,
+      "games": 384,
+      "rate": 0.901
+     },
+     "seat1": {
+      "wins": 340,
+      "games": 384,
+      "rate": 0.8854
+     },
+     "by_deck": {
+      "blackwing": {
+       "wins": 224,
+       "games": 256,
+       "rate": 0.875
+      },
+      "frog_monarch": {
+       "wins": 213,
+       "games": 256,
+       "rate": 0.832
+      },
+      "machina_gadget": {
+       "wins": 249,
+       "games": 256,
+       "rate": 0.9727
+      }
+     }
+    },
+    "1703": {
+     "wins": 732,
+     "games": 768,
+     "rate": 0.9531,
+     "void_games": 0,
+     "seat0": {
+      "wins": 367,
+      "games": 384,
+      "rate": 0.9557
+     },
+     "seat1": {
+      "wins": 365,
+      "games": 384,
+      "rate": 0.9505
+     },
+     "by_deck": {
+      "blackwing": {
+       "wins": 240,
+       "games": 256,
+       "rate": 0.9375
+      },
+      "frog_monarch": {
+       "wins": 240,
+       "games": 256,
+       "rate": 0.9375
+      },
+      "machina_gadget": {
+       "wins": 252,
+       "games": 256,
+       "rate": 0.9844
+      }
+     }
+    },
+    "1704": {
+     "wins": 717,
+     "games": 768,
+     "rate": 0.9336,
+     "void_games": 0,
+     "seat0": {
+      "wins": 357,
+      "games": 384,
+      "rate": 0.9297
+     },
+     "seat1": {
+      "wins": 360,
+      "games": 384,
+      "rate": 0.9375
+     },
+     "by_deck": {
+      "blackwing": {
+       "wins": 229,
+       "games": 256,
+       "rate": 0.8945
+      },
+      "frog_monarch": {
+       "wins": 234,
+       "games": 256,
+       "rate": 0.9141
+      },
+      "machina_gadget": {
+       "wins": 254,
+       "games": 256,
+       "rate": 0.9922
+      }
+     }
+    }
+   }
+  },
+  "validation": {
+   "heuristic": {
+    "1702": {
+     "wins": 39,
+     "games": 96,
+     "rate": 0.4062,
+     "void_games": 0,
+     "seat0": {
+      "wins": 23,
+      "games": 48,
+      "rate": 0.4792
+     },
+     "seat1": {
+      "wins": 16,
+      "games": 48,
+      "rate": 0.3333
+     },
+     "by_deck": {
+      "blackwing": {
+       "wins": 12,
+       "games": 32,
+       "rate": 0.375
+      },
+      "frog_monarch": {
+       "wins": 6,
+       "games": 32,
+       "rate": 0.1875
+      },
+      "machina_gadget": {
+       "wins": 21,
+       "games": 32,
+       "rate": 0.6562
+      }
+     }
+    },
+    "1703": {
+     "wins": 46,
+     "games": 96,
+     "rate": 0.4792,
+     "void_games": 0,
+     "seat0": {
+      "wins": 27,
+      "games": 48,
+      "rate": 0.5625
+     },
+     "seat1": {
+      "wins": 19,
+      "games": 48,
+      "rate": 0.3958
+     },
+     "by_deck": {
+      "blackwing": {
+       "wins": 14,
+       "games": 32,
+       "rate": 0.4375
+      },
+      "frog_monarch": {
+       "wins": 10,
+       "games": 32,
+       "rate": 0.3125
+      },
+      "machina_gadget": {
+       "wins": 22,
+       "games": 32,
+       "rate": 0.6875
+      }
+     }
+    },
+    "1704": {
+     "wins": 47,
+     "games": 96,
+     "rate": 0.4896,
+     "void_games": 0,
+     "seat0": {
+      "wins": 25,
+      "games": 48,
+      "rate": 0.5208
+     },
+     "seat1": {
+      "wins": 22,
+      "games": 48,
+      "rate": 0.4583
+     },
+     "by_deck": {
+      "blackwing": {
+       "wins": 11,
+       "games": 32,
+       "rate": 0.3438
+      },
+      "frog_monarch": {
+       "wins": 12,
+       "games": 32,
+       "rate": 0.375
+      },
+      "machina_gadget": {
+       "wins": 24,
+       "games": 32,
+       "rate": 0.75
+      }
+     }
+    }
+   },
+   "random": {
+    "1702": {
+     "wins": 83,
+     "games": 96,
+     "rate": 0.8646,
+     "void_games": 0,
+     "seat0": {
+      "wins": 45,
+      "games": 48,
+      "rate": 0.9375
+     },
+     "seat1": {
+      "wins": 38,
+      "games": 48,
+      "rate": 0.7917
+     },
+     "by_deck": {
+      "blackwing": {
+       "wins": 25,
+       "games": 32,
+       "rate": 0.7812
+      },
+      "frog_monarch": {
+       "wins": 26,
+       "games": 32,
+       "rate": 0.8125
+      },
+      "machina_gadget": {
+       "wins": 32,
+       "games": 32,
+       "rate": 1.0
+      }
+     }
+    },
+    "1703": {
+     "wins": 90,
+     "games": 96,
+     "rate": 0.9375,
+     "void_games": 0,
+     "seat0": {
+      "wins": 47,
+      "games": 48,
+      "rate": 0.9792
+     },
+     "seat1": {
+      "wins": 43,
+      "games": 48,
+      "rate": 0.8958
+     },
+     "by_deck": {
+      "blackwing": {
+       "wins": 29,
+       "games": 32,
+       "rate": 0.9062
+      },
+      "frog_monarch": {
+       "wins": 29,
+       "games": 32,
+       "rate": 0.9062
+      },
+      "machina_gadget": {
+       "wins": 32,
+       "games": 32,
+       "rate": 1.0
+      }
+     }
+    },
+    "1704": {
+     "wins": 86,
+     "games": 96,
+     "rate": 0.8958,
+     "void_games": 0,
+     "seat0": {
+      "wins": 45,
+      "games": 48,
+      "rate": 0.9375
+     },
+     "seat1": {
+      "wins": 41,
+      "games": 48,
+      "rate": 0.8542
+     },
+     "by_deck": {
+      "blackwing": {
+       "wins": 29,
+       "games": 32,
+       "rate": 0.9062
+      },
+      "frog_monarch": {
+       "wins": 26,
+       "games": 32,
+       "rate": 0.8125
+      },
+      "machina_gadget": {
+       "wins": 31,
+       "games": 32,
+       "rate": 0.9688
+      }
+     }
+    }
+   }
+  },
+  "validation_wins_heuristic_of_288_archive_132": 132
+ },
+ "arms": {
+  "league32": {
+   "pilot": {
+    "heuristic": {
+     "1702": {
+      "wins": 259,
+      "games": 768,
+      "rate": 0.3372,
+      "void_games": 0,
+      "seat0": {
+       "wins": 125,
+       "games": 384,
+       "rate": 0.3255
+      },
+      "seat1": {
+       "wins": 134,
+       "games": 384,
+       "rate": 0.349
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 63,
+        "games": 256,
+        "rate": 0.2461
+       },
+       "frog_monarch": {
+        "wins": 46,
+        "games": 256,
+        "rate": 0.1797
+       },
+       "machina_gadget": {
+        "wins": 150,
+        "games": 256,
+        "rate": 0.5859
+       }
+      }
+     },
+     "1703": {
+      "wins": 235,
+      "games": 768,
+      "rate": 0.306,
+      "void_games": 0,
+      "seat0": {
+       "wins": 118,
+       "games": 384,
+       "rate": 0.3073
+      },
+      "seat1": {
+       "wins": 117,
+       "games": 384,
+       "rate": 0.3047
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 63,
+        "games": 256,
+        "rate": 0.2461
+       },
+       "frog_monarch": {
+        "wins": 37,
+        "games": 256,
+        "rate": 0.1445
+       },
+       "machina_gadget": {
+        "wins": 135,
+        "games": 256,
+        "rate": 0.5273
+       }
+      }
+     },
+     "1704": {
+      "wins": 261,
+      "games": 768,
+      "rate": 0.3398,
+      "void_games": 0,
+      "seat0": {
+       "wins": 122,
+       "games": 384,
+       "rate": 0.3177
+      },
+      "seat1": {
+       "wins": 139,
+       "games": 384,
+       "rate": 0.362
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 72,
+        "games": 256,
+        "rate": 0.2812
+       },
+       "frog_monarch": {
+        "wins": 50,
+        "games": 256,
+        "rate": 0.1953
+       },
+       "machina_gadget": {
+        "wins": 139,
+        "games": 256,
+        "rate": 0.543
+       }
+      }
+     }
+    },
+    "random": {
+     "1702": {
+      "wins": 721,
+      "games": 768,
+      "rate": 0.9388,
+      "void_games": 0,
+      "seat0": {
+       "wins": 366,
+       "games": 384,
+       "rate": 0.9531
+      },
+      "seat1": {
+       "wins": 355,
+       "games": 384,
+       "rate": 0.9245
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 234,
+        "games": 256,
+        "rate": 0.9141
+       },
+       "frog_monarch": {
+        "wins": 235,
+        "games": 256,
+        "rate": 0.918
+       },
+       "machina_gadget": {
+        "wins": 252,
+        "games": 256,
+        "rate": 0.9844
+       }
+      }
+     },
+     "1703": {
+      "wins": 671,
+      "games": 768,
+      "rate": 0.8737,
+      "void_games": 0,
+      "seat0": {
+       "wins": 337,
+       "games": 384,
+       "rate": 0.8776
+      },
+      "seat1": {
+       "wins": 334,
+       "games": 384,
+       "rate": 0.8698
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 220,
+        "games": 256,
+        "rate": 0.8594
+       },
+       "frog_monarch": {
+        "wins": 202,
+        "games": 256,
+        "rate": 0.7891
+       },
+       "machina_gadget": {
+        "wins": 249,
+        "games": 256,
+        "rate": 0.9727
+       }
+      }
+     },
+     "1704": {
+      "wins": 714,
+      "games": 768,
+      "rate": 0.9297,
+      "void_games": 0,
+      "seat0": {
+       "wins": 359,
+       "games": 384,
+       "rate": 0.9349
+      },
+      "seat1": {
+       "wins": 355,
+       "games": 384,
+       "rate": 0.9245
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 236,
+        "games": 256,
+        "rate": 0.9219
+       },
+       "frog_monarch": {
+        "wins": 229,
+        "games": 256,
+        "rate": 0.8945
+       },
+       "machina_gadget": {
+        "wins": 249,
+        "games": 256,
+        "rate": 0.9727
+       }
+      }
+     }
+    }
+   },
+   "validation": {
+    "heuristic": {
+     "1702": {
+      "wins": 34,
+      "games": 96,
+      "rate": 0.3542,
+      "void_games": 0,
+      "seat0": {
+       "wins": 17,
+       "games": 48,
+       "rate": 0.3542
+      },
+      "seat1": {
+       "wins": 17,
+       "games": 48,
+       "rate": 0.3542
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 8,
+        "games": 32,
+        "rate": 0.25
+       },
+       "frog_monarch": {
+        "wins": 9,
+        "games": 32,
+        "rate": 0.2812
+       },
+       "machina_gadget": {
+        "wins": 17,
+        "games": 32,
+        "rate": 0.5312
+       }
+      }
+     },
+     "1703": {
+      "wins": 34,
+      "games": 96,
+      "rate": 0.3542,
+      "void_games": 0,
+      "seat0": {
+       "wins": 18,
+       "games": 48,
+       "rate": 0.375
+      },
+      "seat1": {
+       "wins": 16,
+       "games": 48,
+       "rate": 0.3333
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 8,
+        "games": 32,
+        "rate": 0.25
+       },
+       "frog_monarch": {
+        "wins": 9,
+        "games": 32,
+        "rate": 0.2812
+       },
+       "machina_gadget": {
+        "wins": 17,
+        "games": 32,
+        "rate": 0.5312
+       }
+      }
+     },
+     "1704": {
+      "wins": 34,
+      "games": 96,
+      "rate": 0.3542,
+      "void_games": 0,
+      "seat0": {
+       "wins": 17,
+       "games": 48,
+       "rate": 0.3542
+      },
+      "seat1": {
+       "wins": 17,
+       "games": 48,
+       "rate": 0.3542
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 11,
+        "games": 32,
+        "rate": 0.3438
+       },
+       "frog_monarch": {
+        "wins": 5,
+        "games": 32,
+        "rate": 0.1562
+       },
+       "machina_gadget": {
+        "wins": 18,
+        "games": 32,
+        "rate": 0.5625
+       }
+      }
+     }
+    },
+    "random": {
+     "1702": {
+      "wins": 92,
+      "games": 96,
+      "rate": 0.9583,
+      "void_games": 0,
+      "seat0": {
+       "wins": 46,
+       "games": 48,
+       "rate": 0.9583
+      },
+      "seat1": {
+       "wins": 46,
+       "games": 48,
+       "rate": 0.9583
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 31,
+        "games": 32,
+        "rate": 0.9688
+       },
+       "frog_monarch": {
+        "wins": 31,
+        "games": 32,
+        "rate": 0.9688
+       },
+       "machina_gadget": {
+        "wins": 30,
+        "games": 32,
+        "rate": 0.9375
+       }
+      }
+     },
+     "1703": {
+      "wins": 83,
+      "games": 96,
+      "rate": 0.8646,
+      "void_games": 0,
+      "seat0": {
+       "wins": 46,
+       "games": 48,
+       "rate": 0.9583
+      },
+      "seat1": {
+       "wins": 37,
+       "games": 48,
+       "rate": 0.7708
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 26,
+        "games": 32,
+        "rate": 0.8125
+       },
+       "frog_monarch": {
+        "wins": 25,
+        "games": 32,
+        "rate": 0.7812
+       },
+       "machina_gadget": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       }
+      }
+     },
+     "1704": {
+      "wins": 83,
+      "games": 96,
+      "rate": 0.8646,
+      "void_games": 0,
+      "seat0": {
+       "wins": 44,
+       "games": 48,
+       "rate": 0.9167
+      },
+      "seat1": {
+       "wins": 39,
+       "games": 48,
+       "rate": 0.8125
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 25,
+        "games": 32,
+        "rate": 0.7812
+       },
+       "frog_monarch": {
+        "wins": 27,
+        "games": 32,
+        "rate": 0.8438
+       },
+       "machina_gadget": {
+        "wins": 31,
+        "games": 32,
+        "rate": 0.9688
+       }
+      }
+     }
+    }
+   },
+   "paired_validation_vs_numpy_heuristic": {
+    "mean_gain_pp": -10.42,
+    "sd_gain_pp": 4.54,
+    "per_optimizer": {
+     "1702": {
+      "gain_pp": -5.21,
+      "games": 96,
+      "new": 0.3542,
+      "reference": 0.4062
+     },
+     "1703": {
+      "gain_pp": -12.5,
+      "games": 96,
+      "new": 0.3542,
+      "reference": 0.4792
+     },
+     "1704": {
+      "gain_pp": -13.54,
+      "games": 96,
+      "new": 0.3542,
+      "reference": 0.4896
+     }
+    },
+    "descriptive_bootstrap_95_pp": [
+     -17.01,
+     -3.47
+    ],
+    "starts": 96
+   },
+   "paired_pilot_vs_numpy": {
+    "heuristic": {
+     "mean_gain_pp": -12.45,
+     "sd_gain_pp": 7.26,
+     "per_optimizer": {
+      "1702": {
+       "gain_pp": -8.07,
+       "games": 768,
+       "new": 0.3372,
+       "reference": 0.418
+      },
+      "1703": {
+       "gain_pp": -20.83,
+       "games": 768,
+       "new": 0.306,
+       "reference": 0.5143
+      },
+      "1704": {
+       "gain_pp": -8.46,
+       "games": 768,
+       "new": 0.3398,
+       "reference": 0.4245
+      }
+     },
+     "descriptive_bootstrap_95_pp": [
+      -14.8,
+      -10.16
+     ],
+     "starts": 768
+    },
+    "random": {
+     "mean_gain_pp": -1.26,
+     "sd_gain_pp": 6.29,
+     "per_optimizer": {
+      "1702": {
+       "gain_pp": 4.56,
+       "games": 768,
+       "new": 0.9388,
+       "reference": 0.8932
+      },
+      "1703": {
+       "gain_pp": -7.94,
+       "games": 768,
+       "new": 0.8737,
+       "reference": 0.9531
+      },
+      "1704": {
+       "gain_pp": -0.39,
+       "games": 768,
+       "new": 0.9297,
+       "reference": 0.9336
+      }
+     },
+     "descriptive_bootstrap_95_pp": [
+      -2.78,
+      0.26
+     ],
+     "starts": 768
+    }
+   },
+   "head_to_head": {
+    "mean": 0.428,
+    "per_optimizer": {
+     "1702": {
+      "wins": 360,
+      "games": 768,
+      "rate": 0.4688,
+      "void_games": 0,
+      "seat0": {
+       "wins": 187,
+       "games": 384,
+       "rate": 0.487
+      },
+      "seat1": {
+       "wins": 173,
+       "games": 384,
+       "rate": 0.4505
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 67,
+        "games": 256,
+        "rate": 0.2617
+       },
+       "frog_monarch": {
+        "wins": 115,
+        "games": 256,
+        "rate": 0.4492
+       },
+       "machina_gadget": {
+        "wins": 178,
+        "games": 256,
+        "rate": 0.6953
+       }
+      }
+     },
+     "1703": {
+      "wins": 299,
+      "games": 768,
+      "rate": 0.3893,
+      "void_games": 0,
+      "seat0": {
+       "wins": 145,
+       "games": 384,
+       "rate": 0.3776
+      },
+      "seat1": {
+       "wins": 154,
+       "games": 384,
+       "rate": 0.401
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 68,
+        "games": 256,
+        "rate": 0.2656
+       },
+       "frog_monarch": {
+        "wins": 87,
+        "games": 256,
+        "rate": 0.3398
+       },
+       "machina_gadget": {
+        "wins": 144,
+        "games": 256,
+        "rate": 0.5625
+       }
+      }
+     },
+     "1704": {
+      "wins": 327,
+      "games": 768,
+      "rate": 0.4258,
+      "void_games": 0,
+      "seat0": {
+       "wins": 153,
+       "games": 384,
+       "rate": 0.3984
+      },
+      "seat1": {
+       "wins": 174,
+       "games": 384,
+       "rate": 0.4531
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 79,
+        "games": 256,
+        "rate": 0.3086
+       },
+       "frog_monarch": {
+        "wins": 91,
+        "games": 256,
+        "rate": 0.3555
+       },
+       "machina_gadget": {
+        "wins": 157,
+        "games": 256,
+        "rate": 0.6133
+       }
+      }
+     }
+    }
+   },
+   "R1": "BELOW_BASELINE",
+   "R3": {
+    "mean": 0.3277,
+    "min_seed": 0.306,
+    "deck_means": {
+     "blackwing": 0.2578,
+     "frog_monarch": 0.1732,
+     "machina_gadget": 0.5521
+    },
+    "candidate": false
+   }
+  },
+  "schedule32": {
+   "pilot": {
+    "heuristic": {
+     "1702": {
+      "wins": 235,
+      "games": 768,
+      "rate": 0.306,
+      "void_games": 0,
+      "seat0": {
+       "wins": 121,
+       "games": 384,
+       "rate": 0.3151
+      },
+      "seat1": {
+       "wins": 114,
+       "games": 384,
+       "rate": 0.2969
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 69,
+        "games": 256,
+        "rate": 0.2695
+       },
+       "frog_monarch": {
+        "wins": 29,
+        "games": 256,
+        "rate": 0.1133
+       },
+       "machina_gadget": {
+        "wins": 137,
+        "games": 256,
+        "rate": 0.5352
+       }
+      }
+     },
+     "1703": {
+      "wins": 228,
+      "games": 768,
+      "rate": 0.2969,
+      "void_games": 0,
+      "seat0": {
+       "wins": 108,
+       "games": 384,
+       "rate": 0.2812
+      },
+      "seat1": {
+       "wins": 120,
+       "games": 384,
+       "rate": 0.3125
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 65,
+        "games": 256,
+        "rate": 0.2539
+       },
+       "frog_monarch": {
+        "wins": 29,
+        "games": 256,
+        "rate": 0.1133
+       },
+       "machina_gadget": {
+        "wins": 134,
+        "games": 256,
+        "rate": 0.5234
+       }
+      }
+     },
+     "1704": {
+      "wins": 162,
+      "games": 768,
+      "rate": 0.2109,
+      "void_games": 0,
+      "seat0": {
+       "wins": 70,
+       "games": 384,
+       "rate": 0.1823
+      },
+      "seat1": {
+       "wins": 92,
+       "games": 384,
+       "rate": 0.2396
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 50,
+        "games": 256,
+        "rate": 0.1953
+       },
+       "frog_monarch": {
+        "wins": 15,
+        "games": 256,
+        "rate": 0.0586
+       },
+       "machina_gadget": {
+        "wins": 97,
+        "games": 256,
+        "rate": 0.3789
+       }
+      }
+     }
+    },
+    "random": {
+     "1702": {
+      "wins": 653,
+      "games": 768,
+      "rate": 0.8503,
+      "void_games": 0,
+      "seat0": {
+       "wins": 327,
+       "games": 384,
+       "rate": 0.8516
+      },
+      "seat1": {
+       "wins": 326,
+       "games": 384,
+       "rate": 0.849
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 208,
+        "games": 256,
+        "rate": 0.8125
+       },
+       "frog_monarch": {
+        "wins": 208,
+        "games": 256,
+        "rate": 0.8125
+       },
+       "machina_gadget": {
+        "wins": 237,
+        "games": 256,
+        "rate": 0.9258
+       }
+      }
+     },
+     "1703": {
+      "wins": 664,
+      "games": 768,
+      "rate": 0.8646,
+      "void_games": 0,
+      "seat0": {
+       "wins": 326,
+       "games": 384,
+       "rate": 0.849
+      },
+      "seat1": {
+       "wins": 338,
+       "games": 384,
+       "rate": 0.8802
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 223,
+        "games": 256,
+        "rate": 0.8711
+       },
+       "frog_monarch": {
+        "wins": 197,
+        "games": 256,
+        "rate": 0.7695
+       },
+       "machina_gadget": {
+        "wins": 244,
+        "games": 256,
+        "rate": 0.9531
+       }
+      }
+     },
+     "1704": {
+      "wins": 578,
+      "games": 768,
+      "rate": 0.7526,
+      "void_games": 0,
+      "seat0": {
+       "wins": 301,
+       "games": 384,
+       "rate": 0.7839
+      },
+      "seat1": {
+       "wins": 277,
+       "games": 384,
+       "rate": 0.7214
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 212,
+        "games": 256,
+        "rate": 0.8281
+       },
+       "frog_monarch": {
+        "wins": 130,
+        "games": 256,
+        "rate": 0.5078
+       },
+       "machina_gadget": {
+        "wins": 236,
+        "games": 256,
+        "rate": 0.9219
+       }
+      }
+     }
+    }
+   },
+   "validation": {
+    "heuristic": {
+     "1702": {
+      "wins": 27,
+      "games": 96,
+      "rate": 0.2812,
+      "void_games": 0,
+      "seat0": {
+       "wins": 16,
+       "games": 48,
+       "rate": 0.3333
+      },
+      "seat1": {
+       "wins": 11,
+       "games": 48,
+       "rate": 0.2292
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 7,
+        "games": 32,
+        "rate": 0.2188
+       },
+       "frog_monarch": {
+        "wins": 3,
+        "games": 32,
+        "rate": 0.0938
+       },
+       "machina_gadget": {
+        "wins": 17,
+        "games": 32,
+        "rate": 0.5312
+       }
+      }
+     },
+     "1703": {
+      "wins": 30,
+      "games": 96,
+      "rate": 0.3125,
+      "void_games": 0,
+      "seat0": {
+       "wins": 16,
+       "games": 48,
+       "rate": 0.3333
+      },
+      "seat1": {
+       "wins": 14,
+       "games": 48,
+       "rate": 0.2917
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 10,
+        "games": 32,
+        "rate": 0.3125
+       },
+       "frog_monarch": {
+        "wins": 5,
+        "games": 32,
+        "rate": 0.1562
+       },
+       "machina_gadget": {
+        "wins": 15,
+        "games": 32,
+        "rate": 0.4688
+       }
+      }
+     },
+     "1704": {
+      "wins": 28,
+      "games": 96,
+      "rate": 0.2917,
+      "void_games": 0,
+      "seat0": {
+       "wins": 15,
+       "games": 48,
+       "rate": 0.3125
+      },
+      "seat1": {
+       "wins": 13,
+       "games": 48,
+       "rate": 0.2708
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 10,
+        "games": 32,
+        "rate": 0.3125
+       },
+       "frog_monarch": {
+        "wins": 3,
+        "games": 32,
+        "rate": 0.0938
+       },
+       "machina_gadget": {
+        "wins": 15,
+        "games": 32,
+        "rate": 0.4688
+       }
+      }
+     }
+    },
+    "random": {
+     "1702": {
+      "wins": 87,
+      "games": 96,
+      "rate": 0.9062,
+      "void_games": 0,
+      "seat0": {
+       "wins": 44,
+       "games": 48,
+       "rate": 0.9167
+      },
+      "seat1": {
+       "wins": 43,
+       "games": 48,
+       "rate": 0.8958
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 26,
+        "games": 32,
+        "rate": 0.8125
+       },
+       "frog_monarch": {
+        "wins": 31,
+        "games": 32,
+        "rate": 0.9688
+       },
+       "machina_gadget": {
+        "wins": 30,
+        "games": 32,
+        "rate": 0.9375
+       }
+      }
+     },
+     "1703": {
+      "wins": 80,
+      "games": 96,
+      "rate": 0.8333,
+      "void_games": 0,
+      "seat0": {
+       "wins": 42,
+       "games": 48,
+       "rate": 0.875
+      },
+      "seat1": {
+       "wins": 38,
+       "games": 48,
+       "rate": 0.7917
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 29,
+        "games": 32,
+        "rate": 0.9062
+       },
+       "frog_monarch": {
+        "wins": 19,
+        "games": 32,
+        "rate": 0.5938
+       },
+       "machina_gadget": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       }
+      }
+     },
+     "1704": {
+      "wins": 73,
+      "games": 96,
+      "rate": 0.7604,
+      "void_games": 0,
+      "seat0": {
+       "wins": 36,
+       "games": 48,
+       "rate": 0.75
+      },
+      "seat1": {
+       "wins": 37,
+       "games": 48,
+       "rate": 0.7708
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 28,
+        "games": 32,
+        "rate": 0.875
+       },
+       "frog_monarch": {
+        "wins": 13,
+        "games": 32,
+        "rate": 0.4062
+       },
+       "machina_gadget": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       }
+      }
+     }
+    }
+   },
+   "paired_validation_vs_numpy_heuristic": {
+    "mean_gain_pp": -16.32,
+    "sd_gain_pp": 3.66,
+    "per_optimizer": {
+     "1702": {
+      "gain_pp": -12.5,
+      "games": 96,
+      "new": 0.2812,
+      "reference": 0.4062
+     },
+     "1703": {
+      "gain_pp": -16.67,
+      "games": 96,
+      "new": 0.3125,
+      "reference": 0.4792
+     },
+     "1704": {
+      "gain_pp": -19.79,
+      "games": 96,
+      "new": 0.2917,
+      "reference": 0.4896
+     }
+    },
+    "descriptive_bootstrap_95_pp": [
+     -23.96,
+     -8.68
+    ],
+    "starts": 96
+   },
+   "paired_pilot_vs_numpy": {
+    "heuristic": {
+     "mean_gain_pp": -18.1,
+     "sd_gain_pp": 5.98,
+     "per_optimizer": {
+      "1702": {
+       "gain_pp": -11.2,
+       "games": 768,
+       "new": 0.306,
+       "reference": 0.418
+      },
+      "1703": {
+       "gain_pp": -21.74,
+       "games": 768,
+       "new": 0.2969,
+       "reference": 0.5143
+      },
+      "1704": {
+       "gain_pp": -21.35,
+       "games": 768,
+       "new": 0.2109,
+       "reference": 0.4245
+      }
+     },
+     "descriptive_bootstrap_95_pp": [
+      -20.36,
+      -15.89
+     ],
+     "starts": 768
+    },
+    "random": {
+     "mean_gain_pp": -10.42,
+     "sd_gain_pp": 7.03,
+     "per_optimizer": {
+      "1702": {
+       "gain_pp": -4.3,
+       "games": 768,
+       "new": 0.8503,
+       "reference": 0.8932
+      },
+      "1703": {
+       "gain_pp": -8.85,
+       "games": 768,
+       "new": 0.8646,
+       "reference": 0.9531
+      },
+      "1704": {
+       "gain_pp": -18.1,
+       "games": 768,
+       "new": 0.7526,
+       "reference": 0.9336
+      }
+     },
+     "descriptive_bootstrap_95_pp": [
+      -12.28,
+      -8.55
+     ],
+     "starts": 768
+    }
+   },
+   "head_to_head": {
+    "mean": 0.3446,
+    "per_optimizer": {
+     "1702": {
+      "wins": 326,
+      "games": 768,
+      "rate": 0.4245,
+      "void_games": 0,
+      "seat0": {
+       "wins": 170,
+       "games": 384,
+       "rate": 0.4427
+      },
+      "seat1": {
+       "wins": 156,
+       "games": 384,
+       "rate": 0.4062
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 88,
+        "games": 256,
+        "rate": 0.3438
+       },
+       "frog_monarch": {
+        "wins": 79,
+        "games": 256,
+        "rate": 0.3086
+       },
+       "machina_gadget": {
+        "wins": 159,
+        "games": 256,
+        "rate": 0.6211
+       }
+      }
+     },
+     "1703": {
+      "wins": 233,
+      "games": 768,
+      "rate": 0.3034,
+      "void_games": 0,
+      "seat0": {
+       "wins": 112,
+       "games": 384,
+       "rate": 0.2917
+      },
+      "seat1": {
+       "wins": 121,
+       "games": 384,
+       "rate": 0.3151
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 53,
+        "games": 256,
+        "rate": 0.207
+       },
+       "frog_monarch": {
+        "wins": 66,
+        "games": 256,
+        "rate": 0.2578
+       },
+       "machina_gadget": {
+        "wins": 114,
+        "games": 256,
+        "rate": 0.4453
+       }
+      }
+     },
+     "1704": {
+      "wins": 235,
+      "games": 768,
+      "rate": 0.306,
+      "void_games": 0,
+      "seat0": {
+       "wins": 114,
+       "games": 384,
+       "rate": 0.2969
+      },
+      "seat1": {
+       "wins": 121,
+       "games": 384,
+       "rate": 0.3151
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 61,
+        "games": 256,
+        "rate": 0.2383
+       },
+       "frog_monarch": {
+        "wins": 39,
+        "games": 256,
+        "rate": 0.1523
+       },
+       "machina_gadget": {
+        "wins": 135,
+        "games": 256,
+        "rate": 0.5273
+       }
+      }
+     }
+    }
+   },
+   "R1": "BELOW_BASELINE",
+   "R3": {
+    "mean": 0.2713,
+    "min_seed": 0.2109,
+    "deck_means": {
+     "blackwing": 0.2396,
+     "frog_monarch": 0.0951,
+     "machina_gadget": 0.4792
+    },
+    "candidate": false
+   }
+  },
+  "league160": {
+   "pilot": {
+    "heuristic": {
+     "1702": {
+      "wins": 385,
+      "games": 768,
+      "rate": 0.5013,
+      "void_games": 0,
+      "seat0": {
+       "wins": 199,
+       "games": 384,
+       "rate": 0.5182
+      },
+      "seat1": {
+       "wins": 186,
+       "games": 384,
+       "rate": 0.4844
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 100,
+        "games": 256,
+        "rate": 0.3906
+       },
+       "frog_monarch": {
+        "wins": 90,
+        "games": 256,
+        "rate": 0.3516
+       },
+       "machina_gadget": {
+        "wins": 195,
+        "games": 256,
+        "rate": 0.7617
+       }
+      }
+     },
+     "1703": {
+      "wins": 388,
+      "games": 768,
+      "rate": 0.5052,
+      "void_games": 0,
+      "seat0": {
+       "wins": 195,
+       "games": 384,
+       "rate": 0.5078
+      },
+      "seat1": {
+       "wins": 193,
+       "games": 384,
+       "rate": 0.5026
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 106,
+        "games": 256,
+        "rate": 0.4141
+       },
+       "frog_monarch": {
+        "wins": 102,
+        "games": 256,
+        "rate": 0.3984
+       },
+       "machina_gadget": {
+        "wins": 180,
+        "games": 256,
+        "rate": 0.7031
+       }
+      }
+     },
+     "1704": {
+      "wins": 374,
+      "games": 768,
+      "rate": 0.487,
+      "void_games": 0,
+      "seat0": {
+       "wins": 189,
+       "games": 384,
+       "rate": 0.4922
+      },
+      "seat1": {
+       "wins": 185,
+       "games": 384,
+       "rate": 0.4818
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 117,
+        "games": 256,
+        "rate": 0.457
+       },
+       "frog_monarch": {
+        "wins": 83,
+        "games": 256,
+        "rate": 0.3242
+       },
+       "machina_gadget": {
+        "wins": 174,
+        "games": 256,
+        "rate": 0.6797
+       }
+      }
+     }
+    },
+    "random": {
+     "1702": {
+      "wins": 745,
+      "games": 768,
+      "rate": 0.9701,
+      "void_games": 0,
+      "seat0": {
+       "wins": 372,
+       "games": 384,
+       "rate": 0.9688
+      },
+      "seat1": {
+       "wins": 373,
+       "games": 384,
+       "rate": 0.9714
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 247,
+        "games": 256,
+        "rate": 0.9648
+       },
+       "frog_monarch": {
+        "wins": 244,
+        "games": 256,
+        "rate": 0.9531
+       },
+       "machina_gadget": {
+        "wins": 254,
+        "games": 256,
+        "rate": 0.9922
+       }
+      }
+     },
+     "1703": {
+      "wins": 741,
+      "games": 768,
+      "rate": 0.9648,
+      "void_games": 0,
+      "seat0": {
+       "wins": 370,
+       "games": 384,
+       "rate": 0.9635
+      },
+      "seat1": {
+       "wins": 371,
+       "games": 384,
+       "rate": 0.9661
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 239,
+        "games": 256,
+        "rate": 0.9336
+       },
+       "frog_monarch": {
+        "wins": 249,
+        "games": 256,
+        "rate": 0.9727
+       },
+       "machina_gadget": {
+        "wins": 253,
+        "games": 256,
+        "rate": 0.9883
+       }
+      }
+     },
+     "1704": {
+      "wins": 739,
+      "games": 768,
+      "rate": 0.9622,
+      "void_games": 0,
+      "seat0": {
+       "wins": 364,
+       "games": 384,
+       "rate": 0.9479
+      },
+      "seat1": {
+       "wins": 375,
+       "games": 384,
+       "rate": 0.9766
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 235,
+        "games": 256,
+        "rate": 0.918
+       },
+       "frog_monarch": {
+        "wins": 249,
+        "games": 256,
+        "rate": 0.9727
+       },
+       "machina_gadget": {
+        "wins": 255,
+        "games": 256,
+        "rate": 0.9961
+       }
+      }
+     }
+    }
+   },
+   "validation": {
+    "heuristic": {
+     "1702": {
+      "wins": 47,
+      "games": 96,
+      "rate": 0.4896,
+      "void_games": 0,
+      "seat0": {
+       "wins": 28,
+       "games": 48,
+       "rate": 0.5833
+      },
+      "seat1": {
+       "wins": 19,
+       "games": 48,
+       "rate": 0.3958
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 13,
+        "games": 32,
+        "rate": 0.4062
+       },
+       "frog_monarch": {
+        "wins": 12,
+        "games": 32,
+        "rate": 0.375
+       },
+       "machina_gadget": {
+        "wins": 22,
+        "games": 32,
+        "rate": 0.6875
+       }
+      }
+     },
+     "1703": {
+      "wins": 45,
+      "games": 96,
+      "rate": 0.4688,
+      "void_games": 0,
+      "seat0": {
+       "wins": 25,
+       "games": 48,
+       "rate": 0.5208
+      },
+      "seat1": {
+       "wins": 20,
+       "games": 48,
+       "rate": 0.4167
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 14,
+        "games": 32,
+        "rate": 0.4375
+       },
+       "frog_monarch": {
+        "wins": 14,
+        "games": 32,
+        "rate": 0.4375
+       },
+       "machina_gadget": {
+        "wins": 17,
+        "games": 32,
+        "rate": 0.5312
+       }
+      }
+     },
+     "1704": {
+      "wins": 50,
+      "games": 96,
+      "rate": 0.5208,
+      "void_games": 0,
+      "seat0": {
+       "wins": 30,
+       "games": 48,
+       "rate": 0.625
+      },
+      "seat1": {
+       "wins": 20,
+       "games": 48,
+       "rate": 0.4167
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 19,
+        "games": 32,
+        "rate": 0.5938
+       },
+       "frog_monarch": {
+        "wins": 15,
+        "games": 32,
+        "rate": 0.4688
+       },
+       "machina_gadget": {
+        "wins": 16,
+        "games": 32,
+        "rate": 0.5
+       }
+      }
+     }
+    },
+    "random": {
+     "1702": {
+      "wins": 91,
+      "games": 96,
+      "rate": 0.9479,
+      "void_games": 0,
+      "seat0": {
+       "wins": 46,
+       "games": 48,
+       "rate": 0.9583
+      },
+      "seat1": {
+       "wins": 45,
+       "games": 48,
+       "rate": 0.9375
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 30,
+        "games": 32,
+        "rate": 0.9375
+       },
+       "frog_monarch": {
+        "wins": 29,
+        "games": 32,
+        "rate": 0.9062
+       },
+       "machina_gadget": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       }
+      }
+     },
+     "1703": {
+      "wins": 94,
+      "games": 96,
+      "rate": 0.9792,
+      "void_games": 0,
+      "seat0": {
+       "wins": 48,
+       "games": 48,
+       "rate": 1.0
+      },
+      "seat1": {
+       "wins": 46,
+       "games": 48,
+       "rate": 0.9583
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 31,
+        "games": 32,
+        "rate": 0.9688
+       },
+       "frog_monarch": {
+        "wins": 31,
+        "games": 32,
+        "rate": 0.9688
+       },
+       "machina_gadget": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       }
+      }
+     },
+     "1704": {
+      "wins": 91,
+      "games": 96,
+      "rate": 0.9479,
+      "void_games": 0,
+      "seat0": {
+       "wins": 46,
+       "games": 48,
+       "rate": 0.9583
+      },
+      "seat1": {
+       "wins": 45,
+       "games": 48,
+       "rate": 0.9375
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 28,
+        "games": 32,
+        "rate": 0.875
+       },
+       "frog_monarch": {
+        "wins": 31,
+        "games": 32,
+        "rate": 0.9688
+       },
+       "machina_gadget": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       }
+      }
+     }
+    }
+   },
+   "paired_validation_vs_numpy_heuristic": {
+    "mean_gain_pp": 3.47,
+    "sd_gain_pp": 4.69,
+    "per_optimizer": {
+     "1702": {
+      "gain_pp": 8.33,
+      "games": 96,
+      "new": 0.4896,
+      "reference": 0.4062
+     },
+     "1703": {
+      "gain_pp": -1.04,
+      "games": 96,
+      "new": 0.4688,
+      "reference": 0.4792
+     },
+     "1704": {
+      "gain_pp": 3.12,
+      "games": 96,
+      "new": 0.5208,
+      "reference": 0.4896
+     }
+    },
+    "descriptive_bootstrap_95_pp": [
+     -4.17,
+     11.46
+    ],
+    "starts": 96
+   },
+   "paired_pilot_vs_numpy": {
+    "heuristic": {
+     "mean_gain_pp": 4.56,
+     "sd_gain_pp": 4.85,
+     "per_optimizer": {
+      "1702": {
+       "gain_pp": 8.33,
+       "games": 768,
+       "new": 0.5013,
+       "reference": 0.418
+      },
+      "1703": {
+       "gain_pp": -0.91,
+       "games": 768,
+       "new": 0.5052,
+       "reference": 0.5143
+      },
+      "1704": {
+       "gain_pp": 6.25,
+       "games": 768,
+       "new": 0.487,
+       "reference": 0.4245
+      }
+     },
+     "descriptive_bootstrap_95_pp": [
+      2.04,
+      6.99
+     ],
+     "starts": 768
+    },
+    "random": {
+     "mean_gain_pp": 3.9,
+     "sd_gain_pp": 3.38,
+     "per_optimizer": {
+      "1702": {
+       "gain_pp": 7.68,
+       "games": 768,
+       "new": 0.9701,
+       "reference": 0.8932
+      },
+      "1703": {
+       "gain_pp": 1.17,
+       "games": 768,
+       "new": 0.9648,
+       "reference": 0.9531
+      },
+      "1704": {
+       "gain_pp": 2.86,
+       "games": 768,
+       "new": 0.9622,
+       "reference": 0.9336
+      }
+     },
+     "descriptive_bootstrap_95_pp": [
+      2.6,
+      5.16
+     ],
+     "starts": 768
+    }
+   },
+   "head_to_head": {
+    "mean": 0.5443,
+    "per_optimizer": {
+     "1702": {
+      "wins": 473,
+      "games": 768,
+      "rate": 0.6159,
+      "void_games": 0,
+      "seat0": {
+       "wins": 239,
+       "games": 384,
+       "rate": 0.6224
+      },
+      "seat1": {
+       "wins": 234,
+       "games": 384,
+       "rate": 0.6094
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 119,
+        "games": 256,
+        "rate": 0.4648
+       },
+       "frog_monarch": {
+        "wins": 138,
+        "games": 256,
+        "rate": 0.5391
+       },
+       "machina_gadget": {
+        "wins": 216,
+        "games": 256,
+        "rate": 0.8438
+       }
+      }
+     },
+     "1703": {
+      "wins": 371,
+      "games": 768,
+      "rate": 0.4831,
+      "void_games": 0,
+      "seat0": {
+       "wins": 193,
+       "games": 384,
+       "rate": 0.5026
+      },
+      "seat1": {
+       "wins": 178,
+       "games": 384,
+       "rate": 0.4635
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 72,
+        "games": 256,
+        "rate": 0.2812
+       },
+       "frog_monarch": {
+        "wins": 131,
+        "games": 256,
+        "rate": 0.5117
+       },
+       "machina_gadget": {
+        "wins": 168,
+        "games": 256,
+        "rate": 0.6562
+       }
+      }
+     },
+     "1704": {
+      "wins": 410,
+      "games": 768,
+      "rate": 0.5339,
+      "void_games": 0,
+      "seat0": {
+       "wins": 200,
+       "games": 384,
+       "rate": 0.5208
+      },
+      "seat1": {
+       "wins": 210,
+       "games": 384,
+       "rate": 0.5469
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 102,
+        "games": 256,
+        "rate": 0.3984
+       },
+       "frog_monarch": {
+        "wins": 124,
+        "games": 256,
+        "rate": 0.4844
+       },
+       "machina_gadget": {
+        "wins": 184,
+        "games": 256,
+        "rate": 0.7188
+       }
+      }
+     }
+    }
+   },
+   "R1": "NOT_DISTINGUISHED",
+   "R3": {
+    "mean": 0.4978,
+    "min_seed": 0.487,
+    "deck_means": {
+     "blackwing": 0.4206,
+     "frog_monarch": 0.3581,
+     "machina_gadget": 0.7148
+    },
+    "candidate": false
+   }
+  },
+  "league320": {
+   "pilot": {
+    "heuristic": {
+     "1702": {
+      "wins": 375,
+      "games": 768,
+      "rate": 0.4883,
+      "void_games": 0,
+      "seat0": {
+       "wins": 188,
+       "games": 384,
+       "rate": 0.4896
+      },
+      "seat1": {
+       "wins": 187,
+       "games": 384,
+       "rate": 0.487
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 119,
+        "games": 256,
+        "rate": 0.4648
+       },
+       "frog_monarch": {
+        "wins": 66,
+        "games": 256,
+        "rate": 0.2578
+       },
+       "machina_gadget": {
+        "wins": 190,
+        "games": 256,
+        "rate": 0.7422
+       }
+      }
+     },
+     "1703": {
+      "wins": 381,
+      "games": 768,
+      "rate": 0.4961,
+      "void_games": 0,
+      "seat0": {
+       "wins": 194,
+       "games": 384,
+       "rate": 0.5052
+      },
+      "seat1": {
+       "wins": 187,
+       "games": 384,
+       "rate": 0.487
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 95,
+        "games": 256,
+        "rate": 0.3711
+       },
+       "frog_monarch": {
+        "wins": 114,
+        "games": 256,
+        "rate": 0.4453
+       },
+       "machina_gadget": {
+        "wins": 172,
+        "games": 256,
+        "rate": 0.6719
+       }
+      }
+     },
+     "1704": {
+      "wins": 419,
+      "games": 768,
+      "rate": 0.5456,
+      "void_games": 0,
+      "seat0": {
+       "wins": 211,
+       "games": 384,
+       "rate": 0.5495
+      },
+      "seat1": {
+       "wins": 208,
+       "games": 384,
+       "rate": 0.5417
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 129,
+        "games": 256,
+        "rate": 0.5039
+       },
+       "frog_monarch": {
+        "wins": 109,
+        "games": 256,
+        "rate": 0.4258
+       },
+       "machina_gadget": {
+        "wins": 181,
+        "games": 256,
+        "rate": 0.707
+       }
+      }
+     }
+    },
+    "random": {
+     "1702": {
+      "wins": 750,
+      "games": 768,
+      "rate": 0.9766,
+      "void_games": 0,
+      "seat0": {
+       "wins": 372,
+       "games": 384,
+       "rate": 0.9688
+      },
+      "seat1": {
+       "wins": 378,
+       "games": 384,
+       "rate": 0.9844
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 249,
+        "games": 256,
+        "rate": 0.9727
+       },
+       "frog_monarch": {
+        "wins": 246,
+        "games": 256,
+        "rate": 0.9609
+       },
+       "machina_gadget": {
+        "wins": 255,
+        "games": 256,
+        "rate": 0.9961
+       }
+      }
+     },
+     "1703": {
+      "wins": 748,
+      "games": 768,
+      "rate": 0.974,
+      "void_games": 0,
+      "seat0": {
+       "wins": 376,
+       "games": 384,
+       "rate": 0.9792
+      },
+      "seat1": {
+       "wins": 372,
+       "games": 384,
+       "rate": 0.9688
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 242,
+        "games": 256,
+        "rate": 0.9453
+       },
+       "frog_monarch": {
+        "wins": 251,
+        "games": 256,
+        "rate": 0.9805
+       },
+       "machina_gadget": {
+        "wins": 255,
+        "games": 256,
+        "rate": 0.9961
+       }
+      }
+     },
+     "1704": {
+      "wins": 743,
+      "games": 768,
+      "rate": 0.9674,
+      "void_games": 0,
+      "seat0": {
+       "wins": 372,
+       "games": 384,
+       "rate": 0.9688
+      },
+      "seat1": {
+       "wins": 371,
+       "games": 384,
+       "rate": 0.9661
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 242,
+        "games": 256,
+        "rate": 0.9453
+       },
+       "frog_monarch": {
+        "wins": 245,
+        "games": 256,
+        "rate": 0.957
+       },
+       "machina_gadget": {
+        "wins": 256,
+        "games": 256,
+        "rate": 1.0
+       }
+      }
+     }
+    }
+   },
+   "validation": {
+    "heuristic": {
+     "1702": {
+      "wins": 49,
+      "games": 96,
+      "rate": 0.5104,
+      "void_games": 0,
+      "seat0": {
+       "wins": 27,
+       "games": 48,
+       "rate": 0.5625
+      },
+      "seat1": {
+       "wins": 22,
+       "games": 48,
+       "rate": 0.4583
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 14,
+        "games": 32,
+        "rate": 0.4375
+       },
+       "frog_monarch": {
+        "wins": 11,
+        "games": 32,
+        "rate": 0.3438
+       },
+       "machina_gadget": {
+        "wins": 24,
+        "games": 32,
+        "rate": 0.75
+       }
+      }
+     },
+     "1703": {
+      "wins": 53,
+      "games": 96,
+      "rate": 0.5521,
+      "void_games": 0,
+      "seat0": {
+       "wins": 30,
+       "games": 48,
+       "rate": 0.625
+      },
+      "seat1": {
+       "wins": 23,
+       "games": 48,
+       "rate": 0.4792
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 12,
+        "games": 32,
+        "rate": 0.375
+       },
+       "frog_monarch": {
+        "wins": 19,
+        "games": 32,
+        "rate": 0.5938
+       },
+       "machina_gadget": {
+        "wins": 22,
+        "games": 32,
+        "rate": 0.6875
+       }
+      }
+     },
+     "1704": {
+      "wins": 46,
+      "games": 96,
+      "rate": 0.4792,
+      "void_games": 0,
+      "seat0": {
+       "wins": 32,
+       "games": 48,
+       "rate": 0.6667
+      },
+      "seat1": {
+       "wins": 14,
+       "games": 48,
+       "rate": 0.2917
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 12,
+        "games": 32,
+        "rate": 0.375
+       },
+       "frog_monarch": {
+        "wins": 13,
+        "games": 32,
+        "rate": 0.4062
+       },
+       "machina_gadget": {
+        "wins": 21,
+        "games": 32,
+        "rate": 0.6562
+       }
+      }
+     }
+    },
+    "random": {
+     "1702": {
+      "wins": 94,
+      "games": 96,
+      "rate": 0.9792,
+      "void_games": 0,
+      "seat0": {
+       "wins": 47,
+       "games": 48,
+       "rate": 0.9792
+      },
+      "seat1": {
+       "wins": 47,
+       "games": 48,
+       "rate": 0.9792
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 30,
+        "games": 32,
+        "rate": 0.9375
+       },
+       "frog_monarch": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       },
+       "machina_gadget": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       }
+      }
+     },
+     "1703": {
+      "wins": 96,
+      "games": 96,
+      "rate": 1.0,
+      "void_games": 0,
+      "seat0": {
+       "wins": 48,
+       "games": 48,
+       "rate": 1.0
+      },
+      "seat1": {
+       "wins": 48,
+       "games": 48,
+       "rate": 1.0
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       },
+       "frog_monarch": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       },
+       "machina_gadget": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       }
+      }
+     },
+     "1704": {
+      "wins": 93,
+      "games": 96,
+      "rate": 0.9688,
+      "void_games": 0,
+      "seat0": {
+       "wins": 47,
+       "games": 48,
+       "rate": 0.9792
+      },
+      "seat1": {
+       "wins": 46,
+       "games": 48,
+       "rate": 0.9583
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 29,
+        "games": 32,
+        "rate": 0.9062
+       },
+       "frog_monarch": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       },
+       "machina_gadget": {
+        "wins": 32,
+        "games": 32,
+        "rate": 1.0
+       }
+      }
+     }
+    }
+   },
+   "paired_validation_vs_numpy_heuristic": {
+    "mean_gain_pp": 5.56,
+    "sd_gain_pp": 5.92,
+    "per_optimizer": {
+     "1702": {
+      "gain_pp": 10.42,
+      "games": 96,
+      "new": 0.5104,
+      "reference": 0.4062
+     },
+     "1703": {
+      "gain_pp": 7.29,
+      "games": 96,
+      "new": 0.5521,
+      "reference": 0.4792
+     },
+     "1704": {
+      "gain_pp": -1.04,
+      "games": 96,
+      "new": 0.4792,
+      "reference": 0.4896
+     }
+    },
+    "descriptive_bootstrap_95_pp": [
+     -1.39,
+     12.5
+    ],
+    "starts": 96
+   },
+   "paired_pilot_vs_numpy": {
+    "heuristic": {
+     "mean_gain_pp": 5.77,
+     "sd_gain_pp": 7.05,
+     "per_optimizer": {
+      "1702": {
+       "gain_pp": 7.03,
+       "games": 768,
+       "new": 0.4883,
+       "reference": 0.418
+      },
+      "1703": {
+       "gain_pp": -1.82,
+       "games": 768,
+       "new": 0.4961,
+       "reference": 0.5143
+      },
+      "1704": {
+       "gain_pp": 12.11,
+       "games": 768,
+       "new": 0.5456,
+       "reference": 0.4245
+      }
+     },
+     "descriptive_bootstrap_95_pp": [
+      3.3,
+      8.2
+     ],
+     "starts": 768
+    },
+    "random": {
+     "mean_gain_pp": 4.6,
+     "sd_gain_pp": 3.3,
+     "per_optimizer": {
+      "1702": {
+       "gain_pp": 8.33,
+       "games": 768,
+       "new": 0.9766,
+       "reference": 0.8932
+      },
+      "1703": {
+       "gain_pp": 2.08,
+       "games": 768,
+       "new": 0.974,
+       "reference": 0.9531
+      },
+      "1704": {
+       "gain_pp": 3.39,
+       "games": 768,
+       "new": 0.9674,
+       "reference": 0.9336
+      }
+     },
+     "descriptive_bootstrap_95_pp": [
+      3.3,
+      5.9
+     ],
+     "starts": 768
+    }
+   },
+   "head_to_head": {
+    "mean": 0.5946,
+    "per_optimizer": {
+     "1702": {
+      "wins": 500,
+      "games": 768,
+      "rate": 0.651,
+      "void_games": 0,
+      "seat0": {
+       "wins": 250,
+       "games": 384,
+       "rate": 0.651
+      },
+      "seat1": {
+       "wins": 250,
+       "games": 384,
+       "rate": 0.651
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 142,
+        "games": 256,
+        "rate": 0.5547
+       },
+       "frog_monarch": {
+        "wins": 137,
+        "games": 256,
+        "rate": 0.5352
+       },
+       "machina_gadget": {
+        "wins": 221,
+        "games": 256,
+        "rate": 0.8633
+       }
+      }
+     },
+     "1703": {
+      "wins": 414,
+      "games": 768,
+      "rate": 0.5391,
+      "void_games": 0,
+      "seat0": {
+       "wins": 212,
+       "games": 384,
+       "rate": 0.5521
+      },
+      "seat1": {
+       "wins": 202,
+       "games": 384,
+       "rate": 0.526
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 73,
+        "games": 256,
+        "rate": 0.2852
+       },
+       "frog_monarch": {
+        "wins": 154,
+        "games": 256,
+        "rate": 0.6016
+       },
+       "machina_gadget": {
+        "wins": 187,
+        "games": 256,
+        "rate": 0.7305
+       }
+      }
+     },
+     "1704": {
+      "wins": 456,
+      "games": 768,
+      "rate": 0.5938,
+      "void_games": 0,
+      "seat0": {
+       "wins": 231,
+       "games": 384,
+       "rate": 0.6016
+      },
+      "seat1": {
+       "wins": 225,
+       "games": 384,
+       "rate": 0.5859
+      },
+      "by_deck": {
+       "blackwing": {
+        "wins": 101,
+        "games": 256,
+        "rate": 0.3945
+       },
+       "frog_monarch": {
+        "wins": 153,
+        "games": 256,
+        "rate": 0.5977
+       },
+       "machina_gadget": {
+        "wins": 202,
+        "games": 256,
+        "rate": 0.7891
+       }
+      }
+     }
+    }
+   },
+   "R1": "NOT_DISTINGUISHED",
+   "R3": {
+    "mean": 0.51,
+    "min_seed": 0.4883,
+    "deck_means": {
+     "blackwing": 0.4466,
+     "frog_monarch": 0.3763,
+     "machina_gadget": 0.707
+    },
+    "candidate": false
+   }
+  }
+ },
+ "budget_gain_R2": {
+  "mean_gain_pp": 18.23,
+  "sd_gain_pp": 2.82,
+  "per_optimizer": {
+   "1702": {
+    "gain_pp": 15.1,
+    "games": 768,
+    "new": 0.4883,
+    "reference": 0.3372
+   },
+   "1703": {
+    "gain_pp": 19.01,
+    "games": 768,
+    "new": 0.4961,
+    "reference": 0.306
+   },
+   "1704": {
+    "gain_pp": 20.57,
+    "games": 768,
+    "new": 0.5456,
+    "reference": 0.3398
+   }
+  },
+  "descriptive_bootstrap_95_pp": [
+   16.02,
+   20.53
+  ],
+  "starts": 768,
+  "verdict": "MORE_GAMES_HELP"
+ },
+ "league_curve_vs_heuristic_greedy": {
+  "768": {
+   "1702": 0.2057,
+   "1703": 0.1641,
+   "1704": 0.1263
+  },
+  "3072": {
+   "1702": 0.3372,
+   "1703": 0.306,
+   "1704": 0.3398
+  },
+  "7680": {
+   "1702": 0.4323,
+   "1703": 0.444,
+   "1704": 0.3867
+  },
+  "15360": {
+   "1702": 0.5013,
+   "1703": 0.5052,
+   "1704": 0.487
+  },
+  "30720": {
+   "1702": 0.4883,
+   "1703": 0.4961,
+   "1704": 0.5456
+  }
+ },
+ "sampled_diagnostic": {
+  "league32": {
+   "heuristic": {
+    "1702": 0.2513,
+    "1703": 0.263,
+    "1704": 0.2344
+   },
+   "random": {
+    "1702": 0.8672,
+    "1703": 0.8424,
+    "1704": 0.8542
+   }
+  },
+  "league320": {
+   "heuristic": {
+    "1702": 0.4896,
+    "1703": 0.4349,
+    "1704": 0.4701
+   },
+   "random": {
+    "1702": 0.974,
+    "1703": 0.9557,
+    "1704": 0.9596
+   }
+  },
+  "numpy": {
+   "heuristic": {
+    "1702": 0.293,
+    "1703": 0.2878,
+    "1704": 0.3451
+   },
+   "random": {
+    "1702": 0.8724,
+    "1703": 0.8893,
+    "1704": 0.8568
+   }
+  }
+ },
+ "gauntlet_descriptive": {
+  "gauntlet160": {
+   "1702": {
+    "wins": 708,
+    "games": 1336,
+    "rate": 0.5299,
+    "void_games": 8,
+    "seat0": {
+     "wins": 363,
+     "games": 672,
+     "rate": 0.5402
+    },
+    "seat1": {
+     "wins": 345,
+     "games": 664,
+     "rate": 0.5196
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 15,
+      "games": 64,
+      "rate": 0.2344
+     },
+     "frog_monarch": {
+      "wins": 30,
+      "games": 64,
+      "rate": 0.4688
+     },
+     "g_blackwing": {
+      "wins": 36,
+      "games": 64,
+      "rate": 0.5625
+     },
+     "g_diva_frog": {
+      "wins": 25,
+      "games": 64,
+      "rate": 0.3906
+     },
+     "g_diva_hero": {
+      "wins": 39,
+      "games": 64,
+      "rate": 0.6094
+     },
+     "g_diva_hero_beat": {
+      "wins": 50,
+      "games": 64,
+      "rate": 0.7812
+     },
+     "g_dragon_turbo": {
+      "wins": 33,
+      "games": 64,
+      "rate": 0.5156
+     },
+     "g_frog_monarch": {
+      "wins": 41,
+      "games": 64,
+      "rate": 0.6406
+     },
+     "g_frog_otk": {
+      "wins": 24,
+      "games": 64,
+      "rate": 0.375
+     },
+     "g_gigavise": {
+      "wins": 36,
+      "games": 64,
+      "rate": 0.5625
+     },
+     "g_gladiator_beast": {
+      "wins": 24,
+      "games": 64,
+      "rate": 0.375
+     },
+     "g_hero_beat": {
+      "wins": 45,
+      "games": 64,
+      "rate": 0.7031
+     },
+     "g_hero_frog": {
+      "wins": 52,
+      "games": 64,
+      "rate": 0.8125
+     },
+     "g_lightsworn": {
+      "wins": 28,
+      "games": 56,
+      "rate": 0.5
+     },
+     "g_lightsworn_fairy": {
+      "wins": 36,
+      "games": 64,
+      "rate": 0.5625
+     },
+     "g_machina_control": {
+      "wins": 53,
+      "games": 64,
+      "rate": 0.8281
+     },
+     "g_quickdraw_plant": {
+      "wins": 14,
+      "games": 64,
+      "rate": 0.2188
+     },
+     "g_vayu_turbo": {
+      "wins": 26,
+      "games": 64,
+      "rate": 0.4062
+     },
+     "g_vayu_turbo_ddev08": {
+      "wins": 33,
+      "games": 64,
+      "rate": 0.5156
+     },
+     "g_zombie_teledad": {
+      "wins": 24,
+      "games": 64,
+      "rate": 0.375
+     },
+     "machina_gadget": {
+      "wins": 44,
+      "games": 64,
+      "rate": 0.6875
+     }
+    }
+   },
+   "1703": {
+    "wins": 770,
+    "games": 1344,
+    "rate": 0.5729,
+    "void_games": 0,
+    "seat0": {
+     "wins": 388,
+     "games": 672,
+     "rate": 0.5774
+    },
+    "seat1": {
+     "wins": 382,
+     "games": 672,
+     "rate": 0.5685
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 26,
+      "games": 64,
+      "rate": 0.4062
+     },
+     "frog_monarch": {
+      "wins": 31,
+      "games": 64,
+      "rate": 0.4844
+     },
+     "g_blackwing": {
+      "wins": 41,
+      "games": 64,
+      "rate": 0.6406
+     },
+     "g_diva_frog": {
+      "wins": 30,
+      "games": 64,
+      "rate": 0.4688
+     },
+     "g_diva_hero": {
+      "wins": 37,
+      "games": 64,
+      "rate": 0.5781
+     },
+     "g_diva_hero_beat": {
+      "wins": 52,
+      "games": 64,
+      "rate": 0.8125
+     },
+     "g_dragon_turbo": {
+      "wins": 30,
+      "games": 64,
+      "rate": 0.4688
+     },
+     "g_frog_monarch": {
+      "wins": 43,
+      "games": 64,
+      "rate": 0.6719
+     },
+     "g_frog_otk": {
+      "wins": 28,
+      "games": 64,
+      "rate": 0.4375
+     },
+     "g_gigavise": {
+      "wins": 35,
+      "games": 64,
+      "rate": 0.5469
+     },
+     "g_gladiator_beast": {
+      "wins": 28,
+      "games": 64,
+      "rate": 0.4375
+     },
+     "g_hero_beat": {
+      "wins": 50,
+      "games": 64,
+      "rate": 0.7812
+     },
+     "g_hero_frog": {
+      "wins": 47,
+      "games": 64,
+      "rate": 0.7344
+     },
+     "g_lightsworn": {
+      "wins": 40,
+      "games": 64,
+      "rate": 0.625
+     },
+     "g_lightsworn_fairy": {
+      "wins": 42,
+      "games": 64,
+      "rate": 0.6562
+     },
+     "g_machina_control": {
+      "wins": 53,
+      "games": 64,
+      "rate": 0.8281
+     },
+     "g_quickdraw_plant": {
+      "wins": 28,
+      "games": 64,
+      "rate": 0.4375
+     },
+     "g_vayu_turbo": {
+      "wins": 27,
+      "games": 64,
+      "rate": 0.4219
+     },
+     "g_vayu_turbo_ddev08": {
+      "wins": 34,
+      "games": 64,
+      "rate": 0.5312
+     },
+     "g_zombie_teledad": {
+      "wins": 27,
+      "games": 64,
+      "rate": 0.4219
+     },
+     "machina_gadget": {
+      "wins": 41,
+      "games": 64,
+      "rate": 0.6406
+     }
+    }
+   },
+   "1704": {
+    "wins": 752,
+    "games": 1328,
+    "rate": 0.5663,
+    "void_games": 16,
+    "seat0": {
+     "wins": 398,
+     "games": 672,
+     "rate": 0.5923
+    },
+    "seat1": {
+     "wins": 354,
+     "games": 656,
+     "rate": 0.5396
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 23,
+      "games": 64,
+      "rate": 0.3594
+     },
+     "frog_monarch": {
+      "wins": 21,
+      "games": 64,
+      "rate": 0.3281
+     },
+     "g_blackwing": {
+      "wins": 38,
+      "games": 64,
+      "rate": 0.5938
+     },
+     "g_diva_frog": {
+      "wins": 27,
+      "games": 64,
+      "rate": 0.4219
+     },
+     "g_diva_hero": {
+      "wins": 40,
+      "games": 64,
+      "rate": 0.625
+     },
+     "g_diva_hero_beat": {
+      "wins": 49,
+      "games": 64,
+      "rate": 0.7656
+     },
+     "g_dragon_turbo": {
+      "wins": 34,
+      "games": 64,
+      "rate": 0.5312
+     },
+     "g_frog_monarch": {
+      "wins": 35,
+      "games": 64,
+      "rate": 0.5469
+     },
+     "g_frog_otk": {
+      "wins": 18,
+      "games": 64,
+      "rate": 0.2812
+     },
+     "g_gigavise": {
+      "wins": 47,
+      "games": 64,
+      "rate": 0.7344
+     },
+     "g_gladiator_beast": {
+      "wins": 34,
+      "games": 64,
+      "rate": 0.5312
+     },
+     "g_hero_beat": {
+      "wins": 57,
+      "games": 64,
+      "rate": 0.8906
+     },
+     "g_hero_frog": {
+      "wins": 49,
+      "games": 64,
+      "rate": 0.7656
+     },
+     "g_lightsworn": {
+      "wins": 44,
+      "games": 56,
+      "rate": 0.7857
+     },
+     "g_lightsworn_fairy": {
+      "wins": 31,
+      "games": 64,
+      "rate": 0.4844
+     },
+     "g_machina_control": {
+      "wins": 43,
+      "games": 56,
+      "rate": 0.7679
+     },
+     "g_quickdraw_plant": {
+      "wins": 29,
+      "games": 64,
+      "rate": 0.4531
+     },
+     "g_vayu_turbo": {
+      "wins": 30,
+      "games": 64,
+      "rate": 0.4688
+     },
+     "g_vayu_turbo_ddev08": {
+      "wins": 35,
+      "games": 64,
+      "rate": 0.5469
+     },
+     "g_zombie_teledad": {
+      "wins": 20,
+      "games": 64,
+      "rate": 0.3125
+     },
+     "machina_gadget": {
+      "wins": 48,
+      "games": 64,
+      "rate": 0.75
+     }
+    }
+   }
+  },
+  "league320": {
+   "1702": {
+    "wins": 619,
+    "games": 1328,
+    "rate": 0.4661,
+    "void_games": 16,
+    "seat0": {
+     "wins": 332,
+     "games": 672,
+     "rate": 0.494
+    },
+    "seat1": {
+     "wins": 287,
+     "games": 656,
+     "rate": 0.4375
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 30,
+      "games": 64,
+      "rate": 0.4688
+     },
+     "frog_monarch": {
+      "wins": 24,
+      "games": 64,
+      "rate": 0.375
+     },
+     "g_blackwing": {
+      "wins": 37,
+      "games": 64,
+      "rate": 0.5781
+     },
+     "g_diva_frog": {
+      "wins": 21,
+      "games": 64,
+      "rate": 0.3281
+     },
+     "g_diva_hero": {
+      "wins": 38,
+      "games": 64,
+      "rate": 0.5938
+     },
+     "g_diva_hero_beat": {
+      "wins": 44,
+      "games": 64,
+      "rate": 0.6875
+     },
+     "g_dragon_turbo": {
+      "wins": 15,
+      "games": 64,
+      "rate": 0.2344
+     },
+     "g_frog_monarch": {
+      "wins": 27,
+      "games": 64,
+      "rate": 0.4219
+     },
+     "g_frog_otk": {
+      "wins": 20,
+      "games": 64,
+      "rate": 0.3125
+     },
+     "g_gigavise": {
+      "wins": 13,
+      "games": 64,
+      "rate": 0.2031
+     },
+     "g_gladiator_beast": {
+      "wins": 40,
+      "games": 64,
+      "rate": 0.625
+     },
+     "g_hero_beat": {
+      "wins": 42,
+      "games": 64,
+      "rate": 0.6562
+     },
+     "g_hero_frog": {
+      "wins": 43,
+      "games": 64,
+      "rate": 0.6719
+     },
+     "g_lightsworn": {
+      "wins": 31,
+      "games": 56,
+      "rate": 0.5536
+     },
+     "g_lightsworn_fairy": {
+      "wins": 16,
+      "games": 56,
+      "rate": 0.2857
+     },
+     "g_machina_control": {
+      "wins": 45,
+      "games": 64,
+      "rate": 0.7031
+     },
+     "g_quickdraw_plant": {
+      "wins": 12,
+      "games": 64,
+      "rate": 0.1875
+     },
+     "g_vayu_turbo": {
+      "wins": 26,
+      "games": 64,
+      "rate": 0.4062
+     },
+     "g_vayu_turbo_ddev08": {
+      "wins": 26,
+      "games": 64,
+      "rate": 0.4062
+     },
+     "g_zombie_teledad": {
+      "wins": 20,
+      "games": 64,
+      "rate": 0.3125
+     },
+     "machina_gadget": {
+      "wins": 49,
+      "games": 64,
+      "rate": 0.7656
+     }
+    }
+   },
+   "1703": {
+    "wins": 570,
+    "games": 1320,
+    "rate": 0.4318,
+    "void_games": 24,
+    "seat0": {
+     "wins": 301,
+     "games": 664,
+     "rate": 0.4533
+    },
+    "seat1": {
+     "wins": 269,
+     "games": 656,
+     "rate": 0.4101
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 20,
+      "games": 64,
+      "rate": 0.3125
+     },
+     "frog_monarch": {
+      "wins": 37,
+      "games": 64,
+      "rate": 0.5781
+     },
+     "g_blackwing": {
+      "wins": 30,
+      "games": 64,
+      "rate": 0.4688
+     },
+     "g_diva_frog": {
+      "wins": 25,
+      "games": 64,
+      "rate": 0.3906
+     },
+     "g_diva_hero": {
+      "wins": 34,
+      "games": 64,
+      "rate": 0.5312
+     },
+     "g_diva_hero_beat": {
+      "wins": 31,
+      "games": 64,
+      "rate": 0.4844
+     },
+     "g_dragon_turbo": {
+      "wins": 25,
+      "games": 64,
+      "rate": 0.3906
+     },
+     "g_frog_monarch": {
+      "wins": 35,
+      "games": 64,
+      "rate": 0.5469
+     },
+     "g_frog_otk": {
+      "wins": 19,
+      "games": 64,
+      "rate": 0.2969
+     },
+     "g_gigavise": {
+      "wins": 12,
+      "games": 64,
+      "rate": 0.1875
+     },
+     "g_gladiator_beast": {
+      "wins": 33,
+      "games": 64,
+      "rate": 0.5156
+     },
+     "g_hero_beat": {
+      "wins": 29,
+      "games": 56,
+      "rate": 0.5179
+     },
+     "g_hero_frog": {
+      "wins": 45,
+      "games": 64,
+      "rate": 0.7031
+     },
+     "g_lightsworn": {
+      "wins": 16,
+      "games": 56,
+      "rate": 0.2857
+     },
+     "g_lightsworn_fairy": {
+      "wins": 11,
+      "games": 56,
+      "rate": 0.1964
+     },
+     "g_machina_control": {
+      "wins": 38,
+      "games": 64,
+      "rate": 0.5938
+     },
+     "g_quickdraw_plant": {
+      "wins": 18,
+      "games": 64,
+      "rate": 0.2812
+     },
+     "g_vayu_turbo": {
+      "wins": 20,
+      "games": 64,
+      "rate": 0.3125
+     },
+     "g_vayu_turbo_ddev08": {
+      "wins": 22,
+      "games": 64,
+      "rate": 0.3438
+     },
+     "g_zombie_teledad": {
+      "wins": 20,
+      "games": 64,
+      "rate": 0.3125
+     },
+     "machina_gadget": {
+      "wins": 50,
+      "games": 64,
+      "rate": 0.7812
+     }
+    }
+   },
+   "1704": {
+    "wins": 597,
+    "games": 1336,
+    "rate": 0.4469,
+    "void_games": 8,
+    "seat0": {
+     "wins": 298,
+     "games": 672,
+     "rate": 0.4435
+    },
+    "seat1": {
+     "wins": 299,
+     "games": 664,
+     "rate": 0.4503
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 27,
+      "games": 64,
+      "rate": 0.4219
+     },
+     "frog_monarch": {
+      "wins": 38,
+      "games": 64,
+      "rate": 0.5938
+     },
+     "g_blackwing": {
+      "wins": 38,
+      "games": 64,
+      "rate": 0.5938
+     },
+     "g_diva_frog": {
+      "wins": 27,
+      "games": 64,
+      "rate": 0.4219
+     },
+     "g_diva_hero": {
+      "wins": 35,
+      "games": 64,
+      "rate": 0.5469
+     },
+     "g_diva_hero_beat": {
+      "wins": 37,
+      "games": 64,
+      "rate": 0.5781
+     },
+     "g_dragon_turbo": {
+      "wins": 23,
+      "games": 64,
+      "rate": 0.3594
+     },
+     "g_frog_monarch": {
+      "wins": 33,
+      "games": 64,
+      "rate": 0.5156
+     },
+     "g_frog_otk": {
+      "wins": 25,
+      "games": 64,
+      "rate": 0.3906
+     },
+     "g_gigavise": {
+      "wins": 8,
+      "games": 64,
+      "rate": 0.125
+     },
+     "g_gladiator_beast": {
+      "wins": 33,
+      "games": 64,
+      "rate": 0.5156
+     },
+     "g_hero_beat": {
+      "wins": 34,
+      "games": 64,
+      "rate": 0.5312
+     },
+     "g_hero_frog": {
+      "wins": 38,
+      "games": 64,
+      "rate": 0.5938
+     },
+     "g_lightsworn": {
+      "wins": 28,
+      "games": 56,
+      "rate": 0.5
+     },
+     "g_lightsworn_fairy": {
+      "wins": 22,
+      "games": 64,
+      "rate": 0.3438
+     },
+     "g_machina_control": {
+      "wins": 33,
+      "games": 64,
+      "rate": 0.5156
+     },
+     "g_quickdraw_plant": {
+      "wins": 20,
+      "games": 64,
+      "rate": 0.3125
+     },
+     "g_vayu_turbo": {
+      "wins": 12,
+      "games": 64,
+      "rate": 0.1875
+     },
+     "g_vayu_turbo_ddev08": {
+      "wins": 21,
+      "games": 64,
+      "rate": 0.3281
+     },
+     "g_zombie_teledad": {
+      "wins": 23,
+      "games": 64,
+      "rate": 0.3594
+     },
+     "machina_gadget": {
+      "wins": 42,
+      "games": 64,
+      "rate": 0.6562
+     }
+    }
+   }
+  },
+  "numpy": {
+   "1702": {
+    "wins": 673,
+    "games": 1344,
+    "rate": 0.5007,
+    "void_games": 0,
+    "seat0": {
+     "wins": 328,
+     "games": 672,
+     "rate": 0.4881
+    },
+    "seat1": {
+     "wins": 345,
+     "games": 672,
+     "rate": 0.5134
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 27,
+      "games": 64,
+      "rate": 0.4219
+     },
+     "frog_monarch": {
+      "wins": 24,
+      "games": 64,
+      "rate": 0.375
+     },
+     "g_blackwing": {
+      "wins": 37,
+      "games": 64,
+      "rate": 0.5781
+     },
+     "g_diva_frog": {
+      "wins": 18,
+      "games": 64,
+      "rate": 0.2812
+     },
+     "g_diva_hero": {
+      "wins": 35,
+      "games": 64,
+      "rate": 0.5469
+     },
+     "g_diva_hero_beat": {
+      "wins": 43,
+      "games": 64,
+      "rate": 0.6719
+     },
+     "g_dragon_turbo": {
+      "wins": 23,
+      "games": 64,
+      "rate": 0.3594
+     },
+     "g_frog_monarch": {
+      "wins": 26,
+      "games": 64,
+      "rate": 0.4062
+     },
+     "g_frog_otk": {
+      "wins": 18,
+      "games": 64,
+      "rate": 0.2812
+     },
+     "g_gigavise": {
+      "wins": 16,
+      "games": 64,
+      "rate": 0.25
+     },
+     "g_gladiator_beast": {
+      "wins": 38,
+      "games": 64,
+      "rate": 0.5938
+     },
+     "g_hero_beat": {
+      "wins": 49,
+      "games": 64,
+      "rate": 0.7656
+     },
+     "g_hero_frog": {
+      "wins": 41,
+      "games": 64,
+      "rate": 0.6406
+     },
+     "g_lightsworn": {
+      "wins": 43,
+      "games": 64,
+      "rate": 0.6719
+     },
+     "g_lightsworn_fairy": {
+      "wins": 31,
+      "games": 64,
+      "rate": 0.4844
+     },
+     "g_machina_control": {
+      "wins": 39,
+      "games": 64,
+      "rate": 0.6094
+     },
+     "g_quickdraw_plant": {
+      "wins": 22,
+      "games": 64,
+      "rate": 0.3438
+     },
+     "g_vayu_turbo": {
+      "wins": 36,
+      "games": 64,
+      "rate": 0.5625
+     },
+     "g_vayu_turbo_ddev08": {
+      "wins": 32,
+      "games": 64,
+      "rate": 0.5
+     },
+     "g_zombie_teledad": {
+      "wins": 25,
+      "games": 64,
+      "rate": 0.3906
+     },
+     "machina_gadget": {
+      "wins": 50,
+      "games": 64,
+      "rate": 0.7812
+     }
+    }
+   },
+   "1703": {
+    "wins": 764,
+    "games": 1344,
+    "rate": 0.5685,
+    "void_games": 0,
+    "seat0": {
+     "wins": 396,
+     "games": 672,
+     "rate": 0.5893
+    },
+    "seat1": {
+     "wins": 368,
+     "games": 672,
+     "rate": 0.5476
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 31,
+      "games": 64,
+      "rate": 0.4844
+     },
+     "frog_monarch": {
+      "wins": 29,
+      "games": 64,
+      "rate": 0.4531
+     },
+     "g_blackwing": {
+      "wins": 41,
+      "games": 64,
+      "rate": 0.6406
+     },
+     "g_diva_frog": {
+      "wins": 30,
+      "games": 64,
+      "rate": 0.4688
+     },
+     "g_diva_hero": {
+      "wins": 34,
+      "games": 64,
+      "rate": 0.5312
+     },
+     "g_diva_hero_beat": {
+      "wins": 50,
+      "games": 64,
+      "rate": 0.7812
+     },
+     "g_dragon_turbo": {
+      "wins": 27,
+      "games": 64,
+      "rate": 0.4219
+     },
+     "g_frog_monarch": {
+      "wins": 37,
+      "games": 64,
+      "rate": 0.5781
+     },
+     "g_frog_otk": {
+      "wins": 22,
+      "games": 64,
+      "rate": 0.3438
+     },
+     "g_gigavise": {
+      "wins": 24,
+      "games": 64,
+      "rate": 0.375
+     },
+     "g_gladiator_beast": {
+      "wins": 37,
+      "games": 64,
+      "rate": 0.5781
+     },
+     "g_hero_beat": {
+      "wins": 51,
+      "games": 64,
+      "rate": 0.7969
+     },
+     "g_hero_frog": {
+      "wins": 44,
+      "games": 64,
+      "rate": 0.6875
+     },
+     "g_lightsworn": {
+      "wins": 51,
+      "games": 64,
+      "rate": 0.7969
+     },
+     "g_lightsworn_fairy": {
+      "wins": 34,
+      "games": 64,
+      "rate": 0.5312
+     },
+     "g_machina_control": {
+      "wins": 45,
+      "games": 64,
+      "rate": 0.7031
+     },
+     "g_quickdraw_plant": {
+      "wins": 32,
+      "games": 64,
+      "rate": 0.5
+     },
+     "g_vayu_turbo": {
+      "wins": 27,
+      "games": 64,
+      "rate": 0.4219
+     },
+     "g_vayu_turbo_ddev08": {
+      "wins": 36,
+      "games": 64,
+      "rate": 0.5625
+     },
+     "g_zombie_teledad": {
+      "wins": 27,
+      "games": 64,
+      "rate": 0.4219
+     },
+     "machina_gadget": {
+      "wins": 55,
+      "games": 64,
+      "rate": 0.8594
+     }
+    }
+   },
+   "1704": {
+    "wins": 767,
+    "games": 1344,
+    "rate": 0.5707,
+    "void_games": 0,
+    "seat0": {
+     "wins": 395,
+     "games": 672,
+     "rate": 0.5878
+    },
+    "seat1": {
+     "wins": 372,
+     "games": 672,
+     "rate": 0.5536
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 26,
+      "games": 64,
+      "rate": 0.4062
+     },
+     "frog_monarch": {
+      "wins": 29,
+      "games": 64,
+      "rate": 0.4531
+     },
+     "g_blackwing": {
+      "wins": 34,
+      "games": 64,
+      "rate": 0.5312
+     },
+     "g_diva_frog": {
+      "wins": 25,
+      "games": 64,
+      "rate": 0.3906
+     },
+     "g_diva_hero": {
+      "wins": 39,
+      "games": 64,
+      "rate": 0.6094
+     },
+     "g_diva_hero_beat": {
+      "wins": 49,
+      "games": 64,
+      "rate": 0.7656
+     },
+     "g_dragon_turbo": {
+      "wins": 41,
+      "games": 64,
+      "rate": 0.6406
+     },
+     "g_frog_monarch": {
+      "wins": 36,
+      "games": 64,
+      "rate": 0.5625
+     },
+     "g_frog_otk": {
+      "wins": 39,
+      "games": 64,
+      "rate": 0.6094
+     },
+     "g_gigavise": {
+      "wins": 34,
+      "games": 64,
+      "rate": 0.5312
+     },
+     "g_gladiator_beast": {
+      "wins": 39,
+      "games": 64,
+      "rate": 0.6094
+     },
+     "g_hero_beat": {
+      "wins": 48,
+      "games": 64,
+      "rate": 0.75
+     },
+     "g_hero_frog": {
+      "wins": 50,
+      "games": 64,
+      "rate": 0.7812
+     },
+     "g_lightsworn": {
+      "wins": 49,
+      "games": 64,
+      "rate": 0.7656
+     },
+     "g_lightsworn_fairy": {
+      "wins": 36,
+      "games": 64,
+      "rate": 0.5625
+     },
+     "g_machina_control": {
+      "wins": 44,
+      "games": 64,
+      "rate": 0.6875
+     },
+     "g_quickdraw_plant": {
+      "wins": 21,
+      "games": 64,
+      "rate": 0.3281
+     },
+     "g_vayu_turbo": {
+      "wins": 28,
+      "games": 64,
+      "rate": 0.4375
+     },
+     "g_vayu_turbo_ddev08": {
+      "wins": 26,
+      "games": 64,
+      "rate": 0.4062
+     },
+     "g_zombie_teledad": {
+      "wins": 24,
+      "games": 64,
+      "rate": 0.375
+     },
+     "machina_gadget": {
+      "wins": 50,
+      "games": 64,
+      "rate": 0.7812
+     }
+    }
+   }
+  },
+  "heuristic-mirror": {
+   "wins": 672,
+   "games": 1344,
+   "rate": 0.5,
+   "void_games": 0,
+   "seat0": {
+    "wins": 331,
+    "games": 672,
+    "rate": 0.4926
+   },
+   "seat1": {
+    "wins": 341,
+    "games": 672,
+    "rate": 0.5074
+   },
+   "by_deck": {
+    "blackwing": {
+     "wins": 30,
+     "games": 64,
+     "rate": 0.4688
+    },
+    "frog_monarch": {
+     "wins": 26,
+     "games": 64,
+     "rate": 0.4062
+    },
+    "g_blackwing": {
+     "wins": 44,
+     "games": 64,
+     "rate": 0.6875
+    },
+    "g_diva_frog": {
+     "wins": 33,
+     "games": 64,
+     "rate": 0.5156
+    },
+    "g_diva_hero": {
+     "wins": 44,
+     "games": 64,
+     "rate": 0.6875
+    },
+    "g_diva_hero_beat": {
+     "wins": 47,
+     "games": 64,
+     "rate": 0.7344
+    },
+    "g_dragon_turbo": {
+     "wins": 24,
+     "games": 64,
+     "rate": 0.375
+    },
+    "g_frog_monarch": {
+     "wins": 27,
+     "games": 64,
+     "rate": 0.4219
+    },
+    "g_frog_otk": {
+     "wins": 15,
+     "games": 64,
+     "rate": 0.2344
+    },
+    "g_gigavise": {
+     "wins": 2,
+     "games": 64,
+     "rate": 0.0312
+    },
+    "g_gladiator_beast": {
+     "wins": 40,
+     "games": 64,
+     "rate": 0.625
+    },
+    "g_hero_beat": {
+     "wins": 47,
+     "games": 64,
+     "rate": 0.7344
+    },
+    "g_hero_frog": {
+     "wins": 27,
+     "games": 64,
+     "rate": 0.4219
+    },
+    "g_lightsworn": {
+     "wins": 40,
+     "games": 64,
+     "rate": 0.625
+    },
+    "g_lightsworn_fairy": {
+     "wins": 26,
+     "games": 64,
+     "rate": 0.4062
+    },
+    "g_machina_control": {
+     "wins": 43,
+     "games": 64,
+     "rate": 0.6719
+    },
+    "g_quickdraw_plant": {
+     "wins": 19,
+     "games": 64,
+     "rate": 0.2969
+    },
+    "g_vayu_turbo": {
+     "wins": 29,
+     "games": 64,
+     "rate": 0.4531
+    },
+    "g_vayu_turbo_ddev08": {
+     "wins": 35,
+     "games": 64,
+     "rate": 0.5469
+    },
+    "g_zombie_teledad": {
+     "wins": 22,
+     "games": 64,
+     "rate": 0.3438
+    },
+    "machina_gadget": {
+     "wins": 52,
+     "games": 64,
+     "rate": 0.8125
+    }
+   }
+  }
+ },
+ "gauntlet_net_on_fixtures": {
+  "heuristic": {
+   "1702": {
+    "wins": 323,
+    "games": 768,
+    "rate": 0.4206,
+    "void_games": 0,
+    "seat0": {
+     "wins": 156,
+     "games": 384,
+     "rate": 0.4062
+    },
+    "seat1": {
+     "wins": 167,
+     "games": 384,
+     "rate": 0.4349
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 95,
+      "games": 256,
+      "rate": 0.3711
+     },
+     "frog_monarch": {
+      "wins": 69,
+      "games": 256,
+      "rate": 0.2695
+     },
+     "machina_gadget": {
+      "wins": 159,
+      "games": 256,
+      "rate": 0.6211
+     }
+    }
+   },
+   "1703": {
+    "wins": 337,
+    "games": 768,
+    "rate": 0.4388,
+    "void_games": 0,
+    "seat0": {
+     "wins": 166,
+     "games": 384,
+     "rate": 0.4323
+    },
+    "seat1": {
+     "wins": 171,
+     "games": 384,
+     "rate": 0.4453
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 103,
+      "games": 256,
+      "rate": 0.4023
+     },
+     "frog_monarch": {
+      "wins": 76,
+      "games": 256,
+      "rate": 0.2969
+     },
+     "machina_gadget": {
+      "wins": 158,
+      "games": 256,
+      "rate": 0.6172
+     }
+    }
+   },
+   "1704": {
+    "wins": 341,
+    "games": 768,
+    "rate": 0.444,
+    "void_games": 0,
+    "seat0": {
+     "wins": 170,
+     "games": 384,
+     "rate": 0.4427
+    },
+    "seat1": {
+     "wins": 171,
+     "games": 384,
+     "rate": 0.4453
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 109,
+      "games": 256,
+      "rate": 0.4258
+     },
+     "frog_monarch": {
+      "wins": 47,
+      "games": 256,
+      "rate": 0.1836
+     },
+     "machina_gadget": {
+      "wins": 185,
+      "games": 256,
+      "rate": 0.7227
+     }
+    }
+   }
+  },
+  "random": {
+   "1702": {
+    "wins": 731,
+    "games": 768,
+    "rate": 0.9518,
+    "void_games": 0,
+    "seat0": {
+     "wins": 365,
+     "games": 384,
+     "rate": 0.9505
+    },
+    "seat1": {
+     "wins": 366,
+     "games": 384,
+     "rate": 0.9531
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 239,
+      "games": 256,
+      "rate": 0.9336
+     },
+     "frog_monarch": {
+      "wins": 242,
+      "games": 256,
+      "rate": 0.9453
+     },
+     "machina_gadget": {
+      "wins": 250,
+      "games": 256,
+      "rate": 0.9766
+     }
+    }
+   },
+   "1703": {
+    "wins": 731,
+    "games": 768,
+    "rate": 0.9518,
+    "void_games": 0,
+    "seat0": {
+     "wins": 361,
+     "games": 384,
+     "rate": 0.9401
+    },
+    "seat1": {
+     "wins": 370,
+     "games": 384,
+     "rate": 0.9635
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 238,
+      "games": 256,
+      "rate": 0.9297
+     },
+     "frog_monarch": {
+      "wins": 242,
+      "games": 256,
+      "rate": 0.9453
+     },
+     "machina_gadget": {
+      "wins": 251,
+      "games": 256,
+      "rate": 0.9805
+     }
+    }
+   },
+   "1704": {
+    "wins": 720,
+    "games": 768,
+    "rate": 0.9375,
+    "void_games": 0,
+    "seat0": {
+     "wins": 360,
+     "games": 384,
+     "rate": 0.9375
+    },
+    "seat1": {
+     "wins": 360,
+     "games": 384,
+     "rate": 0.9375
+    },
+    "by_deck": {
+     "blackwing": {
+      "wins": 247,
+      "games": 256,
+      "rate": 0.9648
+     },
+     "frog_monarch": {
+      "wins": 222,
+      "games": 256,
+      "rate": 0.8672
+     },
+     "machina_gadget": {
+      "wins": 251,
+      "games": 256,
+      "rate": 0.9805
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "status": "PASS",
+ "failed": [],
+ "checks": {
+  "codes-closure": {
+   "status": "PASS",
+   "seconds": 0.01,
+   "detail": {
+    "codes": 509,
+    "sha256": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab",
+    "lists": 21
+   }
+  },
+  "audit-rejects-planted-violations": {
+   "status": "PASS",
+   "seconds": 0.06,
+   "detail": [
+    "action embed bound",
+    "action/card id",
+    "beyond offered",
+    "embed bound",
+    "hidden stats",
+    "id beyond list",
+    "overflow",
+    "own hand id",
+    "private hint",
+    "stale selection",
+    "unknown schema"
+   ]
+  },
+  "softmax-offered-only": {
+   "status": "PASS",
+   "seconds": 0.35,
+   "detail": "padding excluded"
+  },
+  "gae-terminal-only": {
+   "status": "PASS",
+   "seconds": 0.0,
+   "detail": "lambda=1 gives Monte Carlo"
+  },
+  "cell-determinism": {
+   "status": "PASS",
+   "seconds": 9.73,
+   "detail": {
+    "rollout": "4ca0194a3c1b57a3",
+    "decisions": 782
+   }
+  },
+  "pack-preserves-references": {
+   "status": "PASS",
+   "seconds": 0.0,
+   "detail": {
+    "decisions": 259,
+    "hidden_private_rows_kept": 0
+   }
+  },
+  "void-on-native-abort-and-truncation": {
+   "status": "PASS",
+   "seconds": 5.8,
+   "detail": {
+    "truncated": "ContractError: environment truncation is not a natural resul",
+    "aborted": "worker died or timed out (exit -6)"
+   }
+  },
+  "checkpoint-fails-closed": {
+   "status": "PASS",
+   "seconds": 0.05,
+   "detail": "tamper, code list, format"
+  },
+  "generated-list-matches-production-worker": {
+   "status": "PASS",
+   "seconds": 2.19,
+   "detail": {
+    "games_identical_outcome_and_length": 16
+   }
+  },
+  "hidden-cards-do-not-reach-network": {
+   "status": "PASS",
+   "seconds": 0.22,
+   "detail": "packed network inputs byte-identical; info:deck and mask_ never read"
+  },
+  "order-equivariant": {
+   "status": "PASS",
+   "seconds": 0.78,
+   "detail": {
+    "options": 15,
+    "rows": 47,
+    "logit_spread": 0.7610310316085815
+   }
+  },
+  "resume-matches-uninterrupted": {
+   "status": "PASS",
+   "seconds": 115.49,
+   "detail": {
+    "rounds": 3,
+    "final_params": "5be8e90f14528d3e"
+   }
+  }
+ }
+}

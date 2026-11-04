@@ -1,0 +1,281 @@
+{
+ "fixtures": {
+  "numpy": {
+   "heuristic": {
+    "by_optimizer": [
+     39.71,
+     47.4,
+     44.79
+    ],
+    "mean": 43.97,
+    "wins": 1013,
+    "games": 2304,
+    "void_games": 0
+   },
+   "random": {
+    "by_optimizer": [
+     89.32,
+     96.35,
+     94.4
+    ],
+    "mean": 93.36,
+    "wins": 2151,
+    "games": 2304,
+    "void_games": 0
+   }
+  },
+  "league32": {
+   "heuristic": {
+    "by_optimizer": [
+     31.38,
+     31.77,
+     33.07
+    ],
+    "mean": 32.07,
+    "wins": 739,
+    "games": 2304,
+    "void_games": 0
+   },
+   "random": {
+    "by_optimizer": [
+     93.1,
+     88.28,
+     92.19
+    ],
+    "mean": 91.19,
+    "wins": 2101,
+    "games": 2304,
+    "void_games": 0
+   }
+  },
+  "league160": {
+   "heuristic": {
+    "by_optimizer": [
+     49.22,
+     47.53,
+     46.74
+    ],
+    "mean": 47.83,
+    "wins": 1102,
+    "games": 2304,
+    "void_games": 0
+   },
+   "random": {
+    "by_optimizer": [
+     94.4,
+     96.48,
+     95.05
+    ],
+    "mean": 95.31,
+    "wins": 2196,
+    "games": 2304,
+    "void_games": 0
+   }
+  },
+  "league320": {
+   "heuristic": {
+    "by_optimizer": [
+     51.82,
+     52.08,
+     52.08
+    ],
+    "mean": 51.99,
+    "wins": 1198,
+    "games": 2304,
+    "void_games": 0
+   },
+   "random": {
+    "by_optimizer": [
+     96.74,
+     96.09,
+     97.14
+    ],
+    "mean": 96.66,
+    "wins": 2227,
+    "games": 2304,
+    "void_games": 0
+   }
+  },
+  "gauntlet160": {
+   "heuristic": {
+    "by_optimizer": [
+     40.49,
+     43.1,
+     40.89
+    ],
+    "mean": 41.49,
+    "wins": 956,
+    "games": 2304,
+    "void_games": 0
+   },
+   "random": {
+    "by_optimizer": [
+     94.4,
+     96.09,
+     93.36
+    ],
+    "mean": 94.62,
+    "wins": 2180,
+    "games": 2304,
+    "void_games": 0
+   }
+  }
+ },
+ "head_to_head": {
+  "league320": {
+   "by_optimizer": [
+    63.28,
+    52.21,
+    60.16
+   ],
+   "mean": 58.55,
+   "void_games": 0
+  },
+  "gauntlet160": {
+   "by_optimizer": [
+    53.26,
+    48.96,
+    48.7
+   ],
+   "mean": 50.31,
+   "void_games": 0
+  }
+ },
+ "gauntlet": {
+  "gauntlet160": {
+   "by_optimizer": [
+    54.39,
+    56.77,
+    54.17
+   ],
+   "mean": 55.11,
+   "wins": 2222,
+   "games": 4032,
+   "void_games": 0,
+   "void_fraction": 0.0,
+   "validity": "VALID"
+  },
+  "league320": {
+   "by_optimizer": [
+    51.34,
+    43.45,
+    49.63
+   ],
+   "mean": 48.14,
+   "wins": 1941,
+   "games": 4032,
+   "void_games": 0,
+   "void_fraction": 0.0,
+   "validity": "VALID"
+  },
+  "numpy": {
+   "by_optimizer": [
+    49.48,
+    57.66,
+    54.32
+   ],
+   "mean": 53.82,
+   "wins": 2170,
+   "games": 4032,
+   "void_games": 0,
+   "void_fraction": 0.0,
+   "validity": "VALID"
+  },
+  "guard_fires": {
+   "gauntlet160": 4141,
+   "league320": 4064,
+   "numpy": 0
+  },
+  "heuristic_mirror": {
+   "rate": 50.0,
+   "games": 1344,
+   "void_games": 0
+  }
+ },
+ "void_cells": {
+  "gauntlet160-on-gauntlet": [],
+  "league320-on-gauntlet": [],
+  "numpy-on-gauntlet": []
+ },
+ "provenance": {
+  "replayed_cells": 95,
+  "replay_mismatches": 0,
+  "fixture_void_games": 0,
+  "native_sha256": [
+   "038e6dd19f4efc17cbe7c4f3cc9b13da2b072bb7ea19dff3399499feef5220a6"
+  ],
+  "phases": 17
+ },
+ "controls": {
+  "heuristic_mirror": 50.0,
+  "heuristic_vs_random": 95.44
+ },
+ "by_deck_league320": {
+  "blackwing": {
+   "league320": 45.05,
+   "numpy": 37.89
+  },
+  "frog_monarch": {
+   "league320": 39.45,
+   "numpy": 28.26
+  },
+  "machina_gadget": {
+   "league320": 71.48,
+   "numpy": 65.76
+  }
+ },
+ "conclusions": {
+  "H1": {
+   "numpy": {
+    "before": 45.2,
+    "after": 43.97,
+    "shift": -1.23,
+    "verdict": "CARRIES_OVER"
+   },
+   "league32": {
+    "before": 32.8,
+    "after": 32.07,
+    "shift": -0.73,
+    "verdict": "CARRIES_OVER"
+   },
+   "league160": {
+    "before": 49.8,
+    "after": 47.83,
+    "shift": -1.97,
+    "verdict": "CARRIES_OVER"
+   },
+   "league320": {
+    "before": 51.0,
+    "after": 51.99,
+    "shift": 0.99,
+    "verdict": "CARRIES_OVER"
+   },
+   "gauntlet160": {
+    "before": 43.4,
+    "after": 41.49,
+    "shift": -1.91,
+    "verdict": "CARRIES_OVER"
+   }
+  },
+  "H2": {
+   "gain_by_optimizer": [
+    12.11,
+    4.69,
+    7.29
+   ],
+   "mean_gain": 8.03,
+   "head_to_head_mean": 58.55,
+   "verdict": "NET_AHEAD"
+  },
+  "H3": {
+   "best": "league320",
+   "mean": 51.99,
+   "lowest": 51.82,
+   "verdict": "NO_CANDIDATE"
+  },
+  "H4": {
+   "decision_limit_voids": 0,
+   "verdict": "GUARD_WORKS"
+  }
+ }
+}

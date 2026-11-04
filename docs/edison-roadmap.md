@@ -101,8 +101,15 @@ games, so they are only as trustworthy as the play policy underneath them.
 - **Hardening landed; old win rates no longer compare.** [The hardening report](edison-hardening.md) covers Lua
   errors, rule fixes, prompts and legality, with 567 certification cases passing. Rule changes alter seeded games,
   so re-baseline before comparing with any earlier result. The forward-model test bed still links the older core.
-- **Open rule questions for the owner:** D1 (chain order across SEGOC steps) and D4 (Ignition priority after declining
-  a Summon trigger). The written sources conflict on both, and the simulator is unchanged on them.
+- **Owner's rule decisions:** D1, Soul Exchange on the opponent's Sangan tributed for Caius gives Caius Chain Link 1 and Sangan
+  Chain Link 2, so SEGOC steps come first and chronology applies only within a step. D4, Ignition priority survives a declined
+  Summon trigger. These outrank the sources that conflict.
+- **M1 learner: smaller network, not yet past the bar.** [The report](edison-learner.md) has a 207,800-parameter card-identity network with
+  league self-play. On the hardened simulator it scores 52.0% against the heuristic at 30,720 duels and 58.6% head to head against the NumPy
+  baseline, below the 55% candidate bar. A fixture-trained net does not generalize to the gauntlet, so train on the gauntlet.
+- **Keep the network on CPU for search, and use the GPU for training.** A leaf evaluation at 0.19 ms inline beats any plausible GPU round trip. The
+  next search dependency is a native forward pass.
+- **Greedy play needs a repetition guard outside the fixtures.** Free negated effects can loop to the decision limit, which matches open defect D12.
 - **Open: loading a position from a real external game.** Replay needs private data and construction
   fails, so M6 and the position suite need their own solution.
 

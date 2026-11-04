@@ -1,0 +1,15 @@
+{
+ "lists": 21,
+ "cells": 840,
+ "duels_completed": 1680,
+ "void_cells": [],
+ "draws": 1,
+ "decisions": 361715,
+ "max_options": 36,
+ "seat0_wins": 882,
+ "seed_range": [
+  73590000,
+  73593360
+ ],
+ "codes_sha256": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab"
+}

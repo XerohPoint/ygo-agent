@@ -1,0 +1,2109 @@
+{
+ "pilot": {
+  "gauntlet-1702": {
+   "config": {
+    "arm": "gauntlet",
+    "optimizer_seed": 1702,
+    "rounds": 160,
+    "seed_base": 73100000,
+    "deck_set": "gauntlet",
+    "opponents": "league",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 1,
+   "learner_cpus": 1,
+   "rounds_done": 160,
+   "duels": 15360,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 2610,
+     "collect_seconds": 614,
+     "update_seconds": 1993,
+     "updates": 4814,
+     "decisions": 593166,
+     "learner_decisions": 356383
+    },
+    "7680": {
+     "wall_seconds": 5114,
+     "collect_seconds": 1359,
+     "update_seconds": 3748,
+     "updates": 9937,
+     "decisions": 1400678,
+     "learner_decisions": 849382
+    },
+    "15360": {
+     "wall_seconds": 9189,
+     "collect_seconds": 2629,
+     "update_seconds": 6548,
+     "updates": 18174,
+     "decisions": 2720095,
+     "learner_decisions": 1680156
+    }
+   },
+   "curve": [
+    {
+     "duels": 3072,
+     "heuristic": "270/1024=0.264",
+     "past": "624/1024=0.609",
+     "H": 1.064,
+     "kl": 0.0302,
+     "vmse": 0.076,
+     "updates": 4814,
+     "update_s": 1993,
+     "collect_s": 614,
+     "decisions": 593166,
+     "void": 0
+    },
+    {
+     "duels": 6144,
+     "heuristic": "337/1024=0.329",
+     "past": "606/1024=0.592",
+     "H": 0.989,
+     "kl": 0.0313,
+     "vmse": 0.107,
+     "updates": 3463,
+     "update_s": 1194,
+     "collect_s": 496,
+     "decisions": 534947,
+     "void": 0
+    },
+    {
+     "duels": 9216,
+     "past": "583/1024=0.569",
+     "heuristic": "474/1024=0.463",
+     "H": 0.906,
+     "kl": 0.0316,
+     "vmse": 0.064,
+     "updates": 3310,
+     "update_s": 1116,
+     "collect_s": 503,
+     "decisions": 538533,
+     "void": 0
+    },
+    {
+     "duels": 12288,
+     "heuristic": "465/1024=0.454",
+     "past": "633/1024=0.618",
+     "H": 0.813,
+     "kl": 0.0326,
+     "vmse": 0.093,
+     "updates": 2993,
+     "update_s": 1079,
+     "collect_s": 526,
+     "decisions": 513481,
+     "void": 0
+    },
+    {
+     "duels": 15360,
+     "heuristic": "525/1024=0.513",
+     "past": "623/1024=0.608",
+     "H": 0.881,
+     "kl": 0.0309,
+     "vmse": 0.066,
+     "updates": 3594,
+     "update_s": 1165,
+     "collect_s": 489,
+     "decisions": 539968,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "e8579318a97d793cdb26b62f350b94284370a403291e4fc588ffeda0607a150e",
+   "config_hash": "1c5d4e9b0df93661d65c56a9075e67e4f13ff7638f32bfeafd131f0a55f1c6be"
+  },
+  "gauntlet-1703": {
+   "config": {
+    "arm": "gauntlet",
+    "optimizer_seed": 1703,
+    "rounds": 160,
+    "seed_base": 73100000,
+    "deck_set": "gauntlet",
+    "opponents": "league",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 1,
+   "learner_cpus": 1,
+   "rounds_done": 160,
+   "duels": 15360,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 2709,
+     "collect_seconds": 631,
+     "update_seconds": 2074,
+     "updates": 5008,
+     "decisions": 607664,
+     "learner_decisions": 365990
+    },
+    "7680": {
+     "wall_seconds": 4821,
+     "collect_seconds": 1325,
+     "update_seconds": 3491,
+     "updates": 9251,
+     "decisions": 1352463,
+     "learner_decisions": 818962
+    },
+    "15360": {
+     "wall_seconds": 8923,
+     "collect_seconds": 2603,
+     "update_seconds": 6308,
+     "updates": 17360,
+     "decisions": 2668598,
+     "learner_decisions": 1649872
+    }
+   },
+   "curve": [
+    {
+     "duels": 3072,
+     "heuristic": "225/1024=0.220",
+     "past": "604/1024=0.590",
+     "H": 1.032,
+     "kl": 0.0331,
+     "vmse": 0.075,
+     "updates": 5008,
+     "update_s": 2074,
+     "collect_s": 631,
+     "decisions": 607664,
+     "void": 0
+    },
+    {
+     "duels": 6144,
+     "heuristic": "417/1024=0.407",
+     "past": "642/1024=0.627",
+     "H": 0.906,
+     "kl": 0.0333,
+     "vmse": 0.097,
+     "updates": 2795,
+     "update_s": 926,
+     "collect_s": 459,
+     "decisions": 491049,
+     "void": 0
+    },
+    {
+     "duels": 9216,
+     "past": "644/1024=0.629",
+     "heuristic": "514/1024=0.502",
+     "H": 0.923,
+     "kl": 0.031,
+     "vmse": 0.088,
+     "updates": 3101,
+     "update_s": 1043,
+     "collect_s": 468,
+     "decisions": 505049,
+     "void": 0
+    },
+    {
+     "duels": 12288,
+     "heuristic": "433/1024=0.423",
+     "past": "647/1024=0.632",
+     "H": 0.801,
+     "kl": 0.0348,
+     "vmse": 0.074,
+     "updates": 3039,
+     "update_s": 1127,
+     "collect_s": 548,
+     "decisions": 522289,
+     "void": 0
+    },
+    {
+     "duels": 15360,
+     "heuristic": "555/1024=0.542",
+     "past": "632/1024=0.617",
+     "H": 0.785,
+     "kl": 0.0317,
+     "vmse": 0.087,
+     "updates": 3417,
+     "update_s": 1137,
+     "collect_s": 496,
+     "decisions": 542547,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "ab79d80bdb4e70aaf2ab7847268af77ecef61acf383f483d0c86b35d0cde6431",
+   "config_hash": "e8ab3ef5fb8031765b0f63f06aebae2d66b00f362b69f0c0e0f80c4e16f74da5"
+  },
+  "gauntlet-1704": {
+   "config": {
+    "arm": "gauntlet",
+    "optimizer_seed": 1704,
+    "rounds": 160,
+    "seed_base": 73100000,
+    "deck_set": "gauntlet",
+    "opponents": "league",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 1,
+   "learner_cpus": 1,
+   "rounds_done": 160,
+   "duels": 15360,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 2743,
+     "collect_seconds": 620,
+     "update_seconds": 2120,
+     "updates": 5069,
+     "decisions": 594399,
+     "learner_decisions": 355877
+    },
+    "7680": {
+     "wall_seconds": 5007,
+     "collect_seconds": 1320,
+     "update_seconds": 3681,
+     "updates": 9643,
+     "decisions": 1348708,
+     "learner_decisions": 811904
+    },
+    "15360": {
+     "wall_seconds": 8325,
+     "collect_seconds": 2412,
+     "update_seconds": 5902,
+     "updates": 16336,
+     "decisions": 2464354,
+     "learner_decisions": 1497508
+    }
+   },
+   "curve": [
+    {
+     "duels": 3072,
+     "heuristic": "249/1024=0.243",
+     "past": "631/1024=0.616",
+     "H": 1.068,
+     "kl": 0.0318,
+     "vmse": 0.052,
+     "updates": 5069,
+     "update_s": 2120,
+     "collect_s": 620,
+     "decisions": 594399,
+     "void": 0
+    },
+    {
+     "duels": 6144,
+     "heuristic": "395/1024=0.386",
+     "past": "665/1024=0.649",
+     "H": 0.964,
+     "kl": 0.032,
+     "vmse": 0.098,
+     "updates": 3255,
+     "update_s": 1125,
+     "collect_s": 486,
+     "decisions": 515924,
+     "void": 0
+    },
+    {
+     "duels": 9216,
+     "past": "651/1024=0.636",
+     "heuristic": "553/1024=0.540",
+     "H": 0.874,
+     "kl": 0.0347,
+     "vmse": 0.09,
+     "updates": 2533,
+     "update_s": 822,
+     "collect_s": 416,
+     "decisions": 457535,
+     "void": 0
+    },
+    {
+     "duels": 12288,
+     "heuristic": "481/1024=0.470",
+     "past": "637/1024=0.622",
+     "H": 0.845,
+     "kl": 0.0363,
+     "vmse": 0.085,
+     "updates": 2508,
+     "update_s": 883,
+     "collect_s": 463,
+     "decisions": 439638,
+     "void": 0
+    },
+    {
+     "duels": 15360,
+     "heuristic": "528/1024=0.516",
+     "past": "593/1024=0.579",
+     "H": 0.846,
+     "kl": 0.0335,
+     "vmse": 0.097,
+     "updates": 2971,
+     "update_s": 951,
+     "collect_s": 427,
+     "decisions": 456858,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "23ee9629f2d66df2fb857f63040eeb74bd0c951b1eec3b26a42d8ebb1c9e17f2",
+   "config_hash": "6a0ff2c1b81be27c5d9649fcd0de19363a677d6f9ed40548586c7c771694112f"
+  },
+  "league-1702": {
+   "config": {
+    "arm": "league",
+    "optimizer_seed": 1702,
+    "rounds": 320,
+    "seed_base": 73000000,
+    "deck_set": "fixtures",
+    "opponents": "league",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 1,
+   "learner_cpus": 1,
+   "rounds_done": 320,
+   "duels": 30720,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1890,
+     "collect_seconds": 439,
+     "update_seconds": 1448,
+     "updates": 4271,
+     "decisions": 507186,
+     "learner_decisions": 322881
+    },
+    "7680": {
+     "wall_seconds": 3970,
+     "collect_seconds": 1093,
+     "update_seconds": 2872,
+     "updates": 8575,
+     "decisions": 1194452,
+     "learner_decisions": 757030
+    },
+    "15360": {
+     "wall_seconds": 6826,
+     "collect_seconds": 1997,
+     "update_seconds": 4820,
+     "updates": 15317,
+     "decisions": 2268564,
+     "learner_decisions": 1445023
+    },
+    "30720": {
+     "wall_seconds": 12735,
+     "collect_seconds": 3755,
+     "update_seconds": 8964,
+     "updates": 30395,
+     "decisions": 4516526,
+     "learner_decisions": 2880470
+    }
+   },
+   "curve": [
+    {
+     "duels": 3072,
+     "heuristic": "159/1024=0.155",
+     "past": "647/1024=0.632",
+     "H": 0.982,
+     "kl": 0.0328,
+     "vmse": 0.052,
+     "updates": 4271,
+     "update_s": 1448,
+     "collect_s": 439,
+     "decisions": 507186,
+     "void": 0
+    },
+    {
+     "duels": 6144,
+     "heuristic": "277/1024=0.271",
+     "past": "660/1024=0.645",
+     "H": 0.816,
+     "kl": 0.039,
+     "vmse": 0.067,
+     "updates": 2871,
+     "update_s": 1001,
+     "collect_s": 463,
+     "decisions": 464088,
+     "void": 0
+    },
+    {
+     "duels": 9216,
+     "past": "642/1024=0.627",
+     "heuristic": "361/1024=0.353",
+     "H": 0.822,
+     "kl": 0.0339,
+     "vmse": 0.101,
+     "updates": 2671,
+     "update_s": 786,
+     "collect_s": 363,
+     "decisions": 428860,
+     "void": 0
+    },
+    {
+     "duels": 12288,
+     "heuristic": "382/1024=0.373",
+     "past": "640/1024=0.625",
+     "H": 0.768,
+     "kl": 0.035,
+     "vmse": 0.085,
+     "updates": 2634,
+     "update_s": 757,
+     "collect_s": 353,
+     "decisions": 418070,
+     "void": 0
+    },
+    {
+     "duels": 15360,
+     "heuristic": "439/1024=0.429",
+     "past": "629/1024=0.614",
+     "H": 0.738,
+     "kl": 0.0339,
+     "vmse": 0.084,
+     "updates": 2870,
+     "update_s": 828,
+     "collect_s": 379,
+     "decisions": 450360,
+     "void": 0
+    },
+    {
+     "duels": 18432,
+     "past": "588/1024=0.574",
+     "heuristic": "425/1024=0.415",
+     "H": 0.743,
+     "kl": 0.0316,
+     "vmse": 0.101,
+     "updates": 2806,
+     "update_s": 957,
+     "collect_s": 412,
+     "decisions": 424088,
+     "void": 0
+    },
+    {
+     "duels": 21504,
+     "heuristic": "439/1024=0.429",
+     "past": "617/1024=0.603",
+     "H": 0.762,
+     "kl": 0.0309,
+     "vmse": 0.107,
+     "updates": 3021,
+     "update_s": 935,
+     "collect_s": 393,
+     "decisions": 452128,
+     "void": 0
+    },
+    {
+     "duels": 24576,
+     "heuristic": "450/1024=0.439",
+     "past": "591/1024=0.577",
+     "H": 0.715,
+     "kl": 0.0363,
+     "vmse": 0.088,
+     "updates": 2926,
+     "update_s": 800,
+     "collect_s": 360,
+     "decisions": 456618,
+     "void": 0
+    },
+    {
+     "duels": 27648,
+     "past": "595/1024=0.581",
+     "heuristic": "439/1024=0.429",
+     "H": 0.837,
+     "kl": 0.0338,
+     "vmse": 0.079,
+     "updates": 3202,
+     "update_s": 752,
+     "collect_s": 305,
+     "decisions": 457790,
+     "void": 0
+    },
+    {
+     "duels": 30720,
+     "heuristic": "463/1024=0.452",
+     "past": "622/1024=0.607",
+     "H": 0.706,
+     "kl": 0.0338,
+     "vmse": 0.087,
+     "updates": 3123,
+     "update_s": 700,
+     "collect_s": 289,
+     "decisions": 457338,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "78fe4e9e7307e05a8c7b26b7f4626613dec4a8dcc7abaf9b822c5cadd60dd031",
+   "config_hash": "d6a230808a37c4a05e05b35302bc57d67180101dbee9a9d5976b249f87c72313"
+  },
+  "league-1703": {
+   "config": {
+    "arm": "league",
+    "optimizer_seed": 1703,
+    "rounds": 320,
+    "seed_base": 73000000,
+    "deck_set": "fixtures",
+    "opponents": "league",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 1,
+   "learner_cpus": 1,
+   "rounds_done": 320,
+   "duels": 30720,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1940,
+     "collect_seconds": 453,
+     "update_seconds": 1485,
+     "updates": 4361,
+     "decisions": 521307,
+     "learner_decisions": 329710
+    },
+    "7680": {
+     "wall_seconds": 3863,
+     "collect_seconds": 1069,
+     "update_seconds": 2788,
+     "updates": 8378,
+     "decisions": 1179144,
+     "learner_decisions": 745713
+    },
+    "15360": {
+     "wall_seconds": 7280,
+     "collect_seconds": 2081,
+     "update_seconds": 5190,
+     "updates": 16588,
+     "decisions": 2384967,
+     "learner_decisions": 1536811
+    },
+    "30720": {
+     "wall_seconds": 13739,
+     "collect_seconds": 3951,
+     "update_seconds": 9771,
+     "updates": 34004,
+     "decisions": 4875042,
+     "learner_decisions": 3169749
+    }
+   },
+   "curve": [
+    {
+     "duels": 3072,
+     "heuristic": "156/1024=0.152",
+     "past": "626/1024=0.611",
+     "H": 0.928,
+     "kl": 0.0323,
+     "vmse": 0.094,
+     "updates": 4361,
+     "update_s": 1485,
+     "collect_s": 453,
+     "decisions": 521307,
+     "void": 0
+    },
+    {
+     "duels": 6144,
+     "heuristic": "288/1024=0.281",
+     "past": "634/1024=0.619",
+     "H": 0.795,
+     "kl": 0.0354,
+     "vmse": 0.052,
+     "updates": 2675,
+     "update_s": 905,
+     "collect_s": 430,
+     "decisions": 436687,
+     "void": 0
+    },
+    {
+     "duels": 9216,
+     "past": "672/1024=0.656",
+     "heuristic": "372/1024=0.363",
+     "H": 0.75,
+     "kl": 0.0346,
+     "vmse": 0.073,
+     "updates": 2842,
+     "update_s": 836,
+     "collect_s": 393,
+     "decisions": 461537,
+     "void": 0
+    },
+    {
+     "duels": 12288,
+     "heuristic": "385/1024=0.376",
+     "past": "672/1024=0.656",
+     "H": 0.736,
+     "kl": 0.0272,
+     "vmse": 0.063,
+     "updates": 3474,
+     "update_s": 1024,
+     "collect_s": 412,
+     "decisions": 495978,
+     "void": 0
+    },
+    {
+     "duels": 15360,
+     "heuristic": "400/1024=0.391",
+     "past": "605/1024=0.591",
+     "H": 0.773,
+     "kl": 0.0333,
+     "vmse": 0.098,
+     "updates": 3236,
+     "update_s": 941,
+     "collect_s": 393,
+     "decisions": 469458,
+     "void": 0
+    },
+    {
+     "duels": 18432,
+     "past": "613/1024=0.599",
+     "heuristic": "404/1024=0.395",
+     "H": 0.745,
+     "kl": 0.0314,
+     "vmse": 0.067,
+     "updates": 3206,
+     "update_s": 1128,
+     "collect_s": 469,
+     "decisions": 471689,
+     "void": 0
+    },
+    {
+     "duels": 21504,
+     "heuristic": "438/1024=0.428",
+     "past": "604/1024=0.590",
+     "H": 0.546,
+     "kl": 0.031,
+     "vmse": 0.069,
+     "updates": 3510,
+     "update_s": 1010,
+     "collect_s": 427,
+     "decisions": 508543,
+     "void": 0
+    },
+    {
+     "duels": 24576,
+     "heuristic": "440/1024=0.430",
+     "past": "609/1024=0.595",
+     "H": 0.636,
+     "kl": 0.0345,
+     "vmse": 0.055,
+     "updates": 3715,
+     "update_s": 921,
+     "collect_s": 346,
+     "decisions": 496288,
+     "void": 0
+    },
+    {
+     "duels": 27648,
+     "past": "589/1024=0.575",
+     "heuristic": "428/1024=0.418",
+     "H": 0.702,
+     "kl": 0.0324,
+     "vmse": 0.094,
+     "updates": 3486,
+     "update_s": 792,
+     "collect_s": 329,
+     "decisions": 514682,
+     "void": 0
+    },
+    {
+     "duels": 30720,
+     "heuristic": "466/1024=0.455",
+     "past": "604/1024=0.590",
+     "H": 0.718,
+     "kl": 0.0312,
+     "vmse": 0.089,
+     "updates": 3499,
+     "update_s": 729,
+     "collect_s": 299,
+     "decisions": 498873,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "24eef8b40438e9dd5d707761c7189108ae0eb8be924451b9e1f92a39950b346e",
+   "config_hash": "c1744f8d66db45480a86566a7b27a2ed2839a5ddb815e6a2c695b3476588a2d3"
+  },
+  "league-1704": {
+   "config": {
+    "arm": "league",
+    "optimizer_seed": 1704,
+    "rounds": 320,
+    "seed_base": 73000000,
+    "deck_set": "fixtures",
+    "opponents": "league",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 1,
+   "learner_cpus": 1,
+   "rounds_done": 320,
+   "duels": 30720,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1977,
+     "collect_seconds": 458,
+     "update_seconds": 1516,
+     "updates": 4478,
+     "decisions": 523038,
+     "learner_decisions": 332569
+    },
+    "7680": {
+     "wall_seconds": 4062,
+     "collect_seconds": 1114,
+     "update_seconds": 2942,
+     "updates": 8752,
+     "decisions": 1213665,
+     "learner_decisions": 772651
+    },
+    "15360": {
+     "wall_seconds": 7197,
+     "collect_seconds": 2078,
+     "update_seconds": 5109,
+     "updates": 16248,
+     "decisions": 2386921,
+     "learner_decisions": 1540295
+    },
+    "30720": {
+     "wall_seconds": 13315,
+     "collect_seconds": 3929,
+     "update_seconds": 9368,
+     "updates": 32408,
+     "decisions": 4821988,
+     "learner_decisions": 3130998
+    }
+   },
+   "curve": [
+    {
+     "duels": 3072,
+     "heuristic": "138/1024=0.135",
+     "past": "637/1024=0.622",
+     "H": 0.988,
+     "kl": 0.036,
+     "vmse": 0.066,
+     "updates": 4478,
+     "update_s": 1516,
+     "collect_s": 458,
+     "decisions": 523038,
+     "void": 0
+    },
+    {
+     "duels": 6144,
+     "heuristic": "263/1024=0.257",
+     "past": "705/1024=0.688",
+     "H": 0.873,
+     "kl": 0.0302,
+     "vmse": 0.053,
+     "updates": 2702,
+     "update_s": 962,
+     "collect_s": 451,
+     "decisions": 454714,
+     "void": 0
+    },
+    {
+     "duels": 9216,
+     "past": "615/1024=0.601",
+     "heuristic": "384/1024=0.375",
+     "H": 0.748,
+     "kl": 0.0313,
+     "vmse": 0.089,
+     "updates": 3005,
+     "update_s": 869,
+     "collect_s": 395,
+     "decisions": 462777,
+     "void": 0
+    },
+    {
+     "duels": 12288,
+     "heuristic": "376/1024=0.367",
+     "past": "656/1024=0.641",
+     "H": 0.722,
+     "kl": 0.0313,
+     "vmse": 0.054,
+     "updates": 3177,
+     "update_s": 929,
+     "collect_s": 386,
+     "decisions": 473169,
+     "void": 0
+    },
+    {
+     "duels": 15360,
+     "heuristic": "385/1024=0.376",
+     "past": "643/1024=0.628",
+     "H": 0.752,
+     "kl": 0.0308,
+     "vmse": 0.08,
+     "updates": 2886,
+     "update_s": 833,
+     "collect_s": 388,
+     "decisions": 473223,
+     "void": 0
+    },
+    {
+     "duels": 18432,
+     "past": "609/1024=0.595",
+     "heuristic": "414/1024=0.404",
+     "H": 0.705,
+     "kl": 0.0322,
+     "vmse": 0.072,
+     "updates": 2842,
+     "update_s": 1016,
+     "collect_s": 460,
+     "decisions": 472676,
+     "void": 0
+    },
+    {
+     "duels": 21504,
+     "heuristic": "458/1024=0.447",
+     "past": "638/1024=0.623",
+     "H": 0.662,
+     "kl": 0.0319,
+     "vmse": 0.083,
+     "updates": 2853,
+     "update_s": 823,
+     "collect_s": 401,
+     "decisions": 470984,
+     "void": 0
+    },
+    {
+     "duels": 24576,
+     "heuristic": "458/1024=0.447",
+     "past": "648/1024=0.633",
+     "H": 0.707,
+     "kl": 0.0271,
+     "vmse": 0.066,
+     "updates": 3030,
+     "update_s": 773,
+     "collect_s": 348,
+     "decisions": 472243,
+     "void": 0
+    },
+    {
+     "duels": 27648,
+     "past": "599/1024=0.585",
+     "heuristic": "464/1024=0.453",
+     "H": 0.724,
+     "kl": 0.0301,
+     "vmse": 0.095,
+     "updates": 3735,
+     "update_s": 844,
+     "collect_s": 323,
+     "decisions": 501692,
+     "void": 0
+    },
+    {
+     "duels": 30720,
+     "heuristic": "420/1024=0.410",
+     "past": "604/1024=0.590",
+     "H": 0.567,
+     "kl": 0.0327,
+     "vmse": 0.083,
+     "updates": 3700,
+     "update_s": 803,
+     "collect_s": 320,
+     "decisions": 517472,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "0eb224e08fe4e68d1a27f3a8ab77d125b254aba6b57d57c8f38f4b5694e57780",
+   "config_hash": "39f84b3322a739df36c473a53a6885e54e8d8a7dc221962a05b29653b59cc1d3"
+  },
+  "schedule-1702": {
+   "config": {
+    "arm": "schedule",
+    "optimizer_seed": 1702,
+    "rounds": 32,
+    "seed_base": 73000000,
+    "deck_set": "fixtures",
+    "opponents": "baseline_alternating",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 1,
+   "learner_cpus": 1,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1473,
+     "collect_seconds": 360,
+     "update_seconds": 1112,
+     "updates": 3186,
+     "decisions": 506632,
+     "learner_decisions": 231457
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "random": "209/384=0.544",
+     "heuristic": "25/384=0.065",
+     "H": 1.113,
+     "kl": 0.0159,
+     "vmse": 0.018,
+     "updates": 1020,
+     "update_s": 418,
+     "collect_s": 118,
+     "decisions": 146112,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "random": "271/384=0.706",
+     "heuristic": "75/384=0.195",
+     "H": 1.009,
+     "kl": 0.0291,
+     "vmse": 0.054,
+     "updates": 832,
+     "update_s": 275,
+     "collect_s": 85,
+     "decisions": 124537,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "random": "303/384=0.789",
+     "heuristic": "83/384=0.216",
+     "H": 0.962,
+     "kl": 0.0316,
+     "vmse": 0.046,
+     "updates": 702,
+     "update_s": 217,
+     "collect_s": 81,
+     "decisions": 121074,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "random": "307/384=0.799",
+     "heuristic": "91/384=0.237",
+     "H": 0.981,
+     "kl": 0.0327,
+     "vmse": 0.088,
+     "updates": 632,
+     "update_s": 201,
+     "collect_s": 76,
+     "decisions": 114909,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "902e69c3ff737f45009d7eb552761d608d47c22278327423798a7f1dafc502e3",
+   "config_hash": "c7a003e8f70ffb75bb08465b58ab07224a0822a86d286a5bc0dfbaf880700ea7"
+  },
+  "schedule-1703": {
+   "config": {
+    "arm": "schedule",
+    "optimizer_seed": 1703,
+    "rounds": 32,
+    "seed_base": 73000000,
+    "deck_set": "fixtures",
+    "opponents": "baseline_alternating",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 1,
+   "learner_cpus": 1,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1573,
+     "collect_seconds": 370,
+     "update_seconds": 1201,
+     "updates": 3358,
+     "decisions": 534087,
+     "learner_decisions": 236862
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "random": "210/384=0.547",
+     "heuristic": "33/384=0.086",
+     "H": 1.156,
+     "kl": 0.0157,
+     "vmse": 0.032,
+     "updates": 996,
+     "update_s": 433,
+     "collect_s": 118,
+     "decisions": 144390,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "random": "251/384=0.654",
+     "heuristic": "56/384=0.146",
+     "H": 1.083,
+     "kl": 0.0326,
+     "vmse": 0.035,
+     "updates": 952,
+     "update_s": 319,
+     "collect_s": 89,
+     "decisions": 135794,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "random": "265/384=0.690",
+     "heuristic": "73/384=0.190",
+     "H": 1.039,
+     "kl": 0.03,
+     "vmse": 0.061,
+     "updates": 751,
+     "update_s": 255,
+     "collect_s": 81,
+     "decisions": 129344,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "random": "278/384=0.724",
+     "heuristic": "79/384=0.206",
+     "H": 1.027,
+     "kl": 0.0332,
+     "vmse": 0.045,
+     "updates": 659,
+     "update_s": 196,
+     "collect_s": 82,
+     "decisions": 124559,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "2271d9242775bbfe104be650d8a8d67de19560e723c5d9669702303eaa0c362c",
+   "config_hash": "ba9769c28da4381f931c96612d61ae73a4c09abd78522028ec2262ec8d062092"
+  },
+  "schedule-1704": {
+   "config": {
+    "arm": "schedule",
+    "optimizer_seed": 1704,
+    "rounds": 32,
+    "seed_base": 73000000,
+    "deck_set": "fixtures",
+    "opponents": "baseline_alternating",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 1,
+   "learner_cpus": 1,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1632,
+     "collect_seconds": 373,
+     "update_seconds": 1257,
+     "updates": 3455,
+     "decisions": 534046,
+     "learner_decisions": 240274
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "random": "217/384=0.565",
+     "heuristic": "30/384=0.078",
+     "H": 1.164,
+     "kl": 0.0154,
+     "vmse": 0.029,
+     "updates": 1008,
+     "update_s": 471,
+     "collect_s": 118,
+     "decisions": 145182,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "random": "252/384=0.656",
+     "heuristic": "52/384=0.135",
+     "H": 1.098,
+     "kl": 0.0373,
+     "vmse": 0.029,
+     "updates": 936,
+     "update_s": 306,
+     "collect_s": 90,
+     "decisions": 131325,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "random": "269/384=0.701",
+     "heuristic": "78/384=0.203",
+     "H": 1.05,
+     "kl": 0.0308,
+     "vmse": 0.042,
+     "updates": 771,
+     "update_s": 258,
+     "collect_s": 87,
+     "decisions": 130534,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "random": "288/384=0.750",
+     "heuristic": "78/384=0.203",
+     "H": 1.019,
+     "kl": 0.0372,
+     "vmse": 0.043,
+     "updates": 740,
+     "update_s": 221,
+     "collect_s": 79,
+     "decisions": 127005,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "8857d651065a1c5942696b279cfcaff383164a83b6c434d6777b93aad1628531",
+   "config_hash": "8a281a03782973cc2837eacd386d68c5d86e0b00a341cbd6c0ec18338f343d75"
+  }
+ },
+ "development": {
+  "d0-smoke": {
+   "config": {
+    "arm": "dev-smoke",
+    "optimizer_seed": 1702,
+    "rounds": 3,
+    "seed_base": 73500000,
+    "deck_set": "fixtures",
+    "opponents": "league",
+    "learning_rate": 0.0003,
+    "gae_lambda": 0.95,
+    "channels": 96,
+    "id_dim": 48,
+    "layers": 2
+   },
+   "workers": 6,
+   "learner_cpus": 8,
+   "rounds_done": 3,
+   "duels": 288,
+   "void_games": 0,
+   "marks": {},
+   "curve": [
+    {
+     "duels": 288,
+     "heuristic": "3/96=0.031",
+     "past": "55/96=0.573",
+     "H": 1.159,
+     "kl": 0.0072,
+     "vmse": 0.03,
+     "updates": 656,
+     "update_s": 307,
+     "collect_s": 35,
+     "decisions": 63274,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "b07cd091b5943059c6d02fc18015f528af2085976fea8a41c15b7eb40224ddc2",
+   "config_hash": "2f55efe91b75942aa82f5a4825326044ed33c65372bc53e575da0d5a6a5d5b6a"
+  },
+  "d1-sample": {
+   "config": {
+    "arm": "dev-sample",
+    "optimizer_seed": 1702,
+    "rounds": 1,
+    "seed_base": 73510000,
+    "deck_set": "fixtures",
+    "opponents": "league",
+    "learning_rate": 0.0003,
+    "gae_lambda": 0.95,
+    "channels": 96,
+    "id_dim": 48,
+    "layers": 2
+   },
+   "workers": 6,
+   "learner_cpus": 8,
+   "rounds_done": 1,
+   "duels": 96,
+   "void_games": 0,
+   "marks": {},
+   "curve": [
+    {
+     "duels": 96,
+     "heuristic": "0/32=0.000",
+     "past": "18/32=0.562",
+     "H": 1.173,
+     "kl": 0.0001,
+     "vmse": 0.111,
+     "updates": 54,
+     "update_s": 50,
+     "collect_s": 20,
+     "decisions": 19808,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "42e6f549a2f0ca067ff664af018098e82d22808e02b40d2678544a9257951f69",
+   "config_hash": "85491d16710ec2ba8aef179e9af29ac8694ffc68e5b77f4218f45d18747b30ac"
+  },
+  "d10": {
+   "config": {
+    "arm": "dev-d10",
+    "optimizer_seed": 1702,
+    "rounds": 32,
+    "seed_base": 73520000,
+    "deck_set": "fixtures",
+    "opponents": "league",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 96,
+    "id_dim": 48,
+    "layers": 2
+   },
+   "workers": 2,
+   "learner_cpus": 2,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1602,
+     "collect_seconds": 289,
+     "update_seconds": 1311,
+     "updates": 4839,
+     "decisions": 513124,
+     "learner_decisions": 325378
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "heuristic": "18/256=0.070",
+     "past": "146/256=0.570",
+     "H": 1.112,
+     "kl": 0.0185,
+     "vmse": 0.05,
+     "updates": 1448,
+     "update_s": 459,
+     "collect_s": 102,
+     "decisions": 143444,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "heuristic": "48/256=0.188",
+     "past": "158/256=0.617",
+     "H": 1.064,
+     "kl": 0.0304,
+     "vmse": 0.062,
+     "updates": 1212,
+     "update_s": 331,
+     "collect_s": 68,
+     "decisions": 122522,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "past": "167/256=0.652",
+     "heuristic": "55/256=0.215",
+     "H": 1.0,
+     "kl": 0.0313,
+     "vmse": 0.049,
+     "updates": 1204,
+     "update_s": 300,
+     "collect_s": 62,
+     "decisions": 122278,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "heuristic": "50/256=0.195",
+     "past": "161/256=0.629",
+     "H": 0.993,
+     "kl": 0.033,
+     "vmse": 0.092,
+     "updates": 975,
+     "update_s": 222,
+     "collect_s": 57,
+     "decisions": 124880,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "f2dd73c3d2ab807e481bdd54102d20308791ddaa0dd141576bedbc8883be8d90",
+   "config_hash": "bc1cb18a59dcd5635d1d73d849fad2aca67fc3f6fd8ec7315281f9993d2936d5"
+  },
+  "d2": {
+   "config": {
+    "arm": "dev-d2",
+    "optimizer_seed": 1702,
+    "rounds": 32,
+    "seed_base": 73520000,
+    "deck_set": "fixtures",
+    "opponents": "league",
+    "learning_rate": 0.0003,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 2,
+   "learner_cpus": 2,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1414,
+     "collect_seconds": 281,
+     "update_seconds": 1131,
+     "updates": 5158,
+     "decisions": 522537,
+     "learner_decisions": 328478
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "heuristic": "14/256=0.055",
+     "past": "139/256=0.543",
+     "H": 1.114,
+     "kl": 0.0166,
+     "vmse": 0.062,
+     "updates": 1504,
+     "update_s": 444,
+     "collect_s": 105,
+     "decisions": 146727,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "heuristic": "30/256=0.117",
+     "past": "155/256=0.605",
+     "H": 1.062,
+     "kl": 0.0232,
+     "vmse": 0.055,
+     "updates": 1312,
+     "update_s": 261,
+     "collect_s": 70,
+     "decisions": 131821,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "past": "150/256=0.586",
+     "heuristic": "37/256=0.145",
+     "H": 0.996,
+     "kl": 0.0314,
+     "vmse": 0.059,
+     "updates": 1204,
+     "update_s": 209,
+     "collect_s": 57,
+     "decisions": 124932,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "heuristic": "43/256=0.168",
+     "past": "159/256=0.621",
+     "H": 0.96,
+     "kl": 0.036,
+     "vmse": 0.06,
+     "updates": 1138,
+     "update_s": 217,
+     "collect_s": 50,
+     "decisions": 119057,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "17d4daa266990b1f70ec307f3d8b1fc84a4ca4cce140473acee3062c161731dc",
+   "config_hash": "5a1920c36599fd3efb85f960d40e40db3546bceb2d3bcdabd642a6e46cf9d828"
+  },
+  "d3": {
+   "config": {
+    "arm": "dev-d3",
+    "optimizer_seed": 1702,
+    "rounds": 32,
+    "seed_base": 73520000,
+    "deck_set": "fixtures",
+    "opponents": "league",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 2,
+   "learner_cpus": 2,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1185,
+     "collect_seconds": 254,
+     "update_seconds": 929,
+     "updates": 4578,
+     "decisions": 515761,
+     "learner_decisions": 328436
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "heuristic": "24/256=0.094",
+     "past": "133/256=0.520",
+     "H": 1.067,
+     "kl": 0.0212,
+     "vmse": 0.058,
+     "updates": 1436,
+     "update_s": 334,
+     "collect_s": 81,
+     "decisions": 140004,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "heuristic": "51/256=0.199",
+     "past": "161/256=0.629",
+     "H": 0.988,
+     "kl": 0.0335,
+     "vmse": 0.068,
+     "updates": 1162,
+     "update_s": 245,
+     "collect_s": 60,
+     "decisions": 124363,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "past": "170/256=0.664",
+     "heuristic": "55/256=0.215",
+     "H": 0.99,
+     "kl": 0.031,
+     "vmse": 0.091,
+     "updates": 914,
+     "update_s": 169,
+     "collect_s": 58,
+     "decisions": 125658,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "heuristic": "37/256=0.145",
+     "past": "158/256=0.617",
+     "H": 1.01,
+     "kl": 0.0322,
+     "vmse": 0.063,
+     "updates": 1066,
+     "update_s": 182,
+     "collect_s": 54,
+     "decisions": 125736,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "45ba9ecd41776435d44b1b7e4887223db7fda319fd7afdeeb4c4f877fe228eff",
+   "config_hash": "90cf9d5f1e504255140e0b43a03f9d334e5baa9cb7558a166aff49da56524b09"
+  },
+  "d4": {
+   "config": {
+    "arm": "dev-d4",
+    "optimizer_seed": 1702,
+    "rounds": 32,
+    "seed_base": 73520000,
+    "deck_set": "fixtures",
+    "opponents": "baseline_alternating",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 2,
+   "learner_cpus": 2,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 941,
+     "collect_seconds": 215,
+     "update_seconds": 724,
+     "updates": 3405,
+     "decisions": 530337,
+     "learner_decisions": 237060
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "random": "224/384=0.583",
+     "heuristic": "30/384=0.078",
+     "H": 1.17,
+     "kl": 0.0114,
+     "vmse": 0.022,
+     "updates": 1032,
+     "update_s": 252,
+     "collect_s": 71,
+     "decisions": 147868,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "random": "259/384=0.674",
+     "heuristic": "53/384=0.138",
+     "H": 1.127,
+     "kl": 0.0314,
+     "vmse": 0.05,
+     "updates": 932,
+     "update_s": 188,
+     "collect_s": 48,
+     "decisions": 131513,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "random": "280/384=0.729",
+     "heuristic": "66/384=0.172",
+     "H": 1.061,
+     "kl": 0.0316,
+     "vmse": 0.055,
+     "updates": 854,
+     "update_s": 166,
+     "collect_s": 51,
+     "decisions": 127593,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "random": "296/384=0.771",
+     "heuristic": "76/384=0.198",
+     "H": 1.029,
+     "kl": 0.0304,
+     "vmse": 0.081,
+     "updates": 587,
+     "update_s": 117,
+     "collect_s": 45,
+     "decisions": 123363,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "15382da498edd2823876612303c34bf99f09ad32b8ddc366ff3fd1384dfdc75e",
+   "config_hash": "05ca7ec9e0a44216684e83831d9f487360a75c509b509adf344cb101aae34d4f"
+  },
+  "d5": {
+   "config": {
+    "arm": "dev-d5",
+    "optimizer_seed": 1702,
+    "rounds": 32,
+    "seed_base": 73520000,
+    "deck_set": "fixtures",
+    "opponents": "league",
+    "learning_rate": 0.001,
+    "gae_lambda": 1.0,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 2,
+   "learner_cpus": 2,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1458,
+     "collect_seconds": 284,
+     "update_seconds": 1172,
+     "updates": 5612,
+     "decisions": 560102,
+     "learner_decisions": 358110
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "heuristic": "15/256=0.059",
+     "past": "142/256=0.555",
+     "H": 1.152,
+     "kl": 0.0101,
+     "vmse": 0.028,
+     "updates": 1572,
+     "update_s": 397,
+     "collect_s": 94,
+     "decisions": 151438,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "heuristic": "29/256=0.113",
+     "past": "136/256=0.531",
+     "H": 1.143,
+     "kl": 0.0179,
+     "vmse": 0.033,
+     "updates": 1396,
+     "update_s": 288,
+     "collect_s": 71,
+     "decisions": 139748,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "past": "151/256=0.590",
+     "heuristic": "30/256=0.117",
+     "H": 1.107,
+     "kl": 0.0286,
+     "vmse": 0.032,
+     "updates": 1380,
+     "update_s": 281,
+     "collect_s": 66,
+     "decisions": 137797,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "heuristic": "20/256=0.078",
+     "past": "144/256=0.562",
+     "H": 1.129,
+     "kl": 0.0279,
+     "vmse": 0.044,
+     "updates": 1264,
+     "update_s": 206,
+     "collect_s": 53,
+     "decisions": 131119,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "1290ecd6c6be2bc693709248014fef65cba22de265f5ab34459e74ad4ebcaae6",
+   "config_hash": "bdd2fb6635fce1670ecc44f97e265a1fc0f0168e4165fa20fd7f3662bf0939cb"
+  },
+  "d6": {
+   "config": {
+    "arm": "dev-d6",
+    "optimizer_seed": 1702,
+    "rounds": 32,
+    "seed_base": 73520000,
+    "deck_set": "fixtures",
+    "opponents": "baseline_alternating",
+    "learning_rate": 0.001,
+    "gae_lambda": 1.0,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 2,
+   "learner_cpus": 2,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1153,
+     "collect_seconds": 231,
+     "update_seconds": 920,
+     "updates": 4016,
+     "decisions": 574705,
+     "learner_decisions": 252543
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "random": "207/384=0.539",
+     "heuristic": "18/384=0.047",
+     "H": 1.202,
+     "kl": 0.0094,
+     "vmse": 0.086,
+     "updates": 1068,
+     "update_s": 294,
+     "collect_s": 75,
+     "decisions": 153648,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "random": "203/384=0.529",
+     "heuristic": "26/384=0.068",
+     "H": 1.208,
+     "kl": 0.0164,
+     "vmse": 0.013,
+     "updates": 1028,
+     "update_s": 230,
+     "collect_s": 55,
+     "decisions": 145471,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "random": "222/384=0.578",
+     "heuristic": "37/384=0.096",
+     "H": 1.179,
+     "kl": 0.0119,
+     "vmse": 0.039,
+     "updates": 976,
+     "update_s": 201,
+     "collect_s": 53,
+     "decisions": 140106,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "random": "231/384=0.602",
+     "heuristic": "54/384=0.141",
+     "H": 1.18,
+     "kl": 0.0185,
+     "vmse": 0.037,
+     "updates": 944,
+     "update_s": 195,
+     "collect_s": 49,
+     "decisions": 135480,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "e7a7821697c17f010048c12abd7df5de7f7a8e14a7cbd107694c52d5681b3003",
+   "config_hash": "bdee4a065d1a176cc3cd9da666f3727b2b3c859c8be4ff5549063d84d6caca8c"
+  },
+  "d7": {
+   "config": {
+    "arm": "dev-d7",
+    "optimizer_seed": 1702,
+    "rounds": 32,
+    "seed_base": 73520000,
+    "deck_set": "fixtures",
+    "opponents": "baseline_alternating",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 96,
+    "id_dim": 48,
+    "layers": 2
+   },
+   "workers": 2,
+   "learner_cpus": 2,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1266,
+     "collect_seconds": 238,
+     "update_seconds": 1026,
+     "updates": 3365,
+     "decisions": 526009,
+     "learner_decisions": 237460
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "random": "209/384=0.544",
+     "heuristic": "31/384=0.081",
+     "H": 1.165,
+     "kl": 0.0143,
+     "vmse": 0.044,
+     "updates": 1044,
+     "update_s": 393,
+     "collect_s": 79,
+     "decisions": 148894,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "random": "264/384=0.688",
+     "heuristic": "68/384=0.177",
+     "H": 1.038,
+     "kl": 0.0303,
+     "vmse": 0.046,
+     "updates": 908,
+     "update_s": 259,
+     "collect_s": 56,
+     "decisions": 125936,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "random": "296/384=0.771",
+     "heuristic": "93/384=0.242",
+     "H": 1.025,
+     "kl": 0.0304,
+     "vmse": 0.051,
+     "updates": 790,
+     "update_s": 208,
+     "collect_s": 51,
+     "decisions": 122788,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "random": "305/384=0.794",
+     "heuristic": "64/384=0.167",
+     "H": 0.989,
+     "kl": 0.0313,
+     "vmse": 0.09,
+     "updates": 623,
+     "update_s": 166,
+     "collect_s": 52,
+     "decisions": 128391,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "af8109086e44a55b0e57acf0b1e999045822308e1d0f4cbe541c20803285dea5",
+   "config_hash": "ce66fdb93239292a8b9c96483edf805f8238aff159a5a9ea9a715b54dea3a2fa"
+  },
+  "d8": {
+   "config": {
+    "arm": "dev-d8",
+    "optimizer_seed": 1703,
+    "rounds": 32,
+    "seed_base": 73530000,
+    "deck_set": "fixtures",
+    "opponents": "baseline_alternating",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 2,
+   "learner_cpus": 2,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1038,
+     "collect_seconds": 227,
+     "update_seconds": 809,
+     "updates": 3566,
+     "decisions": 543427,
+     "learner_decisions": 245822
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "random": "234/384=0.609",
+     "heuristic": "32/384=0.083",
+     "H": 1.159,
+     "kl": 0.016,
+     "vmse": 0.031,
+     "updates": 1032,
+     "update_s": 260,
+     "collect_s": 75,
+     "decisions": 147655,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "random": "232/384=0.604",
+     "heuristic": "44/384=0.115",
+     "H": 1.129,
+     "kl": 0.0238,
+     "vmse": 0.041,
+     "updates": 968,
+     "update_s": 237,
+     "collect_s": 50,
+     "decisions": 135434,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "random": "288/384=0.750",
+     "heuristic": "66/384=0.172",
+     "H": 1.034,
+     "kl": 0.0326,
+     "vmse": 0.06,
+     "updates": 867,
+     "update_s": 178,
+     "collect_s": 54,
+     "decisions": 131660,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "random": "311/384=0.810",
+     "heuristic": "78/384=0.203",
+     "H": 0.989,
+     "kl": 0.0329,
+     "vmse": 0.044,
+     "updates": 699,
+     "update_s": 134,
+     "collect_s": 49,
+     "decisions": 128678,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "7329fefdff33699a4fd83b6085b70ca0b70818a15a6cd1833747b4b371ff66fe",
+   "config_hash": "ae34947a6378f6ccb27cdd7527f12fc2a0e22fa1f527417269ceb45536adec99"
+  },
+  "d9": {
+   "config": {
+    "arm": "dev-d9",
+    "optimizer_seed": 1703,
+    "rounds": 32,
+    "seed_base": 73530000,
+    "deck_set": "fixtures",
+    "opponents": "baseline_alternating",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 96,
+    "id_dim": 48,
+    "layers": 2
+   },
+   "workers": 2,
+   "learner_cpus": 2,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 1329,
+     "collect_seconds": 236,
+     "update_seconds": 1091,
+     "updates": 3756,
+     "decisions": 538568,
+     "learner_decisions": 237104
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "random": "220/384=0.573",
+     "heuristic": "25/384=0.065",
+     "H": 1.174,
+     "kl": 0.0164,
+     "vmse": 0.027,
+     "updates": 1008,
+     "update_s": 336,
+     "collect_s": 76,
+     "decisions": 146995,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "random": "241/384=0.628",
+     "heuristic": "46/384=0.120",
+     "H": 1.196,
+     "kl": 0.0179,
+     "vmse": 0.031,
+     "updates": 904,
+     "update_s": 248,
+     "collect_s": 55,
+     "decisions": 130285,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "random": "257/384=0.669",
+     "heuristic": "50/384=0.130",
+     "H": 1.123,
+     "kl": 0.0276,
+     "vmse": 0.046,
+     "updates": 936,
+     "update_s": 270,
+     "collect_s": 57,
+     "decisions": 133696,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "random": "267/384=0.695",
+     "heuristic": "61/384=0.159",
+     "H": 1.071,
+     "kl": 0.0311,
+     "vmse": 0.04,
+     "updates": 908,
+     "update_s": 237,
+     "collect_s": 49,
+     "decisions": 127592,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "875982db4d275e045a94dc473360ba9cd8cf40cc24801acd7d6d2950414b3693",
+   "config_hash": "d48a669252afd2e940c251120d9da943b1f7c861f871413a10eb73a218481b20"
+  },
+  "speed-8x8": {
+   "config": {
+    "arm": "speed",
+    "optimizer_seed": 1702,
+    "rounds": 32,
+    "seed_base": 73540000,
+    "deck_set": "fixtures",
+    "opponents": "league",
+    "learning_rate": 0.001,
+    "gae_lambda": 0.95,
+    "channels": 64,
+    "id_dim": 32,
+    "layers": 2
+   },
+   "workers": 8,
+   "learner_cpus": 8,
+   "rounds_done": 32,
+   "duels": 3072,
+   "void_games": 0,
+   "marks": {
+    "3072": {
+     "wall_seconds": 692,
+     "collect_seconds": 136,
+     "update_seconds": 555,
+     "updates": 4535,
+     "decisions": 498802,
+     "learner_decisions": 316529
+    }
+   },
+   "curve": [
+    {
+     "duels": 768,
+     "heuristic": "13/256=0.051",
+     "past": "139/256=0.543",
+     "H": 1.14,
+     "kl": 0.0181,
+     "vmse": 0.049,
+     "updates": 1436,
+     "update_s": 209,
+     "collect_s": 51,
+     "decisions": 141431,
+     "void": 0
+    },
+    {
+     "duels": 1536,
+     "heuristic": "39/256=0.152",
+     "past": "157/256=0.613",
+     "H": 1.025,
+     "kl": 0.0305,
+     "vmse": 0.054,
+     "updates": 1135,
+     "update_s": 125,
+     "collect_s": 26,
+     "decisions": 117447,
+     "void": 0
+    },
+    {
+     "duels": 2304,
+     "past": "145/256=0.566",
+     "heuristic": "40/256=0.156",
+     "H": 0.966,
+     "kl": 0.0318,
+     "vmse": 0.072,
+     "updates": 984,
+     "update_s": 111,
+     "collect_s": 30,
+     "decisions": 120044,
+     "void": 0
+    },
+    {
+     "duels": 3072,
+     "heuristic": "55/256=0.215",
+     "past": "160/256=0.625",
+     "H": 0.979,
+     "kl": 0.0369,
+     "vmse": 0.053,
+     "updates": 980,
+     "update_s": 110,
+     "collect_s": 29,
+     "decisions": 119880,
+     "void": 0
+    }
+   ],
+   "final_params_sha256": "e6ab975d9652c2811a358709ae07b2cffd9bb9cbb6bc3a3ed33ba6d17b1eb242",
+   "config_hash": "d554021669e27ae2a14d20f93f0630c9e554c816625f878b103de2758d251b6d"
+  }
+ }
+}
