@@ -1,0 +1,40 @@
+{
+ "binaries": {
+  "before": {
+   "edison_rules": "d7a6be97b6e209599a7731bc1c4da9aea576219235226b3ed8778a7e755eed45",
+   "production": "038e6dd19f4efc17cbe7c4f3cc9b13da2b072bb7ea19dff3399499feef5220a6"
+  },
+  "after": {
+   "edison_rules": "6df1bd58680d681624c02e5bd8ec19159b96cc4204b4af6a543ed7c30b411778",
+   "production": "67423a99970519fb10fb0a484a4b1af331c77623dc318610b3e0d2de375dd95e",
+   "edison_conformance": "ac41e4d3ea72a4d6711c970c2e74602a5aaacafff6234eb759e7c74c0d5a8066",
+   "imported_module": "67423a99970519fb10fb0a484a4b1af331c77623dc318610b3e0d2de375dd95e"
+  }
+ },
+ "locks": {
+  "core_hardening_patch_sha256": {
+   "before": "474d852230ac3b8579af9d6979f59bf21264c3c181739ef58969436b82b4cdbb",
+   "after": "9adf1905ebb577cdbd13dbf51737eb28cd07dfb0cf088b2275d0c6e0d3a1fff5"
+  },
+  "core_patch_sha256_unchanged": true
+ },
+ "fingerprints": {
+  "count": 105,
+  "changed": [
+   "tests/edison/cross_link_trigger_tests.h",
+   "tests/edison/cross_player_trigger_tests.h",
+   "tests/edison/optional_trigger_tests.h",
+   "tests/edison/private_trigger_tests.h",
+   "tests/edison/rules.cpp",
+   "tests/edison/trigger_tests.h",
+   "xmake.lua"
+  ]
+ },
+ "core_variants": {
+  "3d3542c926ac4002a490d7c8de06787e": "29f03fdb0fe396647c43c6bf71dedd195a494bfb6208365095c2dbee6b9cd06f",
+  "5fe29f6ad6dd4ebb83a1f1b5123c1837": "e3adf73d2dbd6f6d144c0679bc00219debfacf3d610c6880fb6c01279bdb3d27",
+  "a2a2f72ea54a45ecad61816290872640": "29f03fdb0fe396647c43c6bf71dedd195a494bfb6208365095c2dbee6b9cd06f",
+  "aa797b55e1fc45fdb959732181b1e231": "e8978744a4fe748fda11c254f0f4f294dfc8010c02e46f8b955dbdb7dfb32f63",
+  "bedb42dd1c644c7482fd8520cd0c023e": "def13f398c5d19141af33876fb41093fba46650e10a28474129638f2516117c4"
+ }
+}

@@ -99,5 +99,5 @@
     "assets/edison/legality.json": "541ccf819cd38ec693ec7ac1c4782f3567c993e41acf81a11aa72873fc092cc3",
     "ygoenv/ygoenv/ygopro/edison_legality_data.h": "4d01d3b8962f206d9073a8eb3b88578fdf6f93583215168df1f5b930c47c084f"
   },
-  "core_hardening_patch_sha256": "474d852230ac3b8579af9d6979f59bf21264c3c181739ef58969436b82b4cdbb"
+  "core_hardening_patch_sha256": "9adf1905ebb577cdbd13dbf51737eb28cd07dfb0cf088b2275d0c6e0d3a1fff5"
 }

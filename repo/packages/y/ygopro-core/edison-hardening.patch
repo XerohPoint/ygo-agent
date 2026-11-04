@@ -1,8 +1,7 @@
 diff --git a/field.cpp b/field.cpp
-index 7b3a341..aff32e2 100644
 --- a/field.cpp
 +++ b/field.cpp
-@@ -2327,7 +2327,8 @@ int32 field::check_lp_cost(uint8 playerid, uint32 lp, uint32 must_pay) {
+@@ -2327,7 +2327,8 @@
  			return TRUE;
  	}
  	//cost[playerid].amount += val;
@@ -12,11 +11,19 @@ index 7b3a341..aff32e2 100644
  		return TRUE;
  	return FALSE;
  }
+@@ -3584,7 +3585,7 @@
+ 			&& phandler->is_has_relation(ch) && (ch.triggering_location & (LOCATION_HAND | LOCATION_DECK))
+ 			|| (peffect->range & (LOCATION_HAND | LOCATION_DECK)))) {
+ 		ch.flag |= CHAIN_HAND_TRIGGER;
+-		// Edison hand triggers participate in their chronological SEGOC group.
++		// Edison hand triggers stay in the optional queue, ordered by SEGOC step and batch.
+ 		// Do not also queue them for quick effects: declining must stay final.
+ 		if(core.duel_rule == 1 && ch.triggering_location == LOCATION_HAND
+ 			&& (!peffect->range || peffect->in_range(ch)))
 diff --git a/processor.cpp b/processor.cpp
-index df7f4e6..860bd8d 100644
 --- a/processor.cpp
 +++ b/processor.cpp
-@@ -1264,6 +1264,12 @@ int32 field::process_phase_event(int16 step, int32 phase) {
+@@ -1264,6 +1264,12 @@
  	}
  	case 22: {
  		core.hand_adjusted = TRUE;
@@ -29,7 +36,120 @@ index df7f4e6..860bd8d 100644
  		add_process(PROCESSOR_POINT_EVENT, 0, 0, 0, 0, 0);
  		core.units.begin()->step = -1;
  		core.units.begin()->arg2 = 0;
-@@ -1495,8 +1501,16 @@ int32 field::process_point_event(int16 step, int32 skip_trigger, int32 skip_free
+@@ -1287,20 +1293,18 @@
+ 	return TRUE;
+ }
+ int32 field::process_point_event(int16 step, int32 skip_trigger, int32 skip_freechain, int32 skip_new) {
+-	// Edison Early Trigger: finish all SEGOC groups for an earlier event
+-	// batch before considering a later batch. Modern rules keep the old path.
+-	auto earliest_group = [this]() {
++	// Edison Rule 7: SEGOC steps come first. Inside one step, the earlier events go on the Chain
++	// first and the player orders only triggers from the same simultaneous batch.
++	auto keep_earliest_batch = [this]() {
++		if(core.duel_rule != 1 || core.select_chains.size() < 2)
++			return;
+ 		uint64_t first = UINT64_MAX;
+-		for(const auto& ch : core.new_fchain_s)
++		for(const auto& ch : core.select_chains)
+ 			first = std::min(first, ch.evt.trigger_group);
+-		for(const auto& ch : core.new_ochain_s)
+-			first = std::min(first, ch.evt.trigger_group);
+-		return first;
+-	};
+-	auto has_group = [this](const chain_list& chains) {
+-		return std::any_of(chains.begin(), chains.end(), [this](const chain& ch) {
+-			return core.duel_rule != 1 || ch.evt.trigger_group == core.early_trigger_group;
++		auto keep_end = std::remove_if(core.select_chains.begin(), core.select_chains.end(), [first](const chain& ch) {
++			return ch.evt.trigger_group != first;
+ 		});
++		core.select_chains.erase(keep_end, core.select_chains.end());
+ 	};
+ 	switch(step) {
+ 	case 0: {
+@@ -1312,8 +1316,6 @@
+ 		}
+ 		core.new_fchain_s.splice(core.new_fchain_s.begin(), core.new_fchain);
+ 		core.new_ochain_s.splice(core.new_ochain_s.begin(), core.new_ochain);
+-		if(core.duel_rule == 1)
+-			core.early_trigger_group = earliest_group();
+ 		core.full_event.splice(core.full_event.end(), core.delayed_activate_event);
+ 		core.delayed_quick.clear();
+ 		core.delayed_quick_tmp.swap(core.delayed_quick);
+@@ -1328,10 +1330,6 @@
+ 		//forced trigger
+ 		core.select_chains.clear();
+ 		for (auto clit = core.new_fchain_s.begin(); clit != core.new_fchain_s.end(); ) {
+-			if(core.duel_rule == 1 && clit->evt.trigger_group != core.early_trigger_group) {
+-				++clit;
+-				continue;
+-			}
+ 			effect* peffect = clit->triggering_effect;
+ 			card* phandler = peffect->get_handler();
+ 			if(phandler->is_has_relation(*clit)) //work around: position and control should be refreshed before raising event
+@@ -1352,6 +1350,7 @@
+ 			}
+ 			++clit;
+ 		}
++		keep_earliest_batch();
+ 		if(core.select_chains.size() == 0) {
+ 			returns.ivalue[0] = -1;
+ 		} else if(core.select_chains.size() == 1) {
+@@ -1363,7 +1362,7 @@
+ 	}
+ 	case 3: {
+ 		if(returns.ivalue[0] == -1) {
+-			if(has_group(core.new_fchain_s)) {
++			if(core.new_fchain_s.size()) {
+ 				core.current_player = 1 - infos.turn_player;
+ 				core.units.begin()->step = 1;
+ 			} else {
+@@ -1386,10 +1385,6 @@
+ 		//optional trigger
+ 		core.select_chains.clear();
+ 		for (auto clit = core.new_ochain_s.begin(); clit != core.new_ochain_s.end(); ) {
+-			if(core.duel_rule == 1 && clit->evt.trigger_group != core.early_trigger_group) {
+-				++clit;
+-				continue;
+-			}
+ 			effect* peffect = clit->triggering_effect;
+ 			card* phandler = peffect->get_handler();
+ 			if(phandler->is_has_relation(*clit)) //work around: position and control should be refreshed before raising event
+@@ -1419,6 +1414,7 @@
+ 			}
+ 			++clit;
+ 		}
++		keep_earliest_batch();
+ 		if(core.select_chains.size() == 0) {
+ 			returns.ivalue[0] = -1;
+ 			core.units.begin()->step = 5;
+@@ -1443,7 +1439,12 @@
+ 				ch.triggering_effect->active_type = 0;
+ 				core.new_ochain_s.remove_if([chain_id = ch.chain_id](chain ch) { return ch.chain_id == chain_id; });
+ 			}
+-			if(has_group(core.new_ochain_s)) {
++			// Edison: declining ends that batch only. This player's later batches are in the same step.
++			if(core.duel_rule == 1 && std::any_of(core.new_ochain_s.begin(), core.new_ochain_s.end(), [this](const chain& ch) {
++				return ch.triggering_player == core.current_player;
++			})) {
++				core.units.begin()->step = 3;
++			} else if(core.new_ochain_s.size()) {
+ 				core.current_player = 1 - infos.turn_player;
+ 				core.units.begin()->step = 3;
+ 			} else {
+@@ -1465,12 +1466,6 @@
+ 		return FALSE;
+ 	}
+ 	case 7: {
+-		if(core.duel_rule == 1 && (!core.new_fchain_s.empty() || !core.new_ochain_s.empty())) {
+-			core.early_trigger_group = earliest_group();
+-			core.current_player = infos.turn_player;
+-			core.units.begin()->step = 1;
+-			return FALSE;
+-		}
+ 		core.select_chains.clear();
+ 		return FALSE;
+ 	}
+@@ -1495,8 +1490,16 @@
  				++eit;
  				card* phandler = peffect->get_handler();
  				e.event_code = peffect->code;
@@ -48,10 +168,11 @@ index df7f4e6..860bd8d 100644
  					newchain.flag = 0;
  					newchain.chain_id = infos.field_id++;
  					newchain.evt = e;
-@@ -1810,6 +1824,15 @@ int32 field::process_quick_effect(int16 step, int32 skip_freechain, uint8 priori
+@@ -1809,6 +1812,15 @@
+ 						++core.spe_effect[priority];
  				}
  			}
- 		}
++		}
 +		// Edison Rule 11: a Chain started by the end-of-turn discard takes only negating Spell
 +		// Speed 2 effects and Spell Speed 3 effects.
 +		if(core.duel_rule == 1 && core.hand_adjusted && core.current_chain.size()) {
@@ -60,11 +181,10 @@ index df7f4e6..860bd8d 100644
 +				return ch.triggering_effect->get_speed() < 3 && !(ch.triggering_effect->category & negating);
 +			});
 +			core.select_chains.erase(keep_end, core.select_chains.end());
-+		}
+ 		}
  		if(core.current_chain.size() || (core.hint_timing[0] & TIMING_ATTACK) || (core.hint_timing[1] & TIMING_ATTACK))
  			core.spe_effect[priority] = (int32)core.select_chains.size();
- 		add_process(PROCESSOR_SELECT_CHAIN, 0, 0, 0, priority, core.spe_effect[priority]);
-@@ -3406,7 +3429,8 @@ void field::calculate_battle_damage(effect** pdamchange, card** preason_card, ui
+@@ -3406,7 +3418,8 @@
  				reason_card = core.attack_target;
  				bd[0] = TRUE;
  			} else {
@@ -74,3 +194,14 @@ index df7f4e6..860bd8d 100644
  					bd[0] = TRUE;
  					bd[1] = TRUE;
  				}
+diff --git a/field.h b/field.h
+--- a/field.h
++++ b/field.h
+@@ -311,7 +311,6 @@
+ 	int32 duel_options{ 0 };
+ 	int32 duel_rule{ CURRENT_RULE };
+ 	uint64_t trigger_group{ 1 };
+-	uint64_t early_trigger_group{ 0 };
+ 	uint32 copy_reset{ 0 };
+ 	int32 copy_reset_count{ 0 };
+ 	uint32 last_control_changed_id{ 0 };

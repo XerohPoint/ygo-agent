@@ -501,7 +501,9 @@ inline void garden_strips_priority(ConfAssets& a, int rule, bool trace) {
   expect_rule(p.links.at(0).code == black_garden, "Rule 6: Black Garden's trigger starts the Chain");
   expect_rule(!p.offered(dark_armed, 0), "Rule 6: no Ignition Effect when the Summon starts a Chain");
 }
-inline void knight_strips_priority(ConfAssets& a, int rule, bool trace, bool accept_trigger) {
+// Owner ruling, November 4, 2026: declining the optional trigger leaves Ignition Effect Priority. The
+// Swap Frog and Alien Dog rulings agree. This overrides the Armageddon Knight example in Rule 6 (Ex.3).
+inline void knight_trigger_priority(ConfAssets& a, int rule, bool trace, bool accept_trigger) {
   Play p(a, rule, trace);
   p.hand(armageddon_knight, 0);
   p.monster(bazoo, 0, 1);
@@ -514,7 +516,8 @@ inline void knight_strips_priority(ConfAssets& a, int rule, bool trace, bool acc
   p.start();
   setup(p.offered(torrential, 1), "Torrential was not offered in the Summon window");
   observed("Bazoo Ignition offered " + yn(p.offered(bazoo, 0)) + ";" + p.chain_text());
-  expect_rule(!p.offered(bazoo, 0), "Rule 6 Ex.3 (no priority): a triggered Summon gives the turn player no Ignition Effect as Chain Link 1");
+  if (accept_trigger) expect_rule(!p.offered(bazoo, 0), "Rule 6 Ex.3 (no priority): a triggered Summon gives the turn player no Ignition Effect as Chain Link 1");
+  else expect_rule(p.offered(bazoo, 0), "Owner ruling, with the Swap Frog and Alien Dog rulings: after declining the trigger, Ignition Effects are still offered with priority");
 }
 inline void sangan_material_strips_priority(ConfAssets& a, int rule, bool trace) {
   Play p(a, rule, trace);
@@ -656,6 +659,68 @@ inline void earlier_optional_later_mandatory(ConfAssets& a, int rule, bool trace
   setup(p.activated(watapon) && p.activated(broww), "Both triggers must activate");
   observed(p.chain_text());
   expect_rule(p.link_index(broww) < p.link_index(watapon), "Rule 7: the chronology exception only applies within one step, so mandatory Broww (Step 1) precedes optional Watapon (Step 3)");
+}
+
+// Inside one SEGOC step: Dealings draws Watapon, then discards Parl, both optional for one player. The
+// earlier Watapon is offered alone and goes first. Declining it is final and leaves the later Parl.
+inline void same_step_chronology(ConfAssets& a, int rule, bool trace, bool public_hand, bool opponent, bool take_watapon, bool take_parl) {
+  Play p(a, rule, trace);
+  const int op = opponent ? 1 : 0;
+  if (public_hand) p.monster(bell, 1, 0, POS_FACEUP_DEFENSE);
+  p.hand(dealings, 0);
+  p.hand(opponent ? broww : parl, 0);
+  if (opponent) p.hand(parl, 1);
+  p.grave(broww, op);  // Parl's target
+  for (int i = 0; i < 3; ++i) { p.deck(blue_eyes, 0); p.deck(blue_eyes, 1); }
+  p.add(watapon, op, LOCATION_DECK, SEQ_DECKTOP, POS_FACEDOWN_DEFENSE);
+  if (take_watapon) p.accept(watapon).chain(watapon);
+  if (take_parl) p.accept(parl).chain(parl);
+  p.activate(dealings);
+  if (opponent) p.pick(broww, 0, LOCATION_HAND);
+  p.pick(parl, op, LOCATION_HAND);
+  if (take_parl) p.pick(broww, op, LOCATION_GRAVE);
+  std::vector<std::vector<uint32_t>> prompts;
+  p.hook = [&](const Event& e) {
+    if (e.kind != MSG_SELECT_CHAIN && e.kind != MSG_SELECT_EFFECTYN) return false;
+    if (!Play::listed(e.cards, watapon) && !Play::listed(e.cards, parl)) return false;
+    std::vector<uint32_t> codes;
+    for (const auto& c : e.cards) codes.push_back(c.code);
+    prompts.push_back(codes);
+    return false;
+  };
+  p.start();
+  std::vector<uint32_t> order;
+  for (size_t i = 1; i < p.links.size(); ++i) order.push_back(p.links[i].code);
+  setup(p.moved(parl, LOCATION_GRAVE, LOCATION_HAND) && p.zone_has(op, LOCATION_HAND, watapon) == !take_watapon, "Dealings must draw Watapon and discard Parl");
+  observed("Trigger Chain:" + p.chain_text() + "; prompts offering Watapon or Parl: " + std::to_string(prompts.size()));
+  std::vector<std::vector<uint32_t>> want_prompts{{watapon}, {parl}};
+  std::vector<uint32_t> want;
+  if (opponent) want.push_back(broww);
+  if (take_watapon) want.push_back(watapon);
+  if (take_parl) want.push_back(parl);
+  expect_rule(prompts == want_prompts, "Rule 7: within one step the earlier Watapon is offered alone and once, then Parl");
+  expect_rule(order == want, "Rule 7: within one step the earlier event goes on the Chain first; declining ends only that batch");
+}
+// The other half of the same model: triggers from one simultaneous batch stay the player's to order.
+inline void same_batch_keeps_choice(ConfAssets& a, int rule, bool trace) {
+  Play p(a, rule, trace);
+  p.hand(bazoo, 0);
+  p.monster(sangan, 0, 0);
+  p.monster(sangan, 0, 1);
+  p.backrow(torrential, 0);
+  for (int i = 0; i < 2; ++i) p.deck(dupe, 0);
+  p.summon(bazoo);
+  p.chain(torrential);
+  int forced_choice = 0;
+  p.hook = [&](const Event& e) {
+    if (e.kind == MSG_SELECT_CHAIN && e.forced && e.cards.size() == 2 && e.cards[0].code == sangan && e.cards[1].code == sangan) ++forced_choice;
+    return false;
+  };
+  p.stop = [&](const Event& e) { return e.kind == MSG_CHAINED && e.chain == 2 && p.links.back().code == sangan; };
+  p.start();
+  setup(p.activated(torrential), "Torrential was not activated");
+  observed("Forced prompts listing both Sangans: " + std::to_string(forced_choice) + ";" + p.chain_text());
+  expect_rule(forced_choice == 1, "Rule 7: triggers from one simultaneous batch are ordered by their controller");
 }
 
 // ---------------------------------------------------------------- Rule 8: Damage Step
@@ -1110,8 +1175,8 @@ inline void register_rule_tests(Registry& r, ConfAssets& a, bool t) {
   both("232", "CHAOS SORCERER IGNITION PRIORITY", "Chaos Sorcerer can be CL1 before Bottomless.", [&a, t](int o, bool h) { chaos_priority(a, o, h, t); });
   both("233", "DEMISE PRIORITY AFTER RITUAL", "Demise's effect is available before Torrential.", [&a, t](int o, bool h) { demise_priority(a, o, h, t); });
   both("234", "BLACK GARDEN REMOVES PRIORITY", "Garden is CL1; DAD's Ignition is not offered.", [&a, t](int o, bool) { garden_strips_priority(a, o, t); });
-  both("235A", "DECLINED TRIGGER REMOVES PRIORITY", "Bazoo's Ignition is not offered after a triggered Summon.", [&a, t](int o, bool) { knight_strips_priority(a, o, t, false); });
-  both("235B", "ACCEPTED TRIGGER REMOVES PRIORITY", "Bazoo's Ignition is not offered as the trigger Chain builds.", [&a, t](int o, bool) { knight_strips_priority(a, o, t, true); });
+  both("235A", "DECLINED TRIGGER KEEPS IGNITION PRIORITY", "Bazoo's Ignition is offered after the trigger is declined.", [&a, t](int o, bool) { knight_trigger_priority(a, o, t, false); });
+  both("235B", "ACCEPTED TRIGGER REMOVES PRIORITY", "Bazoo's Ignition is not offered as the trigger Chain builds.", [&a, t](int o, bool) { knight_trigger_priority(a, o, t, true); });
   both("236", "SANGAN MATERIAL REMOVES PRIORITY", "Sangan starts a Chain; Brionac is not offered.", [&a, t](int o, bool) { sangan_material_strips_priority(a, o, t); });
   both("237", "PRIORITY AFTER A CHAIN RESOLVES", "D.D. Crow is offered before any Ignition Effect.", [&a, t](int o, bool h) { after_chain_priority(a, o, h, t); });
   both("238", "LEVEL EATER SUMMON WINDOW", "Level Eater's GY Ignition can be CL1.", [&a, t](int o, bool h) { level_eater_window(a, o, h, t); });
@@ -1121,6 +1186,13 @@ inline void register_rule_tests(Registry& r, ConfAssets& a, bool t) {
   both("244", "PRIORITY ON ENTERING MAIN PHASE", "D.D. Crow is not offered before the turn player acts.", [&a, t](int o, bool) { new_phase_priority(a, o, t); });
   both("241", "SOUL EXCHANGE SANGAN AND CAIUS", "Caius CL1, opponent's Sangan CL2.", [&a, t](int o, bool) { soul_exchange_segoc(a, o, t); });
   both("242", "EARLIER OPTIONAL VERSUS LATER MANDATORY", "Mandatory Broww CL1, optional Watapon CL2.", [&a, t](int o, bool) { earlier_optional_later_mandatory(a, o, t); });
+  both("243A", "SAME STEP CHRONOLOGY, ACCEPT BOTH", "Earlier Watapon offered alone, CL1; later Parl CL2.", [&a, t](int o, bool) { same_step_chronology(a, o, t, true, false, true, true); });
+  both("243B", "SAME STEP, DECLINE THE EARLIER", "Watapon is not offered again; later Parl is still offered, CL1.", [&a, t](int o, bool) { same_step_chronology(a, o, t, true, false, false, true); });
+  both("243C", "SAME STEP, DECLINE THE LATER", "Watapon CL1; Parl declined.", [&a, t](int o, bool) { same_step_chronology(a, o, t, true, false, true, false); });
+  both("243D", "SAME STEP FOR THE NON-TURN PLAYER", "Turn player's mandatory Broww CL1 (Step 1); P1's earlier Watapon CL2 and later Parl CL3 (Step 4).", [&a, t](int o, bool) { same_step_chronology(a, o, t, true, true, true, true); });
+  both("243E", "SAME STEP WITH A PRIVATE HAND TRIGGER", "Private Watapon offered alone, CL1; later Parl CL2.", [&a, t](int o, bool) { same_step_chronology(a, o, t, false, false, true, true); });
+  both("243F", "PRIVATE HAND TRIGGER DECLINED", "Private Watapon is not offered again; later Parl is still offered, CL1.", [&a, t](int o, bool) { same_step_chronology(a, o, t, false, false, false, true); });
+  both("243G", "SAME BATCH KEEPS THE CHOICE", "Two Sangans destroyed together are both offered in one forced prompt.", [&a, t](int o, bool) { same_batch_keeps_choice(a, o, t); });
 
   both("251", "COUNTER TRAP AT START OF DAMAGE STEP", "Divine Wrath is available when Chalice activates.", [&a, t](int o, bool) { counter_at_damage_start(a, o, t); });
   both("252", "DOOMCALIBER IN DAMAGE STEP", "Doomcaliber activates on Tomato's effect.", [&a, t](int o, bool) { doomcaliber_in_damage_step(a, o, t); });

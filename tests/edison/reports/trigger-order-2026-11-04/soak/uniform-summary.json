@@ -1,0 +1,39 @@
+{
+ "stage": "uniform",
+ "first_seed": 76020000,
+ "last_seed": 76020999,
+ "planned": 1000,
+ "finished": 1000,
+ "statuses": {
+  "ok": 1000
+ },
+ "crashes": 0,
+ "crash_signatures": {},
+ "diagnostic_lines": {},
+ "other_output_lines": {},
+ "contract_violations": {},
+ "decisions": 153880,
+ "prompt_rows_by_msg_id": {
+  "1": 82487,
+  "2": 7173,
+  "3": 8160,
+  "4": 2767,
+  "5": 842,
+  "6": 1228,
+  "7": 552,
+  "8": 21045,
+  "9": 83,
+  "10": 511,
+  "11": 28153,
+  "12": 12,
+  "13": 75,
+  "14": 101,
+  "15": 108,
+  "16": 534,
+  "17": 49
+ },
+ "max_options": 34,
+ "max_repeat": 6,
+ "elapsed_seconds": 24.8,
+ "lists": []
+}

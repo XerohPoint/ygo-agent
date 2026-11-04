@@ -1,0 +1,71 @@
+{
+ "updated_fixtures_on_pre_change_r1_core": {
+  "binary_sha256": "5a6f00641c154e826eb7e6f076f6962bd60532cffd386eb740b26f7d6b5cf551",
+  "certification_failures": [
+   "EDISON RULE TEST 004C: Trigger chain order differs from expected ordering",
+   "EDISON RULE TEST 005A: Optional decision (Step 3) must follow mandatory Broww (Step 1)",
+   "EDISON RULE TEST 005B: Optional decision (Step 3) must follow mandatory Broww (Step 1)",
+   "EDISON RULE TEST 006A: Optional decision (Step 3) must follow mandatory Broww (Step 1)",
+   "EDISON RULE TEST 006B: Optional decision (Step 3) must follow mandatory Broww (Step 1)",
+   "CONTROL 017E: Optional decision (Step 3) must follow mandatory Broww (Step 1)",
+   "CONTROL 017F: Optional decision (Step 3) must follow mandatory Broww (Step 1)",
+   "EDISON RULE TEST 017A: Optional decision (Step 3) must follow mandatory Broww (Step 1)",
+   "EDISON RULE TEST 017B: Optional decision (Step 3) must follow mandatory Broww (Step 1)",
+   "EDISON RULE TEST 017C: Optional decision (Step 3) must follow mandatory Broww (Step 1)",
+   "EDISON RULE TEST 017D: Optional decision (Step 3) must follow mandatory Broww (Step 1)",
+   "EDISON RULE TEST 018A: Cross-player optional decision offered in wrong order or repeated",
+   "EDISON RULE TEST 018B: Cross-player optional decision offered in wrong order or repeated",
+   "EDISON RULE TEST 018C: Cross-player optional decision offered in wrong order or repeated",
+   "EDISON RULE TEST 018D: Cross-player optional decision offered in wrong order or repeated",
+   "EDISON RULE TEST 033A: Cross-player optional decision offered in wrong order or repeated",
+   "EDISON RULE TEST 033B: Cross-player optional decision offered in wrong order or repeated",
+   "EDISON RULE TEST 033C: Cross-player optional decision offered in wrong order or repeated",
+   "EDISON RULE TEST 033D: Cross-player optional decision offered in wrong order or repeated"
+  ],
+  "conformance": {
+   "rule_fail": 13,
+   "unexpected": [
+    "NEW RULE FAILURE 241: Rule 7 Ex.2: turn player's mandatory Caius (Step 1) is CL1, non-turn player's mandatory Sangan (Step 2) is CL2",
+    "NEW RULE FAILURE 242: Rule 7: the chronology exception only applies within one step, so mandatory Broww (Step 1) precedes optional Watapon (Step 3)",
+    "NEW RULE FAILURE 243D: Rule 7: within one step the earlier event goes on the Chain first; declining ends only that batch"
+   ]
+  }
+ },
+ "old_fixtures_on_r2_core": {
+  "certification_failures": [
+   "EDISON RULE TEST 004C: Trigger chain order differs from expected ordering",
+   "EDISON RULE TEST 005A: Earlier optional/later mandatory chain order violated",
+   "EDISON RULE TEST 005B: Broww must not bypass the earlier optional decision",
+   "EDISON RULE TEST 006A: Earlier optional/later mandatory chain order violated",
+   "EDISON RULE TEST 006B: Broww must not bypass the earlier optional decision",
+   "CONTROL 017E: Earlier optional/later mandatory chain order violated",
+   "CONTROL 017F: Broww must not bypass the earlier optional decision",
+   "EDISON RULE TEST 017A: Earlier optional/later mandatory chain order violated",
+   "EDISON RULE TEST 017B: Broww must not bypass the earlier optional decision",
+   "EDISON RULE TEST 017C: Earlier optional/later mandatory chain order violated",
+   "EDISON RULE TEST 017D: Broww must not bypass the earlier optional decision",
+   "EDISON RULE TEST 018A: Cross-player Early Trigger order violated",
+   "EDISON RULE TEST 018B: Later mandatory trigger bypassed earlier optional decision",
+   "EDISON RULE TEST 018C: Cross-player Early Trigger order violated",
+   "EDISON RULE TEST 018D: Later mandatory trigger bypassed earlier optional decision",
+   "EDISON RULE TEST 033A: Later mandatory trigger bypassed earlier optional decision",
+   "EDISON RULE TEST 033B: Cross-player Early Trigger order violated",
+   "EDISON RULE TEST 033C: Later mandatory trigger bypassed earlier optional decision",
+   "EDISON RULE TEST 033D: Cross-player Early Trigger order violated"
+  ],
+  "conformance": {
+   "rule_fail": 11,
+   "unexpected": [
+    "RECORDED FAILURE NOW PASSES 241: update known_failures.json",
+    "RECORDED FAILURE NOW PASSES 242: update known_failures.json"
+   ]
+  }
+ },
+ "old_fixtures_on_r1_core": {
+  "conformance": {
+   "rule_fail": 13,
+   "unexpected": []
+  },
+  "certification": "PASS"
+ }
+}

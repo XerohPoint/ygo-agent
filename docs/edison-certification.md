@@ -191,6 +191,11 @@ suite certifies these four replacement scenarios, not every Field Spell ruling.
 
 ### Test 004 — SEGOC / Early Trigger ordering
 
+**Corrected November 4, 2026.** The owner ruled that SEGOC steps come first and chronology applies only inside
+one step. 004B is unchanged. Tests 004C, 005, 006, 017, 018 and 033 were changed, and the text below that
+describes them records their earlier expectation where it says Edison offers the earlier trigger first. See
+[the trigger-order report](edison-trigger-order.md).
+
 The [Edison SEGOC / Early Trigger rules](https://edisonformat.net/rules/compendium/SEGOC-And-Early-Trigger)
 require mandatory turn-player triggers, mandatory opponent triggers, optional
 turn-player triggers, then optional opponent triggers for simultaneous events.
@@ -257,8 +262,8 @@ trigger conditioned on discarding by effect.
 
 | Case | Edison expectation | Rule 5 comparison |
 | --- | --- | --- |
-| 005A: accept | Offer Watapon before any trigger link; Watapon CL1, Broww CL2 | Confirm Broww CL1 first, then offer Watapon as CL2 |
-| 005B: decline | Offer and decline Watapon before confirming Broww CL1 | Confirm Broww CL1 first, then offer and decline Watapon |
+| 005A: accept | Confirm Broww CL1 (Step 1) first, then offer Watapon (Step 3) as CL2 | Confirm Broww CL1 first, then offer Watapon as CL2 |
+| 005B: decline | Confirm Broww CL1 first, then offer and decline Watapon | Confirm Broww CL1 first, then offer and decline Watapon |
 
 Both decline cases ultimately have only Broww CL1. The test therefore asserts
 **when the optional choice occurs**, not just the final chain. It rejects
@@ -300,10 +305,9 @@ and end before either monster's trigger can activate or be offered. The draw
 and discard messages establish chronology independently of the eventual trigger
 order. After setup ends:
 
-- 006A accepts Watapon: Edison requires Watapon CL1, Broww CL2; Rule 5 requires
-  Broww CL1, Watapon CL2.
-- 006B declines Watapon: Edison requires the decision before Broww CL1; Rule 5
-  confirms Broww first. Both resolve only Broww.
+- 006A accepts Watapon: both rules require Broww CL1, Watapon CL2.
+- 006B declines Watapon: both rules confirm Broww first, then the decision. Both
+  resolve only Broww.
 
 All four cases verify the resulting trigger chain resolves, the draw occurs
 exactly once, Watapon is summoned or retained as chosen, and all final hand,
@@ -1019,10 +1023,10 @@ the existing unpatched cache. No upstream commit or dependency version changed.
 
 Events raised between instant-event flushes receive a shared chronological
 group number. Single-card and group notifications for simultaneous actions
-therefore share a group. In Rule 1, the processor completes forced/optional,
-turn-player/opponent SEGOC ordering within the oldest pending group before
-advancing to the next group. Invalid or declined effects are still handled by
-the existing checks. Rule 5 uses the existing selection path.
+therefore share a group. In Rule 1, since `edison_hardening = "r2"`, each SEGOC step
+offers only its player's oldest pending group, so steps come first and chronology
+applies inside a step. Invalid or declined effects are still handled by the existing
+checks. Rule 5 uses the existing selection path.
 
 The change adds fields to native structures, so both the environment module and
 certification executable must be rebuilt against the same patched headers and

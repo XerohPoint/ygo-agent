@@ -3,8 +3,9 @@
 
 // Test 005 draws Watapon during Dealings; Test 006 draws it with Jar at CL2
 // before Dealings discards Broww at CL1. Bell keeps the hand trigger public.
+// Broww is SEGOC Step 1 and Watapon Step 3, so under both rules Broww is CL1 despite its later event.
 inline void optional_early_trigger(certification::Assets& assets, int options,
-                                   bool historical, bool accept, bool trace, bool across_links = false) {
+                                   bool accept, bool trace, bool across_links = false) {
   using namespace certification;
   TestDuel d(assets, 0, 0, trace,options);
   d.add({bell, 1, 1, LOCATION_MZONE, 0, POS_FACEUP_DEFENSE});
@@ -18,8 +19,7 @@ inline void optional_early_trigger(certification::Assets& assets, int options,
   d.add({watapon, 0, 0, LOCATION_DECK, SEQ_DECKTOP, POS_FACEDOWN_DEFENSE});
   d.add({blue_eyes, 1, 1, LOCATION_DECK, SEQ_DECKTOP, POS_FACEDOWN_DEFENSE});
   const std::vector<uint32_t> expected = !accept ? std::vector<uint32_t>{broww}
-      : historical ? std::vector<uint32_t>{watapon, broww}
-                   : std::vector<uint32_t>{broww, watapon};
+                                                 : std::vector<uint32_t>{broww, watapon};
   const size_t setup_links=across_links?2:1;
   bool jar_requested=false, jar_drawn=false;
   bool requested=false, setup=false, decided=false, ended=false, special=false;
@@ -29,8 +29,8 @@ inline void optional_early_trigger(certification::Assets& assets, int options,
   auto name = [](uint32_t code) { return code==watapon ? "Watapon" : "Broww"; };
   auto choose_optional = [&] {
     require(setup && !decided && !ended, "Optional trigger absent, repeated, or outside trigger window");
-    require(confirmed==size_t(historical ? 0 : 1) && announced==confirmed,
-            "Optional decision must precede Broww in Edison and follow it in Rule 5");
+    require(confirmed==1 && announced==confirmed,
+            "Optional decision (Step 3) must follow mandatory Broww (Step 1)");
     bool public_watapon=false;
     for(int i=0;i<d.count(0,LOCATION_HAND);++i)
       if(d.code(0,LOCATION_HAND,i)==watapon && (d.position(0,LOCATION_HAND,i)&POS_FACEUP))
@@ -150,7 +150,7 @@ inline void optional_early_trigger(certification::Assets& assets, int options,
         require(!ended && announced==confirmed && announced<expected.size() &&
                 e.chain==int(announced+1) && e.cards.at(0).code==expected[announced] &&
                 e.player==0, "Earlier optional/later mandatory chain order violated");
-        require(!historical || decided, "Broww must not bypass the earlier optional decision");
+        if(e.cards[0].code==broww) require(!decided, "Broww must be on the Chain before the optional decision");
         if(e.cards[0].code==watapon) require(decided && accept, "Declined optional activated");
       }
       ++announced;

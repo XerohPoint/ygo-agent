@@ -1,0 +1,68 @@
+{
+ "certification": {
+  "cases_old": 567,
+  "cases_new": 567,
+  "only_new": [],
+  "only_old": [],
+  "rule5_identical": 242,
+  "rule5_trace_differs": [],
+  "edison_identical": 306,
+  "edison_trace_differs": [
+   "CONTROL 017E",
+   "CONTROL 017F",
+   "EDISON RULE TEST 004C",
+   "EDISON RULE TEST 005A",
+   "EDISON RULE TEST 005B",
+   "EDISON RULE TEST 006A",
+   "EDISON RULE TEST 006B",
+   "EDISON RULE TEST 017A",
+   "EDISON RULE TEST 017B",
+   "EDISON RULE TEST 017C",
+   "EDISON RULE TEST 017D",
+   "EDISON RULE TEST 018A",
+   "EDISON RULE TEST 018B",
+   "EDISON RULE TEST 018C",
+   "EDISON RULE TEST 018D",
+   "EDISON RULE TEST 033A",
+   "EDISON RULE TEST 033B",
+   "EDISON RULE TEST 033C",
+   "EDISON RULE TEST 033D"
+  ],
+  "text_only_differs": []
+ },
+ "conformance": {
+  "cases_old": 284,
+  "cases_new": 298,
+  "only_new": [
+   "CONTROL 243A (Rule 5 comparison)",
+   "CONTROL 243B (Rule 5 comparison)",
+   "CONTROL 243C (Rule 5 comparison)",
+   "CONTROL 243D (Rule 5 comparison)",
+   "CONTROL 243E (Rule 5 comparison)",
+   "CONTROL 243F (Rule 5 comparison)",
+   "CONTROL 243G (Rule 5 comparison)",
+   "EDISON RULE TEST 243A",
+   "EDISON RULE TEST 243B",
+   "EDISON RULE TEST 243C",
+   "EDISON RULE TEST 243D",
+   "EDISON RULE TEST 243E",
+   "EDISON RULE TEST 243F",
+   "EDISON RULE TEST 243G"
+  ],
+  "only_old": [],
+  "rule5_identical": 142,
+  "rule5_trace_differs": [],
+  "edison_identical": 140,
+  "edison_trace_differs": [
+   "EDISON RULE TEST 241",
+   "EDISON RULE TEST 242"
+  ],
+  "text_only_differs": [
+   "CONTROL 235A (Rule 5 comparison)",
+   "CONTROL 235B (Rule 5 comparison)",
+   "CONTROL 241 (Rule 5 comparison)",
+   "CONTROL 242 (Rule 5 comparison)",
+   "EDISON RULE TEST 235A"
+  ]
+ }
+}

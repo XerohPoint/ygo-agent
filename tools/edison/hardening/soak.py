@@ -160,7 +160,7 @@ def run_batch(index, stage_dir, duels, decks, module_timeout):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--stage", choices=["a2", "sidein", "targets", "uniform"], required=True)
-    parser.add_argument("--seed", type=int, required=True, help="First seed; the block is 74000000 and up")
+    parser.add_argument("--seed", type=int, required=True, help="First seed; the blocks are 74000000 and up, and 76000000 and up for the trigger-order work")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--workers", type=int, default=6)
     parser.add_argument("--batch", type=int, default=20)
@@ -171,8 +171,8 @@ def main():
     parser.add_argument("--timeout", type=int, default=600)
     args = parser.parse_args()
     args.output = args.output.resolve()  # Workers run with cwd=scripts.
-    if args.seed < 74000000 or args.seed >= 75000000:
-        parser.error("Hardening seeds stay inside the 74000000 block")
+    if not (74000000 <= args.seed < 75000000 or 76000000 <= args.seed < 77000000):
+        parser.error("Hardening seeds stay inside the 74000000 or 76000000 block")
     if args.workers > 6:
         parser.error("At most 6 workers")
     pool = gen_decks.Pool()

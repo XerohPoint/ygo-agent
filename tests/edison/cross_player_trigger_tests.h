@@ -2,9 +2,10 @@
 #include "harness.h"
 
 // Test 018: Dealings draws one player's private Watapon before discarding
-// the other player's Broww. P0 always activates Dealings.
+// the other player's Broww. P0 always activates Dealings. Mandatory Broww (Step 1 or 2) precedes
+// optional Watapon (Step 3 or 4) under both rules, despite its later event.
 inline void cross_player_early_trigger(certification::Assets& assets, int options,
-                                      bool historical, bool accept, uint8_t optional_player, bool trace) {
+                                      bool accept, uint8_t optional_player, bool trace) {
   using namespace certification;
   const uint8_t op=optional_player, mp=1-op;
   const int reward=mp==0?1:2; // Opponent's Dealings gives Broww its additional draw.
@@ -15,14 +16,13 @@ inline void cross_player_early_trigger(certification::Assets& assets, int option
   d.add({watapon,op,op,LOCATION_DECK,SEQ_DECKTOP,POS_FACEDOWN_DEFENSE});
   for(int i=0;i<reward+1;++i)
     d.add({blue_eyes,mp,mp,LOCATION_DECK,SEQ_DECKTOP,POS_FACEDOWN_DEFENSE});
-  const std::vector<uint32_t> expected=!accept?std::vector<uint32_t>{broww}
-      :historical?std::vector<uint32_t>{watapon,broww}:std::vector<uint32_t>{broww,watapon};
+  const std::vector<uint32_t> expected=!accept?std::vector<uint32_t>{broww}:std::vector<uint32_t>{broww,watapon};
   bool requested=false,setup=false,decided=false,ended=false,special=false;
   bool drawn[2]={},selected[2]={},discarded[2]={};
   size_t announced=0,confirmed=0,resolved=0;
   int resolving=0,extra_draws=0;
   auto choose_optional=[&] {
-    require(setup && !ended && !decided && confirmed==size_t(historical?0:1) &&
+    require(setup && !ended && !decided && confirmed==1 &&
             announced==confirmed,"Cross-player optional decision offered in wrong order or repeated");
     require(d.count(op,LOCATION_HAND)==1 && d.code(op,LOCATION_HAND,0)==watapon &&
             (d.position(op,LOCATION_HAND,0)&POS_FACEDOWN),"Watapon must still be private in hand");
@@ -121,8 +121,8 @@ inline void cross_player_early_trigger(certification::Assets& assets, int option
                   << (e.cards.at(0).code==watapon?"Watapon":"Broww") << ".\n";
         require(!ended && announced==confirmed && announced<expected.size() &&
                 e.chain==int(announced+1) && e.cards.at(0).code==expected[announced] &&
-                e.player==(expected[announced]==watapon?op:mp),"Cross-player Early Trigger order violated");
-        require(!historical || decided,"Later mandatory trigger bypassed earlier optional decision");
+                e.player==(expected[announced]==watapon?op:mp),"Cross-player SEGOC step order violated");
+        if(e.cards[0].code==broww) require(!decided,"Mandatory Broww must be on the Chain before the optional decision");
         if(e.cards[0].code==watapon) require(decided && accept,"Declined Watapon activated");
       }
       ++announced;

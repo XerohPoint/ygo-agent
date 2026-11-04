@@ -12,6 +12,9 @@ Two findings differ from the conformance ranking, and D4 needs your decision:
   the Summon was Chain Link 1. With the fixtures corrected, both pass with no code change.
 - **D4 was not changed, because the written rulings conflict.** See [D4](#d4-not-changed-your-decision).
 
+**Update.** The owner has since ruled on D1 and D4. See [the trigger-order report](edison-trigger-order.md), which
+supersedes the D1, D4 and known-failure statements here and the binary hashes below.
+
 | Item | Status |
 | --- | --- |
 | A1 message handler | Done. Planted load, syntax and in-play errors all fail `run_worker()` |
@@ -254,6 +257,7 @@ pinned variant. Instead, the new `edison_hardening` string config installs side 
 | --- | --- | --- |
 | `bedb42dd...`, pinned | `def13f39...` | Byte-identical; `references.txt` also unchanged |
 | `aa797b55...`, `edison_hardening = "r1"` | `e8978744...` | New, reproduced by a clean reinstall |
+| `5fe29f6a...`, `edison_hardening = "r2"` | `e3adf73d...` | Current. See [the trigger-order report](edison-trigger-order.md) |
 
 Main's `.xmake` and `build/linux` file digest is unchanged. Evidence:
 [before](../tests/edison/reports/hardening-2026-11-04/baseline-before.txt),

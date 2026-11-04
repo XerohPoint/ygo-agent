@@ -8,7 +8,7 @@
 add_rules("mode.release")
 set_defaultmode("release")
 add_repositories("my-repo ../../../repo")
-add_requires("ygopro-core 0.0.2", {configs = {edison_early_trigger = true, edison_hardening = "r1"}})
+add_requires("ygopro-core 0.0.2", {configs = {edison_early_trigger = true, edison_hardening = "r2"}})
 add_requires("sqlite3 3.43.0+200", "sqlitecpp 3.2.1")
 
 target("edison_conformance")

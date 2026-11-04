@@ -1,0 +1,59 @@
+{
+ "frozen-082d-heuristic": {
+  "seed": 20110424,
+  "deck0": "blackwing",
+  "deck1": "frog_monarch",
+  "policy0": "heuristic",
+  "duels": 4,
+  "identical": 4,
+  "first_differences": []
+ },
+ "frozen-082d-random": {
+  "seed": 20110424,
+  "deck0": "blackwing",
+  "deck1": "frog_monarch",
+  "policy0": "random",
+  "duels": 4,
+  "identical": 4,
+  "first_differences": []
+ },
+ "fresh-blackwing-frog": {
+  "seed": 76100000,
+  "deck0": "blackwing",
+  "deck1": "frog_monarch",
+  "policy0": "heuristic",
+  "duels": 24,
+  "identical": 23,
+  "first_differences": [
+   {
+    "env": 10,
+    "step": 227,
+    "to_play": 1,
+    "only_in_current": [
+     "msg=6 act=8 Blackwing - Shura the Blue Flame"
+    ],
+    "only_in_reference": [
+     "msg=6 act=8 Dupe Frog"
+    ]
+   }
+  ]
+ },
+ "fresh-frog-machina": {
+  "seed": 76101000,
+  "deck0": "frog_monarch",
+  "deck1": "machina_gadget",
+  "policy0": "heuristic",
+  "duels": 24,
+  "identical": 24,
+  "first_differences": []
+ },
+ "fresh-machina-blackwing": {
+  "seed": 76102000,
+  "deck0": "machina_gadget",
+  "deck1": "blackwing",
+  "policy0": "heuristic",
+  "duels": 24,
+  "identical": 24,
+  "first_differences": []
+ }
+}

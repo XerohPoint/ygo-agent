@@ -417,7 +417,7 @@ int main(int argc, char** argv) {
          [&] { trigger_ordering(assets, 5 << 16, false, false, trace); });
     test("CONTROL 004B - RULE 5 TRIGGER CHOICE", "Both mandatory effects offered; select Caius CL1, Sangan CL2.",
          [&] { trigger_ordering(assets, 5 << 16, true, false, trace); });
-    test("EDISON RULE TEST 004C - EARLY OPPONENT TRIGGER", "Opponent-owned Sangan CL1 before turn-player Caius CL2.",
+    test("EDISON RULE TEST 004C - SEGOC STEP OVER CHRONOLOGY", "Turn-player Caius CL1 (Step 1) before opponent-owned earlier Sangan CL2 (Step 2).",
          [&] { trigger_ordering(assets, options, true, true, trace, true); });
     test("CONTROL 004C - RULE 5 TURN PLAYER FIRST", "Turn-player Caius CL1 before opponent-owned Sangan CL2.",
          [&] { trigger_ordering(assets, 5 << 16, true, false, trace, true); });
@@ -425,11 +425,10 @@ int main(int argc, char** argv) {
       for(bool accept : {true, false}) {
         std::string label = historical ? "EDISON RULE TEST 005" : "CONTROL 005";
         label += accept ? "A - ACCEPT EARLIER OPTIONAL" : "B - DECLINE EARLIER OPTIONAL";
-        std::string expectation = historical ? "Watapon decision before Broww; " : "Rule 5: Broww CL1 before Watapon decision; ";
-        expectation += accept ? (historical ? "Watapon CL1, Broww CL2; resolve both." : "Watapon CL2; resolve both.")
-                              : "decline Watapon, resolve only Broww CL1.";
+        std::string expectation = historical ? "Broww CL1 (Step 1) before Watapon decision (Step 3); " : "Rule 5: Broww CL1 before Watapon decision; ";
+        expectation += accept ? "Watapon CL2; resolve both." : "decline Watapon, resolve only Broww CL1.";
         test(label, expectation, [&] {
-          optional_early_trigger(assets, historical ? options : 5 << 16, historical, accept, trace);
+          optional_early_trigger(assets, historical ? options : 5 << 16, accept, trace);
         });
       }
     }
@@ -437,9 +436,9 @@ int main(int argc, char** argv) {
       for(bool accept : {true, false}) {
         std::string label=historical?"EDISON RULE TEST 006":"CONTROL 006";
         label += accept?"A - DELAYED ACROSS LINKS, ACCEPT":"B - DELAYED ACROSS LINKS, DECLINE";
-        test(label, historical ? "Jar CL2 draws Watapon; Dealings CL1 discards Broww; optional decision first after chain end."
+        test(label, historical ? "Jar CL2 draws Watapon; Dealings CL1 discards Broww; after chain end Broww CL1 (Step 1) before optional Watapon (Step 3)."
                                : "Same resolved setup; Rule 5 confirms Broww before optional Watapon decision.", [&] {
-          optional_early_trigger(assets,historical?options:5<<16,historical,accept,trace,true);
+          optional_early_trigger(assets,historical?options:5<<16,accept,trace,true);
         });
       }
       for(int variant=0;variant<3;++variant) {
@@ -595,24 +594,24 @@ int main(int argc, char** argv) {
         label += char('A'+2*int(across)+int(!accept));
         label += " - RULE 5 PRIVATE HAND";
         test(label,"Unrevealed Watapon decision after Broww CL1; resolve accepted/declined outcome.",[&] {
-          private_early_trigger(assets,5<<16,false,accept,trace,across);
+          private_early_trigger(assets,5<<16,accept,trace,across);
         });
       }
     }
     for(bool accept : {true,false}) {
       std::string label=accept?"CONTROL 017E":"CONTROL 017F";
       label += " - EDISON PUBLIC HAND";
-      test(label,"Bell reveals Watapon; earlier optional decision before Broww.",[&] {
-        optional_early_trigger(assets,options,true,accept,trace);
+      test(label,"Bell reveals Watapon; Broww CL1 (Step 1) before optional decision (Step 3).",[&] {
+        optional_early_trigger(assets,options,accept,trace);
       });
     }
     for(bool across : {false,true}) {
       for(bool accept : {true,false}) {
         std::string label="EDISON RULE TEST 017";
         label += char('A'+2*int(across)+int(!accept));
-        label += " - PRIVATE HAND EARLY TRIGGER";
-        test(label,"Private Watapon's earlier optional decision precedes later mandatory Broww.",[&] {
-          private_early_trigger(assets,options,true,accept,trace,across);
+        label += " - PRIVATE HAND SEGOC STEP ORDER";
+        test(label,"Broww CL1 (Step 1) precedes private Watapon's optional decision (Step 3), offered once.",[&] {
+          private_early_trigger(assets,options,accept,trace,across);
         });
       }
     }
@@ -621,10 +620,10 @@ int main(int argc, char** argv) {
         for(bool accept : {true,false}) {
           std::string label=historical?"EDISON RULE TEST 018":"CONTROL 018";
           label += char('A'+2*op+int(!accept));
-          label += " - CROSS-PLAYER EARLY TRIGGER";
-          test(label,historical?"Earlier private optional decision before opponent's later mandatory trigger."
+          label += historical?" - CROSS-PLAYER SEGOC STEP ORDER":" - CROSS-PLAYER EARLY TRIGGER";
+          test(label,historical?"Mandatory Broww before the opponent's private optional Watapon decision, despite Watapon's earlier event."
                                :"Rule 5: mandatory Broww before opponent's private Watapon decision.",[&] {
-            cross_player_early_trigger(assets,historical?options:5<<16,historical,accept,op,trace);
+            cross_player_early_trigger(assets,historical?options:5<<16,accept,op,trace);
           });
         }
       }
@@ -776,7 +775,7 @@ int main(int argc, char** argv) {
         std::string label=historical?"EDISON RULE TEST 033":"CONTROL 033";
         label+=char('A'+player*2+int(accept));label+=" - CROSS-PLAYER ACROSS-LINK TRIGGERS";
         test(label,"Private Watapon drawn by Jar CL2 precedes opposing Broww discarded by Dealings CL1.",[&] {
-          cross_player_across_links(assets,historical?options:5<<16,historical,accept,uint8_t(player),trace);
+          cross_player_across_links(assets,historical?options:5<<16,accept,uint8_t(player),trace);
         });
       }
     }

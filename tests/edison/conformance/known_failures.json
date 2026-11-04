@@ -1,9 +1,6 @@
 {
   "purpose": "Conformance fixtures that fail because the simulator differs from the written specification. These are expected to fail until a supervised fix lands. They are separate from the certification gate in tests/edison/run.py, which neither reads this file nor runs these fixtures. When a fix lands, the case reports RECORDED FAILURE NOW PASSES and its entry must be removed.",
   "failures": {
-    "241": {"defect": "D1", "summary": "Cross-player SEGOC: opponent's earlier Sangan placed before turn player's later Caius"},
-    "242": {"defect": "D1", "summary": "Earlier optional trigger placed before later mandatory trigger"},
-    "235A": {"defect": "D4", "summary": "Ignition Effect offered after declining a Summon trigger"},
     "261": {"defect": "D6", "summary": "Dandylion returned to hand by Monster Reincarnation does not activate"},
     "262B": {"defect": "D6", "summary": "Necroface returned to the Deck does not activate its banish effect"},
     "206": {"defect": "D9", "summary": "Unlisted Union replaces effect destruction"},

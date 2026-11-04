@@ -5,7 +5,8 @@ edisonformat.com, not Konami's 2025 Time Wizard variant.
 
 **Status update.** This report records the state before fixes. [The hardening report](edison-hardening.md) fixes D2, D5, D7,
 D8 and D10, shows D3 was a fixture error rather than a defect, and leaves D4 open because individual rulings conflict with it.
-`known_failures.json` is the current record. The matrix files were not rebuilt.
+`known_failures.json` is the current record. The matrix files were not rebuilt. [The trigger-order report](edison-trigger-order.md)
+records the owner's rulings on D1 and D4: D1 is fixed, and D4 was a fixture error, so A1 and decision 1 below are settled.
 
 **Result: the simulator disagrees with the written specification in 12 distinct ways, measured by 30 failing
 fixtures. No simulator behavior was changed.** Two of the 12 most affect play: Graveyard Ignition Effects are

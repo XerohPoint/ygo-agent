@@ -21,9 +21,11 @@ inline void trigger_ordering(certification::Assets& assets, int options,
   }
   if(opponent_sangan) d.add({brain, 0, 0, LOCATION_HAND, 0, POS_FACEDOWN_DEFENSE});
   using Link = std::pair<uint32_t, int>;
+  // Edison chronology applies inside one SEGOC step: own Sangan and Caius are both Step 1, so the
+  // earlier Sangan is CL1. An opponent's Sangan is Step 2, so Caius (Step 1) is CL1 (owner ruling).
   const std::vector<Link> expected = early
-      ? (historical ? std::vector<Link>{{sangan,int(opponent_sangan)},{caius,0}}
-                    : std::vector<Link>{{caius,0},{sangan,int(opponent_sangan)}})
+      ? (historical && !opponent_sangan ? std::vector<Link>{{sangan,0},{caius,0}}
+                                        : std::vector<Link>{{caius,0},{sangan,int(opponent_sangan)}})
       : std::vector<Link>{{torrential,0},{sangan,0},{sangan,1},{dupe,0},{dupe,1}};
   bool requested=false, summoned=false, tribute=false, destroyed=false, target=false, choice=false;
   size_t announced=0, confirmed=0;
