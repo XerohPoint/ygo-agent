@@ -1,0 +1,76 @@
+diff --git a/field.cpp b/field.cpp
+index 7b3a341..aff32e2 100644
+--- a/field.cpp
++++ b/field.cpp
+@@ -2327,7 +2327,8 @@ int32 field::check_lp_cost(uint8 playerid, uint32 lp, uint32 must_pay) {
+ 			return TRUE;
+ 	}
+ 	//cost[playerid].amount += val;
+-	if(val <= player[playerid].lp)
++	// Edison Rule 10: a cost cannot reduce the payer's LP to 0.
++	if(core.duel_rule == 1 ? val < player[playerid].lp : val <= player[playerid].lp)
+ 		return TRUE;
+ 	return FALSE;
+ }
+diff --git a/processor.cpp b/processor.cpp
+index df7f4e6..860bd8d 100644
+--- a/processor.cpp
++++ b/processor.cpp
+@@ -1264,6 +1264,12 @@ int32 field::process_phase_event(int16 step, int32 phase) {
+ 	}
+ 	case 22: {
+ 		core.hand_adjusted = TRUE;
++		// Edison Rule 11: the discarded card's optional triggers cannot activate.
++		if(core.duel_rule == 1) {
++			core.new_ochain.remove_if([](const chain& ch) {
++				return ch.triggering_effect->get_handler()->current.reason & REASON_ADJUST;
++			});
++		}
+ 		add_process(PROCESSOR_POINT_EVENT, 0, 0, 0, 0, 0);
+ 		core.units.begin()->step = -1;
+ 		core.units.begin()->arg2 = 0;
+@@ -1495,8 +1501,16 @@ int32 field::process_point_event(int16 step, int32 skip_trigger, int32 skip_free
+ 				++eit;
+ 				card* phandler = peffect->get_handler();
+ 				e.event_code = peffect->code;
+-				if(phandler->current.location == LOCATION_MZONE && peffect->is_chainable(infos.turn_player)
+-				        && peffect->is_activateable(infos.turn_player, e)) {
++				// Edison Ignition Effect Priority covers a monster's Ignition Effect wherever it
++				// activates (Malicious, Level Eater). Spell and Trap "Ignition-like" effects and
++				// Unions equipped in the S/T Zone stay excluded.
++				bool monster_effect = phandler->current.location == LOCATION_MZONE
++				        || ((phandler->current.location & (LOCATION_HAND | LOCATION_GRAVE | LOCATION_REMOVED))
++				            && (phandler->get_type() & TYPE_MONSTER));
++				if(!monster_effect)
++					continue;
++				peffect->set_activate_location();
++				if(peffect->is_chainable(infos.turn_player) && peffect->is_activateable(infos.turn_player, e)) {
+ 					newchain.flag = 0;
+ 					newchain.chain_id = infos.field_id++;
+ 					newchain.evt = e;
+@@ -1810,6 +1824,15 @@ int32 field::process_quick_effect(int16 step, int32 skip_freechain, uint8 priori
+ 				}
+ 			}
+ 		}
++		// Edison Rule 11: a Chain started by the end-of-turn discard takes only negating Spell
++		// Speed 2 effects and Spell Speed 3 effects.
++		if(core.duel_rule == 1 && core.hand_adjusted && core.current_chain.size()) {
++			constexpr uint32 negating = 0x4000 | 0x10000000; // CATEGORY_DISABLE, CATEGORY_NEGATE
++			auto keep_end = std::remove_if(core.select_chains.begin(), core.select_chains.end(), [](const chain& ch) {
++				return ch.triggering_effect->get_speed() < 3 && !(ch.triggering_effect->category & negating);
++			});
++			core.select_chains.erase(keep_end, core.select_chains.end());
++		}
+ 		if(core.current_chain.size() || (core.hint_timing[0] & TIMING_ATTACK) || (core.hint_timing[1] & TIMING_ATTACK))
+ 			core.spe_effect[priority] = (int32)core.select_chains.size();
+ 		add_process(PROCESSOR_SELECT_CHAIN, 0, 0, 0, priority, core.spe_effect[priority]);
+@@ -3406,7 +3429,8 @@ void field::calculate_battle_damage(effect** pdamchange, card** preason_card, ui
+ 				reason_card = core.attack_target;
+ 				bd[0] = TRUE;
+ 			} else {
+-				if(attacker_value != 0) {
++				// Edison Rule 13: two 0 ATK Attack Position monsters destroy each other.
++				if(attacker_value != 0 || core.duel_rule == 1) {
+ 					bd[0] = TRUE;
+ 					bd[1] = TRUE;
+ 				}

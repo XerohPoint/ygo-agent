@@ -36,5 +36,6 @@ constexpr uint32_t dust_tornado = 60082869, umi = 22702055, mountain = 50913601,
   blaze_accelerator = 69537999, cyber_twin = 74157028, chimeratech = 79229522, limiter_removal = 23171610,
   gold_sarc = 75500286, muka_muka = 46657337, pulling_rug = 34717238, archfiend_soldier = 49881766, card_trooper = 85087012,
   thought_ruler = 70780151, dimensional_prison = 70342110, ddv = 35027493, asura_priest = 2134346,
-  flamvell_firedog = 23297235, armed_wing = 76913983, silverwind = 33236860, bora_spear = 49003716;
+  flamvell_firedog = 23297235, armed_wing = 76913983, silverwind = 33236860, bora_spear = 49003716,
+  thunder_dragon = 31786629, flame_viper = 2830619;
 }  // namespace conformance::card_codes

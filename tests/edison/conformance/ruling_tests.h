@@ -531,10 +531,13 @@ inline void bottomless_chain_summon(ConfAssets& a, int rule, bool trace, bool fi
   p.grave(bazoo, 0);
   if (first_link_summons) { p.hand(monster_reborn, 0); p.grave(blue_eyes, 0); p.activate(monster_reborn).pick(blue_eyes); }
   else { p.hand(rota, 0); p.deck(exiled_force, 0); p.activate(rota).pick(exiled_force); }
-  p.chain(call_haunted).pick(bazoo);
+  // chain_when, not chain: Set Call is also offered in the Draw Phase, where it would be Chain Link 1.
+  const uint32_t first_link = first_link_summons ? monster_reborn : rota;
+  p.chain_when(call_haunted, [&p, first_link] { return p.activated(first_link); }).pick(bazoo);
   p.chain(bottomless);
   p.start();
   setup(p.activated(call_haunted), "Call of the Haunted did not chain");
+  setup(p.link_index(call_haunted) == 1, "Call of the Haunted was not Chain Link 2");
   setup(p.zone_has(0, LOCATION_MZONE, bazoo) || p.zone_has(0, LOCATION_REMOVED, bazoo), "Bazoo was not revived");
   observed("Bottomless offered " + yn(p.offered(bottomless, 1)) + ", Bazoo banished " + yn(p.zone_has(0, LOCATION_REMOVED, bazoo)) + ", Blue-Eyes banished " + yn(p.zone_has(0, LOCATION_REMOVED, blue_eyes)));
   if (first_link_summons) {
@@ -554,9 +557,11 @@ inline void torrential_after_cl2_special(ConfAssets& a, int rule, bool trace) {
   p.hand(rota, 0);
   p.deck(exiled_force, 0);
   p.activate(rota).pick(exiled_force);
-  p.chain(call_haunted).pick(bazoo);
+  // chain_when, not chain: Set Call is also offered in the Draw Phase, where it would be Chain Link 1.
+  p.chain_when(call_haunted, [&p] { return p.activated(rota); }).pick(bazoo);
   p.start();
   setup(p.activated(call_haunted), "Call of the Haunted did not chain");
+  setup(p.link_index(call_haunted) == 1, "Call of the Haunted was not Chain Link 2");
   setup(p.zone_has(0, LOCATION_MZONE, bazoo), "Bazoo was not revived");
   bool after_chain = false;
   for (const auto& o : p.offers) if (o.code == torrential && o.depth == 0) after_chain = true;
@@ -892,6 +897,69 @@ inline void gy_ignition_window(ConfAssets& a, int rule, bool historical, bool tr
   setup(p.link_index(actor) == 0 || idle_offers, "Effect must be activatable at all in this fixture");
   if (historical) expect_rule(p.link_index(actor) == 0, "Rule 6: the turn player can activate this Graveyard Ignition Effect as Chain Link 1 in the Summon window");
 }
+// Neighbors of the Graveyard Ignition fix: declining still passes to the opponent, a hand
+// Ignition Effect is also a monster's Ignition Effect, and a trigger still removes priority.
+inline void gy_ignition_declined(ConfAssets& a, int rule, bool historical, bool trace) {
+  Play p(a, rule, trace);
+  p.hand(bazoo, 0);
+  p.grave(plaguespreader, 0);
+  p.hand(jerry_beans, 0);
+  p.backrow(bottomless, 1);
+  p.summon(bazoo);
+  bool idle_offers = false;
+  p.check([&](const Event& e) { idle_offers = Play::listed(e.idle[5], plaguespreader); });
+  p.start();
+  setup(p.moved(bazoo, LOCATION_MZONE, LOCATION_HAND), "Bazoo was not summoned");
+  observed("Plaguespreader offered in the window " + yn(p.offered(plaguespreader, 0)) + ", Bottomless offered " + yn(p.offered(bottomless, 1)) + ", idle afterwards " + yn(idle_offers));
+  expect_rule(p.offered(bottomless, 1), "Declining priority passes the Summon window to the opponent");
+  expect_rule(idle_offers, "The effect stays available from idle after declining");
+  if (historical) expect_rule(p.offered(plaguespreader, 0), "Rule 6: the Graveyard Ignition Effect is offered in the window");
+}
+inline void hand_ignition_window(ConfAssets& a, int rule, bool historical, bool trace) {
+  Play p(a, rule, trace);
+  p.hand(bazoo, 0);
+  p.hand(thunder_dragon, 0);
+  p.deck(thunder_dragon, 0);
+  p.hand(dd_crow, 1);
+  p.chain(thunder_dragon);
+  p.pick(thunder_dragon, 0, LOCATION_DECK);
+  p.summon(bazoo);
+  bool idle_offers = false;
+  p.check([&](const Event& e) { idle_offers = Play::listed(e.idle[5], thunder_dragon); });
+  p.start();
+  setup(p.moved(bazoo, LOCATION_MZONE, LOCATION_HAND), "Bazoo was not summoned");
+  observed("Offered in the Summon window " + yn(p.offered(thunder_dragon, 0)) + ", usable from idle afterwards " + yn(idle_offers) + ";" + p.chain_text());
+  setup(p.link_index(thunder_dragon) == 0 || idle_offers, "Thunder Dragon must be activatable at all in this fixture");
+  if (historical) expect_rule(p.link_index(thunder_dragon) == 0, "Rule 6: priority is not limited to effects on the field, so a hand Ignition Effect can be Chain Link 1");
+}
+inline void garden_strips_gy_priority(ConfAssets& a, int rule, bool trace) {
+  Play p(a, rule, trace);
+  p.field(black_garden, 1);
+  p.hand(bazoo, 0);
+  p.grave(plaguespreader, 0);
+  p.hand(jerry_beans, 0);
+  p.summon(bazoo);
+  p.start();
+  setup(p.activated(black_garden), "Black Garden did not trigger");
+  observed("Plaguespreader offered during the trigger Chain " + yn(p.offered(plaguespreader, 0)) + ";" + p.chain_text());
+  expect_rule(p.links.at(0).code == black_garden, "Rule 6: Black Garden's trigger starts the Chain");
+  expect_rule(!p.offered(plaguespreader, 0), "Rule 6: no Ignition Effect when the Summon starts a Chain");
+}
+inline void spell_ignition_not_priority(ConfAssets& a, int rule, bool trace) {
+  Play p(a, rule, trace);
+  p.hand(bazoo, 0);
+  p.hand(flame_viper, 0);
+  p.add(blaze_accelerator, 0, LOCATION_SZONE, 0, POS_FACEUP_ATTACK);
+  p.monster(blue_eyes, 1);
+  p.summon(bazoo);
+  bool idle_offers = false;
+  p.check([&](const Event& e) { idle_offers = Play::listed(e.idle[5], blaze_accelerator); });
+  p.start();
+  setup(p.moved(bazoo, LOCATION_MZONE, LOCATION_HAND), "Bazoo was not summoned");
+  setup(idle_offers, "Blaze Accelerator must be activatable at all in this fixture");
+  observed("Blaze Accelerator offered in the Summon window " + yn(p.offered(blaze_accelerator, 0)) + ", usable from idle afterwards " + yn(idle_offers));
+  expect_rule(!p.offered(blaze_accelerator, 0), "A Spell's Ignition-like effect stays out of the Summon window, as before the Graveyard fix");
+}
 inline void book_resets_once_per_turn(ConfAssets& a, int rule, bool trace) {
   Play p(a, rule, trace);
   p.monster(dark_end, 0);
@@ -976,6 +1044,10 @@ inline void register_ruling_tests(Registry& r, ConfAssets& a, bool t) {
   r.both("456", "VAYU SUMMON CANNOT BE REVIVED", "Call has no legal target.", [&a, t](int o, bool) { vayu_no_revival(a, o, t); });
   r.both("460A", "PLAGUESPREADER GY IGNITION PRIORITY", "Can be CL1 in the Summon window.", [&a, t](int o, bool h) { gy_ignition_window(a, o, h, t, false); });
   r.both("460B", "VAYU GY IGNITION PRIORITY", "Can be CL1 in the Summon window.", [&a, t](int o, bool h) { gy_ignition_window(a, o, h, t, true); });
+  r.both("460C", "GY IGNITION PRIORITY DECLINED", "Bottomless offered; idle still offers it.", [&a, t](int o, bool h) { gy_ignition_declined(a, o, h, t); });
+  r.both("460D", "HAND IGNITION PRIORITY", "Can be CL1 in the Summon window.", [&a, t](int o, bool h) { hand_ignition_window(a, o, h, t); });
+  r.both("460E", "BLACK GARDEN REMOVES GY PRIORITY", "Garden is CL1; Plaguespreader is not offered.", [&a, t](int o, bool) { garden_strips_gy_priority(a, o, t); });
+  r.both("460F", "SPELL IGNITION-LIKE HAS NO PRIORITY", "Not offered.", [&a, t](int o, bool) { spell_ignition_not_priority(a, o, t); });
   r.both("459", "BOOK OF MOON RESETS ONCE PER TURN", "Dark End's effect is offered again.", [&a, t](int o, bool) { book_resets_once_per_turn(a, o, t); });
 }
 }  // namespace conformance

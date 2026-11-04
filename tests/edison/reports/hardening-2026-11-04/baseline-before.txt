@@ -1,0 +1,20 @@
+Captured 2026-11-04 before any build in this worktree.
+
+libygopro-core.a sha256 (shared cache ~/.xmake/packages/y/ygopro-core/0.0.2):
+29f03fdb0fe396647c43c6bf71dedd195a494bfb6208365095c2dbee6b9cd06f  3d3542c926ac4002a490d7c8de06787e
+29f03fdb0fe396647c43c6bf71dedd195a494bfb6208365095c2dbee6b9cd06f  a2a2f72ea54a45ecad61816290872640
+def13f398c5d19141af33876fb41093fba46650e10a28474129638f2516117c4  bedb42dd1c644c7482fd8520cd0c023e
+
+Main checkout timestamps:
+/home/mada/ygo-agent/.xmake 2026-10-12 22:33:35.505063301 -0600
+/home/mada/ygo-agent/build/linux 2026-10-12 22:39:16.230719285 -0600
+
+Digest of (mtime size path) for every file under main's .xmake and build/linux:
+ea34ee91fadb5dcdd3c1946bbf83776c8911a4c64c9bd6f1d677ac8d5a803a0a
+Newest files:
+1793782977.9870513450 /home/mada/ygo-agent/.xmake/linux/x86_64/cache/toolchain
+1793782977.9950512400 /home/mada/ygo-agent/.xmake/linux/x86_64/cache/detect
+
+Pinned variant bedb42dd content digest (all files except references.txt, sha256 of sorted sha256sum lines):
+061bbde0822977a15718dbf37e6dd6c02763da76c5436dac5eb5613bd36ff412
+references.txt lists: agent-ab05b428044d76037, its conformance dir, /home/mada/ygo-agent (all 261104)

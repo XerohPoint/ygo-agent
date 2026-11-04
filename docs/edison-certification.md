@@ -1413,3 +1413,11 @@ persistence and legacy full-context compatibility. Test 083H checks production
 rollout masking, identical initial full/masked trajectories and thread-count replay
 for both learner seats. The full suite now passes 544 cases. See
 [edison-rl-ablation.md](edison-rl-ablation.md) for the paired study.
+
+## Hardening (084–085)
+
+Test 084 plants Lua errors through `run_worker()` and requires them to fail the worker closed, with a clean control.
+Test 085 plays each previously crashing prompt class through production with the observation contract and all three
+policies checked on every decision, and confirms all 18 gauntlet lists pass production legality. Test 082D now compares
+against a baseline regenerated after the rule fixes, because those fixes change seeded games on purpose. The full suite
+now passes 567 cases. See [edison-hardening.md](edison-hardening.md) for the changes, evidence and limits.

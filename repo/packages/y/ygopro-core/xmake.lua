@@ -8,11 +8,22 @@ package("ygopro-core")
 
     add_configs("edison_early_trigger", {description = "Enable Rule 1 chronological trigger groups", default = false, type = "boolean"})
 
+    -- The package hash covers configs, not patch contents. A string revision puts each
+    -- reviewed hardening patch in its own install directory, so changing the patch can never
+    -- overwrite a variant that another checkout links. Bump it whenever the patch changes.
+    add_configs("edison_hardening", {description = "Revision of edison-hardening.patch, applied after early-trigger.patch; empty to skip", default = "", type = "string"})
+
     add_deps("lua")
 
     on_install("linux", function (package)
         if package:config("edison_early_trigger") then
             local patch = path.join(package:scriptdir(), "early-trigger.patch")
+            os.vrunv("git", {"apply", "--check", patch})
+            os.vrunv("git", {"apply", patch})
+        end
+        if package:config("edison_hardening") ~= "" then
+            assert(package:config("edison_early_trigger"), "edison_hardening applies on top of edison_early_trigger")
+            local patch = path.join(package:scriptdir(), "edison-hardening.patch")
             os.vrunv("git", {"apply", "--check", patch})
             os.vrunv("git", {"apply", patch})
         end

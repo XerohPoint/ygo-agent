@@ -1,0 +1,151 @@
+{
+ "rule_5_controls_changed": [
+  {
+   "case": "281",
+   "before": [
+    "Super Rejuvenation offered yes, Divine Wrath offered yes; CL1=P0:79814787 CL2=P1:49010598",
+    "Rule 5 differs: Rule 11 Ex.1: Super Rejuvenation cannot chain to the end-of-turn discard trigger"
+   ],
+   "after": [
+    "In the trigger's Chain: Super Rejuvenation offered yes, Divine Wrath offered yes; CL1=P0:79814787",
+    "Rule 5 differs: Rule 11 Ex.1: Super Rejuvenation cannot chain to the end-of-turn discard trigger"
+   ]
+  },
+  {
+   "case": "423",
+   "before": [
+    "Torrential offered at Chain Link 1 after the Chain: yes",
+    "Rule 5 differs: Missing the Timing page: a Summon as Chain Link 2+ is not the last thing to happen, so no Summon response window opens"
+   ],
+   "after": [
+    "Torrential offered at Chain Link 1 after the Chain: no",
+    "Rule 5 meets the same expectation."
+   ]
+  },
+  {
+   "case": "424",
+   "before": [
+    "Bottomless offered yes, Bazoo banished yes, Blue-Eyes banished no",
+    "Rule 5 differs: Bottomless ruling: cannot activate if a monster is Summoned as Chain Link 2+"
+   ],
+   "after": [
+    "Bottomless offered no, Bazoo banished no, Blue-Eyes banished no",
+    "Rule 5 meets the same expectation."
+   ]
+  }
+ ],
+ "rule_cases_changed": [
+  {
+   "case": "231",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "MALICIOUS GY IGNITION PRIORITY"
+  },
+  {
+   "case": "238",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "LEVEL EATER SUMMON WINDOW"
+  },
+  {
+   "case": "271A",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "BRAIN CONTROL AT EXACTLY 800 LP"
+  },
+  {
+   "case": "271B",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "SKILL DRAIN AT EXACTLY 1000 LP"
+  },
+  {
+   "case": "271C",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "PREMATURE BURIAL AT EXACTLY 800 LP"
+  },
+  {
+   "case": "272",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "MIRROR WALL MAINTENANCE AT EXACTLY 2000 LP"
+  },
+  {
+   "case": "273",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "DEGENERATE CIRCUIT AT EXACTLY 500 LP"
+  },
+  {
+   "case": "274",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "MESSENGER OF PEACE AT EXACTLY 100 LP"
+  },
+  {
+   "case": "281",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "END DISCARD MANDATORY TRIGGER"
+  },
+  {
+   "case": "282",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "END DISCARD OPTIONAL TRIGGER"
+  },
+  {
+   "case": "296",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "TWO 0 ATK ATTACK POSITION MONSTERS"
+  },
+  {
+   "case": "423",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "TORRENTIAL AFTER CL2 SPECIAL SUMMON"
+  },
+  {
+   "case": "424",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "BOTTOMLESS AFTER CL2 SUMMON ONLY"
+  },
+  {
+   "case": "441A",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "CAIUS BANISHES PLAGUESPREADER"
+  },
+  {
+   "case": "447",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "CAIUS BANISHES BATTLE FADER"
+  },
+  {
+   "case": "460A",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "PLAGUESPREADER GY IGNITION PRIORITY"
+  },
+  {
+   "case": "460B",
+   "before": "FAIL",
+   "after": "PASS",
+   "title": "VAYU GY IGNITION PRIORITY"
+  }
+ ],
+ "new_cases": [
+  "460C:control",
+  "460C:rule",
+  "460D:control",
+  "460D:rule",
+  "460E:control",
+  "460E:rule",
+  "460F:control",
+  "460F:rule"
+ ]
+}

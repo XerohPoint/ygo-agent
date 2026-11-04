@@ -1,0 +1,41 @@
+{
+ "stage": "uniform",
+ "first_seed": 74020000,
+ "last_seed": 74022999,
+ "planned": 3000,
+ "finished": 3000,
+ "statuses": {
+  "ok": 3000
+ },
+ "crashes": 0,
+ "crash_signatures": {},
+ "diagnostic_lines": {
+  "[ygopro-core] Error: diagnostic type 1: [string \"./script/c1082946.lua\"]:24: attempt to call a nil value (local 'op')": 1
+ },
+ "other_output_lines": {},
+ "contract_violations": {},
+ "decisions": 465291,
+ "prompt_rows_by_msg_id": {
+  "1": 248563,
+  "2": 22339,
+  "3": 24706,
+  "4": 8174,
+  "5": 2950,
+  "6": 3432,
+  "7": 1362,
+  "8": 63705,
+  "9": 374,
+  "10": 1492,
+  "11": 85900,
+  "12": 73,
+  "13": 236,
+  "14": 278,
+  "15": 227,
+  "16": 1299,
+  "17": 181
+ },
+ "max_options": 36,
+ "max_repeat": 8,
+ "elapsed_seconds": 60.0,
+ "lists": []
+}

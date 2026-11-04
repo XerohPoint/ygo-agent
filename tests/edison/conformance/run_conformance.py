@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run written-specification conformance fixtures, separately from certification.
 
-This is NOT the certification gate. tests/edison/run.py and its 544 cases do not read
+This is NOT the certification gate. tests/edison/run.py and its cases do not read
 or run anything in this directory, and this runner does not change their meaning.
 
 Each test number runs in its own process with a timeout, twice, so a hang or a crash
@@ -108,7 +108,7 @@ def main():
     no_result = [c for c in cases if c["status"] == "NO_RESULT"]
     rule_cases = [c for c in cases if c["kind"] == "rule"]
     summary = {
-        "note": "Separate from certification. Passing or failing here does not change the 544-case gate.",
+        "note": "Separate from certification. Passing or failing here does not change the gate.",
         "tests_run": len(numbers),
         "rule_cases": len(rule_cases),
         "rule_pass": sum(c["status"] == "PASS" for c in rule_cases),

@@ -96,7 +96,8 @@
   },
   "core_patch_sha256": "5a6d18d7bdac6cb305cf414a7409b374c3ea7519c18a4cc41884686f05fede61",
   "legality_sha256": {
-    "assets/edison/legality.json": "86f500e411d32d249c264ad27747a46662145cba6d4fde6d621744010dec31e5",
-    "ygoenv/ygoenv/ygopro/edison_legality_data.h": "f387530ff090d7798c9235293beb2a21830894f03ee2b3595b38aa2bd5f296bb"
-  }
+    "assets/edison/legality.json": "541ccf819cd38ec693ec7ac1c4782f3567c993e41acf81a11aa72873fc092cc3",
+    "ygoenv/ygoenv/ygopro/edison_legality_data.h": "4d01d3b8962f206d9073a8eb3b88578fdf6f93583215168df1f5b930c47c084f"
+  },
+  "core_hardening_patch_sha256": "474d852230ac3b8579af9d6979f59bf21264c3c181739ef58969436b82b4cdbb"
 }

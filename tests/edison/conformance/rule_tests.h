@@ -938,15 +938,21 @@ inline void end_discard_mandatory(ConfAssets& a, int rule, bool trace) {
   p.backrow(wrath, 1);
   p.hand(jerry_beans, 1);
   p.pick(white_stone, 0);
-  p.chain(wrath);
   p.end();
   p.stop_at_turn = 2;
   p.start();
   setup(p.moved(white_stone, LOCATION_GRAVE, LOCATION_HAND), "White Stone was not discarded");
   setup(p.activated(white_stone), "White Stone did not activate");
-  observed("Super Rejuvenation offered " + yn(p.offered(super_rejuvenation, 0)) + ", Divine Wrath offered " + yn(p.offered(wrath, 1)) + ";" + p.chain_text());
-  expect_rule(p.offered(wrath, 1), "Rule 11 Ex.1: Divine Wrath can negate the mandatory trigger");
-  expect_rule(!p.offered(super_rejuvenation, 0), "Rule 11 Ex.1: Super Rejuvenation cannot chain to the end-of-turn discard trigger");
+  // Super Rejuvenation is legal in the End Phase before the discard, so only an offer inside the
+  // trigger's Chain counts. P1 declines Wrath, because nothing below a Counter Trap could chain to it.
+  bool wrath_in_chain = false, rejuvenation_in_chain = false;
+  for (const auto& o : p.offers) {
+    if (o.depth > 0 && o.code == wrath) wrath_in_chain = true;
+    if (o.depth > 0 && o.code == super_rejuvenation) rejuvenation_in_chain = true;
+  }
+  observed("In the trigger's Chain: Super Rejuvenation offered " + yn(rejuvenation_in_chain) + ", Divine Wrath offered " + yn(wrath_in_chain) + ";" + p.chain_text());
+  expect_rule(wrath_in_chain, "Rule 11 Ex.1: Divine Wrath can negate the mandatory trigger");
+  expect_rule(!rejuvenation_in_chain, "Rule 11 Ex.1: Super Rejuvenation cannot chain to the end-of-turn discard trigger");
 }
 inline void end_discard_optional(ConfAssets& a, int rule, bool historical, bool trace) {
   Play p(a, rule, trace);

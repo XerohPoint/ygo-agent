@@ -61,6 +61,10 @@ def main():
         report["core_patch_sha256"] = digest(patch)
         if report["core_patch_sha256"] != lock["core_patch_sha256"]:
             raise RuntimeError("Core patch hash differs from certification lock")
+        hardening = ROOT / "repo/packages/y/ygopro-core/edison-hardening.patch"
+        report["core_hardening_patch_sha256"] = digest(hardening)
+        if report["core_hardening_patch_sha256"] != lock["core_hardening_patch_sha256"]:
+            raise RuntimeError("Core hardening patch hash differs from certification lock")
         report["core_recipe_sha256"] = digest(recipe)
         report["binary"] = str(args.binary.resolve())
         report["binary_sha256"] = digest(args.binary)
@@ -74,6 +78,7 @@ def main():
                    ROOT / "ygoenv/ygoenv/ygopro/deck_file.h",
                    ROOT / "ygoenv/ygoenv/ygopro/edison_legality_data.h"]
         sources += [ROOT / "ygoai/edison_policy.py", ROOT / "ygoai/edison_rl.py"]
+        sources += [ROOT / "tools/edison/pool_audit/soak_worker.py"]  # Test 085's observation contract.
         sources += sorted(p for p in Path(__file__).parent.iterdir()
                           if p.suffix in (".h", ".cpp", ".py"))
         report["source_sha256"] = {str(path.relative_to(ROOT)): digest(path) for path in sources}
@@ -82,8 +87,9 @@ def main():
             command.append(f"--test={args.test_id}")
         if args.fail_fast:
             command.append("--fail-fast")
-        commands = [] if args.test_id in ("042", "077", "078", "079", "082", "083") else [command]
-        if args.test_id in (None, "042", "077", "078", "079", "082", "083"):
+        production_tests = ("042", "077", "078", "079", "082", "083", "084", "085")
+        commands = [] if args.test_id in production_tests else [command]
+        if args.test_id in (None, *production_tests):
             production = sorted((ROOT / "build/linux/x86_64/release").glob("ygopro_ygoenv*.so"))
             if len(production) != 1:
                 raise RuntimeError("Build the production module before production certification")
@@ -107,7 +113,7 @@ def main():
             commands.append(probe)
         if args.test_id in (None, "078"):
             commands.append([sys.executable, str(Path(__file__).with_name("production_observation_tests.py"))])
-        if args.test_id in (None, "079", "082", "083"):
+        if args.test_id in (None, "079", "082", "083", "084", "085"):
             agent_lock = json.loads(Path(__file__).with_name("agent_assets.lock.json").read_text())
             report["agent_assets_sha256"] = agent_lock
             for relative, expected in agent_lock.items():
@@ -119,6 +125,10 @@ def main():
                 commands.append([sys.executable, str(Path(__file__).with_name("production_context_tests.py"))])
             if args.test_id in (None, "083"):
                 commands.append([sys.executable, str(Path(__file__).with_name("rl_tests.py"))])
+            if args.test_id in (None, "084"):
+                commands.append([sys.executable, str(Path(__file__).with_name("production_diagnostic_tests.py"))])
+            if args.test_id in (None, "085"):
+                commands.append([sys.executable, str(Path(__file__).with_name("production_prompt_tests.py"))])
         report["command"] = commands[0]
         report["commands"] = commands
         outputs = []

@@ -12,6 +12,18 @@
       "url": "https://img.yugioh-card.com/en/downloads/alt_format/2010-03-01.pdf",
       "sha256": "a4eb75169aea3148b1fa10b9fe8b9fe9116a6c321df9a4fd176d7024dfb5c71f",
       "selection_basis": "Advanced Format column; 45 Forbidden, 70 Limited, 20 Semi-Limited"
+    },
+    {
+      "url": "https://www.edisonformat.com/legal-sets.html",
+      "selection_basis": "Pool authority: a card is in the pool if it is in a listed legal set and released in the TCG before the format date. Page read by docs/edison-pool-audit.md; no hash archived."
+    },
+    {
+      "url": "https://formatlibrary.com/api",
+      "selection_basis": "Format date April 24, 2010, and TCG dates for the 13 additions, checked by the project supervisor; see docs/edison-pool-audit.md. Per-card values from that check were not archived."
+    },
+    {
+      "url": "https://db.ygoprodeck.com/api/v7/cardinfo.php",
+      "selection_basis": "Dated listing the audit used to find the additions; tests/edison/reports/pool-audit-2026-11-04/pool_crosscheck.json.gz records each card's set and date."
     }
   ],
   "notes": [
@@ -19,7 +31,10 @@
     "Alternate artwork IDs are included only when explicitly listed for the same source card and present in the pinned database.",
     "The source uses Barrel Dragon ID 81480461; the pinned database contains its listed artwork ID 81480460.",
     "Tokens cannot be placed in decks. Get Your Game On! is a non-duel promotional card absent from the pinned database.",
-    "Card-pool membership does not certify every historical card script."
+    "Card-pool membership does not certify every historical card script.",
+    "Pool authority is the listed legal sets plus Format Library's TCG dates, as decided in docs/edison-roadmap.md. The YGOPRODeck Edison filter named in sources[0] is the starting list; it omits cards that meet that test, such as XX-Saber Gottoms, which is in 8 of 75 sampled tournament lists.",
+    "Only XX-Saber Gottoms is proven in real lists. The other 12 are inferred from set listings and dates. Reasons a card might still be excluded were not checked, and owner review of the authority is still open.",
+    "Duel Terminal printings are not on the legal sets page, so cards only in DT01 stay out. Discord's DT04 printing is not its basis; ANPR is."
   ],
   "excluded": [
     {
@@ -1102,6 +1117,13 @@
       "name": "Gravekeeper's Visionary",
       "accepted_ids": [
         3825890
+      ]
+    },
+    {
+      "code": 3891471,
+      "name": "Psychic Tuning",
+      "accepted_ids": [
+        3891471
       ]
     },
     {
@@ -3081,6 +3103,13 @@
       "name": "Elemental HERO Air Neos",
       "accepted_ids": [
         11502550
+      ]
+    },
+    {
+      "code": 11508758,
+      "name": "Mutant Mindmaster",
+      "accepted_ids": [
+        11508758
       ]
     },
     {
@@ -7260,6 +7289,13 @@
       ]
     },
     {
+      "code": 27416701,
+      "name": "Shiba-Warrior Taro",
+      "accepted_ids": [
+        27416701
+      ]
+    },
+    {
       "code": 27581098,
       "name": "Non-Fusion Area",
       "accepted_ids": [
@@ -9092,6 +9128,13 @@
       ]
     },
     {
+      "code": 34351849,
+      "name": "Froggy Forcefield",
+      "accepted_ids": [
+        34351849
+      ]
+    },
+    {
       "code": 34358408,
       "name": "Djinn Presider of Rituals",
       "accepted_ids": [
@@ -9447,6 +9490,13 @@
       "name": "Terrorking Archfiend",
       "accepted_ids": [
         35975813
+      ]
+    },
+    {
+      "code": 35984222,
+      "name": "Ido the Supreme Magical Force",
+      "accepted_ids": [
+        35984222
       ]
     },
     {
@@ -10533,6 +10583,13 @@
       "name": "Cyber Raider",
       "accepted_ids": [
         39978267
+      ]
+    },
+    {
+      "code": 39980304,
+      "name": "Chain Material",
+      "accepted_ids": [
+        39980304
       ]
     },
     {
@@ -12308,6 +12365,13 @@
       ]
     },
     {
+      "code": 46480475,
+      "name": "Discord",
+      "accepted_ids": [
+        46480475
+      ]
+    },
+    {
       "code": 46502013,
       "name": "Pixie Ring",
       "accepted_ids": [
@@ -13115,6 +13179,13 @@
       ]
     },
     {
+      "code": 49808196,
+      "name": "Metabo Globster",
+      "accepted_ids": [
+        49808196
+      ]
+    },
+    {
       "code": 49814180,
       "name": "Master Monk",
       "accepted_ids": [
@@ -13801,6 +13872,13 @@
       ]
     },
     {
+      "code": 52352005,
+      "name": "XX-Saber Gottoms",
+      "accepted_ids": [
+        52352005
+      ]
+    },
+    {
       "code": 52417194,
       "name": "Heavy Slump",
       "accepted_ids": [
@@ -13812,6 +13890,13 @@
       "name": "Psychic Jumper",
       "accepted_ids": [
         52430902
+      ]
+    },
+    {
+      "code": 52496105,
+      "name": "Gladiator Beast's Battle Manica",
+      "accepted_ids": [
+        52496105
       ]
     },
     {
@@ -18304,6 +18389,13 @@
       ]
     },
     {
+      "code": 70284332,
+      "name": "Tuner's Scheme",
+      "accepted_ids": [
+        70284332
+      ]
+    },
+    {
       "code": 70307656,
       "name": "Mucus Yolk",
       "accepted_ids": [
@@ -20620,6 +20712,13 @@
       ]
     },
     {
+      "code": 79205581,
+      "name": "Scrubbed Raid",
+      "accepted_ids": [
+        79205581
+      ]
+    },
+    {
       "code": 79229522,
       "name": "Chimeratech Fortress Dragon",
       "accepted_ids": [
@@ -22890,6 +22989,13 @@
       "name": "Robbin' Goblin",
       "accepted_ids": [
         88279736
+      ]
+    },
+    {
+      "code": 88289295,
+      "name": "Synchro Control",
+      "accepted_ids": [
+        88289295
       ]
     },
     {
@@ -26428,6 +26534,99 @@
       "code": 98777036,
       "name": "TRAGOEDIA",
       "limit": 1
+    }
+  ],
+  "additions": [
+    {
+      "code": 52352005,
+      "name": "XX-Saber Gottoms",
+      "legal_set": "ANPR",
+      "tcg_date": "2009-09-01",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
+    },
+    {
+      "code": 46480475,
+      "name": "Discord",
+      "legal_set": "ANPR",
+      "tcg_date": "2009-09-01",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
+    },
+    {
+      "code": 39980304,
+      "name": "Chain Material",
+      "legal_set": "PTDN",
+      "tcg_date": "2008-01-26",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
+    },
+    {
+      "code": 49808196,
+      "name": "Metabo Globster",
+      "legal_set": "PTDN",
+      "tcg_date": "2008-01-26",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
+    },
+    {
+      "code": 11508758,
+      "name": "Mutant Mindmaster",
+      "legal_set": "PTDN",
+      "tcg_date": "2008-03-12",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
+    },
+    {
+      "code": 3891471,
+      "name": "Psychic Tuning",
+      "legal_set": "CRMS",
+      "tcg_date": "2009-02-28",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
+    },
+    {
+      "code": 35984222,
+      "name": "Ido the Supreme Magical Force",
+      "legal_set": "CRMS",
+      "tcg_date": "2009-02-28",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
+    },
+    {
+      "code": 88289295,
+      "name": "Synchro Control",
+      "legal_set": "ABPF",
+      "tcg_date": "2010-02-12",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
+    },
+    {
+      "code": 70284332,
+      "name": "Tuner's Scheme",
+      "legal_set": "ABPF",
+      "tcg_date": "2010-02-12",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
+    },
+    {
+      "code": 52496105,
+      "name": "Gladiator Beast's Battle Manica",
+      "legal_set": "GLAS",
+      "tcg_date": "2007-11-14",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
+    },
+    {
+      "code": 34351849,
+      "name": "Froggy Forcefield",
+      "legal_set": "LODT",
+      "tcg_date": "2008-05-03",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
+    },
+    {
+      "code": 27416701,
+      "name": "Shiba-Warrior Taro",
+      "legal_set": "YAP1",
+      "tcg_date": "2008-12-08",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
+    },
+    {
+      "code": 79205581,
+      "name": "Scrubbed Raid",
+      "legal_set": "DP09",
+      "tcg_date": "2010-01-15",
+      "basis": "docs/edison-pool-audit.md: in a listed legal set, dated before 2010-04-24"
     }
   ]
 }

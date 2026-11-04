@@ -12,7 +12,10 @@
 #include <string>
 #include <cstring>
 #include <fstream>
+#include <functional>
 #include <iostream>
+#include <memory>
+#include <stack>
 #include <set>
 
 
@@ -30,6 +33,7 @@
 
 #include "ygopro-core/common.h"
 #include "ygopro-core/card_data.h"
+#include "ygopro-core/card.h"
 #include "ygopro-core/duel.h"
 #include "ygopro-core/ocgapi.h"
 #include "duel_config.h"
@@ -139,34 +143,85 @@ combinations_with_weight2(
   return results;
 }
 
-inline std::vector<uint32_t>
-parse_codes_from_opcodes(const std::vector<uint32_t> &opcodes) {
-  int n = opcodes.size();
-  std::vector<uint32_t> codes;
-
-  if (n == 2) {
-    codes.push_back(opcodes[0]);
-    return codes;
+// Sets of Tributes that reach min, where a double Tribute weighs 2. A set with a spare card is
+// left out, since a Summon does not take more Tributes than it needs.
+inline std::vector<std::vector<int>>
+tribute_combinations(const std::vector<int> &weights, int min, int max) {
+  const int n = weights.size();
+  if (n > 20) {
+    throw std::runtime_error("Too many Tribute candidates: " + std::to_string(n));
   }
-
-  if (((n - 2) % 3) != 0) {
-    for (int i = 0; i < n; i++) {
-      fmt::println("{}: {}", i, opcodes[i]);
-    }
-    throw std::runtime_error("invalid format of opcodes");
-  }
-
-  for (int i = 2; i < n; i += 3) {
-    codes.push_back(opcodes[i]);
-    if ((opcodes[i + 1] != 1073742080) || (opcodes[i + 2] != 1073741829)) {
-      for (int i = 0; i < n; i++) {
-        fmt::println("{}: {}", i, opcodes[i]);
+  std::vector<std::vector<int>> combs;
+  for (uint32_t mask = 1; mask < (1u << n); ++mask) {
+    std::vector<int> comb;
+    int total = 0, lightest = 255;
+    for (int i = 0; i < n; ++i) {
+      if (mask & (1u << i)) {
+        comb.push_back(i);
+        total += weights[i];
+        lightest = std::min(lightest, weights[i]);
       }
-      auto err = fmt::format("invalid format of opcodes starting from {}", i);
-      throw std::runtime_error(err);
+    }
+    if (static_cast<int>(comb.size()) <= max && total >= min && total - lightest < min) {
+      combs.push_back(comb);
     }
   }
-  return codes;
+  if (combs.empty()) {
+    throw std::runtime_error("No legal Tribute set");
+  }
+  return combs;
+}
+
+// Opcodes that name cards directly: {code, ISCODE} or {code, ISCODE, code, ISCODE, OR, ...}.
+inline bool parse_codes_from_opcodes(const std::vector<uint32_t> &opcodes,
+                                     std::vector<uint32_t> &codes) {
+  const int n = opcodes.size();
+  if (n < 2 || opcodes[1] != OPCODE_ISCODE || (n - 2) % 3 != 0) {
+    return false;
+  }
+  codes.push_back(opcodes[0]);
+  for (int i = 2; i < n; i += 3) {
+    if (opcodes[i + 1] != OPCODE_ISCODE || opcodes[i + 2] != OPCODE_OR) {
+      codes.clear();
+      return false;
+    }
+    codes.push_back(opcodes[i]);
+  }
+  return true;
+}
+
+// Same decision as is_declarable in the core's playerop.cpp, which is not exported. A candidate
+// the two disagree on comes back from the core as MSG_RETRY, which aborts the duel loudly.
+inline bool opcodes_allow_card(const card_data &cd, const std::vector<uint32_t> &opcodes) {
+  std::stack<int32_t> stack;
+  const auto pop = [&stack]() {
+    int32_t value = stack.top();
+    stack.pop();
+    return value;
+  };
+  for (uint32_t op : opcodes) {
+    switch (op) {
+    case OPCODE_ADD: if (stack.size() >= 2) { auto r = pop(); auto l = pop(); stack.push(l + r); } break;
+    case OPCODE_SUB: if (stack.size() >= 2) { auto r = pop(); auto l = pop(); stack.push(l - r); } break;
+    case OPCODE_MUL: if (stack.size() >= 2) { auto r = pop(); auto l = pop(); stack.push(l * r); } break;
+    case OPCODE_DIV: if (stack.size() >= 2) { auto r = pop(); auto l = pop(); stack.push(l / r); } break;
+    case OPCODE_AND: if (stack.size() >= 2) { auto r = pop(); auto l = pop(); stack.push(l && r); } break;
+    case OPCODE_OR: if (stack.size() >= 2) { auto r = pop(); auto l = pop(); stack.push(l || r); } break;
+    case OPCODE_NEG: if (stack.size() >= 1) { auto v = pop(); stack.push(-v); } break;
+    case OPCODE_NOT: if (stack.size() >= 1) { auto v = pop(); stack.push(!v); } break;
+    case OPCODE_ISCODE: if (stack.size() >= 1) { auto v = pop(); stack.push(cd.code == static_cast<uint32_t>(v)); } break;
+    case OPCODE_ISSETCARD: if (stack.size() >= 1) { auto v = pop(); stack.push(cd.is_setcode(v)); } break;
+    case OPCODE_ISTYPE: if (stack.size() >= 1) { auto v = pop(); stack.push(cd.type & v); } break;
+    case OPCODE_ISRACE: if (stack.size() >= 1) { auto v = pop(); stack.push(cd.race & v); } break;
+    case OPCODE_ISATTRIBUTE: if (stack.size() >= 1) { auto v = pop(); stack.push(cd.attribute & v); } break;
+    default: stack.push(op); break;
+    }
+  }
+  if (stack.size() != 1 || stack.top() == 0) {
+    return false;
+  }
+  return cd.code == CARD_MARINE_DOLPHIN || cd.code == CARD_TWINKLE_MOSS ||
+         (!cd.alias && (cd.type & (TYPE_MONSTER | TYPE_TOKEN)) != (TYPE_MONSTER | TYPE_TOKEN));
 }
 
 static std::string msg_to_string(int msg) {
@@ -424,9 +479,141 @@ static const std::map<int, std::string> system_strings = {
     {1622, "[%ls] Missed timing"}
 };
 
+// Prompt descriptions added after system_strings. They take new ids after the existing ones, so
+// the effect column of every prompt that already worked keeps its value. Append only.
+static const std::map<int, std::string> added_system_strings = {
+    {2, "Special Summon"},
+    {3, "Flip Summon"},
+    {4, "Normal Summoned"},
+    {5, "Special Summoned"},
+    {6, "Flip Summoned"},
+    {7, "Activate"},
+    {10, "Remove Counter(s)"},
+    {11, "Pay LP"},
+    {12, "Remove Material(s)"},
+    {20, "During the Draw Phase."},
+    {21, "During the Standby Phase."},
+    {22, "Main Phase."},
+    {23, "Your opponent is about to move to the next Phase."},
+    {24, "Battle Step of the Battle Phase."},
+    {25, "End Step of the Battle Phase."},
+    {26, "During the End Phase."},
+    {27, "At the start of the Draw Phase, before the Draw."},
+    {28, "Start Step of the Battle Phase."},
+    {29, "End Step of the Battle Phase."},
+    {40, "Start of the Damage Step."},
+    {41, "Before Damage Calculation."},
+    {42, "During Damage Calculation."},
+    {43, "After Damage Calculation."},
+    {44, "End of the Damage Step."},
+    {60, "Heads"},
+    {61, "Tails"},
+    {62, "Heads effect"},
+    {63, "Tails effect"},
+    {64, "Gemini"},
+    {65, "Use effect"},
+    {66, "Keep revealed"},
+    {67, "Originally owned by opponent"},
+    {70, "Monster Cards"},
+    {71, "Spell Cards"},
+    {72, "Trap Cards"},
+    {100, "First"},
+    {101, "Second"},
+    {102, "Self"},
+    {103, "Opponent"},
+    {201, "No card or effect can be activated at this time."},
+    {202, "Check the field?"},
+    {204, "Remove %d [%ls]"},
+    {205, "Rearrange the order of cards on top/bottom of the Deck."},
+    {206, "Select the chain sequence."},
+    {207, "Revealing %d card(s):"},
+    {208, "Confirm %d card(s):"},
+    {209, "This card has met its requirements."},
+    {211, "Turn counter:"},
+    {212, "Declared card:"},
+    {213, "Declared type:"},
+    {214, "Declared attribute:"},
+    {215, "Declared number:"},
+    {216, "Activated in chain link %d"},
+    {217, "Target of (chain %d) [%ls]"},
+    {223, "Other Trigger Effects will be asked later."},
+    {224, "First Special Summoned by own Condition"},
+    {225, "Overlayed under [%ls](%d)"},
+    {1100, "S/T Destroy"},
+    {1101, "Destroy Monster"},
+    {1102, "Banish"},
+    {1103, "Graveyard"},
+    {1104, "Back to Hand"},
+    {1105, "Back to Deck"},
+    {1106, "Destroy Hand"},
+    {1107, "Destroy Deck"},
+    {1108, "Draw"},
+    {1109, "Search"},
+    {1110, "Recovery"},
+    {1111, "Position"},
+    {1112, "Control"},
+    {1113, "Change ATK/DEF"},
+    {1114, "Piercing"},
+    {1115, "Repeat Attack"},
+    {1116, "Limit Attack"},
+    {1117, "Direct Attack"},
+    {1118, "Special Summon"},
+    {1119, "Token"},
+    {1120, "Type-Related"},
+    {1121, "Property-Related"},
+    {1122, "Damage LP"},
+    {1123, "Recover LP"},
+    {1124, "Destroy"},
+    {1125, "Select"},
+    {1126, "Counter"},
+    {1127, "Gamble"},
+    {1128, "Fusion-Related"},
+    {1129, "Tuner-Related"},
+    {1130, "Xyz-Related"},
+    {1131, "Negate Effect"},
+    {1200, "LAN Mode"},
+    {1201, "Single Mode"},
+    {1202, "Watch Replay"},
+    {1203, "N/A"},
+    {1204, "Deck Edit"},
+    {1210, "Exit"},
+    {1211, "OK"},
+    {1212, "Cancel"},
+    {1213, "Yes"},
+    {1214, "No"},
+    {1215, "Start"},
+    {1216, "Message"},
+    {1217, "Refresh"},
+    {1218, "Ready"},
+    {1219, "Cancel"},
+    {1220, "Nickname:"},
+    {1221, "HostIP:"},
+    {1222, "Password:"},
+    {1223, "Join"},
+    {1224, "Host"},
+    {1225, "Allowed Cards:"},
+    {1226, "Forbidden List:"},
+    {1227, "Duel Mode:"},
+    {1228, "Additional Options"},
+    {1229, "Don't check deck"},
+    {1230, "Do not shuffle deck"},
+    {1231, "Starting LP:"},
+    {1232, "Starting Hand:"},
+    {1233, "Cards per Draw:"},
+    {1234, "Host Name:"},
+    {1235, "Password:"},
+    {1236, "Use obsolete rulings"},
+    {1237, "Time limit:"},
+    {1238, "Return cards to deck top before shuffle"},
+};
+
 static std::string get_system_string(int desc) {
   auto it = system_strings.find(desc);
   if (it != system_strings.end()) {
+    return it->second;
+  }
+  it = added_system_strings.find(desc);
+  if (it != added_system_strings.end()) {
     return it->second;
   }
   throw std::runtime_error(
@@ -601,8 +788,14 @@ inline std::string name(decltype(x_map)::key_type x) { \
   return "unknown"; \
 }
 
-static const ankerl::unordered_dense::map<int, uint8_t> system_string2id =
-    make_ids(system_strings, 16);
+static const ankerl::unordered_dense::map<int, uint8_t> system_string2id = [] {
+  auto ids = make_ids(system_strings, 16);
+  int next = 16 + static_cast<int>(system_strings.size());
+  for (const auto &[desc, text] : added_system_strings) {
+    ids[desc] = static_cast<uint8_t>(next++);
+  }
+  return ids;
+}();
 DEFINE_X_TO_ID_FUN(system_string_to_id, system_string2id)
 
 
@@ -754,7 +947,7 @@ static const std::vector<int> _msgs = {
     MSG_SELECT_YESNO,    MSG_SELECT_BATTLECMD, MSG_SELECT_UNSELECT_CARD,
     MSG_SELECT_OPTION,   MSG_SELECT_PLACE,     MSG_SELECT_SUM,
     MSG_SELECT_DISFIELD, MSG_ANNOUNCE_ATTRIB,  MSG_ANNOUNCE_NUMBER,
-    MSG_ANNOUNCE_CARD,
+    MSG_ANNOUNCE_CARD,   MSG_ANNOUNCE_RACE,
 };
 
 static const ankerl::unordered_dense::map<int, uint8_t> msg2id =
@@ -981,7 +1174,7 @@ public:
   bool finish_ = false;
   uint8_t position_ = 0;
   int effect_ = -1;
-  uint8_t number_ = 0;
+  uint16_t number_ = 0;
   ActionPlace place_ = ActionPlace::None;
   uint8_t attribute_ = 0;
 
@@ -1029,7 +1222,7 @@ public:
     return la;
   }
 
-  static LegalAction number(uint8_t number) {
+  static LegalAction number(uint16_t number) {
     LegalAction la;
     la.number_ = number;
     return la;
@@ -1339,6 +1532,17 @@ inline byte *script_reader_callback(const char *name, int *lenptr) {
   return it->second.buf;
 }
 
+// The core discards Lua and script diagnostics unless a handler is installed. Workers fail
+// closed on these marker words, so write one complete line per diagnostic to stderr.
+inline uint32 core_message_callback(intptr_t pduel, uint32 msg_type) {
+  char buffer[1024] = {};
+  get_log_message(pduel, buffer);
+  std::fprintf(stderr, "[ygopro-core] Error: diagnostic type %u: %s\n",
+               static_cast<unsigned>(msg_type), buffer);
+  std::fflush(stderr);
+  return 0;
+}
+
 static void init_module(const std::string &db_path,
                         const std::string &code_list_file,
                         const std::map<std::string, std::string> &decks) {
@@ -1421,6 +1625,7 @@ static void init_module(const std::string &db_path,
   }
   cards_script_["./script/c0.lua"] = {nullptr, 0};
 
+  set_message_handler(core_message_callback);
   set_card_reader(card_reader_callback);
   set_script_reader(script_reader_callback);
 }
@@ -1701,6 +1906,10 @@ protected:
 
   // multi select
   int ms_idx_ = -1;
+  // A prompt the environment splits into several decisions. The core is still waiting for its
+  // one response, so next() runs this instead of processing.
+  std::function<void()> local_prompt_;
+  int n_places_ = 1;
   int ms_mode_ = 0;
   int ms_min_ = 0;
   int ms_max_ = 0;
@@ -1827,6 +2036,7 @@ public:
 
     turn_count_ = 0;
     ms_idx_ = -1;
+    local_prompt_ = nullptr;
     decision_.reset();
 
     history_actions_1_.Zero();
@@ -2034,6 +2244,8 @@ public:
       fmt::print("({}, {}), ", k, v);
     }
     fmt::print("\n");
+    // Callers may substitute a default response, so the marker is what lets a worker fail closed.
+    fmt::println("Spec not found: {}", spec);
     return -1;
     // throw std::runtime_error("Spec not found: " + spec);
   }
@@ -2686,7 +2898,8 @@ private:
       show_buffer();
       show_turn();
       fmt::println("MS: idx: {}, mode: {}, min: {}, max: {}, must: {}, specs: {}, combs: {}", ms_idx_, ms_mode_, ms_min_, ms_max_, ms_must_, ms_specs_, ms_combs_);
-      fmt::println("Spec: {}, Spec2index:", spec);
+      // This path keeps running with a blank row, so the marker is what lets a worker fail closed.
+      fmt::println("Spec not found: {}, Spec2index:", spec);
       for (auto &[k, v] : spec_infos) {
         fmt::print("{}: {} {}, ", k, v.index, v.cid);
       }
@@ -2746,8 +2959,11 @@ private:
     feat(i, 8) = position_to_id(position);
   }
 
-  void _set_obs_action_number(TArray<uint8_t> &feat, int i, uint8_t number) {
-    feat(i, 9) = number;
+  // Values up to 255 read as before. Larger ones (Mausoleum's 1000 and 2000) carry their high
+  // byte in the place column, which a number prompt does not otherwise use.
+  void _set_obs_action_number(TArray<uint8_t> &feat, int i, uint16_t number) {
+    feat(i, 9) = static_cast<uint8_t>(number & 0xff);
+    feat(i, 10) = static_cast<uint8_t>(number >> 8);
   }
 
   void _set_obs_action_place(TArray<uint8_t> &feat, int i, ActionPlace place) {
@@ -2789,10 +3005,11 @@ private:
     } else if (msg == MSG_SELECT_PLACE || msg_ == MSG_SELECT_DISFIELD) {
       _set_obs_action_place(feat, i, action.place_);
     } else if (msg == MSG_ANNOUNCE_CARD) {
-      // card id, already set
+      // Card id already set. A nonzero number marks a page of the card list, not a card.
+      _set_obs_action_number(feat, i, action.number_);
     } else if (msg == MSG_ANNOUNCE_ATTRIB) {
       _set_obs_action_attrib(feat, i, action.attribute_);
-    } else if (msg == MSG_ANNOUNCE_NUMBER) {
+    } else if (msg == MSG_ANNOUNCE_NUMBER || msg == MSG_ANNOUNCE_RACE) {
       _set_obs_action_number(feat, i, action.number_);
     } else {
       throw std::runtime_error("Unsupported message " + msg_to_string(msg));
@@ -2899,8 +3116,8 @@ private:
           break;
         case MSG_SELECT_PLACE:
         case MSG_SELECT_DISFIELD:
-          ReplayWriteInt8(3);
-          fwrite(buf, 3, 1, fp_);
+          ReplayWriteInt8(3 * n_places_);
+          fwrite(buf, 3 * n_places_, 1, fp_);
           break;
         default:
           ReplayWriteInt8(buf[0] + 1);
@@ -2976,18 +3193,25 @@ private:
       if (eng_flag_ == PROCESSOR_END) {
         break;
       }
-      uint32_t res = YGO_Process(pduel_);
-      dl_ = res & PROCESSOR_BUFFER_LEN;
-      eng_flag_ = res & PROCESSOR_FLAG;
+      if (!local_prompt_) {
+        uint32_t res = YGO_Process(pduel_);
+        dl_ = res & PROCESSOR_BUFFER_LEN;
+        eng_flag_ = res & PROCESSOR_FLAG;
 
-      if (dl_ == 0) {
-        continue;
+        if (dl_ == 0) {
+          continue;
+        }
+        YGO_GetMessage(pduel_, data_);
+        dp_ = 0;
       }
-      YGO_GetMessage(pduel_, data_);
-      dp_ = 0;
-      while ((dp_ != dl_) || (ms_idx_ != -1)) {
+      while ((dp_ != dl_) || (ms_idx_ != -1) || local_prompt_) {
         if (ms_idx_ != -1) {
           handle_multi_select();
+        } else if (local_prompt_) {
+          auto prompt = std::move(local_prompt_);
+          local_prompt_ = nullptr;
+          legal_actions_.clear();
+          prompt();
         } else {
           handle_message();
           if (legal_actions_.empty()) {
@@ -3021,6 +3245,174 @@ private:
     }
     done_ = true;
     legal_actions_.clear();
+  }
+
+  // Pick `remaining` values one decision at a time; the core takes them as one bitmask.
+  void prompt_announce_bits(PlayerId player, uint32_t available, int remaining, uint32_t chosen) {
+    const bool attribute = msg_ == MSG_ANNOUNCE_ATTRIB;
+    for (int bit = 0; bit < 32; ++bit) {
+      const uint32_t value = 1u << bit;
+      if (!(available & value) || (chosen & value)) {
+        continue;
+      }
+      LegalAction la = attribute ? LegalAction::attribute(static_cast<uint8_t>(value))
+                                 : LegalAction::number(bit + 1);
+      la.response_ = value;
+      legal_actions_.push_back(la);
+      if (verbose_) {
+        players_[player]->notify(fmt::format("{}: {}", legal_actions_.size(),
+          attribute ? attribute_to_string(value) : race2str.at(value)));
+      }
+    }
+    to_play_ = player;
+    callback_ = [this, player, available, remaining, chosen](int idx) {
+      const uint32_t selected = chosen | legal_actions_[idx].response_;
+      if (remaining <= 1) {
+        YGO_SetResponsei(pduel_, selected);
+        return;
+      }
+      local_prompt_ = [this, player, available, remaining, selected]() {
+        prompt_announce_bits(player, available, remaining - 1, selected);
+      };
+    };
+  }
+
+  // Card names a declaration can pick, in a fixed order that depends only on the code list and
+  // the card's opcodes, never on the duel. Grouped by card kind, then by name.
+  std::vector<uint32_t> declarable_cards(const std::vector<uint32_t> &opcodes) const {
+    std::vector<uint32_t> named;
+    if (parse_codes_from_opcodes(opcodes, named)) {
+      return named;
+    }
+    std::vector<std::tuple<int, std::string, uint32_t>> found;
+    for (const auto &[code, data] : cards_data_) {
+      if (code == 0 || !ygopro::deck_rules::in_edison_pool(code) ||
+          !opcodes_allow_card(data, opcodes)) {
+        continue;
+      }
+      const int kind = (data.type & TYPE_MONSTER) ? 0 : (data.type & TYPE_SPELL) ? 1 : 2;
+      found.emplace_back(kind, c_get_card(code).name_, code);
+    }
+    std::sort(found.begin(), found.end());
+    for (const auto &entry : found) {
+      named.push_back(std::get<2>(entry));
+    }
+    if (named.empty()) {
+      throw std::runtime_error("No card can be declared");
+    }
+    return named;
+  }
+
+  // Every legal name stays reachable and each decision offers at most kDeclarePage rows, the
+  // smallest action capacity in use. Above that, rows are pages: the row shows its first card
+  // and its size in the number column. A pool of about 4,000 names takes three decisions.
+  static constexpr size_t kDeclarePage = 16;
+
+  void prompt_announce_card(PlayerId player, std::shared_ptr<const std::vector<uint32_t>> cards,
+                            size_t lo, size_t hi) {
+    to_play_ = player;
+    if (hi - lo <= kDeclarePage) {
+      for (size_t i = lo; i < hi; ++i) {
+        LegalAction la;
+        la.cid_ = c_get_card_id((*cards)[i]);
+        la.response_ = (*cards)[i];
+        legal_actions_.push_back(la);
+        if (verbose_) {
+          players_[player]->notify(fmt::format("{}: {}", legal_actions_.size(), c_get_card((*cards)[i]).name_));
+        }
+      }
+      callback_ = [this](int idx) {
+        YGO_SetResponsei(pduel_, legal_actions_[idx].response_);
+      };
+      return;
+    }
+    size_t page = 1;
+    while (page * kDeclarePage < hi - lo) {
+      page *= kDeclarePage;
+    }
+    for (size_t start = lo; start < hi; start += page) {
+      LegalAction la;
+      la.cid_ = c_get_card_id((*cards)[start]);
+      la.number_ = static_cast<uint16_t>(std::min<size_t>(page, hi - start));
+      la.response_ = static_cast<uint32_t>(start);
+      legal_actions_.push_back(la);
+      if (verbose_) {
+        players_[player]->notify(fmt::format("{}: {} cards from {}", legal_actions_.size(),
+          la.number_, c_get_card((*cards)[start]).name_));
+      }
+    }
+    callback_ = [this, player, cards, page, hi](int idx) {
+      const size_t start = legal_actions_[idx].response_;
+      const size_t end = std::min(hi, start + page);
+      local_prompt_ = [this, player, cards, start, end]() {
+        prompt_announce_card(player, cards, start, end);
+      };
+    };
+  }
+
+  // Zones are picked one decision at a time, each excluded from the next.
+  void prompt_place(PlayerId player, uint32_t flag, int count, int picked) {
+    auto places = flag_to_usable_places(flag);
+    if (verbose_) {
+      auto place_s = msg_ == MSG_SELECT_PLACE ? "place" : "disfield";
+      players_[player]->notify(fmt::format("Select {} for card, one of:", place_s));
+    }
+    for (int i = 0; i < places.size(); ++i) {
+      legal_actions_.push_back(LegalAction::place(places[i]));
+      if (verbose_) {
+        players_[player]->notify(fmt::format("{}: {}", i + 1, action_place_to_string(places[i])));
+      }
+    }
+    to_play_ = player;
+    callback_ = [this, player, flag, count, picked](int idx) {
+      auto place = legal_actions_[idx].place_;
+      int i = static_cast<int>(place);
+      uint8_t plr = player;
+      uint8_t loc;
+      uint8_t seq;
+      uint32_t bit;
+      if (
+        i >= static_cast<int>(ActionPlace::MZone1) &&
+        i <= static_cast<int>(ActionPlace::MZone7)) {
+        loc = LOCATION_MZONE;
+        seq = i - static_cast<int>(ActionPlace::MZone1);
+        bit = seq;
+      } else if (
+        i >= static_cast<int>(ActionPlace::SZone1) &&
+        i <= static_cast<int>(ActionPlace::SZone8)) {
+        loc = LOCATION_SZONE;
+        seq = i - static_cast<int>(ActionPlace::SZone1);
+        bit = seq + 8;
+      } else if (
+        i >= static_cast<int>(ActionPlace::OpMZone1) &&
+        i <= static_cast<int>(ActionPlace::OpMZone7)) {
+        plr = 1 - player;
+        loc = LOCATION_MZONE;
+        seq = i - static_cast<int>(ActionPlace::OpMZone1);
+        bit = seq + 16;
+      } else if (
+        i >= static_cast<int>(ActionPlace::OpSZone1) &&
+        i <= static_cast<int>(ActionPlace::OpSZone8)) {
+        plr = 1 - player;
+        loc = LOCATION_SZONE;
+        seq = i - static_cast<int>(ActionPlace::OpSZone1);
+        bit = seq + 24;
+      } else {
+        throw std::runtime_error("Invalid place action");
+      }
+      resp_buf_[3 * picked] = plr;
+      resp_buf_[3 * picked + 1] = loc;
+      resp_buf_[3 * picked + 2] = seq;
+      if (picked + 1 >= count) {
+        n_places_ = count;
+        YGO_SetResponseb(pduel_, resp_buf_);
+        return;
+      }
+      const uint32_t remaining = flag | (1u << bit);
+      local_prompt_ = [this, player, remaining, count, picked]() {
+        prompt_place(player, remaining, count, picked + 1);
+      };
+    };
   }
 
   uint8_t read_u8() { return data_[dp_++]; }
@@ -3277,7 +3669,8 @@ private:
     // different card after movement or randomization.
     if (msg_ == MSG_MOVE || msg_ == MSG_SHUFFLE_HAND || msg_ == MSG_SHUFFLE_DECK ||
         msg_ == MSG_SHUFFLE_EXTRA || msg_ == MSG_SWAP || msg_ == MSG_SET ||
-        msg_ == MSG_SHUFFLE_SET_CARD || msg_ == MSG_SWAP_GRAVE_DECK || msg_ == MSG_POS_CHANGE)
+        msg_ == MSG_SHUFFLE_SET_CARD || msg_ == MSG_SWAP_GRAVE_DECK || msg_ == MSG_POS_CHANGE ||
+        msg_ == MSG_REVERSE_DECK)
       revealed_.clear();
     legal_actions_ = {};
 
@@ -3285,7 +3678,39 @@ private:
       fmt::println("Message {}, length {}, dp {}", msg_to_string(msg_), dl_, dp_);
     }
 
-    if (msg_ == MSG_DRAW) {
+    if (msg_ == MSG_TOSS_COIN || msg_ == MSG_TOSS_DICE) {
+      // A public result. Scripts read it from the core, so the environment only moves past it.
+      auto player = read_u8();
+      int count = read_u8();
+      std::vector<int> results;
+      for (int i = 0; i < count; ++i) {
+        results.push_back(read_u8());
+      }
+      if (verbose_) {
+        players_[player]->notify(fmt::format("{}: {}", msg_ == MSG_TOSS_COIN ? "Coin" : "Dice", results));
+      }
+    } else if (msg_ == MSG_FIELD_DISABLED) {
+      // Zone prompts already carry the usable zones.
+      dp_ += 4;
+    } else if (msg_ == MSG_DECK_TOP) {
+      // The face-up top of a Deck. Not observed: see "no persistent deck-top" in the handoff.
+      dp_ += 6;
+    } else if (msg_ == MSG_REVERSE_DECK) {
+      // No payload.
+    } else if (msg_ == MSG_SWAP_GRAVE_DECK || msg_ == MSG_HAND_RES) {
+      dp_ += 1;
+    } else if (msg_ == MSG_CANCEL_TARGET) {
+      dp_ += 8;
+    } else if (msg_ == MSG_MATCH_KILL) {
+      dp_ += 4;
+    } else if (msg_ == MSG_CONFIRM_EXTRATOP) {
+      read_u8();
+      int count = read_u8();
+      dp_ += 7 * count;
+    } else if (msg_ == MSG_SHOW_HINT) {
+      int length = read_u16();
+      dp_ += length + 1;
+    } else if (msg_ == MSG_DRAW) {
       if (!verbose_) {
         dp_ = dl_;
         return;
@@ -4433,14 +4858,13 @@ private:
           std::any_of(release_params.begin(), release_params.end(),
                       [](int i) { return i != 1; });
 
-      if (min != max) {
-        throw std::runtime_error(
-          fmt::format("min({}) != max({}), not implemented for select tribute", min, max));
-      }
-
       if (has_weight) {
-        throw std::runtime_error("weight not implemented for select tribute");
-        // combs = combinations_with_weight(release_params, min);
+        init_multi_select(min, max, 0, specs, 1, tribute_combinations(release_params, min, max));
+        to_play_ = player;
+        callback_ = [this](int idx) {
+          _callback_multi_select_2(idx);
+        };
+        return;
       }
 
       // TODO(1): use this when added to history actions
@@ -4988,69 +5412,13 @@ private:
       if (count == 0) {
         count = 1;
       }
-      if (count != 1) {
-        auto s = fmt::format("Select place count {} not implemented for {}",
-                              count, msg_ == MSG_SELECT_PLACE ? "place" : "disfield");
-        throw std::runtime_error(s);
-      }
       auto flag = read_u32();
-      auto places = flag_to_usable_places(flag);
-      if (verbose_) {
-        auto place_s = msg_ == MSG_SELECT_PLACE ? "place" : "disfield";
-        auto s = fmt::format("Select {} for card, one of:", place_s);
-        players_[player]->notify(s);
-      }
-      for (int i = 0; i < places.size(); ++i) {
-        legal_actions_.push_back(LegalAction::place(places[i]));
-        if (verbose_) {
-          auto s = fmt::format("{}: {}", i + 1, action_place_to_string(places[i]));
-          players_[player]->notify(s);
-        }
-      }
-      to_play_ = player;
-      callback_ = [this, player](int idx) {
-        auto place = legal_actions_[idx].place_;
-        int i = static_cast<int>(place);
-        uint8_t plr = player;
-        uint8_t loc;
-        uint8_t seq;
-        if (
-          i >= static_cast<int>(ActionPlace::MZone1) &&
-          i <= static_cast<int>(ActionPlace::MZone7)) {
-          loc = LOCATION_MZONE;
-          seq = i - static_cast<int>(ActionPlace::MZone1);
-        } else if (
-          i >= static_cast<int>(ActionPlace::SZone1) &&
-          i <= static_cast<int>(ActionPlace::SZone8)) {
-          loc = LOCATION_SZONE;
-          seq = i - static_cast<int>(ActionPlace::SZone1);
-        } else if (
-          i >= static_cast<int>(ActionPlace::OpMZone1) &&
-          i <= static_cast<int>(ActionPlace::OpMZone7)) {
-          plr = 1 - player;
-          loc = LOCATION_MZONE;
-          seq = i - static_cast<int>(ActionPlace::OpMZone1);
-        } else if (
-          i >= static_cast<int>(ActionPlace::OpSZone1) &&
-          i <= static_cast<int>(ActionPlace::OpSZone8)) {
-          plr = 1 - player;
-          loc = LOCATION_SZONE;
-          seq = i - static_cast<int>(ActionPlace::OpSZone1);
-        }
-        resp_buf_[0] = plr;
-        resp_buf_[1] = loc;
-        resp_buf_[2] = seq;
-        YGO_SetResponseb(pduel_, resp_buf_);
-      };
+      prompt_place(player, flag, count, 0);
     } else if (msg_ == MSG_SELECT_COUNTER) {
       auto player = read_u8();
       auto counter_type = read_u16();
       int counter_count = read_u16();
       int count = read_u8();
-      if (count > 2) {
-        throw std::runtime_error("Select counter count " +
-                                 std::to_string(count) + " not implemented");
-      }
       auto& pl = players_[player];
       if (verbose_) {
         pl->notify(fmt::format("Type new {} for {} card(s), separated by spaces.", "UNKNOWN_COUNTER", count));
@@ -5073,15 +5441,11 @@ private:
       }
       // TODO(2): implement action
       n_counters_ = count;
-      uint16_t resp1 = static_cast<uint16_t>(std::min(counter_count, counters[0]));
-      memcpy(resp_buf_, &resp1, 2);
-      counter_count -= counters[0];
-      if (count == 2) {
-        uint16_t resp2 = 0;
-        if (counter_count > 0) {
-          resp2 = static_cast<uint16_t>(counter_count);
-        }
-        memcpy(resp_buf_ + 2, &resp2, 2);
+      // Taken in listed order, without a decision: the player's choice is not modeled yet.
+      for (int i = 0; i < count; ++i) {
+        uint16_t taken = static_cast<uint16_t>(std::min(counter_count, counters[i]));
+        memcpy(resp_buf_ + 2 * i, &taken, 2);
+        counter_count -= taken;
       }
       YGO_SetResponseb(pduel_, resp_buf_);
     } else if (msg_ == MSG_ANNOUNCE_NUMBER) {
@@ -5090,12 +5454,10 @@ private:
       std::vector<int> numbers;
       for (int i = 0; i < count; ++i) {
         int number = read_u32();
-        if (number <= 0 || number > 12) {
-          throw std::runtime_error("Number " + std::to_string(number) +
-                                   " not implemented for announce number");
-        }
         numbers.push_back(number);
-        legal_actions_.push_back(LegalAction::number(number));
+        // The response is an index, so saturating here only affects what the row shows.
+        legal_actions_.push_back(LegalAction::number(
+          static_cast<uint16_t>(std::min(std::max(number, 0), 65535))));
       }
       if (verbose_) {
         auto& pl = players_[player];
@@ -5114,41 +5476,23 @@ private:
       int count = read_u8();
       auto flag = read_u32();
 
-      int n_attrs = 7;
-
-      std::vector<uint8_t> attrs;
-      for (int i = 0; i < n_attrs; i++) {
-        if (flag & (1 << i)) {
-          attrs.push_back(i + 1);
-        }
-      }
-      // TODO(2): implement action
-      if (count != 1) {
-        throw std::runtime_error("Announce attrib count " +
-                                 std::to_string(count) + " not implemented");
-      }
-
       if (verbose_) {
-        auto& pl = players_[player];
-        pl->notify("Select " + std::to_string(count) +
-                   " attributes separated by spaces:");
-        for (int i = 0; i < attrs.size(); i++) {
-          pl->notify(fmt::format("{}: {}", i + 1, attribute_to_string(1 << (attrs[i] - 1))));
-        }
+        players_[player]->notify("Select " + std::to_string(count) + " attributes:");
       }
-
-      // auto combs = combinations(attrs.size(), count);
-      for (int i = 0; i < attrs.size(); i++) {
-        legal_actions_.push_back(LegalAction::attribute(1 << (attrs[i] - 1)));
+      prompt_announce_bits(player, flag & 0x7f, count, 0);
+    } else if (msg_ == MSG_ANNOUNCE_RACE) {
+      auto player = read_u8();
+      int count = read_u8();
+      uint32_t flag = read_u32();
+      // Types printed after this format's list date cannot be declared in it.
+      uint32_t races = flag & ~static_cast<uint32_t>(RACE_WYRM | RACE_CYBERSE | RACE_ILLUSION);
+      if (__builtin_popcount(races) < count) {
+        races = flag;
       }
-
-      to_play_ = player;
-      callback_ = [this](int idx) {
-        const auto &action = legal_actions_[idx];
-        uint32_t resp = 0;
-        resp |= action.attribute_;
-        YGO_SetResponsei(pduel_, resp);
-      };
+      if (verbose_) {
+        players_[player]->notify("Select " + std::to_string(count) + " Types:");
+      }
+      prompt_announce_bits(player, races, count, 0);
     } else if (msg_ == MSG_ANNOUNCE_CARD) {
       auto player = read_u8();
       int count = read_u8();
@@ -5159,29 +5503,11 @@ private:
         opcodes.push_back(read_u32());
       }
 
-      auto codes = parse_codes_from_opcodes(opcodes);
-
+      auto cards = std::make_shared<const std::vector<uint32_t>>(declarable_cards(opcodes));
       if (verbose_) {
-        auto& pl = players_[player];
-        pl->notify("Select 1 card from the following cards:");
-        for (int i = 0; i < codes.size(); i++) {
-          pl->notify(fmt::format("{}: {}", i + 1, c_get_card(codes[i]).name_));
-        }
+        players_[player]->notify("Declare 1 card:");
       }
-
-      for (auto code : codes) {
-        LegalAction la;
-        la.cid_ = c_get_card_id(code);
-        la.response_ = code;
-        legal_actions_.push_back(la);
-      }
-
-      to_play_ = player;
-      callback_ = [this](int idx) {
-        const auto &action = legal_actions_[idx];
-        uint32_t resp = action.response_;
-        YGO_SetResponsei(pduel_, resp);
-      };
+      prompt_announce_card(player, cards, 0, cards->size());
     } else if (msg_ == MSG_SELECT_POSITION) {
       auto player = read_u8();
       auto code = read_u32();

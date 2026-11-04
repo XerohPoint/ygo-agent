@@ -3,6 +3,10 @@
 Measured November 4, 2026, on `edison` at `5b2b169`. Target ruleset: traditional Edison as written at
 edisonformat.com, not Konami's 2025 Time Wizard variant.
 
+**Status update.** This report records the state before fixes. [The hardening report](edison-hardening.md) fixes D2, D5, D7,
+D8 and D10, shows D3 was a fixture error rather than a defect, and leaves D4 open because individual rulings conflict with it.
+`known_failures.json` is the current record. The matrix files were not rebuilt.
+
 **Result: the simulator disagrees with the written specification in 12 distinct ways, measured by 30 failing
 fixtures. No simulator behavior was changed.** Two of the 12 most affect play: Graveyard Ignition Effects are
 missing from the Summon window (D2), and Trigger ordering across SEGOC steps contradicts the source (D1). D1 is

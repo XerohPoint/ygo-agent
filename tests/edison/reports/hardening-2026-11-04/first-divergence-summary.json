@@ -1,0 +1,67 @@
+{
+ "frozen-baseline": {
+  "duels": 4,
+  "identical": 2,
+  "first_differences": [
+   {
+    "only_in_new_module": [
+     "msg=2 act=8 Plaguespreader Zombie",
+     "msg=2 act=9 0"
+    ],
+    "only_in_old_module": [
+     "msg=1 act=2 Battle Fader",
+     "msg=1 act=2 Tragoedia",
+     "msg=1 act=1 Heavy Storm",
+     "msg=1 act=1 Black Whirlwind",
+     "msg=1 act=8 Heavy Storm",
+     "msg=1 act=8 Black Whirlwind",
+     "msg=1 act=8 Plaguespreader Zombie",
+     "msg=1 act=0 0"
+    ],
+    "duels": 1
+   },
+   {
+    "only_in_new_module": [
+     "msg=2 act=8 Plaguespreader Zombie"
+    ],
+    "only_in_old_module": [],
+    "duels": 1
+   }
+  ]
+ },
+ "bw-fm": {
+  "duels": 16,
+  "identical": 14,
+  "first_differences": [
+   {
+    "only_in_new_module": [
+     "msg=2 act=8 Plaguespreader Zombie",
+     "msg=2 act=9 0"
+    ],
+    "only_in_old_module": [
+     "msg=1 act=1 Mind Control",
+     "msg=1 act=8 Plaguespreader Zombie",
+     "msg=1 act=0 0"
+    ],
+    "duels": 1
+   },
+   {
+    "only_in_new_module": [
+     "msg=2 act=8 Plaguespreader Zombie"
+    ],
+    "only_in_old_module": [],
+    "duels": 1
+   }
+  ]
+ },
+ "mg-bw": {
+  "duels": 16,
+  "identical": 16,
+  "first_differences": []
+ },
+ "fm-mg": {
+  "duels": 16,
+  "identical": 16,
+  "first_differences": []
+ }
+}

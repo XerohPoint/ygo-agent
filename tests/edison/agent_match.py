@@ -229,7 +229,8 @@ def worker(args):
     (args.output / f"worker-{args.worker}.json").write_text(json.dumps(report, indent=2)+"\n")
 
 def run_worker(seed, num_envs, threads, deck1, deck2, output, run=1,
-               policy0="heuristic", policy1="random", model=None, collect=False, rl_rollout=False):
+               policy0="heuristic", policy1="random", model=None, collect=False, rl_rollout=False,
+               script_root=None):
     output=output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     cmd = [sys.executable, str(Path(__file__).resolve()), "--worker", str(run),
@@ -239,7 +240,7 @@ def run_worker(seed, num_envs, threads, deck1, deck2, output, run=1,
     if model: cmd += ["--model",str(Path(model).resolve())]
     if collect: cmd.append("--collect")
     if rl_rollout: cmd.append("--rl-rollout")
-    process = subprocess.run(cmd, cwd=ROOT/"scripts", capture_output=True,
+    process = subprocess.run(cmd, cwd=script_root or ROOT/"scripts", capture_output=True,
                              text=True, timeout=180)
     (output/f"stdout-{run}.txt").write_text(process.stdout)
     (output/f"stderr-{run}.txt").write_text(process.stderr)

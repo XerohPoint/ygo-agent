@@ -3,6 +3,10 @@
 Measured November 4, 2026 at commit 4e3452c. This decides how M2 search copies and
 returns to positions. It does not build search.
 
+**Core pin.** `build.sh` still links the pre-hardening core `bedb42dd...`, which reproduces these measurements. Production now
+uses `aa797b55...` (`edison_hardening = "r1"`), so this test bed lacks the [hardening](edison-hardening.md) rule fixes.
+Move the pin before building search on it.
+
 ## Decision
 
 **Use an in-process arena snapshot (candidate E, added by this spike), one worker

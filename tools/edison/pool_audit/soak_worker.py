@@ -46,6 +46,12 @@ def check_contracts(obs, row, count, id_to_code):
         if context[2] not in (0, 1, 2, 3): return "hint kind"
         if context[4] < 0 or context[5] < context[4]: return "selection bounds"
         if context[3] and identities[int(context[3]) - 1] <= 0: return "source reveals private row"
+        expected = np.zeros(len(cards), dtype=np.uint8)
+        for a in offered:
+            if a[0]: expected[int(a[0]) - 1] = 1
+        if not np.array_equal(selection[:, 0], expected): return "candidate rows differ from offered rows"
+        if bool(context[8]) != bool(np.any(offered[:, 5])): return "finish flag"
+        if bool(context[9]) != bool(np.any(offered[:, 4] == 9)): return "cancel flag"
     elif np.any(context[1:]) or np.any(selection): return "stale selection context"
     return None
 
@@ -62,7 +68,7 @@ def play(env_make, duel, log, audit_fd, id_to_code):
     env = env_make(duel)
     rng = random.Random(duel["seed"] ^ 0xED150)
     trace = hashlib.sha256()
-    chosen, offered_count = Counter(), Counter()
+    chosen, offered_count, prompts = Counter(), Counter(), Counter()
     violations = Counter()
     seen = Counter()
     steps, max_options = 0, 0
@@ -76,6 +82,7 @@ def play(env_make, duel, log, audit_fd, id_to_code):
         if count <= 0:
             status = "no_options"; break
         offered = obs["actions_"][0, :count]
+        prompts[int(offered[0, 3])] += 1
         problem = check_contracts(obs, 0, count, id_to_code)
         if problem: violations[problem] += 1
         for a in offered:
@@ -110,7 +117,8 @@ def play(env_make, duel, log, audit_fd, id_to_code):
               "max_options": max_options, "max_repeat": max(seen.values()) if seen else 0,
               "trace": trace.hexdigest(),
               "chosen": [[c, a, n] for (c, a), n in chosen.items()],
-              "offered": list(offered_count.items()), "violations": dict(violations)}
+              "offered": list(offered_count.items()), "violations": dict(violations),
+              "prompts": {str(k): v for k, v in prompts.items()}}
     log.write(json.dumps({"end": result}) + "\n"); log.flush()
     return status
 

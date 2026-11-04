@@ -6,6 +6,9 @@ No runtime source, existing deck, or lock file changed.
 Random play shows that a card runs without crashing the interface. It does not show that
 the card follows March 2010 rules, and a card can pass every check here and still be wrong.
 
+**Status update.** This report records the state before fixes. [The hardening report](edison-hardening.md) adds the message
+handler, handles the crash classes below and adds the 13 cards.
+
 ## Summary
 
 - **Scripts are not the blocker.** After alias resolution, no legal card lacks a script, and

@@ -5,11 +5,11 @@ inline void script_consistency(certification::Assets& assets,int rule) {
   using namespace certification;
   const std::vector<uint32_t> changed{swap_frog,my_body,destiny_dragoon,mark_rose,black_garden,armory_arm,
     jade_knight,cyber_phoenix,future_fusion,fortune_light,redmd,strike_ninja,rescue_cat,prisma,quickdraw,
-    ryko,darkness_approaches,treeborn,necrovalley,brionac,catapult_turtle,goyo,brain,honest,kalut,sangan};
+    ryko,darkness_approaches,treeborn,necrovalley,brionac,catapult_turtle,goyo,brain,honest,kalut,sangan,caius};
   std::vector<std::string> files{"constant.lua","utility.lua","procedure.lua"};
   for(auto [code,data]:assets.cards)
     if(code!=blue_eyes&&code!=jerry_beans&&code!=rose_token) files.push_back("c"+std::to_string(code)+".lua");
-  require(files.size()==88&&changed.size()==26,"Update reviewed script inventory for new fixtures/overrides");
+  require(files.size()==88&&changed.size()==27,"Update reviewed script inventory for new fixtures/overrides");
   assets.script_rule=rule;
   int overrides=0,suffixes=0;
   for(auto file:files) {
