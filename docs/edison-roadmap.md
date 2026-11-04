@@ -1,0 +1,106 @@
+# Edison AI roadmap
+
+Started November 4, 2026. Owner: project supervisor session. Read
+[the Opus 5.5 handoff](opus-5.5-handoff-2026-11-04.md) for simulator invariants
+and experiment history. This file holds direction; evidence stays in study reports.
+
+## Goal
+
+Three tools for the Edison format (March 2010 list):
+
+1. **Play engine** — given what a player can legally see, rank every legal action
+   by estimated win probability, and explain the line behind the top choices.
+2. **Deck builder** — propose legal 40-card decks with Extra and Side, ranked by
+   measured strength against an explicit expected metagame.
+3. **Side-deck advisor** — given both a deck and what game 1 revealed about the
+   opponent, recommend swaps for games 2 and 3.
+
+"Stockfish for Edison" sets the bar and the shape, not a literal promise. Chess has
+no hidden information, so a chess engine computes one best move. Yu-Gi-Oh has hidden
+hands, set cards and deck order, plus random draws, so the correct output is the
+action with the best expected result **against a belief about hidden cards**. Good
+moves can lose. Strength must be measured over many games, never judged from one.
+
+## Where we are
+
+Measured at commit 4e3452c:
+
+| What a Stockfish-like engine needs | Current state |
+| --- | --- |
+| Correct, deterministic rules | 544 fixtures pass; bounded, not exhaustive |
+| Copy a position to search it | No state copy or snapshot exists; search is not possible yet |
+| Handle hidden information in search | Not started; no belief or determinization code |
+| Strong evaluation | 32-unit NumPy MLP on hand-built features; ~33% vs own heuristic |
+| Training scale | 3,072 duels on CPU; win rate was still rising at the end of the budget |
+| GPU | RTX 5090 present; JAX 0.4.28 in `.venv` sees CPU only |
+| Card coverage | 67 agent card identities of 3,659 legal cards; 3 fixed decks |
+| Benchmark | Own heuristic and random only; no human or real-metagame reference |
+| Matches and siding | Single duels; no best-of-three or Side swap flow |
+
+Upstream `ygoai/rl/jax/agent.py` and `scripts/cleanba.py` contain a much larger
+card-embedding transformer learner, and `mcts/` contains a C++ AlphaZero tree.
+Neither is verified on the Edison pipeline or wired to it.
+
+## Order of work
+
+Each milestone unblocks the next. Deck building and siding are evaluated by playing
+games, so they are only as trustworthy as the play policy underneath them.
+
+### M0 — Evidence (in progress)
+
+- **Loss review**: why the learned policy loses to the heuristic, classified as
+  policy, observation, interface or rules causes.
+- **Forward-model spike**: measured options for copying or reconstructing positions.
+  This decides whether search can be fast enough, and how M2 is built.
+- **Pool and metagame audit**: which legal cards actually work, sourced real Edison
+  decks with Side decks, and what match play needs.
+
+Exit: a decision for M1's learner and M2's search, each backed by measurement.
+
+### M1 — A policy/value network that scales
+
+GPU training on a card-embedding network, self-play against a league of frozen
+opponents rather than only the heuristic, and every existing privacy contract kept
+for anything used at play time. Exit: clearly beats the heuristic on fresh seeds
+across all fixture decks and both seats, with replications.
+
+### M2 — Search: the actual engine
+
+Search over sampled hidden states guided by the M1 network, built on the forward
+model chosen in M0. Includes opponent-hand and deck belief. Exit: search at a fixed
+decision budget beats the same network without search on fresh seeds, and a command
+ranks actions with estimated win rates from a recorded position.
+
+### M3 — Real metagame coverage
+
+Expand from 3 fixtures to a sourced gauntlet of Edison archetypes, and fix the rule
+and card defects that this exposes. Test against decks held out of training to
+measure generalization. Exit: the policy performs on held-out decks, not only known ones.
+
+### M4 — Deck builder
+
+An outer search over legal decks, scored by playing the gauntlet: fast surrogate
+filters candidates, then successive halving spends games on survivors. Exit:
+recovers or beats known-good lists on fresh seeds, and generated decks are checked
+by production legality validation.
+
+### M5 — Side-deck advisor
+
+Best-of-three support with Side swaps, inference of the opponent's deck from cards
+seen, then swap recommendations scored by simulated post-side games. Exit: advised
+siding beats no siding and a simple rule baseline over complete matches.
+
+### M6 — Usable product and human validation
+
+A way for a person to load a position, replay or deck and get recommendations.
+Strength checked against experienced Edison players, the only external reference.
+
+## Standing rules
+
+- Keep Rule 5 comparison behavior and all privacy contracts. Search may only sample
+  hidden state from what the acting player could know; it must never read it.
+- Do not tune on consumed test seeds. Predeclare fresh final-test blocks.
+- Report failed trials and variation; do not present fixed-deck win rates as
+  tournament strength or bounded certification as complete rules correctness.
+- Evaluation scripts that change no runtime behavior belong in `tools/edison/`, so
+  they do not invalidate certification fingerprints of `tests/edison/*.py`.
