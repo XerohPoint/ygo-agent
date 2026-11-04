@@ -1,0 +1,728 @@
+{
+ "protocol_sha256": "56c7f7e46d4be9a24119b7df7dc7dcbd28a1f1f52a664339f7da3d4bde39c886",
+ "protocol_expected": "56c7f7e46d4be9a24119b7df7dc7dcbd28a1f1f52a664339f7da3d4bde39c886",
+ "blocks": {
+  "fixtures": {
+   "gauntlet160": {
+    "by_optimizer": [
+     43.75,
+     47.92,
+     37.89
+    ],
+    "mean": 43.19,
+    "wins": 995,
+    "games": 2304,
+    "void_games": 0,
+    "void_reasons": {},
+    "validity": "VALID"
+   },
+   "gauntlet320": {
+    "by_optimizer": [
+     39.58,
+     47.01,
+     43.75
+    ],
+    "mean": 43.45,
+    "wins": 1001,
+    "games": 2304,
+    "void_games": 0,
+    "void_reasons": {},
+    "validity": "VALID"
+   },
+   "gauntlet640": {
+    "by_optimizer": [
+     52.08,
+     53.91,
+     50.26
+    ],
+    "mean": 52.08,
+    "wins": 1200,
+    "games": 2304,
+    "void_games": 0,
+    "void_reasons": {},
+    "validity": "VALID"
+   },
+   "gauntlet1280": {
+    "by_optimizer": [
+     57.03,
+     62.89,
+     54.56
+    ],
+    "mean": 58.16,
+    "wins": 1340,
+    "games": 2304,
+    "void_games": 0,
+    "void_reasons": {},
+    "validity": "VALID"
+   },
+   "numpy": {
+    "by_optimizer": [
+     40.62,
+     51.95,
+     45.96
+    ],
+    "mean": 46.18,
+    "wins": 1064,
+    "games": 2304,
+    "void_games": 0,
+    "void_reasons": {},
+    "validity": "VALID"
+   }
+  },
+  "gauntlet": {
+   "gauntlet160": {
+    "by_optimizer": [
+     54.46,
+     58.18,
+     56.18
+    ],
+    "mean": 56.27,
+    "wins": 2269,
+    "games": 4032,
+    "void_games": 0,
+    "void_reasons": {},
+    "validity": "VALID"
+   },
+   "gauntlet320": {
+    "by_optimizer": [
+     60.42,
+     60.27,
+     61.01
+    ],
+    "mean": 60.57,
+    "wins": 2442,
+    "games": 4032,
+    "void_games": 0,
+    "void_reasons": {},
+    "validity": "VALID"
+   },
+   "gauntlet640": {
+    "by_optimizer": [
+     65.7,
+     68.23,
+     65.18
+    ],
+    "mean": 66.37,
+    "wins": 2676,
+    "games": 4032,
+    "void_games": 0,
+    "void_reasons": {},
+    "validity": "VALID"
+   },
+   "gauntlet1280": {
+    "by_optimizer": [
+     70.76,
+     73.88,
+     66.89
+    ],
+    "mean": 70.51,
+    "wins": 2843,
+    "games": 4032,
+    "void_games": 0,
+    "void_reasons": {},
+    "validity": "VALID"
+   },
+   "numpy": {
+    "by_optimizer": [
+     50.82,
+     55.28,
+     56.1
+    ],
+    "mean": 54.07,
+    "wins": 2180,
+    "games": 4032,
+    "void_games": 0,
+    "void_reasons": {},
+    "validity": "VALID"
+   }
+  }
+ },
+ "fixtures_vs_random": {
+  "by_optimizer": [
+   97.27,
+   98.57,
+   97.01
+  ],
+  "mean": 97.62,
+  "wins": 2249,
+  "games": 2304,
+  "void_games": 0,
+  "void_reasons": {},
+  "validity": "VALID"
+ },
+ "numpy_vs_random": {
+  "by_optimizer": [
+   90.23,
+   95.05,
+   92.71
+  ],
+  "mean": 92.66,
+  "wins": 2135,
+  "games": 2304,
+  "void_games": 0,
+  "void_reasons": {},
+  "validity": "VALID"
+ },
+ "head_to_head": {
+  "by_optimizer": [
+   67.19,
+   67.97,
+   56.77
+  ],
+  "mean": 63.98,
+  "void_games": 0
+ },
+ "controls": {
+  "fixture_mirror": 50.0,
+  "fixture_heuristic_vs_random": 95.44,
+  "gauntlet_mirror": 50.0
+ },
+ "conclusions": {
+  "G1": {
+   "fixtures": {
+    "by_optimizer": [
+     13.28,
+     14.97,
+     16.67
+    ],
+    "mean": 14.97,
+    "verdict": "MORE_GAMES_HELP"
+   },
+   "gauntlet": {
+    "by_optimizer": [
+     16.3,
+     15.7,
+     10.71
+    ],
+    "mean": 14.24,
+    "verdict": "MORE_GAMES_HELP"
+   }
+  },
+  "G2": {
+   "fixtures": {
+    "mean": 6.08,
+    "by_optimizer": [
+     4.95,
+     8.98,
+     4.3
+    ],
+    "verdict": "STILL_RISING"
+   },
+   "gauntlet": {
+    "mean": 4.14,
+    "by_optimizer": [
+     5.06,
+     5.65,
+     1.71
+    ],
+    "verdict": "STILL_RISING"
+   }
+  },
+  "G4": {
+   "fixtures": {
+    "gain_by_optimizer": [
+     16.41,
+     10.94,
+     8.59
+    ],
+    "mean_gain": 11.98
+   },
+   "gauntlet": {
+    "gain_by_optimizer": [
+     19.94,
+     18.6,
+     10.79
+    ],
+    "mean_gain": 16.44
+   },
+   "head_to_head_mean": 63.98,
+   "verdict": "NET_AHEAD"
+  },
+  "G3": {
+   "fixtures": {
+    "mean": 58.16,
+    "lowest": 54.56
+   },
+   "gauntlet": {
+    "mean": 70.51,
+    "lowest": 66.89
+   },
+   "verdict": "CANDIDATE"
+  },
+  "G5": {
+   "void_games": {},
+   "invalid_groups": [],
+   "void_reasons": {},
+   "training_void_games": {
+    "1702": 0,
+    "1703": 0,
+    "1704": 0
+   },
+   "training_aborted": []
+  }
+ },
+ "training": {
+  "1702": {
+   "rounds": 1280,
+   "duels": 122880,
+   "void_games": 0,
+   "wall_hours": 3.57,
+   "collect_hours": 3.09,
+   "update_hours": 0.43,
+   "updates": 134683,
+   "final_params_sha256": "30e068028696a073295848f5b2bd5a3a15c4abba5553fda459ed88196e093ff1",
+   "curve": [
+    {
+     "duels": 15360,
+     "heuristic": "1937/5120=0.378",
+     "past": "3034/5120=0.593",
+     "H": 0.91,
+     "kl": 0.0305,
+     "vmse": 0.106,
+     "updates": 16522,
+     "update_s": 440,
+     "collect_s": 1379,
+     "decisions": 2493000,
+     "void": 0
+    },
+    {
+     "duels": 30720,
+     "past": "2983/5120=0.583",
+     "heuristic": "2371/5120=0.463",
+     "H": 0.768,
+     "kl": 0.0343,
+     "vmse": 0.114,
+     "updates": 16658,
+     "update_s": 189,
+     "collect_s": 1427,
+     "decisions": 2598148,
+     "void": 0
+    },
+    {
+     "duels": 46080,
+     "heuristic": "2796/5120=0.546",
+     "past": "3098/5120=0.605",
+     "H": 0.732,
+     "kl": 0.0361,
+     "vmse": 0.117,
+     "updates": 16135,
+     "update_s": 152,
+     "collect_s": 1470,
+     "decisions": 2506007,
+     "void": 0
+    },
+    {
+     "duels": 61440,
+     "heuristic": "2878/5120=0.562",
+     "past": "3011/5120=0.588",
+     "H": 0.711,
+     "kl": 0.0321,
+     "vmse": 0.061,
+     "updates": 16196,
+     "update_s": 143,
+     "collect_s": 1440,
+     "decisions": 2582236,
+     "void": 0
+    },
+    {
+     "duels": 76800,
+     "past": "3012/5120=0.588",
+     "heuristic": "3018/5120=0.589",
+     "H": 0.742,
+     "kl": 0.031,
+     "vmse": 0.082,
+     "updates": 16969,
+     "update_s": 140,
+     "collect_s": 1343,
+     "decisions": 2603569,
+     "void": 0
+    },
+    {
+     "duels": 92160,
+     "heuristic": "3147/5120=0.615",
+     "past": "3082/5120=0.602",
+     "H": 0.653,
+     "kl": 0.0389,
+     "vmse": 0.103,
+     "updates": 17033,
+     "update_s": 144,
+     "collect_s": 1330,
+     "decisions": 2568625,
+     "void": 0
+    },
+    {
+     "duels": 107520,
+     "heuristic": "3288/5120=0.642",
+     "past": "3056/5120=0.597",
+     "H": 0.633,
+     "kl": 0.0336,
+     "vmse": 0.11,
+     "updates": 17355,
+     "update_s": 199,
+     "collect_s": 1384,
+     "decisions": 2491230,
+     "void": 0
+    },
+    {
+     "duels": 122880,
+     "past": "3112/5120=0.608",
+     "heuristic": "3481/5120=0.680",
+     "H": 0.662,
+     "kl": 0.0315,
+     "vmse": 0.131,
+     "updates": 17815,
+     "update_s": 154,
+     "collect_s": 1355,
+     "decisions": 2501002,
+     "void": 0
+    }
+   ]
+  },
+  "1703": {
+   "rounds": 1280,
+   "duels": 122880,
+   "void_games": 0,
+   "wall_hours": 3.64,
+   "collect_hours": 3.13,
+   "update_hours": 0.47,
+   "updates": 146803,
+   "final_params_sha256": "ccfb669bce4915b486ff2df02f57cd283192f63e45276be85607d55237fd2135",
+   "curve": [
+    {
+     "duels": 15360,
+     "heuristic": "1984/5120=0.388",
+     "past": "3137/5120=0.613",
+     "H": 0.775,
+     "kl": 0.0305,
+     "vmse": 0.115,
+     "updates": 20341,
+     "update_s": 517,
+     "collect_s": 1568,
+     "decisions": 2826988,
+     "void": 0
+    },
+    {
+     "duels": 30720,
+     "past": "3104/5120=0.606",
+     "heuristic": "2583/5120=0.504",
+     "H": 0.772,
+     "kl": 0.0311,
+     "vmse": 0.066,
+     "updates": 19024,
+     "update_s": 169,
+     "collect_s": 1542,
+     "decisions": 2734625,
+     "void": 0
+    },
+    {
+     "duels": 46080,
+     "heuristic": "3014/5120=0.589",
+     "past": "3138/5120=0.613",
+     "H": 0.674,
+     "kl": 0.0351,
+     "vmse": 0.099,
+     "updates": 17879,
+     "update_s": 200,
+     "collect_s": 1476,
+     "decisions": 2568045,
+     "void": 0
+    },
+    {
+     "duels": 61440,
+     "heuristic": "3149/5120=0.615",
+     "past": "3058/5120=0.597",
+     "H": 0.694,
+     "kl": 0.0316,
+     "vmse": 0.098,
+     "updates": 19547,
+     "update_s": 166,
+     "collect_s": 1500,
+     "decisions": 2677943,
+     "void": 0
+    },
+    {
+     "duels": 76800,
+     "past": "3098/5120=0.605",
+     "heuristic": "3162/5120=0.618",
+     "H": 0.63,
+     "kl": 0.0291,
+     "vmse": 0.066,
+     "updates": 16516,
+     "update_s": 137,
+     "collect_s": 1238,
+     "decisions": 2451725,
+     "void": 0
+    },
+    {
+     "duels": 92160,
+     "heuristic": "3272/5120=0.639",
+     "past": "3057/5120=0.597",
+     "H": 0.645,
+     "kl": 0.0334,
+     "vmse": 0.102,
+     "updates": 17473,
+     "update_s": 143,
+     "collect_s": 1315,
+     "decisions": 2523976,
+     "void": 0
+    },
+    {
+     "duels": 107520,
+     "heuristic": "3426/5120=0.669",
+     "past": "3054/5120=0.596",
+     "H": 0.654,
+     "kl": 0.0327,
+     "vmse": 0.117,
+     "updates": 18153,
+     "update_s": 203,
+     "collect_s": 1385,
+     "decisions": 2490801,
+     "void": 0
+    },
+    {
+     "duels": 122880,
+     "past": "3068/5120=0.599",
+     "heuristic": "3560/5120=0.695",
+     "H": 0.678,
+     "kl": 0.0309,
+     "vmse": 0.138,
+     "updates": 17870,
+     "update_s": 147,
+     "collect_s": 1241,
+     "decisions": 2423098,
+     "void": 0
+    }
+   ]
+  },
+  "1704": {
+   "rounds": 1280,
+   "duels": 122880,
+   "void_games": 0,
+   "wall_hours": 3.61,
+   "collect_hours": 3.13,
+   "update_hours": 0.44,
+   "updates": 141125,
+   "final_params_sha256": "bd2084549e1eef879966e0e03af09da140c604573c1eb2a8755aec1e608f2e6d",
+   "curve": [
+    {
+     "duels": 15360,
+     "heuristic": "1925/5120=0.376",
+     "past": "3047/5120=0.595",
+     "H": 0.821,
+     "kl": 0.0313,
+     "vmse": 0.088,
+     "updates": 17400,
+     "update_s": 530,
+     "collect_s": 1439,
+     "decisions": 2621832,
+     "void": 0
+    },
+    {
+     "duels": 30720,
+     "past": "3026/5120=0.591",
+     "heuristic": "2528/5120=0.494",
+     "H": 0.762,
+     "kl": 0.032,
+     "vmse": 0.101,
+     "updates": 16683,
+     "update_s": 147,
+     "collect_s": 1449,
+     "decisions": 2593392,
+     "void": 0
+    },
+    {
+     "duels": 46080,
+     "heuristic": "2792/5120=0.545",
+     "past": "3001/5120=0.586",
+     "H": 0.706,
+     "kl": 0.0423,
+     "vmse": 0.104,
+     "updates": 18773,
+     "update_s": 167,
+     "collect_s": 1580,
+     "decisions": 2716826,
+     "void": 0
+    },
+    {
+     "duels": 61440,
+     "heuristic": "2942/5120=0.575",
+     "past": "2969/5120=0.580",
+     "H": 0.679,
+     "kl": 0.0367,
+     "vmse": 0.092,
+     "updates": 18474,
+     "update_s": 168,
+     "collect_s": 1479,
+     "decisions": 2673906,
+     "void": 0
+    },
+    {
+     "duels": 76800,
+     "past": "3007/5120=0.587",
+     "heuristic": "2978/5120=0.582",
+     "H": 0.721,
+     "kl": 0.0359,
+     "vmse": 0.1,
+     "updates": 16197,
+     "update_s": 132,
+     "collect_s": 1244,
+     "decisions": 2458156,
+     "void": 0
+    },
+    {
+     "duels": 92160,
+     "heuristic": "3120/5120=0.609",
+     "past": "2989/5120=0.584",
+     "H": 0.669,
+     "kl": 0.0309,
+     "vmse": 0.121,
+     "updates": 18335,
+     "update_s": 148,
+     "collect_s": 1349,
+     "decisions": 2565516,
+     "void": 0
+    },
+    {
+     "duels": 107520,
+     "heuristic": "3260/5120=0.637",
+     "past": "2975/5120=0.581",
+     "H": 0.63,
+     "kl": 0.0329,
+     "vmse": 0.112,
+     "updates": 18112,
+     "update_s": 159,
+     "collect_s": 1390,
+     "decisions": 2475446,
+     "void": 0
+    },
+    {
+     "duels": 122880,
+     "past": "2965/5120=0.579",
+     "heuristic": "3315/5120=0.647",
+     "H": 0.614,
+     "kl": 0.0307,
+     "vmse": 0.112,
+     "updates": 17151,
+     "update_s": 141,
+     "collect_s": 1322,
+     "decisions": 2450595,
+     "void": 0
+    }
+   ]
+  }
+ },
+ "by_deck_fixtures": {
+  "1280": {
+   "blackwing": 53.78,
+   "frog_monarch": 43.62,
+   "machina_gadget": 77.08
+  },
+  "numpy": {
+   "blackwing": 41.54,
+   "frog_monarch": 27.08,
+   "machina_gadget": 69.92
+  }
+ },
+ "by_seat_fixtures": {
+  "1280": {
+   "0": 61.98,
+   "1": 54.34
+  },
+  "numpy": {
+   "0": 49.05,
+   "1": 43.32
+  }
+ },
+ "matchup_interval_fixtures": {
+  "1280": [
+   50.82,
+   64.67
+  ]
+ },
+ "by_deck_gauntlet": {
+  "1280": {
+   "blackwing": 58.85,
+   "frog_monarch": 52.08,
+   "g_blackwing": 66.67,
+   "g_diva_frog": 54.17,
+   "g_diva_hero": 65.1,
+   "g_diva_hero_beat": 85.42,
+   "g_dragon_turbo": 54.69,
+   "g_frog_monarch": 72.92,
+   "g_frog_otk": 48.96,
+   "g_gigavise": 73.44,
+   "g_gladiator_beast": 79.17,
+   "g_hero_beat": 90.1,
+   "g_hero_frog": 85.42,
+   "g_lightsworn": 92.71,
+   "g_lightsworn_fairy": 70.83,
+   "g_machina_control": 88.54,
+   "g_quickdraw_plant": 63.54,
+   "g_vayu_turbo": 61.46,
+   "g_vayu_turbo_ddev08": 77.6,
+   "g_zombie_teledad": 53.65,
+   "machina_gadget": 85.42
+  },
+  "numpy": {
+   "blackwing": 53.65,
+   "frog_monarch": 32.29,
+   "g_blackwing": 63.54,
+   "g_diva_frog": 41.15,
+   "g_diva_hero": 57.29,
+   "g_diva_hero_beat": 73.44,
+   "g_dragon_turbo": 39.58,
+   "g_frog_monarch": 44.79,
+   "g_frog_otk": 31.25,
+   "g_gigavise": 38.02,
+   "g_gladiator_beast": 73.96,
+   "g_hero_beat": 84.9,
+   "g_hero_frog": 65.62,
+   "g_lightsworn": 71.88,
+   "g_lightsworn_fairy": 59.38,
+   "g_machina_control": 54.69,
+   "g_quickdraw_plant": 36.46,
+   "g_vayu_turbo": 40.62,
+   "g_vayu_turbo_ddev08": 54.17,
+   "g_zombie_teledad": 43.23,
+   "machina_gadget": 75.52
+  }
+ },
+ "by_seat_gauntlet": {
+  "1280": {
+   "0": 74.85,
+   "1": 66.17
+  },
+  "numpy": {
+   "0": 56.05,
+   "1": 52.08
+  }
+ },
+ "matchup_interval_gauntlet": {
+  "1280": [
+   67.83,
+   73.29
+  ]
+ },
+ "guard": {
+  "fires": {
+   "gauntlet1280-on-gauntlet": 3761,
+   "gauntlet160-on-gauntlet": 3184,
+   "gauntlet320-on-gauntlet": 5359,
+   "gauntlet640-on-gauntlet": 4610
+  },
+  "decisions": {
+   "gauntlet1280-on-gauntlet": 669352,
+   "gauntlet160-on-gauntlet": 739116,
+   "gauntlet320-on-gauntlet": 806286,
+   "gauntlet640-on-gauntlet": 730265
+  }
+ },
+ "provenance": {
+  "phases": 16,
+  "replayed_cells": 129,
+  "replay_mismatches": 0,
+  "native_sha256": [
+   "67423a99970519fb10fb0a484a4b1af331c77623dc318610b3e0d2de375dd95e"
+  ]
+ }
+}
