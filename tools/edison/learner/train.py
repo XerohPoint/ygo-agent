@@ -381,6 +381,10 @@ def main():
         os.environ["JAX_PLATFORMS"] = "cpu"
         from bench import physical_cpus
         os.sched_setaffinity(0, physical_cpus(args.learner_cpus + args.learner_cpu_offset)[args.learner_cpu_offset:])
+    else:
+        # Without the flag, repeated GPU runs differ from the first update. The desktop shares this card's memory.
+        os.environ.setdefault("XLA_FLAGS", "--xla_gpu_exclude_nondeterministic_ops=true")
+        os.environ.setdefault("XLA_PYTHON_CLIENT_PREALLOCATE", "false")
     os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
     import flax
     import jax

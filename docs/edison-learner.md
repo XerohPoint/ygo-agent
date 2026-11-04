@@ -310,7 +310,13 @@ to C++. Python's audit and pack cost more than the network at batch 1.
 
 ## GPU requirements
 
-From documentation only. **Nothing was installed or tested.** The machine: RTX 5090, Windows driver 617.42,
+**Update after install:** Option A works on this RTX 5090, in the ignored `.venv-gpu` (5.5 GB installed), with actors kept in `.venv`. The real update ran at about
+220 updates/s after compiling, against 8 on 8 CPU threads. Each new shape compiles first, which took 105 s in round 1 and 45 s in round 2 of the smoke test. Collection is now the limit, at
+7-10 s per round against under 1 s per update. Repeated GPU runs differ from round 1 without `--xla_gpu_exclude_nondeterministic_ops=true`. With it, which `train.py` now
+sets, repeated and resumed runs are byte-identical in rollouts, parameters and optimizer state over 3 rounds. [Evidence](../tests/edison/reports/gauntlet-training-2026-11-04/gpu-smoke.json).
+Learning on the GPU has not yet been compared with learning on the CPU.
+
+The rest of this section is from before the install, from documentation only. The machine: RTX 5090, Windows driver 617.42,
 WSL driver 615.78.05, CUDA 13.4 in `nvidia-smi`, `/usr/lib/wsl/lib/libcuda.so.1` present, Python 3.10.12, 947 GB
 free. JAX docs list WSL2 GPU as **experimental**.
 

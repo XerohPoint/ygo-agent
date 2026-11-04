@@ -1,0 +1,68 @@
+{
+ "repeat_identical": {
+  "rollout_sha256": [
+   true,
+   true,
+   true
+  ],
+  "params_sha256": [
+   true,
+   true,
+   true
+  ],
+  "optimizer_sha256": [
+   true,
+   true,
+   true
+  ]
+ },
+ "resume_identical_previous_binary": true,
+ "without_flag_params_identical_round_1": false,
+ "rounds": [
+  {
+   "round": 1,
+   "updates": 216,
+   "collect_seconds": 19.12,
+   "update_seconds": 105.39,
+   "learner_decisions": 13690
+  },
+  {
+   "round": 2,
+   "updates": 208,
+   "collect_seconds": 10.81,
+   "update_seconds": 44.96,
+   "learner_decisions": 13120
+  },
+  {
+   "round": 3,
+   "updates": 188,
+   "collect_seconds": 7.1,
+   "update_seconds": 0.81,
+   "learner_decisions": 11994
+  },
+  {
+   "round": 1,
+   "updates": 216,
+   "collect_seconds": 18.86,
+   "update_seconds": 104.8,
+   "learner_decisions": 13690
+  },
+  {
+   "round": 2,
+   "updates": 208,
+   "collect_seconds": 10.91,
+   "update_seconds": 45.22,
+   "learner_decisions": 13120
+  },
+  {
+   "round": 3,
+   "updates": 188,
+   "collect_seconds": 7.14,
+   "update_seconds": 0.84,
+   "learner_decisions": 11994
+  }
+ ],
+ "jax": "0.6.2",
+ "device": "RTX 5090",
+ "flag": "--xla_gpu_exclude_nondeterministic_ops=true"
+}
