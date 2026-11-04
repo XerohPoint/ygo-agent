@@ -1,0 +1,40 @@
+#pragma once
+#include <cstdint>
+// Passcodes resolved from assets/locale/en/cards.cdb. Card identity is checked by
+// the engine at placement; a wrong code fails as [SETUP], not as a rule result.
+namespace conformance::card_codes {
+constexpr uint32_t dust_tornado = 60082869, umi = 22702055, mountain = 50913601, secret_village = 68462976,
+  dark_magician = 46986414, geartown = 37694547, ancient_gear = 31557782, apophis = 28649820, zoma = 79852326,
+  metal_slime = 26905245, jinzo = 77585513, snatch_steal = 45986603, creature_swap = 31036355,
+  heavy_storm = 19613556, fake_trap = 3027001, lightning_vortex = 69162969, raigeki_break = 4178474,
+  penguin_soldier = 93920745, major_riot = 9074847, dimensionhole = 22959079, imt = 36261276,
+  time_machine = 80987696, return_doomed = 19827717, shura = 58820853, michizure = 37580756,
+  armageddon_knight = 28985331, malicious = 9411399, grepher = 14536035, chaos_sorcerer = 9596126,
+  demise = 72426662, end_of_world = 8198712, dark_armed = 65192027, solemn = 41420027, rai_oh = 71564252,
+  stardust = 44508094, level_eater = 57421866, doomcaliber = 78700060, giant_rat = 97017120,
+  green_gadget = 41172955, red_gadget = 86445415, yellow_gadget = 13839120, peten = 52624755,
+  gorz = 44330098, effect_veiler = 97268402, dandylion = 15341821, monster_reincarnation = 74848038,
+  fluff_token = 15341822, necroface = 28297833, future_visions = 87902575, aslla = 10875327,
+  phoenix_wing = 63356631, absolute_zero = 40854197, mirror_wall = 22359980, degenerate_circuit = 36995273,
+  messenger = 44656491, white_stone = 79814787, super_rejuvenation = 27770341, re_wyvern = 67300516,
+  pole_position = 73578229, gemini_elf = 69140098, x_head = 62651957, luminous_spark = 81777047,
+  opticlops = 14531242, axe_despair = 40619825, battle_fader = 19665973, swift_scarecrow = 18964575,
+  y_dragon = 65622692, z_metal = 64500000, peacekeeper = 78349103, oilman = 31768112, smashing_ground = 97169186,
+  dark_hole = 53129443, mirror_force = 44095762, stratos = 40044918, rekindling = 74845897, dna_transplant = 56769674,
+  neos = 89943723, air_neos = 11502550, super_poly = 48130397, dustshoot = 64697231, crush_card = 57728570,
+  gb_bestiari = 41470137, gb_laquari = 78868776, gb_darius = 25924653, gb_gyzarus = 48156348, test_tiger = 92373006,
+  lyla = 22624373, wulf = 58996430, jain = 96235275, judgment_dragon = 57774843, charge_lb = 94886282,
+  necro_gardna = 4906301, plaguespreader = 33420078, night_assailant = 16226786, tragoedia = 98777036,
+  allure = 1475311, dasher = 81866673, miracle_fusion = 45906428, the_shining = 22061412, voltic = 9327502,
+  rota = 32807846, card_destruction = 72892473, monster_reborn = 83764718, premature_burial = 70828912,
+  ring_destruction = 83555666, gottoms = 13504844, airbellum = 90508760, catastor = 26593852, spore = 11747708,
+  glow_up_bulb = 67441435, black_rose = 73580471, red_dragon_archfiend = 70902743, mist_wurm = 27315304,
+  junk_synchron = 63977008, turret_warrior = 88559132, reborn_tengu = 10028593, dimensional_fissure = 81674782,
+  macro_cosmos = 30241314, banisher = 94853057, kycoo = 88240808, vayu = 72714392, armor_master = 69031175,
+  sirocco = 75498415, icarus_attack = 53567095, gravekeeper_spy = 24317029, morphing_jar = 33508719,
+  ceasefire = 36468556, magical_scientist = 34206604, volcanic_shell = 33365932, volcanic_rocket = 76459806,
+  blaze_accelerator = 69537999, cyber_twin = 74157028, chimeratech = 79229522, limiter_removal = 23171610,
+  gold_sarc = 75500286, muka_muka = 46657337, pulling_rug = 34717238, archfiend_soldier = 49881766, card_trooper = 85087012,
+  thought_ruler = 70780151, dimensional_prison = 70342110, ddv = 35027493, asura_priest = 2134346,
+  flamvell_firedog = 23297235, armed_wing = 76913983, silverwind = 33236860, bora_spear = 49003716;
+}  // namespace conformance::card_codes

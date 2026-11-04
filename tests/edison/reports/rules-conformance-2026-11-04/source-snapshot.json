@@ -1,0 +1,596 @@
+{
+ "fetched": "2026-11-04",
+ "note": "SHA-256 of the pages as fetched with curl, so a later change to the site can be detected. Page text is not archived here.",
+ "pages_sha256": {
+  "advanced-rules1.html": "8ca21ffc1a2605f9f4ed31225ae42b56aca4b51a39d36a32dfe8a285a75279df",
+  "battle-phase.html": "89e31fcb1fdada0269e09bbec2aa9c1cdbe8bf18a8e3ef013037d2dbff269ee6",
+  "edison-rule-differences.html": "fd464691d496d27b927c6179ae5e744aefcf31e9352c77c2beb4f9e57dffde76",
+  "fl_gallery.json": "830dbbd8cd71bc477f0986febc0499a0130cb92e3ffe07a47d84c2e2cd032bcf",
+  "fl_popular.json": "12be2d4c33b6a4ec2c1abb34723e10a61195b7939e3313029295ef45d9713fe8",
+  "home_rules-update-trigger-effect-location-mid-chain-triggers": "8b9152f826637341086fd2257303f5c543685f301cca2e47d352021bfa1f5ba9",
+  "missing-the-timing.html": "36f9530cefd71e6b28cbce04ec9c24481b786bbf9242185a0ecb478b3e3b0769",
+  "priority.html": "e4e6e1092ff095ea5fa89cfb64e26c332515c23c0f008dc958e413318f55d132",
+  "rulebook.html": "6babbe44e0f26ad046f85ddd7c4311c299d66f2cd23e652c5118ef6a023e9b8d",
+  "rulings": "3019246648c582c82fb39acf8664b45c982ee598a520c5d0f964ff131fc223e7",
+  "rulings_individual-card-rulings-p-r": "51ced43615fe75bebd6a7f4ef7ac3dcd8f77b03d766738acc4966943f613a403",
+  "rulings_individual-card-rulings-s-t": "4f682b2d406187fb623ea377edc42441ac15e04d094ea2105701f620e65e97ea",
+  "rulings_individual-rulings-a-c": "e411a9b4b27fe25569c465ff709438ed659579d2c959c7069fbe4696c11373aa",
+  "rulings_individual-rulings-d-e": "65c10399c3a3e8743e23340c56be4af18947547777da15b22c8170f76a537cde",
+  "rulings_individual-rulings-f-h": "4dbe9888afab3a8d5173dfbe7a26b5376e3e2a5bdb8b43273a2fd3cb2f8a2139",
+  "rulings_individual-rulings-i-k": "9aa0b52568e84129e3630639e79a094a4689228a97d251c563a874503b286cba",
+  "rulings_individual-rulings-l-o": "4f2de269132a967efc6af2eebd4f963a768b83d721e050a6838ae0599019b8aa",
+  "rulings_relevant-errata": "aac2332fc50b9d72a3ee21de6ff06311779296434d2271c02f536023582cd8c7",
+  "rulings_rules-u-z": "e049cafb03304553884ddc14a6ea152f70b27db61aa10b62183db7539ad9b6f0",
+  "summons.html": "878e7226871440ffbd5f67b7d12b8627deaff38c62d750d3e9f44b44debaba03"
+ },
+ "metagame_source": "Format Library deck JSON fetched by the pool-audit workstream into /home/mada/ygo-agent/build/edison-pool-audit-2026-11-04/web/formatlibrary (read only). Not a measured sample of current play: 75 decks, mostly recent event-topping lists.",
+ "decks": 75,
+ "deck_types": [
+  [
+   "Vayu Turbo",
+   15
+  ],
+  [
+   "Blackwing",
+   13
+  ],
+  [
+   "Lightsworn",
+   8
+  ],
+  [
+   "Gladiator Beast",
+   6
+  ],
+  [
+   "Frog OTK",
+   5
+  ],
+  [
+   "Dragon Turbo",
+   4
+  ],
+  [
+   "Jinzo Machina",
+   3
+  ],
+  [
+   "Lightsworn Fairy",
+   3
+  ],
+  [
+   "Frog Control",
+   2
+  ],
+  [
+   "Monster Mash",
+   2
+  ],
+  [
+   "Diva Frog",
+   2
+  ],
+  [
+   "Hero Frog",
+   2
+  ],
+  [
+   "Gigavise",
+   2
+  ],
+  [
+   "Diva Hero Beat",
+   1
+  ],
+  [
+   "Hero Beat",
+   1
+  ],
+  [
+   "Quickdraw Plant",
+   1
+  ],
+  [
+   "Frog Monarch",
+   1
+  ],
+  [
+   "Zombie TeleDAD",
+   1
+  ],
+  [
+   "Hero Quickdraw Plant",
+   1
+  ],
+  [
+   "Machina Control",
+   1
+  ],
+  [
+   "Diva Hero",
+   1
+  ]
+ ],
+ "top_cards": [
+  {
+   "code": 44508094,
+   "name": "Stardust Dragon",
+   "decks": 75,
+   "share": 1.0
+  },
+  {
+   "code": 19613556,
+   "name": "Heavy Storm",
+   "decks": 75,
+   "share": 1.0
+  },
+  {
+   "code": 73580471,
+   "name": "Black Rose Dragon",
+   "decks": 72,
+   "share": 0.96
+  },
+  {
+   "code": 50321796,
+   "name": "Brionac, Dragon of the Ice Barrier",
+   "decks": 71,
+   "share": 0.947
+  },
+  {
+   "code": 26593852,
+   "name": "Ally of Justice Catastor",
+   "decks": 71,
+   "share": 0.947
+  },
+  {
+   "code": 44095762,
+   "name": "Mirror Force",
+   "decks": 70,
+   "share": 0.933
+  },
+  {
+   "code": 7391448,
+   "name": "Goyo Guardian",
+   "decks": 70,
+   "share": 0.933
+  },
+  {
+   "code": 24508238,
+   "name": "D.D. Crow",
+   "decks": 66,
+   "share": 0.88
+  },
+  {
+   "code": 5318639,
+   "name": "Mystical Space Typhoon",
+   "decks": 66,
+   "share": 0.88
+  },
+  {
+   "code": 23693634,
+   "name": "Colossal Fighter",
+   "decks": 65,
+   "share": 0.867
+  },
+  {
+   "code": 53582587,
+   "name": "Torrential Tribute",
+   "decks": 64,
+   "share": 0.853
+  },
+  {
+   "code": 87910978,
+   "name": "Brain Control",
+   "decks": 60,
+   "share": 0.8
+  },
+  {
+   "code": 70780151,
+   "name": "Thought Ruler Archfiend",
+   "decks": 59,
+   "share": 0.787
+  },
+  {
+   "code": 64697231,
+   "name": "Trap Dustshoot",
+   "decks": 58,
+   "share": 0.773
+  },
+  {
+   "code": 44330098,
+   "name": "Gorz the Emissary of Darkness",
+   "decks": 58,
+   "share": 0.773
+  },
+  {
+   "code": 79229522,
+   "name": "Chimeratech Fortress Dragon",
+   "decks": 53,
+   "share": 0.707
+  },
+  {
+   "code": 70342110,
+   "name": "Dimensional Prison",
+   "decks": 48,
+   "share": 0.64
+  },
+  {
+   "code": 29401950,
+   "name": "Bottomless Trap Hole",
+   "decks": 45,
+   "share": 0.6
+  },
+  {
+   "code": 43385557,
+   "name": "Magical Android",
+   "decks": 44,
+   "share": 0.587
+  },
+  {
+   "code": 65192027,
+   "name": "Dark Armed Dragon",
+   "decks": 43,
+   "share": 0.573
+  },
+  {
+   "code": 29071332,
+   "name": "Armory Arm",
+   "decks": 43,
+   "share": 0.573
+  },
+  {
+   "code": 70095154,
+   "name": "Cyber Dragon",
+   "decks": 43,
+   "share": 0.573
+  },
+  {
+   "code": 41420027,
+   "name": "Solemn Judgment",
+   "decks": 43,
+   "share": 0.573
+  },
+  {
+   "code": 60082869,
+   "name": "Dust Tornado",
+   "decks": 42,
+   "share": 0.56
+  },
+  {
+   "code": 88643579,
+   "name": "Dark End Dragon",
+   "decks": 42,
+   "share": 0.56
+  },
+  {
+   "code": 93016201,
+   "name": "Royal Oppression",
+   "decks": 41,
+   "share": 0.547
+  },
+  {
+   "code": 27315304,
+   "name": "Mist Wurm",
+   "decks": 39,
+   "share": 0.52
+  },
+  {
+   "code": 1475311,
+   "name": "Allure of Darkness",
+   "decks": 39,
+   "share": 0.52
+  },
+  {
+   "code": 4906301,
+   "name": "Necro Gardna",
+   "decks": 37,
+   "share": 0.493
+  },
+  {
+   "code": 85087012,
+   "name": "Card Trooper",
+   "decks": 34,
+   "share": 0.453
+  },
+  {
+   "code": 33420078,
+   "name": "Plaguespreader Zombie",
+   "decks": 34,
+   "share": 0.453
+  },
+  {
+   "code": 9748752,
+   "name": "Caius the Shadow Monarch",
+   "decks": 34,
+   "share": 0.453
+  },
+  {
+   "code": 32807846,
+   "name": "Reinforcement of the Army",
+   "decks": 33,
+   "share": 0.44
+  },
+  {
+   "code": 21502796,
+   "name": "Ryko, Lightsworn Hunter",
+   "decks": 30,
+   "share": 0.4
+  },
+  {
+   "code": 34717238,
+   "name": "Pulling the Rug",
+   "decks": 30,
+   "share": 0.4
+  },
+  {
+   "code": 2009101,
+   "name": "Blackwing - Gale the Whirlwind",
+   "decks": 30,
+   "share": 0.4
+  },
+  {
+   "code": 75498415,
+   "name": "Blackwing - Sirocco the Dawn",
+   "decks": 30,
+   "share": 0.4
+  },
+  {
+   "code": 69162969,
+   "name": "Lightning Vortex",
+   "decks": 29,
+   "share": 0.387
+  },
+  {
+   "code": 69031175,
+   "name": "Blackwing Armor Master",
+   "decks": 29,
+   "share": 0.387
+  },
+  {
+   "code": 53714009,
+   "name": "Flamvell Uruquizas",
+   "decks": 28,
+   "share": 0.373
+  },
+  {
+   "code": 72714392,
+   "name": "Blackwing - Vayu the Emblem of Honor",
+   "decks": 28,
+   "share": 0.373
+  },
+  {
+   "code": 76913983,
+   "name": "Blackwing Armed Wing",
+   "decks": 28,
+   "share": 0.373
+  },
+  {
+   "code": 14087893,
+   "name": "Book of Moon",
+   "decks": 28,
+   "share": 0.373
+  },
+  {
+   "code": 33236860,
+   "name": "Blackwing - Silverwind the Ascendant",
+   "decks": 28,
+   "share": 0.373
+  },
+  {
+   "code": 35027493,
+   "name": "Deck Devastation Virus",
+   "decks": 25,
+   "share": 0.333
+  },
+  {
+   "code": 28985331,
+   "name": "Armageddon Knight",
+   "decks": 25,
+   "share": 0.333
+  },
+  {
+   "code": 70902743,
+   "name": "Red Dragon Archfiend",
+   "decks": 24,
+   "share": 0.32
+  },
+  {
+   "code": 42009836,
+   "name": "Fossil Dyna Pachycephalo",
+   "decks": 24,
+   "share": 0.32
+  },
+  {
+   "code": 14536035,
+   "name": "Dark Grepher",
+   "decks": 24,
+   "share": 0.32
+  },
+  {
+   "code": 67169062,
+   "name": "Pot of Avarice",
+   "decks": 23,
+   "share": 0.307
+  },
+  {
+   "code": 88240808,
+   "name": "Kycoo the Ghost Destroyer",
+   "decks": 23,
+   "share": 0.307
+  },
+  {
+   "code": 94886282,
+   "name": "Charge of the Light Brigade",
+   "decks": 21,
+   "share": 0.28
+  },
+  {
+   "code": 58120309,
+   "name": "Starlight Road",
+   "decks": 19,
+   "share": 0.253
+  },
+  {
+   "code": 53567095,
+   "name": "Icarus Attack",
+   "decks": 19,
+   "share": 0.253
+  },
+  {
+   "code": 27174286,
+   "name": "Return from the Different Dimension",
+   "decks": 19,
+   "share": 0.253
+  },
+  {
+   "code": 9596126,
+   "name": "Chaos Sorcerer",
+   "decks": 18,
+   "share": 0.24
+  },
+  {
+   "code": 48976825,
+   "name": "Burial from a Different Dimension",
+   "decks": 18,
+   "share": 0.24
+  },
+  {
+   "code": 71413901,
+   "name": "Breaker the Magical Warrior",
+   "decks": 17,
+   "share": 0.227
+  },
+  {
+   "code": 30461781,
+   "name": "Legacy of Yata-Garasu",
+   "decks": 17,
+   "share": 0.227
+  },
+  {
+   "code": 42703248,
+   "name": "Giant Trunade",
+   "decks": 16,
+   "share": 0.213
+  },
+  {
+   "code": 22624373,
+   "name": "Lyla, Lightsworn Sorceress",
+   "decks": 15,
+   "share": 0.2
+  },
+  {
+   "code": 94192409,
+   "name": "Compulsory Evacuation Device",
+   "decks": 14,
+   "share": 0.187
+  },
+  {
+   "code": 77565204,
+   "name": "Future Fusion",
+   "decks": 14,
+   "share": 0.187
+  },
+  {
+   "code": 36361633,
+   "name": "Threatening Roar",
+   "decks": 14,
+   "share": 0.187
+  },
+  {
+   "code": 2980764,
+   "name": "Consecrated Light",
+   "decks": 14,
+   "share": 0.187
+  },
+  {
+   "code": 37742478,
+   "name": "Honest",
+   "decks": 13,
+   "share": 0.173
+  },
+  {
+   "code": 29549364,
+   "name": "Mask of Restrict",
+   "decks": 13,
+   "share": 0.173
+  },
+  {
+   "code": 98777036,
+   "name": "Tragoedia",
+   "decks": 13,
+   "share": 0.173
+  },
+  {
+   "code": 37520316,
+   "name": "Mind Control",
+   "decks": 13,
+   "share": 0.173
+  },
+  {
+   "code": 85215458,
+   "name": "Blackwing - Kalut the Moon Shadow",
+   "decks": 13,
+   "share": 0.173
+  },
+  {
+   "code": 58820853,
+   "name": "Blackwing - Shura the Blue Flame",
+   "decks": 13,
+   "share": 0.173
+  },
+  {
+   "code": 5220687,
+   "name": "Super-Nimble Mega Hamster",
+   "decks": 13,
+   "share": 0.173
+  },
+  {
+   "code": 81439174,
+   "name": "Foolish Burial",
+   "decks": 12,
+   "share": 0.16
+  },
+  {
+   "code": 20663556,
+   "name": "Substitoad",
+   "decks": 12,
+   "share": 0.16
+  },
+  {
+   "code": 12538374,
+   "name": "Treeborn Frog",
+   "decks": 12,
+   "share": 0.16
+  },
+  {
+   "code": 2295440,
+   "name": "One for One",
+   "decks": 12,
+   "share": 0.16
+  },
+  {
+   "code": 9126351,
+   "name": "Swap Frog",
+   "decks": 12,
+   "share": 0.16
+  },
+  {
+   "code": 56052205,
+   "name": "Unifrog",
+   "decks": 12,
+   "share": 0.16
+  },
+  {
+   "code": 46239604,
+   "name": "Dupe Frog",
+   "decks": 12,
+   "share": 0.16
+  },
+  {
+   "code": 66788016,
+   "name": "Fissure",
+   "decks": 12,
+   "share": 0.16
+  }
+ ]
+}

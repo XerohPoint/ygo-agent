@@ -1,0 +1,3778 @@
+{
+ "summary": {
+  "note": "Separate from certification. Passing or failing here does not change the 544-case gate.",
+  "tests_run": 113,
+  "rule_cases": 138,
+  "rule_pass": 108,
+  "rule_fail": 30,
+  "setup_fail": 0,
+  "control_cases": 138,
+  "control_failures": [],
+  "infrastructure": [],
+  "replay_differs": [],
+  "unexpected": [],
+  "no_result": []
+ },
+ "cases": [
+  {
+   "case": "201",
+   "kind": "rule",
+   "title": "FIELD SPELL DESTROYED IN CHAIN",
+   "observed": [
+    "Yami on field yes, Forest in GY yes"
+   ],
+   "expected": "Forest is destroyed in the Chain, so Yami stays.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "201"
+  },
+  {
+   "case": "201",
+   "kind": "control",
+   "title": "FIELD SPELL DESTROYED IN CHAIN (Rule 5 comparison)",
+   "observed": [
+    "Yami on field yes, Forest in GY yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "201"
+  },
+  {
+   "case": "202",
+   "kind": "rule",
+   "title": "SET FIELD SPELL UNDER SECRET VILLAGE",
+   "observed": [
+    "Village kept yes, Set Umi activation offered no"
+   ],
+   "expected": "Village stays; Set Umi cannot be activated.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "202"
+  },
+  {
+   "case": "202",
+   "kind": "control",
+   "title": "SET FIELD SPELL UNDER SECRET VILLAGE (Rule 5 comparison)",
+   "observed": [
+    "Village kept yes, Set Umi activation offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "202"
+  },
+  {
+   "case": "203A",
+   "kind": "rule",
+   "title": "SET MAUSOLEUM OVER FACE-UP GEARTOWN",
+   "observed": [
+    "Control, destroyed by MST: Geartown trigger offered yes",
+    "Geartown trigger offered yes; CL1=P0:37694547"
+   ],
+   "expected": "Geartown destroyed with no Chain; its trigger is available.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "203"
+  },
+  {
+   "case": "203A",
+   "kind": "control",
+   "title": "SET MAUSOLEUM OVER FACE-UP GEARTOWN (Rule 5 comparison)",
+   "observed": [
+    "Control, destroyed by MST: Geartown trigger offered yes",
+    "Geartown trigger offered no;",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "203"
+  },
+  {
+   "case": "203B",
+   "kind": "rule",
+   "title": "SET MAUSOLEUM OVER FACE-DOWN GEARTOWN",
+   "observed": [
+    "Control, destroyed by MST: Geartown trigger offered yes",
+    "Geartown trigger offered yes; CL1=P0:37694547"
+   ],
+   "expected": "Same as 203A when Geartown is face-down.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "203"
+  },
+  {
+   "case": "203B",
+   "kind": "control",
+   "title": "SET MAUSOLEUM OVER FACE-DOWN GEARTOWN (Rule 5 comparison)",
+   "observed": [
+    "Control, destroyed by MST: Geartown trigger offered yes",
+    "Geartown trigger offered no;",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "203"
+  },
+  {
+   "case": "204A",
+   "kind": "rule",
+   "title": "ACTIVATE MAUSOLEUM OVER FACE-UP GEARTOWN",
+   "observed": [
+    "Control, destroyed by MST: Geartown trigger offered yes",
+    "Geartown trigger offered no; CL1=P0:80921533"
+   ],
+   "expected": "A Chain starts, so Geartown's trigger cannot activate.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "204"
+  },
+  {
+   "case": "204A",
+   "kind": "control",
+   "title": "ACTIVATE MAUSOLEUM OVER FACE-UP GEARTOWN (Rule 5 comparison)",
+   "observed": [
+    "Control, destroyed by MST: Geartown trigger offered yes",
+    "Geartown trigger offered no; CL1=P0:80921533",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "204"
+  },
+  {
+   "case": "204B",
+   "kind": "rule",
+   "title": "ACTIVATE MAUSOLEUM OVER FACE-DOWN GEARTOWN",
+   "observed": [
+    "Control, destroyed by MST: Geartown trigger offered yes",
+    "Geartown trigger offered no; CL1=P0:80921533"
+   ],
+   "expected": "Same as 204A when Geartown is face-down.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "204"
+  },
+  {
+   "case": "204B",
+   "kind": "control",
+   "title": "ACTIVATE MAUSOLEUM OVER FACE-DOWN GEARTOWN (Rule 5 comparison)",
+   "observed": [
+    "Control, destroyed by MST: Geartown trigger offered yes",
+    "Geartown trigger offered no; CL1=P0:80921533",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "204"
+  },
+  {
+   "case": "205",
+   "kind": "rule",
+   "title": "LISTED UNION REPLACES EFFECT DESTRUCTION",
+   "observed": [
+    "Equipped monster survived yes, Union in GY yes"
+   ],
+   "expected": "Gearframe is destroyed instead of its equipped Cyber Dragon.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "205"
+  },
+  {
+   "case": "205",
+   "kind": "control",
+   "title": "LISTED UNION REPLACES EFFECT DESTRUCTION (Rule 5 comparison)",
+   "observed": [
+    "Equipped monster survived yes, Union in GY yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "205"
+  },
+  {
+   "case": "206",
+   "kind": "rule",
+   "title": "UNLISTED UNION DOES NOT REPLACE EFFECT DESTRUCTION",
+   "observed": [
+    "Equipped monster survived yes, Union in GY yes"
+   ],
+   "expected": "Y-Dragon Head is not listed, so X-Head Cannon is destroyed.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 3: this Union is not listed as replacing effect destruction, so the equipped monster must be destroyed",
+   "test": "206"
+  },
+  {
+   "case": "206",
+   "kind": "control",
+   "title": "UNLISTED UNION DOES NOT REPLACE EFFECT DESTRUCTION (Rule 5 comparison)",
+   "observed": [
+    "Equipped monster survived yes, Union in GY yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "206"
+  },
+  {
+   "case": "211",
+   "kind": "rule",
+   "title": "TRAP MONSTER NEEDS A MONSTER ZONE",
+   "observed": [
+    "Apophis activation offered with no Monster Zone: no"
+   ],
+   "expected": "Apophis cannot be activated with no empty Monster Zone.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "211"
+  },
+  {
+   "case": "211",
+   "kind": "control",
+   "title": "TRAP MONSTER NEEDS A MONSTER ZONE (Rule 5 comparison)",
+   "observed": [
+    "Apophis activation offered with no Monster Zone: no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "211"
+  },
+  {
+   "case": "212",
+   "kind": "rule",
+   "title": "TRAP MONSTER BLOCKS ITS S/T ZONE",
+   "observed": [
+    "S/T zone 0 unavailable after Apophis left it: yes"
+   ],
+   "expected": "The S/T Zone Apophis left stays unusable.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "212"
+  },
+  {
+   "case": "212",
+   "kind": "control",
+   "title": "TRAP MONSTER BLOCKS ITS S/T ZONE (Rule 5 comparison)",
+   "observed": [
+    "S/T zone 0 unavailable after Apophis left it: no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "212"
+  },
+  {
+   "case": "213",
+   "kind": "rule",
+   "title": "CONTROL OF TRAP MONSTER NEEDS BOTH ZONES",
+   "observed": [
+    "4 S/T Zones occupied: control option offered yes, Apophis taken yes",
+    "5 S/T Zones occupied: control option offered no, Apophis taken no"
+   ],
+   "expected": "Enemy Controller cannot take Apophis with no open S/T Zone.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "213"
+  },
+  {
+   "case": "213",
+   "kind": "control",
+   "title": "CONTROL OF TRAP MONSTER NEEDS BOTH ZONES (Rule 5 comparison)",
+   "observed": [
+    "4 S/T Zones occupied: control option offered yes, Apophis taken yes",
+    "5 S/T Zones occupied: control option offered yes, Apophis taken yes",
+    "Rule 5 differs: Rule 5: gaining control of a Trap Monster needs an open S/T Zone too"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "213"
+  },
+  {
+   "case": "214",
+   "kind": "rule",
+   "title": "JINZO REVERTS TRAP MONSTER",
+   "observed": [
+    "Apophis in Monster Zone no, in S/T Zone yes"
+   ],
+   "expected": "Apophis returns to the S/T Zone immediately.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "214"
+  },
+  {
+   "case": "214",
+   "kind": "control",
+   "title": "JINZO REVERTS TRAP MONSTER (Rule 5 comparison)",
+   "observed": [
+    "Apophis in Monster Zone no, in S/T Zone yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "214"
+  },
+  {
+   "case": "215",
+   "kind": "rule",
+   "title": "TRAP MONSTER ATTACKS SET JINZO",
+   "observed": [
+    "Battles calculated 0, Apophis in S/T yes"
+   ],
+   "expected": "Apophis reverts on the flip; no Damage Calculation.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "215"
+  },
+  {
+   "case": "215",
+   "kind": "control",
+   "title": "TRAP MONSTER ATTACKS SET JINZO (Rule 5 comparison)",
+   "observed": [
+    "Battles calculated 0, Apophis in S/T yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "215"
+  },
+  {
+   "case": "216",
+   "kind": "rule",
+   "title": "STOLEN TRAP MONSTER MEETS JINZO",
+   "observed": [
+    "Apophis P1 S/T no, P0 S/T no, P0 monster yes"
+   ],
+   "expected": "Apophis returns to its owner's S/T Zone.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 5: a stolen Trap Monster returns to its owner's S/T Zone when Jinzo is Summoned",
+   "test": "216"
+  },
+  {
+   "case": "216",
+   "kind": "control",
+   "title": "STOLEN TRAP MONSTER MEETS JINZO (Rule 5 comparison)",
+   "observed": [
+    "Apophis P1 S/T no, P0 S/T yes, P0 monster no",
+    "Rule 5 differs: Rule 5: a stolen Trap Monster returns to its owner's S/T Zone when Jinzo is Summoned"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "216"
+  },
+  {
+   "case": "217",
+   "kind": "rule",
+   "title": "BOOK OF MOON ON TRAP MONSTER",
+   "observed": [
+    "Apophis P0: S/T yes, monster no. P1: S/T no, monster no, GY no"
+   ],
+   "expected": "Apophis becomes Set in its controller's S/T Zone.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "217"
+  },
+  {
+   "case": "217",
+   "kind": "control",
+   "title": "BOOK OF MOON ON TRAP MONSTER (Rule 5 comparison)",
+   "observed": [
+    "Apophis P0: S/T yes, monster no. P1: S/T no, monster no, GY no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "217"
+  },
+  {
+   "case": "218",
+   "kind": "rule",
+   "title": "BOOK OF MOON ON STOLEN TRAP MONSTER",
+   "observed": [
+    "Apophis P0: S/T no, monster no. P1: S/T no, monster yes, GY no"
+   ],
+   "expected": "Apophis goes to the controller's S/T Zone.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 5: a Trap Monster flipped face-down is Set in its controller's S/T Zone",
+   "test": "218"
+  },
+  {
+   "case": "218",
+   "kind": "control",
+   "title": "BOOK OF MOON ON STOLEN TRAP MONSTER (Rule 5 comparison)",
+   "observed": [
+    "Apophis P0: S/T yes, monster no. P1: S/T no, monster no, GY no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "218"
+  },
+  {
+   "case": "219A",
+   "kind": "rule",
+   "title": "HEAVY STORM ON TRAP MONSTER, FAKE TRAP",
+   "observed": [
+    "Protector offered no"
+   ],
+   "expected": "Fake Trap is available.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 5: Fake Trap should be available",
+   "test": "219"
+  },
+  {
+   "case": "219A",
+   "kind": "control",
+   "title": "HEAVY STORM ON TRAP MONSTER, FAKE TRAP (Rule 5 comparison)",
+   "observed": [
+    "Protector offered no",
+    "Rule 5 differs: Rule 5: Fake Trap should be available"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "219"
+  },
+  {
+   "case": "219B",
+   "kind": "rule",
+   "title": "HEAVY STORM ON TRAP MONSTER, MY BODY",
+   "observed": [
+    "Protector offered yes"
+   ],
+   "expected": "My Body is not available.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 5: My Body as a Shield should not be available",
+   "test": "219"
+  },
+  {
+   "case": "219B",
+   "kind": "control",
+   "title": "HEAVY STORM ON TRAP MONSTER, MY BODY (Rule 5 comparison)",
+   "observed": [
+    "Protector offered yes",
+    "Rule 5 differs: Rule 5: My Body as a Shield should not be available"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "219"
+  },
+  {
+   "case": "219C",
+   "kind": "rule",
+   "title": "LIGHTNING VORTEX ON TRAP MONSTER, FAKE TRAP",
+   "observed": [
+    "Protector offered no"
+   ],
+   "expected": "Fake Trap is not available.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "219"
+  },
+  {
+   "case": "219C",
+   "kind": "control",
+   "title": "LIGHTNING VORTEX ON TRAP MONSTER, FAKE TRAP (Rule 5 comparison)",
+   "observed": [
+    "Protector offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "219"
+  },
+  {
+   "case": "219D",
+   "kind": "rule",
+   "title": "LIGHTNING VORTEX ON TRAP MONSTER, MY BODY",
+   "observed": [
+    "Protector offered yes"
+   ],
+   "expected": "My Body is available.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "219"
+  },
+  {
+   "case": "219D",
+   "kind": "control",
+   "title": "LIGHTNING VORTEX ON TRAP MONSTER, MY BODY (Rule 5 comparison)",
+   "observed": [
+    "Protector offered yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "219"
+  },
+  {
+   "case": "219E",
+   "kind": "rule",
+   "title": "RAIGEKI BREAK ON TRAP MONSTER, FAKE TRAP",
+   "observed": [
+    "Protector offered no"
+   ],
+   "expected": "Fake Trap is available.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 5: Fake Trap should be available",
+   "test": "219"
+  },
+  {
+   "case": "219E",
+   "kind": "control",
+   "title": "RAIGEKI BREAK ON TRAP MONSTER, FAKE TRAP (Rule 5 comparison)",
+   "observed": [
+    "Protector offered no",
+    "Rule 5 differs: Rule 5: Fake Trap should be available"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "219"
+  },
+  {
+   "case": "219F",
+   "kind": "rule",
+   "title": "RAIGEKI BREAK ON TRAP MONSTER, MY BODY",
+   "observed": [
+    "Protector offered yes"
+   ],
+   "expected": "My Body is available.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "219"
+  },
+  {
+   "case": "219F",
+   "kind": "control",
+   "title": "RAIGEKI BREAK ON TRAP MONSTER, MY BODY (Rule 5 comparison)",
+   "observed": [
+    "Protector offered yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "219"
+  },
+  {
+   "case": "220",
+   "kind": "rule",
+   "title": "CAIUS REMOVES ZOMA",
+   "observed": [
+    "Damage events 0, P1 LP 8000"
+   ],
+   "expected": "Removed as a Trap Card, so no damage.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "220"
+  },
+  {
+   "case": "220",
+   "kind": "control",
+   "title": "CAIUS REMOVES ZOMA (Rule 5 comparison)",
+   "observed": [
+    "Damage events 0, P1 LP 8000",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "220"
+  },
+  {
+   "case": "221",
+   "kind": "rule",
+   "title": "MICHIZURE AND TRAP MONSTER",
+   "observed": [
+    "Control, ordinary monster destroyed: Michizure offered yes",
+    "Michizure offered no"
+   ],
+   "expected": "Michizure cannot be activated.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "221"
+  },
+  {
+   "case": "221",
+   "kind": "control",
+   "title": "MICHIZURE AND TRAP MONSTER (Rule 5 comparison)",
+   "observed": [
+    "Control, ordinary monster destroyed: Michizure offered yes",
+    "Michizure offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "221"
+  },
+  {
+   "case": "222",
+   "kind": "rule",
+   "title": "SHURA AND TRAP MONSTER",
+   "observed": [
+    "Control, ordinary monster destroyed: Shura offered yes",
+    "Shura offered no"
+   ],
+   "expected": "Shura does not trigger.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "222"
+  },
+  {
+   "case": "222",
+   "kind": "control",
+   "title": "SHURA AND TRAP MONSTER (Rule 5 comparison)",
+   "observed": [
+    "Control, ordinary monster destroyed: Shura offered yes",
+    "Shura offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "222"
+  },
+  {
+   "case": "223",
+   "kind": "rule",
+   "title": "PENGUIN SOLDIER AND MAJOR RIOT",
+   "observed": [
+    "Major Riot offered yes"
+   ],
+   "expected": "Major Riot cannot be activated.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 5: a Trap Monster returns to hand as a Trap Card, so Major Riot cannot be activated",
+   "test": "223"
+  },
+  {
+   "case": "223",
+   "kind": "control",
+   "title": "PENGUIN SOLDIER AND MAJOR RIOT (Rule 5 comparison)",
+   "observed": [
+    "Major Riot offered yes",
+    "Rule 5 differs: Rule 5: a Trap Monster returns to hand as a Trap Card, so Major Riot cannot be activated"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "223"
+  },
+  {
+   "case": "224",
+   "kind": "rule",
+   "title": "MATTER TRANSPORTER ON TRAP MONSTER",
+   "observed": [
+    "Apophis after return: GY yes, monster no, S/T no"
+   ],
+   "expected": "Returns as a Trap Card and is destroyed.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "224"
+  },
+  {
+   "case": "224",
+   "kind": "control",
+   "title": "MATTER TRANSPORTER ON TRAP MONSTER (Rule 5 comparison)",
+   "observed": [
+    "Apophis after return: GY yes, monster no, S/T no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "224"
+  },
+  {
+   "case": "225",
+   "kind": "rule",
+   "title": "TIME MACHINE AND TRAP MONSTER",
+   "observed": [
+    "Control, ordinary monster destroyed: Time Machine offered yes",
+    "Time Machine offered no"
+   ],
+   "expected": "Time Machine cannot be activated.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "225"
+  },
+  {
+   "case": "225",
+   "kind": "control",
+   "title": "TIME MACHINE AND TRAP MONSTER (Rule 5 comparison)",
+   "observed": [
+    "Control, ordinary monster destroyed: Time Machine offered yes",
+    "Time Machine offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "225"
+  },
+  {
+   "case": "226",
+   "kind": "rule",
+   "title": "RETURN OF THE DOOMED AND TRAP MONSTER",
+   "observed": [
+    "Control, Bazoo returned to hand: yes",
+    "Apophis returned to hand: no"
+   ],
+   "expected": "No legal target.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "226"
+  },
+  {
+   "case": "226",
+   "kind": "control",
+   "title": "RETURN OF THE DOOMED AND TRAP MONSTER (Rule 5 comparison)",
+   "observed": [
+    "Control, Bazoo returned to hand: yes",
+    "Apophis returned to hand: no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "226"
+  },
+  {
+   "case": "227",
+   "kind": "rule",
+   "title": "DIMENSIONHOLE ON TRAP MONSTER",
+   "observed": [
+    "Apophis after the Standby Phase: GY yes, monster no, S/T no"
+   ],
+   "expected": "Returns as a Trap Card and is destroyed.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "227"
+  },
+  {
+   "case": "227",
+   "kind": "control",
+   "title": "DIMENSIONHOLE ON TRAP MONSTER (Rule 5 comparison)",
+   "observed": [
+    "Apophis after the Standby Phase: GY yes, monster no, S/T no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "227"
+  },
+  {
+   "case": "231",
+   "kind": "rule",
+   "title": "MALICIOUS GY IGNITION PRIORITY",
+   "observed": [
+    "Malicious offered in Summon window no, Crow offered yes, usable from idle afterwards yes;"
+   ],
+   "expected": "Malicious can be CL1 before D.D. Crow.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 6 Ex.1: Malicious's Graveyard Ignition Effect can be Chain Link 1 in the Summon window, before D.D. Crow",
+   "test": "231"
+  },
+  {
+   "case": "231",
+   "kind": "control",
+   "title": "MALICIOUS GY IGNITION PRIORITY (Rule 5 comparison)",
+   "observed": [
+    "Malicious offered in Summon window no, Crow offered yes, usable from idle afterwards yes;",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "231"
+  },
+  {
+   "case": "232",
+   "kind": "rule",
+   "title": "CHAOS SORCERER IGNITION PRIORITY",
+   "observed": [
+    " CL1=P0:9596126 CL2=P1:29401950"
+   ],
+   "expected": "Chaos Sorcerer can be CL1 before Bottomless.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "232"
+  },
+  {
+   "case": "232",
+   "kind": "control",
+   "title": "CHAOS SORCERER IGNITION PRIORITY (Rule 5 comparison)",
+   "observed": [
+    " CL1=P1:29401950",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "232"
+  },
+  {
+   "case": "233",
+   "kind": "rule",
+   "title": "DEMISE PRIORITY AFTER RITUAL",
+   "observed": [
+    "Demise offered yes, Torrential offered yes; CL1=P0:8198712 CL1=P0:72426662"
+   ],
+   "expected": "Demise's effect is available before Torrential.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "233"
+  },
+  {
+   "case": "233",
+   "kind": "control",
+   "title": "DEMISE PRIORITY AFTER RITUAL (Rule 5 comparison)",
+   "observed": [
+    "Demise offered no, Torrential offered yes; CL1=P0:8198712",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "233"
+  },
+  {
+   "case": "234",
+   "kind": "rule",
+   "title": "BLACK GARDEN REMOVES PRIORITY",
+   "observed": [
+    "DAD offered during the trigger Chain no; CL1=P1:71645242"
+   ],
+   "expected": "Garden is CL1; DAD's Ignition is not offered.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "234"
+  },
+  {
+   "case": "234",
+   "kind": "control",
+   "title": "BLACK GARDEN REMOVES PRIORITY (Rule 5 comparison)",
+   "observed": [
+    "DAD offered during the trigger Chain no; CL1=P1:71645242",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "234"
+  },
+  {
+   "case": "235A",
+   "kind": "rule",
+   "title": "DECLINED TRIGGER REMOVES PRIORITY",
+   "observed": [
+    "Bazoo Ignition offered yes;"
+   ],
+   "expected": "Bazoo's Ignition is not offered after a triggered Summon.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 6 Ex.3 (no priority): a triggered Summon gives the turn player no Ignition Effect as Chain Link 1",
+   "test": "235"
+  },
+  {
+   "case": "235A",
+   "kind": "control",
+   "title": "DECLINED TRIGGER REMOVES PRIORITY (Rule 5 comparison)",
+   "observed": [
+    "Bazoo Ignition offered no;",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "235"
+  },
+  {
+   "case": "235B",
+   "kind": "rule",
+   "title": "ACCEPTED TRIGGER REMOVES PRIORITY",
+   "observed": [
+    "Bazoo Ignition offered no; CL1=P0:28985331"
+   ],
+   "expected": "Bazoo's Ignition is not offered as the trigger Chain builds.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "235"
+  },
+  {
+   "case": "235B",
+   "kind": "control",
+   "title": "ACCEPTED TRIGGER REMOVES PRIORITY (Rule 5 comparison)",
+   "observed": [
+    "Bazoo Ignition offered no; CL1=P0:28985331",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "235"
+  },
+  {
+   "case": "236",
+   "kind": "rule",
+   "title": "SANGAN MATERIAL REMOVES PRIORITY",
+   "observed": [
+    "Brionac offered no; CL1=P0:26202165"
+   ],
+   "expected": "Sangan starts a Chain; Brionac is not offered.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "236"
+  },
+  {
+   "case": "236",
+   "kind": "control",
+   "title": "SANGAN MATERIAL REMOVES PRIORITY (Rule 5 comparison)",
+   "observed": [
+    "Brionac offered no; CL1=P0:26202165",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "236"
+  },
+  {
+   "case": "237",
+   "kind": "rule",
+   "title": "PRIORITY AFTER A CHAIN RESOLVES",
+   "observed": [
+    "Crow offered after the Chain and before the next idle yes; idle offers Malicious yes"
+   ],
+   "expected": "D.D. Crow is offered before any Ignition Effect.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "237"
+  },
+  {
+   "case": "237",
+   "kind": "control",
+   "title": "PRIORITY AFTER A CHAIN RESOLVES (Rule 5 comparison)",
+   "observed": [
+    "Crow offered after the Chain and before the next idle yes; idle offers Malicious yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "237"
+  },
+  {
+   "case": "238",
+   "kind": "rule",
+   "title": "LEVEL EATER SUMMON WINDOW",
+   "observed": [
+    "Level Eater offered in Summon window no, usable from idle afterwards yes;"
+   ],
+   "expected": "Level Eater's GY Ignition can be CL1.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Summons page Ex.2: Level Eater's Graveyard Ignition Effect can be Chain Link 1",
+   "test": "238"
+  },
+  {
+   "case": "238",
+   "kind": "control",
+   "title": "LEVEL EATER SUMMON WINDOW (Rule 5 comparison)",
+   "observed": [
+    "Level Eater offered in Summon window no, usable from idle afterwards yes;",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "238"
+  },
+  {
+   "case": "239",
+   "kind": "rule",
+   "title": "RAI-OH NEGATES INHERENT SUMMON",
+   "observed": [
+    "Rai-Oh activated yes, Chaos Sorcerer in GY yes"
+   ],
+   "expected": "Chaos Sorcerer's Summon is negated.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "239"
+  },
+  {
+   "case": "239",
+   "kind": "control",
+   "title": "RAI-OH NEGATES INHERENT SUMMON (Rule 5 comparison)",
+   "observed": [
+    "Rai-Oh activated yes, Chaos Sorcerer in GY yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "239"
+  },
+  {
+   "case": "240",
+   "kind": "rule",
+   "title": "OPPRESSION DESTROYED IN CHAIN",
+   "observed": [
+    "Stardust on field yes; CL1=P1:93016201 CL2=P0:60082869"
+   ],
+   "expected": "The Synchro Summon is not negated.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "240"
+  },
+  {
+   "case": "240",
+   "kind": "control",
+   "title": "OPPRESSION DESTROYED IN CHAIN (Rule 5 comparison)",
+   "observed": [
+    "Stardust on field yes; CL1=P1:93016201 CL2=P0:60082869",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "240"
+  },
+  {
+   "case": "241",
+   "kind": "rule",
+   "title": "SOUL EXCHANGE SANGAN AND CAIUS",
+   "observed": [
+    " CL1=P0:68005187 CL1=P1:26202165 CL2=P0:9748752"
+   ],
+   "expected": "Caius CL1, opponent's Sangan CL2.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 7 Ex.2: turn player's mandatory Caius (Step 1) is CL1, non-turn player's mandatory Sangan (Step 2) is CL2",
+   "test": "241"
+  },
+  {
+   "case": "241",
+   "kind": "control",
+   "title": "SOUL EXCHANGE SANGAN AND CAIUS (Rule 5 comparison)",
+   "observed": [
+    " CL1=P0:68005187 CL1=P0:9748752 CL2=P1:26202165",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "241"
+  },
+  {
+   "case": "242",
+   "kind": "rule",
+   "title": "EARLIER OPTIONAL VERSUS LATER MANDATORY",
+   "observed": [
+    " CL1=P0:74117290 CL1=P0:87774234 CL2=P0:79126789"
+   ],
+   "expected": "Mandatory Broww CL1, optional Watapon CL2.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 7: the chronology exception only applies within one step, so mandatory Broww (Step 1) precedes optional Watapon (Step 3)",
+   "test": "242"
+  },
+  {
+   "case": "242",
+   "kind": "control",
+   "title": "EARLIER OPTIONAL VERSUS LATER MANDATORY (Rule 5 comparison)",
+   "observed": [
+    " CL1=P0:74117290 CL1=P0:79126789 CL2=P0:87774234",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "242"
+  },
+  {
+   "case": "244",
+   "kind": "rule",
+   "title": "PRIORITY ON ENTERING MAIN PHASE",
+   "observed": [
+    "Crow offered in Main Phase 1 before the turn player acted: no"
+   ],
+   "expected": "D.D. Crow is not offered before the turn player acts.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "244"
+  },
+  {
+   "case": "244",
+   "kind": "control",
+   "title": "PRIORITY ON ENTERING MAIN PHASE (Rule 5 comparison)",
+   "observed": [
+    "Crow offered in Main Phase 1 before the turn player acted: no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "244"
+  },
+  {
+   "case": "251",
+   "kind": "rule",
+   "title": "COUNTER TRAP AT START OF DAMAGE STEP",
+   "observed": [
+    " CL1=P0:25789292 CL2=P1:41420027"
+   ],
+   "expected": "Divine Wrath is available when Chalice activates.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "251"
+  },
+  {
+   "case": "251",
+   "kind": "control",
+   "title": "COUNTER TRAP AT START OF DAMAGE STEP (Rule 5 comparison)",
+   "observed": [
+    " CL1=P0:25789292 CL2=P1:41420027",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "251"
+  },
+  {
+   "case": "252",
+   "kind": "rule",
+   "title": "DOOMCALIBER IN DAMAGE STEP",
+   "observed": [
+    "Doomcaliber activated yes; CL1=P1:83011277 CL2=P0:78700060"
+   ],
+   "expected": "Doomcaliber activates on Tomato's effect.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "252"
+  },
+  {
+   "case": "252",
+   "kind": "control",
+   "title": "DOOMCALIBER IN DAMAGE STEP (Rule 5 comparison)",
+   "observed": [
+    "Doomcaliber activated yes; CL1=P1:83011277 CL2=P0:78700060",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "252"
+  },
+  {
+   "case": "253",
+   "kind": "rule",
+   "title": "GADGET FROM GIANT RAT",
+   "observed": [
+    "Gadget offered yes; CL1=P0:97017120 CL1=P0:41172955"
+   ],
+   "expected": "Green Gadget's trigger is available.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "253"
+  },
+  {
+   "case": "253",
+   "kind": "control",
+   "title": "GADGET FROM GIANT RAT (Rule 5 comparison)",
+   "observed": [
+    "Gadget offered yes; CL1=P0:97017120 CL1=P0:41172955",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "253"
+  },
+  {
+   "case": "254",
+   "kind": "rule",
+   "title": "RYKO MILLS PETEN",
+   "observed": [
+    "Peten offered yes; CL1=P0:21502796"
+   ],
+   "expected": "Peten activates in another manual Chain.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "254"
+  },
+  {
+   "case": "254",
+   "kind": "control",
+   "title": "RYKO MILLS PETEN (Rule 5 comparison)",
+   "observed": [
+    "Peten offered yes; CL1=P0:21502796",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "254"
+  },
+  {
+   "case": "255",
+   "kind": "rule",
+   "title": "GORZ ON BATTLE DAMAGE",
+   "observed": [
+    "Gorz activated yes, P0 monsters 2; CL1=P0:44330098 CL1=P0:44330098"
+   ],
+   "expected": "Gorz activates.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "255"
+  },
+  {
+   "case": "255",
+   "kind": "control",
+   "title": "GORZ ON BATTLE DAMAGE (Rule 5 comparison)",
+   "observed": [
+    "Gorz activated yes, P0 monsters 2; CL1=P0:44330098 CL1=P0:44330098",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "255"
+  },
+  {
+   "case": "256",
+   "kind": "rule",
+   "title": "ATTACK REPLAY DOES NOT REOPEN DECLARATION",
+   "observed": [
+    "Attack messages 2, Mirror Force offered after the replay no"
+   ],
+   "expected": "No second declaration Chain.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "256"
+  },
+  {
+   "case": "256",
+   "kind": "control",
+   "title": "ATTACK REPLAY DOES NOT REOPEN DECLARATION (Rule 5 comparison)",
+   "observed": [
+    "Attack messages 2, Mirror Force offered after the replay no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "256"
+  },
+  {
+   "case": "257",
+   "kind": "rule",
+   "title": "EFFECT VEILER IN THE DAMAGE STEP",
+   "observed": [
+    "Effect Veiler offered in Main Phase yes, in the Damage Step no"
+   ],
+   "expected": "Veiler is not offered.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "257"
+  },
+  {
+   "case": "257",
+   "kind": "control",
+   "title": "EFFECT VEILER IN THE DAMAGE STEP (Rule 5 comparison)",
+   "observed": [
+    "Effect Veiler offered in Main Phase yes, in the Damage Step no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "257"
+  },
+  {
+   "case": "258",
+   "kind": "rule",
+   "title": "MONSTER MARKED DESTROYED CANNOT BE RETURNED",
+   "observed": [
+    "Penguin Soldier, marked destroyed by battle, offered as its own return target: no"
+   ],
+   "expected": "Penguin cannot return itself.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "258"
+  },
+  {
+   "case": "258",
+   "kind": "control",
+   "title": "MONSTER MARKED DESTROYED CANNOT BE RETURNED (Rule 5 comparison)",
+   "observed": [
+    "Penguin Soldier, marked destroyed by battle, offered as its own return target: no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "258"
+  },
+  {
+   "case": "261",
+   "kind": "rule",
+   "title": "DANDYLION RETURNED BY REINCARNATION",
+   "observed": [
+    "Dandylion activated from hand no, tokens 0"
+   ],
+   "expected": "Dandylion activates from the hand.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 9: Dandylion's trigger activates from outside its trigger location, even after returning to hand",
+   "test": "261"
+  },
+  {
+   "case": "261",
+   "kind": "control",
+   "title": "DANDYLION RETURNED BY REINCARNATION (Rule 5 comparison)",
+   "observed": [
+    "Dandylion activated from hand no, tokens 0",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "261"
+  },
+  {
+   "case": "262A",
+   "kind": "rule",
+   "title": "NECROFACE WITH FUTURE VISIONS CL1",
+   "observed": [
+    "Necroface activations 2, P0 banished 6; CL1=P0:87902575 CL2=P0:28297833 CL1=P0:28297833"
+   ],
+   "expected": "Necroface activates a second time in a new Chain.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "262"
+  },
+  {
+   "case": "262A",
+   "kind": "control",
+   "title": "NECROFACE WITH FUTURE VISIONS CL1 (Rule 5 comparison)",
+   "observed": [
+    "Necroface activations 2, P0 banished 6; CL1=P0:87902575 CL2=P0:28297833 CL1=P0:28297833",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "262"
+  },
+  {
+   "case": "262B",
+   "kind": "rule",
+   "title": "NECROFACE CL1 WITH FUTURE VISIONS",
+   "observed": [
+    "Necroface activations 1, P0 banished 0; CL1=P0:28297833 CL2=P0:87902575"
+   ],
+   "expected": "Necroface activates a second time from the Deck.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 9: Necroface's banish effect starts a new Chain after Future Visions removed it, even though it was returned to the Deck",
+   "test": "262"
+  },
+  {
+   "case": "262B",
+   "kind": "control",
+   "title": "NECROFACE CL1 WITH FUTURE VISIONS (Rule 5 comparison)",
+   "observed": [
+    "Necroface activations 1, P0 banished 0; CL1=P0:28297833 CL2=P0:87902575",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "262"
+  },
+  {
+   "case": "263",
+   "kind": "rule",
+   "title": "ASLLA PISCU RETURNED TO DECK",
+   "observed": [
+    "Control, destroyed: Aslla activated yes",
+    "Aslla activated no"
+   ],
+   "expected": "Aslla does not activate.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "263"
+  },
+  {
+   "case": "263",
+   "kind": "control",
+   "title": "ASLLA PISCU RETURNED TO DECK (Rule 5 comparison)",
+   "observed": [
+    "Control, destroyed: Aslla activated yes",
+    "Aslla activated no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "263"
+  },
+  {
+   "case": "264",
+   "kind": "rule",
+   "title": "ABSOLUTE ZERO RETURNED TO EXTRA",
+   "observed": [
+    "Absolute Zero activated yes, Blue-Eyes destroyed yes"
+   ],
+   "expected": "Absolute Zero activates.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "264"
+  },
+  {
+   "case": "264",
+   "kind": "control",
+   "title": "ABSOLUTE ZERO RETURNED TO EXTRA (Rule 5 comparison)",
+   "observed": [
+    "Absolute Zero activated no, Blue-Eyes destroyed no",
+    "Rule 5 differs: Rule 9: Absolute Zero returned to the Extra Deck does activate"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "264"
+  },
+  {
+   "case": "271A",
+   "kind": "rule",
+   "title": "BRAIN CONTROL AT EXACTLY 800 LP",
+   "observed": [
+    "Activation offered at 801 LP: yes",
+    "Activation offered at 800 LP: yes"
+   ],
+   "expected": "Not offered.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 10: you cannot pay a cost that would reduce your LP to 0",
+   "test": "271"
+  },
+  {
+   "case": "271A",
+   "kind": "control",
+   "title": "BRAIN CONTROL AT EXACTLY 800 LP (Rule 5 comparison)",
+   "observed": [
+    "Activation offered at 801 LP: yes",
+    "Activation offered at 800 LP: yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "271"
+  },
+  {
+   "case": "271B",
+   "kind": "rule",
+   "title": "SKILL DRAIN AT EXACTLY 1000 LP",
+   "observed": [
+    "Activation offered at 1001 LP: yes",
+    "Activation offered at 1000 LP: yes"
+   ],
+   "expected": "Not offered.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 10: you cannot pay a cost that would reduce your LP to 0",
+   "test": "271"
+  },
+  {
+   "case": "271B",
+   "kind": "control",
+   "title": "SKILL DRAIN AT EXACTLY 1000 LP (Rule 5 comparison)",
+   "observed": [
+    "Activation offered at 1001 LP: yes",
+    "Activation offered at 1000 LP: yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "271"
+  },
+  {
+   "case": "271C",
+   "kind": "rule",
+   "title": "PREMATURE BURIAL AT EXACTLY 800 LP",
+   "observed": [
+    "Activation offered at 801 LP: yes",
+    "Activation offered at 800 LP: yes"
+   ],
+   "expected": "Not offered.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 10: you cannot pay a cost that would reduce your LP to 0",
+   "test": "271"
+  },
+  {
+   "case": "271C",
+   "kind": "control",
+   "title": "PREMATURE BURIAL AT EXACTLY 800 LP (Rule 5 comparison)",
+   "observed": [
+    "Activation offered at 801 LP: yes",
+    "Activation offered at 800 LP: yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "271"
+  },
+  {
+   "case": "272",
+   "kind": "rule",
+   "title": "MIRROR WALL MAINTENANCE AT EXACTLY 2000 LP",
+   "observed": [
+    "Winner 1, LP 0, self-destructed no, LP costs 1"
+   ],
+   "expected": "Cannot pay; self-destructs.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 10: maintenance cannot reduce LP to 0",
+   "test": "272"
+  },
+  {
+   "case": "272",
+   "kind": "control",
+   "title": "MIRROR WALL MAINTENANCE AT EXACTLY 2000 LP (Rule 5 comparison)",
+   "observed": [
+    "Winner 1, LP 0, self-destructed no, LP costs 1",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "272"
+  },
+  {
+   "case": "273",
+   "kind": "rule",
+   "title": "DEGENERATE CIRCUIT AT EXACTLY 500 LP",
+   "observed": [
+    "Winner 1, LP 0, self-destructed no, LP costs 1"
+   ],
+   "expected": "Cannot pay; self-destructs.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 10: maintenance cannot reduce LP to 0",
+   "test": "273"
+  },
+  {
+   "case": "273",
+   "kind": "control",
+   "title": "DEGENERATE CIRCUIT AT EXACTLY 500 LP (Rule 5 comparison)",
+   "observed": [
+    "Winner 1, LP 0, self-destructed no, LP costs 1",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "273"
+  },
+  {
+   "case": "274",
+   "kind": "rule",
+   "title": "MESSENGER OF PEACE AT EXACTLY 100 LP",
+   "observed": [
+    "Winner 1, LP 0, self-destructed no, LP costs 1"
+   ],
+   "expected": "Cannot pay; self-destructs.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 10: maintenance cannot reduce LP to 0",
+   "test": "274"
+  },
+  {
+   "case": "274",
+   "kind": "control",
+   "title": "MESSENGER OF PEACE AT EXACTLY 100 LP (Rule 5 comparison)",
+   "observed": [
+    "Winner 1, LP 0, self-destructed no, LP costs 1",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "274"
+  },
+  {
+   "case": "281",
+   "kind": "rule",
+   "title": "END DISCARD MANDATORY TRIGGER",
+   "observed": [
+    "Super Rejuvenation offered yes, Divine Wrath offered yes; CL1=P0:79814787 CL2=P1:49010598"
+   ],
+   "expected": "Wrath offered, Super Rejuvenation not.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 11 Ex.1: Super Rejuvenation cannot chain to the end-of-turn discard trigger",
+   "test": "281"
+  },
+  {
+   "case": "281",
+   "kind": "control",
+   "title": "END DISCARD MANDATORY TRIGGER (Rule 5 comparison)",
+   "observed": [
+    "Super Rejuvenation offered yes, Divine Wrath offered yes; CL1=P0:79814787 CL2=P1:49010598",
+    "Rule 5 differs: Rule 11 Ex.1: Super Rejuvenation cannot chain to the end-of-turn discard trigger"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "281"
+  },
+  {
+   "case": "282",
+   "kind": "rule",
+   "title": "END DISCARD OPTIONAL TRIGGER",
+   "observed": [
+    "Peten offered yes"
+   ],
+   "expected": "Peten cannot activate.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 11 Ex.2: the discarded monster's optional trigger cannot activate",
+   "test": "282"
+  },
+  {
+   "case": "282",
+   "kind": "control",
+   "title": "END DISCARD OPTIONAL TRIGGER (Rule 5 comparison)",
+   "observed": [
+    "Peten offered yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "282"
+  },
+  {
+   "case": "283",
+   "kind": "rule",
+   "title": "END DISCARD DOOMCALIBER",
+   "observed": [
+    " CL1=P0:79814787 CL2=P1:78700060"
+   ],
+   "expected": "Doomcaliber adds a Chain Link.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "283"
+  },
+  {
+   "case": "283",
+   "kind": "control",
+   "title": "END DISCARD DOOMCALIBER (Rule 5 comparison)",
+   "observed": [
+    " CL1=P0:79814787 CL2=P1:78700060",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "283"
+  },
+  {
+   "case": "284",
+   "kind": "rule",
+   "title": "END DISCARD ALLOWS NO RESPONSE",
+   "observed": [
+    "MST offered after the discard, same turn: no"
+   ],
+   "expected": "No response window follows the discard.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "284"
+  },
+  {
+   "case": "284",
+   "kind": "control",
+   "title": "END DISCARD ALLOWS NO RESPONSE (Rule 5 comparison)",
+   "observed": [
+    "MST offered after the discard, same turn: no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "284"
+  },
+  {
+   "case": "291",
+   "kind": "rule",
+   "title": "VOLUNTARY LOOP SUMMON",
+   "observed": [
+    "X-Head Cannon Normal Summon offered yes"
+   ],
+   "expected": "X-Head Cannon cannot be Summoned.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 12 Ex.1: a voluntary Summon that would create an infinite loop is illegal",
+   "test": "291"
+  },
+  {
+   "case": "291",
+   "kind": "control",
+   "title": "VOLUNTARY LOOP SUMMON (Rule 5 comparison)",
+   "observed": [
+    "X-Head Cannon Normal Summon offered yes",
+    "Rule 5 differs: Rule 12 Ex.1: a voluntary Summon that would create an infinite loop is illegal"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "291"
+  },
+  {
+   "case": "292",
+   "kind": "rule",
+   "title": "INVOLUNTARY LOOP DESTROYS POLE POSITION",
+   "observed": [
+    "Pole Position destroyed by game mechanics yes, on field no"
+   ],
+   "expected": "Muka Muka's draw loops; Pole Position is destroyed by game mechanics.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "292"
+  },
+  {
+   "case": "292",
+   "kind": "control",
+   "title": "INVOLUNTARY LOOP DESTROYS POLE POSITION (Rule 5 comparison)",
+   "observed": [
+    "Pole Position destroyed by game mechanics yes, on field no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "292"
+  },
+  {
+   "case": "293",
+   "kind": "rule",
+   "title": "ILLEGAL LOOP SUMMON TAKEN ANYWAY",
+   "observed": [
+    "Engine reached a checkpoint. X-Head on field no, in GY yes, Pole Position on field no, in GY yes"
+   ],
+   "expected": "Engine must not hang; records what the state does.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "293"
+  },
+  {
+   "case": "293",
+   "kind": "control",
+   "title": "ILLEGAL LOOP SUMMON TAKEN ANYWAY (Rule 5 comparison)",
+   "observed": [
+    "Engine reached a checkpoint. X-Head on field no, in GY yes, Pole Position on field no, in GY yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "293"
+  },
+  {
+   "case": "296",
+   "kind": "rule",
+   "title": "TWO 0 ATK ATTACK POSITION MONSTERS",
+   "observed": [
+    "Attacker destroyed no, defender destroyed no"
+   ],
+   "expected": "Both destroyed.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 13: two 0 ATK Attack Position monsters destroy each other",
+   "test": "296"
+  },
+  {
+   "case": "296",
+   "kind": "control",
+   "title": "TWO 0 ATK ATTACK POSITION MONSTERS (Rule 5 comparison)",
+   "observed": [
+    "Attacker destroyed no, defender destroyed no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "296"
+  },
+  {
+   "case": "297",
+   "kind": "rule",
+   "title": "0 ATK ATTACKS 0 DEF",
+   "observed": [
+    "Attacker destroyed no, defender destroyed no"
+   ],
+   "expected": "Neither destroyed.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "297"
+  },
+  {
+   "case": "297",
+   "kind": "control",
+   "title": "0 ATK ATTACKS 0 DEF (Rule 5 comparison)",
+   "observed": [
+    "Attacker destroyed no, defender destroyed no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "297"
+  },
+  {
+   "case": "301",
+   "kind": "rule",
+   "title": "LADD SEQUENTIAL ALL CARDS",
+   "observed": [
+    "Move order: other monster 1, S/T 2, revival 3"
+   ],
+   "expected": "All your cards are destroyed, then the target is revived.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "301"
+  },
+  {
+   "case": "301",
+   "kind": "control",
+   "title": "LADD SEQUENTIAL ALL CARDS (Rule 5 comparison)",
+   "observed": [
+    "Move order: other monster 1, S/T 2, revival 3",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "301"
+  },
+  {
+   "case": "302",
+   "kind": "rule",
+   "title": "JUDGMENT DRAGON PHASE RETRY",
+   "observed": [
+    "Activations 5, milled 4, returned no"
+   ],
+   "expected": "Reactivates after LADD negation until it mills.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "302"
+  },
+  {
+   "case": "302",
+   "kind": "control",
+   "title": "JUDGMENT DRAGON PHASE RETRY (Rule 5 comparison)",
+   "observed": [
+    "Activations 1, milled 0, returned no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "302"
+  },
+  {
+   "case": "303",
+   "kind": "rule",
+   "title": "ASURA PRIEST PHASE RETRY",
+   "observed": [
+    "Activations 5, milled 0, returned yes"
+   ],
+   "expected": "Reactivates after LADD negation until it returns.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "303"
+  },
+  {
+   "case": "303",
+   "kind": "control",
+   "title": "ASURA PRIEST PHASE RETRY (Rule 5 comparison)",
+   "observed": [
+    "Activations 1, milled 0, returned no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "303"
+  },
+  {
+   "case": "304A",
+   "kind": "rule",
+   "title": "NECROVALLEY AND REKINDLING",
+   "observed": [
+    "Revived monster on field yes; negated 0"
+   ],
+   "expected": "Rekindling does not target, so it is not negated.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "304"
+  },
+  {
+   "case": "304A",
+   "kind": "control",
+   "title": "NECROVALLEY AND REKINDLING (Rule 5 comparison)",
+   "observed": [
+    "Revived monster on field no; negated 1",
+    "Rule 5 differs: Errata: Necrovalley only negates effects that target"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "304"
+  },
+  {
+   "case": "304B",
+   "kind": "rule",
+   "title": "NECROVALLEY AND REDMD",
+   "observed": [
+    "Revived monster on field yes; negated 0"
+   ],
+   "expected": "REDMD does not target, so it is not negated.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "304"
+  },
+  {
+   "case": "304B",
+   "kind": "control",
+   "title": "NECROVALLEY AND REDMD (Rule 5 comparison)",
+   "observed": [
+    "Revived monster on field no; negated 0",
+    "Rule 5 differs: Errata: Necrovalley only negates effects that target"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "304"
+  },
+  {
+   "case": "305",
+   "kind": "rule",
+   "title": "SWAP FROG SAME COPY",
+   "observed": [
+    "Same Swap Frog offered again with another monster available: no"
+   ],
+   "expected": "The same Swap Frog cannot use its effect twice.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "305"
+  },
+  {
+   "case": "305",
+   "kind": "control",
+   "title": "SWAP FROG SAME COPY (Rule 5 comparison)",
+   "observed": [
+    "Same Swap Frog offered again with another monster available: no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "305"
+  },
+  {
+   "case": "306A",
+   "kind": "rule",
+   "title": "HERALD AT START OF DAMAGE STEP",
+   "observed": [
+    "Actor phase 32, Herald offered yes; CL1=P0:26593852 CL2=P1:17266660"
+   ],
+   "expected": "Herald can respond to Catastor.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "306"
+  },
+  {
+   "case": "306A",
+   "kind": "control",
+   "title": "HERALD AT START OF DAMAGE STEP (Rule 5 comparison)",
+   "observed": [
+    "Actor phase 32, Herald offered yes; CL1=P0:26593852 CL2=P1:17266660",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "306"
+  },
+  {
+   "case": "306B",
+   "kind": "rule",
+   "title": "HERALD BEFORE DAMAGE CALCULATION",
+   "observed": [
+    "Actor phase 32, Herald offered yes; CL1=P0:37742478 CL2=P1:17266660"
+   ],
+   "expected": "Herald can respond to Honest.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "306"
+  },
+  {
+   "case": "306B",
+   "kind": "control",
+   "title": "HERALD BEFORE DAMAGE CALCULATION (Rule 5 comparison)",
+   "observed": [
+    "Actor phase 32, Herald offered yes; CL1=P0:37742478 CL2=P1:17266660",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "306"
+  },
+  {
+   "case": "307",
+   "kind": "rule",
+   "title": "MAUSOLEUM USES THE NORMAL SUMMON",
+   "observed": [
+    "LP 7000, another Normal Summon or Set offered no"
+   ],
+   "expected": "No further Normal Summon or Set this turn.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "307"
+  },
+  {
+   "case": "307",
+   "kind": "control",
+   "title": "MAUSOLEUM USES THE NORMAL SUMMON (Rule 5 comparison)",
+   "observed": [
+    "LP 7000, another Normal Summon or Set offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "307"
+  },
+  {
+   "case": "308",
+   "kind": "rule",
+   "title": "HEAVY STORM ON EQUIPPED UNION",
+   "observed": [
+    "My Body offered no"
+   ],
+   "expected": "My Body is not available.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "308"
+  },
+  {
+   "case": "308",
+   "kind": "control",
+   "title": "HEAVY STORM ON EQUIPPED UNION (Rule 5 comparison)",
+   "observed": [
+    "My Body offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "308"
+  },
+  {
+   "case": "309",
+   "kind": "rule",
+   "title": "COLOSSAL FIGHTER ARMORY ARM OTK",
+   "observed": [
+    "Attacks 3, winner 0, P1 LP -400, P0 LP 7700, Colossal on field yes, Armory on field yes; CL1=P0:29071332 CL1=P0:29071332 CL2=P0:23693634 CL1=P0:29071332 CL2=P0:23693634 CL1=P0:29071332 CL2=P0:23693634"
+   ],
+   "expected": "Three attacks win the duel.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "309"
+  },
+  {
+   "case": "309",
+   "kind": "control",
+   "title": "COLOSSAL FIGHTER ARMORY ARM OTK (Rule 5 comparison)",
+   "observed": [
+    "Attacks 4, winner -1, P1 LP 5200, P0 LP 7600, Colossal on field no, Armory on field yes; CL1=P0:29071332 CL1=P0:29071332 CL2=P0:23693634 CL1=P0:29071332 CL2=P0:23693634 CL1=P0:29071332 CL2=P0:23693634 CL1=P0:29071332",
+    "Rule 5 differs: Errata: the Colossal Fighter + Armory Arm OTK works (three 2800 burns)"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "309"
+  },
+  {
+   "case": "401",
+   "kind": "rule",
+   "title": "STARDUST IN THE DAMAGE STEP",
+   "observed": [
+    "Stardust offered yes"
+   ],
+   "expected": "Stardust can negate Ryko's Flip Effect.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "401"
+  },
+  {
+   "case": "401",
+   "kind": "control",
+   "title": "STARDUST IN THE DAMAGE STEP (Rule 5 comparison)",
+   "observed": [
+    "Stardust offered no",
+    "Rule 5 differs: Stardust ruling: negates activations that destroy, even in the Damage Step"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "401"
+  },
+  {
+   "case": "402A",
+   "kind": "rule",
+   "title": "STARDUST VERSUS DECK DEVASTATION VIRUS",
+   "observed": [
+    "Responder offered yes"
+   ],
+   "expected": "Stardust can respond.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "402"
+  },
+  {
+   "case": "402A",
+   "kind": "control",
+   "title": "STARDUST VERSUS DECK DEVASTATION VIRUS (Rule 5 comparison)",
+   "observed": [
+    "Responder offered yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "402"
+  },
+  {
+   "case": "402B",
+   "kind": "rule",
+   "title": "MY BODY VERSUS VIRUS, FACE-UP",
+   "observed": [
+    "Responder offered yes"
+   ],
+   "expected": "My Body can respond.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "402"
+  },
+  {
+   "case": "402B",
+   "kind": "control",
+   "title": "MY BODY VERSUS VIRUS, FACE-UP (Rule 5 comparison)",
+   "observed": [
+    "Responder offered yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "402"
+  },
+  {
+   "case": "402C",
+   "kind": "rule",
+   "title": "MY BODY VERSUS VIRUS, FACE-DOWN",
+   "observed": [
+    "Responder offered no"
+   ],
+   "expected": "My Body cannot respond.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "402"
+  },
+  {
+   "case": "402C",
+   "kind": "control",
+   "title": "MY BODY VERSUS VIRUS, FACE-DOWN (Rule 5 comparison)",
+   "observed": [
+    "Responder offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "402"
+  },
+  {
+   "case": "403A",
+   "kind": "rule",
+   "title": "STARDUST VERSUS OPPRESSION ON A SUMMON",
+   "observed": [
+    "Stardust offered no; CL1=P1:93016201"
+   ],
+   "expected": "Stardust cannot respond.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "403"
+  },
+  {
+   "case": "403A",
+   "kind": "control",
+   "title": "STARDUST VERSUS OPPRESSION ON A SUMMON (Rule 5 comparison)",
+   "observed": [
+    "Stardust offered no; CL1=P1:93016201",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "403"
+  },
+  {
+   "case": "403B",
+   "kind": "rule",
+   "title": "STARDUST VERSUS OPPRESSION ON CALL",
+   "observed": [
+    "Stardust offered yes; CL1=P0:97077563 CL2=P1:93016201"
+   ],
+   "expected": "Stardust can respond.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "403"
+  },
+  {
+   "case": "403B",
+   "kind": "control",
+   "title": "STARDUST VERSUS OPPRESSION ON CALL (Rule 5 comparison)",
+   "observed": [
+    "Stardust offered yes; CL1=P0:97077563 CL2=P1:93016201",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "403"
+  },
+  {
+   "case": "404A",
+   "kind": "rule",
+   "title": "STARDUST REVIVES AFTER RESOLVING",
+   "observed": [
+    "Stardust activations 2, on field yes; CL1=P1:53129443 CL2=P0:44508094 CL1=P0:44508094"
+   ],
+   "expected": "Stardust returns during the End Phase.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "404"
+  },
+  {
+   "case": "404A",
+   "kind": "control",
+   "title": "STARDUST REVIVES AFTER RESOLVING (Rule 5 comparison)",
+   "observed": [
+    "Stardust activations 2, on field yes; CL1=P1:53129443 CL2=P0:44508094 CL1=P0:44508094",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "404"
+  },
+  {
+   "case": "404B",
+   "kind": "rule",
+   "title": "STARDUST DOES NOT REVIVE IF NEGATED",
+   "observed": [
+    "Stardust activations 1, on field no; CL1=P1:53129443 CL2=P0:44508094 CL3=P1:49010598"
+   ],
+   "expected": "No revival when (1) was negated.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "404"
+  },
+  {
+   "case": "404B",
+   "kind": "control",
+   "title": "STARDUST DOES NOT REVIVE IF NEGATED (Rule 5 comparison)",
+   "observed": [
+    "Stardust activations 1, on field no; CL1=P1:53129443 CL2=P0:44508094 CL3=P1:49010598",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "404"
+  },
+  {
+   "case": "405",
+   "kind": "rule",
+   "title": "BLACK ROSE ON A SET FLIP MONSTER",
+   "observed": [
+    "Ryko activated yes, Ryko ATK 0"
+   ],
+   "expected": "Ryko flips, activates and has 0 ATK.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "405"
+  },
+  {
+   "case": "405",
+   "kind": "control",
+   "title": "BLACK ROSE ON A SET FLIP MONSTER (Rule 5 comparison)",
+   "observed": [
+    "Ryko activated yes, Ryko ATK 0",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "405"
+  },
+  {
+   "case": "406",
+   "kind": "rule",
+   "title": "BRIONAC UNDER MACRO COSMOS",
+   "observed": [
+    "Macro Cosmos no: Brionac offered yes",
+    "Macro Cosmos yes: Brionac offered no"
+   ],
+   "expected": "Brionac cannot be activated.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "406"
+  },
+  {
+   "case": "406",
+   "kind": "control",
+   "title": "BRIONAC UNDER MACRO COSMOS (Rule 5 comparison)",
+   "observed": [
+    "Macro Cosmos no: Brionac offered yes",
+    "Macro Cosmos yes: Brionac offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "406"
+  },
+  {
+   "case": "407A",
+   "kind": "rule",
+   "title": "CATASTOR ATTACKS FACE-DOWN",
+   "observed": [
+    "Catastor activated no;"
+   ],
+   "expected": "Catastor does not activate.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "407"
+  },
+  {
+   "case": "407A",
+   "kind": "control",
+   "title": "CATASTOR ATTACKS FACE-DOWN (Rule 5 comparison)",
+   "observed": [
+    "Catastor activated no;",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "407"
+  },
+  {
+   "case": "407B",
+   "kind": "rule",
+   "title": "CATASTOR ATTACKS FACE-UP NON-DARK",
+   "observed": [
+    "Catastor activated yes; CL1=P0:26593852"
+   ],
+   "expected": "Catastor activates.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "407"
+  },
+  {
+   "case": "407B",
+   "kind": "control",
+   "title": "CATASTOR ATTACKS FACE-UP NON-DARK (Rule 5 comparison)",
+   "observed": [
+    "Catastor activated yes; CL1=P0:26593852",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "407"
+  },
+  {
+   "case": "407C",
+   "kind": "rule",
+   "title": "CATASTOR ATTACKS LADD",
+   "observed": [
+    "Catastor activated yes; CL1=P0:26593852 CL2=P1:47297616"
+   ],
+   "expected": "Catastor activates.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "407"
+  },
+  {
+   "case": "407C",
+   "kind": "control",
+   "title": "CATASTOR ATTACKS LADD (Rule 5 comparison)",
+   "observed": [
+    "Catastor activated yes; CL1=P0:26593852 CL2=P1:47297616",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "407"
+  },
+  {
+   "case": "408",
+   "kind": "rule",
+   "title": "GOYO EQUAL ATK",
+   "observed": [
+    "Control, ordinary destruction: Goyo offered yes",
+    "Goyo offered no"
+   ],
+   "expected": "Goyo does not activate.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "408"
+  },
+  {
+   "case": "408",
+   "kind": "control",
+   "title": "GOYO EQUAL ATK (Rule 5 comparison)",
+   "observed": [
+    "Control, ordinary destruction: Goyo offered yes",
+    "Goyo offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "408"
+  },
+  {
+   "case": "409",
+   "kind": "rule",
+   "title": "GOYO REMOVED BY RYKO",
+   "observed": [
+    "Control, ordinary destruction: Goyo offered yes",
+    "Goyo offered no"
+   ],
+   "expected": "Goyo does not activate.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "409"
+  },
+  {
+   "case": "409",
+   "kind": "control",
+   "title": "GOYO REMOVED BY RYKO (Rule 5 comparison)",
+   "observed": [
+    "Control, ordinary destruction: Goyo offered yes",
+    "Goyo offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "409"
+  },
+  {
+   "case": "411",
+   "kind": "rule",
+   "title": "GALE LOCKS HALVED ATK",
+   "observed": [
+    "Blue-Eyes ATK 2000"
+   ],
+   "expected": "Stays 2000 after Axe is destroyed.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "411"
+  },
+  {
+   "case": "411",
+   "kind": "control",
+   "title": "GALE LOCKS HALVED ATK (Rule 5 comparison)",
+   "observed": [
+    "Blue-Eyes ATK 2000",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "411"
+  },
+  {
+   "case": "412",
+   "kind": "rule",
+   "title": "TORRENTIAL IN THE DAMAGE STEP",
+   "observed": [
+    "Torrential offered in the Damage Step no"
+   ],
+   "expected": "Torrential is not offered.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "412"
+  },
+  {
+   "case": "412",
+   "kind": "control",
+   "title": "TORRENTIAL IN THE DAMAGE STEP (Rule 5 comparison)",
+   "observed": [
+    "Torrential offered in the Damage Step no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "412"
+  },
+  {
+   "case": "414",
+   "kind": "rule",
+   "title": "BRAIN CONTROL WITH FULL ZONES",
+   "observed": [
+    "4 monsters: Brain Control offered yes",
+    "5 monsters: Brain Control offered no"
+   ],
+   "expected": "Brain Control is not offered.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "414"
+  },
+  {
+   "case": "414",
+   "kind": "control",
+   "title": "BRAIN CONTROL WITH FULL ZONES (Rule 5 comparison)",
+   "observed": [
+    "4 monsters: Brain Control offered yes",
+    "5 monsters: Brain Control offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "414"
+  },
+  {
+   "case": "415",
+   "kind": "rule",
+   "title": "GORZ AFTER CAIUS BURN",
+   "observed": [
+    "Gorz offered yes"
+   ],
+   "expected": "Gorz is available.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "415"
+  },
+  {
+   "case": "415",
+   "kind": "control",
+   "title": "GORZ AFTER CAIUS BURN (Rule 5 comparison)",
+   "observed": [
+    "Gorz offered yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "415"
+  },
+  {
+   "case": "416",
+   "kind": "rule",
+   "title": "GORZ WHEN A MONSTER BATTLED",
+   "observed": [
+    "Gorz offered no"
+   ],
+   "expected": "Gorz is not available.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "416"
+  },
+  {
+   "case": "416",
+   "kind": "control",
+   "title": "GORZ WHEN A MONSTER BATTLED (Rule 5 comparison)",
+   "observed": [
+    "Gorz offered no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "416"
+  },
+  {
+   "case": "417",
+   "kind": "rule",
+   "title": "GORZ THEN TRAGOEDIA",
+   "observed": [
+    "Tragoedia offered as a response to Gorz no; CL1=P0:44330098 CL1=P0:44330098"
+   ],
+   "expected": "Tragoedia cannot chain to Gorz.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "417"
+  },
+  {
+   "case": "417",
+   "kind": "control",
+   "title": "GORZ THEN TRAGOEDIA (Rule 5 comparison)",
+   "observed": [
+    "Tragoedia offered as a response to Gorz no; CL1=P0:44330098 CL1=P0:44330098",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "417"
+  },
+  {
+   "case": "418",
+   "kind": "rule",
+   "title": "GORZ TOKEN WINDOW",
+   "observed": [
+    "In the Damage Step: Oppression offered no, Torrential offered no, P0 monsters 2"
+   ],
+   "expected": "No Oppression or Torrential in the Damage Step.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "418"
+  },
+  {
+   "case": "418",
+   "kind": "control",
+   "title": "GORZ TOKEN WINDOW (Rule 5 comparison)",
+   "observed": [
+    "In the Damage Step: Oppression offered no, Torrential offered no, P0 monsters 2",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "418"
+  },
+  {
+   "case": "420",
+   "kind": "rule",
+   "title": "CHIMERATECH FACE-DOWN MATERIALS",
+   "observed": [
+    "Offered with face-down materials: yes"
+   ],
+   "expected": "Chimeratech can be Summoned.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "420"
+  },
+  {
+   "case": "420",
+   "kind": "control",
+   "title": "CHIMERATECH FACE-DOWN MATERIALS (Rule 5 comparison)",
+   "observed": [
+    "Offered with face-down materials: yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "420"
+  },
+  {
+   "case": "421",
+   "kind": "rule",
+   "title": "CHIMERATECH UNDER SKILL DRAIN",
+   "observed": [
+    "ATK after Skill Drain left: 0"
+   ],
+   "expected": "ATK stays 0 after Drain leaves.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "421"
+  },
+  {
+   "case": "421",
+   "kind": "control",
+   "title": "CHIMERATECH UNDER SKILL DRAIN (Rule 5 comparison)",
+   "observed": [
+    "ATK after Skill Drain left: 0",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "421"
+  },
+  {
+   "case": "422",
+   "kind": "rule",
+   "title": "DIMENSIONAL PRISON WITH BOOK OF MOON",
+   "observed": [
+    "Blue-Eyes banished no, on field yes"
+   ],
+   "expected": "The monster is not removed.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "422"
+  },
+  {
+   "case": "422",
+   "kind": "control",
+   "title": "DIMENSIONAL PRISON WITH BOOK OF MOON (Rule 5 comparison)",
+   "observed": [
+    "Blue-Eyes banished no, on field yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "422"
+  },
+  {
+   "case": "423",
+   "kind": "rule",
+   "title": "TORRENTIAL AFTER CL2 SPECIAL SUMMON",
+   "observed": [
+    "Torrential offered at Chain Link 1 after the Chain: yes"
+   ],
+   "expected": "Torrential is not offered.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Missing the Timing page: a Summon as Chain Link 2+ is not the last thing to happen, so no Summon response window opens",
+   "test": "423"
+  },
+  {
+   "case": "423",
+   "kind": "control",
+   "title": "TORRENTIAL AFTER CL2 SPECIAL SUMMON (Rule 5 comparison)",
+   "observed": [
+    "Torrential offered at Chain Link 1 after the Chain: yes",
+    "Rule 5 differs: Missing the Timing page: a Summon as Chain Link 2+ is not the last thing to happen, so no Summon response window opens"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "423"
+  },
+  {
+   "case": "424",
+   "kind": "rule",
+   "title": "BOTTOMLESS AFTER CL2 SUMMON ONLY",
+   "observed": [
+    "Bottomless offered yes, Bazoo banished yes, Blue-Eyes banished no"
+   ],
+   "expected": "Bottomless is not offered.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Bottomless ruling: cannot activate if a monster is Summoned as Chain Link 2+",
+   "test": "424"
+  },
+  {
+   "case": "424",
+   "kind": "control",
+   "title": "BOTTOMLESS AFTER CL2 SUMMON ONLY (Rule 5 comparison)",
+   "observed": [
+    "Bottomless offered yes, Bazoo banished yes, Blue-Eyes banished no",
+    "Rule 5 differs: Bottomless ruling: cannot activate if a monster is Summoned as Chain Link 2+"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "424"
+  },
+  {
+   "case": "425",
+   "kind": "rule",
+   "title": "BOTTOMLESS AFTER CL1 AND CL2 SUMMONS",
+   "observed": [
+    "Bottomless offered yes, Bazoo banished no, Blue-Eyes banished yes"
+   ],
+   "expected": "Bottomless hits the CL1 monster only.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "425"
+  },
+  {
+   "case": "425",
+   "kind": "control",
+   "title": "BOTTOMLESS AFTER CL1 AND CL2 SUMMONS (Rule 5 comparison)",
+   "observed": [
+    "Bottomless offered yes, Bazoo banished no, Blue-Eyes banished yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "425"
+  },
+  {
+   "case": "426",
+   "kind": "rule",
+   "title": "DARK ARMED AND CALL OF THE HAUNTED",
+   "observed": [
+    "Dark Armed offered as a Call target no"
+   ],
+   "expected": "Dark Armed is not a legal target.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "426"
+  },
+  {
+   "case": "426",
+   "kind": "control",
+   "title": "DARK ARMED AND CALL OF THE HAUNTED (Rule 5 comparison)",
+   "observed": [
+    "Dark Armed offered as a Call target no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "426"
+  },
+  {
+   "case": "427",
+   "kind": "rule",
+   "title": "DARK ARMED REPEATED",
+   "observed": [
+    "Activations 2"
+   ],
+   "expected": "Two activations in a turn.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "427"
+  },
+  {
+   "case": "427",
+   "kind": "control",
+   "title": "DARK ARMED REPEATED (Rule 5 comparison)",
+   "observed": [
+    "Activations 2",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "427"
+  },
+  {
+   "case": "431",
+   "kind": "rule",
+   "title": "SOLEMN JUDGMENT ROUNDING",
+   "observed": [
+    "P1 LP after paying half of 7001: 3501"
+   ],
+   "expected": "7001 LP becomes 3501.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "431"
+  },
+  {
+   "case": "431",
+   "kind": "control",
+   "title": "SOLEMN JUDGMENT ROUNDING (Rule 5 comparison)",
+   "observed": [
+    "P1 LP after paying half of 7001: 3501",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "431"
+  },
+  {
+   "case": "432A",
+   "kind": "rule",
+   "title": "DUST TORNADO TARGET ACTIVATED",
+   "observed": [
+    "Mirror Force Set yes; CL1=P0:60082869 CL2=P1:82732705"
+   ],
+   "expected": "Target destroyed; you may Set.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "432"
+  },
+  {
+   "case": "432A",
+   "kind": "control",
+   "title": "DUST TORNADO TARGET ACTIVATED (Rule 5 comparison)",
+   "observed": [
+    "Mirror Force Set yes; CL1=P0:60082869 CL2=P1:82732705",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "432"
+  },
+  {
+   "case": "432B",
+   "kind": "rule",
+   "title": "DUST TORNADO TARGET DESTROYED FIRST",
+   "observed": [
+    "Mirror Force Set no; CL1=P0:60082869 CL2=P1:5318639"
+   ],
+   "expected": "You cannot Set.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "432"
+  },
+  {
+   "case": "432B",
+   "kind": "control",
+   "title": "DUST TORNADO TARGET DESTROYED FIRST (Rule 5 comparison)",
+   "observed": [
+    "Mirror Force Set no; CL1=P0:60082869 CL2=P1:5318639",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "432"
+  },
+  {
+   "case": "433",
+   "kind": "rule",
+   "title": "DARK END FLIPPED IN RESPONSE",
+   "observed": [
+    "Blue-Eyes in GY no"
+   ],
+   "expected": "Target is not sent to the Graveyard.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "433"
+  },
+  {
+   "case": "433",
+   "kind": "control",
+   "title": "DARK END FLIPPED IN RESPONSE (Rule 5 comparison)",
+   "observed": [
+    "Blue-Eyes in GY no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "433"
+  },
+  {
+   "case": "435",
+   "kind": "rule",
+   "title": "OPPRESSION VERSUS DEBRIS DRAGON",
+   "observed": [
+    "Oppression offered yes, Lonefire on field no"
+   ],
+   "expected": "Oppression can respond.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "435"
+  },
+  {
+   "case": "435",
+   "kind": "control",
+   "title": "OPPRESSION VERSUS DEBRIS DRAGON (Rule 5 comparison)",
+   "observed": [
+    "Oppression offered yes, Lonefire on field no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "435"
+  },
+  {
+   "case": "437",
+   "kind": "rule",
+   "title": "NECRO GARDNA NEXT ATTACK",
+   "observed": [
+    "Gardna activations 1, damage events 0, P0 LP 8000"
+   ],
+   "expected": "The next attack is negated.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "437"
+  },
+  {
+   "case": "437",
+   "kind": "control",
+   "title": "NECRO GARDNA NEXT ATTACK (Rule 5 comparison)",
+   "observed": [
+    "Gardna activations 1, damage events 0, P0 LP 8000",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "437"
+  },
+  {
+   "case": "438",
+   "kind": "rule",
+   "title": "TWO NECRO GARDNAS",
+   "observed": [
+    "Gardna activations 2, damage events 1, P0 LP 6400"
+   ],
+   "expected": "Only the next attack is negated.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "438"
+  },
+  {
+   "case": "438",
+   "kind": "control",
+   "title": "TWO NECRO GARDNAS (Rule 5 comparison)",
+   "observed": [
+    "Gardna activations 2, damage events 1, P0 LP 6400",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "438"
+  },
+  {
+   "case": "439A",
+   "kind": "rule",
+   "title": "CARD TROOPER DESTROYED FACE-DOWN",
+   "observed": [
+    "Card Trooper activated yes"
+   ],
+   "expected": "Trooper activates.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "439"
+  },
+  {
+   "case": "439A",
+   "kind": "control",
+   "title": "CARD TROOPER DESTROYED FACE-DOWN (Rule 5 comparison)",
+   "observed": [
+    "Card Trooper activated yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "439"
+  },
+  {
+   "case": "439B",
+   "kind": "rule",
+   "title": "CARD TROOPER UNDER OPPONENT'S CONTROL",
+   "observed": [
+    "Card Trooper activated no"
+   ],
+   "expected": "Trooper does not activate.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "439"
+  },
+  {
+   "case": "439B",
+   "kind": "control",
+   "title": "CARD TROOPER UNDER OPPONENT'S CONTROL (Rule 5 comparison)",
+   "observed": [
+    "Card Trooper activated no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "439"
+  },
+  {
+   "case": "441A",
+   "kind": "rule",
+   "title": "CAIUS BANISHES PLAGUESPREADER",
+   "observed": [
+    "Damage events 1"
+   ],
+   "expected": "No damage.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Plaguespreader ruling: Caius inflicts no damage since its Condition banishes it",
+   "test": "441"
+  },
+  {
+   "case": "441A",
+   "kind": "control",
+   "title": "CAIUS BANISHES PLAGUESPREADER (Rule 5 comparison)",
+   "observed": [
+    "Damage events 1",
+    "Rule 5 differs: Plaguespreader ruling: Caius inflicts no damage since its Condition banishes it"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "441"
+  },
+  {
+   "case": "441B",
+   "kind": "rule",
+   "title": "PLAGUESPREADER FLIPPED THEN DESTROYED",
+   "observed": [
+    "Plaguespreader in GY yes, banished no"
+   ],
+   "expected": "Goes to the Graveyard.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "441"
+  },
+  {
+   "case": "441B",
+   "kind": "control",
+   "title": "PLAGUESPREADER FLIPPED THEN DESTROYED (Rule 5 comparison)",
+   "observed": [
+    "Plaguespreader in GY yes, banished no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "441"
+  },
+  {
+   "case": "441C",
+   "kind": "rule",
+   "title": "PLAGUESPREADER UNDER NECROVALLEY",
+   "observed": [
+    "Plaguespreader on field yes"
+   ],
+   "expected": "Not negated.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "441"
+  },
+  {
+   "case": "441C",
+   "kind": "control",
+   "title": "PLAGUESPREADER UNDER NECROVALLEY (Rule 5 comparison)",
+   "observed": [
+    "Plaguespreader on field no",
+    "Rule 5 differs: Plaguespreader ruling: does not target, so it is not negated by Necrovalley"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "441"
+  },
+  {
+   "case": "446",
+   "kind": "rule",
+   "title": "CAIUS WITH BOTTOMLESS CHAINED",
+   "observed": [
+    "Bottomless offered yes, Caius banished yes, target banished yes"
+   ],
+   "expected": "Bottomless chains; target still banished.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "446"
+  },
+  {
+   "case": "446",
+   "kind": "control",
+   "title": "CAIUS WITH BOTTOMLESS CHAINED (Rule 5 comparison)",
+   "observed": [
+    "Bottomless offered yes, Caius banished yes, target banished yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "446"
+  },
+  {
+   "case": "447",
+   "kind": "rule",
+   "title": "CAIUS BANISHES BATTLE FADER",
+   "observed": [
+    "Damage events 1"
+   ],
+   "expected": "No damage.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Caius ruling: no damage when a DARK monster is banished by a Condition, such as Battle Fader",
+   "test": "447"
+  },
+  {
+   "case": "447",
+   "kind": "control",
+   "title": "CAIUS BANISHES BATTLE FADER (Rule 5 comparison)",
+   "observed": [
+    "Damage events 1",
+    "Rule 5 differs: Caius ruling: no damage when a DARK monster is banished by a Condition, such as Battle Fader"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "447"
+  },
+  {
+   "case": "448",
+   "kind": "rule",
+   "title": "RYKO MILLS LAST",
+   "observed": [
+    "Dupe offered no, Peten offered yes"
+   ],
+   "expected": "Destroyed Dupe misses timing; milled Peten can activate.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "448"
+  },
+  {
+   "case": "448",
+   "kind": "control",
+   "title": "RYKO MILLS LAST (Rule 5 comparison)",
+   "observed": [
+    "Dupe offered yes, Peten offered yes",
+    "Rule 5 differs: Ryko ruling: milling is always last, so a When-you-can target misses the timing"
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "448"
+  },
+  {
+   "case": "449A",
+   "kind": "rule",
+   "title": "PULLING THE RUG AFTER IGNITION PRIORITY",
+   "observed": [
+    "Pulling the Rug offered no; CL1=P0:40133511"
+   ],
+   "expected": "Pulling the Rug is not offered.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "449"
+  },
+  {
+   "case": "449A",
+   "kind": "control",
+   "title": "PULLING THE RUG AFTER IGNITION PRIORITY (Rule 5 comparison)",
+   "observed": [
+    "Pulling the Rug offered no;",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "449"
+  },
+  {
+   "case": "449B",
+   "kind": "rule",
+   "title": "PULLING THE RUG ON A SUMMON TRIGGER",
+   "observed": [
+    "Pulling the Rug offered yes; CL1=P0:28985331"
+   ],
+   "expected": "Pulling the Rug is offered.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "449"
+  },
+  {
+   "case": "449B",
+   "kind": "control",
+   "title": "PULLING THE RUG ON A SUMMON TRIGGER (Rule 5 comparison)",
+   "observed": [
+    "Pulling the Rug offered yes; CL1=P0:28985331",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "449"
+  },
+  {
+   "case": "450",
+   "kind": "rule",
+   "title": "SIROCCO IN MAIN PHASE 2",
+   "observed": [
+    "Sirocco offered in Main Phase 2: no"
+   ],
+   "expected": "Not offered.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "450"
+  },
+  {
+   "case": "450",
+   "kind": "control",
+   "title": "SIROCCO IN MAIN PHASE 2 (Rule 5 comparison)",
+   "observed": [
+    "Sirocco offered in Main Phase 2: no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "450"
+  },
+  {
+   "case": "451",
+   "kind": "rule",
+   "title": "SIROCCO LOCKS OTHER ATTACKS",
+   "observed": [
+    "Bora can attack no, Sirocco can attack yes"
+   ],
+   "expected": "Bora cannot attack.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "451"
+  },
+  {
+   "case": "451",
+   "kind": "control",
+   "title": "SIROCCO LOCKS OTHER ATTACKS (Rule 5 comparison)",
+   "observed": [
+    "Bora can attack no, Sirocco can attack yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "451"
+  },
+  {
+   "case": "452",
+   "kind": "rule",
+   "title": "SIROCCO NEGATED",
+   "observed": [
+    "Bora can attack yes, Sirocco can attack no"
+   ],
+   "expected": "Bora can attack.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "452"
+  },
+  {
+   "case": "452",
+   "kind": "control",
+   "title": "SIROCCO NEGATED (Rule 5 comparison)",
+   "observed": [
+    "Bora can attack yes, Sirocco can attack no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "452"
+  },
+  {
+   "case": "455",
+   "kind": "rule",
+   "title": "VAYU TARGET BANISHED BY CROW",
+   "observed": [
+    "Vayu in GY yes, Armed Wing on field no"
+   ],
+   "expected": "Vayu stays; no Summon.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "455"
+  },
+  {
+   "case": "455",
+   "kind": "control",
+   "title": "VAYU TARGET BANISHED BY CROW (Rule 5 comparison)",
+   "observed": [
+    "Vayu in GY yes, Armed Wing on field no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "455"
+  },
+  {
+   "case": "456",
+   "kind": "rule",
+   "title": "VAYU SUMMON CANNOT BE REVIVED",
+   "observed": [
+    "Call of the Haunted offered with only Armed Wing as a monster in the GY: no"
+   ],
+   "expected": "Call has no legal target.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "456"
+  },
+  {
+   "case": "456",
+   "kind": "control",
+   "title": "VAYU SUMMON CANNOT BE REVIVED (Rule 5 comparison)",
+   "observed": [
+    "Call of the Haunted offered with only Armed Wing as a monster in the GY: no",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "456"
+  },
+  {
+   "case": "459",
+   "kind": "rule",
+   "title": "BOOK OF MOON RESETS ONCE PER TURN",
+   "observed": [
+    "Dark End effect offered again after Book and Flip Summon: yes"
+   ],
+   "expected": "Dark End's effect is offered again.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "459"
+  },
+  {
+   "case": "459",
+   "kind": "control",
+   "title": "BOOK OF MOON RESETS ONCE PER TURN (Rule 5 comparison)",
+   "observed": [
+    "Dark End effect offered again after Book and Flip Summon: yes",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "459"
+  },
+  {
+   "case": "460A",
+   "kind": "rule",
+   "title": "PLAGUESPREADER GY IGNITION PRIORITY",
+   "observed": [
+    "Offered in the Summon window no, usable from idle afterwards yes;"
+   ],
+   "expected": "Can be CL1 in the Summon window.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 6: the turn player can activate this Graveyard Ignition Effect as Chain Link 1 in the Summon window",
+   "test": "460"
+  },
+  {
+   "case": "460A",
+   "kind": "control",
+   "title": "PLAGUESPREADER GY IGNITION PRIORITY (Rule 5 comparison)",
+   "observed": [
+    "Offered in the Summon window no, usable from idle afterwards yes;",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "460"
+  },
+  {
+   "case": "460B",
+   "kind": "rule",
+   "title": "VAYU GY IGNITION PRIORITY",
+   "observed": [
+    "Offered in the Summon window no, usable from idle afterwards yes;"
+   ],
+   "expected": "Can be CL1 in the Summon window.",
+   "status": "FAIL",
+   "failure_class": "RULE",
+   "message": "Rule 6: the turn player can activate this Graveyard Ignition Effect as Chain Link 1 in the Summon window",
+   "test": "460"
+  },
+  {
+   "case": "460B",
+   "kind": "control",
+   "title": "VAYU GY IGNITION PRIORITY (Rule 5 comparison)",
+   "observed": [
+    "Offered in the Summon window no, usable from idle afterwards yes;",
+    "Rule 5 meets the same expectation."
+   ],
+   "expected": "Recorded for comparison with Edison; only a fixture that cannot run fails here.",
+   "status": "PASS",
+   "failure_class": null,
+   "message": "",
+   "test": "460"
+  }
+ ]
+}
