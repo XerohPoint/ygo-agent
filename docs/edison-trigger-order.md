@@ -13,10 +13,8 @@ replays, and every Rule 5 trace is byte-identical. Evidence is in
 - **D4.** After a Summon whose optional trigger is declined (the Swap Frog case), Ignition Effects are still offered with
   priority. The simulator already did this. This overrides the Armageddon Knight example in Rule 6, and the Swap Frog and Alien
   Dog rulings agree with it.
-
-The owner did not rule on the Dark World Dealings case (conformance 242: earlier optional Watapon, later mandatory Broww). Its
-answer, Broww first, follows from the same model and from edisonformat.com's Rule 7. **Please confirm this one.** Groups 005, 006,
-017, 018 and 033 rest on it too.
+- **Dark World Dealings** (conformance 242). With earlier optional Watapon and later mandatory Broww, Broww is Chain Link 1. The owner
+  confirmed this after the change landed, and it matches edisonformat.com's Rule 7. Groups 005, 006, 017, 018 and 033 rest on it.
 
 ## The rule as implemented
 

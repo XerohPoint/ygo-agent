@@ -102,8 +102,8 @@ games, so they are only as trustworthy as the play policy underneath them.
   errors, rule fixes, prompts and legality, with 567 certification cases passing. Rule changes alter seeded games,
   so re-baseline before comparing with any earlier result. The forward-model test bed still links the older core.
 - **Owner's rule decisions:** D1, Soul Exchange on the opponent's Sangan tributed for Caius gives Caius Chain Link 1 and Sangan
-  Chain Link 2, so SEGOC steps come first and chronology applies only within a step. D4, Ignition priority survives a declined
-  Summon trigger. These outrank the sources that conflict.
+  Chain Link 2, and mandatory Broww goes before earlier optional Watapon, so SEGOC steps come first and chronology applies only
+  within a step. D4, Ignition priority survives a declined Summon trigger. These outrank the sources that conflict.
 - **M1 learner: smaller network, not yet past the bar.** [The report](edison-learner.md) has a 207,800-parameter card-identity network with
   league self-play. On the hardened simulator it scores 52.0% against the heuristic at 30,720 duels and 58.6% head to head against the NumPy
   baseline, below the 55% candidate bar. A fixture-trained net does not generalize to the gauntlet, so train on the gauntlet.
