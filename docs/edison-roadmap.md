@@ -30,7 +30,7 @@ Measured at commit 4e3452c:
 | Correct, deterministic rules | 544 fixtures pass; bounded, not exhaustive |
 | Copy a position to search it | No state copy or snapshot exists; search is not possible yet |
 | Handle hidden information in search | Not started; no belief or determinization code |
-| Strong evaluation | 32-unit NumPy MLP on hand-built features; ~33% vs own heuristic |
+| Strong evaluation | 32-unit NumPy MLP on hand-built features; 45.3% vs own heuristic playing greedily, 30.0% sampling ([fresh-seed test](edison-loss-review.md)) |
 | Training scale | 3,072 duels on CPU; win rate was still rising at the end of the budget |
 | GPU | RTX 5090 present; JAX 0.4.28 in `.venv` sees CPU only |
 | Card coverage | 67 agent card identities of 3,659 legal cards; 3 fixed decks |

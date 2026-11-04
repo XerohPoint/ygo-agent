@@ -1,0 +1,127 @@
+{
+ "seeds": [
+  72000000,
+  72000015
+ ],
+ "verdict": "PASS",
+ "checks": {
+  "mean_gain_vs_heuristic_at_least_5pp": true,
+  "every_optimizer_gain_above_zero": true,
+  "vs_random_not_below_minus_3pp": true,
+  "no_incomplete_duels": true,
+  "replay_matches": true
+ },
+ "vs_heuristic": {
+  "sampled_wins": 173,
+  "greedy_wins": 261,
+  "games_per_arm": 576,
+  "sampled_rate": 0.3003,
+  "greedy_rate": 0.4531,
+  "mean_gain_pp": 15.28,
+  "sd_gain_pp": 4.81,
+  "descriptive_bootstrap_95_pp": [
+   10.42,
+   20.14
+  ],
+  "per_optimizer": {
+   "1702": {
+    "sampled_wins": 59,
+    "greedy_wins": 83,
+    "games": 192,
+    "gain_pp": 12.5
+   },
+   "1703": {
+    "sampled_wins": 52,
+    "greedy_wins": 92,
+    "games": 192,
+    "gain_pp": 20.83
+   },
+   "1704": {
+    "sampled_wins": 62,
+    "greedy_wins": 86,
+    "games": 192,
+    "gain_pp": 12.5
+   }
+  },
+  "by_learner_deck": {
+   "blackwing": {
+    "sampled": 0.2396,
+    "greedy": 0.3385,
+    "games": 192
+   },
+   "frog_monarch": {
+    "sampled": 0.151,
+    "greedy": 0.3281,
+    "games": 192
+   },
+   "machina_gadget": {
+    "sampled": 0.5104,
+    "greedy": 0.6927,
+    "games": 192
+   }
+  }
+ },
+ "vs_random": {
+  "sampled_wins": 502,
+  "greedy_wins": 526,
+  "games_per_arm": 576,
+  "sampled_rate": 0.8715,
+  "greedy_rate": 0.9132,
+  "mean_gain_pp": 4.17,
+  "sd_gain_pp": 0.52,
+  "descriptive_bootstrap_95_pp": [
+   1.04,
+   7.29
+  ],
+  "per_optimizer": {
+   "1702": {
+    "sampled_wins": 164,
+    "greedy_wins": 172,
+    "games": 192,
+    "gain_pp": 4.17
+   },
+   "1703": {
+    "sampled_wins": 169,
+    "greedy_wins": 176,
+    "games": 192,
+    "gain_pp": 3.65
+   },
+   "1704": {
+    "sampled_wins": 169,
+    "greedy_wins": 178,
+    "games": 192,
+    "gain_pp": 4.69
+   }
+  },
+  "by_learner_deck": {
+   "blackwing": {
+    "sampled": 0.8594,
+    "greedy": 0.9271,
+    "games": 192
+   },
+   "frog_monarch": {
+    "sampled": 0.8229,
+    "greedy": 0.849,
+    "games": 192
+   },
+   "machina_gadget": {
+    "sampled": 0.9323,
+    "greedy": 0.9635,
+    "games": 192
+   }
+  }
+ },
+ "draws": 0,
+ "replay_mismatches": [],
+ "replayed_cells": 36,
+ "control_heuristic_mirror": {
+  "games": 96,
+  "seat0_wins": 49,
+  "seat1_wins": 47,
+  "draws": 0
+ },
+ "decisions_per_second_serial": {
+  "sampled": 1417,
+  "greedy": 1181
+ }
+}

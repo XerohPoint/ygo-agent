@@ -4,6 +4,22 @@ Date: 2026-11-04. Models: full-context PPO from `rl-budget-2026-11-02`, optimize
 1702/1703/1704, final round. Opponent: frozen heuristic. Seeds: validation 40000000-40000007
 only. Test blocks 22M/50M/60M were not used. Runtime sources are unchanged from 4e3452c.
 
+## Fresh-seed result
+
+The recommendation below passed its predeclared test on seeds 72000000-72000015, which played no part in the
+review. [Protocol](../tests/edison/reports/greedy-test-2026-11-04/protocol.md),
+[summary](../tests/edison/reports/greedy-test-2026-11-04/summary.json). 576 games per arm and opponent; no draws or
+incomplete duels; all 36 replayed greedy cells matched by trace hash.
+
+| Opponent | Sampled | Greedy | Mean paired gain ± SD | Gain by optimizer (1702, 1703, 1704) |
+| --- | ---: | ---: | ---: | ---: |
+| Heuristic | 173/576 (30.0%) | 261/576 (45.3%) | +15.28 ± 4.81 pp | +12.50, +20.83, +12.50 |
+| Random | 502/576 (87.2%) | 526/576 (91.3%) | +4.17 ± 0.52 pp | +4.17, +3.65, +4.69 |
+
+The heuristic against itself split 49-47 over 96 games. Greedy remains below parity, and it is 33.9%, 32.8% and 69.3%
+with Blackwing, Frog Monarch and Machina Gadget. These are fixed decks and non-adapting opponents: this is not
+evidence that greedy play is right against an adapting opponent or that the network understands more.
+
 ## Bottom line
 
 **Most of the gap to the heuristic is action sampling, not what the network prefers.** The same
