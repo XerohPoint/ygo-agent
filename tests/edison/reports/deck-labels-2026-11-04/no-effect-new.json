@@ -1,0 +1,55 @@
+{
+ "seed": 80900000,
+ "games_per_pairing": 8,
+ "pairings": [
+  {
+   "deck0": "frog_monarch",
+   "deck1": "machina_gadget",
+   "seed": 80900000,
+   "off": {
+    "sha256": "c4162d6963fbf31c590d9ee435c3e1cb11a03ccf939d14c87f52b6012c2db88b",
+    "decisions": 2263
+   },
+   "on": {
+    "sha256": "c4162d6963fbf31c590d9ee435c3e1cb11a03ccf939d14c87f52b6012c2db88b",
+    "decisions": 2263
+   },
+   "identical": true,
+   "audit_saw_decisions": 2263,
+   "audit_saw_duels": 8
+  },
+  {
+   "deck0": "machina_gadget",
+   "deck1": "blackwing",
+   "seed": 80900100,
+   "off": {
+    "sha256": "9a1bd00a7c8f9fb19e6a2ca2421b859a8897367619101fab003f825aa3b1b09e",
+    "decisions": 1777
+   },
+   "on": {
+    "sha256": "9a1bd00a7c8f9fb19e6a2ca2421b859a8897367619101fab003f825aa3b1b09e",
+    "decisions": 1777
+   },
+   "identical": true,
+   "audit_saw_decisions": 1777,
+   "audit_saw_duels": 8
+  },
+  {
+   "deck0": "blackwing",
+   "deck1": "frog_monarch",
+   "seed": 80900200,
+   "off": {
+    "sha256": "e05940c950e64fffc5ad54a61101bcc93bde57dd106e47c5a1b306255a8cea14",
+    "decisions": 2197
+   },
+   "on": {
+    "sha256": "e05940c950e64fffc5ad54a61101bcc93bde57dd106e47c5a1b306255a8cea14",
+    "decisions": 2197
+   },
+   "identical": true,
+   "audit_saw_decisions": 2197,
+   "audit_saw_duels": 8
+  }
+ ],
+ "identical": true
+}

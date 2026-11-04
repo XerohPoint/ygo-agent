@@ -1,0 +1,38 @@
+{
+ "base_commit": "0027cc9",
+ "binaries": {
+  "edison_rules": {
+   "before": "6df1bd58680d681624c02e5bd8ec19159b96cc4204b4af6a543ed7c30b411778",
+   "after": "6df1bd58680d681624c02e5bd8ec19159b96cc4204b4af6a543ed7c30b411778"
+  },
+  "production_module": {
+   "before": "67423a99970519fb10fb0a484a4b1af331c77623dc318610b3e0d2de375dd95e",
+   "after": "b0f7f47fdf9a37e2868706875c5bf043d3b82ef332adffbfd1f86ea44c67a2b4"
+  },
+  "edison_conformance": {
+   "before": "ac41e4d3ea72a4d6711c970c2e74602a5aaacafff6234eb759e7c74c0d5a8066",
+   "after": "ac41e4d3ea72a4d6711c970c2e74602a5aaacafff6234eb759e7c74c0d5a8066"
+  },
+  "old_logic_with_audit_module": "ddcd756e3fdeb1278addd6605fbef29ac900ea0ba253b43cc5e0e4306e441d9c",
+  "imported_module": "b0f7f47fdf9a37e2868706875c5bf043d3b82ef332adffbfd1f86ea44c67a2b4"
+ },
+ "fingerprints": {
+  "sources_before": 105,
+  "sources_after": 108,
+  "changed": [
+   "tests/edison/production_context_tests.py",
+   "tests/edison/production_deck_label_tests.py",
+   "tests/edison/prompt_audit.py",
+   "tests/edison/run.py",
+   "tools/edison/pool_audit/soak_worker.py",
+   "ygoenv/ygoenv/ygopro/prompt_audit.h",
+   "ygoenv/ygoenv/ygopro/ygopro.h"
+  ]
+ },
+ "locks": {
+  "core_hardening_patch_sha256": "9adf1905ebb577cdbd13dbf51737eb28cd07dfb0cf088b2275d0c6e0d3a1fff5",
+  "core_patch_sha256": "5a6d18d7bdac6cb305cf414a7409b374c3ea7519c18a4cc41884686f05fede61",
+  "core_recipe_sha256": "6530a9ba96d8bc99ea3a7a27d6cee225f89905525914d3026be1e0112352469f"
+ },
+ "locks_unchanged": true
+}

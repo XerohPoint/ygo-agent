@@ -72,6 +72,7 @@ def main():
                    ROOT / "ygoenv/ygoenv/ygopro/duel_config.h",
                    ROOT / "ygoenv/ygoenv/ygopro/observation_visibility.h",
                    ROOT / "ygoenv/ygoenv/ygopro/decision_context.h",
+                   ROOT / "ygoenv/ygoenv/ygopro/prompt_audit.h",
                    ROOT / "ygoenv/ygoenv/ygopro/historical_scripts.h",
                    ROOT / "ygoenv/ygoenv/ygopro/script_loader.h",
                    ROOT / "ygoenv/ygoenv/ygopro/deck_validation.h",
@@ -93,7 +94,7 @@ def main():
             command.append(f"--test={args.test_id}")
         if args.fail_fast:
             command.append("--fail-fast")
-        production_tests = ("042", "077", "078", "079", "082", "083", "084", "085")
+        production_tests = ("042", "077", "078", "079", "082", "083", "084", "085", "086")
         commands = [] if args.test_id in production_tests else [command]
         if args.test_id in (None, *production_tests):
             production = sorted((ROOT / "build/linux/x86_64/release").glob("ygopro_ygoenv*.so"))
@@ -123,7 +124,7 @@ def main():
             commands.append(probe)
         if args.test_id in (None, "078"):
             commands.append([sys.executable, str(Path(__file__).with_name("production_observation_tests.py"))])
-        if args.test_id in (None, "079", "082", "083", "084", "085"):
+        if args.test_id in (None, "079", "082", "083", "084", "085", "086"):
             agent_lock = json.loads(Path(__file__).with_name("agent_assets.lock.json").read_text())
             report["agent_assets_sha256"] = agent_lock
             for relative, expected in agent_lock.items():
@@ -139,6 +140,8 @@ def main():
                 commands.append([sys.executable, str(Path(__file__).with_name("production_diagnostic_tests.py"))])
             if args.test_id in (None, "085"):
                 commands.append([sys.executable, str(Path(__file__).with_name("production_prompt_tests.py"))])
+            if args.test_id in (None, "086"):
+                commands.append([sys.executable, str(Path(__file__).with_name("production_deck_label_tests.py"))])
         report["command"] = commands[0]
         report["commands"] = commands
         outputs = []

@@ -1,0 +1,225 @@
+{
+ "pairings": [
+  {
+   "pairing": "blackwing-frog_monarch-heuristic-heuristic",
+   "duels": 16,
+   "same_length": 8,
+   "same_winner": 16,
+   "identical": 2,
+   "first_difference_rows_and_labels_only": 14,
+   "same_up_to_first_difference_action": 4
+  },
+  {
+   "pairing": "blackwing-frog_monarch-heuristic-random",
+   "duels": 16,
+   "same_length": 12,
+   "same_winner": 16,
+   "first_difference_rows_and_labels_only": 13,
+   "same_up_to_first_difference_action": 10,
+   "identical": 3
+  },
+  {
+   "pairing": "frog_monarch-blackwing-heuristic-heuristic",
+   "duels": 16,
+   "same_length": 6,
+   "same_winner": 16,
+   "first_difference_rows_and_labels_only": 14,
+   "same_up_to_first_difference_action": 2,
+   "identical": 2
+  },
+  {
+   "pairing": "frog_monarch-blackwing-heuristic-random",
+   "duels": 16,
+   "same_length": 7,
+   "same_winner": 15,
+   "first_difference_rows_and_labels_only": 14,
+   "same_up_to_first_difference_action": 5,
+   "identical": 2
+  },
+  {
+   "pairing": "frog_monarch-machina_gadget-heuristic-heuristic",
+   "duels": 16,
+   "same_length": 8,
+   "same_winner": 15,
+   "first_difference_rows_and_labels_only": 16,
+   "same_up_to_first_difference_action": 5
+  },
+  {
+   "pairing": "frog_monarch-machina_gadget-heuristic-random",
+   "duels": 16,
+   "same_length": 6,
+   "same_winner": 13,
+   "first_difference_rows_and_labels_only": 15,
+   "same_up_to_first_difference_action": 8,
+   "identical": 1
+  },
+  {
+   "pairing": "machina_gadget-blackwing-heuristic-heuristic",
+   "duels": 16,
+   "same_length": 4,
+   "same_winner": 12,
+   "first_difference_rows_and_labels_only": 13,
+   "same_up_to_first_difference_action": 2,
+   "identical": 3
+  },
+  {
+   "pairing": "machina_gadget-blackwing-heuristic-random",
+   "duels": 16,
+   "same_length": 9,
+   "same_winner": 16,
+   "first_difference_rows_and_labels_only": 14,
+   "same_up_to_first_difference_action": 7,
+   "identical": 2
+  },
+  {
+   "pairing": "machina_gadget-frog_monarch-heuristic-heuristic",
+   "duels": 16,
+   "same_length": 7,
+   "same_winner": 14,
+   "first_difference_rows_and_labels_only": 15,
+   "same_up_to_first_difference_action": 3,
+   "identical": 1
+  },
+  {
+   "pairing": "machina_gadget-frog_monarch-heuristic-random",
+   "duels": 16,
+   "same_length": 11,
+   "same_winner": 16,
+   "first_difference_rows_and_labels_only": 15,
+   "same_up_to_first_difference_action": 11,
+   "identical": 1
+  }
+ ],
+ "totals": {
+  "duels": 160,
+  "same_length": 78,
+  "same_winner": 149,
+  "identical": 17,
+  "first_difference_rows_and_labels_only": 143,
+  "same_up_to_first_difference_action": 57
+ },
+ "first_difference_message": {
+  "3": 143
+ },
+ "example": {
+  "duel": "blackwing-frog_monarch-heuristic-heuristic",
+  "env": 1,
+  "step": 21,
+  "reference": [
+   [
+    3,
+    0,
+    8,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    5,
+    0,
+    35,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    6,
+    0,
+    35,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    8,
+    0,
+    51,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "current": [
+   [
+    5,
+    0,
+    15,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    6,
+    0,
+    15,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    3,
+    0,
+    9,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    4,
+    0,
+    9,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ]
+ }
+}

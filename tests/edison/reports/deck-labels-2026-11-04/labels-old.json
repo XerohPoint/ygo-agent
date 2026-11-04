@@ -1,0 +1,59 @@
+{
+ "seeds": [
+  80100000,
+  80101535
+ ],
+ "games": 1536,
+ "checkpoints": [
+  "/home/mada/ygo-agent/build/edison-gauntlet-training-2026-11-04/runs/gauntlet-1702/checkpoint-1280",
+  "/home/mada/ygo-agent/build/edison-gauntlet-training-2026-11-04/runs/gauntlet-1703/checkpoint-1280",
+  "/home/mada/ygo-agent/build/edison-gauntlet-training-2026-11-04/runs/gauntlet-1704/checkpoint-1280"
+ ],
+ "module": "/home/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/build/deck-labels/old-audit-module/ygopro_ygoenv.cpython-310-x86_64-linux-gnu.so",
+ "counts": {
+  "select_prompts_seen": 1962,
+  "deck_prompts_seen": 1217,
+  "options_shown": 6874,
+  "options_frog_label": 1724,
+  "chance_x1000": 250017,
+  "last_card_prompts": 1278,
+  "last_card_prompt_right": 42,
+  "deck_prompts": 1217,
+  "label_right": 34
+ },
+ "last_card_prompt_right_percent": 3.29,
+ "label_right_percent": 2.79,
+ "chance_percent": 20.54,
+ "frog_label_percent": 25.08,
+ "differential": {
+  "duels": 1536,
+  "decisions": 283374,
+  "decisions_listing_cards": 222095,
+  "mismatch_total": 39086,
+  "by_field": {
+   "label_mismatch": 33277,
+   "row_mismatch": 33277,
+   "zone_mismatch": 0,
+   "shared_row": 0,
+   "lone_mismatch": 246,
+   "private_shown": 0
+  },
+  "extra_visible_own_deck_rows": 24338,
+  "prompts_with_extra_rows": 5563
+ },
+ "differential_deck": {
+  "select_card|deck|own": {
+   "steps": 5569,
+   "options": 35945,
+   "hidden": 0,
+   "label_mismatch": 33277,
+   "row_mismatch": 33277,
+   "zone_mismatch": 0,
+   "shared_row": 0,
+   "lone_options": 256,
+   "lone_mismatch": 246,
+   "unknown_code": 0,
+   "private_shown": 0
+  }
+ }
+}

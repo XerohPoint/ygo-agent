@@ -3775,6 +3775,48 @@ private:
     return cards;
   }
 
+  // The core masks the sequence of the selecting player's own Deck cards in a prompt: 0, 1, 2 in
+  // prompt order, never a Deck position. Deck rows are keyed by real position, so an option must
+  // not be looked up by that number. It is bound by the prompt's card code instead: the n-th
+  // candidate of a code takes the n-th Deck card of that code. Same-code rows look identical and
+  // carry no position, so which physical copy backs an option exposes nothing. The response is
+  // still the option's index in the prompt. No other card's code may reach an observation, since
+  // the protocol does not redact codes of face-down or private opposing cards.
+  struct DeckOptionBinder {
+    bool loaded = false;
+    std::map<CardCode, std::vector<uint8_t>> unbound;
+  };
+
+  std::string prompt_spec(DeckOptionBinder& binder, PlayerId player, CardCode code,
+                          PlayerId controller, uint8_t loc, uint8_t seq, uint8_t pos) {
+    if (loc != LOCATION_DECK || controller != player) {
+      return ls_to_spec(loc, seq, pos, controller != player);
+    }
+    if (!binder.loaded) {
+      binder.loaded = true;
+      for (const auto& c : get_cards_in_location(player, LOCATION_DECK)) {
+        binder.unbound[c.code_].push_back(c.sequence_);
+      }
+    }
+    auto& copies = binder.unbound[code];
+    if (copies.empty()) {
+      throw std::runtime_error("Deck candidate " + std::to_string(code) + " has no unbound Deck card");
+    }
+    const uint8_t real = copies.front();
+    copies.erase(copies.begin());
+    return ls_to_spec(LOCATION_DECK, real, 0, false);
+  }
+
+  // For display only. An own Deck card's sequence here is masked, so it cannot be looked up.
+  Card prompt_card(PlayerId player, CardCode code, PlayerId controller, uint8_t loc, uint8_t seq) {
+    if (loc != LOCATION_DECK || controller != player) return get_card(controller, loc, seq);
+    Card card = c_get_card(code);
+    card.controler_ = controller;
+    card.location_ = loc;
+    card.sequence_ = seq;
+    return card;
+  }
+
   std::vector<Card> read_cardlist(bool extra = false, bool extra8 = false) {
     std::vector<Card> cards;
     auto count = read_u8();
@@ -4856,6 +4898,7 @@ private:
 
       std::vector<std::string> select_specs;
       select_specs.reserve(select_size);
+      DeckOptionBinder deck_binder;
       if (verbose_) {
         auto& pl = players_[player];
         pl->notify("Select " + std::to_string(min) + " to " +
@@ -4865,10 +4908,11 @@ private:
           auto loc = read_u32();
           Card card = c_get_card(code);
           card.set_location(loc);
-          auto spec = card.get_spec(player);
+          auto spec = prompt_spec(deck_binder, player, code, card.controler_, card.location_, card.sequence_, card.position_);
           select_specs.push_back(spec);
           audit_note(spec, code, card.controler_, card.location_, card.sequence_, card.position_);
-          auto s = fmt::format("{}: {}({})", i + 1, card.name_, spec);
+          // The prompt's own spec: a person reading this sees no Deck position.
+          auto s = fmt::format("{}: {}({})", i + 1, card.name_, card.get_spec(player));
           pl->notify(s);
         }
       } else {
@@ -4878,7 +4922,7 @@ private:
           auto loc = read_u8();
           auto seq = read_u8();
           auto pos = read_u8();
-          auto spec = ls_to_spec(loc, seq, pos, controller != player);
+          auto spec = prompt_spec(deck_binder, player, code, controller, loc, seq, pos);
           select_specs.push_back(spec);
           audit_note(spec, code, controller, loc, seq, pos);
         }
@@ -4891,7 +4935,7 @@ private:
       for (int i=0; i<unselect_size; ++i) {
         auto code=read_u32();
         auto controller=read_u8(), loc=read_u8(), seq=read_u8(), pos=read_u8();
-        decision_.selected.push_back(ls_to_spec(loc,seq,pos,controller!=player));
+        decision_.selected.push_back(prompt_spec(deck_binder,player,code,controller,loc,seq,pos));
         audit_note(decision_.selected.back(), code, controller, loc, seq, pos);
       }
       decision_.candidates = select_specs;
@@ -4931,6 +4975,7 @@ private:
 
       std::vector<std::string> specs;
       specs.reserve(size);
+      DeckOptionBinder deck_binder;
       if (verbose_) {
         std::vector<Card> cards;
         for (int i = 0; i < size; ++i) {
@@ -4944,16 +4989,17 @@ private:
         pl->notify("Select " + std::to_string(min) + " to " +
                    std::to_string(max) + " cards separated by spaces:");
         for (const auto &card : cards) {
-          auto spec = card.get_spec(player);
+          auto spec = prompt_spec(deck_binder, player, card.code_, card.controler_, card.location_, card.sequence_, card.position_);
           specs.push_back(spec);
           audit_note(spec, card.code_, card.controler_, card.location_, card.sequence_, card.position_);
           int i = specs.size();
+          // The prompt's own spec: a person reading this sees no Deck position.
           if (card.controler_ != player && card.position_ & POS_FACEDOWN) {
             pl->notify(
-              fmt::format("{}: {} card ({})", i, card.get_position(), spec));
+              fmt::format("{}: {} card ({})", i, card.get_position(), card.get_spec(player)));
           } else {
             pl->notify(
-              fmt::format("{}: {} ({})", i, card.name_, spec));
+              fmt::format("{}: {} ({})", i, card.name_, card.get_spec(player)));
           }
         }
       } else {
@@ -4963,7 +5009,7 @@ private:
           auto loc = read_u8();
           auto seq = read_u8();
           auto pos = read_u8();
-          auto spec = ls_to_spec(loc, seq, pos, controller != player);
+          auto spec = prompt_spec(deck_binder, player, code, controller, loc, seq, pos);
           specs.push_back(spec);
           audit_note(spec, code, controller, loc, seq, pos);
         }
@@ -5017,28 +5063,31 @@ private:
       release_params.reserve(size);
       std::vector<std::string> specs;
       specs.reserve(size);
+      DeckOptionBinder deck_binder;
       if (verbose_) {
         std::vector<Card> cards;
+        std::vector<std::string> bound_specs;
         for (int i = 0; i < size; ++i) {
           auto code = read_u32();
           auto controller = read_u8();
           auto loc = read_u8();
           auto seq = read_u8();
           auto release_param = read_u8();
-          Card card = get_card(controller, loc, seq);
+          auto bound = prompt_spec(deck_binder, player, code, controller, loc, seq, 0);
+          Card card = prompt_card(player, code, controller, loc, seq);
           cards.push_back(card);
+          bound_specs.push_back(bound);
           release_params.push_back(release_param);
-          audit_note(card.get_spec(player), code, controller, loc, seq, -1);
+          audit_note(bound, code, controller, loc, seq, -1);
         }
         auto& pl = players_[player];
         pl->notify("Select " + std::to_string(min) + " to " +
                    std::to_string(max) +
                    " cards to tribute separated by spaces:");
-        for (const auto &card : cards) {
-          auto spec = card.get_spec(player);
-          specs.push_back(spec);
+        for (size_t i = 0; i < cards.size(); ++i) {
+          specs.push_back(bound_specs[i]);
           pl->notify(
-            fmt::format("{}: {} ({})", specs.size(), card.name_, spec));
+            fmt::format("{}: {} ({})", specs.size(), cards[i].name_, cards[i].get_spec(player)));
         }
       } else {
         for (int i = 0; i < size; ++i) {
@@ -5048,7 +5097,7 @@ private:
           auto seq = read_u8();
           auto release_param = read_u8();
 
-          auto spec = ls_to_spec(loc, seq, 0, controller != player);
+          auto spec = prompt_spec(deck_binder, player, code, controller, loc, seq, 0);
           specs.push_back(spec);
           audit_note(spec, code, controller, loc, seq, -1);
 
@@ -5112,6 +5161,7 @@ private:
       std::vector<std::string> select_specs;
 
       int expected = val;
+      DeckOptionBinder deck_binder;
       if (verbose_) {
         std::vector<Card> must_select;
         must_select.reserve(must_select_size);
@@ -5121,11 +5171,12 @@ private:
           auto loc = read_u8();
           auto seq = read_u8();
           auto param = read_u32();
-          Card card = get_card(controller, loc, seq);
+          auto bound = prompt_spec(deck_binder, player, code, controller, loc, seq, 0);
+          Card card = prompt_card(player, code, controller, loc, seq);
           must_select.push_back(card);
-          decision_.mandatory.push_back(card.get_spec(player));
-          decision_.selected.push_back(card.get_spec(player));
-          audit_note(card.get_spec(player), code, controller, loc, seq, -1);
+          decision_.mandatory.push_back(bound);
+          decision_.selected.push_back(bound);
+          audit_note(bound, code, controller, loc, seq, -1);
           expected -= (param & 0xff);
         }
         auto& pl = players_[player];
@@ -5144,7 +5195,7 @@ private:
           auto seq = read_u8();
           auto param = read_u32();
 
-          auto spec = ls_to_spec(loc, seq, 0, controller != player);
+          auto spec = prompt_spec(deck_binder, player, code, controller, loc, seq, 0);
           decision_.mandatory.push_back(spec);
           decision_.selected.push_back(spec);
           audit_note(spec, code, controller, loc, seq, -1);
@@ -5159,23 +5210,25 @@ private:
       if (verbose_) {
         std::vector<Card> select;
         select.reserve(select_size);
+        std::vector<std::string> bound_specs;
         for (int i = 0; i < select_size; ++i) {
           auto code = read_u32();
           auto controller = read_u8();
           auto loc = read_u8();
           auto seq = read_u8();
           auto param = read_u32();
-          Card card = get_card(controller, loc, seq);
+          auto bound = prompt_spec(deck_binder, player, code, controller, loc, seq, 0);
+          Card card = prompt_card(player, code, controller, loc, seq);
           select.push_back(card);
+          bound_specs.push_back(bound);
           select_params.push_back(param);
-          audit_note(card.get_spec(player), code, controller, loc, seq, -1);
+          audit_note(bound, code, controller, loc, seq, -1);
         }
         auto& pl = players_[player];
-        for (const auto &card : select) {
-          auto spec = card.get_spec(player);
-          select_specs.push_back(spec);
+        for (size_t i = 0; i < select.size(); ++i) {
+          select_specs.push_back(bound_specs[i]);
           pl->notify(
-            fmt::format("{}: {} ({})", select_specs.size(), card.name_, spec));
+            fmt::format("{}: {} ({})", select_specs.size(), select[i].name_, select[i].get_spec(player)));
         }
       } else {
         for (int i = 0; i < select_size; ++i) {
@@ -5185,7 +5238,7 @@ private:
           auto seq = read_u8();
           auto param = read_u32();
 
-          auto spec = ls_to_spec(loc, seq, 0, controller != player);
+          auto spec = prompt_spec(deck_binder, player, code, controller, loc, seq, 0);
           select_specs.push_back(spec);
           select_params.push_back(param);
           audit_note(spec, code, controller, loc, seq, -1);

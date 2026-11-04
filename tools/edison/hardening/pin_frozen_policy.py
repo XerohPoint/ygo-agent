@@ -17,8 +17,8 @@ from production_context_tests import FROZEN_BASELINE, FROZEN_MODEL
 import tempfile
 
 def main():
-    report = {"purpose": "Seeded frozen-policy games for test 082D, regenerated after the rule fixes in docs/edison-hardening.md. "
-                         "Replaces the comparison against tests/edison/reports/agents-2026-11-02.",
+    report = {"purpose": "Seeded frozen-policy games for test 082D, regenerated after the Deck label fix in docs/edison-deck-labels.md. "
+                         "Replaces tests/edison/reports/hardening-2026-11-04/frozen-policy-baseline.json.",
               "seed": 20110424, "deck0": "blackwing", "deck1": "frog_monarch", "policies": {}}
     with tempfile.TemporaryDirectory(prefix="edison-pin-") as tmp:
         for policy in ("heuristic", "learned"):

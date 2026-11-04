@@ -1,0 +1,68 @@
+
+EDISON RULE TEST 086A - SUBSTITOAD, MIXED DECK
+Expected: every option is the Frog the engine offered, and history records the pick.
+RESULT: FAIL — Worker exited 1: e)
+  File "/home/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 113, in check_decision
+    assert entry["id"] == entry["expected_id"], f"Option labelled {entry['id']}, engine offered {entry['expected_id']}: {entry}"
+AssertionError: Option labelled 471, engine offered 513: {'spec_kind': 'deck', 'code': 12538374, 'expected_id': 513, 'id': 471, 'row': 2, 'row_id': 471, 'controller': 0, 'location': 1, 'prompt_sequence': 0, 'exempt': False}
+
+EDISON RULE TEST 086B - SWAP FROG, DECK OR FIELD
+Expected: masked Deck options and real field options both show their card and zone.
+RESULT: FAIL — Worker exited 1: e)
+  File "/home/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 113, in check_decision
+    assert entry["id"] == entry["expected_id"], f"Option labelled {entry['id']}, engine offered {entry['expected_id']}: {entry}"
+AssertionError: Option labelled 252, engine offered 513: {'spec_kind': 'deck', 'code': 12538374, 'expected_id': 513, 'id': 252, 'row': 3, 'row_id': 252, 'controller': 0, 'location': 1, 'prompt_sequence': 0, 'exempt': False}
+
+EDISON RULE TEST 086C - DUPLICATES OF ONE CODE
+Expected: copies of a code take distinct rows, in identity order.
+RESULT: FAIL — Worker exited 1: e)
+  File "/home/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 113, in check_decision
+    assert entry["id"] == entry["expected_id"], f"Option labelled {entry['id']}, engine offered {entry['expected_id']}: {entry}"
+AssertionError: Option labelled 851, engine offered 513: {'spec_kind': 'deck', 'code': 12538374, 'expected_id': 513, 'id': 851, 'row': 6, 'row_id': 851, 'controller': 1, 'location': 1, 'prompt_sequence': 0, 'exempt': False}
+
+EDISON RULE TEST 086D - A NON-CANDIDATE STAYS HIDDEN
+Expected: only candidates are visible; every other Deck row is blank.
+RESULT: FAIL — Worker exited 1: e)
+  File "/home/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 113, in check_decision
+    assert entry["id"] == entry["expected_id"], f"Option labelled {entry['id']}, engine offered {entry['expected_id']}: {entry}"
+AssertionError: Option labelled 221, engine offered 513: {'spec_kind': 'deck', 'code': 12538374, 'expected_id': 513, 'id': 221, 'row': 4, 'row_id': 221, 'controller': 0, 'location': 1, 'prompt_sequence': 0, 'exempt': False}
+
+EDISON RULE TEST 086E - TWO PICKS FROM THE DECK
+Expected: the first pick stays flagged on a row showing it.
+RESULT: FAIL — Worker exited 1: 
+  File "/home/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 113, in check_decision
+    assert entry["id"] == entry["expected_id"], f"Option labelled {entry['id']}, engine offered {entry['expected_id']}: {entry}"
+AssertionError: Option labelled 568, engine offered 1305: {'spec_kind': 'deck', 'code': 31786629, 'expected_id': 1305, 'id': 568, 'row': 2, 'row_id': 568, 'controller': 1, 'location': 1, 'prompt_sequence': 0, 'exempt': False}
+
+EDISON RULE TEST 086F - UNSELECT LIST FROM THE DECK
+Expected: both lists of the prompt map to distinct rows showing their cards.
+RESULT: FAIL — Worker exited 1: )
+  File "/home/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 113, in check_decision
+    assert entry["id"] == entry["expected_id"], f"Option labelled {entry['id']}, engine offered {entry['expected_id']}: {entry}"
+AssertionError: Option labelled 541, engine offered 568: {'spec_kind': 'deck', 'code': 14037717, 'expected_id': 568, 'id': 541, 'row': 19, 'row_id': 541, 'controller': 1, 'location': 1, 'prompt_sequence': 0, 'exempt': False}
+
+EDISON RULE TEST 086G - A LONE CANDIDATE IN HISTORY
+Expected: an option answered with no decision records the true card.
+RESULT: FAIL — Worker exited 1: production_deck_label_tests.py", line 327, in main
+    worker(args.worker, args.codes, args.deck, args.so)
+  File "/home/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 261, in worker
+    assert record["mismatch_total"] == 0, f"Differential mismatches: {record['mismatches'][:4]}"
+AssertionError: Differential mismatches: [{'kind': 'lone_option', 'key': 'select_card|deck|own', 'code': 46239604, 'expected_id': 1922, 'id': 350, 'turn': 30}]
+
+EDISON RULE TEST 086H - THE OPPONENT CHOOSES FROM THEIR OWN DECK
+Expected: the selecting seat sees its own candidates.
+RESULT: FAIL — Worker exited 1: File "/home/mada/ygo-agent/.claude/worktrees/agent-a44c9d808e2199553/tests/edison/production_deck_label_tests.py", line 113, in check_decision
+    assert entry["id"] == entry["expected_id"], f"Option labelled {entry['id']}, engine offered {entry['expected_id']}: {entry}"
+AssertionError: Option labelled 2279, engine offered 4021: {'spec_kind': 'deck', 'code': 99597615, 'expected_id': 4021, 'id': 2279, 'row': 6, 'row_id': 2279, 'controller': 1, 'location': 1, 'prompt_sequence': 0, 'exempt': False}
+
+EDISON RULE TEST 086I - CHOOSING FROM THE OPPONENT'S DECK
+Expected: options stay blank on hidden rows and nothing is revealed; a planted script, since no pool card does this.
+Observed: reached in duel 1; 377 card-listing decisions compared with the prompt.
+RESULT: PASS
+
+EDISON RULE TEST 086J - THE VERBOSE PARSER AGREES
+Expected: seeded duels give byte-identical observations through the verbose and the plain prompt parser.
+Observed: 707 decisions identical.
+RESULT: PASS
+
+SUMMARY: 2 PASS, 8 FAIL

@@ -43,6 +43,8 @@ These networks beat a heuristic that they also trained against, and the heuristi
 
 ## Known defect: Deck option labels
 
+**Fixed since, in [the Deck label report](edison-deck-labels.md). Results in this report still belong to the defective interface, and the networks need retraining.**
+
 **When a player chooses a card from the Deck, the policy sees the wrong card names. This affects every policy trained or evaluated so far.** The owner's description of a Frog combo led to the replays that exposed it.
 
 - **Cause.** For Deck candidates the core's `card::get_select_info_location` sends a masked sequence (0, 1, 2 and so on, in prompt order) to hide real positions. `ygopro.h` skips the code in that message and treats the masked sequence as a real position, so the

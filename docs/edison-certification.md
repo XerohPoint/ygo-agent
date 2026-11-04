@@ -1425,3 +1425,11 @@ Test 085 plays each previously crashing prompt class through production with the
 policies checked on every decision, and confirms all 18 gauntlet lists pass production legality. Test 082D now compares
 against a baseline regenerated after the rule fixes, because those fixes change seeded games on purpose. The full suite
 now passes 567 cases. See [edison-hardening.md](edison-hardening.md) for the changes, evidence and limits.
+
+## Deck option labels (086)
+
+Test 086 plays Deck prompts through production and compares each option with the card code in the engine's own prompt, through the
+test-only differential in `prompt_audit.h`. It covers mixed Deck contents, Deck-or-field prompts, duplicates, non-candidates, two picks,
+unselect lists, lone options and the other seat's selection, with guards for the opposing Deck and the verbose parser. Test 082D now
+compares against a baseline regenerated after the fix, because its interaction counts record the labels shown. The full suite now passes
+577 cases. See [edison-deck-labels.md](edison-deck-labels.md).

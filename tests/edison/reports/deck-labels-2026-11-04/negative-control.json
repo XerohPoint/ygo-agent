@@ -1,0 +1,47 @@
+{
+ "new_fixtures_on_old_build": {
+  "module": "old logic plus the audit, ddcd756e3fdeb1278addd6605fbef29ac900ea0ba253b43cc5e0e4306e441d9c",
+  "summary": [
+   "SUMMARY: 2 PASS, 8 FAIL"
+  ],
+  "passing_on_both_and_why": {
+   "086I": "Regression guard. Opposing Deck behavior is unchanged by this work.",
+   "086J": "Regression guard for the verbose parser edits."
+  }
+ },
+ "old_fixtures_on_new_build": {
+  "module": "b0f7f47fdf9a37e2868706875c5bf043d3b82ef332adffbfd1f86ea44c67a2b4",
+  "failures": [
+   "RESULT: FAIL - ('Frozen policy behavior changed', 'heuristic', 'interactions')"
+  ],
+  "explanation": "082D alone, on its pinned interaction counts. See frozen-policy-baseline.json and docs/edison-deck-labels.md."
+ },
+ "differential_on_old_build": {
+  "duels": 3376,
+  "decisions": 582254,
+  "mismatch_total": 41438,
+  "by_field": {
+   "label_mismatch": 35261,
+   "row_mismatch": 35261,
+   "zone_mismatch": 0,
+   "shared_row": 0,
+   "lone_mismatch": 781,
+   "private_shown": 0
+  },
+  "extra_visible_own_deck_rows": 22522
+ },
+ "differential_on_new_build": {
+  "duels": 3376,
+  "decisions": 582254,
+  "mismatch_total": 0,
+  "by_field": {
+   "label_mismatch": 0,
+   "row_mismatch": 0,
+   "zone_mismatch": 0,
+   "shared_row": 0,
+   "lone_mismatch": 0,
+   "private_shown": 0
+  },
+  "extra_visible_own_deck_rows": 0
+ }
+}
