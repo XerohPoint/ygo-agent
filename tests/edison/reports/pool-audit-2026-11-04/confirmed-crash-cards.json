@@ -1,0 +1,965 @@
+{
+ "cards": {
+  "56995655": {
+   "name": "Ominous Fortunetelling",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 70",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "41925941": {
+   "name": "Bark of Dark Ruler",
+   "signature": "exit-6: what():  Number 100 not implemented for announce number",
+   "evidence": "attributed+feature",
+   "count": 3
+  },
+  "8323633": {
+   "name": "Cloak and Dagger",
+   "signature": "exit-6: what():  [c_get_card_id] Card not found: 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "62892347": {
+   "name": "Arcana Force 0 - The Fool",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "82642348": {
+   "name": "Kryuel",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 60",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "22959079": {
+   "name": "Dimensionhole",
+   "signature": "exit-6: what():  Unknown message field_disabled, length 5, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "78053598": {
+   "name": "Dark Designator",
+   "signature": "exit-6: what():  invalid format of opcodes",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "60866277": {
+   "name": "Earthshaker",
+   "signature": "exit-6: what():  Announce attrib count 2 not implemented",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "43061293": {
+   "name": "Fire Darts",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 6, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "76895648": {
+   "name": "Dangerous Machine Type-6",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "33423043": {
+   "name": "D.D. Designator",
+   "signature": "exit-6: what():  invalid format of opcodes",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "37812118": {
+   "name": "Cup of Ace",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "48356796": {
+   "name": "Mystical Cards of Light",
+   "signature": "exit-6: what():  Unknown message field_disabled, length 5, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "1525329": {
+   "name": "The Hunter with 7 Weapons",
+   "signature": "exit-6: what():  Unknown message announce_race, length 7, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "53839837": {
+   "name": "Vampire Lord",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 70",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "84389640": {
+   "name": "Attack of the Cornered Rat",
+   "signature": "exit-6: what():  Number 100 not implemented for announce number",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "69296555": {
+   "name": "Array of Revealing Light",
+   "signature": "exit-6: what():  Unknown message announce_race, length 7, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "25551951": {
+   "name": "Blowback Dragon",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 6, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "62966332": {
+   "name": "Convulsion of Nature",
+   "signature": "exit-6: what():  Unknown message reverse_deck, length 15, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "67959180": {
+   "name": "Goddess of Whim",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 60",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "296499": {
+   "name": "The Regulation of Tribe",
+   "signature": "exit-6: what():  Unknown message announce_race, length 7, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "126218": {
+   "name": "Skull Dice",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "38299233": {
+   "name": "Needle Wall",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "27340877": {
+   "name": "DNA Checkup",
+   "signature": "exit-6: what():  Announce attrib count 2 not implemented",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 4
+  },
+  "71625222": {
+   "name": "Time Wizard",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 60",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "17874674": {
+   "name": "Seal of Wickedness",
+   "signature": "exit-6: what():  Unknown message cancel_target, length 9, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "74137509": {
+   "name": "Graceful Dice",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "64538655": {
+   "name": "Sasuke Samurai #4",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 60",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "89801755": {
+   "name": "Abyssal Designator",
+   "signature": "exit-6: what():  Unknown message announce_race, length 7, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "34568403": {
+   "name": "Arcana Force VII - The Chariot",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "32015116": {
+   "name": "Blind Destruction",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "17078030": {
+   "name": "Wall of Revealing Light",
+   "signature": "exit-6: what():  Number 1000 not implemented for announce number",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "46303688": {
+   "name": "Roulette Barrel",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 5, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "3549275": {
+   "name": "Dice Jar",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 8, dp 1",
+   "evidence": "attributed+feature",
+   "count": 8
+  },
+  "15800838": {
+   "name": "Mind Crush",
+   "signature": "exit-6: what():  invalid format of opcodes",
+   "evidence": "attributed+feature",
+   "count": 16
+  },
+  "22796548": {
+   "name": "Archfiend's Oath",
+   "signature": "exit-6: what():  invalid format of opcodes",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "97574404": {
+   "name": "Arcana Force VI - The Lovers",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "61175706": {
+   "name": "Arcana Force IV - The Emperor",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "62784717": {
+   "name": "Tour of Doom",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "80921533": {
+   "name": "Mausoleum of the Emperor",
+   "signature": "exit-6: what():  Number 2000 not implemented for announce number",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 4
+  },
+  "35781051": {
+   "name": "Arcana Force III - The Empress",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "73206827": {
+   "name": "Light Barrier",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "74701381": {
+   "name": "DNA Surgery",
+   "signature": "exit-6: what():  Unknown message announce_race, length 7, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "50470982": {
+   "name": "The Paths of Destiny",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "84397023": {
+   "name": "Level Conversion Lab",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "69831560": {
+   "name": "Arcana Force EX - The Dark Ruler",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "4483989": {
+   "name": "Prepare to Strike Back",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 60",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 4
+  },
+  "81172176": {
+   "name": "Fiend Comedian",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 60",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "60953118": {
+   "name": "Arcana Force XIV - Temperance",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "70050374": {
+   "name": "Twin-Barrel Dragon",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 5, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "59344077": {
+   "name": "Magic Drain",
+   "signature": "exit-6: what():  Unknown message deck_top, length 14, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "39537362": {
+   "name": "Ordeal of a Traveler",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 70",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "89111398": {
+   "name": "Dark Dust Spirit",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "67196946": {
+   "name": "Star Blast",
+   "signature": "exit-6: what():  Number 500 not implemented for announce number",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "21598948": {
+   "name": "Fairy Box",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 60",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "38167722": {
+   "name": "Dark Spirit Art - Greed",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1213",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "26495087": {
+   "name": "Vampire Lady",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 70",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "38723936": {
+   "name": "Question",
+   "signature": "exit-6: what():  [c_get_card_id] Card not found: 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "5990062": {
+   "name": "Reversal Quiz",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 70",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "2356994": {
+   "name": "Great Long Nose",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "30707994": {
+   "name": "Maximum Six",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "97452817": {
+   "name": "Arcana Force XVIII - The Moon",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "93542102": {
+   "name": "Morphtronic Celfon",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "43711255": {
+   "name": "Prohibition",
+   "signature": "exit-6: what():  invalid format of opcodes",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "50593156": {
+   "name": "Sand Gambler",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 6, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "16135253": {
+   "name": "Agido",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "5861892": {
+   "name": "Arcana Force EX - The Light Ruler",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "84290642": {
+   "name": "Snipe Hunter",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 4
+  },
+  "21454943": {
+   "name": "Psychic Commander",
+   "signature": "exit-6: what():  Number 100 not implemented for announce number",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "2196767": {
+   "name": "Gambler of Legend",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 6, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "39751093": {
+   "name": "Otohime",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "89718302": {
+   "name": "Abare Ushioni",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 60",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "40695128": {
+   "name": "Maharaghi",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "38538445": {
+   "name": "Fushi No Tori",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "15317640": {
+   "name": "B.E.S. Covered Core",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 60",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "23846921": {
+   "name": "Arcana Force XXI - The World",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "94773007": {
+   "name": "Jirai Gumo",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 60",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "8396952": {
+   "name": "Arcana Force I - The Magician",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "81480460": {
+   "name": "Barrel Dragon",
+   "signature": "exit-6: what():  Unknown message toss_coin, length 6, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "37313786": {
+   "name": "Gamble",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 60",
+   "evidence": "attributed+feature",
+   "count": 3
+  },
+  "75745607": {
+   "name": "Hino-Kagu-Tsuchi",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "10809984": {
+   "name": "Great Phantom Thief",
+   "signature": "exit-6: what():  invalid format of opcodes",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "38975369": {
+   "name": "Gundari",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "97642679": {
+   "name": "Dark Master - Zorc",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "77084837": {
+   "name": "Inaba White Rabbit",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "564541": {
+   "name": "Totem Dragon",
+   "signature": "exit-6: what():  weight not implemented for select tribute",
+   "evidence": "attributed+feature",
+   "count": 3
+  },
+  "40391316": {
+   "name": "Ojama Knight",
+   "signature": "exit-6: what():  Unknown message field_disabled, length 5, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 4
+  },
+  "45452224": {
+   "name": "Kinka-byo",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "15595052": {
+   "name": "Disciple of the Forbidden Spell",
+   "signature": "exit-6: what():  Announce attrib count 2 not implemented",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "57270476": {
+   "name": "Grave Lure",
+   "signature": "exit-6: what():  Unknown message deck_top, length 14, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 6
+  },
+  "8581705": {
+   "name": "Infernalqueen Archfiend",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 4
+  },
+  "13955608": {
+   "name": "Stronghold the Moving Fortress",
+   "signature": "exit-6: what():  Unknown message field_disabled, length 5, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "28649820": {
+   "name": "Embodiment of Apophis",
+   "signature": "exit-6: what():  Unknown message field_disabled, length 5, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "2134346": {
+   "name": "Asura Priest",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "26905245": {
+   "name": "Metal Reflect Slime",
+   "signature": "exit-6: what():  Unknown message field_disabled, length 5, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "35798491": {
+   "name": "Darkbishop Archfiend",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "35975813": {
+   "name": "Terrorking Archfiend",
+   "signature": "exit-6: what():  Unknown message toss_dice, length 4, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 4
+  },
+  "40473581": {
+   "name": "Susa Soldier",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "43543777": {
+   "name": "Izanami",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "49879995": {
+   "name": "Phantom Dragon",
+   "signature": "exit-6: what():  Select place count 2 not implemented for disfield",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "65743242": {
+   "name": "Call of the Earthbound",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1213",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 4
+  },
+  "70406920": {
+   "name": "Machine King - 3000 B.C.",
+   "signature": "exit-6: what():  Unknown message field_disabled, length 5, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "79703905": {
+   "name": "Cloudian - Altus",
+   "signature": "exit-6: what():  Select counter count 3 not implemented",
+   "evidence": "dedicated duels",
+   "crashed": 2,
+   "of": 4
+  },
+  "79852326": {
+   "name": "Zoma the Spirit",
+   "signature": "exit-6: what():  Unknown message field_disabled, length 5, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "76862289": {
+   "name": "Yamata Dragon",
+   "signature": "exit-6: what():  [system_string_to_id] cannot find id: 1104",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "90502999": {
+   "name": "Ground Collapse",
+   "signature": "exit-6: what():  Select place count 2 not implemented for disfield",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 4
+  },
+  "90440725": {
+   "name": "Cyber Shadow Gardna",
+   "signature": "exit-6: what():  Unknown message field_disabled, length 5, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 4,
+   "of": 4
+  },
+  "11662742": {
+   "name": "Gellenduo",
+   "signature": "exit-6: what():  weight not implemented for select tribute",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 6
+  },
+  "17444133": {
+   "name": "Kaiser Sea Horse",
+   "signature": "exit-6: what():  weight not implemented for select tribute",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 6
+  },
+  "38479725": {
+   "name": "The Trojan Horse",
+   "signature": "exit-6: what():  weight not implemented for select tribute",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 6
+  },
+  "53461122": {
+   "name": "Earth Effigy",
+   "signature": "exit-6: what():  weight not implemented for select tribute",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 6
+  },
+  "63571750": {
+   "name": "Pharaoh's Treasure",
+   "signature": "exit-6: what():  Unknown message deck_top, length 14, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 3,
+   "of": 6
+  },
+  "81755371": {
+   "name": "Dark Effigy",
+   "signature": "exit-6: what():  weight not implemented for select tribute",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 6
+  },
+  "88733579": {
+   "name": "Drill Bug",
+   "signature": "exit-6: what():  Unknown message deck_top, length 14, dp 1",
+   "evidence": "dedicated duels",
+   "crashed": 1,
+   "of": 6
+  }
+ },
+ "classes": {
+  "Unknown message toss_coin, length 4, dp 1": [
+   "Arcana Force 0 - The Fool",
+   "Arcana Force EX - The Dark Ruler",
+   "Arcana Force EX - The Light Ruler",
+   "Arcana Force I - The Magician",
+   "Arcana Force III - The Empress",
+   "Arcana Force IV - The Emperor",
+   "Arcana Force VI - The Lovers",
+   "Arcana Force VII - The Chariot",
+   "Arcana Force XIV - Temperance",
+   "Arcana Force XVIII - The Moon",
+   "Arcana Force XXI - The World",
+   "Cup of Ace",
+   "Light Barrier",
+   "The Paths of Destiny",
+   "Tour of Doom"
+  ],
+  "Unknown message toss_dice, length 4, dp 1": [
+   "Agido",
+   "Blind Destruction",
+   "Dangerous Machine Type-6",
+   "Dark Master - Zorc",
+   "Darkbishop Archfiend",
+   "Graceful Dice",
+   "Infernalqueen Archfiend",
+   "Level Conversion Lab",
+   "Maximum Six",
+   "Morphtronic Celfon",
+   "Needle Wall",
+   "Skull Dice",
+   "Snipe Hunter",
+   "Terrorking Archfiend"
+  ],
+  "[system_string_to_id] cannot find id: 1104": [
+   "Asura Priest",
+   "Dark Dust Spirit",
+   "Fushi No Tori",
+   "Great Long Nose",
+   "Gundari",
+   "Hino-Kagu-Tsuchi",
+   "Inaba White Rabbit",
+   "Izanami",
+   "Kinka-byo",
+   "Maharaghi",
+   "Otohime",
+   "Susa Soldier",
+   "Yamata Dragon"
+  ],
+  "[system_string_to_id] cannot find id: 60": [
+   "Abare Ushioni",
+   "B.E.S. Covered Core",
+   "Fairy Box",
+   "Fiend Comedian",
+   "Gamble",
+   "Goddess of Whim",
+   "Jirai Gumo",
+   "Kryuel",
+   "Prepare to Strike Back",
+   "Sasuke Samurai #4",
+   "Time Wizard"
+  ],
+  "Unknown message field_disabled, length 5, dp 1": [
+   "Cyber Shadow Gardna",
+   "Dimensionhole",
+   "Embodiment of Apophis",
+   "Machine King - 3000 B.C.",
+   "Metal Reflect Slime",
+   "Mystical Cards of Light",
+   "Ojama Knight",
+   "Stronghold the Moving Fortress",
+   "Zoma the Spirit"
+  ],
+  "invalid format of opcodes": [
+   "Archfiend's Oath",
+   "D.D. Designator",
+   "Dark Designator",
+   "Great Phantom Thief",
+   "Mind Crush",
+   "Prohibition"
+  ],
+  "weight not implemented for select tribute": [
+   "Dark Effigy",
+   "Earth Effigy",
+   "Gellenduo",
+   "Kaiser Sea Horse",
+   "The Trojan Horse",
+   "Totem Dragon"
+  ],
+  "[system_string_to_id] cannot find id: 70": [
+   "Ominous Fortunetelling",
+   "Ordeal of a Traveler",
+   "Reversal Quiz",
+   "Vampire Lady",
+   "Vampire Lord"
+  ],
+  "Unknown message announce_race, length 7, dp 1": [
+   "Abyssal Designator",
+   "Array of Revealing Light",
+   "DNA Surgery",
+   "The Hunter with 7 Weapons",
+   "The Regulation of Tribe"
+  ],
+  "Unknown message toss_coin, length 6, dp 1": [
+   "Barrel Dragon",
+   "Blowback Dragon",
+   "Gambler of Legend",
+   "Sand Gambler"
+  ],
+  "Unknown message deck_top, length 14, dp 1": [
+   "Drill Bug",
+   "Grave Lure",
+   "Magic Drain",
+   "Pharaoh's Treasure"
+  ],
+  "Number 100 not implemented for announce number": [
+   "Attack of the Cornered Rat",
+   "Bark of Dark Ruler",
+   "Psychic Commander"
+  ],
+  "Announce attrib count 2 not implemented": [
+   "DNA Checkup",
+   "Disciple of the Forbidden Spell",
+   "Earthshaker"
+  ],
+  "[c_get_card_id] Card not found: 1": [
+   "Cloak and Dagger",
+   "Question"
+  ],
+  "[system_string_to_id] cannot find id: 1213": [
+   "Call of the Earthbound",
+   "Dark Spirit Art - Greed"
+  ],
+  "Select place count 2 not implemented for disfield": [
+   "Ground Collapse",
+   "Phantom Dragon"
+  ],
+  "Unknown message toss_dice, length 6, dp 1": [
+   "Fire Darts"
+  ],
+  "Unknown message reverse_deck, length 15, dp 1": [
+   "Convulsion of Nature"
+  ],
+  "Unknown message cancel_target, length 9, dp 1": [
+   "Seal of Wickedness"
+  ],
+  "Number 1000 not implemented for announce number": [
+   "Wall of Revealing Light"
+  ],
+  "Unknown message toss_dice, length 5, dp 1": [
+   "Roulette Barrel"
+  ],
+  "Unknown message toss_dice, length 8, dp 1": [
+   "Dice Jar"
+  ],
+  "Number 2000 not implemented for announce number": [
+   "Mausoleum of the Emperor"
+  ],
+  "Unknown message toss_coin, length 5, dp 1": [
+   "Twin-Barrel Dragon"
+  ],
+  "Number 500 not implemented for announce number": [
+   "Star Blast"
+  ],
+  "Select counter count 3 not implemented": [
+   "Cloudian - Altus"
+  ]
+ }
+}

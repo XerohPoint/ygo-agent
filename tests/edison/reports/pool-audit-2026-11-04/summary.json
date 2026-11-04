@@ -1,0 +1,3642 @@
+{
+ "entries": 3659,
+ "accepted_ids": 3759,
+ "forbidden": 43,
+ "playable": 3616,
+ "needs_script": 3251,
+ "no_script_needed_normal": 408,
+ "file_at_manifest_code": 3237,
+ "non_normal_missing_at_manifest_code": 14,
+ "non_normal_missing_after_alias": 0,
+ "probe_entries_with_diagnostics": 0,
+ "soak": {
+  "statuses": {
+   "ok": 31666,
+   "crash": 2092
+  },
+  "total_steps": 4144114,
+  "max_options": 58,
+  "violations": {},
+  "stage_stats": {
+   "s1_uniform": {
+    "duels": 3000,
+    "elapsed": 513.1642262935638,
+    "ok": 1481,
+    "crash": 1519
+   },
+   "s2_themed": {
+    "duels": 2000,
+    "elapsed": 36.61658048629761,
+    "ok": 1969,
+    "crash": 31
+   },
+   "s3_targeted": {
+    "duels": 1500,
+    "elapsed": 24.99742603302002,
+    "ok": 1495,
+    "crash": 5
+   },
+   "s4_confirm": {
+    "duels": 524,
+    "elapsed": 95.74653553962708,
+    "ok": 208,
+    "crash": 316
+   },
+   "s5_targeted": {
+    "duels": 2000,
+    "elapsed": 32.73191547393799,
+    "ok": 1999,
+    "crash": 1
+   },
+   "s6_targeted": {
+    "duels": 2000,
+    "elapsed": 30.617212772369385,
+    "ok": 1999,
+    "crash": 1
+   },
+   "s7_targeted": {
+    "duels": 2000,
+    "elapsed": 32.885088205337524,
+    "ok": 1997,
+    "crash": 3
+   },
+   "s8_targeted": {
+    "duels": 2000,
+    "elapsed": 39.96034836769104,
+    "ok": 1998,
+    "crash": 2
+   },
+   "s9_targeted": {
+    "duels": 2000,
+    "elapsed": 30.376245260238647,
+    "ok": 1999,
+    "crash": 1
+   },
+   "s10_targeted": {
+    "duels": 2000,
+    "elapsed": 31.73241376876831,
+    "ok": 1993,
+    "crash": 7
+   },
+   "s11_targeted": {
+    "duels": 2000,
+    "elapsed": 33.056241273880005,
+    "ok": 1999,
+    "crash": 1
+   },
+   "s12_targeted": {
+    "duels": 2000,
+    "elapsed": 30.186901569366455,
+    "ok": 1997,
+    "crash": 3
+   },
+   "s13_themed": {
+    "duels": 3000,
+    "elapsed": 48.9223415851593,
+    "ok": 2984,
+    "crash": 16
+   },
+   "s14_uniform_blocked": {
+    "duels": 3000,
+    "elapsed": 67.02700519561768,
+    "ok": 2960,
+    "crash": 40
+   },
+   "g1_gauntlet_main": {
+    "duels": 1296,
+    "elapsed": 34.60742402076721,
+    "ok": 1296
+   },
+   "g2_gauntlet_sidein": {
+    "duels": 1296,
+    "elapsed": 53.35689401626587,
+    "ok": 1176,
+    "crash": 120
+   },
+   "s15_confirm": {
+    "duels": 858,
+    "elapsed": 18.732722282409668,
+    "ok": 841,
+    "crash": 17
+   },
+   "s16_confirm_low": {
+    "duels": 1284,
+    "elapsed": 24.486515283584595,
+    "ok": 1275,
+    "crash": 9
+   }
+  }
+ },
+ "soak_lua_distinct": 0,
+ "status_counts": {
+  "activated": 2614,
+  "summoned": 829,
+  "offered_only": 95,
+  "summoned_not_activated": 75,
+  "forbidden_no_production_duel": 43,
+  "in_deck_only": 3
+ },
+ "in_a_soak_deck": 3616,
+ "offered": 3613,
+ "activated_among_activatable": [
+  2581,
+  2742
+ ],
+ "normal_summoned_or_chain": 3518,
+ "pct_activated_among_activatable": 94.13,
+ "pct_exercised_of_playable": 97.29,
+ "pct_exercised_of_all": 96.15,
+ "crash_classes": [
+  {
+   "signature": "[system_string_to_id] cannot find id: 1104",
+   "count": 285,
+   "cards": [
+    [
+     "Dark Dust Spirit",
+     92
+    ],
+    [
+     "Treeborn Frog",
+     12
+    ],
+    [
+     "Maharaghi",
+     10
+    ],
+    [
+     "Otohime",
+     7
+    ],
+    [
+     "Soul Exchange",
+     6
+    ],
+    [
+     "Great Long Nose",
+     5
+    ],
+    [
+     "Gundari",
+     4
+    ],
+    [
+     "Hino-Kagu-Tsuchi",
+     3
+    ],
+    [
+     "Inaba White Rabbit",
+     3
+    ],
+    [
+     "Kinka-byo",
+     3
+    ],
+    [
+     "Smashing Ground",
+     3
+    ],
+    [
+     "Spiritual Water Art - Aoi",
+     3
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message toss_coin, length 4, dp 1",
+   "count": 284,
+   "cards": [
+    [
+     "Light Barrier",
+     38
+    ],
+    [
+     "Cup of Ace",
+     37
+    ],
+    [
+     "Arcana Force VI - The Lovers",
+     24
+    ],
+    [
+     "Arcana Force VII - The Chariot",
+     23
+    ],
+    [
+     "Arcana Force III - The Empress",
+     22
+    ],
+    [
+     "Arcana Force IV - The Emperor",
+     19
+    ],
+    [
+     "Tour of Doom",
+     19
+    ],
+    [
+     "The Paths of Destiny",
+     18
+    ],
+    [
+     "Arcana Force I - The Magician",
+     16
+    ],
+    [
+     "Arcana Force 0 - The Fool",
+     14
+    ],
+    [
+     "Arcana Force XVIII - The Moon",
+     12
+    ],
+    [
+     "Arcana Force EX - The Light Ruler",
+     12
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message toss_dice, length 4, dp 1",
+   "count": 258,
+   "cards": [
+    [
+     "Snipe Hunter",
+     42
+    ],
+    [
+     "Dangerous Machine Type-6",
+     31
+    ],
+    [
+     "Skull Dice",
+     31
+    ],
+    [
+     "Needle Wall",
+     31
+    ],
+    [
+     "Graceful Dice",
+     27
+    ],
+    [
+     "Blind Destruction",
+     25
+    ],
+    [
+     "Level Conversion Lab",
+     15
+    ],
+    [
+     "Morphtronic Celfon",
+     12
+    ],
+    [
+     "Maximum Six",
+     10
+    ],
+    [
+     "Agido",
+     7
+    ],
+    [
+     "Dark Master - Zorc",
+     5
+    ],
+    [
+     "Power Pickaxe",
+     2
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message field_disabled, length 5, dp 1",
+   "count": 183,
+   "cards": [
+    [
+     "Mystical Cards of Light",
+     29
+    ],
+    [
+     "Dimensionhole",
+     25
+    ],
+    [
+     "Zoma the Spirit",
+     25
+    ],
+    [
+     "Embodiment of Apophis",
+     20
+    ],
+    [
+     "Machine King - 3000 B.C.",
+     20
+    ],
+    [
+     "Cyber Shadow Gardna",
+     20
+    ],
+    [
+     "Metal Reflect Slime",
+     18
+    ],
+    [
+     "Stronghold the Moving Fortress",
+     18
+    ],
+    [
+     "Ojama Knight",
+     2
+    ],
+    [
+     "Inverse Universe",
+     1
+    ],
+    [
+     "The Reliable Guardian",
+     1
+    ],
+    [
+     "Skill Successor",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "invalid format of opcodes",
+   "count": 148,
+   "cards": [
+    [
+     "D.D. Designator",
+     38
+    ],
+    [
+     "Dark Designator",
+     31
+    ],
+    [
+     "Archfiend's Oath",
+     31
+    ],
+    [
+     "Prohibition",
+     27
+    ],
+    [
+     "Mind Crush",
+     16
+    ],
+    [
+     "Great Phantom Thief",
+     5
+    ],
+    [
+     "Morphtronic Scopen",
+     1
+    ],
+    [
+     "Colosseum - Cage of the Gladiator Beasts",
+     1
+    ],
+    [
+     "Necrovalley",
+     1
+    ],
+    [
+     "Hard-sellin' Goblin",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "[system_string_to_id] cannot find id: 60",
+   "count": 141,
+   "cards": [
+    [
+     "Goddess of Whim",
+     21
+    ],
+    [
+     "Fiend Comedian",
+     21
+    ],
+    [
+     "Time Wizard",
+     18
+    ],
+    [
+     "Sasuke Samurai #4",
+     17
+    ],
+    [
+     "Abare Ushioni",
+     15
+    ],
+    [
+     "Jirai Gumo",
+     13
+    ],
+    [
+     "Fairy Box",
+     10
+    ],
+    [
+     "Prepare to Strike Back",
+     8
+    ],
+    [
+     "B.E.S. Covered Core",
+     8
+    ],
+    [
+     "Kryuel",
+     5
+    ],
+    [
+     "Gamble",
+     3
+    ],
+    [
+     "Venom Swamp",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message announce_race, length 7, dp 1",
+   "count": 130,
+   "cards": [
+    [
+     "Array of Revealing Light",
+     41
+    ],
+    [
+     "Abyssal Designator",
+     33
+    ],
+    [
+     "The Regulation of Tribe",
+     29
+    ],
+    [
+     "DNA Surgery",
+     19
+    ],
+    [
+     "The Hunter with 7 Weapons",
+     8
+    ],
+    [
+     "Aegis of the Ocean Dragon Lord",
+     1
+    ],
+    [
+     "Success Probability 0%",
+     1
+    ],
+    [
+     "Golden Homunculus",
+     1
+    ],
+    [
+     "Phantom Beast Cross-Wing",
+     1
+    ],
+    [
+     "Cyber Gymnast",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "[system_string_to_id] cannot find id: 70",
+   "count": 95,
+   "cards": [
+    [
+     "Ominous Fortunetelling",
+     28
+    ],
+    [
+     "Reversal Quiz",
+     22
+    ],
+    [
+     "Ordeal of a Traveler",
+     18
+    ],
+    [
+     "Vampire Lady",
+     14
+    ],
+    [
+     "Vampire Lord",
+     13
+    ],
+    [
+     "Strong Wind Dragon",
+     1
+    ],
+    [
+     "Darkness Approaches",
+     1
+    ],
+    [
+     "Cost Down",
+     1
+    ],
+    [
+     "Recycle",
+     1
+    ],
+    [
+     "Heart of the Underdog",
+     1
+    ],
+    [
+     "Karma Cut",
+     1
+    ],
+    [
+     "Beast Fangs",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "weight not implemented for select tribute",
+   "count": 74,
+   "cards": [
+    [
+     "Totem Dragon",
+     3
+    ],
+    [
+     "Volcanic Hammerer",
+     2
+    ],
+    [
+     "Destiny Board",
+     2
+    ],
+    [
+     "Shadow Spell",
+     1
+    ],
+    [
+     "Forest",
+     1
+    ],
+    [
+     "Invigoration",
+     1
+    ],
+    [
+     "Iron Chain Coil",
+     1
+    ],
+    [
+     "Return Soul",
+     1
+    ],
+    [
+     "Tualatin",
+     1
+    ],
+    [
+     "Gilford the Lightning",
+     1
+    ],
+    [
+     "Raise Body Heat",
+     1
+    ],
+    [
+     "Dark-Piercing Light",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "[c_get_card_id] Card not found: 1",
+   "count": 55,
+   "cards": [
+    [
+     "Question",
+     29
+    ],
+    [
+     "Cloak and Dagger",
+     25
+    ],
+    [
+     "Dice Re-Roll",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message toss_coin, length 6, dp 1",
+   "count": 54,
+   "cards": [
+    [
+     "Blowback Dragon",
+     17
+    ],
+    [
+     "Gambler of Legend",
+     17
+    ],
+    [
+     "Sand Gambler",
+     14
+    ],
+    [
+     "Barrel Dragon",
+     4
+    ],
+    [
+     "Rush Recklessly",
+     1
+    ],
+    [
+     "Evil Blast",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "Select place count 2 not implemented for disfield",
+   "count": 52,
+   "cards": [
+    [
+     "Ground Collapse",
+     38
+    ],
+    [
+     "Phantom Dragon",
+     4
+    ],
+    [
+     "The Warrior Returning Alive",
+     1
+    ],
+    [
+     "United We Stand",
+     1
+    ],
+    [
+     "Master & Expert",
+     1
+    ],
+    [
+     "Nimble Momonga",
+     1
+    ],
+    [
+     "Flint",
+     1
+    ],
+    [
+     "Elemental Absorber",
+     1
+    ],
+    [
+     "Quick Charger",
+     1
+    ],
+    [
+     "Venom Swamp",
+     1
+    ],
+    [
+     "Automatic Laser",
+     1
+    ],
+    [
+     "Iron Core of Koa'ki Meiru",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message deck_top, length 14, dp 1",
+   "count": 47,
+   "cards": [
+    [
+     "Pharaoh's Treasure",
+     5
+    ],
+    [
+     "Grave Lure",
+     3
+    ],
+    [
+     "Parasite Paracide",
+     2
+    ],
+    [
+     "Chaos Sorcerer",
+     2
+    ],
+    [
+     "Tri-Horned Dragon",
+     1
+    ],
+    [
+     "Robbin' Zombie",
+     1
+    ],
+    [
+     "Hammer Shot",
+     1
+    ],
+    [
+     "Worm Erokin",
+     1
+    ],
+    [
+     "Battle Tuned",
+     1
+    ],
+    [
+     "Skull Flame",
+     1
+    ],
+    [
+     "Battle Mania",
+     1
+    ],
+    [
+     "Evil Dragon Ananta",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "Announce attrib count 2 not implemented",
+   "count": 40,
+   "cards": [
+    [
+     "Earthshaker",
+     19
+    ],
+    [
+     "DNA Checkup",
+     18
+    ],
+    [
+     "Disciple of the Forbidden Spell",
+     2
+    ],
+    [
+     "Toon Defense",
+     1
+    ],
+    [
+     "Infernity Archfiend",
+     1
+    ],
+    [
+     "Flip Flop Frog",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message cancel_target, length 9, dp 1",
+   "count": 27,
+   "cards": [
+    [
+     "Seal of Wickedness",
+     17
+    ],
+    [
+     "Dragonic Attack",
+     1
+    ],
+    [
+     "Andro Sphinx",
+     1
+    ],
+    [
+     "Dark Core",
+     1
+    ],
+    [
+     "Searchlightman",
+     1
+    ],
+    [
+     "The Inexperienced Spy",
+     1
+    ],
+    [
+     "Black Garden",
+     1
+    ],
+    [
+     "Patroid",
+     1
+    ],
+    [
+     "Stealth Bird",
+     1
+    ],
+    [
+     "Acid Rain",
+     1
+    ],
+    [
+     "Counselor Lily",
+     1
+    ],
+    [
+     "Cold Wave",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message reverse_deck, length 15, dp 1",
+   "count": 27,
+   "cards": [
+    [
+     "Convulsion of Nature",
+     27
+    ]
+   ]
+  },
+  {
+   "signature": "Number 1000 not implemented for announce number",
+   "count": 26,
+   "cards": [
+    [
+     "Wall of Revealing Light",
+     18
+    ],
+    [
+     "Mausoleum of the Emperor",
+     8
+    ]
+   ]
+  },
+  {
+   "signature": "Number 500 not implemented for announce number",
+   "count": 26,
+   "cards": [
+    [
+     "Star Blast",
+     26
+    ]
+   ]
+  },
+  {
+   "signature": "Number 100 not implemented for announce number",
+   "count": 22,
+   "cards": [
+    [
+     "Psychic Commander",
+     11
+    ],
+    [
+     "Attack of the Cornered Rat",
+     8
+    ],
+    [
+     "Bark of Dark Ruler",
+     3
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message toss_dice, length 5, dp 1",
+   "count": 17,
+   "cards": [
+    [
+     "Roulette Barrel",
+     17
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message toss_coin, length 5, dp 1",
+   "count": 17,
+   "cards": [
+    [
+     "Twin-Barrel Dragon",
+     17
+    ],
+    [
+     "Morale Boost",
+     1
+    ],
+    [
+     "Goblin Black Ops",
+     1
+    ],
+    [
+     "Commander Gottoms, Swordmaster",
+     1
+    ],
+    [
+     "Dark Magic Curtain",
+     1
+    ],
+    [
+     "Venom Swamp",
+     1
+    ],
+    [
+     "Spacegate",
+     1
+    ],
+    [
+     "Bee List Soldier",
+     1
+    ],
+    [
+     "Dark Bribe",
+     1
+    ],
+    [
+     "Breaker the Magical Warrior",
+     1
+    ],
+    [
+     "Gravekeeper's Spear Soldier",
+     1
+    ],
+    [
+     "Magna Drago",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "[system_string_to_id] cannot find id: 1214",
+   "count": 13,
+   "cards": [
+    [
+     "Dark Spirit Art - Greed",
+     8
+    ],
+    [
+     "Magic Drain",
+     5
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message toss_dice, length 6, dp 1",
+   "count": 12,
+   "cards": [
+    [
+     "Fire Darts",
+     12
+    ]
+   ]
+  },
+  {
+   "signature": "[system_string_to_id] cannot find id: 1213",
+   "count": 11,
+   "cards": [
+    [
+     "Dark Spirit Art - Greed",
+     9
+    ],
+    [
+     "Magic Drain",
+     1
+    ],
+    [
+     "Call of the Earthbound",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "Select counter count 3 not implemented",
+   "count": 11,
+   "cards": [
+    [
+     "Cloudian - Altus",
+     6
+    ],
+    [
+     "Alien Telepath",
+     2
+    ],
+    [
+     "Alien Overlord",
+     1
+    ],
+    [
+     "Defender, the Magical Knight",
+     1
+    ],
+    [
+     "Mist Body",
+     1
+    ],
+    [
+     "The Dragon Dwelling in the Deep",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message toss_dice, length 8, dp 1",
+   "count": 8,
+   "cards": [
+    [
+     "Dice Jar",
+     8
+    ],
+    [
+     "Red-Eyes Darkness Metal Dragon",
+     1
+    ],
+    [
+     "Disappear",
+     1
+    ],
+    [
+     "Axe of Despair",
+     1
+    ],
+    [
+     "Fossil Tusker",
+     1
+    ],
+    [
+     "Mysterious Puppeteer",
+     1
+    ],
+    [
+     "Blizzard Warrior",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "Number 2000 not implemented for announce number",
+   "count": 8,
+   "cards": [
+    [
+     "Mausoleum of the Emperor",
+     8
+    ]
+   ]
+  },
+  {
+   "signature": "Unknown message deck_top, length 7, dp 1",
+   "count": 7,
+   "cards": [
+    [
+     "Destiny HERO - Doom Lord",
+     4
+    ],
+    [
+     "Different Dimension Gate",
+     2
+    ],
+    [
+     "Junk Archer",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "min(1) != max(2), not implemented for select tribute",
+   "count": 6,
+   "cards": [
+    [
+     "Cloudian - Nimbusman",
+     5
+    ],
+    [
+     "Cloudian Squall",
+     2
+    ],
+    [
+     "Cloudian - Cirrostratus",
+     1
+    ],
+    [
+     "Dark Core",
+     1
+    ],
+    [
+     "Wicked Rebirth",
+     1
+    ],
+    [
+     "Ancient Gear Workshop",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "min(1) != max(3), not implemented for select tribute",
+   "count": 3,
+   "cards": [
+    [
+     "Cloudian - Nimbusman",
+     3
+    ],
+    [
+     "Crystal Seer",
+     1
+    ],
+    [
+     "Cloudian Squall",
+     1
+    ],
+    [
+     "Cloudian - Eye of the Typhoon",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "Select counter count 4 not implemented",
+   "count": 2,
+   "cards": [
+    [
+     "Alien Telepath",
+     1
+    ],
+    [
+     "Code A Ancient Ruins",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "min(1) != max(4), not implemented for select tribute",
+   "count": 1,
+   "cards": [
+    [
+     "Cloudian - Turbulence",
+     1
+    ],
+    [
+     "Cloudian - Nimbusman",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "Select counter count 6 not implemented",
+   "count": 1,
+   "cards": [
+    [
+     "Cloudian - Altus",
+     1
+    ]
+   ]
+  },
+  {
+   "signature": "[system_string_to_id] cannot find id: 10",
+   "count": 1,
+   "cards": [
+    [
+     "Savage Colosseum",
+     1
+    ]
+   ]
+  }
+ ],
+ "confirm": {
+  "Mind Crush": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Agido": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 2
+   },
+   "chains": 0
+  },
+  "Big Eye": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Elemental HERO Chaos Neos": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Wall of Revealing Light": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Number 1000 not implemented for announce number": 2
+   },
+   "chains": 0
+  },
+  "Cloudian - Nimbusman": {
+   "ok": 4,
+   "crash": {},
+   "chains": 6
+  },
+  "Psychic Commander": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Number 100 not implemented for announce number": 3
+   },
+   "chains": 0
+  },
+  "Seal of Wickedness": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message cancel_target, length 9, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Dice Jar": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Rampaging Rhynos": {
+   "ok": 4,
+   "crash": {},
+   "chains": 22
+  },
+  "Prepare to Strike Back": {
+   "ok": 3,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 60": 1
+   },
+   "chains": 5
+  },
+  "Magical Exemplar": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Skull Lair": {
+   "ok": 4,
+   "crash": {},
+   "chains": 36
+  },
+  "Arcana Force EX - The Light Ruler": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Reversal Quiz": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 70": 4
+   },
+   "chains": 0
+  },
+  "Cloak and Dagger": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [c_get_card_id] Card not found: 1": 4
+   },
+   "chains": 0
+  },
+  "Arcana Force I - The Magician": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 3
+   },
+   "chains": 0
+  },
+  "Infernalqueen Archfiend": {
+   "ok": 3,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 1
+   },
+   "chains": 27
+  },
+  "Shadowknight Archfiend": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Great Phantom Thief": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  invalid format of opcodes": 2
+   },
+   "chains": 0
+  },
+  "B.E.S. Covered Core": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 60": 3
+   },
+   "chains": 0
+  },
+  "Disciple of the Forbidden Spell": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Announce attrib count 2 not implemented": 2
+   },
+   "chains": 7
+  },
+  "Stronghold the Moving Fortress": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message field_disabled, length 5, dp 1": 4
+   },
+   "chains": 0
+  },
+  "DNA Checkup": {
+   "ok": 3,
+   "crash": {
+    "exit-6: what():  Announce attrib count 2 not implemented": 1
+   },
+   "chains": 0
+  },
+  "Embodiment of Apophis": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message field_disabled, length 5, dp 1": 3
+   },
+   "chains": 0
+  },
+  "Maximum Six": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 2
+   },
+   "chains": 0
+  },
+  "Tribe-Infecting Virus": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Arcana Force VII - The Chariot": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 3
+   },
+   "chains": 0
+  },
+  "Tsukuyomi": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Blind Destruction": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 4
+   },
+   "chains": 0
+  },
+  "D.D. Designator": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  invalid format of opcodes": 4
+   },
+   "chains": 0
+  },
+  "Skull Dice": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+   },
+   "chains": 0
+  },
+  "The Hunter with 7 Weapons": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message announce_race, length 7, dp 1": 3
+   },
+   "chains": 0
+  },
+  "Asura Priest": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 3
+   },
+   "chains": 0
+  },
+  "Great Long Nose": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 3
+   },
+   "chains": 0
+  },
+  "Yata-Garasu": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "The Regulation of Tribe": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message announce_race, length 7, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Gambler of Legend": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 6, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Arcana Force XXI - The World": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 3
+   },
+   "chains": 0
+  },
+  "Blowback Dragon": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 6, dp 1": 3
+   },
+   "chains": 0
+  },
+  "Vampire Lady": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 70": 3
+   },
+   "chains": 0
+  },
+  "Metal Reflect Slime": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Unknown message field_disabled, length 5, dp 1": 2
+   },
+   "chains": 0
+  },
+  "Fairy Box": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 60": 4
+   },
+   "chains": 0
+  },
+  "Archfiend's Oath": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  invalid format of opcodes": 4
+   },
+   "chains": 0
+  },
+  "Dimensionhole": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message field_disabled, length 5, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Darkbishop Archfiend": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 2
+   },
+   "chains": 0
+  },
+  "Terrorking Archfiend": {
+   "ok": 3,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 1
+   },
+   "chains": 0
+  },
+  "Second Coin Toss": {
+   "ok": 4,
+   "crash": {},
+   "chains": 9
+  },
+  "Gamble": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Needle Wall": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+   },
+   "chains": 0
+  },
+  "Arcana Force III - The Empress": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Cup of Ace": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Dark Spirit Art - Greed": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1213": 2,
+    "exit-6: what():  [system_string_to_id] cannot find id: 1214": 2
+   },
+   "chains": 0
+  },
+  "Maharaghi": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 3
+   },
+   "chains": 1
+  },
+  "Bark of Dark Ruler": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Card Blocker": {
+   "ok": 4,
+   "crash": {},
+   "chains": 12
+  },
+  "Fire Darts": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 6, dp 1": 2
+   },
+   "chains": 0
+  },
+  "Susa Soldier": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 4
+   },
+   "chains": 0
+  },
+  "Izanami": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 4
+   },
+   "chains": 0
+  },
+  "Prohibition": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  invalid format of opcodes": 4
+   },
+   "chains": 0
+  },
+  "Kinka-byo": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 3
+   },
+   "chains": 0
+  },
+  "Storm Shooter": {
+   "ok": 4,
+   "crash": {},
+   "chains": 9
+  },
+  "Ordeal of a Traveler": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 70": 3
+   },
+   "chains": 0
+  },
+  "Otohime": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 3
+   },
+   "chains": 0
+  },
+  "Ojama Knight": {
+   "ok": 3,
+   "crash": {
+    "exit-6: what():  Unknown message field_disabled, length 5, dp 1": 1
+   },
+   "chains": 0
+  },
+  "Fushi No Tori": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 4
+   },
+   "chains": 0
+  },
+  "Question": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [c_get_card_id] Card not found: 1": 4
+   },
+   "chains": 0
+  },
+  "Gundari": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 4
+   },
+   "chains": 0
+  },
+  "Roulette Barrel": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 5, dp 1": 3
+   },
+   "chains": 0
+  },
+  "Mystical Cards of Light": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message field_disabled, length 5, dp 1": 3
+   },
+   "chains": 1
+  },
+  "Phantom Dragon": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Select place count 2 not implemented for disfield": 2
+   },
+   "chains": 0
+  },
+  "Vampire Lord": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 70": 2
+   },
+   "chains": 0
+  },
+  "The Paths of Destiny": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Sand Gambler": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 6, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Ominous Fortunetelling": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 70": 4
+   },
+   "chains": 0
+  },
+  "Magic Drain": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Unknown message deck_top, length 14, dp 1": 1,
+    "exit-6: what():  [system_string_to_id] cannot find id: 1214": 1
+   },
+   "chains": 0
+  },
+  "Arcana Force XIV - Temperance": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 3
+   },
+   "chains": 2
+  },
+  "Skull Archfiend of Lightning": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Arcana Force 0 - The Fool": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 2
+   },
+   "chains": 0
+  },
+  "Earthshaker": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Announce attrib count 2 not implemented": 4
+   },
+   "chains": 0
+  },
+  "Arcana Force IV - The Emperor": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Tour of Doom": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Convulsion of Nature": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message reverse_deck, length 15, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Senet Switch": {
+   "ok": 4,
+   "crash": {},
+   "chains": 97
+  },
+  "Call of the Earthbound": {
+   "ok": 3,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1213": 1
+   },
+   "chains": 1
+  },
+  "Arcana Force EX - The Dark Ruler": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 3
+   },
+   "chains": 0
+  },
+  "Sasuke Samurai #4": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 60": 4
+   },
+   "chains": 0
+  },
+  "Star Blast": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Number 500 not implemented for announce number": 4
+   },
+   "chains": 0
+  },
+  "Goddess of Whim": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 60": 4
+   },
+   "chains": 0
+  },
+  "Array of Revealing Light": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message announce_race, length 7, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Twin-Barrel Dragon": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 5, dp 1": 3
+   },
+   "chains": 3
+  },
+  "Time Wizard": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 60": 3
+   },
+   "chains": 0
+  },
+  "Desrook Archfiend": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Vilepawn Archfiend": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Machine King - 3000 B.C.": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message field_disabled, length 5, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Light Barrier": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Graceful Dice": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 4
+   },
+   "chains": 0
+  },
+  "DNA Surgery": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message announce_race, length 7, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Cloudian - Altus": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Select counter count 3 not implemented": 1,
+    "exit-6: what():  Select counter count 6 not implemented": 1
+   },
+   "chains": 7
+  },
+  "Zoma the Spirit": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message field_disabled, length 5, dp 1": 3
+   },
+   "chains": 0
+  },
+  "Mausoleum of the Emperor": {
+   "ok": 3,
+   "crash": {
+    "exit-6: what():  Number 2000 not implemented for announce number": 1
+   },
+   "chains": 5
+  },
+  "Fiend Comedian": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 60": 3
+   },
+   "chains": 0
+  },
+  "Barrel Dragon": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 6, dp 1": 2
+   },
+   "chains": 0
+  },
+  "Kryuel": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 60": 3
+   },
+   "chains": 0
+  },
+  "Yamato-no-Kami": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Dice Re-Roll": {
+   "ok": 4,
+   "crash": {},
+   "chains": 8
+  },
+  "Hino-Kagu-Tsuchi": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 2
+   },
+   "chains": 0
+  },
+  "Alien Infiltrator": {
+   "ok": 4,
+   "crash": {},
+   "chains": 17
+  },
+  "Yamata Dragon": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 3
+   },
+   "chains": 0
+  },
+  "Dangerous Machine Type-6": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 2
+   },
+   "chains": 0
+  },
+  "Seismic Shockwave": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Inaba White Rabbit": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 4
+   },
+   "chains": 0
+  },
+  "Dark Designator": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  invalid format of opcodes": 4
+   },
+   "chains": 0
+  },
+  "Snipe Hunter": {
+   "ok": 3,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 1
+   },
+   "chains": 0
+  },
+  "Attack of the Cornered Rat": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Number 100 not implemented for announce number": 3
+   },
+   "chains": 3
+  },
+  "Card Trooper": {
+   "ok": 4,
+   "crash": {},
+   "chains": 11
+  },
+  "Golden Ladybug": {
+   "ok": 4,
+   "crash": {},
+   "chains": 24
+  },
+  "Gatling Dragon": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Level Conversion Lab": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Dark Dust Spirit": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 1104": 4
+   },
+   "chains": 0
+  },
+  "Lucky Chance": {
+   "ok": 4,
+   "crash": {},
+   "chains": 12
+  },
+  "Arcana Force XVIII - The Moon": {
+   "ok": 2,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 2
+   },
+   "chains": 0
+  },
+  "Arcana Force VI - The Lovers": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_coin, length 4, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Dark Master - Zorc": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Ojama King": {
+   "ok": 4,
+   "crash": {},
+   "chains": 0
+  },
+  "Ground Collapse": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Select place count 2 not implemented for disfield": 3
+   },
+   "chains": 0
+  },
+  "Morphtronic Celfon": {
+   "ok": 1,
+   "crash": {
+    "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+   },
+   "chains": 0
+  },
+  "Abare Ushioni": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 60": 4
+   },
+   "chains": 0
+  },
+  "Abyssal Designator": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message announce_race, length 7, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Cyber Shadow Gardna": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  Unknown message field_disabled, length 5, dp 1": 4
+   },
+   "chains": 0
+  },
+  "Jirai Gumo": {
+   "ok": 0,
+   "crash": {
+    "exit-6: what():  [system_string_to_id] cannot find id: 60": 4
+   },
+   "chains": 0
+  },
+  "Goblin Fan": {
+   "ok": 6,
+   "crash": {},
+   "chains": 16
+  },
+  "Card Guard": {
+   "ok": 6,
+   "crash": {},
+   "chains": 27
+  },
+  "Omega Goggles": {
+   "ok": 6,
+   "crash": {},
+   "chains": 48
+  },
+  "Spiritual Water Art - Aoi": {
+   "ok": 6,
+   "crash": {},
+   "chains": 4
+  },
+  "Field Barrier": {
+   "ok": 6,
+   "crash": {},
+   "chains": 8
+  },
+  "Half or Nothing": {
+   "ok": 6,
+   "crash": {},
+   "chains": 17
+  },
+  "Cloudian - Turbulence": {
+   "ok": 6,
+   "crash": {},
+   "chains": 21
+  },
+  "Night Assailant": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Ancient Telescope": {
+   "ok": 6,
+   "crash": {},
+   "chains": 16
+  },
+  "Herald of Orange Light": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Treeborn Frog": {
+   "ok": 6,
+   "crash": {},
+   "chains": 2
+  },
+  "Destiny HERO - Diamond Dude": {
+   "ok": 6,
+   "crash": {},
+   "chains": 83
+  },
+  "Negate Attack": {
+   "ok": 6,
+   "crash": {},
+   "chains": 18
+  },
+  "Worm Erokin": {
+   "ok": 6,
+   "crash": {},
+   "chains": 39
+  },
+  "Whirlwind Prodigy": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "A Legendary Ocean": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 25
+  },
+  "Prevent Rat": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Totem Dragon": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Gladiator Beast Retiari": {
+   "ok": 6,
+   "crash": {},
+   "chains": 17
+  },
+  "Dark Cure": {
+   "ok": 6,
+   "crash": {},
+   "chains": 110
+  },
+  "Swap Frog": {
+   "ok": 6,
+   "crash": {},
+   "chains": 35
+  },
+  "Chaos Sorcerer": {
+   "ok": 6,
+   "crash": {},
+   "chains": 19
+  },
+  "Sunlight Unicorn": {
+   "ok": 6,
+   "crash": {},
+   "chains": 69
+  },
+  "Gellenduo": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 8
+  },
+  "Card Shuffle": {
+   "ok": 6,
+   "crash": {},
+   "chains": 71
+  },
+  "Kaiser Sea Horse": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 0
+  },
+  "Deep Diver": {
+   "ok": 6,
+   "crash": {},
+   "chains": 5
+  },
+  "Fairy's Hand Mirror": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 0
+  },
+  "Neo-Spacian Aqua Dolphin": {
+   "ok": 6,
+   "crash": {},
+   "chains": 21
+  },
+  "Burning Spear": {
+   "ok": 6,
+   "crash": {},
+   "chains": 12
+  },
+  "Molten Destruction": {
+   "ok": 6,
+   "crash": {},
+   "chains": 17
+  },
+  "Begone, Knave!": {
+   "ok": 6,
+   "crash": {},
+   "chains": 131
+  },
+  "Substitoad": {
+   "ok": 6,
+   "crash": {},
+   "chains": 1
+  },
+  "Type Zero Magic Crusher": {
+   "ok": 6,
+   "crash": {},
+   "chains": 26
+  },
+  "Jam Breeding Machine": {
+   "ok": 6,
+   "crash": {},
+   "chains": 80
+  },
+  "Aquarian Alessa": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Solomon's Lawbook": {
+   "ok": 6,
+   "crash": {},
+   "chains": 12
+  },
+  "Nitro Unit": {
+   "ok": 6,
+   "crash": {},
+   "chains": 18
+  },
+  "An Owl of Luck": {
+   "ok": 6,
+   "crash": {},
+   "chains": 2
+  },
+  "A Cat of Ill Omen": {
+   "ok": 6,
+   "crash": {},
+   "chains": 2
+  },
+  "Magical Merchant": {
+   "ok": 6,
+   "crash": {},
+   "chains": 2
+  },
+  "Rainbow Life": {
+   "ok": 6,
+   "crash": {},
+   "chains": 11
+  },
+  "Ante": {
+   "ok": 6,
+   "crash": {},
+   "chains": 15
+  },
+  "\"A\" Cell Breeding Device": {
+   "ok": 6,
+   "crash": {},
+   "chains": 168
+  },
+  "Kaibaman": {
+   "ok": 6,
+   "crash": {},
+   "chains": 8
+  },
+  "Yado Karu": {
+   "ok": 6,
+   "crash": {},
+   "chains": 2
+  },
+  "Bottomless Trap Hole": {
+   "ok": 6,
+   "crash": {},
+   "chains": 7
+  },
+  "Enchanting Fitting Room": {
+   "ok": 6,
+   "crash": {},
+   "chains": 19
+  },
+  "Conscription": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 13
+  },
+  "The First Sarcophagus": {
+   "ok": 6,
+   "crash": {},
+   "chains": 35
+  },
+  "Stumbling": {
+   "ok": 6,
+   "crash": {},
+   "chains": 463
+  },
+  "Mass Driver": {
+   "ok": 6,
+   "crash": {},
+   "chains": 40
+  },
+  "Sword of Dark Destruction": {
+   "ok": 6,
+   "crash": {},
+   "chains": 15
+  },
+  "The Trojan Horse": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 0
+  },
+  "Common Charity": {
+   "ok": 6,
+   "crash": {},
+   "chains": 11
+  },
+  "Elemental HERO Absolute Zero": {
+   "ok": 6,
+   "crash": {},
+   "chains": 4
+  },
+  "Flame Ruler": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Solemn Judgment": {
+   "ok": 6,
+   "crash": {},
+   "chains": 7
+  },
+  "Destiny HERO - Doom Lord": {
+   "ok": 6,
+   "crash": {},
+   "chains": 88
+  },
+  "Junk Archer": {
+   "ok": 6,
+   "crash": {},
+   "chains": 8
+  },
+  "Chthonian Alliance": {
+   "ok": 6,
+   "crash": {},
+   "chains": 11
+  },
+  "Necrovalley": {
+   "ok": 6,
+   "crash": {},
+   "chains": 23
+  },
+  "Fruits of Kozaky's Studies": {
+   "ok": 6,
+   "crash": {},
+   "chains": 17
+  },
+  "Spirit Burner": {
+   "ok": 6,
+   "crash": {},
+   "chains": 137
+  },
+  "Colosseum - Cage of the Gladiator Beasts": {
+   "ok": 6,
+   "crash": {},
+   "chains": 17
+  },
+  "Wandering Mummy": {
+   "ok": 6,
+   "crash": {},
+   "chains": 59
+  },
+  "Monster Gate": {
+   "ok": 6,
+   "crash": {},
+   "chains": 5
+  },
+  "Double Coston": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Rising Air Current": {
+   "ok": 6,
+   "crash": {},
+   "chains": 16
+  },
+  "Dupe Frog": {
+   "ok": 6,
+   "crash": {},
+   "chains": 7
+  },
+  "Iron Chain Coil": {
+   "ok": 6,
+   "crash": {},
+   "chains": 30
+  },
+  "Earth Effigy": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 0
+  },
+  "Venom Swamp": {
+   "ok": 6,
+   "crash": {},
+   "chains": 217
+  },
+  "Volcanic Hammerer": {
+   "ok": 6,
+   "crash": {},
+   "chains": 24
+  },
+  "Light Effigy": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Level Limit - Area A": {
+   "ok": 6,
+   "crash": {},
+   "chains": 15
+  },
+  "Plague Wolf": {
+   "ok": 6,
+   "crash": {},
+   "chains": 25
+  },
+  "Drop Off": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 10
+  },
+  "Viser Des": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 12
+  },
+  "Different Dimension Gate": {
+   "ok": 6,
+   "crash": {},
+   "chains": 18
+  },
+  "United We Stand": {
+   "ok": 6,
+   "crash": {},
+   "chains": 11
+  },
+  "Grave Lure": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  Unknown message deck_top, length 14, dp 1": 1
+   },
+   "chains": 7
+  },
+  "Reasoning": {
+   "ok": 6,
+   "crash": {},
+   "chains": 7
+  },
+  "Fiend's Hand Mirror": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Shift": {
+   "ok": 6,
+   "crash": {},
+   "chains": 15
+  },
+  "Dark Deal": {
+   "ok": 6,
+   "crash": {},
+   "chains": 1
+  },
+  "Nobleman-Eater Bug": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "7": {
+   "ok": 6,
+   "crash": {},
+   "chains": 16
+  },
+  "Soul Exchange": {
+   "ok": 6,
+   "crash": {},
+   "chains": 13
+  },
+  "Wicked-Breaking Flamberge - Baou": {
+   "ok": 6,
+   "crash": {},
+   "chains": 12
+  },
+  "Secret Village of the Spellcasters": {
+   "ok": 6,
+   "crash": {},
+   "chains": 9
+  },
+  "Spiritual Forest": {
+   "ok": 6,
+   "crash": {},
+   "chains": 15
+  },
+  "Dark Core": {
+   "ok": 6,
+   "crash": {},
+   "chains": 11
+  },
+  "Dimensional Prison": {
+   "ok": 6,
+   "crash": {},
+   "chains": 13
+  },
+  "Upstart Goblin": {
+   "ok": 6,
+   "crash": {},
+   "chains": 10
+  },
+  "Elemental HERO Bladedge": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Dust Tornado": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 10
+  },
+  "Dark Scorpion - Chick the Yellow": {
+   "ok": 6,
+   "crash": {},
+   "chains": 6
+  },
+  "Remote Revenge": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Pharaoh's Treasure": {
+   "ok": 3,
+   "crash": {
+    "exit-6: what():  Unknown message deck_top, length 14, dp 1": 3
+   },
+   "chains": 7
+  },
+  "Black Garden": {
+   "ok": 6,
+   "crash": {},
+   "chains": 81
+  },
+  "Patroid": {
+   "ok": 6,
+   "crash": {},
+   "chains": 24
+  },
+  "Clock Tower Prison": {
+   "ok": 6,
+   "crash": {},
+   "chains": 125
+  },
+  "Harpies' Hunting Ground": {
+   "ok": 6,
+   "crash": {},
+   "chains": 32
+  },
+  "Yubel": {
+   "ok": 6,
+   "crash": {},
+   "chains": 20
+  },
+  "Morphing Jar #2": {
+   "ok": 6,
+   "crash": {},
+   "chains": 1
+  },
+  "Inverse Universe": {
+   "ok": 6,
+   "crash": {},
+   "chains": 14
+  },
+  "Darkness Approaches": {
+   "ok": 6,
+   "crash": {},
+   "chains": 10
+  },
+  "Ultimate Offering": {
+   "ok": 6,
+   "crash": {},
+   "chains": 30
+  },
+  "Volcanic Blaster": {
+   "ok": 6,
+   "crash": {},
+   "chains": 8
+  },
+  "Warrior Elimination": {
+   "ok": 6,
+   "crash": {},
+   "chains": 7
+  },
+  "Alien Telepath": {
+   "ok": 6,
+   "crash": {},
+   "chains": 1
+  },
+  "Chain Strike": {
+   "ok": 6,
+   "crash": {},
+   "chains": 11
+  },
+  "Unshaven Angler": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Royal Oppression": {
+   "ok": 6,
+   "crash": {},
+   "chains": 11
+  },
+  "Magical Hats": {
+   "ok": 6,
+   "crash": {},
+   "chains": 11
+  },
+  "Soul Taker": {
+   "ok": 6,
+   "crash": {},
+   "chains": 11
+  },
+  "Dark Effigy": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 0
+  },
+  "Crystal Seer": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Robbin' Zombie": {
+   "ok": 6,
+   "crash": {},
+   "chains": 86
+  },
+  "Drill Bug": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  Unknown message deck_top, length 14, dp 1": 1
+   },
+   "chains": 4
+  },
+  "Field-Commander Rahz": {
+   "ok": 6,
+   "crash": {},
+   "chains": 15
+  },
+  "Ojama Country": {
+   "ok": 6,
+   "crash": {},
+   "chains": 20
+  },
+  "Cloudian Squall": {
+   "ok": 6,
+   "crash": {},
+   "chains": 105
+  },
+  "Power Pickaxe": {
+   "ok": 6,
+   "crash": {},
+   "chains": 22
+  },
+  "Dark Spirit of the Silent": {
+   "ok": 6,
+   "crash": {},
+   "chains": 12
+  },
+  "Destiny Board": {
+   "ok": 6,
+   "crash": {},
+   "chains": 154
+  },
+  "Elemental Absorber": {
+   "ok": 6,
+   "crash": {},
+   "chains": 11
+  },
+  "Pandemonium": {
+   "ok": 6,
+   "crash": {},
+   "chains": 22
+  },
+  "Aqua Chorus": {
+   "ok": 6,
+   "crash": {},
+   "chains": 10
+  },
+  "Jade Insect Whistle": {
+   "ok": 6,
+   "crash": {},
+   "chains": 15
+  },
+  "Mist Valley Shaman": {
+   "ok": 6,
+   "crash": {},
+   "chains": 30
+  },
+  "Recycle": {
+   "ok": 6,
+   "crash": {},
+   "chains": 26
+  },
+  "Enchanted Javelin": {
+   "ok": 6,
+   "crash": {},
+   "chains": 12
+  },
+  "Spellbook Organization": {
+   "ok": 6,
+   "crash": {},
+   "chains": 12
+  },
+  "Salvage": {
+   "ok": 6,
+   "crash": {},
+   "chains": 1
+  },
+  "Smashing Ground": {
+   "ok": 6,
+   "crash": {},
+   "chains": 14
+  },
+  "Ectoplasmer": {
+   "ok": 6,
+   "crash": {},
+   "chains": 119
+  },
+  "Genetic Woman": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Gift of The Mystical Elf": {
+   "ok": 6,
+   "crash": {},
+   "chains": 13
+  },
+  "Code A Ancient Ruins": {
+   "ok": 5,
+   "crash": {
+    "exit-6: what():  Select counter count 4 not implemented": 1
+   },
+   "chains": 16
+  },
+  "Shadow-Imprisoning Mirror": {
+   "ok": 6,
+   "crash": {},
+   "chains": 18
+  },
+  "Wind Effigy": {
+   "ok": 6,
+   "crash": {},
+   "chains": 0
+  },
+  "Elemental HERO Neo Bubbleman": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Rapid-Fire Magician": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Super-Ancient Dinobeast": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "The Second Sarcophagus": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Spirit of the Pot of Greed": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Elemental HERO Marine Neos": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Doomkaiser Dragon/Assault Mode": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Dimension Explosion": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Combination Attack": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Iris, the Earth Mother": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Ancient Gear Beast": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Infernity Beast": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Vennominaga the Deity of Poisonous Snakes": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Destiny Mirage": {
+   "ok": 11,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 2
+  },
+  "Mirage Dragon": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Mass Hypnosis": {
+   "ok": 12,
+   "crash": {},
+   "chains": 1
+  },
+  "Vampire Genesis": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Mechanical Hound": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Rise of the Snake Deity": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Flying Fortress SKY FIRE": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Call of the Grave": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Reverse of Neos": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Blasting the Ruins": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Fake Feather": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Vehicroid Connection Zone": {
+   "ok": 11,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 0
+  },
+  "Primal Seed": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Crimson Fire": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Spirit of the Pharaoh": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Magicat": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Gate Guardian": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Invasion of Flames": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Dark Eradicator Warlock": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Earthbound Wave": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Bountiful Artemis": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Hamon, Lord of Striking Thunder": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Jar Robber": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Spirit Message \"L\"": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Yubel - The Ultimate Nightmare": {
+   "ok": 11,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 0
+  },
+  "Reversal of Fate": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Hyper Psychic Blaster/Assault Mode": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Enishi, Shien's Chancellor": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Spirit Message \"I\"": {
+   "ok": 11,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 0
+  },
+  "Mega Ton Magical Cannon": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Ancient Gear Knight": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Assault Slash": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Armityle the Chaos Phantasm": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "White Hole": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Lightning Punisher": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Lava Dragon": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Anti Raigeki": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Meltiel, Sage of the Sky": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Wonder Garage": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Creeping Doom Manta": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Eagle Eye": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Catoblepas and the Witch of Fate": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Six Scrolls of the Samurai": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Anti-Spell": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Blue-Eyes Shining Dragon": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Sword of Kusanagi": {
+   "ok": 10,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 2
+   },
+   "chains": 0
+  },
+  "Mirage Knight": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Gryphon Wing": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Lich Lord, King of the Underworld": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Ancient Gear Soldier": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Nega-Ton Corepanel": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Mythical Beast Cerberus": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Big Shield Gardna": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Majestic Red Dragon": {
+   "ok": 12,
+   "crash": {},
+   "chains": 3
+  },
+  "Spirit Message \"N\"": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Gearfried the Swordmaster": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Great Shogun Shien": {
+   "ok": 11,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 0
+  },
+  "Rainbow Gravity": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Assault Revival": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Invader of Darkness": {
+   "ok": 11,
+   "crash": {
+    "exit-6: what():  weight not implemented for select tribute": 1
+   },
+   "chains": 0
+  },
+  "Layard the Liberator": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Fortune's Future": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Dedication through Light and Darkness": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Crystal Abundance": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Sand Moth": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Golden Bamboo Sword": {
+   "ok": 12,
+   "crash": {},
+   "chains": 1
+  },
+  "Change of Hero - Reflector Ray": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Orb of Yasaka": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Guardian Elma": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Princess Pikeru": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Assault Counter": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "The Third Sarcophagus": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Elemental HERO Bubbleman": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Dragon Queen of Tragic Endings": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Ancient Gear Golem": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Neo-Spacian Marine Dolphin": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Rainbow Dragon": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Spell Canceller": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Theinen the Great Sphinx": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Sorcerer of Dark Magic": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Torapart": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "VWXYZ-Dragon Catapult Cannon": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Pitch-Black Warwolf": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Tactical Espionage Expert": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "The Kick Man": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Dark Sage": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Assault Overload": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Contract with the Dark Master": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Ojamuscle": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Urgent Synthesis": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Spirit Message \"A\"": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Black Brutdrago": {
+   "ok": 11,
+   "crash": {
+    "exit-6: what():  Select counter count 3 not implemented": 1
+   },
+   "chains": 0
+  },
+  "Arcana Call": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  },
+  "Avatar of The Pot": {
+   "ok": 12,
+   "crash": {},
+   "chains": 0
+  }
+ },
+ "gauntlet": {
+  "main": {
+   "diva_hero": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 28647
+   },
+   "diva_frog": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 34293
+   },
+   "diva_hero_beat": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 32285
+   },
+   "dragon_turbo": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 32263
+   },
+   "frog_monarch": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 38280
+   },
+   "frog_otk": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 36342
+   },
+   "gigavise": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 35516
+   },
+   "gladiator_beast": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 35995
+   },
+   "blackwing": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 32277
+   },
+   "hero_beat": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 32334
+   },
+   "hero_frog": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 37791
+   },
+   "lightsworn": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 26681
+   },
+   "lightsworn_fairy": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 24586
+   },
+   "machina_control": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 28268
+   },
+   "quickdraw_plant": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 30670
+   },
+   "vayu_turbo": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 29846
+   },
+   "vayu_turbo_ddev08": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 30757
+   },
+   "zombie_teledad": {
+    "ok": 144,
+    "crash": {},
+    "other": {},
+    "steps": 32189
+   }
+  },
+  "sidein": {
+   "blackwing": {
+    "ok": 138,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 4,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 2
+    },
+    "other": {},
+    "steps": 28563
+   },
+   "gigavise": {
+    "ok": 137,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 4,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+    },
+    "other": {},
+    "steps": 32140
+   },
+   "gladiator_beast": {
+    "ok": 135,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 6,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+    },
+    "other": {},
+    "steps": 30121
+   },
+   "hero_beat": {
+    "ok": 138,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 5,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 1
+    },
+    "other": {},
+    "steps": 30545
+   },
+   "hero_frog": {
+    "ok": 109,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 32,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+    },
+    "other": {},
+    "steps": 23115
+   },
+   "lightsworn": {
+    "ok": 139,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 4,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 1
+    },
+    "other": {},
+    "steps": 24617
+   },
+   "lightsworn_fairy": {
+    "ok": 104,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 5,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 35
+    },
+    "other": {},
+    "steps": 19147
+   },
+   "machina_control": {
+    "ok": 142,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 2
+    },
+    "other": {},
+    "steps": 28663
+   },
+   "quickdraw_plant": {
+    "ok": 138,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 6
+    },
+    "other": {},
+    "steps": 29527
+   },
+   "diva_hero": {
+    "ok": 136,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 5,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+    },
+    "other": {},
+    "steps": 29083
+   },
+   "diva_frog": {
+    "ok": 111,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 33
+    },
+    "other": {},
+    "steps": 24377
+   },
+   "diva_hero_beat": {
+    "ok": 141,
+    "crash": {
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 1,
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 2
+    },
+    "other": {},
+    "steps": 29962
+   },
+   "dragon_turbo": {
+    "ok": 140,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 2,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 2
+    },
+    "other": {},
+    "steps": 27765
+   },
+   "frog_monarch": {
+    "ok": 104,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 38,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 2
+    },
+    "other": {},
+    "steps": 23889
+   },
+   "frog_otk": {
+    "ok": 135,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 7,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 2
+    },
+    "other": {},
+    "steps": 31790
+   },
+   "vayu_turbo": {
+    "ok": 137,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 6,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 1
+    },
+    "other": {},
+    "steps": 27266
+   },
+   "vayu_turbo_ddev08": {
+    "ok": 134,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 6,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 4
+    },
+    "other": {},
+    "steps": 27459
+   },
+   "zombie_teledad": {
+    "ok": 134,
+    "crash": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 7,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+    },
+    "other": {},
+    "steps": 30443
+   }
+  }
+ }
+}

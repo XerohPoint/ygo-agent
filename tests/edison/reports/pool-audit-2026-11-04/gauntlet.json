@@ -1,0 +1,976 @@
+{
+ "decks": [
+  {
+   "name": "blackwing",
+   "archetype": "Blackwing",
+   "share": 0.2267,
+   "url": "https://formatlibrary.com/decks/78809",
+   "event": "EWCQ13",
+   "date": "2026-06-21",
+   "placement": 1,
+   "size": 126,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 40,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Brain Control",
+    "Brionac, Dragon of the Ice Barrier",
+    "Dark End Dragon",
+    "Goyo Guardian"
+   ],
+   "e35_no_override": [
+    "Dark End Dragon"
+   ],
+   "other_risk": [],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    42,
+    42
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 138,
+    "crash": 6,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 4,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 2
+    }
+   }
+  },
+  {
+   "name": "vayu_turbo",
+   "archetype": "Vayu Turbo",
+   "share": 0.2238,
+   "url": "https://formatlibrary.com/decks/84297",
+   "event": "BEAK12",
+   "date": "2026-09-05",
+   "placement": 2,
+   "size": 157,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 41,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Ryko, Lightsworn Hunter",
+    "Brain Control",
+    "Armory Arm",
+    "Brionac, Dragon of the Ice Barrier",
+    "Dark End Dragon",
+    "Goyo Guardian"
+   ],
+   "e35_no_override": [
+    "Dark End Dragon"
+   ],
+   "other_risk": [],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    52,
+    52
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 137,
+    "crash": 7,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 6,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 1
+    }
+   }
+  },
+  {
+   "name": "hero_frog",
+   "archetype": "Hero Frog",
+   "share": 0.0933,
+   "url": "https://formatlibrary.com/decks/73078",
+   "event": "EWCQ12",
+   "date": "2026-03-15",
+   "placement": 2,
+   "size": 133,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 41,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Swap Frog",
+    "Treeborn Frog",
+    "Brain Control",
+    "Future Fusion",
+    "Armory Arm",
+    "Brionac, Dragon of the Ice Barrier",
+    "Goyo Guardian",
+    "Soul Exchange"
+   ],
+   "e35_no_override": [
+    "Soul Exchange"
+   ],
+   "other_risk": [],
+   "interface": [
+    "Dark Dust Spirit [side]"
+   ],
+   "weak": [],
+   "coverage": [
+    51,
+    51
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 109,
+    "crash": 35,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 32,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+    }
+   }
+  },
+  {
+   "name": "gladiator_beast",
+   "archetype": "Gladiator Beast",
+   "share": 0.0624,
+   "url": "https://formatlibrary.com/decks/68372",
+   "event": "EWC2025",
+   "date": "2025-12-14",
+   "placement": 1,
+   "size": 93,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 42,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Elemental HERO Prisma",
+    "Rescue Cat",
+    "Brionac, Dragon of the Ice Barrier",
+    "Goyo Guardian",
+    "Brain Control"
+   ],
+   "e35_no_override": [],
+   "other_risk": [],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    46,
+    46
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 135,
+    "crash": 9,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 6,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+    }
+   }
+  },
+  {
+   "name": "frog_monarch",
+   "archetype": "Frog Monarch",
+   "share": 0.0466,
+   "url": "https://formatlibrary.com/decks/78922",
+   "event": "EWCQ13",
+   "date": "2026-06-21",
+   "placement": 3,
+   "size": 126,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 40,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Treeborn Frog",
+    "Swap Frog",
+    "Brain Control",
+    "Armory Arm",
+    "Brionac, Dragon of the Ice Barrier",
+    "Goyo Guardian",
+    "Soul Exchange"
+   ],
+   "e35_no_override": [
+    "Soul Exchange"
+   ],
+   "other_risk": [],
+   "interface": [
+    "Dark Dust Spirit [side]"
+   ],
+   "weak": [],
+   "coverage": [
+    45,
+    45
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 104,
+    "crash": 40,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 38,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 2
+    }
+   }
+  },
+  {
+   "name": "dragon_turbo",
+   "archetype": "Dragon Turbo",
+   "share": 0.0409,
+   "url": "https://formatlibrary.com/decks/85607",
+   "event": "PBR58",
+   "date": "2026-09-21",
+   "placement": 3,
+   "size": 60,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 40,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Red-Eyes Darkness Metal Dragon",
+    "Future Fusion",
+    "Armory Arm",
+    "Goyo Guardian",
+    "Brionac, Dragon of the Ice Barrier"
+   ],
+   "e35_no_override": [],
+   "other_risk": [
+    "Ancient Fairy Dragon"
+   ],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    42,
+    42
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 140,
+    "crash": 4,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 2,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 2
+    }
+   }
+  },
+  {
+   "name": "lightsworn",
+   "archetype": "Lightsworn",
+   "share": 0.0316,
+   "url": "https://formatlibrary.com/decks/85060",
+   "event": "EWCQ14",
+   "date": "2026-09-13",
+   "placement": 4,
+   "size": 142,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 41,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Ryko, Lightsworn Hunter",
+    "Lumina, Lightsworn Summoner",
+    "Armory Arm",
+    "Goyo Guardian",
+    "Brionac, Dragon of the Ice Barrier",
+    "Dark End Dragon"
+   ],
+   "e35_no_override": [
+    "Lumina, Lightsworn Summoner",
+    "Dark End Dragon"
+   ],
+   "other_risk": [],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    53,
+    53
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 139,
+    "crash": 5,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 4,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 1
+    }
+   }
+  },
+  {
+   "name": "frog_otk",
+   "archetype": "Frog OTK",
+   "share": 0.0308,
+   "url": "https://formatlibrary.com/decks/84951",
+   "event": "EWCQ14",
+   "date": "2026-09-13",
+   "placement": 1,
+   "size": 142,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 40,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Swap Frog",
+    "Treeborn Frog",
+    "Brain Control",
+    "Armory Arm",
+    "Brionac, Dragon of the Ice Barrier",
+    "Goyo Guardian",
+    "Soul Exchange"
+   ],
+   "e35_no_override": [
+    "Soul Exchange"
+   ],
+   "other_risk": [],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    42,
+    42
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 135,
+    "crash": 9,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 7,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 2
+    }
+   }
+  },
+  {
+   "name": "diva_hero_beat",
+   "archetype": "Diva Hero Beat",
+   "share": 0.0265,
+   "url": "https://formatlibrary.com/decks/73097",
+   "event": "EWCQ12",
+   "date": "2026-03-15",
+   "placement": 4,
+   "size": 133,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 40,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Future Fusion",
+    "Goyo Guardian",
+    "Brionac, Dragon of the Ice Barrier"
+   ],
+   "e35_no_override": [],
+   "other_risk": [],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    47,
+    47
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 141,
+    "crash": 3,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 1,
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 2
+    }
+   }
+  },
+  {
+   "name": "gigavise",
+   "archetype": "Gigavise",
+   "share": 0.0258,
+   "url": "https://formatlibrary.com/decks/84319",
+   "event": "BEAK12",
+   "date": "2026-09-05",
+   "placement": 1,
+   "size": 157,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": false,
+   "reason": "RuntimeError: Outside Edison card pool: 52352005, file: /home/mada/ygo-agent/assets/edison/gauntlet_candidates/gigavise.ydk",
+   "sizes": {
+    "main": 40,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [
+    52352005
+   ],
+   "e35": [
+    "Mark of the Rose",
+    "Armory Arm",
+    "Brionac, Dragon of the Ice Barrier",
+    "Goyo Guardian",
+    "Brain Control",
+    "My Body as a Shield"
+   ],
+   "e35_no_override": [],
+   "other_risk": [],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    44,
+    44
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 137,
+    "crash": 7,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 4,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+    }
+   }
+  },
+  {
+   "name": "machina_control",
+   "archetype": "Machina Control",
+   "share": 0.0215,
+   "url": "https://formatlibrary.com/decks/78816",
+   "event": "EWCQ13",
+   "date": "2026-06-21",
+   "placement": 9,
+   "size": 126,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": false,
+   "reason": "RuntimeError: Outside Edison card pool: 52352005, file: /home/mada/ygo-agent/assets/edison/gauntlet_candidates/machina_control.ydk",
+   "sizes": {
+    "main": 40,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [
+    52352005
+   ],
+   "e35": [
+    "Machina Gearframe",
+    "Ryko, Lightsworn Hunter",
+    "Brain Control",
+    "Armory Arm",
+    "Brionac, Dragon of the Ice Barrier",
+    "Dark End Dragon",
+    "Goyo Guardian",
+    "Soul Exchange"
+   ],
+   "e35_no_override": [
+    "Machina Gearframe",
+    "Dark End Dragon",
+    "Soul Exchange"
+   ],
+   "other_risk": [
+    "Machina Fortress"
+   ],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    41,
+    41
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 142,
+    "crash": 2,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 2
+    }
+   }
+  },
+  {
+   "name": "diva_hero",
+   "archetype": "Diva Hero",
+   "share": 0.0172,
+   "url": "https://formatlibrary.com/decks/85032",
+   "event": "EWCQ14",
+   "date": "2026-09-13",
+   "placement": 9,
+   "size": 142,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 41,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Brain Control",
+    "Future Fusion",
+    "Brionac, Dragon of the Ice Barrier",
+    "Dark End Dragon",
+    "Goyo Guardian"
+   ],
+   "e35_no_override": [
+    "Dark End Dragon"
+   ],
+   "other_risk": [
+    "Ancient Fairy Dragon"
+   ],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    52,
+    52
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 136,
+    "crash": 8,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 5,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+    }
+   }
+  },
+  {
+   "name": "zombie_teledad",
+   "archetype": "Zombie TeleDAD",
+   "share": 0.0143,
+   "url": "https://formatlibrary.com/decks/75594",
+   "event": "BEAK11",
+   "date": "2026-05-07",
+   "placement": 5,
+   "size": 165,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 40,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Brain Control",
+    "Brionac, Dragon of the Ice Barrier",
+    "Goyo Guardian",
+    "Dark End Dragon",
+    "Soul Exchange"
+   ],
+   "e35_no_override": [
+    "Dark End Dragon",
+    "Soul Exchange"
+   ],
+   "other_risk": [],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    51,
+    51
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 134,
+    "crash": 10,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 7,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 3
+    }
+   }
+  },
+  {
+   "name": "diva_frog",
+   "archetype": "Diva Frog",
+   "share": 0.0143,
+   "url": "https://formatlibrary.com/decks/75612",
+   "event": "BEAK11",
+   "date": "2026-05-07",
+   "placement": 2,
+   "size": 165,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 42,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Sangan",
+    "Swap Frog",
+    "Treeborn Frog",
+    "Brain Control",
+    "Soul Exchange",
+    "Ultimate Offering",
+    "Armory Arm",
+    "Brionac, Dragon of the Ice Barrier",
+    "Dark End Dragon",
+    "Goyo Guardian"
+   ],
+   "e35_no_override": [
+    "Soul Exchange",
+    "Ultimate Offering",
+    "Dark End Dragon"
+   ],
+   "other_risk": [],
+   "interface": [
+    "Dark Dust Spirit [side]"
+   ],
+   "weak": [],
+   "coverage": [
+    46,
+    46
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 111,
+    "crash": 33,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 33
+    }
+   }
+  },
+  {
+   "name": "hero_beat",
+   "archetype": "Hero Beat",
+   "share": 0.0115,
+   "url": "https://formatlibrary.com/decks/28337",
+   "event": "BEAK04",
+   "date": "2023-08-04",
+   "placement": 3,
+   "size": 106,
+   "community": "Format Library",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 40,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Future Fusion",
+    "Destiny End Dragoon"
+   ],
+   "e35_no_override": [],
+   "other_risk": [],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    41,
+    41
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 138,
+    "crash": 6,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 5,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 1
+    }
+   }
+  },
+  {
+   "name": "lightsworn_fairy",
+   "archetype": "Lightsworn Fairy",
+   "share": 0.0115,
+   "url": "https://formatlibrary.com/decks/85583",
+   "event": "IMNCS05",
+   "date": "2026-09-20",
+   "placement": 1,
+   "size": 86,
+   "community": "I-M-NERD",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 42,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Lumina, Lightsworn Summoner",
+    "Ryko, Lightsworn Hunter",
+    "Brain Control",
+    "Armory Arm",
+    "Brionac, Dragon of the Ice Barrier",
+    "Dark End Dragon",
+    "Goyo Guardian",
+    "Light End Dragon"
+   ],
+   "e35_no_override": [
+    "Lumina, Lightsworn Summoner",
+    "Dark End Dragon",
+    "Light End Dragon"
+   ],
+   "other_risk": [],
+   "interface": [
+    "Snipe Hunter [side]"
+   ],
+   "weak": [],
+   "coverage": [
+    58,
+    58
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 104,
+    "crash": 40,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 5,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 35
+    }
+   }
+  },
+  {
+   "name": "quickdraw_plant",
+   "archetype": "Quickdraw Plant",
+   "share": 0.0079,
+   "url": "https://formatlibrary.com/decks/2981",
+   "event": "SJCED10",
+   "date": "2010-04-25",
+   "placement": 1,
+   "size": 2175,
+   "community": "Konami",
+   "ruleset": "2010 official OP/SJC, rules as judged in April 2010",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 41,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Light and Darkness Dragon",
+    "Quickdraw Synchron",
+    "Ryko, Lightsworn Hunter",
+    "Sangan",
+    "Brain Control",
+    "Brionac, Dragon of the Ice Barrier",
+    "My Body as a Shield"
+   ],
+   "e35_no_override": [
+    "Light and Darkness Dragon"
+   ],
+   "other_risk": [
+    "Night Assailant",
+    "Ancient Fairy Dragon"
+   ],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    46,
+    46
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 138,
+    "crash": 6,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 6
+    }
+   }
+  },
+  {
+   "name": "vayu_turbo_ddev08",
+   "archetype": "Vayu Turbo",
+   "share": 0.2238,
+   "url": "https://formatlibrary.com/decks/60919",
+   "event": "DDEV08",
+   "date": "2025-07-19",
+   "placement": 1,
+   "size": 215,
+   "community": "EdisonFormat.com",
+   "ruleset": "Community traditional Edison; not Konami Time Wizard modern mechanics",
+   "legal": true,
+   "reason": "",
+   "sizes": {
+    "main": 40,
+    "extra": 15,
+    "side": 15
+   },
+   "off_manifest": [],
+   "e35": [
+    "Ryko, Lightsworn Hunter",
+    "Brain Control",
+    "Armory Arm",
+    "Brionac, Dragon of the Ice Barrier",
+    "Dark End Dragon",
+    "Goyo Guardian"
+   ],
+   "e35_no_override": [
+    "Dark End Dragon"
+   ],
+   "other_risk": [],
+   "interface": [],
+   "weak": [],
+   "coverage": [
+    48,
+    48
+   ],
+   "main": {
+    "ok": 144,
+    "crash": 0,
+    "other": {},
+    "signatures": {}
+   },
+   "sidein": {
+    "ok": 134,
+    "crash": 10,
+    "other": {},
+    "signatures": {
+     "exit-6: what():  [system_string_to_id] cannot find id: 1104": 6,
+     "exit-6: what():  Unknown message toss_dice, length 4, dp 1": 4
+    }
+   }
+  }
+ ],
+ "replay_share_all_archetypes": 0.9066,
+ "replay_share_legal_lists_only": 0.8593
+}

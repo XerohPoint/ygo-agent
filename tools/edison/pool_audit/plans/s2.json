@@ -1,0 +1,3 @@
+[{"name":"s1_uniform","kind":"uniform","count":0},
+ {"name":"s2_themed","kind":"themed","count":2000,"policy":"eager","quarantine_file":"/home/mada/ygo-agent/build/edison-pool-audit-2026-11-04/quarantine.json"},
+ {"name":"s3_targeted","kind":"targeted","count":1500,"policy":"eager","quarantine_file":"/home/mada/ygo-agent/build/edison-pool-audit-2026-11-04/quarantine.json"}]

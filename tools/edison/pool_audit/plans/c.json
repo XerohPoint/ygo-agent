@@ -1,0 +1,2 @@
+[{"name":"s15_confirm","kind":"confirm","targets_file":"/home/mada/ygo-agent/build/edison-pool-audit-2026-11-04/confirm2.json","per_target":6,"quarantine_file":"/home/mada/ygo-agent/build/edison-pool-audit-2026-11-04/quarantine.json"},
+ {"name":"s16_confirm_low","kind":"confirm","targets_file":"/home/mada/ygo-agent/build/edison-pool-audit-2026-11-04/confirm3.json","per_target":12,"quarantine_file":"/home/mada/ygo-agent/build/edison-pool-audit-2026-11-04/quarantine.json"}]
