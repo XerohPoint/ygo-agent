@@ -15,8 +15,8 @@ MAX_STEPS, MAX_OPTIONS = 10000, 256
 ACTS = {1: "set", 2: "repo", 3: "spsummon", 4: "summon", 5: "mset", 6: "attack", 7: "direct", 8: "activate"}
 
 def load_module(args):
-    if args.module == "audit":
-        so = ROOT / "build/edison-pool-audit-2026-11-04/audit_module/ygopro_ygoenv.cpython-310-x86_64-linux-gnu.so"
+    if args.so or args.module == "audit":
+        so = args.so or ROOT / "build/edison-pool-audit-2026-11-04/audit_module/ygopro_ygoenv.cpython-310-x86_64-linux-gnu.so"
         spec = importlib.util.spec_from_file_location("ygoenv.ygopro.ygopro_ygoenv", so)
         module = importlib.util.module_from_spec(spec)
         sys.modules["ygoenv.ygopro.ygopro_ygoenv"] = module
@@ -129,6 +129,7 @@ def main():
     parser.add_argument("--audit-log", type=Path, required=True)
     parser.add_argument("--codes", type=Path, required=True)
     parser.add_argument("--module", choices=["audit", "production"], default="audit")
+    parser.add_argument("--so", type=Path, help="Load this module file instead, to compare builds")
     args = parser.parse_args()
     os.environ["EDISON_AUDIT_LOG"] = str(args.audit_log)
     load_module(args)

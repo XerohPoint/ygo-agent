@@ -12,7 +12,7 @@ Stages (see --stage):
   targets one card at a time, random decks built around it from --targets
   uniform random decks from the whole pool, nothing blocked, as in the audit's first stage
 """
-import argparse, json, random, re, subprocess, sys, time
+import argparse, json, os, random, re, subprocess, sys, time
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -104,7 +104,7 @@ def signature(err, out, kind):
     text = what[-1] if what else (tail[-1] if tail else kind)
     return f"{kind}: {re.sub(r'[0-9]{5,}', 'N', text.strip())[:200]}"
 
-def run_batch(index, stage_dir, duels, decks, module_timeout):
+def run_batch(index, stage_dir, duels, decks, module_timeout, so=None, audit_dir=None):
     bdir = stage_dir / f"b{index:05d}"
     bdir.mkdir(parents=True, exist_ok=True)
     paths = {}
@@ -119,11 +119,12 @@ def run_batch(index, stage_dir, duels, decks, module_timeout):
         spec.write_text(json.dumps({"decks": {n: str(p) for n, p in paths.items()}, "duels": remaining}))
         cmd = [sys.executable, str(ROOT / "tools/edison/pool_audit/soak_worker.py"), "--spec", str(spec),
                "--log", str(log), "--audit-log", str(bdir / "unused.log"), "--codes", str(FULL_CODES),
-               "--module", "production"]
+               "--module", "production"] + (["--so", str(so)] if so else [])
         kind = None
+        env = {**os.environ, "EDISON_PROMPT_AUDIT": str(audit_dir)} if audit_dir else None
         try:
             done = subprocess.run(cmd, cwd=ROOT / "scripts", capture_output=True, text=True,
-                                  errors="replace", timeout=module_timeout)
+                                  errors="replace", timeout=module_timeout, env=env)
             out, err, code = done.stdout, done.stderr, done.returncode
         except subprocess.TimeoutExpired as error:
             out = (error.stdout or b"").decode(errors="replace") if isinstance(error.stdout, bytes) else (error.stdout or "")
@@ -160,7 +161,7 @@ def run_batch(index, stage_dir, duels, decks, module_timeout):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--stage", choices=["a2", "sidein", "targets", "uniform"], required=True)
-    parser.add_argument("--seed", type=int, required=True, help="First seed; the blocks are 74000000 and up, and 76000000 and up for the trigger-order work")
+    parser.add_argument("--seed", type=int, required=True, help="First seed; the blocks are 74000000 and up, 76000000 and up for the trigger-order work, and 80000000 and up for the Deck label work")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--workers", type=int, default=6)
     parser.add_argument("--batch", type=int, default=20)
@@ -169,10 +170,13 @@ def main():
     parser.add_argument("--per-target", type=int, default=6)
     parser.add_argument("--count", type=int, default=1000, help="Duels for the uniform stage")
     parser.add_argument("--timeout", type=int, default=600)
+    parser.add_argument("--so", type=Path, help="Run this module file instead of the checkout's, to compare builds")
+    parser.add_argument("--prompt-audit", action="store_true",
+                        help="Turn on the test-only prompt differential; results land in <output>/prompt-audit")
     args = parser.parse_args()
     args.output = args.output.resolve()  # Workers run with cwd=scripts.
-    if not (74000000 <= args.seed < 75000000 or 76000000 <= args.seed < 77000000):
-        parser.error("Hardening seeds stay inside the 74000000 or 76000000 block")
+    if not (74000000 <= args.seed < 75000000 or 76000000 <= args.seed < 77000000 or 80000000 <= args.seed < 81000000):
+        parser.error("Hardening seeds stay inside the 74000000, 76000000 or 80000000 block")
     if args.workers > 6:
         parser.error("At most 6 workers")
     pool = gen_decks.Pool()
@@ -185,11 +189,15 @@ def main():
         variant = "sidein" if args.stage == "sidein" else "main"
         duels, decks, next_seed = plan_lists(pool, variant, args.per_pair, args.seed)
     args.output.mkdir(parents=True, exist_ok=True)
+    audit_dir = None
+    if args.prompt_audit:
+        audit_dir = args.output / "prompt-audit"
+        audit_dir.mkdir(exist_ok=True)
     batches = [duels[i:i + args.batch] for i in range(0, len(duels), args.batch)]
     started = time.time()
     finished, crashes, lines = [], [], Counter()
     with ThreadPoolExecutor(args.workers) as pool_runner:
-        futures = [pool_runner.submit(run_batch, i, args.output, batch, decks, args.timeout)
+        futures = [pool_runner.submit(run_batch, i, args.output, batch, decks, args.timeout, args.so, audit_dir)
                    for i, batch in enumerate(batches)]
         for future in futures:
             done, crashed, output = future.result()

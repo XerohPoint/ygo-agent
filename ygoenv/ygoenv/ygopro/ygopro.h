@@ -42,6 +42,7 @@
 #include "deck_file.h"
 #include "observation_visibility.h"
 #include "decision_context.h"
+#include "prompt_audit.h"
 
 // clang-format on
 
@@ -1903,6 +1904,7 @@ protected:
   std::unordered_set<std::string> revealed_;
 
   DecisionContext decision_;
+  PromptAudit audit_;
 
   // multi select
   int ms_idx_ = -1;
@@ -2038,6 +2040,10 @@ public:
     ms_idx_ = -1;
     local_prompt_ = nullptr;
     decision_.reset();
+    if (PromptAudit::on()) {
+      audit_flush();
+      audit_.options.clear();
+    }
 
     history_actions_1_.Zero();
     history_actions_2_.Zero();
@@ -2544,6 +2550,7 @@ public:
     }
 
     if (n_options == 0) {
+      if (PromptAudit::on()) audit_flush();
       state["info:num_options"_] = 1;
       state["obs:global_"_][22] = uint8_t(1);
       // if (step_count_ >= spec_.config["max_steps"_]) {
@@ -2590,6 +2597,7 @@ public:
 
     _set_obs_actions(state["obs:actions_"_], legal_actions_);
     _set_obs_decision(state, spec_infos);
+    if (PromptAudit::on()) audit_decision(state);
 
     // write history actions
 
@@ -2656,6 +2664,189 @@ private:
     };
     mark(decision_.selected,1);
     mark(decision_.mandatory,2);
+  }
+
+  // Test-only; see prompt_audit.h. These read the parsed prompt and the finished observation.
+  void audit_note(const std::string& spec, uint32_t code, int controller, int location,
+                  int sequence, int position) {
+    if (PromptAudit::on())
+      audit_.options.push_back({spec, code & 0x7fffffff, controller, location, sequence, position});
+  }
+
+  void audit_flush() {
+    audit_.flush(int(spec_.config["seed"_]), deck_name_[0], deck_name_[1]);
+  }
+
+  static const char* audit_location(int location) {
+    if (location & LOCATION_OVERLAY) return "overlay";
+    switch (location) {
+      case LOCATION_DECK: return "deck";
+      case LOCATION_HAND: return "hand";
+      case LOCATION_MZONE: return "mzone";
+      case LOCATION_SZONE: return "szone";
+      case LOCATION_GRAVE: return "grave";
+      case LOCATION_REMOVED: return "removed";
+      case LOCATION_EXTRA: return "extra";
+      default: return "other";
+    }
+  }
+
+  std::string audit_key(const PromptAuditOption& option) {
+    return msg_to_string(msg_) + "|" + audit_location(option.location) + "|" +
+           (option.controller == to_play_ ? "own" : "opponent");
+  }
+
+  // Own candidates are never exempt, however they are masked. An opposing card is exempt only
+  // where the viewer may legitimately not know it, and only while it stays hidden.
+  bool audit_private(const PromptAuditOption& option) {
+    if (option.controller == to_play_ || (option.location & LOCATION_OVERLAY)) return false;
+    if (option.location & (LOCATION_DECK | LOCATION_HAND | LOCATION_EXTRA)) return true;
+    int position = option.position;
+    if (position < 0) position = get_card(option.controller, option.location, option.sequence).position_;
+    return position & POS_FACEDOWN;
+  }
+
+  int audit_expected_id(const PromptAuditOption& option) {
+    auto it = card_ids_.find(option.code);
+    return it == card_ids_.end() ? -1 : int(it->second);
+  }
+
+  void audit_lone_option(const LegalAction& action) {
+    const auto* option = audit_.find(action.spec_);
+    if (!option) return;
+    auto key = audit_key(*option);
+    audit_.bump(key, PromptAudit::AutoOptions);
+    const int expected = audit_expected_id(*option);
+    if (expected < 0) {
+      audit_.bump(key, PromptAudit::UnknownCode);
+      return;
+    }
+    if (int(action.cid_) == expected || (action.cid_ == 0 && audit_private(*option))) return;
+    audit_.bump(key, PromptAudit::AutoMismatch);
+    audit_.record_mismatch(fmt::format(
+        "{{\"kind\":\"lone_option\",\"key\":\"{}\",\"code\":{},\"expected_id\":{},\"id\":{},\"turn\":{}}}",
+        key, option->code, expected, int(action.cid_), turn_count_));
+  }
+
+  void audit_decision(State& state) {
+    audit_.decisions++;
+    if (audit_.options.empty()) return;
+    audit_.card_decisions++;
+    auto& cards = state["obs:cards_"_];
+    const bool card_choice = msg_ == MSG_SELECT_CARD || msg_ == MSG_SELECT_UNSELECT_CARD ||
+                             msg_ == MSG_SELECT_TRIBUTE || msg_ == MSG_SELECT_SUM;
+    auto row_id = [&](int row) { return int(uint8_t(cards(row - 1, 0))) * 256 + int(uint8_t(cards(row - 1, 1))); };
+    std::map<int, int> row_uses;
+    std::map<std::string, bool> seen_keys;
+    std::string trace;
+    for (const auto& action : legal_actions_) {
+      if (action.spec_.empty()) continue;
+      const auto* option = audit_.find(action.spec_);
+      std::string key = option ? audit_key(*option) : msg_to_string(msg_) + "|unmatched|";
+      seen_keys[key] = true;
+      audit_.bump(key, PromptAudit::Options);
+      const int row = action.spec_index_, id = int(action.cid_);
+      const int shown = row > 0 ? row_id(row) : -1;
+      const int expected = option ? audit_expected_id(*option) : -1;
+      if (card_choice && row > 0) row_uses[row]++;
+      if (!option) {
+        audit_.bump(key, PromptAudit::UnknownCode);
+        continue;
+      }
+      if (expected < 0) audit_.bump(key, PromptAudit::UnknownCode);
+      const bool is_private = audit_private(*option);
+      const bool exempt = id == 0 && shown <= 0 && is_private;
+      if (exempt) audit_.bump(key, PromptAudit::Hidden);
+      if (is_private && !exempt &&
+          !revealed_.count(reveal_key(to_play_, option->controller, option->location, option->sequence))) {
+        audit_.bump(key, PromptAudit::PrivateShown);
+        audit_.record_mismatch(fmt::format(
+            "{{\"kind\":\"private_shown\",\"key\":\"{}\",\"code\":{},\"id\":{},\"row_id\":{},\"turn\":{}}}",
+            key, option->code, id, shown, turn_count_));
+      }
+      bool label_bad = !exempt && expected >= 0 && id != expected;
+      bool row_bad = row <= 0 || (!exempt && expected >= 0 && shown != expected);
+      bool zone_bad = false;
+      if (row > 0) {
+        const int location = option->location & 0x7f;
+        zone_bad = uint8_t(cards(row - 1, 2)) != location_to_id(location) ||
+                   uint8_t(cards(row - 1, 4)) != (option->controller != to_play_ ? 1 : 0);
+      }
+      if (label_bad) audit_.bump(key, PromptAudit::LabelMismatch);
+      if (row_bad) audit_.bump(key, PromptAudit::RowMismatch);
+      if (zone_bad) audit_.bump(key, PromptAudit::ZoneMismatch);
+      if (label_bad || row_bad || zone_bad) {
+        audit_.record_mismatch(fmt::format(
+            "{{\"kind\":\"option\",\"key\":\"{}\",\"code\":{},\"expected_id\":{},\"id\":{},\"row\":{},\"row_id\":{},"
+            "\"label_bad\":{},\"row_bad\":{},\"zone_bad\":{},\"prompt_sequence\":{},\"turn\":{}}}",
+            key, option->code, expected, id, row, shown, label_bad, row_bad, zone_bad, option->sequence, turn_count_));
+      }
+      if (PromptAudit::tracing()) {
+        trace += fmt::format("{}{{\"spec_kind\":\"{}\",\"code\":{},\"expected_id\":{},\"id\":{},\"row\":{},\"row_id\":{},"
+                             "\"controller\":{},\"location\":{},\"prompt_sequence\":{},\"exempt\":{}}}",
+                             trace.empty() ? "" : ",", audit_location(option->location), option->code, expected, id, row,
+                             shown, option->controller, option->location, option->sequence, exempt);
+      }
+    }
+    for (const auto& [key, unused] : seen_keys) audit_.bump(key, PromptAudit::Steps);
+    if (card_choice) {
+      for (const auto& [row, uses] : row_uses) {
+        if (uses > 1) audit_.bump(msg_to_string(msg_) + "|shared|", PromptAudit::SharedRow, uses - 1);
+      }
+    }
+    // Deck rows the prompt does not account for: each visible own row must be a listed code or a reveal.
+    std::map<uint32_t, int> listed;
+    for (const auto& option : audit_.options)
+      if (option.location == LOCATION_DECK && option.controller == to_play_) listed[option.code]++;
+    uint64_t extra = 0;
+    std::string visible;
+    for (const auto& c : get_cards_in_location(to_play_, LOCATION_DECK)) {
+      if (card_hidden(c, to_play_)) continue;
+      if (PromptAudit::tracing()) visible += (visible.empty() ? "" : ",") + std::to_string(c.code_);
+      if (revealed_.count(reveal_key(to_play_, c.controler_, c.location_, c.sequence_))) continue;
+      auto it = listed.find(c.code_);
+      if (it != listed.end() && it->second > 0) it->second--;
+      else extra++;
+    }
+    if (extra) {
+      audit_.extra_visible_rows += extra;
+      audit_.prompts_with_extra_rows++;
+      audit_.record_mismatch(fmt::format(
+          "{{\"kind\":\"extra_deck_rows\",\"msg\":\"{}\",\"rows\":{},\"turn\":{}}}", msg_to_string(msg_), extra, turn_count_));
+    }
+    // Does prompt order follow true Deck position? Only the first decision of a prompt counts.
+    if ((msg_ == MSG_SELECT_CARD || msg_ == MSG_SELECT_UNSELECT_CARD) && decision_.selected.empty()) {
+      const auto& core = reinterpret_cast<duel*>(pduel_)->game_field->core;
+      const auto& listed_cards = core.select_cards;
+      for (size_t i = 0; i < listed_cards.size(); ++i) {
+        for (size_t j = i + 1; j < listed_cards.size(); ++j) {
+          const auto* a = listed_cards[i];
+          const auto* b = listed_cards[j];
+          if (a->current.location != LOCATION_DECK || b->current.location != LOCATION_DECK ||
+              a->current.controler != to_play_ || b->current.controler != to_play_) continue;
+          const bool top_first = a->current.sequence > b->current.sequence;
+          if (a->data.code == b->data.code) {
+            audit_.order_pairs_same++;
+            audit_.order_top_first_same += top_first;
+          } else {
+            audit_.order_pairs_distinct++;
+            audit_.order_top_first_distinct += top_first;
+          }
+        }
+      }
+    }
+    if (PromptAudit::tracing()) {
+      std::string selected;
+      auto& selection = state["obs:selection_"_];
+      for (int row = 0; row < selection.Shape()[0]; ++row) {
+        if (uint8_t(selection(row, 1)))
+          selected += (selected.empty() ? "" : ",") + std::to_string(row + 1);
+      }
+      audit_.write_line(fmt::format(
+          "{{\"type\":\"decision\",\"msg\":\"{}\",\"player\":{},\"turn\":{},\"options\":[{}],\"visible_own_deck\":[{}],"
+          "\"selected_rows\":[{}],\"extra_rows\":{}}}",
+          msg_to_string(msg_), int(to_play_), turn_count_, trace, visible, selected, extra));
+    }
   }
 
   // Explicit reveals are scoped to their recipient and absolute card location.
@@ -3226,6 +3417,7 @@ private:
             la.msg_ = msg_;
             if (!la.spec_.empty()) {
               la.cid_ = spec_to_card_id(la.spec_, to_play_);
+              if (PromptAudit::on()) audit_lone_option(la);
             }
             update_history_actions(to_play_, la);
             if (verbose_) {
@@ -3622,7 +3814,9 @@ private:
           data = read_u32();
         }
       }
-      card_specs.push_back({code, ls_to_spec(loc, seq, 0, player != controller), data});
+      auto spec = ls_to_spec(loc, seq, 0, player != controller);
+      audit_note(spec, code, controller, loc, seq, -1);
+      card_specs.push_back({code, spec, data});
     }
     return card_specs;
   }
@@ -3662,6 +3856,7 @@ private:
   void handle_message() {
     msg_ = int(data_[dp_++]);
     decision_.clear_selection();
+    if (PromptAudit::on()) audit_.options.clear();
     if (msg_ == MSG_NEW_TURN || msg_ == MSG_NEW_PHASE || msg_ == MSG_CHAIN_END ||
         msg_ == MSG_CHAIN_SOLVED || msg_ == MSG_WIN)
       decision_.pending_hints.fill(0);
@@ -4672,18 +4867,20 @@ private:
           card.set_location(loc);
           auto spec = card.get_spec(player);
           select_specs.push_back(spec);
+          audit_note(spec, code, card.controler_, card.location_, card.sequence_, card.position_);
           auto s = fmt::format("{}: {}({})", i + 1, card.name_, spec);
           pl->notify(s);
         }
       } else {
         for (int i = 0; i < select_size; ++i) {
-          dp_ += 4;
+          auto code = read_u32();
           auto controller = read_u8();
           auto loc = read_u8();
           auto seq = read_u8();
           auto pos = read_u8();
           auto spec = ls_to_spec(loc, seq, pos, controller != player);
           select_specs.push_back(spec);
+          audit_note(spec, code, controller, loc, seq, pos);
         }
       }
 
@@ -4692,9 +4889,10 @@ private:
       // Keep the existing no-unselect action policy, but expose the core's
       // actual selected group. Do not infer it from earlier client choices.
       for (int i=0; i<unselect_size; ++i) {
-        read_u32(); // never trust an unredacted protocol card code
+        auto code=read_u32();
         auto controller=read_u8(), loc=read_u8(), seq=read_u8(), pos=read_u8();
         decision_.selected.push_back(ls_to_spec(loc,seq,pos,controller!=player));
+        audit_note(decision_.selected.back(), code, controller, loc, seq, pos);
       }
       decision_.candidates = select_specs;
 
@@ -4748,6 +4946,7 @@ private:
         for (const auto &card : cards) {
           auto spec = card.get_spec(player);
           specs.push_back(spec);
+          audit_note(spec, card.code_, card.controler_, card.location_, card.sequence_, card.position_);
           int i = specs.size();
           if (card.controler_ != player && card.position_ & POS_FACEDOWN) {
             pl->notify(
@@ -4759,13 +4958,14 @@ private:
         }
       } else {
         for (int i = 0; i < size; ++i) {
-          dp_ += 4;
+          auto code = read_u32();
           auto controller = read_u8();
           auto loc = read_u8();
           auto seq = read_u8();
           auto pos = read_u8();
           auto spec = ls_to_spec(loc, seq, pos, controller != player);
           specs.push_back(spec);
+          audit_note(spec, code, controller, loc, seq, pos);
         }
       }
 
@@ -4828,6 +5028,7 @@ private:
           Card card = get_card(controller, loc, seq);
           cards.push_back(card);
           release_params.push_back(release_param);
+          audit_note(card.get_spec(player), code, controller, loc, seq, -1);
         }
         auto& pl = players_[player];
         pl->notify("Select " + std::to_string(min) + " to " +
@@ -4841,7 +5042,7 @@ private:
         }
       } else {
         for (int i = 0; i < size; ++i) {
-          dp_ += 4;
+          auto code = read_u32();
           auto controller = read_u8();
           auto loc = read_u8();
           auto seq = read_u8();
@@ -4849,6 +5050,7 @@ private:
 
           auto spec = ls_to_spec(loc, seq, 0, controller != player);
           specs.push_back(spec);
+          audit_note(spec, code, controller, loc, seq, -1);
 
           release_params.push_back(release_param);
         }
@@ -4923,6 +5125,7 @@ private:
           must_select.push_back(card);
           decision_.mandatory.push_back(card.get_spec(player));
           decision_.selected.push_back(card.get_spec(player));
+          audit_note(card.get_spec(player), code, controller, loc, seq, -1);
           expected -= (param & 0xff);
         }
         auto& pl = players_[player];
@@ -4935,7 +5138,7 @@ private:
         }
       } else {
         for (int i = 0; i < must_select_size; ++i) {
-          dp_ += 4;
+          auto code = read_u32();
           auto controller = read_u8();
           auto loc = read_u8();
           auto seq = read_u8();
@@ -4944,6 +5147,7 @@ private:
           auto spec = ls_to_spec(loc, seq, 0, controller != player);
           decision_.mandatory.push_back(spec);
           decision_.selected.push_back(spec);
+          audit_note(spec, code, controller, loc, seq, -1);
           expected -= (param & 0xff);
         }
       }
@@ -4964,6 +5168,7 @@ private:
           Card card = get_card(controller, loc, seq);
           select.push_back(card);
           select_params.push_back(param);
+          audit_note(card.get_spec(player), code, controller, loc, seq, -1);
         }
         auto& pl = players_[player];
         for (const auto &card : select) {
@@ -4974,7 +5179,7 @@ private:
         }
       } else {
         for (int i = 0; i < select_size; ++i) {
-          dp_ += 4;
+          auto code = read_u32();
           auto controller = read_u8();
           auto loc = read_u8();
           auto seq = read_u8();
@@ -4983,6 +5188,7 @@ private:
           auto spec = ls_to_spec(loc, seq, 0, controller != player);
           select_specs.push_back(spec);
           select_params.push_back(param);
+          audit_note(spec, code, controller, loc, seq, -1);
         }
       }
 
@@ -5038,6 +5244,7 @@ private:
         uint8_t seq = read_u8();
         uint8_t pos = read_u8();
         specs.push_back(ls_to_spec(loc, seq, pos, c != player));
+        audit_note(specs.back(), code, c, loc, seq, pos);
         uint32_t desc = read_u32();
         descs.push_back(desc);
       }
@@ -5163,6 +5370,7 @@ private:
       auto pos = read_u8();
       auto desc = read_u32();
       std::string spec = ls_to_spec(loc, seq, pos, ct != player);
+      audit_note(spec, code, ct, loc, seq, pos);
       auto [code_d, eff_idx] = unpack_desc(code, desc);
       if (desc == 0) {
         code_d = code;
