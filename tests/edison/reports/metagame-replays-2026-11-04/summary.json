@@ -1,0 +1,2554 @@
+{
+ "replays": 697,
+ "labeled": 697,
+ "unlabeled": 0,
+ "mirrors": 91,
+ "publish_date_min": "2023-08-04T23:17:36.274Z",
+ "publish_date_max": "2026-10-28T15:06:31.430Z",
+ "events": 85,
+ "archetypes": [
+  {
+   "archetype": "Blackwing",
+   "replay_appearances": 316,
+   "wins": 165,
+   "losses": 151,
+   "win_rate": 0.5222,
+   "win_rate_wilson95": [
+    0.4671,
+    0.5766
+   ],
+   "appearance_share": 0.2267
+  },
+  {
+   "archetype": "Vayu Turbo",
+   "replay_appearances": 312,
+   "wins": 153,
+   "losses": 159,
+   "win_rate": 0.4904,
+   "win_rate_wilson95": [
+    0.4354,
+    0.5456
+   ],
+   "appearance_share": 0.2238
+  },
+  {
+   "archetype": "Hero Frog",
+   "replay_appearances": 130,
+   "wins": 66,
+   "losses": 64,
+   "win_rate": 0.5077,
+   "win_rate_wilson95": [
+    0.4228,
+    0.5922
+   ],
+   "appearance_share": 0.0933
+  },
+  {
+   "archetype": "Gladiator Beast",
+   "replay_appearances": 87,
+   "wins": 47,
+   "losses": 40,
+   "win_rate": 0.5402,
+   "win_rate_wilson95": [
+    0.436,
+    0.641
+   ],
+   "appearance_share": 0.0624
+  },
+  {
+   "archetype": "Frog Monarch",
+   "replay_appearances": 65,
+   "wins": 36,
+   "losses": 29,
+   "win_rate": 0.5538,
+   "win_rate_wilson95": [
+    0.4334,
+    0.6683
+   ],
+   "appearance_share": 0.0466
+  },
+  {
+   "archetype": "Dragon Turbo",
+   "replay_appearances": 57,
+   "wins": 30,
+   "losses": 27,
+   "win_rate": 0.5263,
+   "win_rate_wilson95": [
+    0.3992,
+    0.6501
+   ],
+   "appearance_share": 0.0409
+  },
+  {
+   "archetype": "Lightsworn",
+   "replay_appearances": 44,
+   "wins": 18,
+   "losses": 26,
+   "win_rate": 0.4091,
+   "win_rate_wilson95": [
+    0.2769,
+    0.5559
+   ],
+   "appearance_share": 0.0316
+  },
+  {
+   "archetype": "Frog OTK",
+   "replay_appearances": 43,
+   "wins": 25,
+   "losses": 18,
+   "win_rate": 0.5814,
+   "win_rate_wilson95": [
+    0.4333,
+    0.7162
+   ],
+   "appearance_share": 0.0308
+  },
+  {
+   "archetype": "Diva Hero Beat",
+   "replay_appearances": 37,
+   "wins": 19,
+   "losses": 18,
+   "win_rate": 0.5135,
+   "win_rate_wilson95": [
+    0.3589,
+    0.6655
+   ],
+   "appearance_share": 0.0265
+  },
+  {
+   "archetype": "Gigavise",
+   "replay_appearances": 36,
+   "wins": 19,
+   "losses": 17,
+   "win_rate": 0.5278,
+   "win_rate_wilson95": [
+    0.3701,
+    0.6801
+   ],
+   "appearance_share": 0.0258
+  },
+  {
+   "archetype": "Machina Control",
+   "replay_appearances": 30,
+   "wins": 15,
+   "losses": 15,
+   "win_rate": 0.5,
+   "win_rate_wilson95": [
+    0.3315,
+    0.6685
+   ],
+   "appearance_share": 0.0215
+  },
+  {
+   "archetype": "Diva Hero",
+   "replay_appearances": 24,
+   "wins": 9,
+   "losses": 15,
+   "win_rate": 0.375,
+   "win_rate_wilson95": [
+    0.2116,
+    0.5729
+   ],
+   "appearance_share": 0.0172
+  },
+  {
+   "archetype": "Zombie TeleDAD",
+   "replay_appearances": 20,
+   "wins": 7,
+   "losses": 13,
+   "win_rate": 0.35,
+   "win_rate_wilson95": [
+    0.1812,
+    0.5671
+   ],
+   "appearance_share": 0.0143
+  },
+  {
+   "archetype": "Diva Frog",
+   "replay_appearances": 20,
+   "wins": 15,
+   "losses": 5,
+   "win_rate": 0.75,
+   "win_rate_wilson95": [
+    0.5313,
+    0.8881
+   ],
+   "appearance_share": 0.0143
+  },
+  {
+   "archetype": "Hero Beat",
+   "replay_appearances": 16,
+   "wins": 7,
+   "losses": 9,
+   "win_rate": 0.4375,
+   "win_rate_wilson95": [
+    0.231,
+    0.6682
+   ],
+   "appearance_share": 0.0115
+  },
+  {
+   "archetype": "Lightsworn Fairy",
+   "replay_appearances": 16,
+   "wins": 5,
+   "losses": 11,
+   "win_rate": 0.3125,
+   "win_rate_wilson95": [
+    0.1416,
+    0.556
+   ],
+   "appearance_share": 0.0115
+  },
+  {
+   "archetype": "Diva Zombie",
+   "replay_appearances": 15,
+   "wins": 7,
+   "losses": 8,
+   "win_rate": 0.4667,
+   "win_rate_wilson95": [
+    0.2481,
+    0.6988
+   ],
+   "appearance_share": 0.0108
+  },
+  {
+   "archetype": "Quickdraw Plant",
+   "replay_appearances": 11,
+   "wins": 7,
+   "losses": 4,
+   "win_rate": 0.6364,
+   "win_rate_wilson95": [
+    0.3538,
+    0.8483
+   ],
+   "appearance_share": 0.0079
+  },
+  {
+   "archetype": "Plant Frog",
+   "replay_appearances": 9,
+   "wins": 5,
+   "losses": 4,
+   "win_rate": 0.5556,
+   "win_rate_wilson95": [
+    0.2666,
+    0.8112
+   ],
+   "appearance_share": 0.0065
+  },
+  {
+   "archetype": "Dragon Beat",
+   "replay_appearances": 9,
+   "wins": 4,
+   "losses": 5,
+   "win_rate": 0.4444,
+   "win_rate_wilson95": [
+    0.1888,
+    0.7334
+   ],
+   "appearance_share": 0.0065
+  },
+  {
+   "archetype": "Other",
+   "replay_appearances": 8,
+   "wins": 3,
+   "losses": 5,
+   "win_rate": 0.375,
+   "win_rate_wilson95": [
+    0.1368,
+    0.6943
+   ],
+   "appearance_share": 0.0057
+  },
+  {
+   "archetype": "Fairy",
+   "replay_appearances": 7,
+   "wins": 2,
+   "losses": 5,
+   "win_rate": 0.2857,
+   "win_rate_wilson95": [
+    0.0822,
+    0.6411
+   ],
+   "appearance_share": 0.005
+  },
+  {
+   "archetype": "TeleDAD",
+   "replay_appearances": 7,
+   "wins": 5,
+   "losses": 2,
+   "win_rate": 0.7143,
+   "win_rate_wilson95": [
+    0.3589,
+    0.9178
+   ],
+   "appearance_share": 0.005
+  },
+  {
+   "archetype": "X-Saber",
+   "replay_appearances": 7,
+   "wins": 4,
+   "losses": 3,
+   "win_rate": 0.5714,
+   "win_rate_wilson95": [
+    0.2505,
+    0.8418
+   ],
+   "appearance_share": 0.005
+  },
+  {
+   "archetype": "Gravekeeper",
+   "replay_appearances": 6,
+   "wins": 3,
+   "losses": 3,
+   "win_rate": 0.5,
+   "win_rate_wilson95": [
+    0.1876,
+    0.8124
+   ],
+   "appearance_share": 0.0043
+  },
+  {
+   "archetype": "Jinzo Machina",
+   "replay_appearances": 6,
+   "wins": 2,
+   "losses": 4,
+   "win_rate": 0.3333,
+   "win_rate_wilson95": [
+    0.0968,
+    0.7
+   ],
+   "appearance_share": 0.0043
+  },
+  {
+   "archetype": "Frog Control",
+   "replay_appearances": 6,
+   "wins": 4,
+   "losses": 2,
+   "win_rate": 0.6667,
+   "win_rate_wilson95": [
+    0.3,
+    0.9032
+   ],
+   "appearance_share": 0.0043
+  },
+  {
+   "archetype": "Amaryllis",
+   "replay_appearances": 4,
+   "wins": 2,
+   "losses": 2,
+   "win_rate": 0.5,
+   "win_rate_wilson95": [
+    0.15,
+    0.85
+   ],
+   "appearance_share": 0.0029
+  },
+  {
+   "archetype": "Diva Hero Zombie",
+   "replay_appearances": 4,
+   "wins": 1,
+   "losses": 3,
+   "win_rate": 0.25,
+   "win_rate_wilson95": [
+    0.0456,
+    0.6994
+   ],
+   "appearance_share": 0.0029
+  },
+  {
+   "archetype": "Machina Gadget",
+   "replay_appearances": 4,
+   "wins": 0,
+   "losses": 4,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.4899
+   ],
+   "appearance_share": 0.0029
+  },
+  {
+   "archetype": "Macro Stun",
+   "replay_appearances": 3,
+   "wins": 1,
+   "losses": 2,
+   "win_rate": 0.3333,
+   "win_rate_wilson95": [
+    0.0615,
+    0.7923
+   ],
+   "appearance_share": 0.0022
+  },
+  {
+   "archetype": "Flamvell Frog",
+   "replay_appearances": 3,
+   "wins": 2,
+   "losses": 1,
+   "win_rate": 0.6667,
+   "win_rate_wilson95": [
+    0.2077,
+    0.9385
+   ],
+   "appearance_share": 0.0022
+  },
+  {
+   "archetype": "Zombie Plant",
+   "replay_appearances": 3,
+   "wins": 2,
+   "losses": 1,
+   "win_rate": 0.6667,
+   "win_rate_wilson95": [
+    0.2077,
+    0.9385
+   ],
+   "appearance_share": 0.0022
+  },
+  {
+   "archetype": "Diva Cat",
+   "replay_appearances": 3,
+   "wins": 1,
+   "losses": 2,
+   "win_rate": 0.3333,
+   "win_rate_wilson95": [
+    0.0615,
+    0.7923
+   ],
+   "appearance_share": 0.0022
+  },
+  {
+   "archetype": "Assault Turbo",
+   "replay_appearances": 3,
+   "wins": 2,
+   "losses": 1,
+   "win_rate": 0.6667,
+   "win_rate_wilson95": [
+    0.2077,
+    0.9385
+   ],
+   "appearance_share": 0.0022
+  },
+  {
+   "archetype": "Machina Frog",
+   "replay_appearances": 2,
+   "wins": 1,
+   "losses": 1,
+   "win_rate": 0.5,
+   "win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ],
+   "appearance_share": 0.0014
+  },
+  {
+   "archetype": "Zombie",
+   "replay_appearances": 2,
+   "wins": 1,
+   "losses": 1,
+   "win_rate": 0.5,
+   "win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ],
+   "appearance_share": 0.0014
+  },
+  {
+   "archetype": "Cat Control",
+   "replay_appearances": 2,
+   "wins": 1,
+   "losses": 1,
+   "win_rate": 0.5,
+   "win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ],
+   "appearance_share": 0.0014
+  },
+  {
+   "archetype": "Gadget",
+   "replay_appearances": 2,
+   "wins": 1,
+   "losses": 1,
+   "win_rate": 0.5,
+   "win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ],
+   "appearance_share": 0.0014
+  },
+  {
+   "archetype": "Vaskii Turbo",
+   "replay_appearances": 2,
+   "wins": 0,
+   "losses": 2,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.6576
+   ],
+   "appearance_share": 0.0014
+  },
+  {
+   "archetype": "Ancient Gear Machina",
+   "replay_appearances": 2,
+   "wins": 0,
+   "losses": 2,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.6576
+   ],
+   "appearance_share": 0.0014
+  },
+  {
+   "archetype": "Monster Mash",
+   "replay_appearances": 2,
+   "wins": 0,
+   "losses": 2,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.6576
+   ],
+   "appearance_share": 0.0014
+  },
+  {
+   "archetype": "Lightsworn Monarch",
+   "replay_appearances": 1,
+   "wins": 0,
+   "losses": 1,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.7935
+   ],
+   "appearance_share": 0.0007
+  },
+  {
+   "archetype": "Turbo Frog",
+   "replay_appearances": 1,
+   "wins": 0,
+   "losses": 1,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.7935
+   ],
+   "appearance_share": 0.0007
+  },
+  {
+   "archetype": "Flamvell Zombie",
+   "replay_appearances": 1,
+   "wins": 0,
+   "losses": 1,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.7935
+   ],
+   "appearance_share": 0.0007
+  },
+  {
+   "archetype": "Mausoleum Frog",
+   "replay_appearances": 1,
+   "wins": 0,
+   "losses": 1,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.7935
+   ],
+   "appearance_share": 0.0007
+  },
+  {
+   "archetype": "Machina Cat",
+   "replay_appearances": 1,
+   "wins": 0,
+   "losses": 1,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.7935
+   ],
+   "appearance_share": 0.0007
+  },
+  {
+   "archetype": "Six Samurai",
+   "replay_appearances": 1,
+   "wins": 0,
+   "losses": 1,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.7935
+   ],
+   "appearance_share": 0.0007
+  },
+  {
+   "archetype": "Zombie Turbo",
+   "replay_appearances": 1,
+   "wins": 0,
+   "losses": 1,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.7935
+   ],
+   "appearance_share": 0.0007
+  },
+  {
+   "archetype": "Quickdraw Frog",
+   "replay_appearances": 1,
+   "wins": 0,
+   "losses": 1,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.7935
+   ],
+   "appearance_share": 0.0007
+  },
+  {
+   "archetype": "Dark Plant",
+   "replay_appearances": 1,
+   "wins": 0,
+   "losses": 1,
+   "win_rate": 0.0,
+   "win_rate_wilson95": [
+    0.0,
+    0.7935
+   ],
+   "appearance_share": 0.0007
+  }
+ ],
+ "matchups": [
+  {
+   "a": "Blackwing",
+   "b": "Vayu Turbo",
+   "games": 75,
+   "a_wins": 33,
+   "a_win_rate": 0.44,
+   "a_win_rate_wilson95": [
+    0.3333,
+    0.5525
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Hero Frog",
+   "games": 31,
+   "a_wins": 19,
+   "a_win_rate": 0.6129,
+   "a_win_rate_wilson95": [
+    0.4382,
+    0.7627
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "Vayu Turbo",
+   "games": 26,
+   "a_wins": 15,
+   "a_win_rate": 0.5769,
+   "a_win_rate_wilson95": [
+    0.3895,
+    0.7446
+   ]
+  },
+  {
+   "a": "Frog Monarch",
+   "b": "Vayu Turbo",
+   "games": 24,
+   "a_wins": 16,
+   "a_win_rate": 0.6667,
+   "a_win_rate_wilson95": [
+    0.4671,
+    0.8203
+   ]
+  },
+  {
+   "a": "Gladiator Beast",
+   "b": "Vayu Turbo",
+   "games": 23,
+   "a_wins": 11,
+   "a_win_rate": 0.4783,
+   "a_win_rate_wilson95": [
+    0.2924,
+    0.6704
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Gladiator Beast",
+   "games": 17,
+   "a_wins": 7,
+   "a_win_rate": 0.4118,
+   "a_win_rate_wilson95": [
+    0.2161,
+    0.6399
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Dragon Turbo",
+   "games": 15,
+   "a_wins": 11,
+   "a_win_rate": 0.7333,
+   "a_win_rate_wilson95": [
+    0.4805,
+    0.891
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Frog Monarch",
+   "games": 15,
+   "a_wins": 9,
+   "a_win_rate": 0.6,
+   "a_win_rate_wilson95": [
+    0.3575,
+    0.8018
+   ]
+  },
+  {
+   "a": "Dragon Turbo",
+   "b": "Vayu Turbo",
+   "games": 15,
+   "a_wins": 8,
+   "a_win_rate": 0.5333,
+   "a_win_rate_wilson95": [
+    0.3012,
+    0.7519
+   ]
+  },
+  {
+   "a": "Diva Hero Beat",
+   "b": "Vayu Turbo",
+   "games": 13,
+   "a_wins": 9,
+   "a_win_rate": 0.6923,
+   "a_win_rate_wilson95": [
+    0.4237,
+    0.8732
+   ]
+  },
+  {
+   "a": "Lightsworn",
+   "b": "Vayu Turbo",
+   "games": 11,
+   "a_wins": 5,
+   "a_win_rate": 0.4545,
+   "a_win_rate_wilson95": [
+    0.2127,
+    0.7199
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Lightsworn",
+   "games": 10,
+   "a_wins": 5,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.2366,
+    0.7634
+   ]
+  },
+  {
+   "a": "Frog OTK",
+   "b": "Vayu Turbo",
+   "games": 10,
+   "a_wins": 5,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.2366,
+    0.7634
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Frog OTK",
+   "games": 9,
+   "a_wins": 4,
+   "a_win_rate": 0.4444,
+   "a_win_rate_wilson95": [
+    0.1888,
+    0.7334
+   ]
+  },
+  {
+   "a": "Gigavise",
+   "b": "Vayu Turbo",
+   "games": 9,
+   "a_wins": 6,
+   "a_win_rate": 0.6667,
+   "a_win_rate_wilson95": [
+    0.3542,
+    0.8794
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Diva Hero Beat",
+   "games": 8,
+   "a_wins": 5,
+   "a_win_rate": 0.625,
+   "a_win_rate_wilson95": [
+    0.3057,
+    0.8632
+   ]
+  },
+  {
+   "a": "Gladiator Beast",
+   "b": "Hero Frog",
+   "games": 8,
+   "a_wins": 6,
+   "a_win_rate": 0.75,
+   "a_win_rate_wilson95": [
+    0.4093,
+    0.9285
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Diva Zombie",
+   "games": 7,
+   "a_wins": 5,
+   "a_win_rate": 0.7143,
+   "a_win_rate_wilson95": [
+    0.3589,
+    0.9178
+   ]
+  },
+  {
+   "a": "Dragon Turbo",
+   "b": "Hero Frog",
+   "games": 7,
+   "a_wins": 6,
+   "a_win_rate": 0.8571,
+   "a_win_rate_wilson95": [
+    0.4869,
+    0.9743
+   ]
+  },
+  {
+   "a": "Machina Control",
+   "b": "Vayu Turbo",
+   "games": 7,
+   "a_wins": 3,
+   "a_win_rate": 0.4286,
+   "a_win_rate_wilson95": [
+    0.1582,
+    0.7495
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Diva Hero",
+   "games": 6,
+   "a_wins": 3,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.1876,
+    0.8124
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Gigavise",
+   "games": 6,
+   "a_wins": 4,
+   "a_win_rate": 0.6667,
+   "a_win_rate_wilson95": [
+    0.3,
+    0.9032
+   ]
+  },
+  {
+   "a": "Dragon Turbo",
+   "b": "Frog Monarch",
+   "games": 6,
+   "a_wins": 3,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.1876,
+    0.8124
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Machina Control",
+   "games": 5,
+   "a_wins": 2,
+   "a_win_rate": 0.4,
+   "a_win_rate_wilson95": [
+    0.1176,
+    0.7693
+   ]
+  },
+  {
+   "a": "Diva Hero",
+   "b": "Vayu Turbo",
+   "games": 5,
+   "a_wins": 2,
+   "a_win_rate": 0.4,
+   "a_win_rate_wilson95": [
+    0.1176,
+    0.7693
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "Zombie TeleDAD",
+   "games": 5,
+   "a_wins": 4,
+   "a_win_rate": 0.8,
+   "a_win_rate_wilson95": [
+    0.3755,
+    0.9638
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Hero Beat",
+   "games": 4,
+   "a_wins": 2,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.15,
+    0.85
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Quickdraw Plant",
+   "games": 4,
+   "a_wins": 1,
+   "a_win_rate": 0.25,
+   "a_win_rate_wilson95": [
+    0.0456,
+    0.6994
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Zombie TeleDAD",
+   "games": 4,
+   "a_wins": 3,
+   "a_win_rate": 0.75,
+   "a_win_rate_wilson95": [
+    0.3006,
+    0.9544
+   ]
+  },
+  {
+   "a": "Diva Frog",
+   "b": "Vayu Turbo",
+   "games": 4,
+   "a_wins": 3,
+   "a_win_rate": 0.75,
+   "a_win_rate_wilson95": [
+    0.3006,
+    0.9544
+   ]
+  },
+  {
+   "a": "Diva Hero",
+   "b": "Hero Frog",
+   "games": 4,
+   "a_wins": 3,
+   "a_win_rate": 0.75,
+   "a_win_rate_wilson95": [
+    0.3006,
+    0.9544
+   ]
+  },
+  {
+   "a": "Diva Hero Beat",
+   "b": "Hero Frog",
+   "games": 4,
+   "a_wins": 1,
+   "a_win_rate": 0.25,
+   "a_win_rate_wilson95": [
+    0.0456,
+    0.6994
+   ]
+  },
+  {
+   "a": "Frog Monarch",
+   "b": "Hero Frog",
+   "games": 4,
+   "a_wins": 3,
+   "a_win_rate": 0.75,
+   "a_win_rate_wilson95": [
+    0.3006,
+    0.9544
+   ]
+  },
+  {
+   "a": "Gigavise",
+   "b": "Gladiator Beast",
+   "games": 4,
+   "a_wins": 2,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.15,
+    0.85
+   ]
+  },
+  {
+   "a": "Gladiator Beast",
+   "b": "Lightsworn",
+   "games": 4,
+   "a_wins": 1,
+   "a_win_rate": 0.25,
+   "a_win_rate_wilson95": [
+    0.0456,
+    0.6994
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "Machina Control",
+   "games": 4,
+   "a_wins": 2,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.15,
+    0.85
+   ]
+  },
+  {
+   "a": "Lightsworn Fairy",
+   "b": "Vayu Turbo",
+   "games": 4,
+   "a_wins": 1,
+   "a_win_rate": 0.25,
+   "a_win_rate_wilson95": [
+    0.0456,
+    0.6994
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Fairy",
+   "games": 3,
+   "a_wins": 2,
+   "a_win_rate": 0.6667,
+   "a_win_rate_wilson95": [
+    0.2077,
+    0.9385
+   ]
+  },
+  {
+   "a": "Diva Frog",
+   "b": "Gravekeeper",
+   "games": 3,
+   "a_wins": 2,
+   "a_win_rate": 0.6667,
+   "a_win_rate_wilson95": [
+    0.2077,
+    0.9385
+   ]
+  },
+  {
+   "a": "Diva Frog",
+   "b": "Hero Frog",
+   "games": 3,
+   "a_wins": 2,
+   "a_win_rate": 0.6667,
+   "a_win_rate_wilson95": [
+    0.2077,
+    0.9385
+   ]
+  },
+  {
+   "a": "Frog Control",
+   "b": "Gladiator Beast",
+   "games": 3,
+   "a_wins": 2,
+   "a_win_rate": 0.6667,
+   "a_win_rate_wilson95": [
+    0.2077,
+    0.9385
+   ]
+  },
+  {
+   "a": "Frog OTK",
+   "b": "Gigavise",
+   "games": 3,
+   "a_wins": 1,
+   "a_win_rate": 0.3333,
+   "a_win_rate_wilson95": [
+    0.0615,
+    0.7923
+   ]
+  },
+  {
+   "a": "Frog OTK",
+   "b": "Gladiator Beast",
+   "games": 3,
+   "a_wins": 2,
+   "a_win_rate": 0.6667,
+   "a_win_rate_wilson95": [
+    0.2077,
+    0.9385
+   ]
+  },
+  {
+   "a": "Gigavise",
+   "b": "Lightsworn",
+   "games": 3,
+   "a_wins": 3,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.4385,
+    1.0
+   ]
+  },
+  {
+   "a": "Gladiator Beast",
+   "b": "Machina Control",
+   "games": 3,
+   "a_wins": 2,
+   "a_win_rate": 0.6667,
+   "a_win_rate_wilson95": [
+    0.2077,
+    0.9385
+   ]
+  },
+  {
+   "a": "Gladiator Beast",
+   "b": "Plant Frog",
+   "games": 3,
+   "a_wins": 2,
+   "a_win_rate": 0.6667,
+   "a_win_rate_wilson95": [
+    0.2077,
+    0.9385
+   ]
+  },
+  {
+   "a": "Plant Frog",
+   "b": "Vayu Turbo",
+   "games": 3,
+   "a_wins": 2,
+   "a_win_rate": 0.6667,
+   "a_win_rate_wilson95": [
+    0.2077,
+    0.9385
+   ]
+  },
+  {
+   "a": "Amaryllis",
+   "b": "Vayu Turbo",
+   "games": 2,
+   "a_wins": 2,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.3424,
+    1.0
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Diva Frog",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Jinzo Machina",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Plant Frog",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Zombie Plant",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Diva Frog",
+   "b": "Gladiator Beast",
+   "games": 2,
+   "a_wins": 2,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.3424,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Hero",
+   "b": "Dragon Turbo",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Diva Hero Beat",
+   "b": "Frog Monarch",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Diva Hero Beat",
+   "b": "Machina Control",
+   "games": 2,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.6576
+   ]
+  },
+  {
+   "a": "Diva Zombie",
+   "b": "Hero Frog",
+   "games": 2,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.6576
+   ]
+  },
+  {
+   "a": "Dragon Beat",
+   "b": "Machina Gadget",
+   "games": 2,
+   "a_wins": 2,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.3424,
+    1.0
+   ]
+  },
+  {
+   "a": "Dragon Turbo",
+   "b": "Frog OTK",
+   "games": 2,
+   "a_wins": 2,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.3424,
+    1.0
+   ]
+  },
+  {
+   "a": "Dragon Turbo",
+   "b": "Gladiator Beast",
+   "games": 2,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.6576
+   ]
+  },
+  {
+   "a": "Dragon Turbo",
+   "b": "Lightsworn Fairy",
+   "games": 2,
+   "a_wins": 2,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.3424,
+    1.0
+   ]
+  },
+  {
+   "a": "Fairy",
+   "b": "Hero Frog",
+   "games": 2,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.6576
+   ]
+  },
+  {
+   "a": "Frog Control",
+   "b": "Frog OTK",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Frog Monarch",
+   "b": "Frog OTK",
+   "games": 2,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.6576
+   ]
+  },
+  {
+   "a": "Frog Monarch",
+   "b": "Gladiator Beast",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Frog Monarch",
+   "b": "Hero Beat",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Frog OTK",
+   "b": "Hero Frog",
+   "games": 2,
+   "a_wins": 2,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.3424,
+    1.0
+   ]
+  },
+  {
+   "a": "Gigavise",
+   "b": "Hero Frog",
+   "games": 2,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.6576
+   ]
+  },
+  {
+   "a": "Gigavise",
+   "b": "Lightsworn Fairy",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Hero Beat",
+   "b": "Hero Frog",
+   "games": 2,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.6576
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "Lightsworn",
+   "games": 2,
+   "a_wins": 2,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.3424,
+    1.0
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "Lightsworn Fairy",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "Other",
+   "games": 2,
+   "a_wins": 2,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.3424,
+    1.0
+   ]
+  },
+  {
+   "a": "Lightsworn",
+   "b": "Quickdraw Plant",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Machina Control",
+   "b": "TeleDAD",
+   "games": 2,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.6576
+   ]
+  },
+  {
+   "a": "Macro Stun",
+   "b": "Vayu Turbo",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Quickdraw Plant",
+   "b": "Vayu Turbo",
+   "games": 2,
+   "a_wins": 1,
+   "a_win_rate": 0.5,
+   "a_win_rate_wilson95": [
+    0.0945,
+    0.9055
+   ]
+  },
+  {
+   "a": "Vayu Turbo",
+   "b": "Zombie TeleDAD",
+   "games": 2,
+   "a_wins": 2,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.3424,
+    1.0
+   ]
+  },
+  {
+   "a": "Amaryllis",
+   "b": "Dragon Beat",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Amaryllis",
+   "b": "Zombie TeleDAD",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Ancient Gear Machina",
+   "b": "Hero Frog",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Ancient Gear Machina",
+   "b": "Machina Control",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Assault Turbo",
+   "b": "Gigavise",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Assault Turbo",
+   "b": "Vayu Turbo",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Assault Turbo",
+   "b": "Zombie TeleDAD",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Diva Cat",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Diva Hero Zombie",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Dragon Beat",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Frog Control",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Gadget",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Gravekeeper",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Lightsworn Fairy",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Macro Stun",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "TeleDAD",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "Vaskii Turbo",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Blackwing",
+   "b": "X-Saber",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Cat Control",
+   "b": "Gladiator Beast",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Cat Control",
+   "b": "Vayu Turbo",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Dark Plant",
+   "b": "Frog OTK",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Cat",
+   "b": "Frog Monarch",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Cat",
+   "b": "Vayu Turbo",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Frog",
+   "b": "Hero Beat",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Frog",
+   "b": "Lightsworn",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Frog",
+   "b": "Quickdraw Plant",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Frog",
+   "b": "TeleDAD",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Hero",
+   "b": "Diva Zombie",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Hero",
+   "b": "Frog Monarch",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Hero",
+   "b": "Frog OTK",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Hero",
+   "b": "Gladiator Beast",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Hero",
+   "b": "Lightsworn",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Hero",
+   "b": "Quickdraw Plant",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Hero",
+   "b": "Zombie",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Hero Beat",
+   "b": "Hero Beat",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Hero Beat",
+   "b": "Machina Frog",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Hero Beat",
+   "b": "Machina Gadget",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Hero Beat",
+   "b": "Quickdraw Plant",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Hero Beat",
+   "b": "Turbo Frog",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Hero Beat",
+   "b": "Zombie TeleDAD",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Hero Zombie",
+   "b": "Dragon Beat",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Hero Zombie",
+   "b": "Frog Monarch",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Hero Zombie",
+   "b": "Machina Control",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Zombie",
+   "b": "Gladiator Beast",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Zombie",
+   "b": "Hero Beat",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Diva Zombie",
+   "b": "Lightsworn",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Zombie",
+   "b": "Lightsworn Fairy",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Diva Zombie",
+   "b": "Vayu Turbo",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Dragon Beat",
+   "b": "Frog Monarch",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Dragon Beat",
+   "b": "Gladiator Beast",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Dragon Beat",
+   "b": "Hero Frog",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Dragon Beat",
+   "b": "Vayu Turbo",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Dragon Turbo",
+   "b": "Fairy",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Dragon Turbo",
+   "b": "Gigavise",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Dragon Turbo",
+   "b": "Machina Control",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Dragon Turbo",
+   "b": "TeleDAD",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Fairy",
+   "b": "Vayu Turbo",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Flamvell Frog",
+   "b": "Flamvell Zombie",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Flamvell Frog",
+   "b": "Hero Frog",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Flamvell Frog",
+   "b": "Zombie Plant",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Frog Monarch",
+   "b": "Jinzo Machina",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Frog Monarch",
+   "b": "Lightsworn",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Frog Monarch",
+   "b": "Plant Frog",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Frog Monarch",
+   "b": "Zombie TeleDAD",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Frog OTK",
+   "b": "Lightsworn",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Frog OTK",
+   "b": "Machina Control",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Frog OTK",
+   "b": "X-Saber",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Frog OTK",
+   "b": "Zombie TeleDAD",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Gadget",
+   "b": "Vayu Turbo",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Gigavise",
+   "b": "Jinzo Machina",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Gladiator Beast",
+   "b": "Lightsworn Fairy",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Gladiator Beast",
+   "b": "Monster Mash",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Gladiator Beast",
+   "b": "Six Samurai",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Gravekeeper",
+   "b": "Lightsworn",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Gravekeeper",
+   "b": "X-Saber",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Hero Beat",
+   "b": "Machina Control",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Hero Beat",
+   "b": "Mausoleum Frog",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Hero Beat",
+   "b": "Vayu Turbo",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Hero Beat",
+   "b": "X-Saber",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Hero Beat",
+   "b": "Zombie TeleDAD",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "Jinzo Machina",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "Lightsworn Monarch",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "Quickdraw Frog",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "TeleDAD",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "Vaskii Turbo",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "X-Saber",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Hero Frog",
+   "b": "Zombie",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Jinzo Machina",
+   "b": "Lightsworn",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Lightsworn",
+   "b": "Lightsworn Fairy",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Lightsworn",
+   "b": "TeleDAD",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Lightsworn",
+   "b": "X-Saber",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Lightsworn Fairy",
+   "b": "Monster Mash",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Lightsworn Fairy",
+   "b": "Zombie TeleDAD",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Machina Cat",
+   "b": "Vayu Turbo",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Machina Frog",
+   "b": "Machina Gadget",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  },
+  {
+   "a": "Vayu Turbo",
+   "b": "X-Saber",
+   "games": 1,
+   "a_wins": 0,
+   "a_win_rate": 0.0,
+   "a_win_rate_wilson95": [
+    0.0,
+    0.7935
+   ]
+  },
+  {
+   "a": "Vayu Turbo",
+   "b": "Zombie Turbo",
+   "games": 1,
+   "a_wins": 1,
+   "a_win_rate": 1.0,
+   "a_win_rate_wilson95": [
+    0.2065,
+    1.0
+   ]
+  }
+ ],
+ "source": "https://formatlibrary.com/api/replays?filter=formatName:eq:Edison",
+ "expected_count": 698,
+ "retrieved_utc": "2026-11-04T09:01:06.208659+00:00",
+ "caveat": "Published replays are a selected sample of event games, not all games; game-level results share players and events, so intervals are descriptive."
+}

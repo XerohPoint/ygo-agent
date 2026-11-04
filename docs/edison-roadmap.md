@@ -41,6 +41,34 @@ Upstream `ygoai/rl/jax/agent.py` and `scripts/cleanba.py` contain a much larger
 card-embedding transformer learner, and `mcts/` contains a C++ AlphaZero tree.
 Neither is verified on the Edison pipeline or wired to it.
 
+## Target ruleset and external sources
+
+The target is **traditional community Edison**, as played on Format Library, Really
+Big Edison and Dueling Book. It is not Konami's Time Wizard variant with modern
+mechanics, announced around June 2025. That exemption comes from one fan-run post
+([edisonformat.net](https://www.edisonformat.net)) and is not independently confirmed.
+
+| Source | Use | Status |
+| --- | --- | --- |
+| [Rule differences](https://www.edisonformat.com/edison-rule-differences.html), [errata](https://www.edisonformat.com/rulings/relevant-errata), [rulings](https://www.edisonformat.com/rulings) | Rules specification for conformance tests | In use (M0) |
+| [Format Library deck gallery](https://formatlibrary.com/deck-gallery/edison) and its public API | Gauntlet decks with Side decks | In use (M0) |
+| Format Library replay metadata | Archetype share and human matchup results | [Collected](../tests/edison/reports/metagame-replays-2026-11-04/summary.json) |
+| Dueling Book replay contents | Move-level human games | **Blocked**: needs a token; requires permission |
+| YouTube matches | Human review of positions | Not planned as a dataset; costly to extract |
+
+Replay metadata covers 697 of 698 listed games from 85 events. Blackwing (22.7%) and
+Vayu Turbo (22.4%) lead by appearance. No fixture deck covers Vayu Turbo. Published
+replays are a selected sample, so shares and matchup records are guidance, not a
+true metagame measure, and the matchup sample sizes are small.
+
+Do not scrape Dueling Book replay contents. The token requirement is an access
+control, and the community scraper found (`nedhmn/duel-tools`) includes a CAPTCHA
+solver. Move-level data needs permission from the site or data supplied by players.
+Dueling Book is also a manual simulator without a rules engine, so its logs would
+not map directly onto simulator actions and may contain rewinds or illegal plays.
+If obtained, they could support imitation warm starts and a "does the engine agree
+with strong players?" benchmark.
+
 ## Order of work
 
 Each milestone unblocks the next. Deck building and siding are evaluated by playing
@@ -54,6 +82,8 @@ games, so they are only as trustworthy as the play policy underneath them.
   This decides whether search can be fast enough, and how M2 is built.
 - **Pool and metagame audit**: which legal cards actually work, sourced real Edison
   decks with Side decks, and what match play needs.
+- **Rules conformance**: test the simulator against the published rule differences,
+  errata and card rulings. Defects are reported first and fixed after review.
 
 Exit: a decision for M1's learner and M2's search, each backed by measurement.
 
