@@ -80,6 +80,27 @@ Keep our own short notes and links rather than republishing transcripts or video
 Each milestone unblocks the next. Deck building and siding are evaluated by playing
 games, so they are only as trustworthy as the play policy underneath them.
 
+### Decisions from M0 evidence (November 4, 2026)
+
+- **Evaluate greedily.** Playing the top action is the baseline; sampling stays a training
+  diagnostic ([fresh-seed test](edison-loss-review.md)). Revisit with adapting opponents.
+- **Search transport: arena snapshot.** One worker process per thread, built on the
+  [forward-model report](edison-forward-model.md). Start with PIMC and a fresh deal per iteration,
+  then add a learned belief. Defer ISMCTS unless measured losses call for it.
+- **Observation encoding is now the main native speed limit.** It cuts simulation throughput
+  by about 5.7×, so it is worth optimizing once the network's inputs settle.
+- **Train on the sourced gauntlet.** [18 lists](edison-pool-audit.md) covering 85.93% of replay
+  appearances pass legality today, and 90.66% once XX-Saber Gottoms is added. Main and Extra ran
+  1,296 duels with no crashes. Treat the 3 fixtures as a regression set.
+- **Treat the pool authority as the listed legal sets plus Format Library dates,** and add the 13
+  omitted cards, subject to the owner's review. YGOPRODeck's filter missed a card that appears
+  in 8 of 75 sampled tournament lists.
+- **Hardening comes before the wider pool or siding.** Production ignores Lua errors because it never
+  installs a message handler, and 114 confirmed cards crash the interface through unhandled prompts
+  such as coin, dice and declarations. The gauntlet's Main and Extra avoid these, but Side decks do not.
+- **Open: loading a position from a real external game.** Replay needs private data and construction
+  fails, so M6 and the position suite need their own solution.
+
 ### M0 — Evidence (in progress)
 
 - **Loss review**: why the learned policy loses to the heuristic, classified as
