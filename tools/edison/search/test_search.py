@@ -16,6 +16,8 @@ A stage fails if its result breaks its rule, and the program's exit code is the 
 """
 import argparse
 import json
+import math
+from multiprocessing.pool import ThreadPool
 import os
 from pathlib import Path
 import random
@@ -32,6 +34,11 @@ import search_common as sc  # noqa: E402
 TESTS = sc.OUT / "tests"
 SEED = 86000000
 SEMANTIC_GAP = 0.25  # a position estimated high must end in a win this much more often than one estimated low
+SEMANTIC_MIN = {"mid": 200, "sure": 20}  # decisions each side of a band needs before its result means anything
+CLOSING_HIGH = 0.8  # a move that ended the game, for the seat that won, should be estimated at least this high
+CLOSING_SHARE = 0.7  # in at least this share of such positions
+CLOSING_TOP = 0.7  # and to rank within CLOSING_TIE of the best option in at least this share, so numbers on the wrong option fail
+CLOSING_TIE = 0.05
 
 
 FAILURES = []
@@ -277,43 +284,53 @@ def stage_semantics(args, names):
     runs = {"clean": direction(play(lines, "semantics-clean", args.workers))}
     for mutant in ("flip-leaf", "flip-terminal"):
         runs[mutant] = direction(play(lines, f"semantics-{mutant}", args.workers, binary=sc.TEST_BIN, extra=("--mutant", mutant)))
-    points = lambda d: d["won_when_high"] - d["won_when_low"]
-    broken = []
-    for band in ("mid", "sure"):
-        if points(runs["clean"][band]) < SEMANTIC_GAP:
-            broken.append(f"clean {band}: estimates do not separate wins from losses")
-    if points(runs["flip-leaf"]["mid"]) > 0:
-        broken.append("flip-leaf went unseen")
-    if points(runs["flip-terminal"]["sure"]) > 0:
-        broken.append("flip-terminal went unseen")
+    runs["no-rollouts"] = direction(play(lines, "semantics-no-rollouts", args.workers, binary=sc.TEST_BIN, extra=("--mutant", "no-rollouts")))
+    broken = semantic_rules(runs)
+    empty = semantic_rules({**runs, "flip-leaf": runs["no-rollouts"], "flip-terminal": runs["no-rollouts"]})
+    broken += ["controls that produced no estimates were accepted"] * (not any("too few" in b for b in empty))
     return report("semantics", runs, broken)
 
 
+def semantic_rules(runs):
+    points = lambda d: d["won_when_high"] - d["won_when_low"]
+    thin = lambda d, band: min(d[band]["decisions"]) < SEMANTIC_MIN[band]
+    broken = []
+    for band in ("mid", "sure"):
+        if thin(runs["clean"], band):
+            broken.append(f"clean {band}: too few decisions")
+        elif points(runs["clean"][band]) < SEMANTIC_GAP:
+            broken.append(f"clean {band}: estimates do not separate wins from losses")
+    for mutant, band in (("flip-leaf", "mid"), ("flip-terminal", "sure")):
+        if thin(runs[mutant], band):
+            broken.append(f"{mutant}: too few decisions to show anything")
+        elif points(runs[mutant][band]) > 0:
+            broken.append(f"{mutant} went unseen")
+    return broken
+
+
 def stage_key(args, names):
-    """A row's last column is the deal key. A seat's own count falls behind the duel's whenever the other seat has decisions."""
+    """A row's last column is the deal key. It must be exactly how many decisions that seat had made, counted from the game's own record of who acted."""
     pairs = sc.neighbour_pairs(names)
     lines = [sc.job_line(f"g{i}", *pairs[i % len(pairs)], SEED + 6000 + i, i % 2, "n1702", 12, 4, 4, 1.0, 1, 17, 1) for i in range(8)]
 
     def check(played):
-        bad = behind = rows = 0
+        wrong = rows = behind = 0
         for g in played.values():
-            last = -1
             for row in g["log"]:
                 decision, key = row[0], row[-1]
                 rows += 1
-                bad += key <= last or key > decision
+                wrong += key != sum(seat == g["search_seat"] for seat in g["seats"][:decision])
                 behind += key < decision
-                last = key
-        return {"rows": rows, "out_of_order": bad, "behind_the_duel": behind}
+        return {"rows": rows, "wrong": wrong, "behind_the_duel": behind}
     clean = check(play(lines, "key-clean", args.workers))
-    planted = check(play(lines, "key-total", args.workers, binary=sc.TEST_BIN, extra=("--mutant", "total-key")))
-    broken = ["no rows"] * (not clean["rows"]) + ["keys out of order"] * bool(clean["out_of_order"]) + ["key follows the duel's count"] * (clean["behind_the_duel"] < 0.9 * clean["rows"])
-    broken += ["the planted key went unseen"] * (planted["behind_the_duel"] >= 0.9 * planted["rows"])
-    return report("key", {"clean": clean, "total-key": planted}, broken)
+    planted = {name: check(play(lines, f"key-{name}", args.workers, binary=sc.TEST_BIN, extra=("--mutant", name))) for name in ("total-key", "half-key")}
+    broken = ["no rows"] * (not clean["rows"]) + ["a key is not the seat's own count"] * bool(clean["wrong"]) + ["the seats never fell out of step, so this shows nothing"] * (not clean["behind_the_duel"])
+    broken += [f"{name} went unseen" for name, result in planted.items() if not result["wrong"]]
+    return report("key", {"clean": clean, **planted}, broken)
 
 
 def stage_provenance(args, names):
-    """A directory must not hand back games from other jobs, through the script or the binary."""
+    """A directory must not hand back games from other jobs or inputs, through the script or the binary."""
     pairs = sc.neighbour_pairs(names)
     first = [sc.job_line("g0", *pairs[0], SEED + 7000, -1, "n1702")]
     second = [sc.job_line("g0", *pairs[0], SEED + 7001, -1, "n1702")]
@@ -327,7 +344,18 @@ def stage_provenance(args, names):
     done = subprocess.run([str(sc.BIN), "play", "--root", str(sc.ROOT), "--registry", str(sc.REGISTRY), *sc.net_args(["n1702"]), "--codes-sha", sc.CODES_SHA, "--jobs", str(TESTS / "provenance.tsv"),
                            "--out", str(TESTS / "provenance"), "--workers", "1"], cwd=sc.SCRIPTS, capture_output=True, text=True)
     refused_binary = done.returncode != 0
-    return report("provenance", {"script_refuses": refused_script, "binary_refuses": refused_binary}, ["the script reused other jobs' games"] * (not refused_script) + ["the binary reused other jobs' games"] * (not refused_binary))
+    (TESTS / "provenance.tsv").write_text("".join(first))
+    done = subprocess.run([str(sc.TEST_BIN), "play", "--root", str(sc.ROOT), "--registry", str(sc.REGISTRY), *sc.net_args(["n1702"]), "--codes-sha", sc.CODES_SHA, "--jobs", str(TESTS / "provenance.tsv"),
+                           "--out", str(TESTS / "provenance"), "--workers", "1"], cwd=sc.SCRIPTS, capture_output=True, text=True)
+    refused_build = done.returncode != 0
+    refused = {"other jobs, script": refused_script, "other jobs, binary": refused_binary, "other build, binary": refused_build}
+    for label, options in (("other build, script", {"binary": sc.TEST_BIN}), ("other Lua", {"cwd": overlay("provenance", "")}), ("other arguments", {"extra": ("--mutant", "x")})):
+        try:
+            sc.play(first, TESTS / "provenance", 1, **options)
+            refused[label] = False
+        except SystemExit:
+            refused[label] = True
+    return report("provenance", refused, [f"{label}: reused the games" for label, ok in refused.items() if not ok])
 
 
 def stage_ranker(args, names):
@@ -356,6 +384,111 @@ def stage_ranker(args, names):
     broken = ["too few decisions"] * (checked < 20) + ["one seat never checked"] * (seats in (0, checked))
     broken += ["the ranker's network choice is not the move played"] * (right != checked) + ["using the other net went unseen"] * (wrong_net_right == checked)
     return report("ranker", {"checked": checked, "seat_1": seats, "network_choice_is_the_move": right, "with_the_other_net": wrong_net_right}, broken)
+
+
+def closing_decision(game):
+    """The last real choice of the seat that won. None if the game has none."""
+    for decision in range(game["decisions"] - 1, -1, -1):
+        if game["counts"][decision] > 1 and game["seats"][decision] == game["winner"]:
+            return decision
+    return None
+
+
+def judge_rank(position, out):
+    """The numbers a ranking shows must follow from its samples. Returns the recorded move's estimate as a win rate, or None if it wasn't compared."""
+    bad = 0
+    for o in out["options"]:
+        n = len(o["samples"])
+        bad += o["deals"] != n
+        if n:
+            mean = sum(o["samples"]) / n
+            error = math.sqrt(max(0.0, sum((v - mean) ** 2 for v in o["samples"]) / (n - 1)) / n) if n > 1 else 0.0
+            bad += abs(o["mean"] - mean) > 1e-9 or abs(o["error"] - error) > 1e-9
+    played = out["options"][position["move"]]
+    return bad, (played["mean"] + 1) / 2 if played["deals"] else None
+
+
+def rank_positions(positions, workers, binary=sc.BIN, **options):
+    def one(position):
+        return json.loads(sc.rank(*position["start"], position["moves"], net=position["net"], binary=binary, samples=1, **options))
+    with ThreadPool(workers) as pool:
+        return pool.map(one, positions)
+
+
+def judge_estimates(closing, closing_out, middle, middle_out):
+    """Against outcomes the ranker can't see: moves that won the game at once, and mid-game positions by who went on to win."""
+    bad = high = top = compared = 0
+    for position, out in zip(closing, closing_out):
+        wrong, estimate = judge_rank(position, out)
+        bad += wrong
+        if estimate is not None:
+            compared += 1
+            high += estimate >= CLOSING_HIGH
+            top += estimate >= max((o["mean"] + 1) / 2 for o in out["options"] if o["deals"]) - CLOSING_TIE
+    won, lost = [], []
+    for position, out in zip(middle, middle_out):
+        wrong, estimate = judge_rank(position, out)
+        bad += wrong
+        if estimate is not None:
+            (won if position["won"] else lost).append(estimate)
+    gap = float(np.mean(won) - np.mean(lost)) if won and lost else 0.0
+    return {"numbers_not_from_samples": bad, "closing": compared, "closing_high": high, "closing_top": top, "middle": [len(won), len(lost)], "middle_gap": round(gap, 3)}
+
+
+def estimate_rules(result):
+    broken = ["a shown number does not follow from its samples"] * bool(result["numbers_not_from_samples"])
+    broken += ["too few closing positions"] * (result["closing"] < 20) + ["moves that won are not estimated high"] * (result["closing_high"] < CLOSING_SHARE * max(1, result["closing"]))
+    broken += ["moves that won don't rank near the top"] * (result["closing_top"] < CLOSING_TOP * max(1, result["closing"]))
+    broken += ["too few middle positions"] * (min(result["middle"]) < 10) + ["estimates do not separate later wins from losses"] * (result["middle_gap"] < SEMANTIC_GAP)
+    return broken
+
+
+def game_positions(jobs, played, rng, middle_per_game=2):
+    closing, middle = [], []
+    for job in jobs:
+        fields = job.rstrip("\n").split("\t")
+        game = played[fields[0]]
+        if game["status"] != "OK" or game["winner"] not in (0, 1):
+            continue
+        make = lambda d: {"start": (fields[1], fields[2], int(fields[3])), "moves": game["moves"][:d], "move": game["moves"][d], "net": fields[5], "won": game["seats"][d] == game["winner"], "id": fields[0], "decision": d}
+        d = closing_decision(game)
+        if d is not None:
+            closing.append(make(d))
+        choices = [i for i in range(game["decisions"]) if game["counts"][i] > 1]
+        middle += [make(d) for d in rng.sample(choices, min(middle_per_game, len(choices)))]
+    return closing, middle
+
+
+def stage_estimates(args, names):
+    """The ranker's estimates, labels and errors, on positions with known outcomes. The planted rankers must all fail."""
+    pairs = sc.neighbour_pairs(names)
+    lines = [sc.job_line(f"g{i}", *pairs[i * 5 % len(pairs)], SEED + 7200 + i, -1, "n1702") for i in range(32)]
+    played = play(lines, "estimates", args.workers)
+    closing, middle = game_positions(lines, played, random.Random(SEED + 7200))
+    options = {"budget": 64, "depth": 48}
+    run = lambda binary=sc.BIN, **more: judge_estimates(closing, rank_positions(closing, args.workers, binary=binary, **options, **more), middle, rank_positions(middle, args.workers, binary=binary, **options, **more))
+    clean = run()
+    planted = {name: run(binary=sc.TEST_BIN, rank_mutant=name) for name in ("zero", "blank", "rotate")}
+    broken = estimate_rules(clean)
+    broken += [f"the planted {name} ranker passed" for name, result in planted.items() if not estimate_rules(result)]
+    # Labels: at a game's first decision, every card an option names comes from the acting seat's own list.
+    from rank_position import describe
+    metadata = sc.deck_registry.card_metadata()
+    names_by_id = {cid: meta["name"] for cid, meta in metadata.items()}
+    lists = sc.deck_registry.registry()
+    label_errors = labels = 0
+    for job in lines:
+        fields = job.split("\t")
+        out = json.loads(sc.rank(fields[1], fields[2], int(fields[3]), [], net=fields[5], budget=2, depth=0))
+        zones = sc.deck_registry.parse_ydk(Path(lists[fields[1 + out["seat"]]]).read_text())
+        own = {metadata[cid]["name"] for cid, meta in metadata.items() if any(meta["code"] in codes for codes in zones.values())}
+        for o in out["options"]:
+            row = bytes.fromhex(o["row"])
+            card = names_by_id.get(row[1] * 256 + row[2], "")
+            labels += bool(card)
+            label_errors += bool(card) and (card not in own or card not in describe(o["row"], names_by_id))
+    broken += ["no labels named a card"] * (not labels) + ["an opening option names a card outside the acting seat's list"] * bool(label_errors)
+    return report("estimates", {"clean": clean, **planted, "labels": labels, "label_errors": label_errors}, broken)
 
 
 def main():

@@ -15,8 +15,9 @@ it sees no core or environment type.
 1. Take the options the network may play, best logits first, up to `max_candidates`.
 2. For each deal: restore the root, deal from a seed, play one option, then roll out.
 3. A rollout plays the network greedily for both seats for `depth` network decisions, then asks the value
-   head. One-option steps are free. A finished duel scores +1, -1 or 0. A truncated or voided world gives
-   no value and is skipped.
+   head. One-option steps are free, including at the horizon. A rollout has its own repeat guard, so it can't
+   spin on an option that changes nothing. A finished duel scores +1, -1 or 0. A truncated or voided world
+   gives no value and is skipped.
 4. Every option compared sees the same deals, so comparisons are paired. Sequential halving cuts the
    candidates, and the network's own choice always survives.
 5. Play the best finalist only if its paired gain over the network's choice exceeds `margin_z` paired
@@ -78,17 +79,29 @@ The planted leaks are caught at every level. In the three families respectively,
 The pair test passes a fixed decision key, so it doesn't cover how the play loop chooses that key. That part
 is checked by reading the code only.
 
-The pairs share one load order for the cards in the sampled position, or differ only rarely. Sol found natural
-worlds where load order changes which card a random discard takes under the same deal seed, so the answers need
-not be identical when load orders differ. The defensible claim is about the distribution over seeds; see
-`docs/edison-forward-model.md`.
+The test doesn't record whether a pair's load orders differ. Sol found natural worlds where load order changes
+which card a random discard takes under the same deal seed, so identical answers aren't guaranteed in general. The
+defensible claim is about the distribution over seeds, and `docs/edison-forward-model.md` gives its limits.
 
 ## Pilot
 
 Each row is 336 games on 168 seeds, across the gauntlet's neighbouring pairs in both seats and 3 networks,
 at 64 rollouts per decision. These runs chose settings, so they are not the test.
 
-@@PILOT@@
+Seeds 86300000-86300167, with the plain network scoring 46.1% from the same seats and seeds. A draw would count
+half, and none occurred. These ran before the last forward model merge (commit 8554f63).
+
+| Setting | Score | 95% range | Leaves the network's choice | CPU per game |
+| --- | --- | --- | --- | --- |
+| Depth 48, rollouts without the guard | 76.2% | 71.4-80.4 | 16.4% | 48 s |
+| Depth 48 | 79.8% | 75.1-83.7 | 16.0% | 52 s |
+| Depth 96 | 77.4% | 72.6-81.5 | 13.8% | 112 s |
+
+The guard's 3.6 points are within noise on these 336 pairs. Depth 96 cost twice as much and did not score higher,
+so the test uses depth 48.
+
+Against a different network on seeds 86310000-86310167, depth 48 scored 75.9% (71.0-80.2), against 50.9% for the
+plain network on those seats and seeds.
 
 ### On the deals before Sol's fixes
 
@@ -125,8 +138,8 @@ decisions within a game aren't independent, so this is a pattern and not a measu
 
 - It has not been tried against a person, or against anything but the three networks of one training method.
 - It knows the opposing list, which a real player would have to infer.
-- Sampled worlds can still fail: about 100 of 1.5M rollouts at depth 48 on the old deals, mostly Lua errors. They
-  are discarded and counted, and the true duel isn't affected.
+- Sampled worlds can still fail. They are discarded and counted, and the true duel isn't affected. At depth 48 on the
+  fixed deals, 241 of 1.36M rollouts failed, all in one game.
 - When deals are refused, about 4-6% of searched decisions, the network plays without search. A refusal can
   reflect a hidden card (`docs/edison-forward-model.md`), so a seat's search being on or off is not perfectly
   independent of hidden information, though no estimate is steered by it.

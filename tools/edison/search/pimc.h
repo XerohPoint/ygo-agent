@@ -26,12 +26,14 @@ struct Config {
   double margin_z = 1.0;   // leave the network's choice only if the paired gain exceeds this many errors
   bool halving = true;     // false gives every candidate the same number of deals
   bool audit = true;       // audit every observation in a sampled world
+  bool keep_samples = false;  // keep each option's rollout results, so a ranking can show its working
   uint64_t seed = 0;
 };
 
 struct Counters {
   long deals_ok = 0, deals_refused = 0, rollouts = 0, worlds_void = 0, truncated = 0, net_errors = 0, net_calls = 0, forced_steps = 0,
        option_mismatch = 0, step_overruns = 0, guard_fires = 0;
+  std::string first_void;  // what the first voided world reported, for the game record
 };
 
 struct OptionEstimate {
@@ -39,6 +41,7 @@ struct OptionEstimate {
   int deals = 0;  // finished rollouts behind this estimate. Zero for an option not compared
   double mean = 0, error = 0;
   bool finalist = false;
+  std::vector<double> samples;  // only with Config::keep_samples
 };
 
 struct Result {
@@ -134,6 +137,9 @@ struct RolloutGuard {
 // Plays from the current world until its leaf. Returns false if the world produced no value.
 inline bool rollout(fm::SearchWorld &world, const ednet::Net &net, ednet::Scratch &scratch, int viewer, const Config &config, Counters &counters,
                     RolloutGuard &guard, double *value) {
+#ifdef SEARCH_TEST_HOOKS
+  if (g_mutant == "no-rollouts") return false;
+#endif
   constexpr int kMaxSteps = 4000;
   int left = config.depth;
   for (int steps = 0; steps < kMaxSteps; ++steps) {
@@ -257,7 +263,10 @@ inline Result search(fm::SearchWorld &world, const ednet::Net &net, ednet::Scrat
           ++counters.option_mismatch;
         } else if (world.step(option) == fm::Status::kVoid || !rollout(world, net, scratch, viewer, config, counters, guard, &value)) {
           value = missing;
-          if (world.voided()) ++counters.worlds_void;
+          if (world.voided()) {
+            ++counters.worlds_void;
+            if (counters.first_void.empty()) counters.first_void = world.last_diagnostic();
+          }
         }
         values[option].push_back(value);
       }
@@ -293,7 +302,10 @@ inline Result search(fm::SearchWorld &world, const ednet::Net &net, ednet::Scrat
     double total = 0, squares = 0;
     int count = 0;
     for (double v : values[option])
-      if (!std::isnan(v)) total += v, squares += v * v, ++count;
+      if (!std::isnan(v)) {
+        total += v, squares += v * v, ++count;
+        if (config.keep_samples) estimate.samples.push_back(v);
+      }
     estimate.deals = count;
     estimate.mean = count ? total / count : 0;
     estimate.error = count > 1 ? std::sqrt(std::max(0.0, (squares - total * total / count) / (count - 1)) / count) : 0;

@@ -44,18 +44,20 @@ def score(game, seat):
 
 
 def summarise(games, plain=None):
-    """games and plain share ids and seeds. Void games drop their pair from both arms, so both rates have one denominator."""
+    """games and plain share ids and seeds. Void games drop their pair from both arms, so both rates have one denominator. Without plain there is no baseline to show."""
     pairs = []
     for key, game in games.items():
         mine = score(game, game.get("search_seat"))
-        base = score(plain[key.replace("g", "p", 1)], game.get("search_seat")) if plain is not None else mine
+        base = score(plain[key.replace("g", "p", 1)], game.get("search_seat")) if plain is not None else 0.0
         if mine is not None and base is not None:
             pairs.append((key, mine, base))
     wins = sum(p[1] for p in pairs)
     low, high = wilson(wins, len(pairs))
     listed = list(games.values())
     out = {"games": len(listed), "pairs": len(pairs), "void": sum(g["status"] != "OK" for g in listed), "draws": sum(g["status"] == "OK" and g["winner"] not in (0, 1) for g in listed),
-           "search_score": round(100 * wins / max(1, len(pairs)), 2), "low": round(100 * low, 2), "high": round(100 * high, 2), "plain_score": round(100 * sum(p[2] for p in pairs) / max(1, len(pairs)), 2)}
+           "search_score": round(100 * wins / max(1, len(pairs)), 2), "low": round(100 * low, 2), "high": round(100 * high, 2)}
+    if plain is not None:
+        out["plain_score"] = round(100 * sum(p[2] for p in pairs) / max(1, len(pairs)), 2)
     for key in ("searched", "departed", "fell_back", "deals_ok", "deals_refused", "rollouts", "worlds_void", "truncated", "net_errors", "net_calls", "option_mismatch", "step_overruns", "rollout_guard_fires"):
         out[key] = sum(g.get(key, 0) for g in listed)
     out["departed_share"] = round(out["departed"] / max(1, out["searched"]), 4)
@@ -65,12 +67,12 @@ def summarise(games, plain=None):
 
 
 def calibration(games):
-    """Estimated win rate of the option played against how those games ended. Decisions in one game are not independent."""
+    """Estimated win rate of the option played against how those games ended, a draw counting half. Decisions in one game are not independent."""
     bins = [[0, 0.0, 0.0] for _ in range(10)]
     for g in games:
-        if g["status"] != "OK" or g["winner"] not in (0, 1):
+        won = score(g, g["search_seat"])
+        if won is None:
             continue
-        won = g["winner"] == g["search_seat"]
         for row in g.get("log", []):
             if row[2] < 2:
                 continue
@@ -83,15 +85,16 @@ def calibration(games):
 
 
 def splits(games):
+    """Scores with a draw counting half, as the headline does. These are for reading: one seed per matchup doesn't support a claim about a list."""
     out = {}
-    ok = [g for g in games if g["status"] == "OK" and g["winner"] in (0, 1)]
+    ok = [g for g in games if g["status"] == "OK"]
     for label, key in (("by_seat", lambda g: g["search_seat"]), ("by_net", lambda g: g["_job"][5]), ("by_search_deck", lambda g: g["_job"][1 + g["search_seat"]])):
         table = {}
         for g in ok:
             t = table.setdefault(str(key(g)), [0, 0])
-            t[0] += g["winner"] == g["search_seat"]
+            t[0] += score(g, g["search_seat"])
             t[1] += 1
-        out[label] = {k: {"games": n, "rate": round(100 * w / n, 1)} for k, (w, n) in sorted(table.items())}
+        out[label] = {k: {"games": n, "score": round(100 * w / n, 1)} for k, (w, n) in sorted(table.items())}
     return out
 
 

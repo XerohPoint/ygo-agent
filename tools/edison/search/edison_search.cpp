@@ -198,6 +198,22 @@ std::string json_text(const std::string &s) {
   return out + "\"";
 }
 
+// Names this executable in each game it writes, so a directory cannot resume under another build. Set before any fork.
+std::string g_binary_id;
+
+std::string binary_id() {
+  std::ifstream in("/proc/self/exe", std::ios::binary);
+  std::vector<char> buffer(1 << 20);
+  uint64_t hash = 14695981039346656037ULL;
+  while (in.read(buffer.data(), buffer.size()) || in.gcount() > 0) {
+    for (std::streamsize i = 0; i < in.gcount(); ++i) hash = (hash ^ static_cast<unsigned char>(buffer[i])) * 1099511628211ULL;
+    if (in.eof()) break;
+  }
+  char text[32];
+  snprintf(text, sizeof text, "%016llx", static_cast<unsigned long long>(hash));
+  return text;
+}
+
 struct Totals {
   pimc::Counters c;
   long searched = 0, departed = 0, fell_back = 0, net_decisions = 0;
@@ -209,6 +225,7 @@ struct Totals {
   }
   void add(const pimc::Result &r) {
     c.deals_ok += r.counters.deals_ok, c.deals_refused += r.counters.deals_refused, c.rollouts += r.counters.rollouts;
+    if (c.first_void.empty()) c.first_void = r.counters.first_void;
     c.worlds_void += r.counters.worlds_void, c.truncated += r.counters.truncated, c.net_errors += r.counters.net_errors;
     c.net_calls += r.counters.net_calls, c.forced_steps += r.counters.forced_steps, c.option_mismatch += r.counters.option_mismatch;
     c.step_overruns += r.counters.step_overruns;
@@ -236,8 +253,8 @@ void play_one(const Job &job, const std::string &out_dir) {
   assumption[0].opponent_main = main_deck_of(job.deck1);  // for the viewer in seat 0
   assumption[1].opponent_main = main_deck_of(job.deck0);
 
-  std::string text = "{\"id\":" + json_text(job.id) + ",\"job\":" + json_text(job.text);
-  std::string moves, log;
+  std::string text = "{\"id\":" + json_text(job.id) + ",\"job\":" + json_text(job.text) + ",\"binary\":" + json_text(g_binary_id);
+  std::string moves, seats, counts, log;
   uint32_t crc = 0;
   int decision = 0;
   Totals totals;
@@ -273,6 +290,7 @@ void play_one(const Job &job, const std::string &out_dir) {
           long key = own_decisions[seat];
 #ifdef SEARCH_TEST_HOOKS
           if (pimc::g_mutant == "total-key") key = decision;
+          if (pimc::g_mutant == "half-key") key = own_decisions[seat] + (decision - own_decisions[seat]) / 2;
 #endif
           pimc::Result result = pimc::search(*world, search_net, scratch, root.data(), allowed, assumption[seat], job.config, static_cast<uint64_t>(key));
           totals.add_stats(world->stats());
@@ -289,6 +307,8 @@ void play_one(const Job &job, const std::string &out_dir) {
         }
         guards[seat].tried[key].insert(choice);
       }
+      seats += (moves.empty() ? "" : ",") + std::to_string(seat);
+      counts += (moves.empty() ? "" : ",") + std::to_string(count);
       moves += (moves.empty() ? "" : ",") + std::to_string(choice);
       duel.play(choice);
       ++own_decisions[seat];
@@ -321,28 +341,30 @@ void play_one(const Job &job, const std::string &out_dir) {
   text += ",\"rollout_guard_fires\":" + std::to_string(totals.c.guard_fires);
   text += ",\"void_reasons\":" + list(totals.voids, static_cast<int>(fm::VoidReason::kCount));
   text += ",\"refusal_reasons\":" + list(totals.refusals, static_cast<int>(fm::DealRefusal::kCount));
-  text += ",\"reason\":" + json_text(reason) + ",\"moves\":[" + moves + "],\"log\":[" + log + "]}\n";
+  text += ",\"first_void\":" + json_text(totals.c.first_void);
+  text += ",\"reason\":" + json_text(reason) + ",\"moves\":[" + moves + "],\"seats\":[" + seats + "],\"counts\":[" + counts + "],\"log\":[" + log + "]}\n";
   write_all(out_dir + "/" + job.id + ".json", text);
 }
 
 int command_play(const std::string &jobs_path, const std::string &out_dir, int workers, int timeout_seconds) {
   std::vector<Job> jobs = read_jobs(jobs_path);
   mkdir(out_dir.c_str(), 0755);
+  g_binary_id = binary_id();
   size_t next = 0;
   std::map<pid_t, std::pair<size_t, time_t>> running;
   long started = 0, failed = 0;
   auto path_of = [&](size_t i) { return out_dir + "/" + jobs[i].id + ".json"; };
   auto mark_void = [&](size_t i, const std::string &why) {
     ++failed;
-    write_all(path_of(i), "{\"id\":" + json_text(jobs[i].id) + ",\"job\":" + json_text(jobs[i].text) + ",\"status\":\"VOID\",\"reason\":" + json_text(why) + "}\n");
+    write_all(path_of(i), "{\"id\":" + json_text(jobs[i].id) + ",\"job\":" + json_text(jobs[i].text) + ",\"binary\":" + json_text(g_binary_id) + ",\"status\":\"VOID\",\"reason\":" + json_text(why) + "}\n");
   };
   while (next < jobs.size() || !running.empty()) {
     while (next < jobs.size() && static_cast<int>(running.size()) < workers) {
       size_t i = next++;
-      if (access(path_of(i).c_str(), F_OK) == 0) {  // finished in an earlier run, which must have been this job
+      if (access(path_of(i).c_str(), F_OK) == 0) {  // finished in an earlier run, which must have been this job and this build
         std::ifstream earlier(path_of(i));
         std::string found((std::istreambuf_iterator<char>(earlier)), std::istreambuf_iterator<char>());
-        if (found.find("\"job\":" + json_text(jobs[i].text)) == std::string::npos) die(path_of(i) + " holds a different job");
+        if (found.find("\"job\":" + json_text(jobs[i].text) + ",\"binary\":" + json_text(g_binary_id)) == std::string::npos) die(path_of(i) + " holds a different job or build");
         continue;
       }
       fflush(nullptr);
@@ -448,10 +470,30 @@ int command_rank(std::map<std::string, std::string> &args) {
   config.margin_z = 1.0;
   config.halving = false;
   config.seed = args.count("search-seed") ? std::strtoull(args["search-seed"].c_str(), nullptr, 10) : 1;
+  config.keep_samples = args.count("samples") != 0;
   auto world = duel.open_search(seat);
   if (!world) die("no search world at the acting seat");
   pimc::Result result = pimc::search(*world, net, scratch, root.data(), allowed, assumption[seat], config, static_cast<uint64_t>(own_decisions[seat]));
   world.reset();
+#ifdef SEARCH_TEST_HOOKS
+  if (args["rank-mutant"] == "zero")
+    for (auto &o : result.options) o.mean = 0, o.error = 0;
+  if (args["rank-mutant"] == "blank")
+    for (auto &o : result.options) {
+      o.mean = 0, o.error = 0;
+      for (double &v : o.samples) v = 0;
+    }
+  if (args["rank-mutant"] == "rotate" && count > 1) {  // every number is right, on the wrong option
+    pimc::OptionEstimate first = result.options[0];
+    for (int i = 0; i + 1 < count; ++i) {
+      float logit = result.options[i].logit;
+      result.options[i] = result.options[i + 1];
+      result.options[i].logit = logit;
+    }
+    first.logit = result.options[count - 1].logit;
+    result.options[count - 1] = first;
+  }
+#endif
   std::string text = "{\"status\":\"OK\",\"seat\":" + std::to_string(seat) + ",\"decision\":" + std::to_string(decision) + ",\"chosen\":" + std::to_string(result.chosen) +
                      ",\"greedy\":" + std::to_string(result.greedy) + ",\"fell_back\":" + (result.fell_back ? "true" : "false");
   char number[260];
@@ -465,7 +507,17 @@ int command_rank(std::map<std::string, std::string> &args) {
   for (int i = 0; i < count; ++i) {
     const auto &o = result.options[i];
     snprintf(number, sizeof number, "{\"option\":%d,\"logit\":%.9g,\"deals\":%d,\"mean\":%.17g,\"error\":%.17g,\"row\":\"%s\"}", i, o.logit, o.deals, o.mean, o.error, rows[i].c_str());
-    text += (i ? "," : "") + std::string(number);
+    std::string item = number;
+    if (config.keep_samples) {
+      item.pop_back();
+      item += ",\"samples\":[";
+      for (size_t k = 0; k < o.samples.size(); ++k) {
+        snprintf(number, sizeof number, "%s%.17g", k ? "," : "", o.samples[k]);
+        item += number;
+      }
+      item += "]}";
+    }
+    text += (i ? "," : "") + item;
   }
   text += "]}\n";
   fputs(text.c_str(), stdout);

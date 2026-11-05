@@ -43,24 +43,47 @@ def job_line(job_id, deck0, deck1, seed, seat, net, budget=0, depth=0, candidate
     return f"{job_id}\t{deck0}\t{deck1}\t{seed}\t{seat}\t{net}\t{budget}\t{depth}\t{candidates}\t{z}\t{halving}\t{search_seed}\t{mode}\t{opponent_net or net}\n"
 
 
+def file_sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def inputs(binary, cwd, extra=()):
+    """Everything a game's result depends on besides its job line. The binary checks the nets against PARAMS_SHA itself."""
+    scripts = hashlib.sha256()
+    for path in sorted((Path(cwd) / "script").resolve().glob("*.lua")):
+        scripts.update(path.name.encode() + b"\0" + path.read_bytes())
+    lists = hashlib.sha256()
+    for line in sorted(REGISTRY.read_text().splitlines()):
+        name, path = line.split(" ", 1)
+        lists.update(name.encode() + b"\0" + Path(path).read_bytes())
+    return {"binary": file_sha(binary), "scripts": scripts.hexdigest(), "database": file_sha(ROOT / "assets/locale/en/cards.cdb"), "lists": lists.hexdigest(), "codes": file_sha(ROOT / "tools/edison/learner/codes_v1.txt"),
+            "nets": PARAMS_SHA, "extra": list(extra)}
+
+
 def play(lines, out_dir, workers, binary=BIN, cwd=SCRIPTS, timeout=3600, nets=None, fresh=False, extra=()):
-    """Games in out_dir must come from these jobs and this binary, so a directory resumes one run and nothing else. fresh discards it first."""
+    """Games in out_dir must come from these jobs and these inputs, so a directory resumes one run and nothing else. fresh discards it first.
+    Every attempt's counts are appended beside the directory. A worker's failure stays as that game's void file, so a resume can't erase it."""
     out_dir = Path(out_dir)
     jobs = out_dir.with_suffix(".tsv")
-    meta = out_dir.with_suffix(".binary")
-    built = hashlib.sha256(Path(binary).read_bytes()).hexdigest()
+    meta = out_dir.with_suffix(".inputs")
+    attempts = out_dir.with_suffix(".attempts")
+    built = inputs(binary, cwd, extra)
     if fresh and out_dir.exists():
         shutil.rmtree(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     if any(out_dir.glob("*.json")):
-        if not meta.exists() or meta.read_text().strip() != built:
-            raise SystemExit(f"{out_dir} holds games from another binary. Use another directory")
+        known = json.loads(meta.read_text()) if meta.exists() else {}
+        changed = [key for key in built if known.get(key) != built[key]]
+        if changed:
+            raise SystemExit(f"{out_dir} holds games from other inputs ({', '.join(changed)}). Use another directory")
         if not jobs.exists() or jobs.read_text() != "".join(lines):
             raise SystemExit(f"{out_dir} holds games from other jobs. Use another directory")
-    meta.write_text(built + "\n")
+    meta.write_text(json.dumps(built, indent=1) + "\n")
     jobs.write_text("".join(lines))
-    subprocess.run([str(binary), "play", "--root", str(ROOT), "--registry", str(REGISTRY), *net_args(nets), "--codes-sha", CODES_SHA, "--jobs", str(jobs),
-                    "--out", str(out_dir), "--workers", str(workers), "--timeout", str(timeout)] + list(extra), cwd=cwd, check=True, stdout=subprocess.DEVNULL)
+    done = subprocess.run([str(binary), "play", "--root", str(ROOT), "--registry", str(REGISTRY), *net_args(nets), "--codes-sha", CODES_SHA, "--jobs", str(jobs),
+                    "--out", str(out_dir), "--workers", str(workers), "--timeout", str(timeout)] + list(extra), cwd=cwd, check=True, stdout=subprocess.PIPE, text=True)
+    with attempts.open("a") as log:
+        log.write(done.stdout)
     wanted = {line.split("\t")[0] for line in lines}
     return {k: v for k, v in load(out_dir).items() if k in wanted}
 
