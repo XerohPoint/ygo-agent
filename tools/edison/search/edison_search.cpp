@@ -237,6 +237,7 @@ void play_one(const Job &job, const std::string &out_dir) {
   int decision = 0;
   Totals totals;
   RepeatGuard guards[2];
+  long own_decisions[2] = {0, 0};  // a seat cannot count the other's private prompts, so its deal seeds come from these
   double search_seconds = 0;
   std::string status = "OK", reason;
   int winner = -1, win_reason = 0;
@@ -264,7 +265,7 @@ void play_one(const Job &job, const std::string &out_dir) {
           double started = cpu_seconds();
           auto world = duel.open_search(seat);
           if (!world) throw std::runtime_error("no search world at the acting seat");
-          pimc::Result result = pimc::search(*world, search_net, scratch, root.data(), allowed, assumption[seat], job.config, static_cast<uint64_t>(decision));
+          pimc::Result result = pimc::search(*world, search_net, scratch, root.data(), allowed, assumption[seat], job.config, static_cast<uint64_t>(own_decisions[seat]));
           totals.add_stats(world->stats());
           world.reset();
           search_seconds += cpu_seconds() - started;
@@ -281,6 +282,7 @@ void play_one(const Job &job, const std::string &out_dir) {
       }
       moves += (moves.empty() ? "" : ",") + std::to_string(choice);
       duel.play(choice);
+      ++own_decisions[seat];
       ++decision;
     }
     winner = duel.winner();
@@ -392,6 +394,7 @@ int command_rank(std::map<std::string, std::string> &args) {
   std::vector<int> moves = parse_moves(args["moves"]);
   // The guard's memory is part of what the network would be allowed to play, so rebuild it on the way.
   RepeatGuard guards[2];
+  long own_decisions[2] = {0, 0};
   int decision = 0;
   for (int move : moves) {
     if (duel.done()) die("the game ended before the recorded moves did");
@@ -399,6 +402,7 @@ int command_rank(std::map<std::string, std::string> &args) {
     int seat = duel.to_play();
     if (duel.option_count() > 1) guards[seat].tried[RepeatGuard::key_of(duel.observe())].insert(move);
     duel.play(move);
+    ++own_decisions[seat];
     ++decision;
   }
   if (duel.done()) die("the game is over at this position");
@@ -431,7 +435,7 @@ int command_rank(std::map<std::string, std::string> &args) {
   config.seed = args.count("search-seed") ? std::strtoull(args["search-seed"].c_str(), nullptr, 10) : 1;
   auto world = duel.open_search(seat);
   if (!world) die("no search world at the acting seat");
-  pimc::Result result = pimc::search(*world, net, scratch, root.data(), allowed, assumption[seat], config, static_cast<uint64_t>(decision));
+  pimc::Result result = pimc::search(*world, net, scratch, root.data(), allowed, assumption[seat], config, static_cast<uint64_t>(own_decisions[seat]));
   world.reset();
   std::string text = "{\"status\":\"OK\",\"seat\":" + std::to_string(seat) + ",\"decision\":" + std::to_string(decision) + ",\"chosen\":" + std::to_string(result.chosen) +
                      ",\"greedy\":" + std::to_string(result.greedy) + ",\"fell_back\":" + (result.fell_back ? "true" : "false");

@@ -121,7 +121,8 @@ inline bool rollout(fm::SearchWorld &world, const ednet::Net &net, ednet::Scratc
 
 // One decision. root_logits are the network's on the viewer's observation, allowed the options it may
 // play. The world must be at its undealt root, and is left at some root or dealt state: closing it puts
-// the true position back. decision_key must come from public facts only, such as the decision's number.
+// the true position back. decision_key must come from what the viewer knows, such as how many decisions it has made. The duel's
+// whole decision count will not do: it counts the opponent's private prompts.
 inline Result search(fm::SearchWorld &world, const ednet::Net &net, ednet::Scratch &scratch, const float *root_logits, const std::vector<int> &allowed,
                      const fm::DealAssumption &assumption, const Config &config, uint64_t decision_key) {
   const int options = world.option_count();
