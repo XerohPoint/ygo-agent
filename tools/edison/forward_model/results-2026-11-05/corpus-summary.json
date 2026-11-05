@@ -2,9 +2,9 @@
  "module_sha256": "b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f",
  "cells": 42,
  "games": 672,
- "decisions": 121150,
- "seed_first": 85400000,
- "seed_last": 85441015,
+ "decisions": 120811,
+ "seed_first": 85600000,
+ "seed_last": 85641015,
  "lists": [
   "blackwing",
   "frog_monarch",
@@ -33,337 +33,337 @@
    "cell": 0,
    "deck0": "blackwing",
    "deck1": "frog_monarch",
-   "seed": 85400000,
+   "seed": 85600000,
    "games": 16,
-   "decisions": 2357
+   "decisions": 2449
   },
   {
    "cell": 1,
    "deck0": "frog_monarch",
    "deck1": "blackwing",
-   "seed": 85401000,
+   "seed": 85601000,
    "games": 16,
-   "decisions": 2149
+   "decisions": 3000
   },
   {
    "cell": 2,
    "deck0": "frog_monarch",
    "deck1": "machina_gadget",
-   "seed": 85402000,
+   "seed": 85602000,
    "games": 16,
-   "decisions": 2765
+   "decisions": 2105
   },
   {
    "cell": 3,
    "deck0": "machina_gadget",
    "deck1": "frog_monarch",
-   "seed": 85403000,
+   "seed": 85603000,
    "games": 16,
-   "decisions": 2471
+   "decisions": 2335
   },
   {
    "cell": 4,
    "deck0": "machina_gadget",
    "deck1": "g_blackwing",
-   "seed": 85404000,
+   "seed": 85604000,
    "games": 16,
-   "decisions": 2549
+   "decisions": 3110
   },
   {
    "cell": 5,
    "deck0": "g_blackwing",
    "deck1": "machina_gadget",
-   "seed": 85405000,
+   "seed": 85605000,
    "games": 16,
-   "decisions": 4300
+   "decisions": 3882
   },
   {
    "cell": 6,
    "deck0": "g_blackwing",
    "deck1": "g_vayu_turbo",
-   "seed": 85406000,
+   "seed": 85606000,
    "games": 16,
-   "decisions": 2154
+   "decisions": 3015
   },
   {
    "cell": 7,
    "deck0": "g_vayu_turbo",
    "deck1": "g_blackwing",
-   "seed": 85407000,
+   "seed": 85607000,
    "games": 16,
-   "decisions": 2684
+   "decisions": 3587
   },
   {
    "cell": 8,
    "deck0": "g_vayu_turbo",
    "deck1": "g_hero_frog",
-   "seed": 85408000,
+   "seed": 85608000,
    "games": 16,
-   "decisions": 2405
+   "decisions": 2599
   },
   {
    "cell": 9,
    "deck0": "g_hero_frog",
    "deck1": "g_vayu_turbo",
-   "seed": 85409000,
+   "seed": 85609000,
    "games": 16,
-   "decisions": 3185
+   "decisions": 2407
   },
   {
    "cell": 10,
    "deck0": "g_hero_frog",
    "deck1": "g_gladiator_beast",
-   "seed": 85410000,
+   "seed": 85610000,
    "games": 16,
-   "decisions": 3516
+   "decisions": 3335
   },
   {
    "cell": 11,
    "deck0": "g_gladiator_beast",
    "deck1": "g_hero_frog",
-   "seed": 85411000,
+   "seed": 85611000,
    "games": 16,
-   "decisions": 3578
+   "decisions": 3733
   },
   {
    "cell": 12,
    "deck0": "g_gladiator_beast",
    "deck1": "g_frog_monarch",
-   "seed": 85412000,
+   "seed": 85612000,
    "games": 16,
-   "decisions": 3635
+   "decisions": 3741
   },
   {
    "cell": 13,
    "deck0": "g_frog_monarch",
    "deck1": "g_gladiator_beast",
-   "seed": 85413000,
+   "seed": 85613000,
    "games": 16,
-   "decisions": 3059
+   "decisions": 3252
   },
   {
    "cell": 14,
    "deck0": "g_frog_monarch",
    "deck1": "g_dragon_turbo",
-   "seed": 85414000,
+   "seed": 85614000,
    "games": 16,
-   "decisions": 3658
+   "decisions": 3399
   },
   {
    "cell": 15,
    "deck0": "g_dragon_turbo",
    "deck1": "g_frog_monarch",
-   "seed": 85415000,
+   "seed": 85615000,
    "games": 16,
-   "decisions": 3448
+   "decisions": 3480
   },
   {
    "cell": 16,
    "deck0": "g_dragon_turbo",
    "deck1": "g_lightsworn",
-   "seed": 85416000,
+   "seed": 85616000,
    "games": 16,
-   "decisions": 3444
+   "decisions": 3113
   },
   {
    "cell": 17,
    "deck0": "g_lightsworn",
    "deck1": "g_dragon_turbo",
-   "seed": 85417000,
+   "seed": 85617000,
    "games": 16,
-   "decisions": 2681
+   "decisions": 2577
   },
   {
    "cell": 18,
    "deck0": "g_lightsworn",
    "deck1": "g_frog_otk",
-   "seed": 85418000,
+   "seed": 85618000,
    "games": 16,
-   "decisions": 1891
+   "decisions": 1546
   },
   {
    "cell": 19,
    "deck0": "g_frog_otk",
    "deck1": "g_lightsworn",
-   "seed": 85419000,
+   "seed": 85619000,
    "games": 16,
-   "decisions": 2904
+   "decisions": 2629
   },
   {
    "cell": 20,
    "deck0": "g_frog_otk",
    "deck1": "g_diva_hero_beat",
-   "seed": 85420000,
+   "seed": 85620000,
    "games": 16,
-   "decisions": 2733
+   "decisions": 2999
   },
   {
    "cell": 21,
    "deck0": "g_diva_hero_beat",
    "deck1": "g_frog_otk",
-   "seed": 85421000,
+   "seed": 85621000,
    "games": 16,
-   "decisions": 2672
+   "decisions": 2939
   },
   {
    "cell": 22,
    "deck0": "g_diva_hero_beat",
    "deck1": "g_gigavise",
-   "seed": 85422000,
+   "seed": 85622000,
    "games": 16,
-   "decisions": 2715
+   "decisions": 2591
   },
   {
    "cell": 23,
    "deck0": "g_gigavise",
    "deck1": "g_diva_hero_beat",
-   "seed": 85423000,
+   "seed": 85623000,
    "games": 16,
-   "decisions": 3607
+   "decisions": 2206
   },
   {
    "cell": 24,
    "deck0": "g_gigavise",
    "deck1": "g_machina_control",
-   "seed": 85424000,
+   "seed": 85624000,
    "games": 16,
-   "decisions": 1884
+   "decisions": 1760
   },
   {
    "cell": 25,
    "deck0": "g_machina_control",
    "deck1": "g_gigavise",
-   "seed": 85425000,
+   "seed": 85625000,
    "games": 16,
-   "decisions": 1794
+   "decisions": 2858
   },
   {
    "cell": 26,
    "deck0": "g_machina_control",
    "deck1": "g_diva_hero",
-   "seed": 85426000,
+   "seed": 85626000,
    "games": 16,
-   "decisions": 2144
+   "decisions": 2563
   },
   {
    "cell": 27,
    "deck0": "g_diva_hero",
    "deck1": "g_machina_control",
-   "seed": 85427000,
+   "seed": 85627000,
    "games": 16,
-   "decisions": 3198
+   "decisions": 2411
   },
   {
    "cell": 28,
    "deck0": "g_diva_hero",
    "deck1": "g_zombie_teledad",
-   "seed": 85428000,
+   "seed": 85628000,
    "games": 16,
-   "decisions": 3058
+   "decisions": 3531
   },
   {
    "cell": 29,
    "deck0": "g_zombie_teledad",
    "deck1": "g_diva_hero",
-   "seed": 85429000,
+   "seed": 85629000,
    "games": 16,
-   "decisions": 3599
+   "decisions": 2968
   },
   {
    "cell": 30,
    "deck0": "g_zombie_teledad",
    "deck1": "g_diva_frog",
-   "seed": 85430000,
+   "seed": 85630000,
    "games": 16,
-   "decisions": 3128
+   "decisions": 3440
   },
   {
    "cell": 31,
    "deck0": "g_diva_frog",
    "deck1": "g_zombie_teledad",
-   "seed": 85431000,
+   "seed": 85631000,
    "games": 16,
-   "decisions": 3376
+   "decisions": 2569
   },
   {
    "cell": 32,
    "deck0": "g_diva_frog",
    "deck1": "g_hero_beat",
-   "seed": 85432000,
+   "seed": 85632000,
    "games": 16,
-   "decisions": 3895
+   "decisions": 3277
   },
   {
    "cell": 33,
    "deck0": "g_hero_beat",
    "deck1": "g_diva_frog",
-   "seed": 85433000,
+   "seed": 85633000,
    "games": 16,
-   "decisions": 3443
+   "decisions": 3615
   },
   {
    "cell": 34,
    "deck0": "g_hero_beat",
    "deck1": "g_lightsworn_fairy",
-   "seed": 85434000,
+   "seed": 85634000,
    "games": 16,
-   "decisions": 2715
+   "decisions": 3327
   },
   {
    "cell": 35,
    "deck0": "g_lightsworn_fairy",
    "deck1": "g_hero_beat",
-   "seed": 85435000,
+   "seed": 85635000,
    "games": 16,
-   "decisions": 2424
+   "decisions": 2268
   },
   {
    "cell": 36,
    "deck0": "g_lightsworn_fairy",
    "deck1": "g_quickdraw_plant",
-   "seed": 85436000,
+   "seed": 85636000,
    "games": 16,
-   "decisions": 2349
+   "decisions": 2150
   },
   {
    "cell": 37,
    "deck0": "g_quickdraw_plant",
    "deck1": "g_lightsworn_fairy",
-   "seed": 85437000,
+   "seed": 85637000,
    "games": 16,
-   "decisions": 2292
+   "decisions": 2719
   },
   {
    "cell": 38,
    "deck0": "g_quickdraw_plant",
    "deck1": "g_vayu_turbo_ddev08",
-   "seed": 85438000,
+   "seed": 85638000,
    "games": 16,
-   "decisions": 2864
+   "decisions": 3714
   },
   {
    "cell": 39,
    "deck0": "g_vayu_turbo_ddev08",
    "deck1": "g_quickdraw_plant",
-   "seed": 85439000,
+   "seed": 85639000,
    "games": 16,
-   "decisions": 3321
+   "decisions": 2120
   },
   {
    "cell": 40,
    "deck0": "g_vayu_turbo_ddev08",
    "deck1": "blackwing",
-   "seed": 85440000,
+   "seed": 85640000,
    "games": 16,
-   "decisions": 2553
+   "decisions": 2855
   },
   {
    "cell": 41,
    "deck0": "blackwing",
    "deck1": "g_vayu_turbo_ddev08",
-   "seed": 85441000,
+   "seed": 85641000,
    "games": 16,
-   "decisions": 2553
+   "decisions": 2637
   }
  ]
 }

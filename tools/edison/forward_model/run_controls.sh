@@ -14,8 +14,9 @@ B="$ROOT/build/forward_model"
 R="$B/controls.jsonl"
 : > "$R"
 cd "$ROOT/scripts"
+#   The load-order classification must not explain a planted leak away, and the distribution test must see one.
 for leak in leak-hand leak-seed leak-order; do
-  "$B/fm_bench_mutant" redeal --root .. --mutant "$leak" --per-cell "${CONTROL_PER_CELL:-1}" --deals 6 --cap 3000 --workers 4 \
+  "$B/fm_bench_mutant" redeal --root .. --mutant "$leak" --per-cell "${CONTROL_PER_CELL:-1}" --deals 6 --cap 3000 --workers 4 --distribution-deals 60 --distribution-every 1 \
     --log "$B/control-$leak.log" 2> "$B/control-$leak.stderr" | sed "s/^{/{\"mutant\":\"$leak\",/" | tee -a "$R"
 done
 "$B/fm_bench_mutant" setfixture --root .. --mutant relax-set --out "$B/control-relax-set.jsonl" | sed 's/^{/{"mutant":"relax-set",/' | tee -a "$R"
