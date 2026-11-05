@@ -4,8 +4,8 @@ Determinized search for the play engine: for each decision, deal the hidden card
 network's best few options on the same deals, and leave the network's choice only if an option does
 measurably better. Code is in `tools/edison/search/`.
 
-**Status:** pilot results only, and they choose settings. The M2 test has not run. See
-[What this does not show](#what-this-does-not-show).
+**Status:** pilot results only, and they choose settings. The M2 test's plan is in
+[`edison-m2-protocol.md`](edison-m2-protocol.md). See [What this does not show](#what-this-does-not-show).
 
 ## How one decision works
 
@@ -39,7 +39,10 @@ python3 tools/edison/search/rank_position.py --game build/edison-search/pilot2-b
 `rank_position.py` lists every option with an estimated win rate and an error. Run it from `scripts/`.
 
 `edison_search play` plays games from a job file, one forked process per game. `search_study.py` runs the
-pilots and the different-network study, and `test_search.py` runs the checks below.
+pilots and the different-network study, `test_search.py` runs the checks below, and `m2_final.py` is the M2 test.
+
+Run games through the Python scripts. They refuse to resume a directory if the jobs, binary, nets, Lua scripts,
+database, lists, code list or arguments changed. Run directly, the binary checks only the job and its own build.
 
 ## Assumptions
 
@@ -52,16 +55,37 @@ pilots and the different-network study, and `test_search.py` runs the checks bel
 
 ## Checks
 
-`test_search.py`, on the deals after Sol's forward model review. Seeds 86000000-86009999.
+`test_search.py`, seeds 86000000-86009999. Each stage returns a failing exit code if a rule breaks, and the rows
+that name a planted fault are checked on a broken build too.
 
 | Check | Result |
 | --- | --- |
 | Without search, native play matches the JAX production chain and winner | 84 games, 12,380 decisions, 0 differ |
 | A search that runs but is ignored changes nothing | 84 games, 12,099 decisions, 6,196 searches, 0 differ |
-| Same game and seed across worker counts | 64 games, 5,337 searches, 0 differ |
+| Same game and seed across worker counts | 64 games, 4,940 searches, 0 differ |
 | A wrong opposing list is never searched | 32 positions, 0 searched |
-| Planted Lua failure and refused prompt in sampled worlds | 16 games each, 1,505 worlds voided, 0 worker deaths. The 6 games where the true duel also hit it are void |
-| Planted hang | 2 games, 61 worlds voided, 0 worker deaths, 1 true duel void |
+| Planted Lua failure and refused prompt in sampled worlds | 16 games each, 1,504 worlds voided each, 0 worker deaths. The 3 games each where the true duel also hit it are void |
+| Planted hang | 2 games, 71 worlds voided, 0 worker deaths, 1 true duel void |
+| The deal key is the seat's own decision count, from the game's record of who acted | 641 rows, 0 wrong. Planted total count wrong on 607, half the opponent's count on 588 |
+| Estimates separate wins from losses, on games the network plays | Won 27% of decisions estimated low and 67% estimated high; near-certain 0% and 99.5%. Flipping the leaf or terminal sign reverses it, and controls with no estimates fail |
+| A directory refuses other jobs, builds, Lua and arguments | 6 of 6 refused |
+| The ranker loads the acting seat's net at that decision | 47 of 47 network choices match the move played, against 35 with the other net |
+
+**The ranker's numbers**, on 64 games with budget 64 and depth 48:
+
+| Ranker | Shown numbers wrong | Options alone that differ | Winner's last choice estimated at 80%+ | Later wins minus losses | Branches agreeing |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Correct | 0 | 0 of 645 | 58 of 63 | 37 points | 30 of 34 |
+| All means and errors zero | 645 | 0 of 127 | no estimates pass | none | none |
+| All numbers zero, samples too | 0 | 0 of 127 | 0 of 63 | 0 points | none |
+| Numbers rotated across all options | 0 | 127 of 127 | 46 of 63 | 34 points | 7 of 34 |
+| Rotated across all but the network's | 0 | 60 of 127 | 58 of 63 | 37 points | 21 of 34 |
+| Swapped between the best and worst only | 0 | 15 of 127 | 58 of 63 | 37 points | 30 of 34 |
+| Rollouts step the next option | 0 | 0 of 127 | 46 of 63 | 34 points | 7 of 34 |
+
+"Alone" rolls an option out with no others on the deals it had, which must give the same results to the last bit. A
+branch plays the shown best and worst in the true duel and ranks from there. Opening labels name cards from the acting
+seat's list: 511 of 511. These are floors, not measures of accuracy.
 
 **Privacy.** Two natural duels with one public history and one viewer view must get byte-identical search
 answers, because the search may depend only on what the viewer can see. Pairs come from the forward model's
@@ -69,19 +93,21 @@ R4 and R4W rigs. The last row is the case a same-timeline test can't reach, such
 
 | Pairs | Both searched | One side refused | Answers identical |
 | --- | --- | --- | --- |
-| R4, one private timeline | 222 | 0 | 222 |
-| R4W, one private timeline | 218 | 0 | 218 |
-| R4W, private timelines differ | 121 | 0 | 121 |
+| R4, one private timeline | 215 | 0 | 215 |
+| R4W, one private timeline | 207 | 0 | 207 |
+| R4W, private timelines differ | 146 | 0 | 146 |
 
-The planted leaks are caught at every level. In the three families respectively, answers matched on 18 of 66,
-22 of 78 and 5 of 42 pairs with the hand leak; 15, 20 and 5 with the seed leak; and 8, 11 and 0 with the order leak.
+The planted leaks are caught in every family. In the three families respectively, answers matched on 20 of 82,
+20 of 84 and 13 of 45 pairs with the hand leak; 16, 17 and 10 with the seed leak; and 3, 3 and 1 with the order leak.
 
 The pair test passes a fixed decision key, so it doesn't cover how the play loop chooses that key. That part
 is checked by reading the code only.
 
 The test doesn't record whether a pair's load orders differ. Sol found natural worlds where load order changes
-which card a random discard takes under the same deal seed, so identical answers aren't guaranteed in general. The
-defensible claim is about the distribution over seeds, and `docs/edison-forward-model.md` gives its limits.
+which card a random discard takes under the same deal seed, so identical answers aren't guaranteed in general. Over
+seeds the random picks tested showed no dependence, but a group summon such as Return from the Different Dimension
+follows true load order on every seed. So a search can learn which public card the engine will prompt first, which a
+player couldn't. It doesn't learn what's in a hidden slot. `docs/edison-forward-model.md` gives the limits.
 
 ## Pilot
 

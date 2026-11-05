@@ -44,7 +44,7 @@ The unit of inference is the block, and the claim covers these 168 ordered pairs
    - At least 20 closing positions were estimated. In at least 70%, the move played is estimated at 80% or higher, and in at least 70% it is within 5 points of the best option.
    - At least 10 middle positions on each side. The move played is estimated at least 25 points higher when that seat went on to win, on the unrounded numbers.
    - **Branches.** In positions where the shown best and worst options are at least 20 points apart, play each in the true duel, through any forced steps, and rank from there with the same settings. A branch that ends at the decision limit gives no result. At least 15 such positions must be usable, and in at least 75% the shown best must really come out above the shown worst. This is what ties an option to the action the true duel plays.
-   - No ranking, including those for branches, lost a world to a failure, and all of them repeat exactly.
+   - No ranking, including those for branches, lost a world to a failure. The closing and middle rankings repeat exactly in full, and the branch values the comparison uses repeat exactly.
 
 These thresholds were set from `test_search.py`'s `estimates` stage on seeds 86007200-86007263, not from this test's games, and two smaller check cohorts of Sol's. They are floors for "the numbers mean what they say", not measures of how accurate the estimates are. A branch compares estimates with estimates, not with a known truth, and it has limited power: a ranker with numbers on the wrong options can pass it, which is why Alone exists. Failing a coverage floor would fail this test for a reason unrelated to strength, and the report would say so.
 
