@@ -35,10 +35,10 @@ def net_args(names=None):
     return args
 
 
-def job_line(job_id, deck0, deck1, seed, seat, net, budget=0, depth=0, candidates=0, z=0.0, halving=1, search_seed=0, mode=0):
+def job_line(job_id, deck0, deck1, seed, seat, net, budget=0, depth=0, candidates=0, z=0.0, halving=1, search_seed=0, mode=0, opponent_net=None):
     if any(low <= seed <= high for low, high in FORBIDDEN):
         raise SystemExit(f"seed {seed} is forbidden")
-    return f"{job_id}\t{deck0}\t{deck1}\t{seed}\t{seat}\t{net}\t{budget}\t{depth}\t{candidates}\t{z}\t{halving}\t{search_seed}\t{mode}\n"
+    return f"{job_id}\t{deck0}\t{deck1}\t{seed}\t{seat}\t{net}\t{budget}\t{depth}\t{candidates}\t{z}\t{halving}\t{search_seed}\t{mode}\t{opponent_net or net}\n"
 
 
 def play(lines, out_dir, workers, binary=BIN, cwd=SCRIPTS, timeout=3600, nets=None):

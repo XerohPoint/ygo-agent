@@ -6,9 +6,10 @@
 //                      [--budget N --depth N --search-seed N --max-candidates N --assume-opponent DECK]
 //
 // The working directory must hold ./script. A job is one tab-separated line:
-//   id deck0 deck1 seed_plus_env search_seat net budget depth max_candidates margin_z halving search_seed mode
-// search_seat -1 plays the network in both seats. Mode 0 plays the search's choice. Mode 1 runs the search
-// and plays the network's choice anyway, which must not change the game.
+//   id deck0 deck1 seed_plus_env search_seat net budget depth max_candidates margin_z halving search_seed mode opponent_net
+// search_seat -1 plays net in seat 0 and opponent_net in seat 1. Otherwise the search uses net, in its rollouts for both seats too,
+// and the other seat plays opponent_net without search. Mode 0 plays the search's choice. Mode 1 runs the search and plays the
+// network's choice anyway, which must not change the game.
 #include <fcntl.h>
 #include <signal.h>
 #include <sys/stat.h>
@@ -140,7 +141,7 @@ int best_allowed(const float *logits, const std::vector<int> &allowed) {
 }
 
 struct Job {
-  std::string id, deck0, deck1, net;
+  std::string id, deck0, deck1, net, opponent_net;
   uint64_t seed = 0, search_seed = 0;
   int search_seat = -1, mode = 0;
   pimc::Config config;
@@ -157,11 +158,11 @@ std::vector<Job> read_jobs(const std::string &path) {
     Job j;
     int halving = 1;
     if (!(row >> j.id >> j.deck0 >> j.deck1 >> j.seed >> j.search_seat >> j.net >> j.config.budget >> j.config.depth >> j.config.max_candidates >>
-          j.config.margin_z >> halving >> j.search_seed >> j.mode))
+          j.config.margin_z >> halving >> j.search_seed >> j.mode >> j.opponent_net))
       die("bad job: " + line);
     j.config.halving = halving != 0;
     j.config.seed = j.search_seed;
-    if (!g_nets.count(j.net)) die("job names an unloaded net: " + j.net);
+    if (!g_nets.count(j.net) || !g_nets.count(j.opponent_net)) die("job names an unloaded net: " + j.net + " or " + j.opponent_net);
     jobs.push_back(j);
   }
   return jobs;
@@ -196,6 +197,12 @@ std::string json_text(const std::string &s) {
 struct Totals {
   pimc::Counters c;
   long searched = 0, departed = 0, fell_back = 0, net_decisions = 0;
+  long voids[static_cast<int>(fm::VoidReason::kCount)] = {};
+  long refusals[static_cast<int>(fm::DealRefusal::kCount)] = {};
+  void add_stats(const fm::WorldStats &stats) {
+    for (int i = 0; i < static_cast<int>(fm::VoidReason::kCount); ++i) voids[i] += stats.voids[i];
+    for (int i = 0; i < static_cast<int>(fm::DealRefusal::kCount); ++i) refusals[i] += stats.deals_refused[i];
+  }
   void add(const pimc::Result &r) {
     c.deals_ok += r.counters.deals_ok, c.deals_refused += r.counters.deals_refused, c.rollouts += r.counters.rollouts;
     c.worlds_void += r.counters.worlds_void, c.truncated += r.counters.truncated, c.net_errors += r.counters.net_errors;
@@ -214,10 +221,12 @@ double cpu_seconds() {
 }
 
 void play_one(const Job &job, const std::string &out_dir) {
-  const ednet::Net &net = g_nets.at(job.net)->net;
+  const ednet::Net &search_net = g_nets.at(job.net)->net;
+  const ednet::Net *seat_net[2] = {&search_net, &g_nets.at(job.opponent_net)->net};
+  if (job.search_seat == 1) std::swap(seat_net[0], seat_net[1]);
   ednet::Scratch scratch;
   const char *err = nullptr;
-  if (!ednet::create_scratch(scratch, net.config, &err)) die(err);
+  if (!ednet::create_scratch(scratch, search_net.config, &err)) die(err);
   fm::DealAssumption assumption[2];
   assumption[0].opponent_main = main_deck_of(job.deck1);  // for the viewer in seat 0
   assumption[1].opponent_main = main_deck_of(job.deck0);
@@ -243,7 +252,7 @@ void play_one(const Job &job, const std::string &out_dir) {
         ednet::RawObs raw = pimc::to_raw(obs);
         float value = 0;
         const float *logits = nullptr;
-        int verdict = ednet::evaluate_full(net, scratch, raw, true, &value, &logits);
+        int verdict = ednet::evaluate_full(*seat_net[seat], scratch, raw, true, &value, &logits);
         if (verdict != ednet::kOk) throw std::runtime_error("network refused the true observation: status " + std::to_string(verdict));
         ++totals.net_decisions;
         std::vector<float> root(logits, logits + count);
@@ -255,7 +264,8 @@ void play_one(const Job &job, const std::string &out_dir) {
           double started = cpu_seconds();
           auto world = duel.open_search(seat);
           if (!world) throw std::runtime_error("no search world at the acting seat");
-          pimc::Result result = pimc::search(*world, net, scratch, root.data(), allowed, assumption[seat], job.config, static_cast<uint64_t>(decision));
+          pimc::Result result = pimc::search(*world, search_net, scratch, root.data(), allowed, assumption[seat], job.config, static_cast<uint64_t>(decision));
+          totals.add_stats(world->stats());
           world.reset();
           search_seconds += cpu_seconds() - started;
           totals.add(result);
@@ -292,6 +302,13 @@ void play_one(const Job &job, const std::string &out_dir) {
            totals.c.rollouts, totals.c.worlds_void, totals.c.truncated, totals.c.net_errors, totals.c.net_calls, totals.c.forced_steps, totals.c.option_mismatch,
            totals.c.step_overruns, guards[0].fires, guards[1].fires, search_seconds, cpu_seconds());
   text += numbers;
+  auto list = [](const long *values, int count) {
+    std::string out = "[";
+    for (int i = 0; i < count; ++i) out += (i ? "," : "") + std::to_string(values[i]);
+    return out + "]";
+  };
+  text += ",\"void_reasons\":" + list(totals.voids, static_cast<int>(fm::VoidReason::kCount));
+  text += ",\"refusal_reasons\":" + list(totals.refusals, static_cast<int>(fm::DealRefusal::kCount));
   text += ",\"reason\":" + json_text(reason) + ",\"moves\":[" + moves + "],\"log\":[" + log + "]}\n";
   write_all(out_dir + "/" + job.id + ".json", text);
 }
