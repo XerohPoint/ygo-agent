@@ -2,26 +2,34 @@
 
 ## November 5, 2026: the forward model on the certified rules build, after review
 
-Branch `m2-forward-model`. Sol's review of `fae7262` found real problems. This section replaces that commit's report, and every number in it comes from the final build. Nothing here is search. The older spike below keeps its own measurements, labelled as old core.
+Branch `m2-forward-model`. Sol reviewed `fae7262` and then `9380186`, and both reviews found real problems. This section replaces those commits' reports, and every number in it comes from the final build, unless it is marked as a replay of the older corpus. Nothing here is search. The older spike below keeps its own measurements, labelled as old core.
 
-**Result: the forward model runs on today's certified rules, on all 21 gauntlet lists. It matches production at every decision, restores byte-exactly, and deals only what the public history allows.** In the wider leak test, where two worlds need only one public history and may differ in private prompts, all 5,596 of 5,596 dealt pairs have equal hidden slots, 5,596 have equal canonical chains and 5,588 match in every observation byte. A hand trap declined in private no longer shows: Gorz differs in 0 of 1,921 compared decisions, against 961 on the old rule. The suite now has a verdict: `run_all.sh` returns the exit code of a checker, and the checker is itself tested on 28 planted faults.
+**Result: the forward model runs on today's certified rules, on all 21 gauntlet lists. It matches production at every decision, restores byte-exactly, and deals only what the public history allows.** One deal seed gives one set of hidden cards across true worlds with one public history, in all 5,440 of 5,440 dealt pairs of the wider leak test. It does not always give one future. A random pick over a group reads the true load order, so one seed can discard another card: 119 of 2,265 compared worlds on Sol's Thestalos line. **The defensible claim is about seeds as samples: over deal seeds, tests found no dependence on load order,** and the same tests catch a planted first-card pick at p below 1e-100. See [What holds across true worlds](#what-holds-across-true-worlds). A hand trap declined in private no longer shows: Gorz differs in 0 of 1,842 compared decisions, against 915 on the old rule. The suite now has a verdict: `run_all.sh` returns the exit code of a checker, and the checker is itself tested on 65 planted faults.
 
-**What is not resolved:** the deal still assumes the opposing decklist is known, a refusal can still reveal a little, exact bytes still differ in 8 of 5,596 R4W pairs, 2.2% of positions refuse every deal, and deals ignore what an opponent's passes imply. See [Still open](#still-open).
+**What is not resolved:** the deal still assumes the opposing decklist is known, a refusal can still reveal a little, one seed does not name one future across load orders, 2.1% of positions refuse every deal, and deals ignore what an opponent's passes imply. See [Still open](#still-open).
 
 ### What the review found
 
 | # | Finding | Reproduced? | Now |
 | --- | --- | --- | --- |
 | 1 | A privately declined Gorz leaves a chain entry on the hand card, so deals refuse in that world only | Yes: 20 of 20 against 0 of 20 | Fixed. The entry is stale, so the deal clears it |
-| 2 | R4's pairs share one private timeline, so it could not see finding 1 | Yes, by reading | R4W added: 2,863 accepted worlds, 1,085 with a private difference |
+| 2 | R4's pairs share one private timeline, so it could not see finding 1 | Yes, by reading | R4W added: 2,770 accepted worlds, 1,017 with a private difference |
 | 3 | Deals break a hard rule: a Level 6-10 monster in a slot Normal Set with no Tributes | Yes: 467 of 1,000 | Fixed: 0 of 1,000 on the same line. Control 467 of 1,000 |
-| 4 | Exact option order depends on true history | Yes | Mostly fixed: 3,507 of 3,508 in R4, 5,588 of 5,596 in R4W now match in every byte. Every cause found is fixed except one, which I left. See [What remains](#what-remains-of-option-order) |
+| 4 | Exact option order depends on true history | Yes | Mostly fixed: 3,494 of 3,494 in R4, 5,436 of 5,440 in R4W now match in every byte. Every remaining pair is verified as load order, which is left in place. See [What holds](#what-holds-across-true-worlds) |
 | 5 | The hang watchdog stops nothing while the arena is off | Yes: not stopped in 5 s | Fixed. Only glibc's allocator defers a jump now |
 | 6 | A marker hides behind a flush, and one printed before a throw is emitted later | Yes, both | Fixed: stdout is our own stream, captured during a guard. The `size_t` underflow went with the old pointer arithmetic |
 | 7 | Gates report failures without failing, and a capped rollout counted as finished | Yes, by reading | Fixed: `check_results.py`. A world finishes only on `kTerminal` |
 | 8 | The example scores production's decision limit as a loss | By reading | Fixed in the example and the header's sketch |
 
-R4W also found a bug the review did not: a dealt monster kept what the Deck object last held for this turn's attack counts. See [What R4 found](#what-r4-found-on-the-way).
+**The second review** (of `9380186`) found three things, all reproduced:
+
+| # | Finding | Now |
+| --- | --- | --- |
+| 1 | The same seed discards another card and changes Life Points across load orders, on a natural line | True, and left in place. Measured below, and the contract now says it. Sol's seed 85550000 is outside this round's block, so I rebuilt the line on 85660000: 119 of 2,265 |
+| 2 | The checker read no continuation observation, winner or coverage counter | Fixed. All six of Sol's mutations exit nonzero, and are in `test_checker.py`. Five of the six pass the old checker; the sixth, which it always caught, is Sol's control |
+| 3 | `KNOWN` was a number, so an unrelated failure under it passed | Fixed. Each pair that fails any comparison must be listed and verified as load order. See [The suite's verdict](#the-suites-verdict) |
+
+R4W found two bugs neither review did: a dealt monster's attack counts (below), and an effect-id limit that read the opening hands (below).
 
 ### The pin
 
@@ -36,11 +44,11 @@ R4W also found a bug the review did not: a dealt monster kept what the Deck obje
 
 ### Corpus
 
-Production's own heuristic in both seats, through the certified module. Each of the 21 registry lists against its next neighbour, in both seats: 42 cells, 16 games each, 672 games, 121,150 decisions. Seeds **85400000 + cell × 1000 + env, so 85400000-85441015**. Fixtures use 85450002 (the Set line), 85450000 (the API check) and 85450100-85450267 (hand traps). `collect_corpus.py` refuses anything outside 85400000-85499999. Position sampling uses other constants, which are not game seeds.
+Production's own heuristic in both seats, through the certified module. Each of the 21 registry lists against its next neighbour, in both seats: 42 cells, 16 games each, 672 games, 120,811 decisions. Seeds **85600000 + cell × 1000 + env, so 85600000-85641015**. Fixtures use 85650002 (the Set line), 85650000 (the API check), 85650100-85650267 (hand traps) and 85660000-85660002 (load order). `collect_corpus.py` refuses anything outside 85600000-85699999. This is a new corpus for this round, so every exception on it is unseen. Position sampling uses other constants, which are not game seeds.
 
 ### Production equivalence
 
-| 672 games, 121,150 decisions, 21 lists | Differences |
+| 672 games, 120,811 decisions, 21 lists | Differences |
 | --- | ---: |
 | Acting player | 0 |
 | Option count | 0 |
@@ -61,7 +69,7 @@ The check from [Correctness](#correctness) below, on all 21 lists: every option 
 
 | Check | Result |
 | --- | --- |
-| Branch points / options / reference decisions | 504 / 1,649 / 263,720 |
+| Branch points / options / reference decisions | 504 / 1,682 / 265,415 |
 | Truncated, failed positions, diagnostics | 0, 0, 0 |
 | Arena restore vs straight run: decision chain, deep hash, every observation byte | **0 mismatches** |
 | Options in reverse order | **0 mismatches** |
@@ -69,24 +77,24 @@ The check from [Correctness](#correctness) below, on all 21 lists: every option 
 | Fork vs straight run; replay repeated; replay in a scrambled heap | **0 mismatches** |
 | Return to the position and finish the recorded game | **0 mismatches** |
 | Everything outside the core (`env_hash`, below) | **0 mismatches** |
-| **Whole arena, byte for byte** | **0 bytes differ in 4.28 GB, over 1,649 comparisons** |
+| **Whole arena, byte for byte** | **0 bytes differ in 4.36 GB, over 1,682 comparisons** |
 
 **How rollback of state outside the core is proved:**
 
 - The observation chain includes history bytes at every decision.
 - `env_hash` folds in both history rings and cursors, reveal memory, the Deck binder's ranks, decision context, multi-select and prompt state, the environment's random streams and the message buffer.
 - The whole-arena comparison needs no list of what matters. Two children start from one root. One runs an option straight. The other runs other options first, restores, then runs it. Every byte of every object, live or freed, allocator included, must match.
-- Statics: three playouts change one thing in the program's 2.7 MB of `.data` and `.bss`, the test bed's own `g_query_buf` scratch (2476 bytes). `check_statics.py` fails on any other.
+- Statics: three playouts change one thing in the program's 2.7 MB of `.data` and `.bss`, the test bed's own `g_query_buf` scratch (3236 bytes). `check_statics.py` fails on any other.
 
-**Negative controls.** Each plants a real miss in the rollback, on 126 branch points, 460 options:
+**Negative controls.** Each plants a real miss in the rollback, on 126 branch points, 455 options:
 
 | Planted | Arena mismatches | Decision | Deep | Observation bytes | Other checks |
 | --- | ---: | ---: | ---: | ---: | --- |
-| History rings not rolled back | 334 | 0 | 334 | 334 | Reverse 460, return 126, bytes 22, failed positions 0 |
-| History cursors not rolled back | 334 | 0 | 334 | 331 | Reverse 460, return 126, bytes 460, failed positions 0 |
-| A stale reveal key left behind | 460 | 0 | 460 | 201 | Reverse 460, return 126, bytes 1, failed positions 0 |
-| A stale Deck binder rank left behind | 460 | 0 | 460 | 0 | Reverse 460, return 126, bytes 0, failed positions 0 |
-| Core random stream one step on | 460 | 402 | 460 | 404 | Reverse 460, return 100, bytes 0, failed positions 30 |
+| History rings not rolled back | 329 | 0 | 329 | 329 | Reverse 455, return 126, bytes 31, failed positions 0 |
+| History cursors not rolled back | 327 | 0 | 327 | 319 | Reverse 453, return 126, bytes 454, failed positions 0 |
+| A stale reveal key left behind | 455 | 0 | 455 | 181 | Reverse 455, return 126, bytes 1, failed positions 0 |
+| A stale Deck binder rank left behind | 455 | 0 | 455 | 0 | Reverse 455, return 126, bytes 0, failed positions 0 |
+| Core random stream one step on | 455 | 407 | 455 | 411 | Reverse 455, return 86, bytes 0, failed positions 45 |
 
 ### Determinizer
 
@@ -134,31 +142,31 @@ If a list gains a card that breaks these facts, `check_set_rules.py` fails.
 | --- | --- |
 | The Set line from the review, 1,000 deals | 0 above Level 4, 0 rule violations, 0 refused |
 | **Control:** the old rule on the same line | 467 above Level 4, 467 rule violations |
-| R2 deals checked by an independent reading of the rules | 0 violations in 11,826 |
-| **True world rejected**, recorded play: every face-down slot, both viewers, every decision | 0 of 552,105 slot views over 121,150 decisions |
-| **True world rejected**, random play | 0 of 407,128 slot views over 164,105 decisions |
-| Of those random-play views: no Tribute / 1 / 2 / Sirocco's procedure open | 80,735 / 13,269 / 4,386 / 17,290 |
-| Uniformity, a free hand slot, against exact odds counted by brute force | Chi-square 3996 on 4,123 degrees of freedom (ratio 0.969), 179 positions, 0 past 3 sigma |
-| Uniformity, a constrained slot | Chi-square 1625 on 1,571 (ratio 1.035), 139 positions, 2 past 3 sigma |
+| R2 deals checked by an independent reading of the rules | 0 violations in 11,844 |
+| **True world rejected**, recorded play: every face-down slot, both viewers, every decision | 0 of 553,228 slot views over 120,811 decisions |
+| **True world rejected**, random play | 0 of 395,972 slot views over 161,490 decisions |
+| Of those random-play views: no Tribute / 1 / 2 / Sirocco's procedure open | 78,896 / 13,031 / 4,838 / 17,133 |
+| Uniformity, a free hand slot, against exact odds counted by brute force | Chi-square 3986 on 3,865 degrees of freedom (ratio 1.031), 167 positions, 2 past 3 sigma |
+| Uniformity, a constrained slot | Chi-square 1279 on 1,332 (ratio 0.960), 121 positions, 1 past 3 sigma |
 
-The checker failed the run before this one on the constrained slot, at ratio 0.84. A ratio that low means counts too even for chance. The test used one seed list for every position, so positions with one pool got the same counts and their chi-squares were not independent. With seeds per position it is 1.035. No deal code changed for this.
+An earlier run failed the checker on the constrained slot, at ratio 0.84. A ratio that low means counts too even for chance. The test used one seed list for every position, so positions with one pool got the same counts and their chi-squares were not independent. With seeds per position it is 0.960. No deal code changed for this.
 
-Random play was needed: the heuristic almost never Sets a low-Level monster, so recorded play has 0 such views. A face-down monster equipped through Armory Arm, or a card of the other player's in a face-down zone, is not dealt: the deal refuses it. 207 slot views in random play were of that kind.
+Random play was needed: the heuristic almost never Sets a low-Level monster, so recorded play has 0 such views. A face-down monster equipped through Armory Arm, or a card of the other player's in a face-down zone, is not dealt: the deal refuses it. 166 slot views in random play were of that kind.
 
 **Refusals.** Over 12,096 deals at 2,016 real roots:
 
 | Outcome | Deals | |
 | --- | ---: | --- |
-| Dealt | 11,826 | 97.8% |
-| Refused: the pending operation holds a hidden card | 270 | 2.2% |
+| Dealt | 11,844 | 97.9% |
+| Refused: the pending operation holds a hidden card | 252 | 2.1% |
 | Refused: a hidden card carries rule state | 0 | 0.0% |
-| Positions where every deal was refused | 45 of 2,016 | 2.2% |
+| Positions where every deal was refused | 42 of 2,016 | 2.1% |
 
 `fae7262` refused 234 deals on a different corpus: 150 core reference and 84 rule state. **Rule-state refusals fell to 0 once stale chain entries and Tributes left the check.** The core writes an entry when it merely offers a private trigger (`card::create_relation`, `processor.cpp`) and does not take it off when the player declines, and it looks an entry up only by effect and chain id, and chain ids are never reused. So an entry whose chain is not live means nothing, and the deal clears it. One whose chain is live refuses. Tributes, which `carries_object_state` also refused on, now move with the slot.
 
 The core-reference count rose in one way, deliberately. A viewer's own Deck card held by a pending operation, such as the top card an effect is about to Summon, carried its true identity into the sampled world. R4W found it: two worlds went different ways at the next prompt. Now only the candidates of the viewer's live prompt may move, and any other pointer into the viewer's Deck refuses.
 
-**What a refusal can still reveal.** `kCoreReference` reads no hidden code, but which cards a pending operation holds can depend on hidden cards. In the hand-trap pairs below, it separated two worlds at 2 of 4,194 compared decisions, where a pending-chain list held an opposing hand card's optional trigger while the viewer was prompted first. The hidden fact it reveals is that the opponent holds a card with a trigger waiting at this moment. `kHiddenObjectState` refused nothing here and would reveal that a hidden card carries rule state: a counter, relation, equip or added effect. A search must take no signal from either, and should not re-roll the seed on them, since they do not depend on it.
+**What a refusal can still reveal.** `kCoreReference` reads no hidden code, but which cards a pending operation holds can depend on hidden cards. In the hand-trap pairs below, it separated two worlds at 1 of 3,996 compared decisions, where a pending-chain list held an opposing hand card's optional trigger while the viewer was prompted first. The hidden fact it reveals is that the opponent holds a card with a trigger waiting at this moment. `kHiddenObjectState` refused nothing here and would reveal that a hidden card carries rule state: a counter, relation, equip or added effect. A search must take no signal from either, and should not re-roll the seed on them, since they do not depend on it.
 
 ### R1-R5 on all 21 lists
 
@@ -167,22 +175,22 @@ The core-reference count rose in one way, deliberately. A viewer's own Deck card
 | Test | Result |
 | --- | --- |
 | R1. Reorder both Decks: playouts completed | 12,096 of 12,096. Same seed reproduces all (0 differ) |
-| R2. Full re-deal: dealt | 11,826 of 12,096 |
-| R2. Playouts completed | 11,826 of 11,826. Same seed reproduces all (0 differ) |
-| R2. **Viewer's own observation changed by the deal** | **0 of 11,826**, including 774 own Deck options re-bound |
+| R2. Full re-deal: dealt | 11,844 of 12,096 |
+| R2. Playouts completed | 11,844 of 11,844. Same seed reproduces all (0 differ) |
+| R2. **Viewer's own observation changed by the deal** | **0 of 11,844**, including 1074 own Deck options re-bound |
 | R1, R2. Invariant failures, diagnostics, exceptions | 0, 0, 0 |
-| R2. **A slot's attack state changed by the deal** | **0 of 11,826**. Control, state left on the object: 744 of 744 |
-| R2. Cost per deal | 162 µs on this loaded machine |
-| R3. Re-deal vs natural duel, same assignment: board | 1,573 of 1,573 |
-| R3. Forward chain, canonical order | **1,573 of 1,573** |
-| R3. Winner | 1,573 of 1,573 |
-| R3. Exact option order against the natural duel | 1,243 of 1,573. Not a leak measure: see below |
-| R3. Alternate-history acceptance | 1,754 of 5,913: early 1109/1986, mid 304/1968, late 341/1959 |
-| R5. Cards outside the true list: playouts completed | 12,042 of 12,042, 175 µs. 70.6% of those cards moved in play |
+| R2. **A slot's attack state changed by the deal** | **0 of 11,844**. Control, state left on the object: 750 of 750 |
+| R2. Cost per deal | 284 µs on this loaded machine |
+| R3. Re-deal vs natural duel, same assignment: board | 1,538 of 1,538 |
+| R3. Forward chain, canonical order | **1,538 of 1,538** |
+| R3. Winner | 1,538 of 1,538 |
+| R3. Exact option order against the natural duel | 1,470 of 1,538. Not a leak measure: see below |
+| R3. Alternate-history acceptance | 1,747 of 5,922: early 1107/1986, mid 328/1971, late 312/1965 |
+| R5. Cards outside the true list: playouts completed | 12,048 of 12,048, 276 µs. 70.7% of those cards moved in play |
 
 **R3 exact order** fell, and that is the cost of the fix below. A sampled world's effect order no longer follows the true duel's arrival order, so it no longer copies the natural duel's arbitrary order among equal effects. Canonical chains, the rule outcome, are unchanged.
 
-**The two old undiagnosed differences** (R3 game 57 index 11, R4 game 28 index 150) are on seeds I may not replay, so neither was re-run. The same class recurred on an earlier corpus and its cause is found: the environment's own random stream, which decides the End Phase random discard. The rig's reset does not draw from it as `reset()` does, so natural and swapped worlds held different streams, and the old deal reseeded only the core's. Given one stream, the R3 chain matches in all 1,573 above. That this explains those two old cases is likely and not verified.
+**The two old undiagnosed differences from `fae7262`'s corpus** (R3 game 57 index 11, R4 game 28 index 150) are on seeds I may not replay, so neither was re-run. The same class recurred on an earlier corpus and its cause is found: the environment's own random stream, which decides the End Phase random discard. The rig's reset does not draw from it as `reset()` does, so natural and swapped worlds held different streams, and the old deal reseeded only the core's. Given one stream, the R3 chain matches in all 1,538 above. That this explains those two old cases is likely and not verified.
 
 ### The leak tests
 
@@ -192,95 +200,188 @@ R4W replays the recorded game against a rigged Deck. Worlds must agree on public
 
 | | R4 | R4W | R4W, pairs with a private difference |
 | --- | ---: | ---: | ---: |
-| Samples / accepted | 5,913 / 1,754 | 6,048 / 2,863 | 1,085 worlds |
-| Extra / skipped private prompts | | 6,462 / 4,286 | |
-| Pairs | 3,508 | 5,726 | 2,170 |
-| Refused in both worlds | 0 | 130 | |
+| Samples / accepted | 5,922 / 1,747 | 6,048 / 2,770 | 1,017 worlds |
+| Extra / skipped private prompts | | 5,378 / 3,546 | |
+| Pairs | 3,494 | 5,540 | 2,034 |
+| Refused in both worlds | 0 | 100 | |
 | **Refused in one world only** | 0 | **0** | 0 |
-| **Hidden slots equal** | 3,508 | **5,596** | 2,110 |
-| **Forward chain, canonical order** | 3,507 | **5,596** | 2,110 |
-| Winner | 3,508 | 5,596 | |
-| Viewer's observation at the root | 3,508 | 5,596 | |
-| Next 8 viewer decisions, all bytes | 3,508 | 5,596 | |
-| Exact order, viewer's bytes to the end of the game | 3,507 | 5,588 | |
-| **Every seat's bytes to the end of the game** | 3,507 | **5,588** | 2,104 (exact chain) |
+| **Hidden slots equal** | 3,494 | **5,440** | 1,990 |
+| **Forward chain, canonical order** | 3,493 | **5,439** | 1,990 |
+| Winner | 3,494 | 5,440 | |
+| Viewer's observation at the root | 3,494 | 5,440 | |
+| Next 8 viewer decisions, all bytes | 3,494 | 5,440 | |
+| Exact order, viewer's bytes to the end of the game | 3,494 | 5,436 | |
+| **Every seat's bytes to the end of the game** | 3,494 | **5,436** | 1,988 (exact chain) |
 | Hard-rule violations | | 0 | |
-| Control, no re-deal: chains equal / viewer bytes equal | 27 / 24 of 1,754 | | |
+| Control, no re-deal: chains equal / viewer bytes equal | 20 / 18 of 1,747 | | |
 
-**R4W's rejections:** 2,914 where the true world took an opposing action other than a decline that the rigged world could not take, 271 on a public difference, 0 on a viewer's byte. **What it still misses:** worlds where the opponent took a different private action, as a different Set or a different choice at a private prompt. Those need a model of the opponent's choices, and rejection here is why R4W accepts 47.3%. It also shares R4's blind spots: one list, one opposing Extra Deck.
+**R4W's rejections:** 3,022 where the true world took an opposing action other than a decline that the rigged world could not take, 255 on a public difference, 1 on a viewer's byte. **What it still misses:** worlds where the opponent took a different private action, as a different Set or a different choice at a private prompt. Those need a model of the opponent's choices, and rejection here is why R4W accepts 45.8%. It also shares R4's blind spots: one list, one opposing Extra Deck.
 
 **Hand traps and private prompts.** Each opposing card with a trigger or Quick effect from the hand, in each list that holds it: one duel with that card in the opening hand, one with it at the bottom of the Deck, one scripted public line, and the opponent declining everything. Four seeds per list pair. Wherever the viewer's views have matched so far, the two worlds must deal alike.
 
 | | Result | Old rule (`refuse-relate` control) |
 | --- | ---: | ---: |
 | Fixtures | 224 | 224 |
-| Fixtures with extra private prompts | 129 | |
-| Extra private prompts: Gorz / D.D. Crow / Tragoedia / Battle Fader | 277 / 218 / 61 / 41 | |
-| Viewer decisions compared | 4,194 | 4,194 |
-| **One world refused, the other dealt** | **2** | **1,422** |
-| Of those, Gorz | 0 of 1,921 | 961 |
+| Fixtures with extra private prompts | 135 | |
+| Extra private prompts: Gorz / D.D. Crow / Tragoedia / Battle Fader | 267 / 229 / 97 / 47 | |
+| Viewer decisions compared | 3,996 | 3,996 |
+| **One world refused, the other dealt** | **1** | **1,465** |
+| Of those, Gorz | 0 of 1,842 | 915 |
 | Slots differ / canonical chain differs / exact differs | 0 / 0 / 0 | |
 
-Honest, Kalut and Herald of Orange Light reached no private prompt on this line, as it has no battle with an opposing monster. So those three are not exercised here. Sol's exact Gorz pair sits on a seed outside this round's block, so I reproduced it on Sol's build of `fae7262` (20 of 20 refused against 0 of 20) and the regression test rebuilds the same situation on seeds 85450100-85450267.
+Honest, Kalut and Herald of Orange Light reached no private prompt on this line, as it has no battle with an opposing monster. So those three are not exercised here. Sol's exact Gorz pair sits on a seed outside this round's block, so I reproduced it on Sol's build of `fae7262` (20 of 20 refused against 0 of 20) and the regression test rebuilds the same situation on seeds 85650100-85650267.
 
 **The planted leaks.** 170 pairs each in R4:
 
 | Planted | Slots equal | Canonical chain | All bytes | Root bytes |
 | --- | ---: | ---: | ---: | ---: |
-| Deal keeps the true opposing hand | 16 of 170 | 17 | 16 | 170 |
-| Deal's seed mixed with the true opposing hand | 16 of 170 | 17 | 16 | 170 |
-| Deal's pool keeps the true slot order | 0 of 170 | 0 | 0 | 170 |
+| Deal keeps the true opposing hand | 14 of 164 | 15 | 14 | 164 |
+| Deal's seed mixed with the true opposing hand | 14 of 164 | 14 | 14 | 164 |
+| Deal's pool keeps the true slot order | 0 of 164 | 0 | 0 | 164 |
 
 Root bytes stay equal because the viewer's own view holds no hidden card, so that row alone proves nothing.
 
 ### What R4 found on the way
 
-Each would have been a real leak through prompts. They are most of finding 4.
+Each would have been a real leak through prompts. They are most of finding 4. Game numbers here are from older corpora.
 
 - **Effect registration order.** The core lists same-code effects in registration order, so a dealt card kept the place of where it truly was. All hidden slots now re-register in slot order.
 - **Effect ids.** Offered effects sort by id. An id says when a card was created, in Deck order, or when it last arrived somewhere. A dealt card kept both, so option order read the true opening order and history. `order_effects_by_arrival` now orders every effect in the duel by the slot's cardid or arrival, then hands the same id values back in that order.
 - **The availability flag.** A conditional effect takes a fresh id the first time its condition holds, and the flag saying so stays on the effect (`effect::is_available`). A Swap Frog whose Summon was open in the true duel therefore sorted differently. A dealt card starts with it clear.
 - **A pointer into the viewer's Deck.** See Refusals above.
 - **Prompt candidates after a deal.** The core sorts a prompt's candidates by Deck position, so option k means the k-th copy. Left in the old order after a deal, one option took a copy from a different slot depending on the true Deck, and chains parted some turns after an own Deck search. `restore_live_order` sorts them again if they were sorted before.
-- **What a slot's card did this turn (not in the review).** The core's card constructor never sets `announce_count` and its neighbours. They are cleared only when a card reaches the field or a turn starts. A dealt card arrives without either, so it kept what its object held. At one R4W position, game 243 index 191, that was 16 from heap residue, so the face-down monster could not change position in one world only. These bytes and the turn's indestructible counts now move with the slot, and R2 checks them.
+- **What a slot's card did this turn (not in the review).** The core's card constructor never sets `announce_count` and its neighbours. They are cleared only when a card reaches the field or a turn starts. A dealt card arrives without either, so it kept what its object held. At one R4W position on the older corpus, game 243 index 191, that was 16 from heap residue, so the face-down monster could not change position in one world only. These bytes and the turn's indestructible counts now move with the slot, and R2 checks them, the map's contents included.
+- **The limit on effect ids at creation (not in the review).** The limit that says "this id was given at creation" was read at the first decision, and how far a duel gets by then depends on the opening hands. With no prompt before the first Main Phase, a conditional effect had already taken a fresh id below it, so it sorted with cards at creation in that world only. Two Judgment Dragons then listed in the other order. The limit is now the first card drawn, which depends only on the lists. This was 4 of the 8 pairs below.
 
 Found by reading, with no failing test first:
 
 - **Public memory.** A card stays tracked only while no hidden event could have moved it, judged from public counts alone. A card entering a Deck stops being tracked.
 - **Reveals between decisions.** A message tap reads `MSG_CONFIRM_CARDS` and `MSG_CONFIRM_DECKTOP`.
-- **The other seat's history.** Rows not public when written lose their card id: 44,040 ids over 11,826 deals.
+- **The other seat's history.** Rows not public when written lose their card id: 43,782 ids over 11,844 deals.
 - **The Deck binder.** Own Deck options re-bind by production's own rule, which the viewer's bytes confirm above.
 
-### What remains of option order
+### What holds across true worlds
 
-R4 canonical chains: 3,507 of 3,508. With one load order, 3,146 of 3,146, and the checker requires all of them. R4W: 5,596 of 5,596, also required.
+For one public history, one assumed list and one deal seed:
 
-**The cause I left in place: load order.** The core's card groups iterate by `cardid`, which is a card's place in the loaded list. Two true worlds can load copies in different orders, so one slot holds a different `cardid`. I traced this in two positions:
+| Claim | Holds? | Evidence |
+| --- | --- | --- |
+| Which code goes in which hidden slot | **Yes** | 3,494 of 3,494 in R4, 5,440 of 5,440 in R4W |
+| Same true world, same seed: same world, to the last byte | **Yes** | R1, R2 repeats: 0 differ |
+| Same load order: same future, every byte | **Yes, in every pair measured** | R4 with one load order: 3,076 of 3,076 canonical, 3,076 every byte. R4 only. R4W does not split on this |
+| Different load orders: same future | **No** | Same-seed differences below |
+| Over deal seeds, a sampled world's distribution given the public history does not depend on load order | **Not refuted, tested on the lines below** | Homogeneity tests below |
 
-- **R4, game 53 index 42, the one R4 canonical difference.** An opposing effect discarded from the viewer's hand with no prompt. The hand's ids sorted to 16, 18, 37 in one world and 14, 16, 37 in the other, and position 1 is a different card in each. The viewer's Graveyard and Life Points then parted.
-- **R4W, game 47 index 87.** The same kind of discard, with the same options offered next. It shows in the viewer's bytes on the exact walk and not on the canonical one.
+So a search must treat seeds as samples. It must not compare or cache sampled results seed for seed between true positions, and a finite set of seeds gives slightly different evaluations in different true worlds. Those differences should average out. A proof would have to cover every group a script can read, and the audit below is that far and no further. `fm_world.h` says this on `deal`.
 
-A uniform pick is uniform over either order, so this changes which card one seed takes, not the odds. So I read it as no signal about a hidden card. I did not prove that for every group a script can read, and fixing it would mean renumbering `cardid` for public cards as well, which I judged riskier than the difference.
+**Why the seed stops short.** The core reads `cardid` in one place, `card_sort`, which orders every `card_set`. `cardid` is a card's place in the loaded list, and a hidden slot's number and a public card's number both reflect the true list. Group.RandomSelect draws an index into a group, so one draw takes another card when the numbers fall in another order.
 
-**Bytes only, canonical chain equal:** 1 of 3,508 in R4 and 8 of 5,596 in R4W. Besides game 47, these are at game 431 index 138, game 309 index 82 (4 pairs), game 468 index 43 and game 32 index 66. Where options differ at the first differing decision, they are other Graveyard or hand effects in another order, such as `g11` and `g13` or `h2` and `h3`, and effect order among public cards also reads load order. **That load order causes these is not verified.** `check_results.py` limits them at 0.2% of pairs. Search must not use a position's option order as a key: `pimc.h` on `m2-search` already breaks ties on an option's own bytes, and option order reaches the network only through a permutation-invariant pool, so this should not reach a decision. I did not run that code here.
+**The test.** Natural duels only: each variant is a real duel from a rigged initial Deck, with the same forced opening cards, one searched or milled card at a place spread across the Deck, and the rest in the variant's own order. A variant counts only if every viewer observation and public hash before the root match the first variant's. Each variant has its own deal seeds, so counts are independent, and the table is a chi-square homogeneity across variants. Thin columns are pooled. Refusals and worlds that never reach the pick are columns too. Seeds 85660000-85660002.
+
+| Line | Variants with one public history | Deal seeds per variant | Reached the pick | Refused | **Same seed, other result** | Homogeneity by place picked | By card and Life Points |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Thestalos discards from the viewer's hand, with a searched card in it (Sol's line) | 16 of 16 | 4,000 | 18,202 of 64,000 | 0 | 119 of 2,265 | 74 on 90, p = 0.892 | 346 on 360, p = 0.693 |
+| The viewer's Thestalos discards from the opposing hand, with a card they searched in public | 16 of 16 | 1,500 | 24,000 of 24,000 | 0 | 944 of 7,680 | 80 on 75, p = 0.324 | 411 on 390, p = 0.221 |
+| Power Tool Dragon picks from three Equip Spells in the viewer's Deck | 16 of 16 | 1,000 | 15,222 of 16,000 | 0 | 0 of 7,320 | 36 on 45, p = 0.830 | 22 on 30, p = 0.860 |
+
+**The plants**, in a Lua override in those runs only. `first` takes the group's first card, which reads load order. `min2` draws twice and keeps whichever comes first in the group, a weaker lean. The last column is the estimate in [Renumbering](#renumbering-an-estimate).
+
+| Line | `first`: homogeneity | `first`: same seed, other result | `min2`: homogeneity | Numbered by place: same seed, other result |
+| --- | ---: | ---: | ---: | ---: |
+| Thestalos, viewer's hand | 4,079 on 30, p < 1e-100 | 447 of 2,265 | 107 on 90, p = 0.102 | 0 of 2,265 |
+| Thestalos, opposing hand | 13,357 on 15, p < 1e-100 | 2,880 of 7,680 | 134 on 75, p = 3.3e-05 | 0 of 7,680 |
+| Power Tool Dragon | 49 on 45, p = 0.300 | 0 of 7,305 | 31 on 45, p = 0.944 | 0 of 7,275 |
+
+Power Tool's three cards never moved, so their numbers keep Deck order whatever the load order was. One seed takes one card there, which is why the plant changes nothing on that line. The line shows the pick's odds are flat. It cannot show more.
+
+**Across the corpus.** In the wider leak test, 169 accepted pairs, 100 deal seeds a world, own seeds each, winner by game length: chi-square 371 on 409, p = 0.913, 3 pairs past 3 sigma. Control, a deal that keeps the true opposing hand: chi-square 776 on 340, p = 3.7e-36. This covers true worlds that differ in private prompts as well as load order. It has little power per pair, and it is random play.
+
+**What this does not show.** A small lean can be missed. `min2` is the weakest plant tried. The test saw it on the opposing hand, at p = 3.3e-05, but not on Sol's line, at p = 0.10, with fewer worlds reaching the pick and numbers that change rank less often. So on that line, the test rules out a lean like `first` and not one like `min2`. Nothing here covers other lists, other policies, or picks on lines not run.
+
+### The pairs that differ
+
+**On this corpus.** Every pair that fails any comparison is listed, with a causal test: give world B world A's numbers, place by place, and change nothing else. World A plays the very walk that showed the difference, so if world B now follows it to the end, in chains and every byte, numbering was the whole of the difference. The checker fails on any pair that does not pass. A planted leak does not: 0 of 150 `leak-hand` differences pass this test.
+
+| Test | Game / index / deal | Duel seed | Extra / skipped private prompts | Canonical chain equal | Winner equal | Viewer's bytes equal | First difference |
+| --- | --- | ---: | ---: | --- | --- | --- | --- |
+| R4W | 454 / 75 / 0 | 85628006 | 0 / 0 | yes | yes | no | `at=174 seat=0/0 msg=19/19 turn=28/28 options=2/2 first_diff=actions_[1]=0/1 options_same_set=1` |
+| R4W | 51 / 19 / 0 | 85603003 | 9 / 0 | yes | yes | no | `at=251 seat=0/0 msg=11/11 turn=37/37 options=10/10 first_diff=actions_[24]=22/21 option[2]=g3|3|0|0|0|-1|0|0|0` |
+| R4 | 38 / 14 / 0 | 85602006 | 0 / 0 | **no** | yes | yes | `canonical walk: at=189 seat=1/1 msg=10/16 turn=28/28 options=2/2 first_diff=cards_[902]=1/0 first_diff=global_` |
+| R4W | 441 / 9 / 0 | 85627009 | 0 / 0 | yes | yes | no | `at=90 seat=0/0 msg=19/19 turn=10/10 options=2/2 first_diff=actions_[1]=0/1 options_same_set=1` |
+| R4W | 441 / 9 / 1 | 85627009 | 0 / 0 | **no** | yes | yes | `canonical walk: at=219 seat=0/0 msg=12/12 turn=30/30 options=2/2 first_diff=cards_[698]=167/46 first_diff=acti` |
+| R4W | 443 / 68 / 0 | 85627011 | 2 / 0 | yes | yes | no | `at=94 seat=0/0 msg=16/16 turn=17/17 options=4/4 first_diff=actions_[0]=38/36 option[0]=g17|8|0|0|0|10010|0|0|0` |
+
+R4: 1 of 3,494. R4W: 5 of 5,440.
+
+**The eight R4W byte-only pairs from `9380186`, with its one R4 byte-only pair and its one canonical pair.** On the 85400000 corpus, replayed on the final build for this diagnosis only, as those positions exist nowhere else: `replay-85400000.txt` in the results. Sol was right that not all were reorderings.
+
+| Pair | Test | First difference | Cause |
+| --- | --- | --- | --- |
+| Game 53, index 42, deal 1 | R4 | Canonical chain only, decision 74: `msg` 12 against 10. Viewer's hand parted at decision 33, with no prompt | Load order, verified. An opposing random discard: ids sort 16, 18, 37 and 14, 16, 37, and place 1 is another card. Graveyard and 200 Life Points then differ |
+| Game 47, index 87, deal 0 | R4W | `cards_[1108]`, a viewer's hand row, decision 46. Same options | Load order, verified. The same kind of discard: 44330098 in one, 5556499 in the other |
+| Game 431, index 138, deal 1 | R4 | `actions_[0]`, 37 / 39, decision 11. `g11` before `g13` in one | Load order, verified. Two Graveyard effects in other id order |
+| Game 431, index 138, deal 0 | R4W | `actions_[1]`, 0 / 1, position prompt, decision 18. Raw chain equal | Load order, verified. The prompt's row names another card, so its card id byte differs |
+| Game 468, index 43, deal 0 | R4W | `actions_[0]`, 42 / 43, decision 60. `g12` / `g13` | Load order, verified |
+| Game 32, index 66, deal 0 | R4W | `actions_[12]`, 28 / 29, decision 231. `g9` / `g10` | Load order, verified |
+| Game 309, index 82, deals 0 and 1, two samples | R4W | `actions_[0]` 45 / 26 and 30 / 29 and 20 / 21, `actions_[24]` 17 / 18. `x3` / `h2`, `h2` / `h3` | **Not load order: one number in both worlds, and the test said so. A real bug:** the effect-id limit above. Fixed, and all four then match in every byte |
+
+### Group order in the pool's scripts
+
+From Sol's audit and a wider scan of 220 scripts for 223 codes, read by hand. Whether order changes a rule outcome:
+
+| What the script does | Scripts | Reads order? | Checked |
+| --- | --- | --- | --- |
+| Random pick from a group | Thestalos, Power Tool Dragon, X-Saber Urbellum | Index into the group, uniform | Thestalos and Power Tool: tests above. **Urbellum: not tested.** On `g_frog_monarch` the only Tuner is Fishborg Blaster, whose `EFFECT_TUNER_MATERIAL_LIMIT` stops the Synchro on my scripted line (0 of 960 worlds reached it in a trial), so it needs a Tuner taken from the other player |
+| One card out of a mandatory one-card selection or target | About 50 sites | No | By reading |
+| `GetFirstMatchingCard` | Gadgets, Destiny HERO - Malicious, White Stone, Starlight Road | By zone and sequence, not number | By reading the core. Filters are one code |
+| Sum or apply to all | Junk Warrior, Sirocco, Limiter Removal, Tempest Magician, Armor Master, Super Rejuvenation, `aux.sumreg`, Future Fusion | Yes, with the same result in any order | By reading |
+| Summon a selected group one by one | Rescue Cat, Gyzarus, Secutor, Return from the Different Dimension | **Yes: which card is placed and prompted first** | Cat: Sol, 1,500 paired, 0 layouts differ. **Gyzarus, Secutor, Return: not run.** With a random or symmetric policy the order should not change the odds, but a policy that treats first and second prompts differently could read it |
+| Ties, then the player chooses | Fissure, Smashing Ground | Option order only | By reading |
+| `eg:GetFirst()` on a one-card event | Bottomless Trap Hole's Normal Summon path, Black Whirlwind | No | By reading. Its Special Summon path takes the whole group |
+| **`eg:GetFirst()` on a group of up to two** | **Armory Arm**, when both monsters are destroyed by battle | **Yes: this decides whether the damage happens** | **Not run.** By reading, the two usually have different owners, whose number ranges do not depend on load order. If one player controls both, it does. It is the one site I found where order can decide a rule outcome outside a random pick |
+
+Not classified: `procedure.lua`'s sites (Xyz and Shaddoll procedures, which I saw only in a scan), and order the core reads inside its own operations, such as simultaneous moves. R4 and R4W cover those only as far as play reached them.
+
+### Renumbering: an estimate
+
+Not built for search. A test-only switch numbers every card by its place at deal time, so the numbers are a function of public facts.
+
+| Measured with the switch on | Result |
+| --- | --- |
+| R4, 1,638 dealt pairs: canonical / every byte | 1,638 / 1,638 |
+| R4W, 2,796 dealt pairs: canonical / every byte | 2,796 / 2,796 |
+| Pairs that fail any comparison | 0, against 6 without it on about twice as many positions |
+| Thestalos, same seed, other result | 0 of 2,265 and 0 of 7,680 |
+| R3, canonical chain against the natural duel with the same hidden cards | 708 of 720 |
+| R2 playouts finishing, failures | 5,874 of 5,874, invariant 0, diagnostics 0, exceptions 0, crashed positions 0 |
+
+**What it would touch.** The core reads `cardid` only in `card_sort`, and production's environment does not read it. In the forward model, `rebuild_card_sets` already rebuilds every `card_set` the core holds (22 in its core data, 4 on each card, all groups), and `order_effects_by_arrival` already keys on it. `PublicMemory` and `WorldBaseline` are indexed by it, so they would need the true number kept aside, as would the hard-rule check, whose counter means nothing with this switch on. I put it at about 40 lines in `fm_deal.h`, and the checker's exception list could then go, leaving strict equality.
+
+**What it has not been shown to be:** safe. Three things stand open:
+
+1. **A loop in progress.** A deal can land with a prompt open inside a Lua loop, between `GetFirst` and `GetNext`, as in a group Special Summon. Renumbering public cards reorders that group under the loop, which could skip a card or repeat one. Deals cannot do this today, since a group holding a hidden card refuses and groups of public cards never reorder. No test above looks for it, so zero failures do not rule it out. It would need the order kept in any group with a live iterator, or a refusal, which would be public.
+2. **Fidelity.** 12 of 720 R3 chains part from the natural duel with the switch on, though no winner does. I did not look at why. Numbers by place are not a load order a natural duel could have: natural numbers keep each owner's cards in one range, and those ranges decide `eg:GetFirst()` on Armory Arm.
+3. **Chance.** A first-card read would become a fixed function of public facts, where a natural duel varies. Numbering by a seeded shuffle of places, keeping owner ranges, would keep that chance. That is what I would build, and it is not what this switch measures.
+
+**Recommendation: do it, but as its own reviewed commit after this merges, not now.** It is small, and it closes the one thing the contract cannot promise: Thestalos's same-seed differences go to 0, and all 4,434 pairs match in every byte. A search that treats seeds as samples does not need it to be sound, so it blocks nothing. Open item 1 is the reason not to slip it in here.
 
 ### Failure inside a sampled world
 
-Each script plant fires only while Heavy Storm is in hand during a Summon, and the chosen game never does that on its recorded line (`g_diva_frog/g_hero_beat seed=85432000 env=1`, decision 34). So the failure cannot occur in the true duel, only in sampled worlds that deal it to the opposing hand. Three runs in fresh processes, 512 seeds each: all seeds in order, then only the clean seeds, then only the voided seeds.
+Each script plant fires only while Heavy Storm is in hand during a Summon, and the chosen game never does that on its recorded line (`g_diva_frog/g_hero_beat seed=85632000 env=0`, decision 61). So the failure cannot occur in the true duel, only in sampled worlds that deal it to the opposing hand. Three runs in fresh processes, 512 seeds each: all seeds in order, then only the clean seeds, then only the voided seeds.
 
 | Plant | Voided as | Voids | Finished | Clean-run digest differences | Reproduced alone | True game finishes after |
 | --- | --- | ---: | ---: | ---: | ---: | --- |
-| `error()` in Lua | `kLuaError` | 34 | 478 | 0 of 478 | 34 of 34 | yes |
-| A prompt production refuses (opposing Deck) | `kEnvironmentThrow` | 34 | 478 | 0 of 478 | 34 of 34 | yes |
-| Endless loop in Lua | `kHang` | 34 | 478 | 0 of 478 | 34 of 34 | yes |
-| Runaway recursion in Lua | `kLuaError` | 34 | 478 | 0 of 478 | 34 of 34 | yes |
+| `error()` in Lua | `kLuaError` | 17 | 495 | 0 of 495 | 17 of 17 | yes |
+| A prompt production refuses (opposing Deck) | `kEnvironmentThrow` | 17 | 495 | 0 of 495 | 17 of 17 | yes |
+| Endless loop in Lua | `kHang` | 17 | 495 | 0 of 495 | 17 of 17 | yes |
+| Runaway recursion in Lua | `kLuaError` | 17 | 495 | 0 of 495 | 17 of 17 | yes |
 | Invalid write inside the guard | `kFatalSignal` | 32 | 480 | 0 of 480 | 32 of 32 | yes |
 | `abort()` inside the guard | `kFatalSignal` | 32 | 480 | 0 of 480 | 32 of 32 | yes |
 | Production's `Spec not found` line | `kNativeDiagnostic` | 32 | 480 | 0 of 480 | 32 of 32 | yes |
 | That line, then a flush (finding 6) | `kNativeDiagnostic` | 32 | 480 | 0 of 480 | 32 of 32 | yes |
 | That line, then a throw (finding 6) | `kEnvironmentThrow` | 32 | 480 | 0 of 480 | 32 of 32 | yes |
 | Endless loop with the arena off (finding 5) | `kHang` | 32 | 480 | 0 of 480 | 32 of 32 | yes |
-| **Control:** history rollback missed, Lua plant | `kLuaError` | 34 | 478 | **478 of 478** | | |
+| **Control:** history rollback missed, Lua plant | `kLuaError` | 17 | 495 | **495 of 495** | | |
 
 Only `kTerminal` counts as finished now (finding 7), and 0 worlds ended any other way. The checker fails if any marker from a failed world reaches stdout. Segfault, abort and the markers are planted through a test hook, as no real crash is at hand. The hang limit is CPU time, 2 s by default, 1 s here.
 
@@ -292,7 +393,7 @@ Only `kTerminal` counts as finished now (finding 7), and 0 worlds ended any othe
 
 `fm_world.h` includes no core or environment type. `fm_search_example.cpp` includes only it. Its 20 contract checks pass, and 8 attempts to name a core type, an environment type, the internals or the test hooks fail to compile, against a control that compiles.
 
-**No signature changed in this round.** The header's comments and its usage sketch did, the sketch now checking `truncated()`. For the merge with `m2-search`: `apply_assignment` gained a parameter, and `fm_deal.h`, `fm_hidden.h`, `fm_env.h`, `arena.h` and `fm_world.cpp` changed inside.
+**No signature changed in these rounds, but `deal`'s contract did:** it no longer promises one world per seed across true worlds. The usage sketch now checks `truncated()`. For the merge with `m2-search`: `apply_assignment` gained a parameter, and `fm_deal.h`, `fm_hidden.h`, `fm_env.h`, `arena.h` and `fm_world.cpp` changed inside.
 
 | Need | Call |
 | --- | --- |
@@ -311,7 +412,19 @@ One worker per process. A world is not thread safe. Sampled opposing observation
 
 ### The suite's verdict
 
-`run_all.sh` returns the exit code of `check_results.py`. It fails on any nonzero mismatch, diagnostic or invariant counter, on a planted control not caught, on a planted failure that did not void as planned, on unequal digests across heaps and processes, on a missing result, and on a marker reaching stdout. Known residuals have explicit limits in `KNOWN`, so they fail if they grow. `test_checker.py` breaks real results one fault at a time and requires a failure: 28 of 28 caught, and the unbroken results pass.
+`run_all.sh` returns the exit code of `check_results.py`. It fails on any nonzero mismatch, diagnostic or invariant counter, on a planted control not caught, on a planted failure that did not void as planned, on unequal digests across heaps and processes, on a missing result, and on a marker reaching stdout. `test_checker.py` breaks real results one fault at a time and requires a failure: 65 of 65 caught, Sol's six mutations among them, and the unbroken results pass.
+
+**Since the second review it also checks:** every continuation observation counter, winners, and how counters relate. Samples equal accepted plus rejected. Pairs equal twice accepted. A later comparison cannot exceed an earlier one. Coverage has floors, so a test cannot pass by testing less.
+
+**Allowed exceptions, and how each is verified:**
+
+| Exception | Verified how | Limit |
+| --- | --- | --- |
+| A pair differing in chain, bytes or winner | **By a program, pair by pair**: listed, slots equal, one numbering makes it the same. Each counter must equal dealt minus the listed pairs that fail it, so one more failure anywhere fails, however small | 0.2% of dealt pairs |
+| A one-sided refusal in the hand-trap pairs | **Kind only**: it must be `pending chain list`. That a hidden optional trigger caused it is not checked by a program | 1 of 3,996, as measured. Limit 2 |
+| R3 exact order against a natural duel | **Not an exception, not gated** beyond not exceeding its base: a sampled world deliberately does not copy a natural duel's arbitrary order | None |
+
+One-sided refusals in R4 and R4W are now required to be 0, as they are. Hand-trap exact and canonical differences are required to be 0, as they are.
 
 ### Throughput
 
@@ -319,18 +432,18 @@ Through the search API, on a shuffled mix of real roots, 15 s per cell, Ryzen 7 
 
 | Workers | Nodes/s per worker | Nodes/s total | Node, µs | Restore | Deal | Step | Observe | Load |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | 2,445 | 2,445 | 409 | 68 | 132 | 48 | 162 | 9.11 |
-| 2 | 2,305 | 4,610 | 434 | 68 | 139 | 50 | 175 | 9.08 |
-| 4 | 2,095 | 8,382 | 477 | 72 | 152 | 56 | 196 | 9.29 |
+| 1 | 1,991 | 1,991 | 502 | 77 | 162 | 70 | 192 | 9.05 |
+| 2 | 1,971 | 3,942 | 507 | 76 | 165 | 64 | 201 | 9.04 |
+| 4 | 1,858 | 7,432 | 538 | 81 | 172 | 66 | 218 | 9.31 |
 
-A node is restore + deal + one step + encode. The deal's cost rose in this round: it orders every effect in the duel and counts legal assignments. Full random playouts with a deal and the encoder: 36 / 32 / 31 per worker on 1 / 2 / 4 workers, about 4,800 decisions/s each on 4. The older playout bench, no deal, on these lists: 147 / 143 / 129 playouts/s per worker without the encoder, 32 / 31 / 27 with it.
+A node is restore + deal + one step + encode. The deal's cost rose in this round: it orders every effect in the duel and counts legal assignments. Full random playouts with a deal and the encoder: 30 / 27 / 26 per worker on 1 / 2 / 4 workers, about 4,200 decisions/s each on 4. The older playout bench, no deal, on these lists: 130 / 126 / 115 playouts/s per worker without the encoder, 29 / 28 / 22 with it.
 
 ### Still open
 
 - **The known-list assumption.** A real opponent's list is not known. R5 shows cards outside the list work mechanically, and the API does not offer it. A wrong list is refused, so a caller guessing a list learns one bit per call.
-- **Option order.** See [What remains](#what-remains-of-option-order).
-- **The refusal bit.** See Refusals. Measured at 2 of 4,194 in the hand-trap pairs and 0 of 5,726 in R4W. Refusal parity in R4W now includes worlds the first world refuses.
-- **2.2% of positions refuse every deal,** mostly a prompt or chain that holds a hidden card, such as a target among set cards. Following the slot instead of the object may recover many of these. I did not try it.
+- **One seed, one future.** Not across load orders. See [What holds](#what-holds-across-true-worlds) and [Renumbering](#renumbering-an-estimate).
+- **The refusal bit.** See Refusals. Measured at 1 of 3,996 in the hand-trap pairs and 0 of 5,540 in R4W. Refusal parity in R4W now includes worlds the first world refuses.
+- **2.1% of positions refuse every deal,** mostly a prompt or chain that holds a hidden card, such as a target among set cards. Following the slot instead of the object may recover many of these. I did not try it.
 - **Behaviour.** Deals respect public facts only. They ignore what an opponent's passes imply, and that a card just shuffled in is in the Deck.
 - **Scripts holding hidden cards.** A label object on another card's effect refuses the deal. Label groups are ignored, as Summon procedures leave them stale. References in Lua tables and the stale `operated_set` are not detected. None showed in R3, R4 or R4W.
 - **Reveals.** The tap reads a batch's first message, which by source reading is where those two messages always land. Not proven. A Deck slot is pinned only while its reveal key lives, which production clears on any move.
@@ -345,11 +458,11 @@ A node is restore + deal + one step + encode. The deal's cost rose in this round
 - **glibc reliance.** Recovery from `abort()` relies on glibc's recursive abort lock.
 - **A fatal signal inside a glibc call** other than the allocator would jump with that call's state as it stood. The planted faults do not cover arbitrary interrupted libc calls.
 - **More than 4 workers, native Linux, and a real inference runtime in the same process.**
-- **Not rerun on this build:** `run_costs.sh` and `run_allocator_compare.sh` (fork, replay and memory tables). Candidate D was rerun: 378 of 400 reached idle, board 378, exact action set 26 (6.9%), 142 (37.6%) ignoring phase actions, 852 wrongly offered and 4 lost. It still fails.
+- **Not rerun on this build:** `run_costs.sh` and `run_allocator_compare.sh` (fork, replay and memory tables). Candidate D was rerun: 379 of 400 reached idle, board 379, exact action set 29 (7.7%), 156 (41.2%) ignoring phase actions, 812 wrongly offered and 2 lost. It still fails.
 
 ### Reproduce
 
-Link the git-ignored assets, then run everything. About an hour on 4 threads on a loaded machine, and the build does not use xmake. The exit code is the verdict:
+Link the git-ignored assets, then run everything. About 1 hour 45 minutes on 4 threads on a loaded machine, and the build does not use xmake. The exit code is the verdict:
 
 ~~~bash
 W=/path/to/worktree
@@ -371,15 +484,15 @@ Under `tools/edison/forward_model/`:
 | `fm_world.h`, `fm_world.cpp` | The search API, and the guard around every core call |
 | `fm_search_example.cpp`, `run_api.sh` | API contract checks and compile refusals |
 | `fm_deal.h` | Determinizer, public memory, hard rules, re-binding, the planted faults |
-| `fm_hidden.h` | R1-R5, R4W, hand-trap pairs, the rules scan, uniformity, candidate D |
+| `fm_hidden.h` | R1-R5, R4W, hand-trap pairs, the rules scan, uniformity, load order, candidate D |
 | `fm_env.h` | Production subclass, stamp, hashes, sha256, message tap, captured stdout |
-| `fm_bench.cpp` | Commands: `verify`, `correct`, `redeal`, `uniform`, `rules`, `setfixture`, `handtrap`, `void`, `node`, `statics`, `deepdiff`, `construct`, and the older `replay`, `fork`, `forkmem`, `arena`, `throughput`, `fork-conc` |
+| `fm_bench.cpp` | Commands: `verify`, `correct`, `redeal`, `uniform`, `rules`, `setfixture`, `handtrap`, `loadorder`, `void`, `node`, `statics`, `deepdiff`, `construct`, and the older `replay`, `fork`, `forkmem`, `arena`, `throughput`, `fork-conc` |
 | `arena.h` | Allocator and snapshots |
 | `collect_corpus.py` | Production games and digests |
 | `check_results.py`, `test_checker.py` | The suite's verdict, and proof it can fail |
 | `check_statics.py`, `check_set_rules.py` | Static data, and the facts the Set rules rest on |
 | `build.sh`, `test_build_refusal.sh` | The pinned build, and proof it refuses others |
-| `run_all.sh`, `run_verify.sh`, `run_correct.sh`, `run_controls.sh`, `run_void.sh`, `run_throughput.sh` | Reproduction |
+| `run_all.sh`, `run_verify.sh`, `run_correct.sh`, `run_controls.sh`, `run_loadorder.sh`, `run_void.sh`, `run_throughput.sh` | Reproduction |
 
 ---
 

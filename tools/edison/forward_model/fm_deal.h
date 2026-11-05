@@ -156,6 +156,10 @@ inline std::vector<uint32_t> slot_attack_state(FmEnv *e) {
     out.push_back(uint32_t(c->attack_announce_count) | uint32_t(c->announce_count) << 8 | uint32_t(c->attacked_count) << 16 | uint32_t(c->direct_attackable) << 24);
     out.push_back(uint32_t(c->attack_all_target) | uint32_t(c->attack_controler) << 8);
     out.push_back(static_cast<uint32_t>(c->indestructable_effects.size()));
+    for (const auto &kv : c->indestructable_effects) {
+      out.push_back(kv.first);
+      out.push_back(static_cast<uint32_t>(kv.second));
+    }
   };
   for (int p = 0; p < 2; ++p) {
     for (const card *c : f->player[p].list_main) add(c);
@@ -223,6 +227,69 @@ inline int rebuild_card_sets(duel *d) {
     }
   return rebuilt;
 }
+
+#ifdef FM_TEST_HOOKS
+// Test only, never in a search build. The core reads `cardid` in one place, card_sort, which orders every card_set. These
+// helpers walk every place a card can be and read or write its number. They exist to test a cause: give a sampled world
+// another world's numbers, by place, and see whether a difference between the two goes away.
+constexpr int kMaxNumbered = 400;
+struct SlotNumbering {
+  int count = 0;
+  uint16_t id[kMaxNumbered];
+};
+template <class F>
+inline void walk_places(field *f, F &&visit) {
+  for (int p = 0; p < 2; ++p) {
+    auto &pl = f->player[p];
+    for (auto *list : {&pl.list_main, &pl.list_hand, &pl.list_mzone, &pl.list_szone, &pl.list_grave, &pl.list_remove, &pl.list_extra})
+      for (card *c : *list) {
+        if (!c) continue;
+        visit(c);
+        for (card *under : c->xyz_materials) visit(under);
+      }
+  }
+}
+inline const SlotNumbering *g_test_numbering = nullptr;
+inline bool g_test_canonical_numbering = false;
+inline void capture_numbering(duel *d, SlotNumbering &n) {
+  n.count = 0;
+  walk_places(d->game_field, [&](card *c) {
+    if (n.count < kMaxNumbered) n.id[n.count] = c->cardid;
+    ++n.count;
+  });
+}
+inline bool numbering_equal(const SlotNumbering &a, const SlotNumbering &b) {
+  return a.count == b.count && std::equal(a.id, a.id + std::min(a.count, kMaxNumbered), b.id);
+}
+// False if the places do not match, or if a card outside every place would share a number.
+inline bool apply_numbering(duel *d, const SlotNumbering &n) {
+  SlotNumbering here;
+  capture_numbering(d, here);
+  if (here.count != n.count || n.count > kMaxNumbered) return false;
+  std::set<uint16_t> taken(n.id, n.id + n.count);
+  std::set<card *> placed;
+  walk_places(d->game_field, [&](card *c) { placed.insert(c); });
+  for (card *c : d->cards)
+    if (!placed.count(c) && taken.count(c->cardid)) return false;
+  int at = 0;
+  walk_places(d->game_field, [&](card *c) { c->cardid = n.id[at++]; });
+  return true;
+}
+// An estimate of the fix that was not made: number every card by its place, so numbers are a function of public facts.
+inline void apply_canonical_numbering(duel *d) {
+  SlotNumbering n;
+  capture_numbering(d, n);
+  if (n.count > kMaxNumbered) return;
+  std::set<card *> placed;
+  walk_places(d->game_field, [&](card *c) { placed.insert(c); });
+  uint16_t next = 1;
+  for (card *c : d->cards)
+    if (!placed.count(c) && c->cardid >= next) next = c->cardid + 1;
+  int at = 0;
+  walk_places(d->game_field, [&](card *) { n.id[at] = next + at; ++at; });
+  apply_numbering(d, n);
+}
+#endif
 
 // The core sorts offered effects by effect id. An id has two lives. Each effect gets one when its card is created at
 // the start of the duel, in Deck order. Then a card's in-range effects take fresh ones from the duel's counter each time
@@ -297,6 +364,13 @@ inline int apply_assignment(duel *d, const std::vector<card *> &holders, const s
     occupy_slot(assignment[i], slots[i], inherit_cardid);
     slot_ref(f, slots[i]) = assignment[i];
   }
+#ifdef FM_TEST_HOOKS
+  if (g_test_numbering) {
+    if (!apply_numbering(d, *g_test_numbering)) throw std::runtime_error("numbering does not fit this world");
+  } else if (g_test_canonical_numbering) {
+    apply_canonical_numbering(d);
+  }
+#endif
   for (size_t i = 0; i < holders.size(); ++i) assignment[i]->apply_field_effect();
   order_effects_by_arrival(d, assignment, slots, load_id_limit);
   f->refresh_player_info(0);
@@ -466,7 +540,14 @@ inline void capture_baseline(FmEnv *e, WorldBaseline &b) {
       if (kv.second->code == EFFECT_SET_PROC || kv.second->code == EFFECT_LIMIT_SET_PROC) b.set_procedure_codes.push_back(c->data.code);
   }
   std::sort(b.set_procedure_codes.begin(), b.set_procedure_codes.end());
-  b.load_id_limit = e->core()->game_field->infos.field_id;
+  // Every id below the first card drawn was given at creation. Reading the counter now would be wrong: this runs at the
+  // first decision, and how far the duel got by then depends on the opening hands. With no prompt before the first Main
+  // Phase, a conditional effect has already taken a fresh id below such a limit, so it sorted with cards at creation in
+  // that world only. R4W caught this: game 309 index 82, on the 85400000 corpus, two Judgment Dragons in another order.
+  uint32_t first_arrival = e->core()->game_field->infos.field_id;
+  for (card *c : e->core()->cards)
+    if (c->current.location != LOCATION_DECK && c->current.location != LOCATION_EXTRA) first_arrival = std::min(first_arrival, c->fieldid);
+  b.load_id_limit = first_arrival;
 }
 
 struct AssumedList {

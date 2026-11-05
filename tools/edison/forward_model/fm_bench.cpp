@@ -1650,6 +1650,7 @@ int main(int argc, char **argv) {
   if (cmd == "rules") return cmd_rules(games, g_args);
   if (cmd == "setfixture") return cmd_setfixture(g_args);
   if (cmd == "handtrap") return cmd_handtrap(games, g_args);
+  if (cmd == "loadorder") return cmd_loadorder(g_args);
   if (cmd == "deepdiff") return cmd_deepdiff(games);
   if (cmd == "statics") return cmd_statics(games);
   if (cmd == "void") return cmd_void(games);

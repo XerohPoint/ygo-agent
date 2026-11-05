@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Everything in docs/edison-forward-model.md's newest section, in order, then the verdict: this script's exit code is
-# check_results.py's. About an hour on 4 threads on a machine with other work running.
-# Game seeds: 85400000-85441015 for the corpus, 85450002 and 85450100 upward for fixtures, 85450000 for the API check.
+# check_results.py's. About 1 hour 45 minutes on 4 threads on a machine with other work running.
+# Game seeds: 85600000-85641015 for the corpus, 85650002 and 85650100 upward for fixtures, 85650000 for the API check,
+# 85660000-85660002 for the load-order lines.
 set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 HERE="$ROOT/tools/edison/forward_model"
@@ -15,6 +16,7 @@ bash "$HERE/test_build_refusal.sh" > "$B/build_refusal.out" 2>&1
 bash "$HERE/run_verify.sh" > "$B/verify.out" 2>&1
 bash "$HERE/run_correct.sh" > "$B/correct.out" 2>&1
 bash "$HERE/run_controls.sh" > "$B/controls.out" 2>&1
+bash "$HERE/run_loadorder.sh" > "$B/loadorder.out" 2>&1
 VOID_SEEDS=512 bash "$HERE/run_void.sh" > "$B/void.out" 2>&1
 bash "$HERE/run_api.sh" > "$B/api.out" 2>&1
 bash "$HERE/run_throughput.sh" > "$B/throughput.out" 2>&1

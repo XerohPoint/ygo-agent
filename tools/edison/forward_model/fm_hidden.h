@@ -128,11 +128,11 @@ struct RedealOut {
   long r4_pairs, r4_refused_both, r4_refused_one, r4_slots_equal, r4_canon_equal, r4_raw_equal, r4_winner_equal,
       r4_root_obs_equal, r4_next8_viewer_obs_equal, r4_viewer_obs_equal, r4_all_obs_equal, r4_control_pairs,
       r4_control_chain_equal, r4_control_viewer_obs_equal, r4_failed, r4_ls_pairs, r4_ls_slots, r4_ls_canon, r4_ls_raw,
-      r4_ls_obs;
+      r4_ls_obs, r4_exceptions, r4_exceptions_explained;
   // R4W: worlds that need only one public history and one viewer view, and may differ in private prompts
   long w_samples, w_accept, w_with_extra, w_extra_prompts, w_skipped_prompts, w_reject_private, w_reject_viewer, w_reject_public, w_reject_end;
   long w_pairs, w_refused_a, w_refused_b, w_refused_both, w_refused_one, w_slots_equal, w_canon_equal, w_raw_equal, w_winner_equal, w_root_obs_equal,
-      w_next8_viewer_obs_equal, w_viewer_obs_equal, w_all_obs_equal, w_x_pairs, w_x_refused_one, w_x_slots, w_x_canon, w_x_raw, w_hard_rule_bad, w_failed;
+      w_next8_viewer_obs_equal, w_viewer_obs_equal, w_all_obs_equal, w_x_pairs, w_x_refused_one, w_x_slots, w_x_canon, w_x_raw, w_hard_rule_bad, w_failed, w_exceptions, w_exceptions_explained, w_distribution_pairs, w_distribution_chi_milli, w_distribution_dof, w_distribution_over3;
   // R5 materialisation
   long r5_attempts, r5_playouts, r5_done, r5_invariant_bad, r5_diag, r5_exceptions, r5_card_moved, r5_cards;
   double r5_us;
@@ -298,11 +298,64 @@ inline int first_chain_divergence(const CanonRun &a, const CanonRun &b) {
   return n;
 }
 
-// Reports where and how two worlds first differ, for a human. Replays both from their snapshots.
-inline void describe_pair(FILE *log, const char *tag, const Game &g, const Pos &pos, int viewer, FmEnv *a, FmEnv *b,
-                          const std::function<void()> &prepare_a, const std::function<void()> &prepare_b, uint64_t policy,
-                          int at, bool canonical = false) {
+// A pair that differs is allowed only if a program can tell why. The one cause allowed is load order: the two true worlds
+// loaded their cards in other orders, so one place holds another `cardid`, and the core's groups iterate by it. The test
+// is causal. Give world B world A's numbers, place by place, and change nothing else. World A then plays the very walk
+// that showed the difference, so if world B now follows it to the end, numbering was the whole of the difference.
+struct LoadOrderTest {
+  bool numbering_differs = false, applied = false, same = false;
+  bool explained() const { return numbering_differs && applied && same; }
+};
+struct PairVerdict {
+  bool slots, canon, raw, winner, next8, viewer_obs, all_obs;
+};
+inline LoadOrderTest transplant_numbering(const std::function<void()> &prepare_a, const std::function<void()> &prepare_b, FmEnv *a, FmEnv *b, uint64_t policy, int cap, CanonRun &canon_a,
+                                          CanonRun &canon_b, CanonRun &raw_a, CanonRun &raw_b) {
+  LoadOrderTest out;
+  static SlotNumbering numbers_a, numbers_b;
+  prepare_a();
+  capture_numbering(a->core(), numbers_a);
+  prepare_b();
+  capture_numbering(b->core(), numbers_b);
+  out.numbering_differs = !numbering_equal(numbers_a, numbers_b);
+  try {
+    g_test_numbering = &numbers_a;
+    prepare_b();
+    g_test_numbering = nullptr;
+    out.applied = true;
+    run_canonical(b, policy, cap, canon_b, false, false);
+    g_test_numbering = &numbers_a;
+    prepare_b();
+    g_test_numbering = nullptr;
+    run_canonical(b, policy, cap, raw_b, true, true);
+    prepare_a();
+    run_canonical(a, policy, cap, canon_a, false, false);
+    prepare_a();
+    run_canonical(a, policy, cap, raw_a, true, true);
+    out.same = canon_a.digest == canon_b.digest && raw_a.digest == raw_b.digest && first_obs_divergence(raw_a, raw_b, -1) == -1;
+  } catch (const std::exception &) {
+    g_test_numbering = nullptr;
+  }
+  return out;
+}
+inline void emit_exception(FILE *log, const char *test, const Game &g, const Pos &pos, int viewer, int seed_i, int extra, int skipped, const PairVerdict &v, const LoadOrderTest &cause, const std::string &first,
+                           const std::string &canon_first) {
   if (!log) return;
+  fprintf(log,
+          "EXCEPTION {\"test\":\"%s\",\"game\":%d,\"decks\":\"%s/%s\",\"seed\":%u,\"env\":%d,\"index\":%d,\"viewer\":%d,\"deal\":%d,\"extra\":%d,\"skipped\":%d,"
+          "\"slots_equal\":%d,\"canon_equal\":%d,\"raw_equal\":%d,\"winner_equal\":%d,\"next8_viewer_obs_equal\":%d,\"viewer_obs_equal\":%d,\"all_obs_equal\":%d,"
+          "\"numbering_differs\":%d,\"numbering_applied\":%d,\"same_with_one_numbering\":%d,\"cause\":\"%s\",\"first\":\"%s\",\"canon_first\":\"%s\"}\n",
+          test, pos.game, g.deck0.c_str(), g.deck1.c_str(), g.seed, g.env, pos.index, viewer, seed_i, extra, skipped, v.slots, v.canon, v.raw, v.winner, v.next8, v.viewer_obs, v.all_obs, cause.numbering_differs,
+          cause.applied, cause.same, cause.explained() ? "load_order" : "unexplained", first.c_str(), canon_first.c_str());
+  fflush(log);
+}
+
+// Reports where and how two worlds first differ, for a human. Replays both from their snapshots.
+inline std::string describe_pair(FILE *log, const char *tag, const Game &g, const Pos &pos, int viewer, FmEnv *a, FmEnv *b,
+                                 const std::function<void()> &prepare_a, const std::function<void()> &prepare_b, uint64_t policy,
+                                 int at, bool canonical = false) {
+  std::string text;
+  if (!log) return text;
   static const char *fields[] = {"cards_", "global_", "decision_", "selection_", "actions_", "h_actions_"};
   auto run_to = [&](FmEnv *e, const std::function<void()> &prepare, std::vector<std::vector<uint8_t>> &bytes,
                     std::vector<std::string> &options, int &seat, int &msg, int &turn) {
@@ -373,27 +426,38 @@ inline void describe_pair(FILE *log, const char *tag, const Game &g, const Pos &
   int sa = -1, sb = -1, ma = 0, mb = 0, ta = 0, tb = 0;
   run_to(a, prepare_a, ba, oa, sa, ma, ta);
   run_to(b, prepare_b, bb, ob, sb, mb, tb);
-  fprintf(log, "%s game=%d(%s/%s seed=%u env=%d) index=%d viewer=%d at=%d seat=%d/%d msg=%d/%d turn=%d/%d options=%zu/%zu", tag,
-          pos.game, g.deck0.c_str(), g.deck1.c_str(), g.seed, g.env, pos.index, viewer, at, sa, sb, ma, mb, ta, tb, oa.size(), ob.size());
+  char line[1500];
+  snprintf(line, sizeof line, "at=%d seat=%d/%d msg=%d/%d turn=%d/%d options=%zu/%zu", at, sa, sb, ma, mb, ta, tb, oa.size(), ob.size());
+  text = line;
   if (ba.size() == 6 && bb.size() == 6)
     for (int k = 0; k < 6; ++k) {
       size_t common = std::min(ba[k].size(), bb[k].size());
       for (size_t i = 0; i < common; ++i)
         if (ba[k][i] != bb[k][i]) {
-          fprintf(log, " first_diff=%s[%zu]=%d/%d", fields[k], i, ba[k][i], bb[k][i]);
+          snprintf(line, sizeof line, " first_diff=%s[%zu]=%d/%d", fields[k], i, ba[k][i], bb[k][i]);
+          text += line;
           break;
         }
     }
   for (size_t i = 0; i < std::min(oa.size(), ob.size()); ++i)
     if (oa[i] != ob[i]) {
-      fprintf(log, " option[%zu]=%s/%s", i, oa[i].c_str(), ob[i].c_str());
+      snprintf(line, sizeof line, " option[%zu]=%s/%s", i, oa[i].c_str(), ob[i].c_str());
+      text += line;
       break;
     }
-  fprintf(log, "\n");
+  {
+    std::vector<std::string> sa_options(oa), sb_options(ob);
+    std::sort(sa_options.begin(), sa_options.end());
+    std::sort(sb_options.begin(), sb_options.end());
+    text += sa_options == sb_options ? " options_same_set=1" : " options_same_set=0";
+  }
+  fprintf(log, "%s game=%d(%s/%s seed=%u env=%d) index=%d viewer=%d %s\n", tag, pos.game, g.deck0.c_str(), g.deck1.c_str(), g.seed, g.env, pos.index, viewer, text.c_str());
   fflush(log);
+  return text;
 }
 
 inline FILE *g_redeal_log = nullptr;
+inline int g_distribution_deals = 0, g_distribution_every = 16;
 
 // An assignment of these objects to these slots that the public rules allow, for rigging a natural duel. It need
 // not be uniform: the replay decides whether the rigged duel is a real alternative.
@@ -935,8 +999,13 @@ inline void redeal_position(const std::vector<Game> &games, const Pos &pos, int 
                   pos.game, g.deck0.c_str(), g.deck1.c_str(), g.seed, g.env, pos.index, viewer, layout_same, slots, canon, raw, obs_viewer_div,
                   obs_all_div, raw_a_run->length, raw_b_run->length, a.moved, b.moved, t->msg[pos.index]);
           int at = obs_all_div >= 0 ? obs_all_div : 0;
-          describe_pair(g_redeal_log, "R4FIRST", g, pos, viewer, e, w, prepare_a, prepare_b, policy, at);
-          if (!canon) describe_pair(g_redeal_log, "R4CANON", g, pos, viewer, e, w, prepare_a, prepare_b, policy, first_chain_divergence(*canon_a, *canon_b), true);
+          std::string first = describe_pair(g_redeal_log, "R4FIRST", g, pos, viewer, e, w, prepare_a, prepare_b, policy, at);
+          std::string canon_first = canon ? std::string() : describe_pair(g_redeal_log, "R4CANON", g, pos, viewer, e, w, prepare_a, prepare_b, policy, first_chain_divergence(*canon_a, *canon_b), true);
+          PairVerdict verdict{slots, canon, raw, raw_a_run->winner == raw_b_run->winner, first_seat_obs_equal(*raw_a_run, *raw_b_run, viewer, 8), obs_viewer_div == -1, obs_all_div == -1};
+          LoadOrderTest cause = transplant_numbering(prepare_a, prepare_b, e, w, policy, cap, *canon_a, *canon_b, *raw_a_run, *raw_b_run);
+          ++o.r4_exceptions;
+          o.r4_exceptions_explained += cause.explained();
+          emit_exception(g_redeal_log, "r4", g, pos, viewer, seed_i, 0, 0, verdict, cause, first, canon_first);
         }
       }
       // Control: no re-deal, same policy. Must usually differ or the test has no power.
@@ -1103,6 +1172,53 @@ inline void redeal_position(const std::vector<Game> &games, const Pos &pos, int 
       g_search_pair(g, pos, viewer, e, *t, snap, w, *wt, alt, assumed, differs_privately ? 2 : 1);
       snapshot_restore(snap);
     }
+    // Over deal seeds, the two worlds' playouts should have one distribution: not one result per seed, which load order
+    // can break, but the same odds. Each world has its own seeds, so counts are independent.
+    if (g_distribution_deals > 0 && y % g_distribution_every == 0) {
+      constexpr int kBins = 11;  // winner by length, and refused
+      long counts[2][kBins] = {};
+      try {
+        for (int world = 0; world < 2; ++world)
+          for (int i = 0; i < g_distribution_deals; ++i) {
+            snapshot_restore(world == 0 ? snap : alt);
+            DealReport r = world == 0 ? determinize(e, viewer, mix(mix(mix(y, 37), world), i), t->memory, t->baseline, assumed)
+                                      : determinize(w, viewer, mix(mix(mix(y, 37), world), i), wt->memory, wt->baseline, assumed);
+            if (!r.ok()) {
+              ++counts[world][kBins - 1];
+              continue;
+            }
+            run_canonical(world == 0 ? e : w, mix(mix(mix(y, 41), world), i), cap, *raw_a_run, true, false);
+            int length = raw_a_run->length < 40 ? 0 : raw_a_run->length < 120 ? 1 : 2;
+            ++counts[world][raw_a_run->winner == 0 ? length : raw_a_run->winner == 1 ? 3 + length : 6 + std::min(length, 1)];
+          }
+        double chi = 0, pooled[2] = {0, 0};
+        int columns = 0;
+        auto add_column = [&](double a, double b) {
+          double expected = (a + b) / 2;
+          chi += (a - expected) * (a - expected) / expected + (b - expected) * (b - expected) / expected;
+          ++columns;
+        };
+        for (int k = 0; k < kBins; ++k) {
+          double a = counts[0][k], b = counts[1][k];
+          if (a + b < 10) {
+            pooled[0] += a;
+            pooled[1] += b;
+          } else {
+            add_column(a, b);
+          }
+        }
+        if (pooled[0] + pooled[1] >= 10) add_column(pooled[0], pooled[1]);
+        if (columns > 1) {
+          ++o.w_distribution_pairs;
+          o.w_distribution_chi_milli += static_cast<long>(chi * 1000);
+          o.w_distribution_dof += columns - 1;
+          if (chi > (columns - 1) + 3 * std::sqrt(2.0 * (columns - 1))) ++o.w_distribution_over3;
+        }
+      } catch (const std::exception &ex) {
+        ++o.w_failed;
+        if (g_redeal_log) fprintf(g_redeal_log, "R4WEXCEPTION distribution game=%d index=%d: %s\n", pos.game, pos.index, ex.what());
+      }
+    }
     try {
       for (int seed_i = 0; seed_i < 2; ++seed_i) {
         uint64_t deal_seed = mix(mix(y, 29), seed_i), policy = mix(mix(y, 31), seed_i);
@@ -1163,8 +1279,13 @@ inline void redeal_position(const std::vector<Game> &games, const Pos &pos, int 
         if ((!slots || !canon || !raw || obs_all_div != -1) && g_redeal_log) {
           fprintf(g_redeal_log, "R4WDIFF game=%d(%s/%s seed=%u env=%d) index=%d viewer=%d extra=%d skipped=%d slots=%d canon=%d raw=%d obs_viewer_div=%d obs_all_div=%d lens=%d/%d\n", pos.game,
                   g.deck0.c_str(), g.deck1.c_str(), g.seed, g.env, pos.index, viewer, extra, skipped, slots, canon, raw, obs_viewer_div, obs_all_div, raw_a_run->length, raw_b_run->length);
-          describe_pair(g_redeal_log, "R4WFIRST", g, pos, viewer, e, w, [&] { prepare_a(); }, [&] { prepare_b(); }, policy, obs_all_div >= 0 ? obs_all_div : 0);
-          if (!canon) describe_pair(g_redeal_log, "R4WCANON", g, pos, viewer, e, w, [&] { prepare_a(); }, [&] { prepare_b(); }, policy, first_chain_divergence(*canon_a, *canon_b), true);
+          std::string first = describe_pair(g_redeal_log, "R4WFIRST", g, pos, viewer, e, w, [&] { prepare_a(); }, [&] { prepare_b(); }, policy, obs_all_div >= 0 ? obs_all_div : 0);
+          std::string canon_first = canon ? std::string() : describe_pair(g_redeal_log, "R4WCANON", g, pos, viewer, e, w, [&] { prepare_a(); }, [&] { prepare_b(); }, policy, first_chain_divergence(*canon_a, *canon_b), true);
+          PairVerdict verdict{slots, canon, raw, raw_a_run->winner == raw_b_run->winner, first_seat_obs_equal(*raw_a_run, *raw_b_run, viewer, 8), obs_viewer_div == -1, obs_all_div == -1};
+          LoadOrderTest cause = transplant_numbering([&] { prepare_a(); }, [&] { prepare_b(); }, e, w, policy, cap, *canon_a, *canon_b, *raw_a_run, *raw_b_run);
+          ++o.w_exceptions;
+          o.w_exceptions_explained += cause.explained();
+          emit_exception(g_redeal_log, "r4w", g, pos, viewer, seed_i, extra, skipped, verdict, cause, first, canon_first);
         }
       }
     } catch (const std::exception &ex) {
@@ -1284,6 +1405,9 @@ inline int cmd_redeal(const std::vector<Game> &games, std::map<std::string, std:
     return it == args.end() ? std::string() : it->second;
   };
   int per_cell = get("per-cell", 4), deals = get("deals", 6), cap = get("cap", 3000), workers = get("workers", 4);
+  g_distribution_deals = get("distribution-deals", 0);
+  g_distribution_every = get("distribution-every", 16);
+  g_test_canonical_numbering = get("canonical-numbering", 0) != 0;
   auto positions = sample_positions_per_cell(games, per_cell, 85100059);
   if (get("only-game", -1) >= 0) positions = {Pos{get("only-game", 0), 0, get("only-index", 0)}};  // To diagnose one logged case.
   std::set<std::string> decks_covered;
@@ -1393,9 +1517,9 @@ inline int cmd_redeal(const std::vector<Game> &games, std::map<std::string, std:
            "\"accept_early\":\"%ld/%ld\",\"accept_mid\":\"%ld/%ld\",\"accept_late\":\"%ld/%ld\",\"ms_per_accepted\":%.2f},"
            "\"r4\":{" J(pairs) J(refused_both) J(refused_one_world_only) J(failed) J(slots_equal) J(canon_equal) J(raw_equal) J(winner_equal) J(root_obs_equal)
            J(next8_viewer_obs_equal) J(viewer_obs_equal) J(all_obs_equal) J(control_pairs) J(control_chain_equal) J(control_viewer_obs_equal)
-           J(layout_same_pairs) J(layout_same_slots) J(layout_same_canon) J(layout_same_raw) J(layout_same_obs) "\"_\":0},"
+           J(layout_same_pairs) J(layout_same_slots) J(layout_same_canon) J(layout_same_raw) J(layout_same_obs) J(exceptions) J(exceptions_explained) "\"_\":0},"
            "\"r4w\":{" J(samples) J(accept) J(accept_with_private_difference) J(extra_prompts) J(skipped_prompts) J(reject_private) J(reject_viewer) J(reject_public) J(reject_end) J(failed) J(pairs) J(refused_a) J(refused_b) J(refused_both)
-           J(refused_one_world_only) J(slots_equal) J(canon_equal) J(raw_equal) J(winner_equal) J(root_obs_equal) J(next8_viewer_obs_equal) J(viewer_obs_equal) J(all_obs_equal) J(private_pairs) J(private_refused_one) J(private_slots) J(private_canon) J(private_raw) J(hard_rule_violations) "\"_\":0},"
+           J(refused_one_world_only) J(slots_equal) J(canon_equal) J(raw_equal) J(winner_equal) J(root_obs_equal) J(next8_viewer_obs_equal) J(viewer_obs_equal) J(all_obs_equal) J(private_pairs) J(private_refused_one) J(private_slots) J(private_canon) J(private_raw) J(hard_rule_violations) J(exceptions) J(exceptions_explained) J(distribution_pairs) J(distribution_chi_milli) J(distribution_dof) J(distribution_over3) "\"_\":0},"
            "\"r5\":{" J(attempts) J(playouts) J(done) J(invariant_bad) J(diag) J(exceptions) J(cards) J(card_moved)
            "\"us_per_materialise\":%.1f}}",
            decks_covered.size(), t.positions, crashed, deals, cap, t.r1_playouts, t.r1_done, t.r1_invariant_bad, t.r1_diag, t.r1_exceptions,
@@ -1409,9 +1533,9 @@ inline int cmd_redeal(const std::vector<Game> &games, std::map<std::string, std:
            t.bucket_samples[2], r3_us / 1000 / std::max(1L, t.r3_accept), t.r4_pairs, t.r4_refused_both, t.r4_refused_one, t.r4_failed,
            t.r4_slots_equal, t.r4_canon_equal, t.r4_raw_equal, t.r4_winner_equal, t.r4_root_obs_equal, t.r4_next8_viewer_obs_equal,
            t.r4_viewer_obs_equal, t.r4_all_obs_equal, t.r4_control_pairs, t.r4_control_chain_equal, t.r4_control_viewer_obs_equal, t.r4_ls_pairs,
-           t.r4_ls_slots, t.r4_ls_canon, t.r4_ls_raw, t.r4_ls_obs, t.w_samples, t.w_accept, t.w_with_extra, t.w_extra_prompts, t.w_skipped_prompts, t.w_reject_private, t.w_reject_viewer, t.w_reject_public, t.w_reject_end, t.w_failed,
+           t.r4_ls_slots, t.r4_ls_canon, t.r4_ls_raw, t.r4_ls_obs, t.r4_exceptions, t.r4_exceptions_explained, t.w_samples, t.w_accept, t.w_with_extra, t.w_extra_prompts, t.w_skipped_prompts, t.w_reject_private, t.w_reject_viewer, t.w_reject_public, t.w_reject_end, t.w_failed,
            t.w_pairs, t.w_refused_a, t.w_refused_b, t.w_refused_both, t.w_refused_one, t.w_slots_equal, t.w_canon_equal, t.w_raw_equal, t.w_winner_equal, t.w_root_obs_equal, t.w_next8_viewer_obs_equal, t.w_viewer_obs_equal, t.w_all_obs_equal,
-           t.w_x_pairs, t.w_x_refused_one, t.w_x_slots, t.w_x_canon, t.w_x_raw, t.w_hard_rule_bad, t.r5_attempts, t.r5_playouts, t.r5_done, t.r5_invariant_bad, t.r5_diag,
+           t.w_x_pairs, t.w_x_refused_one, t.w_x_slots, t.w_x_canon, t.w_x_raw, t.w_hard_rule_bad, t.w_exceptions, t.w_exceptions_explained, t.w_distribution_pairs, t.w_distribution_chi_milli, t.w_distribution_dof, t.w_distribution_over3, t.r5_attempts, t.r5_playouts, t.r5_done, t.r5_invariant_bad, t.r5_diag,
            t.r5_exceptions, t.r5_cards, t.r5_card_moved, r5_us / std::max(1L, t.r5_attempts));
   emit_kv(buf);
   return 0;
@@ -1653,7 +1777,7 @@ inline int cmd_setfixture(std::map<std::string, std::string> &args) {
   Game g;
   g.deck0 = "frog_monarch";
   g.deck1 = "blackwing";
-  g.seed = 85450002;
+  g.seed = 85650002;
   g.env = 0;
   struct Out {
     int set_code, set_level, ok, refused, above_four, violations, viewer;
@@ -1862,7 +1986,8 @@ inline int cmd_handtrap(const std::vector<Game> &games, std::map<std::string, st
   long fixtures = 0, with_prompt = 0, private_prompts = 0, compared = 0, refusal_differences = 0, slot_differences = 0, canon_differences = 0, raw_differences = 0, refused_decisions = 0,
        skipped = 0, gorz_compared = 0, gorz_prompts = 0, gorz_refusal_differences = 0, gorz_refused = 0;
   std::map<uint32_t, long> prompts_by_code;
-  uint32_t seed = 85450100;
+  std::map<std::string, long> refusal_kinds;
+  uint32_t seed = 85650100;
   std::vector<std::pair<std::string, std::string>> rounds;
   for (int round = 0; round < 4; ++round) rounds.insert(rounds.end(), cells.begin(), cells.end());
   for (const auto &cell : rounds) {
@@ -1963,6 +2088,7 @@ inline int cmd_handtrap(const std::vector<Game> &games, std::map<std::string, st
         if (a.refused[k] != b.refused[k]) {
           ++refusal_differences;
           gorz_refusal_differences += is_gorz;
+          ++refusal_kinds[a.refused[k] ? a.kind[k] : b.kind[k]];
           if (log) fprintf(log, "REFUSAL %s/%s code=%u decision=%d refused=%d/%d kind=%s/%s private=%d\n", g.deck0.c_str(), g.deck1.c_str(), code, k, a.refused[k], b.refused[k], a.kind[k], b.kind[k], extra);
           continue;
         }
@@ -1984,15 +2110,654 @@ inline int cmd_handtrap(const std::vector<Game> &games, std::map<std::string, st
   std::string by_code = "{";
   for (const auto &kv : prompts_by_code) by_code += std::string(by_code.size() > 1 ? "," : "") + "\"" + std::to_string(kv.first) + "\":" + std::to_string(kv.second);
   by_code += "}";
-  char buf[1800];
+  std::string kinds_json = "{";
+  for (const auto &kv : refusal_kinds) kinds_json += std::string(kinds_json.size() > 1 ? "," : "") + "\"" + kv.first + "\":" + std::to_string(kv.second);
+  kinds_json += "}";
+  char buf[2000];
   snprintf(buf, sizeof buf,
-           "{\"handtrap\":true,\"seeds\":\"85450100-%u\",\"fixtures\":%ld,\"skipped\":%ld,\"fixtures_with_extra_private_prompts\":%ld,\"extra_private_prompts\":%ld,\"viewer_decisions_compared\":%ld,"
+           "{\"handtrap\":true,\"seeds\":\"85650100-%u\",\"fixtures\":%ld,\"skipped\":%ld,\"fixtures_with_extra_private_prompts\":%ld,\"extra_private_prompts\":%ld,\"viewer_decisions_compared\":%ld,"
            "\"decisions_with_a_refusal\":%ld,\"refusal_differences\":%ld,\"slot_differences\":%ld,\"canonical_differences\":%ld,\"exact_differences\":%ld,"
-           "\"gorz\":{\"decisions_compared\":%ld,\"extra_private_prompts\":%ld,\"refused_decisions\":%ld,\"refusal_differences\":%ld},\"extra_prompts_by_code\":%s}",
+           "\"gorz\":{\"decisions_compared\":%ld,\"extra_private_prompts\":%ld,\"refused_decisions\":%ld,\"refusal_differences\":%ld},\"extra_prompts_by_code\":%s,\"refusal_kinds\":%s}",
            seed - 1, fixtures, skipped, with_prompt, private_prompts, compared, refused_decisions, refusal_differences, slot_differences, canon_differences, raw_differences, gorz_compared, gorz_prompts,
-           gorz_refused, gorz_refusal_differences, by_code.c_str());
+           gorz_refused, gorz_refusal_differences, by_code.c_str(), kinds_json.c_str());
   emit_kv(buf);
   if (log) fclose(log);
+  return 0;
+}
+
+// -- Load order: what a sampled world's distribution depends on ------------------------------------------------------
+// Two true worlds with one public history can load their cards in other orders. The core's groups iterate in that order,
+// so Group.RandomSelect, which draws an index into a group, takes another card from the same draw. So one deal seed does
+// not make one world across true worlds. What should hold is weaker: over deal seeds, a sampled world's distribution
+// given the public history does not depend on load order. This tests that on natural duels. Each load-order variant is a
+// real duel from a rigged initial Deck, whose every viewer observation before the root matches the first variant's. Each
+// variant gets its own deal seeds, so counts are independent, and check_results.py runs a homogeneity test across variants.
+// A plant in Lua replaces the random pick in a test run only, to show the test can see a pick that reads group order.
+constexpr int kLoadPaired = 512;
+constexpr int kLoadCodes = 80;
+struct LoadOut {
+  uint64_t prefix_digest;
+  int prefix_decisions, ready, reached, refused, none, failed, deals;
+  int by_seq[8];
+  uint32_t code[kLoadCodes];
+  int lp[kLoadCodes], by_code[kLoadCodes];
+  int codes;
+  uint32_t paired[kLoadPaired];
+  int paired_refused;
+  char error[160];
+};
+
+struct LineState {
+  bool a = false, b = false, c = false, d = false, e = false;
+  int hand_before = 0, grave_before = 0;
+  uint64_t hand_objects[12] = {};
+};
+
+inline int option_of(FmEnv *e, uint32_t code, ygopro::ActionAct act) {
+  const auto &acts = e->actions();
+  for (size_t i = 0; i < acts.size(); ++i) {
+    card *c = DealAccess::object_of(e, acts[i]);
+    if (c && c->data.code == code && acts[i].act_ == act) return static_cast<int>(i);
+  }
+  return -1;
+}
+inline int option_with_code(FmEnv *e, uint32_t code) {
+  const auto &acts = e->actions();
+  for (size_t i = 0; i < acts.size(); ++i) {
+    card *c = DealAccess::object_of(e, acts[i]);
+    if (c && c->data.code == code) return static_cast<int>(i);
+  }
+  return -1;
+}
+inline int cancel_of(FmEnv *e) {
+  const auto &acts = e->actions();
+  int pick = -1;
+  for (size_t i = 0; i < acts.size(); ++i)
+    if (acts[i].act_ == ygopro::ActionAct::Cancel) pick = static_cast<int>(i);
+  return pick;
+}
+// Passing: decline what can be declined, leave the phase otherwise.
+inline int pass_of(FmEnv *e) {
+  int pick = cancel_of(e);
+  const auto &acts = e->actions();
+  if (e->msg() == MSG_SELECT_IDLECMD || e->msg() == MSG_SELECT_BATTLECMD)
+    for (size_t i = 0; i < acts.size(); ++i)
+      if (acts[i].phase_ != ygopro::ActionPhase::None) pick = static_cast<int>(i);
+  return pick < 0 ? 0 : pick;
+}
+inline bool selecting(FmEnv *e) { return e->msg() == MSG_SELECT_CARD || e->msg() == MSG_SELECT_UNSELECT_CARD || e->msg() == MSG_SELECT_TRIBUTE; }
+
+struct LoadLine {
+  const char *name, *deck0, *deck1;
+  uint32_t seed;
+  int viewer, varied_player;
+  uint32_t varied_code;
+  std::vector<uint32_t> forced[2];
+  int keep_viewer_top;  // Deck cards the viewer draws before the root: one code in every variant
+  std::function<int(FmEnv *, LineState &)> prefix;  // -1 when the root is reached
+  std::function<int(FmEnv *, LineState &)> play;    // -1 when the outcome can be read
+  std::function<bool(FmEnv *, LineState &, int &, uint32_t &, int &)> outcome;
+};
+
+constexpr uint32_t kRota = 32807846, kCat = 14878871, kPrisma = 89312388, kSamnite = 2619149, kTiger = 92373006, kThestalos = 26205777, kTytannial = 11819616, kFoolish = 81439173, kLonefire = 48686504, kGigaplant = 53257892, kCopyPlant = 66457407, kPowerTool = 2403771;
+
+inline int low_summon(FmEnv *e, uint32_t skip) {
+  const auto &acts = e->actions();
+  for (size_t i = 0; i < acts.size(); ++i) {
+    card *c = DealAccess::object_of(e, acts[i]);
+    if (c && c->data.code != skip && (c->data.level & 0xff) <= 4 && acts[i].act_ == ygopro::ActionAct::Summon) return static_cast<int>(i);
+  }
+  return -1;
+}
+
+// What left a hand since `st` noted it: its code, sequence, and the owner's Life Points.
+inline void note_hand(FmEnv *e, int player, LineState &st) {
+  auto &hand = e->core()->game_field->player[player].list_hand;
+  st.hand_before = static_cast<int>(hand.size());
+  for (size_t i = 0; i < hand.size() && i < 12; ++i) st.hand_objects[i] = reinterpret_cast<uint64_t>(hand[i]);
+}
+inline bool hand_loss(FmEnv *e, int player, LineState &st, int &seq, uint32_t &code, int &lp) {
+  auto &hand = e->core()->game_field->player[player].list_hand;
+  if (static_cast<int>(hand.size()) >= st.hand_before) return false;
+  for (int i = 0; i < st.hand_before && i < 12; ++i) {
+    card *c = reinterpret_cast<card *>(st.hand_objects[i]);
+    if (std::find(hand.begin(), hand.end(), c) == hand.end()) {
+      seq = i;
+      code = c->data.code;
+      lp = e->core()->game_field->player[player].lp;
+      return true;
+    }
+  }
+  return false;
+}
+
+inline std::vector<LoadLine> load_lines() {
+  std::vector<LoadLine> out;
+  auto rota_then_cat = [](FmEnv *e, LineState &st) -> int {
+    // Reinforcement of the Army, shown for Prisma; then Rescue Cat, Summoned and used. The root is Cat's selection.
+    if (st.c && e->to_play() == 0 && selecting(e)) return -1;
+    if (e->msg() == MSG_SELECT_IDLECMD && e->to_play() == 0) {
+      int pick = -1;
+      if (!st.a && (pick = option_of(e, kRota, ygopro::ActionAct::Activate)) >= 0) {
+        st.a = true;
+        return pick;
+      }
+      if (st.a && !st.b && (pick = option_of(e, kCat, ygopro::ActionAct::Summon)) >= 0) {
+        st.b = true;
+        return pick;
+      }
+      if (st.b && (pick = option_of(e, kCat, ygopro::ActionAct::Activate)) >= 0) {
+        st.c = true;
+        return pick;
+      }
+    }
+    if (st.a && !st.c && selecting(e)) {
+      int pick = option_with_code(e, kPrisma);
+      if (pick >= 0) return pick;
+    }
+    return pass_of(e);
+  };
+  {
+    // Sol's line: Thestalos discards at random from the viewer's hand, which holds a searched card.
+    LoadLine l;
+    l.name = "thestalos_viewer_hand";
+    l.deck0 = "g_gladiator_beast";
+    l.deck1 = "frog_monarch";
+    l.seed = 85660000;
+    l.viewer = 0;
+    l.varied_player = 0;
+    l.varied_code = kPrisma;
+    l.forced[0] = {kRota, kCat};
+    l.keep_viewer_top = 0;
+    l.prefix = rota_then_cat;
+    l.play = [](FmEnv *e, LineState &st) -> int {
+      field *f = e->core()->game_field;
+      if (st.e && static_cast<int>(f->player[0].list_grave.size()) > st.grave_before && e->msg() == MSG_SELECT_IDLECMD && e->to_play() == 1) return -1;
+      if (e->turn() > 4) return -1;
+      if (!st.a) {  // Cat's two Beasts
+        if (selecting(e)) {
+          for (uint32_t wanted : {kSamnite, kTiger}) {
+            bool on = false;
+            for (card *c : f->player[0].list_mzone) on = on || (c && c->data.code == wanted);
+            if (wanted == kSamnite ? st.b : st.c) on = true;
+            if (on) continue;
+            int pick = option_with_code(e, wanted);
+            if (pick >= 0) {
+              (wanted == kSamnite ? st.b : st.c) = true;
+              return pick;
+            }
+          }
+        }
+        int monsters = 0;
+        for (card *c : f->player[0].list_mzone) monsters += c != nullptr;
+        if (monsters >= 2 && e->to_play() == 0 && e->msg() == MSG_SELECT_IDLECMD) {
+          st.a = true;
+          st.grave_before = static_cast<int>(f->player[0].list_grave.size());
+        }
+        if (!st.a) {
+          int pick = cancel_of(e);
+          return pick < 0 ? 0 : pick;
+        }
+      }
+      if (e->msg() == MSG_SELECT_IDLECMD && e->to_play() == 1 && e->turn() == 2 && !st.d) {
+        int pick = low_summon(e, 0);
+        if (pick >= 0) {
+          st.d = true;
+          return pick;
+        }
+      }
+      if (e->msg() == MSG_SELECT_IDLECMD && e->to_play() == 1 && e->turn() == 4 && !st.e) {
+        int pick = option_of(e, kThestalos, ygopro::ActionAct::Summon);
+        if (pick >= 0) {
+          st.e = true;
+          note_hand(e, 0, st);
+          return pick;
+        }
+      }
+      return pass_of(e);
+    };
+    l.outcome = [](FmEnv *e, LineState &st, int &seq, uint32_t &code, int &lp) { return st.e && hand_loss(e, 0, st, seq, code, lp); };
+    out.push_back(l);
+  }
+  {
+    // Another card's pick: Power Tool Dragon's, one of three Equip Spells the viewer chose from the Deck. Those three never
+    // moved, so their numbers keep Deck order whatever the load order was. This line should not be sensitive at all.
+    LoadLine l;
+    l.name = "power_tool_viewer_deck";
+    l.deck0 = "g_gigavise";
+    l.deck1 = "blackwing";
+    l.seed = 85660001;
+    l.viewer = 0;
+    l.varied_player = 0;
+    l.varied_code = kTytannial;
+    l.forced[0] = {kFoolish, kLonefire, kGigaplant, kCopyPlant};
+    l.keep_viewer_top = 0;
+    l.prefix = [](FmEnv *e, LineState &st) -> int {
+      // Foolish Burial shows the varied card. The root is the next Main Phase prompt.
+      if (st.b && e->msg() == MSG_SELECT_IDLECMD && e->to_play() == 0) return -1;
+      if (e->msg() == MSG_SELECT_IDLECMD && e->to_play() == 0 && !st.a) {
+        int pick = option_of(e, kFoolish, ygopro::ActionAct::Activate);
+        if (pick >= 0) {
+          st.a = true;
+          return pick;
+        }
+      }
+      if (st.a && selecting(e)) {
+        int pick = option_with_code(e, kTytannial);
+        if (pick >= 0) {
+          st.b = true;
+          return pick;
+        }
+      }
+      return pass_of(e);
+    };
+    l.play = [](FmEnv *e, LineState &st) -> int {
+      if (e->turn() > 5) return -1;
+      if (st.e && static_cast<int>(e->core()->game_field->player[0].list_hand.size()) > st.hand_before) return -1;
+      if (e->to_play() == 0 && e->msg() == MSG_SELECT_IDLECMD) {
+        int pick = -1;
+        if (e->turn() == 1 && !st.a && (pick = option_of(e, kLonefire, ygopro::ActionAct::Summon)) >= 0) {
+          st.a = true;
+          return pick;
+        }
+        if (e->turn() == 3 && !st.b && (pick = option_of(e, kGigaplant, ygopro::ActionAct::Summon)) >= 0) {
+          st.b = true;
+          return pick;
+        }
+        if (e->turn() == 5 && !st.c && (pick = option_of(e, kCopyPlant, ygopro::ActionAct::Summon)) >= 0) {
+          st.c = true;
+          return pick;
+        }
+        if (e->turn() == 5 && !st.d && (pick = option_of(e, kPowerTool, ygopro::ActionAct::SpSummon)) >= 0) {
+          st.d = true;
+          return pick;
+        }
+        if (e->turn() == 5 && st.d && !st.e && (pick = option_of(e, kPowerTool, ygopro::ActionAct::Activate)) >= 0) {
+          st.e = true;
+          st.hand_before = static_cast<int>(e->core()->game_field->player[0].list_hand.size());
+          st.grave_before = 0;
+          return pick;
+        }
+      }
+      if (st.e && e->to_play() == 0 && selecting(e)) {
+        // Three Equip Spells: the first offered that is not already chosen. Numbered for the result by choice order.
+        const auto &acts = e->actions();
+        for (size_t i = 0; i < acts.size(); ++i) {
+          card *c = DealAccess::object_of(e, acts[i]);
+          if (!c || c->current.location != LOCATION_DECK) continue;
+          bool chosen = false;
+          for (int k = 0; k < st.grave_before && k < 3; ++k) chosen = chosen || st.hand_objects[k] == reinterpret_cast<uint64_t>(c);
+          if (chosen) continue;
+          if (st.grave_before < 3) st.hand_objects[st.grave_before++] = reinterpret_cast<uint64_t>(c);
+          return static_cast<int>(i);
+        }
+        return 0;
+      }
+      if (selecting(e)) return 0;
+      return pass_of(e);
+    };
+    l.outcome = [](FmEnv *e, LineState &st, int &seq, uint32_t &code, int &lp) {
+      if (!st.e) return false;
+      auto &hand = e->core()->game_field->player[0].list_hand;
+      if (static_cast<int>(hand.size()) <= st.hand_before) return false;
+      for (int k = 0; k < st.grave_before && k < 3; ++k) {
+        card *c = reinterpret_cast<card *>(st.hand_objects[k]);
+        if (std::find(hand.begin(), hand.end(), c) != hand.end()) {
+          seq = k;
+          code = c->data.code;
+          lp = e->core()->game_field->player[0].lp;
+          return true;
+        }
+      }
+      return false;
+    };
+    out.push_back(l);
+  }
+  {
+    // The viewer's own Thestalos, discarding at random from the opposing hand, which holds a card they searched in public.
+    LoadLine l;
+    l.name = "thestalos_opposing_hand";
+    l.deck0 = "frog_monarch";
+    l.deck1 = "g_gladiator_beast";
+    l.seed = 85660002;
+    l.viewer = 0;
+    l.varied_player = 1;
+    l.varied_code = kPrisma;
+    l.forced[0] = {kThestalos, 9126351};
+    l.forced[1] = {kRota};
+    l.keep_viewer_top = 2;
+    l.prefix = [](FmEnv *e, LineState &st) -> int {
+      if (e->msg() == MSG_SELECT_IDLECMD && e->to_play() == 0 && e->turn() == 3) return -1;
+      if (e->msg() == MSG_SELECT_IDLECMD && e->to_play() == 0 && e->turn() == 1 && !st.a) {
+        int pick = option_of(e, 9126351, ygopro::ActionAct::Summon);
+        if (pick >= 0) {
+          st.a = true;
+          return pick;
+        }
+      }
+      if (e->msg() == MSG_SELECT_IDLECMD && e->to_play() == 1 && e->turn() == 2 && !st.b) {
+        int pick = option_of(e, kRota, ygopro::ActionAct::Activate);
+        if (pick >= 0) {
+          st.b = true;
+          return pick;
+        }
+      }
+      if (st.b && e->to_play() == 1 && selecting(e)) {
+        int pick = option_with_code(e, kPrisma);
+        if (pick >= 0) return pick;
+      }
+      return pass_of(e);
+    };
+    l.play = [](FmEnv *e, LineState &st) -> int {
+      if (e->turn() > 5) return -1;
+      if (st.a && static_cast<int>(e->core()->game_field->player[1].list_hand.size()) < st.hand_before) return -1;
+      // Turn 5: the opposing hand now holds a card drawn after the search, whose number can fall either side of Prisma's.
+      if (e->msg() == MSG_SELECT_IDLECMD && e->to_play() == 0 && e->turn() == 5 && !st.a) {
+        int pick = option_of(e, kThestalos, ygopro::ActionAct::Summon);
+        if (pick >= 0) {
+          st.a = true;
+          note_hand(e, 1, st);
+          return pick;
+        }
+      }
+      return pass_of(e);
+    };
+    l.outcome = [](FmEnv *e, LineState &st, int &seq, uint32_t &code, int &lp) { return st.a && hand_loss(e, 1, st, seq, code, lp); };
+    out.push_back(l);
+  }
+  return out;
+}
+
+// Test only. Replaces the random pick for this run: "first" takes the group's first card, "min2" draws twice and keeps
+// whichever comes first in the group, which is a weak lean toward group order, there to show how small a lean is seen.
+inline void plant_group_pick(FmEnv *e, const std::string &plant) {
+  if (plant == "none") return;
+  const char *first =
+      "Group.RandomSelect=function(g,p,n) local out=Group.CreateGroup() out:AddCard(g:GetFirst()) return out end";
+  const char *min2 =
+      "local orig=Group.RandomSelect\n"
+      "Group.RandomSelect=function(g,p,n)\n"
+      "  if g:GetCount()<=n then return orig(g,p,n) end\n"
+      "  local a=orig(g,p,1):GetFirst() local b=orig(g,p,1):GetFirst()\n"
+      "  local c=g:GetFirst() local out=Group.CreateGroup()\n"
+      "  while c do if c==a or c==b then out:AddCard(c) return out end c=g:GetNext() end\n"
+      "  return orig(g,p,n)\n"
+      "end";
+  lua_State *L = e->core()->lua->lua_state;
+  if (luaL_dostring(L, plant == "first" ? first : min2)) throw std::runtime_error("plant failed");
+}
+
+inline LoadOut run_load_variant(const LoadLine &line, int variant, int variants, int seeds, const std::string &plant, bool canonical, const std::vector<uint32_t> rig[2]) {
+  LoadOut out{};
+  g_use_arena = true;
+  arena_clear();
+  Game g;
+  g.deck0 = line.deck0;
+  g.deck1 = line.deck1;
+  g.seed = line.seed;
+  g.env = 0;
+  auto *t = new TrueDuel;
+  t->e = new_env(g, env_seed_of(g));
+  uint32_t deck_seed, duel_seed;
+  FmEnv::production_seeds(env_seed_of(g), deck_seed, duel_seed);
+  start_true_duel(*t);
+  FmEnv *e = t->e;
+  {
+    Scope s(true);
+    e->reset_rigged(duel_seed, rig[0], rig[1], g.deck0, g.deck1);
+    plant_group_pick(e, plant);
+  }
+  capture_baseline(e, t->baseline);
+  LineState st;
+  int viewer = line.viewer;
+  uint64_t digest = 0;
+  for (int j = 0; j < 400 && !e->done(); ++j) {
+    note_public(e, t->memory);
+    if (e->to_play() == viewer) {
+      Scope s(true);
+      digest = mix(digest, e->obs_hash());
+      digest = mix(digest, public_hash(e, viewer, t->memory));
+      ++out.prefix_decisions;
+    }
+    int pick = line.prefix(e, st);
+    if (pick < 0) {
+      out.ready = 1;
+      break;
+    }
+    RowMarker marker = before_true_step(e, t->memory, pick);
+    {
+      Scope s(true);
+      e->act(pick);
+    }
+    after_true_step(e, t->memory, marker);
+  }
+  stop_true_duel();
+  out.prefix_digest = digest;
+  if (!out.ready) return out;
+  AssumedList assumed;
+  assumed.opponent_main = ygopro::main_decks_.at(viewer == 0 ? g.deck1 : g.deck0);
+  Snapshot snap;
+  snapshot_take(snap);
+  g_test_canonical_numbering = canonical;
+  auto play_world = [&](uint64_t deal_seed, int &seq, uint32_t &code, int &lp) -> int {
+    snapshot_restore(snap);
+    DealReport r = determinize(e, viewer, deal_seed, t->memory, t->baseline, assumed);
+    if (!r.ok()) return 2;
+    LineState world;
+    for (int j = 0; j < 600 && !e->done(); ++j) {
+      int pick = line.play(e, world);
+      if (pick < 0) break;
+      Scope s(true);
+      e->act(pick);
+    }
+    return line.outcome(e, world, seq, code, lp) ? 1 : 0;
+  };
+  for (int i = 0; i < seeds; ++i) {
+    ++out.deals;
+    int seq = 0, lp = 0;
+    uint32_t code = 0;
+    int result;
+    try {
+      result = play_world(mix(mix(85600011, variant), i), seq, code, lp);
+    } catch (const std::exception &ex) {
+      ++out.failed;
+      snprintf(out.error, sizeof out.error, "%s", ex.what());
+      continue;
+    }
+    if (result == 2) {
+      ++out.refused;
+    } else if (result == 0) {
+      ++out.none;
+    } else {
+      ++out.reached;
+      if (seq >= 0 && seq < 8) ++out.by_seq[seq];
+      int at = 0;
+      while (at < out.codes && !(out.code[at] == code && out.lp[at] == lp)) ++at;
+      if (at == out.codes && out.codes < kLoadCodes) {
+        out.code[at] = code;
+        out.lp[at] = lp;
+        ++out.codes;
+      }
+      if (at < kLoadCodes) ++out.by_code[at];
+    }
+  }
+  // One seed list shared by every variant: not for the test, to count how often one seed gives another result.
+  for (int i = 0; i < kLoadPaired; ++i) {
+    int seq = 0, lp = 0;
+    uint32_t code = 0;
+    int result = 0;
+    try {
+      result = play_world(mix(85600013, i), seq, code, lp);
+    } catch (const std::exception &) {
+      continue;
+    }
+    if (result == 2) ++out.paired_refused;
+    if (result == 1) out.paired[i] = static_cast<uint32_t>(mix(mix(code, lp), seq)) | 1;
+  }
+  return out;
+}
+
+inline int cmd_loadorder(std::map<std::string, std::string> &args) {
+  auto get = [&](const std::string &k, int d) {
+    auto it = args.find(k);
+    return it == args.end() ? d : std::stoi(it->second);
+  };
+  auto text = [&](const std::string &k, const std::string &d) {
+    auto it = args.find(k);
+    return it == args.end() ? d : it->second;
+  };
+  int variants = get("variants", 16), seeds = get("seeds", 1500), workers = get("workers", 4);
+  std::string plant = text("plant", "none"), only = text("line", "");
+  bool canonical = get("canonical-numbering", 0) != 0;
+  for (const LoadLine &line : load_lines()) {
+    if (!only.empty() && only != line.name) continue;
+    Game g;
+    g.deck0 = line.deck0;
+    g.deck1 = line.deck1;
+    g.seed = line.seed;
+    g.env = 0;
+    (void)spec_for(g);
+    // The natural initial Decks, then the forced opening cards.
+    struct Base {
+      int n[2], hand[2][8], hands[2];
+      uint32_t code[2][64];
+    };
+    Base base = in_child<Base>([&] {
+      Base u{};
+      g_use_arena = true;
+      arena_clear();
+      FmEnv *e = new_env(g, env_seed_of(g));
+      {
+        Scope s(true);
+        e->reset();
+      }
+      std::vector<card *> objects[2];
+      for (card *c : e->core()->cards)
+        if (c->data.code && !c->is_extra_deck_monster()) objects[c->owner].push_back(c);
+      for (int p = 0; p < 2; ++p) {
+        std::sort(objects[p].begin(), objects[p].end(), [](card *a, card *b) { return a->cardid < b->cardid; });
+        u.n[p] = static_cast<int>(objects[p].size());
+        for (int i = 0; i < u.n[p]; ++i) {
+          u.code[p][i] = objects[p][i]->data.code;
+          if (objects[p][i]->current.location == LOCATION_HAND && u.hands[p] < 8) u.hand[p][u.hands[p]++] = i;
+        }
+      }
+      return u;
+    });
+    std::vector<uint32_t> forced_rig[2];
+    std::vector<int> free_at[2];
+    for (int p = 0; p < 2; ++p) {
+      forced_rig[p].assign(base.code[p], base.code[p] + base.n[p]);
+      std::sort(base.hand[p], base.hand[p] + base.hands[p]);
+      for (size_t k = 0; k < line.forced[p].size(); ++k) {
+        auto it = std::find(forced_rig[p].begin(), forced_rig[p].end(), line.forced[p][k]);
+        if (it == forced_rig[p].end()) throw std::runtime_error("forced card not in the list");
+        std::swap(*it, forced_rig[p][base.hand[p][k]]);
+      }
+      std::set<int> hand(base.hand[p], base.hand[p] + base.hands[p]);
+      for (int i = 0; i < base.n[p]; ++i)
+        if (!hand.count(i)) free_at[p].push_back(i);
+    }
+    // Each variant: the varied card at a place spread over the Deck, the other Deck cards in that variant's own order.
+    std::vector<std::array<std::vector<uint32_t>, 2>> rigs(variants);
+    for (int v = 0; v < variants; ++v) {
+      uint64_t x = mix(85600017, v);
+      for (int p = 0; p < 2; ++p) {
+        std::vector<uint32_t> rig = forced_rig[p];
+        std::vector<int> places = free_at[p];
+        if (p == line.viewer && line.keep_viewer_top > 0) places.resize(places.size() - line.keep_viewer_top);
+        // A copy of the varied card goes to its place first, and stays there.
+        if (p == line.varied_player) {
+          auto it = std::find_if(places.begin(), places.end(), [&](int at) { return rig[at] == line.varied_code; });
+          if (it == places.end()) throw std::runtime_error("varied card not in the Deck");
+          int target = places[variants > 1 ? v * (places.size() - 1) / (variants - 1) : 0];
+          std::swap(rig[*it], rig[target]);
+          places.erase(std::find(places.begin(), places.end(), target));
+        }
+        std::vector<uint32_t> others;
+        for (int at : places) others.push_back(rig[at]);
+        for (size_t k = others.size(); k > 1; --k) std::swap(others[k - 1], others[splitmix(x) % k]);
+        for (size_t k = 0; k < places.size(); ++k) rig[places[k]] = others[k];
+        rigs[v][p] = rig;
+      }
+    }
+    // Workers share one result table, so variants can run on up to 4 threads.
+    auto *table = static_cast<LoadOut *>(mmap(nullptr, sizeof(LoadOut) * variants, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0));
+    std::vector<pid_t> kids;
+    for (int w = 0; w < workers; ++w) {
+      pid_t pid = fork();
+      if (pid == 0) {
+        for (int v = w; v < variants; v += workers) {
+          try {
+            std::vector<uint32_t> rig[2] = {rigs[v][0], rigs[v][1]};
+            table[v] = in_child<LoadOut>([&] { return run_load_variant(line, v, variants, seeds, plant, canonical, rig); });
+          } catch (const std::exception &ex) {
+            table[v] = LoadOut{};
+            snprintf(table[v].error, sizeof table[v].error, "%s", ex.what());
+          }
+        }
+        _exit(0);
+      }
+      kids.push_back(pid);
+    }
+    for (pid_t pid : kids) waitpid(pid, nullptr, 0);
+    // Keep the variants whose public history matches the first's.
+    std::vector<int> kept;
+    for (int v = 0; v < variants; ++v)
+      if (table[v].ready && table[v].prefix_digest == table[0].prefix_digest) kept.push_back(v);
+    long failed = 0, deals = 0, refused = 0, reached = 0, none = 0, paired_compared = 0, paired_different = 0, paired_refused = 0;
+    std::map<std::pair<uint32_t, int>, std::vector<int>> by_code;
+    std::string seq_rows = "[", code_rows = "[", labels = "[", first_error;
+    for (int v : kept) {
+      const LoadOut &o = table[v];
+      failed += o.failed;
+      deals += o.deals;
+      refused += o.refused;
+      reached += o.reached;
+      none += o.none;
+      paired_refused += o.paired_refused;
+      if (first_error.empty() && o.error[0]) first_error = o.error;
+      for (int c = 0; c < o.codes; ++c) by_code[{o.code[c], o.lp[c]}].resize(kept.size());
+    }
+    for (int v = 0; v < variants; ++v)
+      if (first_error.empty() && table[v].error[0]) first_error = table[v].error;
+    for (size_t k = 0; k < kept.size(); ++k) {
+      const LoadOut &o = table[kept[k]];
+      for (int c = 0; c < o.codes; ++c) by_code[{o.code[c], o.lp[c]}][k] = o.by_code[c];
+      if (k)
+        for (int i = 0; i < kLoadPaired; ++i)
+          if (o.paired[i] && table[kept[0]].paired[i]) {
+            ++paired_compared;
+            paired_different += o.paired[i] != table[kept[0]].paired[i];
+          }
+      seq_rows += std::string(k ? "," : "") + "[" + std::to_string(o.none) + "," + std::to_string(o.refused);
+      for (int s = 0; s < 8; ++s) seq_rows += "," + std::to_string(o.by_seq[s]);
+      seq_rows += "]";
+    }
+    seq_rows += "]";
+    for (size_t k = 0; k < kept.size(); ++k) {
+      const LoadOut &o = table[kept[k]];
+      code_rows += std::string(k ? "," : "") + "[" + std::to_string(o.none) + "," + std::to_string(o.refused);
+      for (const auto &kv : by_code) code_rows += "," + std::to_string(kv.second[k]);
+      code_rows += "]";
+    }
+    code_rows += "]";
+    {
+      bool any = false;
+      for (const auto &kv : by_code) {
+        labels += std::string(any ? "," : "") + "\"" + std::to_string(kv.first.first) + "/" + std::to_string(kv.first.second) + "\"";
+        any = true;
+      }
+      labels += "]";
+    }
+    std::string json = "{\"loadorder\":\"" + std::string(line.name) + "\",\"decks\":\"" + line.deck0 + "/" + line.deck1 + "\",\"seed\":" + std::to_string(line.seed) + ",\"plant\":\"" + plant + "\",\"canonical_numbering\":" +
+                       std::to_string(canonical ? 1 : 0) + ",\"variants\":" + std::to_string(variants) + ",\"variants_one_public_history\":" + std::to_string(kept.size()) + ",\"seeds_per_variant\":" + std::to_string(seeds) +
+                       ",\"prefix_decisions\":" + std::to_string(table[0].prefix_decisions) + ",\"deals\":" + std::to_string(deals) + ",\"refused\":" + std::to_string(refused) + ",\"none\":" + std::to_string(none) + ",\"reached\":" +
+                       std::to_string(reached) + ",\"failed\":" + std::to_string(failed) + ",\"paired_compared\":" + std::to_string(paired_compared) + ",\"paired_different\":" + std::to_string(paired_different) + ",\"paired_refused\":" +
+                       std::to_string(paired_refused) + ",\"by_sequence\":" + seq_rows + ",\"by_code_labels\":" + labels + ",\"by_code\":" + code_rows + ",\"error\":\"" + first_error + "\"}";
+    emit_kv(json.c_str());
+    munmap(table, sizeof(LoadOut) * variants);
+  }
   return 0;
 }
 

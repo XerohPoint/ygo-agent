@@ -10,20 +10,25 @@ Usage: check_results.py [DIR]    DIR defaults to build/forward_model.
 """
 import hashlib
 import json
+import math
 from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[3]
-# Residuals documented in docs/edison-forward-model.md. Each is a fraction of its denominator that must not be exceeded.
+# Residuals documented in docs/edison-forward-model.md. A number here is not what allows an exception. Each exception must
+# first be verified as its stated cause, so an unrelated failure fails however small it is. The limits below then bound
+# how much of a verified cause is acceptable, as low as the data allows.
 KNOWN = {
-    "r4_exact_order": 0.002,     # pairs equal in hidden slots and canonical chain, but not in exact option order
-    "r4_copy_order": 0.001,      # R4 pairs whose true Decks loaded copies in another order: a random pick over a group reads load order
-    "r4w_exact_order": 0.002,
-    "r4_refusal_bit": 0.005,     # pairs where one world dealt and the other refused
-    "r4w_refusal_bit": 0.005,
-    "handtrap_refusal_bit": 0.002,  # compared viewer decisions where only one world refused
-    "handtrap_exact_order": 0.002,
+    "r4_load_order_pairs": 0.002,   # verified load-order pairs, a fraction of dealt pairs
+    "r4w_load_order_pairs": 0.002,
+    "handtrap_refusal_kinds": ("pending chain list",),  # what a one-sided refusal in the hand-trap pairs may be
+    "handtrap_refusals": 2,         # the most seen on any corpus. Kind is checked; that a hidden trigger caused it is not
 }
+# Coverage the suite must reach, so a test cannot pass by testing less.
+FLOOR = {"positions": 2000, "r4_pairs": 1500, "r4w_samples": 3000, "r4w_accept": 1000, "r4w_private_accept": 300, "distribution_pairs": 100, "handtrap_fixtures": 100, "handtrap_decisions": 2000}
+PAIR_COUNTERS = ("slots_equal", "canon_equal", "raw_equal", "winner_equal", "root_obs_equal", "next8_viewer_obs_equal", "viewer_obs_equal", "all_obs_equal")
+HOMOGENEOUS_P = 1e-3     # natural variants must not be told apart: six tests, so a false alarm is about 1 run in 170
+PLANT_P = 1e-6           # a planted first-card pick must be seen
 LEAK_CONTROLS = ("leak-hand", "leak-seed", "leak-order")
 ROLLBACK_CONTROLS = ("rollback-history", "rollback-cursor", "rollback-reveal", "rollback-bind", "rollback-rng")
 VOID_EXPECTED = {"lua": "lua_error", "prompt": "environment_throw", "hang": "hang", "stack": "lua_error", "segv": "fatal_signal", "abort": "fatal_signal",
@@ -104,7 +109,103 @@ def check_clean_correct(r, where):
     require(r.get("branch_points", 0) >= 400, f"{where}: {r.get('branch_points')} branch points")
 
 
-def check_redeal(r, where):
+def chi2_sf(x, k):
+    """The chance a chi-square with k degrees of freedom is at least x: the regularized upper incomplete gamma."""
+    if x <= 0:
+        return 1.0
+    a, z = k / 2, x / 2
+    log_front = a * math.log(z) - z - math.lgamma(a)
+    if z < a + 1:
+        total = term = 1 / a
+        n = a
+        for _ in range(100000):
+            n += 1
+            term *= z / n
+            total += term
+            if term < total * 1e-15:
+                break
+        return max(0.0, 1 - total * math.exp(log_front))
+    b = z + 1 - a
+    c = 1e300
+    d = 1 / b
+    h = d
+    for i in range(1, 100000):
+        an = -i * (i - a)
+        b += 2
+        d = an * d + b
+        d = 1e-300 if abs(d) < 1e-300 else d
+        c = b + an / c
+        c = 1e-300 if abs(c) < 1e-300 else c
+        d = 1 / d
+        delta = d * c
+        h *= delta
+        if abs(delta - 1) < 1e-15:
+            break
+    return min(1.0, h * math.exp(log_front))
+
+
+def homogeneity(rows):
+    """Chi-square across rows. A column too thin for the test is pooled with the others like it."""
+    if not rows or not rows[0]:
+        return 0.0, 0, 1.0
+    n_rows = len(rows)
+    columns = [[row[k] for row in rows] for k in range(len(rows[0]))]
+    keep, pool = [], [0] * n_rows
+    for column in columns:
+        if sum(column) < 5 * n_rows:
+            pool = [a + b for a, b in zip(pool, column)]
+        else:
+            keep.append(column)
+    if sum(pool) >= 5 * n_rows:
+        keep.append(pool)
+    if len(keep) < 2:
+        return 0.0, 0, 1.0
+    row_totals = [sum(column[i] for column in keep) for i in range(n_rows)]
+    total = sum(row_totals)
+    chi = 0.0
+    for column in keep:
+        column_total = sum(column)
+        for i in range(n_rows):
+            expected = row_totals[i] * column_total / total
+            if expected:
+                chi += (column[i] - expected) ** 2 / expected
+    dof = (n_rows - 1) * (len(keep) - 1)
+    return chi, dof, chi2_sf(chi, dof)
+
+
+def check_counts(r, where):
+    """Counters that must agree with each other, and coverage the suite must reach."""
+    r2, r3, r4, r4w = (r.get(k, {}) for k in ("r2", "r3", "r4", "r4w"))
+    require(r.get("positions", 0) >= FLOOR["positions"], f"{where}: {r.get('positions')} positions")
+    status = r2.get("status", {})
+    require(sum(status.values()) == r2.get("attempts", -1), f"{where} r2: statuses add to {sum(status.values())} of {r2.get('attempts')}")
+    require(status.get("ok") == r2.get("ok") == r2.get("playouts"), f"{where} r2: ok {status.get('ok')}, {r2.get('ok')}, playouts {r2.get('playouts')}")
+    require(r2.get("positions_refused_every_deal", 0) <= r.get("positions", 0), f"{where} r2: more positions refused than positions")
+    rejected = sum(r3.get(k, 0) for k in ("reject_prompt", "reject_offered", "reject_public", "reject_obs", "reject_action", "reject_end", "exceptions"))
+    require(r3.get("accept", 0) + rejected == r3.get("samples", -1), f"{where} r3: accepted {r3.get('accept')} and rejected {rejected} of {r3.get('samples')}")
+    require(r3.get("layout_same", 0) <= r3.get("accept", 0), f"{where} r3: more same-layout worlds than accepted")
+    require(r3.get("raw_match_cardid", 0) <= r3.get("layout_same", 0), f"{where} r3: exact matches above same-layout worlds")
+    require(r4.get("pairs") == 2 * r3.get("accept", 0), f"{where} r4: {r4.get('pairs')} pairs from {r3.get('accept')} accepted worlds")
+    require(r4.get("control_pairs") == r3.get("accept"), f"{where} r4: {r4.get('control_pairs')} control pairs from {r3.get('accept')} accepted worlds")
+    require(r4.get("layout_same_pairs") == 2 * r3.get("layout_same", 0), f"{where} r4: {r4.get('layout_same_pairs')} same-layout pairs from {r3.get('layout_same')} worlds")
+    require(r4.get("pairs", 0) >= FLOOR["r4_pairs"], f"{where} r4: {r4.get('pairs')} pairs")
+    rejected = sum(r4w.get(k, 0) for k in ("reject_private", "reject_viewer", "reject_public", "reject_end"))
+    require(r4w.get("accept", 0) + rejected + r4w.get("failed", 0) == r4w.get("samples", -1), f"{where} r4w: accepted {r4w.get('accept')} and rejected {rejected} of {r4w.get('samples')}")
+    require(r4w.get("samples", 0) >= FLOOR["r4w_samples"], f"{where} r4w: {r4w.get('samples')} samples")
+    require(r4w.get("accept", 0) >= FLOOR["r4w_accept"], f"{where} r4w: {r4w.get('accept')} accepted")
+    require(r4w.get("accept_with_private_difference", 0) >= FLOOR["r4w_private_accept"], f"{where} r4w: {r4w.get('accept_with_private_difference')} accepted with a private difference")
+    require(r4w.get("accept_with_private_difference", 1e9) <= r4w.get("accept", 0), f"{where} r4w: more private worlds than accepted")
+    require(r4w.get("extra_prompts", 0) > 0 and r4w.get("skipped_prompts", 0) > 0, f"{where} r4w: extra {r4w.get('extra_prompts')}, skipped {r4w.get('skipped_prompts')} private prompts")
+    require(r4w.get("pairs") == 2 * r4w.get("accept", 0), f"{where} r4w: {r4w.get('pairs')} pairs from {r4w.get('accept')} accepted")
+    require(r4w.get("private_pairs") == 2 * r4w.get("accept_with_private_difference", 0), f"{where} r4w: {r4w.get('private_pairs')} private pairs from {r4w.get('accept_with_private_difference')} worlds")
+    require(r4w.get("refused_both", 0) == r4w.get("refused_a", -1) == r4w.get("refused_b", -2), f"{where} r4w: refused {r4w.get('refused_a')}, {r4w.get('refused_b')}, both {r4w.get('refused_both')}")
+    private_dealt = r4w.get("private_pairs", 0) - r4w.get("private_refused_one", 0)
+    for key in ("private_slots", "private_canon", "private_raw"):
+        require(r4w.get(key, 1e9) <= private_dealt, f"{where} r4w: {key} {r4w.get(key)} above {private_dealt} private pairs")
+    require(r4w.get("private_slots", 0) > 0, f"{where} r4w: no private pair was compared")
+
+
+def check_redeal(r, where, directory):
     require(r.get("lists_covered") == 21, f"{where}: {r.get('lists_covered')} lists")
     zero(r, ("crashed_positions",), where)
     r1, r2, r3, r4, r4w, r5 = (r.get(k, {}) for k in ("r1", "r2", "r3", "r4", "r4w", "r5"))
@@ -116,27 +217,41 @@ def check_redeal(r, where):
     require(r3.get("layout_same"), f"{where} r3: no samples")
     for key in ("board_match", "canon_match_cardid", "winner_match"):
         require(r3.get(key) == r3.get("layout_same"), f"{where} r3: {key} {r3.get(key)} of {r3.get('layout_same')}")
-    for name, section, exact, bit in (("r4", r4, "r4_exact_order", "r4_refusal_bit"), ("r4w", r4w, "r4w_exact_order", "r4w_refusal_bit")):
-        zero(section, ("failed",), f"{where} {name}")
+    check_counts(r, where)
+    exceptions = lines(directory, "exceptions.jsonl")
+    for name, section, limit in (("r4", r4, "r4_load_order_pairs"), ("r4w", r4w, "r4w_load_order_pairs")):
+        zero(section, ("failed", "refused_one_world_only"), f"{where} {name}")
         dealt = section.get("pairs", 0) - section.get("refused_both", 0) - section.get("refused_one_world_only", 0)
         require(dealt > 0, f"{where} {name}: no pairs dealt")
-        for key in ("slots_equal", "root_obs_equal"):
-            require(section.get(key) == dealt, f"{where} {name}: {key} {section.get(key)} of {dealt}")
-        if name == "r4w":
-            require(section.get("canon_equal") == dealt, f"{where} {name}: canon_equal {section.get('canon_equal')} of {dealt}")
-        else:
-            require(section.get("layout_same_pairs", 0) > 0, f"{where} r4: no pair with one load order")
-            for key in ("layout_same_slots", "layout_same_canon"):
-                require(section.get(key) == section.get("layout_same_pairs"), f"{where} r4: {key} {section.get(key)} of {section.get('layout_same_pairs')}")
-            if section.get("canon_equal", 0) < dealt * (1 - KNOWN["r4_copy_order"]):
-                fail(f"{where} r4: canonical chain {section.get('canon_equal')} of {dealt}, past the known limit")
-        if dealt and section.get("raw_equal", 0) < dealt * (1 - KNOWN[exact]):
-            fail(f"{where} {name}: exact order {section.get('raw_equal')} of {dealt}, past the known limit")
-        if section.get("refused_one_world_only", 0) > section.get("pairs", 0) * KNOWN[bit]:
-            fail(f"{where} {name}: {section.get('refused_one_world_only')} one-sided refusals, past the known limit")
+        require(section.get("root_obs_equal") == dealt, f"{where} {name}: root_obs_equal {section.get('root_obs_equal')} of {dealt}")
+        records = [x for x in exceptions if x.get("test") == name]
+        # Every pair that failed any comparison has a record, and every counter agrees with the records.
+        require(section.get("exceptions") == len(records), f"{where} {name}: {section.get('exceptions')} exceptions counted, {len(records)} recorded")
+        require(section.get("exceptions_explained") == len(records), f"{where} {name}: only {section.get('exceptions_explained')} of {len(records)} exceptions explained")
+        for key in PAIR_COUNTERS:
+            expected = dealt - sum(1 for x in records if not x.get(key, 1))
+            require(section.get(key) == expected, f"{where} {name}: {key} {section.get(key)}, but {expected} from {dealt} dealt and {len(records)} recorded exceptions")
+        for later, earlier in (("all_obs_equal", "viewer_obs_equal"), ("viewer_obs_equal", "next8_viewer_obs_equal"), ("next8_viewer_obs_equal", "root_obs_equal")):
+            require(section.get(later, 1e9) <= section.get(earlier, -1), f"{where} {name}: {later} {section.get(later)} above {earlier} {section.get(earlier)}")
+        for x in records:
+            at = f"{where} {name} exception game {x.get('game')} index {x.get('index')} deal {x.get('deal')}"
+            require(x.get("slots_equal") == 1, f"{at}: hidden slots differ")
+            require(x.get("cause") == "load_order" and x.get("numbering_differs") == 1 and x.get("numbering_applied") == 1 and x.get("same_with_one_numbering") == 1, f"{at}: not verified as load order: {x.get('cause')}")
+            require(not all(x.get(key, 0) for key in PAIR_COUNTERS if key != "root_obs_equal"), f"{at}: recorded, yet nothing differs")
+        if len(records) > dealt * KNOWN[limit]:
+            fail(f"{where} {name}: {len(records)} load-order pairs of {dealt}, past the known limit")
+    require(r4.get("layout_same_pairs", 0) > 0, f"{where} r4: no pair with one load order")
+    for key in ("layout_same_slots", "layout_same_canon", "layout_same_raw", "layout_same_obs"):
+        require(r4.get(key) == r4.get("layout_same_pairs"), f"{where} r4: {key} {r4.get(key)} of {r4.get('layout_same_pairs')}")
     require(r4.get("control_chain_equal", 1e9) < r4.get("control_pairs", 0) * 0.1, f"{where} r4: its no-deal control is not different enough, {r4.get('control_chain_equal')} of {r4.get('control_pairs')}")
-    zero(r4w, ("hard_rule_violations",), where + " r4w")
-    require(r4w.get("private_pairs", 0) > 0, f"{where} r4w: no pair differed in a private prompt")
+    # reject_viewer is not here. A rigged world that shows the viewer another byte is simply not a pair.
+    zero(r4w, ("hard_rule_violations", "private_refused_one"), where + " r4w")
+    # Over deal seeds, the two worlds of a pair should not be told apart.
+    pairs, dof, chi = r4w.get("distribution_pairs", 0), r4w.get("distribution_dof", 0), r4w.get("distribution_chi_milli", 0) / 1000
+    require(pairs >= FLOOR["distribution_pairs"], f"{where} r4w: {pairs} pairs in the distribution test")
+    if dof:
+        p = chi2_sf(chi, dof)
+        require(p >= HOMOGENEOUS_P, f"{where} r4w: the two worlds' playouts differ over deal seeds, chi-square {chi:.0f} on {dof}, p {p:.2g}")
     zero(r5, ("invariant_bad", "diag", "exceptions"), where + " r5")
     require(r5.get("done") == r5.get("playouts") and r5.get("playouts"), f"{where} r5: {r5.get('done')} of {r5.get('playouts')} done")
 
@@ -156,7 +271,7 @@ def check_correct(directory):
         require(r.get("statics_changed"), "statics: nothing changed, so the audit saw nothing")
         require(not r.get("not_allowed"), f"statics: {r.get('not_allowed')}")
     for r in kinds.get("redeal", []):
-        check_redeal(r, "redeal")
+        check_redeal(r, "redeal", directory)
     for r in kinds.get("uniform", []):
         for slot in ("hand", "constrained_slot"):
             section = r.get(slot, {})
@@ -171,13 +286,17 @@ def check_correct(directory):
         zero(r, ("above_level_four", "hard_rule_violations", "refused"), "set fixture")
         require(r.get("ok", 0) > 0, "set fixture: no deals")
     for r in kinds.get("handtrap", []):
-        zero(r, ("slot_differences", "canonical_differences", "skipped"), "hand traps")
+        zero(r, ("slot_differences", "canonical_differences", "exact_differences", "skipped"), "hand traps")
         compared = r.get("viewer_decisions_compared", 0)
-        require(compared > 0, "hand traps: nothing compared")
-        if r.get("refusal_differences", 0) > compared * KNOWN["handtrap_refusal_bit"]:
-            fail(f"hand traps: {r.get('refusal_differences')} one-sided refusals of {compared}, past the known limit")
-        if r.get("exact_differences", 0) > compared * KNOWN["handtrap_exact_order"]:
-            fail(f"hand traps: {r.get('exact_differences')} exact differences of {compared}, past the known limit")
+        require(compared >= FLOOR["handtrap_decisions"], f"hand traps: {compared} decisions compared")
+        require(r.get("fixtures", 0) >= FLOOR["handtrap_fixtures"], f"hand traps: {r.get('fixtures')} fixtures")
+        require(r.get("fixtures_with_extra_private_prompts", 1e9) <= r.get("fixtures", 0), "hand traps: more fixtures with prompts than fixtures")
+        kinds = r.get("refusal_kinds", {})
+        require(sum(kinds.values()) == r.get("refusal_differences", -1), f"hand traps: refusal kinds add to {sum(kinds.values())} of {r.get('refusal_differences')}")
+        for kind in kinds:
+            require(kind in KNOWN["handtrap_refusal_kinds"], f"hand traps: a one-sided refusal of kind {kind!r}")
+        if r.get("refusal_differences", 0) > KNOWN["handtrap_refusals"]:
+            fail(f"hand traps: {r.get('refusal_differences')} one-sided refusals, past the known limit")
         gorz = r.get("gorz", {})
         zero(gorz, ("refusal_differences",), "hand traps, Gorz")
         require(gorz.get("extra_private_prompts", 0) > 0, "hand traps: no Gorz prompt was reached, so this tested nothing")
@@ -197,6 +316,13 @@ def check_controls(directory):
             r4 = r.get("r4", {})
             dealt = r4.get("pairs", 0) - r4.get("refused_both", 0) - r4.get("refused_one_world_only", 0)
             require(dealt > 0 and r4.get("slots_equal", dealt) < dealt, f"control {name}: not caught by slot equality, {r4.get('slots_equal')} of {dealt}")
+            require(r4.get("exceptions_explained", 0) < r4.get("exceptions", 0), f"control {name}: load order explained every planted difference away, {r4.get('exceptions_explained')} of {r4.get('exceptions')}")
+        if name == "leak-hand":
+            for r in found:
+                r4w = r.get("r4w", {})
+                dof = r4w.get("distribution_dof", 0)
+                p = chi2_sf(r4w.get("distribution_chi_milli", 0) / 1000, dof) if dof else 1.0
+                require(p < HOMOGENEOUS_P, f"control {name}: the distribution test did not see it, p {p:.2g}")
     for name in ROLLBACK_CONTROLS:
         found = by_mutant.get(name, [])
         require(found, f"control {name}: no result")
@@ -214,6 +340,46 @@ def check_controls(directory):
     require(found, "control refuse-relate: no result")
     for r in found:
         require(r.get("refusal_differences", 0) > 0, f"control refuse-relate: Gorz not caught: {r.get('refusal_differences')}")
+
+
+def check_loadorder(directory):
+    """Over deal seeds, natural variants must not be told apart, and a pick that reads load order must be."""
+    records = lines(directory, "loadorder.jsonl")
+    def found(line, plant, canonical=0):
+        out = [r for r in records if r.get("loadorder") == line and r.get("plant") == plant and r.get("canonical_numbering") == canonical]
+        require(len(out) == 1, f"load order {line} {plant}: {len(out)} results")
+        return out[0] if out else {}
+    for line in ("thestalos_viewer_hand", "thestalos_opposing_hand", "power_tool_viewer_deck"):
+        for plant in ("none", "first", "min2"):
+            r = found(line, plant)
+            where = f"load order {line} {plant}"
+            require(r.get("variants", 0) >= 16 and r.get("variants_one_public_history") == r.get("variants"), f"{where}: {r.get('variants_one_public_history')} of {r.get('variants')} variants share a public history")
+            zero(r, ("failed",), where)
+            require(not r.get("error"), f"{where}: {r.get('error')}")
+            require(r.get("deals") == r.get("variants", 0) * r.get("seeds_per_variant", -1), f"{where}: {r.get('deals')} deals")
+            require(r.get("refused", 0) + r.get("none", 0) + r.get("reached", 0) == r.get("deals", -1), f"{where}: outcomes add to {r.get('refused', 0) + r.get('none', 0) + r.get('reached', 0)} of {r.get('deals')}")
+            require(r.get("reached", 0) >= 100 * r.get("variants", 0), f"{where}: only {r.get('reached')} worlds reached the pick")
+            rows = r.get("by_sequence", [])
+            require(len(rows) == r.get("variants_one_public_history"), f"{where}: {len(rows)} rows")
+            require(sum(sum(row[2:]) for row in rows) == r.get("reached", -1), f"{where}: table holds {sum(sum(row[2:]) for row in rows)} of {r.get('reached')} picks")
+            code_rows = r.get("by_code", [])
+            require(sum(sum(row[2:]) for row in code_rows) == r.get("reached", -1), f"{where}: code table holds {sum(sum(row[2:]) for row in code_rows)} of {r.get('reached')} picks")
+            if plant == "none":
+                for name, table in (("place in hand", rows), ("card and Life Points", code_rows)):
+                    chi, dof, p = homogeneity(table)
+                    require(dof > 0, f"{where} {name}: nothing to test")
+                    require(p >= HOMOGENEOUS_P, f"{where} {name}: variants differ, chi-square {chi:.1f} on {dof}, p {p:.2g}")
+        natural = found(line, "none")
+        first = found(line, "first")
+        if line == "power_tool_viewer_deck":
+            # Three cards that never moved: their order does not depend on load order, so one seed takes one card.
+            zero(natural, ("paired_different",), f"load order {line}")
+            zero(first, ("paired_different",), f"load order {line} first")
+        else:
+            # The fact the contract is written around. If this stops being true, the doc is stale.
+            require(natural.get("paired_different", 0) > 0, f"load order {line}: one seed always gave one result, so the doc is stale")
+            chi, dof, p = homogeneity(first.get("by_sequence", []))
+            require(p < PLANT_P, f"load order {line}: a first-card pick was not seen, p {p:.2g}")
 
 
 def check_void(directory):
@@ -272,6 +438,7 @@ def main():
     check_verify(directory)
     check_correct(directory)
     check_controls(directory)
+    check_loadorder(directory)
     check_void(directory)
     check_text(directory)
     for message in failures:

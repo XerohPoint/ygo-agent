@@ -12,7 +12,7 @@
 // Typical use, inside one worker process (the arena has a fixed address, so one duel per process):
 //
 //   fm::init_forward_model({root});            // cwd must hold ./script
-//   fm::Referee duel("g_lightsworn", "blackwing", 85450000);
+//   fm::Referee duel("g_lightsworn", "blackwing", 85650000);
 //   while (!duel.done()) {
 //     auto world = duel.open_search(duel.to_play());       // refuses any seat but the acting one
 //     for (uint64_t i = 0; i < iterations; ++i) {
@@ -148,9 +148,20 @@ class SearchWorld {
   Status restore(Handle handle);
   void release(Handle handle);
 
-  // Re-deal the hidden cards from public inputs and the seed, then reseed the future. Allowed only from
-  // an undealt, unvoided root at the viewer's decision. Same public history, same seed, same assumption:
-  // same world, and every face-down card obeys what its Set publicly showed. Refused deals change nothing.
+  // Re-deal the hidden cards from public inputs and the seed, then reseed the future. Allowed only from an undealt,
+  // unvoided root at the viewer's decision. Every face-down card obeys what its Set publicly showed. Refused deals change
+  // nothing. What holds for one public history, one assumption and one seed:
+  //
+  //   - Which code goes in which hidden slot does not depend on the true cards. This holds across true worlds.
+  //   - The same true world and seed give the same sampled world, to the last byte, every time.
+  //   - Across true worlds, the sampled world's future may differ. The core's groups iterate by a number that reflects
+  //     the true load order, so a random pick over a group, as Thestalos's discard, can take another card from the same
+  //     draw, and bytes and option order can differ too. So a seed does not name a world across true worlds. Never compare
+  //     or cache sampled results seed for seed between true positions.
+  //   - Over seeds, tests found no difference. Treat seeds as samples: the distribution of sampled worlds given the public
+  //     history showed no dependence on load order, in a homogeneity test whose planted first-card pick was caught.
+  //     docs/edison-forward-model.md gives the numbers and what was not tested.
+  //
   // A refusal is not always public. One for kCoreReference can say a hidden hand card has an optional
   // trigger waiting, and kHiddenObjectState that a hidden card carries rule state, so a search must take no
   // signal from it. docs/edison-forward-model.md gives the measured rates.
