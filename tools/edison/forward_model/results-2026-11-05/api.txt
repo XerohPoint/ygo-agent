@@ -1,0 +1,38 @@
+pass: core_type does not compile
+pass: card_type does not compile
+pass: environment_type does not compile
+pass: world_internals does not compile
+pass: referee_internals does not compile
+pass: world_to_referee does not compile
+pass: true_cards does not compile
+pass: test_hooks does not compile
+built /home/mada/ygo-agent/.claude/worktrees/agent-ab53c43e04e63263e/build/forward_model/fm_search_example (core 5fe29f6ad6dd4ebb83a1f1b5123c1837, hardening r2)
+pass: only the acting seat can open a search
+pass: the acting seat can open a search
+pass: a new world is undealt
+pass: an undealt world cannot be stepped
+pass: an undealt world reports no result
+pass: an undealt world shows the viewer's own decision
+pass: a list that cannot be true is refused
+pass: a refused deal leaves the world undealt
+pass: the true list deals
+pass: a deal moves slots
+pass: a dealt world cannot be dealt again
+pass: dealing does not change what the viewer sees
+pass: an impossible option is refused
+pass: a dealt world steps
+pass: a handle remembers its world was dealt
+pass: restore returns to the snapshot
+pass: a released handle is gone
+pass: the root is undealt again
+option 0: 26 wins of 29
+option 1: 27 wins of 29
+option 2: 27 wins of 29
+option 3: 24 wins of 29
+option 4: 24 wins of 28
+option 5: 25 wins of 28
+option 6: 22 wins of 28
+restores 202, deals 201, steps 31908, observes 31710
+pass: closing the world gives back the true decision
+pass: the referee plays on
+0 failures
