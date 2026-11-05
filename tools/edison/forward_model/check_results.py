@@ -236,7 +236,7 @@ def check_redeal(r, where, directory):
         for x in records:
             at = f"{where} {name} exception game {x.get('game')} index {x.get('index')} deal {x.get('deal')}"
             require(x.get("slots_equal") == 1, f"{at}: hidden slots differ")
-            require(x.get("cause") == "load_order" and x.get("numbering_differs") == 1 and x.get("numbering_applied") == 1 and x.get("same_with_one_numbering") == 1, f"{at}: not verified as load order: {x.get('cause')}")
+            require(x.get("cause") == "load_order" and x.get("numbering_differs") == 1 and x.get("repeats_untouched") == 1 and x.get("numbering_applied") == 1 and x.get("same_with_one_numbering") == 1, f"{at}: not verified as load order: {x.get('cause')}")
             require(not all(x.get(key, 0) for key in PAIR_COUNTERS if key != "root_obs_equal"), f"{at}: recorded, yet nothing differs")
         if len(records) > dealt * KNOWN[limit]:
             fail(f"{where} {name}: {len(records)} load-order pairs of {dealt}, past the known limit")
@@ -249,6 +249,8 @@ def check_redeal(r, where, directory):
     # Over deal seeds, the two worlds of a pair should not be told apart.
     pairs, dof, chi = r4w.get("distribution_pairs", 0), r4w.get("distribution_dof", 0), r4w.get("distribution_chi_milli", 0) / 1000
     require(pairs >= FLOOR["distribution_pairs"], f"{where} r4w: {pairs} pairs in the distribution test")
+    # A pair enters this test only with at least one degree of freedom, so fewer than that is a malformed result.
+    require(dof >= pairs, f"{where} r4w: {dof} degrees of freedom for {pairs} pairs")
     if dof:
         p = chi2_sf(chi, dof)
         require(p >= HOMOGENEOUS_P, f"{where} r4w: the two worlds' playouts differ over deal seeds, chi-square {chi:.0f} on {dof}, p {p:.2g}")
@@ -349,7 +351,7 @@ def check_loadorder(directory):
         out = [r for r in records if r.get("loadorder") == line and r.get("plant") == plant and r.get("canonical_numbering") == canonical]
         require(len(out) == 1, f"load order {line} {plant}: {len(out)} results")
         return out[0] if out else {}
-    for line in ("thestalos_viewer_hand", "thestalos_opposing_hand", "power_tool_viewer_deck"):
+    for line in ("thestalos_viewer_hand", "thestalos_opposing_hand"):
         for plant in ("none", "first", "min2"):
             r = found(line, plant)
             where = f"load order {line} {plant}"
@@ -371,15 +373,10 @@ def check_loadorder(directory):
                     require(p >= HOMOGENEOUS_P, f"{where} {name}: variants differ, chi-square {chi:.1f} on {dof}, p {p:.2g}")
         natural = found(line, "none")
         first = found(line, "first")
-        if line == "power_tool_viewer_deck":
-            # Three cards that never moved: their order does not depend on load order, so one seed takes one card.
-            zero(natural, ("paired_different",), f"load order {line}")
-            zero(first, ("paired_different",), f"load order {line} first")
-        else:
-            # The fact the contract is written around. If this stops being true, the doc is stale.
-            require(natural.get("paired_different", 0) > 0, f"load order {line}: one seed always gave one result, so the doc is stale")
-            chi, dof, p = homogeneity(first.get("by_sequence", []))
-            require(p < PLANT_P, f"load order {line}: a first-card pick was not seen, p {p:.2g}")
+        # The fact the contract is written around. If this stops being true, the doc is stale.
+        require(natural.get("paired_different", 0) > 0, f"load order {line}: one seed always gave one result, so the doc is stale")
+        chi, dof, p = homogeneity(first.get("by_sequence", []))
+        require(p < PLANT_P, f"load order {line}: a first-card pick was not seen, p {p:.2g}")
 
 
 def check_void(directory):

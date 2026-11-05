@@ -545,8 +545,8 @@ inline void capture_baseline(FmEnv *e, WorldBaseline &b) {
   // Phase, a conditional effect has already taken a fresh id below such a limit, so it sorted with cards at creation in
   // that world only. R4W caught this: game 309 index 82, on the 85400000 corpus, two Judgment Dragons in another order.
   uint32_t first_arrival = e->core()->game_field->infos.field_id;
-  for (card *c : e->core()->cards)
-    if (c->current.location != LOCATION_DECK && c->current.location != LOCATION_EXTRA) first_arrival = std::min(first_arrival, c->fieldid);
+  for (card *c : e->core()->cards)  // temp_card is never placed, and the core leaves its fieldid unset
+    if (c != e->core()->game_field->temp_card && c->current.location != LOCATION_DECK && c->current.location != LOCATION_EXTRA) first_arrival = std::min(first_arrival, c->fieldid);
   b.load_id_limit = first_arrival;
 }
 

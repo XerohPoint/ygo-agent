@@ -158,9 +158,10 @@ class SearchWorld {
   //     the true load order, so a random pick over a group, as Thestalos's discard, can take another card from the same
   //     draw, and bytes and option order can differ too. So a seed does not name a world across true worlds. Never compare
   //     or cache sampled results seed for seed between true positions.
-  //   - Over seeds, tests found no difference. Treat seeds as samples: the distribution of sampled worlds given the public
-  //     history showed no dependence on load order, in a homogeneity test whose planted first-card pick was caught.
-  //     docs/edison-forward-model.md gives the numbers and what was not tested.
+  //   - Treat seeds as samples. Over seeds, the random picks tested showed no dependence on load order, and a planted
+  //     first-card pick was caught. That is not general: Return from the Different Dimension summons in true load order on
+  //     every seed, so a policy that treats its first and second prompts differently gets a different value. What is dealt
+  //     into hidden slots still doesn't depend on it. docs/edison-forward-model.md gives the numbers and what was not tested.
   //
   // A refusal is not always public. One for kCoreReference can say a hidden hand card has an optional
   // trigger waiting, and kHiddenObjectState that a hidden card carries rule state, so a search must take no

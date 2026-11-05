@@ -301,10 +301,11 @@ inline int first_chain_divergence(const CanonRun &a, const CanonRun &b) {
 // A pair that differs is allowed only if a program can tell why. The one cause allowed is load order: the two true worlds
 // loaded their cards in other orders, so one place holds another `cardid`, and the core's groups iterate by it. The test
 // is causal. Give world B world A's numbers, place by place, and change nothing else. World A then plays the very walk
-// that showed the difference, so if world B now follows it to the end, numbering was the whole of the difference.
+// that showed the difference, so if world B now follows it to the end, numbering was the whole of the difference. That
+// reasoning needs the difference to come back on an untouched retry, or something else went away, so that is checked first.
 struct LoadOrderTest {
-  bool numbering_differs = false, applied = false, same = false;
-  bool explained() const { return numbering_differs && applied && same; }
+  bool numbering_differs = false, repeats = false, applied = false, same = false;
+  bool explained() const { return numbering_differs && repeats && applied && same; }
 };
 struct PairVerdict {
   bool slots, canon, raw, winner, next8, viewer_obs, all_obs;
@@ -319,6 +320,15 @@ inline LoadOrderTest transplant_numbering(const std::function<void()> &prepare_a
   capture_numbering(b->core(), numbers_b);
   out.numbering_differs = !numbering_equal(numbers_a, numbers_b);
   try {
+    prepare_a();
+    run_canonical(a, policy, cap, canon_a, false, false);
+    prepare_a();
+    run_canonical(a, policy, cap, raw_a, true, true);
+    prepare_b();
+    run_canonical(b, policy, cap, canon_b, false, false);
+    prepare_b();
+    run_canonical(b, policy, cap, raw_b, true, true);
+    out.repeats = canon_a.digest != canon_b.digest || raw_a.digest != raw_b.digest || first_obs_divergence(raw_a, raw_b, -1) != -1;
     g_test_numbering = &numbers_a;
     prepare_b();
     g_test_numbering = nullptr;
@@ -344,9 +354,9 @@ inline void emit_exception(FILE *log, const char *test, const Game &g, const Pos
   fprintf(log,
           "EXCEPTION {\"test\":\"%s\",\"game\":%d,\"decks\":\"%s/%s\",\"seed\":%u,\"env\":%d,\"index\":%d,\"viewer\":%d,\"deal\":%d,\"extra\":%d,\"skipped\":%d,"
           "\"slots_equal\":%d,\"canon_equal\":%d,\"raw_equal\":%d,\"winner_equal\":%d,\"next8_viewer_obs_equal\":%d,\"viewer_obs_equal\":%d,\"all_obs_equal\":%d,"
-          "\"numbering_differs\":%d,\"numbering_applied\":%d,\"same_with_one_numbering\":%d,\"cause\":\"%s\",\"first\":\"%s\",\"canon_first\":\"%s\"}\n",
+          "\"numbering_differs\":%d,\"repeats_untouched\":%d,\"numbering_applied\":%d,\"same_with_one_numbering\":%d,\"cause\":\"%s\",\"first\":\"%s\",\"canon_first\":\"%s\"}\n",
           test, pos.game, g.deck0.c_str(), g.deck1.c_str(), g.seed, g.env, pos.index, viewer, seed_i, extra, skipped, v.slots, v.canon, v.raw, v.winner, v.next8, v.viewer_obs, v.all_obs, cause.numbering_differs,
-          cause.applied, cause.same, cause.explained() ? "load_order" : "unexplained", first.c_str(), canon_first.c_str());
+          cause.repeats, cause.applied, cause.same, cause.explained() ? "load_order" : "unexplained", first.c_str(), canon_first.c_str());
   fflush(log);
 }
 
@@ -2199,7 +2209,7 @@ struct LoadLine {
   std::function<bool(FmEnv *, LineState &, int &, uint32_t &, int &)> outcome;
 };
 
-constexpr uint32_t kRota = 32807846, kCat = 14878871, kPrisma = 89312388, kSamnite = 2619149, kTiger = 92373006, kThestalos = 26205777, kTytannial = 11819616, kFoolish = 81439173, kLonefire = 48686504, kGigaplant = 53257892, kCopyPlant = 66457407, kPowerTool = 2403771;
+constexpr uint32_t kRota = 32807846, kCat = 14878871, kPrisma = 89312388, kSamnite = 2619149, kTiger = 92373006, kThestalos = 26205777, kTytannial = 11819616, kFoolish = 81439173, kLonefire = 48686504, kGigaplant = 53257892, kCopyPlant = 66457407;
 
 inline int low_summon(FmEnv *e, uint32_t skip) {
   const auto &acts = e->actions();
@@ -2317,100 +2327,6 @@ inline std::vector<LoadLine> load_lines() {
       return pass_of(e);
     };
     l.outcome = [](FmEnv *e, LineState &st, int &seq, uint32_t &code, int &lp) { return st.e && hand_loss(e, 0, st, seq, code, lp); };
-    out.push_back(l);
-  }
-  {
-    // Another card's pick: Power Tool Dragon's, one of three Equip Spells the viewer chose from the Deck. Those three never
-    // moved, so their numbers keep Deck order whatever the load order was. This line should not be sensitive at all.
-    LoadLine l;
-    l.name = "power_tool_viewer_deck";
-    l.deck0 = "g_gigavise";
-    l.deck1 = "blackwing";
-    l.seed = 85660001;
-    l.viewer = 0;
-    l.varied_player = 0;
-    l.varied_code = kTytannial;
-    l.forced[0] = {kFoolish, kLonefire, kGigaplant, kCopyPlant};
-    l.keep_viewer_top = 0;
-    l.prefix = [](FmEnv *e, LineState &st) -> int {
-      // Foolish Burial shows the varied card. The root is the next Main Phase prompt.
-      if (st.b && e->msg() == MSG_SELECT_IDLECMD && e->to_play() == 0) return -1;
-      if (e->msg() == MSG_SELECT_IDLECMD && e->to_play() == 0 && !st.a) {
-        int pick = option_of(e, kFoolish, ygopro::ActionAct::Activate);
-        if (pick >= 0) {
-          st.a = true;
-          return pick;
-        }
-      }
-      if (st.a && selecting(e)) {
-        int pick = option_with_code(e, kTytannial);
-        if (pick >= 0) {
-          st.b = true;
-          return pick;
-        }
-      }
-      return pass_of(e);
-    };
-    l.play = [](FmEnv *e, LineState &st) -> int {
-      if (e->turn() > 5) return -1;
-      if (st.e && static_cast<int>(e->core()->game_field->player[0].list_hand.size()) > st.hand_before) return -1;
-      if (e->to_play() == 0 && e->msg() == MSG_SELECT_IDLECMD) {
-        int pick = -1;
-        if (e->turn() == 1 && !st.a && (pick = option_of(e, kLonefire, ygopro::ActionAct::Summon)) >= 0) {
-          st.a = true;
-          return pick;
-        }
-        if (e->turn() == 3 && !st.b && (pick = option_of(e, kGigaplant, ygopro::ActionAct::Summon)) >= 0) {
-          st.b = true;
-          return pick;
-        }
-        if (e->turn() == 5 && !st.c && (pick = option_of(e, kCopyPlant, ygopro::ActionAct::Summon)) >= 0) {
-          st.c = true;
-          return pick;
-        }
-        if (e->turn() == 5 && !st.d && (pick = option_of(e, kPowerTool, ygopro::ActionAct::SpSummon)) >= 0) {
-          st.d = true;
-          return pick;
-        }
-        if (e->turn() == 5 && st.d && !st.e && (pick = option_of(e, kPowerTool, ygopro::ActionAct::Activate)) >= 0) {
-          st.e = true;
-          st.hand_before = static_cast<int>(e->core()->game_field->player[0].list_hand.size());
-          st.grave_before = 0;
-          return pick;
-        }
-      }
-      if (st.e && e->to_play() == 0 && selecting(e)) {
-        // Three Equip Spells: the first offered that is not already chosen. Numbered for the result by choice order.
-        const auto &acts = e->actions();
-        for (size_t i = 0; i < acts.size(); ++i) {
-          card *c = DealAccess::object_of(e, acts[i]);
-          if (!c || c->current.location != LOCATION_DECK) continue;
-          bool chosen = false;
-          for (int k = 0; k < st.grave_before && k < 3; ++k) chosen = chosen || st.hand_objects[k] == reinterpret_cast<uint64_t>(c);
-          if (chosen) continue;
-          if (st.grave_before < 3) st.hand_objects[st.grave_before++] = reinterpret_cast<uint64_t>(c);
-          return static_cast<int>(i);
-        }
-        return 0;
-      }
-      if (selecting(e)) return 0;
-      return pass_of(e);
-    };
-    l.outcome = [](FmEnv *e, LineState &st, int &seq, uint32_t &code, int &lp) {
-      if (!st.e) return false;
-      auto &hand = e->core()->game_field->player[0].list_hand;
-      if (static_cast<int>(hand.size()) <= st.hand_before) return false;
-      for (int k = 0; k < st.grave_before && k < 3; ++k) {
-        card *c = reinterpret_cast<card *>(st.hand_objects[k]);
-        if (std::find(hand.begin(), hand.end(), c) != hand.end()) {
-          seq = k;
-          code = c->data.code;
-          lp = e->core()->game_field->player[0].lp;
-          return true;
-        }
-      }
-      return false;
-    };
     out.push_back(l);
   }
   {

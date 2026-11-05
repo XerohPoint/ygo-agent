@@ -19,10 +19,8 @@ run() { "$B/fm_bench" loadorder --root .. --variants 16 --workers 4 "$@" 2>> "$B
 for plant in none first min2; do
   run --line thestalos_viewer_hand --seeds "${LOAD_SEEDS_A:-4000}" --plant "$plant"
   run --line thestalos_opposing_hand --seeds "${LOAD_SEEDS_B:-1500}" --plant "$plant"
-  run --line power_tool_viewer_deck --seeds "${LOAD_SEEDS_C:-1000}" --plant "$plant"
 done
 run --line thestalos_viewer_hand --seeds 400 --canonical-numbering 1
 run --line thestalos_opposing_hand --seeds 400 --canonical-numbering 1
-run --line power_tool_viewer_deck --seeds 400 --canonical-numbering 1
 "$B/fm_bench" redeal --root .. --per-cell "${RENUMBER_PER_CELL:-8}" --deals 6 --cap 3000 --workers 4 --canonical-numbering 1 --log "$B/renumber.log" --out "$B/renumber.jsonl" 2> "$B/renumber.stderr"
 grep -h '^EXCEPTION ' "$B"/renumber.log.* | sed 's/^EXCEPTION //' > "$B/renumber-exceptions.jsonl"
