@@ -1,0 +1,40 @@
+{
+ "commit": "919108a5a3898c578162fbd039c2afd183c164fa",
+ "inputs": {
+  "binary": "167be8aa8f9a4767789c3e81dc719051dd41c32afc3678d9cf6172d307a5548f",
+  "scripts": "c94d0b9167109c883feaeb1268ea145e6836d7f1aa4bfeed0e1fa6dca27ae5d6",
+  "database": "4c5de5831fade7601d55092dec594d5aab220b4321bf9dddbc3707a45df4000d",
+  "lists": "eaa13e19021710bac552313d934be45a56581b82769560c0f07234f574e6c4be",
+  "codes": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab",
+  "nets": {
+   "n1702": "c8192ab0385a9f707dd1d61b69f0e9c1143d6c14160f06e5731d70e97ad698c7",
+   "n1703": "a7200c87c9732fe3166b4403367193731165bfe43da033243387ab349c29d184",
+   "n1704": "24e5a46c90c06cd018cb5b89bced3e7ae015ea63ca1fd25aba020b3929f50066"
+  },
+  "extra": [],
+  "binary_id": "d35e8512ba2cce6f",
+  "jobs": "024aacaed3e00d5ae24b5b2bbe0d51a824bd8595f36dbf08e20dab7d95a88675"
+ },
+ "scripts": {
+  "tools/edison/search/collect_decisions.py": "c1ccee5336ee63d94cbf7c7a0d2c201a75a499248a3c2f9646542e1bca8d6eea",
+  "tools/edison/search/dump_format.py": "73ab862555ea637baaab0dcb891f30cb0e43cd3f81ee6af6b5e8bf366b571bd6",
+  "tools/edison/search/export_net.py": "f2723147a0ebca3a17be6fd20b526b0debdd6c37f0b2f0dde6fdf2aff2165191",
+  "tools/edison/search/m2_final.py": "16761feabfe5b4e4b270b14cfc267f53c36d20d958abf0dcc1d5864a914ef616",
+  "tools/edison/search/mutate_decisions.py": "780fb677152e11e44f714283a23e3506eb427c2b21edfe0524f7d11fb431a47c",
+  "tools/edison/search/noise_floor.py": "ed6bc4fda4fe24aa54ad940068b2601c85abfc41f75749f534e658d0707531bb",
+  "tools/edison/search/rank_position.py": "4e56105fe2418f8917e166e93f9077d574ea8017cd84487e46d100018a9b9bb9",
+  "tools/edison/search/reference.py": "1262309575458e34196f7dfff692961df6e95a530cab0f886c24385989262756",
+  "tools/edison/search/run_differential.py": "d16a37e7ef8f1aec7aa143230098bc4e827869bfaf90355ff53a4af777554242",
+  "tools/edison/search/search_common.py": "866e6b7ebc6982d77eda0f0465a7e3ca5cf837fb1aa793c62d5f2a8dfc82d507",
+  "tools/edison/search/search_study.py": "ae3beb9b11cc794ebe071bdd53d79bb26944a1f5365422c8f5ac6855635cfef1",
+  "tools/edison/search/test_search.py": "b52fdd45d299f476114a4ba715ce05258a4bbcd4989f55af4962e7c58f077322"
+ },
+ "setting": {
+  "budget": 64,
+  "depth": 48,
+  "candidates": 4,
+  "z": 1.0
+ },
+ "base_seed": 87000000,
+ "resamples": 20000
+}
