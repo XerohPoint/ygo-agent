@@ -37,7 +37,7 @@ def forward(module, arguments):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("eval", "report", "final"))
+    parser.add_argument("command", choices=("eval", "report", "final", "final-report"))
     parser.add_argument("--workers", type=int, default=8)
     args = parser.parse_args()
     configure()
@@ -46,6 +46,8 @@ def main():
         return forward(gauntlet_eval, ["--workers", str(args.workers)])
     if args.command == "report":
         return forward(gauntlet_report, ["--output", str(summary)])
+    if args.command == "final-report":
+        return forward(final_test, ["report"])
     verdict = json.loads(summary.read_text())["conclusions"]["G3"]["verdict"]
     if verdict != "CANDIDATE":
         print(f"G3 is {verdict}: the final test stays unplayed, as the protocol says.")

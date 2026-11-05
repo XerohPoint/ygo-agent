@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Count the Substitoad thinning line and Deck-option label accuracy in logs written by line_probe.py.
 
-Deck picks are read from the summoned card at the position prompt and tributes from the Graveyard, because Deck option labels are unreliable.
+Deck picks are read from the summoned card at the position prompt and tributes from the Graveyard, so label accuracy can be checked against them.
 Field Dupe Frog reports as Des Frog in some views, so the end board accepts either.
 """
 import argparse
@@ -89,7 +89,10 @@ def analyze(group, frog_total):
                         if first == POSITION:
                             pulled.append(NAMES.get(step["options"][0][2], "?"))
                             summoned[pulled[-1]] += 1
-                            prompt = next((p for p in reversed(own[:i]) if p["options"][0][0] == SELECT), None)
+                            # The cost is paid before the Deck prompt, so a prompt with nothing new in the Graveyard chose the tribute.
+                            # With one candidate the Deck pick is automatic and no prompt counts.
+                            prompt = next((p for p in reversed(own[:i]) if p["options"][0][0] == SELECT and gained(entry["public"], p["public"])), None)
+                            c["summons_without_deck_prompt"] += prompt is None
                             if prompt:
                                 labels = [o[2] for o in prompt["options"]]
                                 c["deck_prompts"] += 1

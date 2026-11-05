@@ -5,9 +5,44 @@ sha256 c5ecba9c, assets per `tests/edison/agent_assets.lock.json`. The pilot num
 older binary; [the re-baseline](#re-baseline-on-the-hardened-simulator) has the numbers on the hardened one. No
 runtime source, fixture or lock file changed; all new code is under `tools/edison/learner/`.
 
+## M1 exit on the fixed Deck labels
+
+**M1's exit rule is met, on fresh seeds and the [fixed Deck labels](edison-deck-labels.md). That means these networks beat one weak heuristic on deck lists they trained on. It is not human, tournament or held-out-deck strength.** Three optimizers trained for 245,760 gauntlet duels each on certified module b8fcd2bc (about 6 hours each, sharing the machine). No run aborted, and the only training void was one 8-game cell at the decision limit. The [protocol](../tests/edison/reports/retrain-2026-11-04/protocol.md) and [final-test protocol](../tests/edison/reports/retrain-2026-11-04/final/protocol.md) were hashed before training. [Evaluation summary](../tests/edison/reports/retrain-2026-11-04/summary.json), [final summary](../tests/edison/reports/retrain-2026-11-04/final/summary.json).
+
+| Evaluation, seeds 82M, consumed | Round 160 | Round 320 | Round 640 | Round 1280 | Round 2560, by optimizer | Round 2560 | NumPy baseline |
+| --- | ---: | ---: | ---: | ---: | --- | ---: | ---: |
+| Fixtures, 768 games each | 44.4 | 49.6 | 51.7 | 60.4 | 73.1, 65.2, 68.1 | **68.8%** | 49.2% |
+| Gauntlet, 1,344 games each | 59.0 | 64.4 | 67.6 | 75.3 | 81.6, 77.4, 79.0 | **79.3%** | 54.1% |
+
+G1 `MORE_GAMES_HELP` and G2 `STILL_RISING` on both blocks (round 2560 minus 1280 is +8.4 and +4.0 pp). G3 `CANDIDATE`. G4 `NET_AHEAD`, with 71.4% head to head against the baseline. G5 is valid, with 0 void games in evaluation. So training had not plateaued, and the same settings with more games may go further. That is untested.
+
+Round 1280 scored 60.4% and 75.3%, against 58.2% and 70.5% for the earlier run on the defective interface. Seeds differ, so this is not a clean measure of the fix, but the fix did not cost strength.
+
+| Final test, seeds 83M, consumed | 1702 | 1703 | 1704 | Mean | Lowest lower bound | Verdict |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| F1, fixtures, 3,072 games each | 70.18 | 64.55 | 68.20 | **67.64%** | 62.84 | PASS |
+| F2, gauntlet, 5,376 games each | 82.33 | 77.29 | 79.85 | **79.82%** | 76.15 | PASS |
+
+**Verdict: `M1_EXIT_MET`.** Fixture decks pooled are Blackwing 54.75%, Frog Monarch 68.23% and Machina Gadget 79.95%. Fixture seats are 71.14% and 64.15%, and gauntlet seats are 81.91% and 77.74%. There were 0 void games and 0 draws in F1 and F2, and 52 replayed cells with 0 mismatches. Without the guard the gauntlet scores 79.71% with 96 void games at the decision limit, and the guard's paired effect is +1.10, -0.52 and -0.32 pp.
+
+**Checks.** My recount from raw cells matches, and the network hashes match the training checkpoints. [Sol's independent read](../tests/edison/reports/retrain-2026-11-04/review/reviewer_report.md) scored the raw cells with its own code and got the same verdict. It found no privacy leak the study could reach, including in new duels past the first turn: 180 compared observations through turn 8 with different hidden cards, and 1,008 full duels on the real networks reaching turn 49 with 0 prompt-audit violations. These are bounded checks, not a proof. I confirmed its findings below from the raw data or the code.
+
+**What limits this result:**
+
+- **The heuristic is weak.** It has a whitelist of activations. In Sol's 1,008 duels it took 0 of 857 Substitoad offers, 0 of 1,232 Solemn Judgment offers and 0 of 259 Honest offers. It also sees fewer inputs than the network. How much of the margin comes from this was not measured.
+- **Passing pools hide losing matchups.** Network Blackwing against heuristic Machina Gadget wins only 424 of 1,536 games (27.60%), and optimizer 1703's Blackwing in seat 1 wins 254 of 512 (49.61%). F1 only tests pools, so neither breaks the rule, but "wins every matchup" is not supported.
+- **Decks and opponent are familiar.** Training and testing share all 21 lists and the heuristic. Fresh seeds are new starts, not new decks, and M3 measures generalization.
+
+**Test gaps found, neither changing a game or the verdict:**
+
+- **Mirror controls could not fail.** Both challenger seats replay the same duels, so the aggregate is 50% by construction. The reports now add seat 0's rate, counting each duel once: 54.75% on final fixtures and 50.93% on the final gauntlet. Those fit the networks' seat gaps.
+- **Trace hashes omit history.** `actor.py` hashes cards, selection, global, actions and decision, but not `h_actions_`, which the network also reads. A history-only divergence with unchanged actions would pass replay. No such divergence is known, and Sol's paired checks compare history directly. Fixing it changes every trace hash, so it waits for the next change to the actor.
+
+Seeds consumed: 81000000-81245759 training, 82000000-63 and 82010000-7 evaluation, 83000000-255 and 83010000-31 final test (`evaluate.py` now refuses 83M), and 84000000-84002300 and 84010000-7 by Sol's review.
+
 ## Long gauntlet run and M1 final test
 
-**M1's exit is not met, and every number in this section comes from an interface with [a known Deck-label defect](#known-defect-deck-option-labels).** Three optimizers trained for 122,880
+**This run did not meet M1's exit, and every number in this section comes from an interface with [a known Deck-label defect](#known-defect-deck-option-labels). [The retrained result](#m1-exit-on-the-fixed-deck-labels) replaces it.** Three optimizers trained for 122,880
 gauntlet duels each on the GPU, on certified module 67423a99, with 0 void games and no aborted run (about 3.6 hours each, sharing the machine). The [protocol](../tests/edison/reports/gauntlet-training-2026-11-04/protocol.md)
 was hashed before training. [Summary](../tests/edison/reports/gauntlet-training-2026-11-04/summary.json). All play is greedy, against the heuristic.
 
@@ -43,14 +78,14 @@ These networks beat a heuristic that they also trained against, and the heuristi
 
 ## Known defect: Deck option labels
 
-**Fixed since, in [the Deck label report](edison-deck-labels.md). Results in this report still belong to the defective interface, and the networks need retraining.**
+**Fixed since, in [the Deck label report](edison-deck-labels.md), and [retrained](#m1-exit-on-the-fixed-deck-labels). Other results in this report still belong to the defective interface.**
 
 **When a player chooses a card from the Deck, the policy sees the wrong card names. This affects every policy trained or evaluated so far.** The owner's description of a Frog combo led to the replays that exposed it.
 
 - **Cause.** For Deck candidates the core's `card::get_select_info_location` sends a masked sequence (0, 1, 2 and so on, in prompt order) to hide real positions. `ygopro.h` skips the code in that message and treats the masked sequence as a real position, so the
   option's card id and row come from whichever card sits at that real Deck position. The prompt's true code is available and ignored.
-- **Evidence.** In one replayed prompt the engine offers Treeborn, Treeborn, Swap and Swap, while the policy sees ids 433, 263, 112 and 347. Over 2,042 Substitoad Deck prompts from the round 1280 networks, the chosen label matched the summoned card 5.6% of the time, against
-  20.0% for a random pick. Only 31.8% of labels were Frogs, though Substitoad can only summon Frogs. The engine itself obeys the card: all 638 summons I checked were Frogs.
+- **Evidence.** In one replayed prompt the engine offers Treeborn, Treeborn, Swap and Swap, while the policy sees ids 433, 263, 112 and 347. Over 2,184 Substitoad Deck prompts from the logged networks, the chosen label matched the summoned card 5.1% of the time, against
+  19.7% for a random pick. Only 29.4% of labels were Frogs, though Substitoad can only summon Frogs. (Corrected: the first count, 5.6% of 2,042, also read some tribute prompts.) The engine itself obeys the card: all 638 summons I checked were Frogs.
 - **Consequences.** Policies choose blind among Deck candidates. Because `card_hidden` unhides rows matching an offered spec, **the identities of hidden cards at those real Deck positions are also exposed to their owner.** That breaks the contract that hidden Deck contents stay hidden. Rows are sorted by identity and carry no position, but which
   cards appeared is still information. Whether any policy gained from it was not measured. Rules are not affected.
 - **Scope.** `MSG_SELECT_CARD` and `MSG_SELECT_UNSELECT_CARD` use this path, so all Deck searches should be affected. I measured Substitoad's prompts and read Swap Frog's. Other cards are inferred from the code path.
@@ -73,6 +108,24 @@ counts this, on consumed seeds. Every replayed game matched its stored trace. [S
 
 "Full line" is my definition: 3+ activations, Treeborn tributed to Substitoad, Swap Frog sending a Substitoad, and ending on Substitoad and Dupe Frog. So **the net plays the end of the plan and fragments of the combo, and rarely the whole combo.** It revives Treeborn almost every time and tributes it for Summons. Its most common Substitoad tribute is Substitoad
 itself (502 times), which gives up the end board. It cannot aim its Deck picks because of the defect above, which may be why the line is rare. That explanation is untested. The win-rate gain from round 160 to 1280 is not shown to come from this line. Whether the full line is strong in this simulator has not been measured either.
+
+### On the fixed Deck labels
+
+[Summary](../tests/edison/reports/retrain-2026-11-04/frog-line.json), on the consumed 82M evaluation games. Every replayed game matched its stored trace. Frog Monarch fixture, greedy:
+
+| 768 games per row, except the heuristic's 256 | Heuristic | Round 160 | Round 1280 | Round 2560 | Old build, round 1280 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Won | 20.3% | 26.8% | 54.9% | 70.6% | 43.6% |
+| Games where Substitoad could activate, then did | 153, then 0 | 364, then 322 | 539, then 506 | 558, then 540 | 439, then 415 |
+| Own turns with 2+ / 3+ / 5+ activations | 0 / 0 / 0 | 70 / 36 / 6 | 269 / 198 / 77 | 288 / 192 / 76 | 96 / 37 / 15 |
+| Treeborn revived, of offers | 91 of 102 | 2,448 of 2,953 | 3,887 of 3,897 | 3,998 of 4,054 | 2,815 of 2,844 |
+| Treeborn tributed for a Summon | 38 | 611 | 1,097 | 1,136 | 657 |
+| Turns ending on Substitoad and Dupe Frog | 6 | 2 | 26 | 39 | 13 |
+| Full line in one turn | 0 | 0 | 5 | 4 | 2 |
+
+**The label fix shows up directly.** Across these logs the chosen label matched the summoned card at all 5,034 Deck prompts, and all 26,764 labels shown were Frogs. The same counter on the old logs gives 5.1% and 29.4%, so it separates the builds. (The counter first read 93.6%. Those misses were tribute prompts, taken when a single Deck candidate made the pick automatic, so it now requires the cost to have been paid.)
+
+**At round 1280, turns with 3+ Substitoad activations are about 5 times as common as on the old build (198 against 37). At round 2560 they are 192 of 5,201 own turns. The whole line is still rare, at 4 turns.** The networks differ from the owner's plan in one clear way: at round 2560 Swap Frog sends Treeborn most often (352 times) and Substitoad less (108), which puts a reviver in the Graveyard instead of thinning Substitoads from the Deck. It still most often tributes Substitoad itself (634), which gives up the end board. Whether its version or the full line is stronger in this simulator has not been tested, and the win-rate gain is not shown to come from this line.
 
 ## Re-baseline on the hardened simulator
 

@@ -302,7 +302,7 @@ Supervisor's check, independent of the audit code: after a random policy picks a
 
 ## Not verified, and open points
 
-- **Position independence past the first turn, and beyond these scenarios.** 087 covers four scenarios, two seeds and one alternative order each, with seat 0 first to act. Later turns diverge through draws, so a same-state comparison needs a way to fix the draw.
+- **Position independence past the first turn, and beyond these scenarios.** 087 covers four scenarios, two seeds and one alternative order each, with seat 0 first to act. Later turns diverge through draws, so a same-state comparison needs a way to fix the draw. Sol's later [study review](../tests/edison/reports/retrain-2026-11-04/review/reviewer_report.md) ran paired checks that hold draws equal, through turn 8 with no leak found. That narrows this gap and does not close it.
 - **Whether a pool card reaches a voiding prompt.** 0 voids in the soak and a pattern search. A card missed by both would void its cell, loudly.
 - **`MSG_SELECT_TRIBUTE`'s throw** has no fixture, as no script can reach it by my reading of the core.
 - **`MSG_CONFIRM_DECKTOP` is skipped outside verbose mode**, so cards publicly revealed from the top of a Deck never reach an observation. This hides public information and leaks nothing. It predates this work.

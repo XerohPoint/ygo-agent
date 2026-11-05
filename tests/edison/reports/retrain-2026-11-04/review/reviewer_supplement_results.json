@@ -1,0 +1,562 @@
+{
+  "checkpoint_training_links": "all 15 evaluation checkpoints match round log hashes; every retained checkpoint metadata matches its run config",
+  "decks_matching_hashes": 21,
+  "native_sha256": "b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f",
+  "mirror_duplicates": {
+    "control-fixtures": 1536,
+    "control-gauntlet": 2688
+  },
+  "history_mutation_trace_unchanged": {
+    "seed": 84002000,
+    "row": 0,
+    "column": 6,
+    "before": 0,
+    "after": 1
+  },
+  "model_deck_seat": {
+    "('net-1702', 'blackwing', 0)": [
+      300,
+      512
+    ],
+    "('net-1702', 'frog_monarch', 1)": [
+      362,
+      512
+    ],
+    "('net-1702', 'machina_gadget', 1)": [
+      387,
+      512
+    ],
+    "('net-1702', 'frog_monarch', 0)": [
+      386,
+      512
+    ],
+    "('net-1702', 'blackwing', 1)": [
+      287,
+      512
+    ],
+    "('net-1702', 'machina_gadget', 0)": [
+      434,
+      512
+    ],
+    "('net-1703', 'blackwing', 0)": [
+      283,
+      512
+    ],
+    "('net-1703', 'frog_monarch', 1)": [
+      283,
+      512
+    ],
+    "('net-1703', 'machina_gadget', 1)": [
+      392,
+      512
+    ],
+    "('net-1703', 'frog_monarch', 0)": [
+      356,
+      512
+    ],
+    "('net-1703', 'blackwing', 1)": [
+      254,
+      512
+    ],
+    "('net-1703', 'machina_gadget', 0)": [
+      415,
+      512
+    ],
+    "('net-1704', 'blackwing', 0)": [
+      299,
+      512
+    ],
+    "('net-1704', 'frog_monarch', 1)": [
+      336,
+      512
+    ],
+    "('net-1704', 'machina_gadget', 1)": [
+      396,
+      512
+    ],
+    "('net-1704', 'frog_monarch', 0)": [
+      373,
+      512
+    ],
+    "('net-1704', 'blackwing', 1)": [
+      259,
+      512
+    ],
+    "('net-1704', 'machina_gadget', 0)": [
+      432,
+      512
+    ]
+  },
+  "matchups": {
+    "('blackwing', 'frog_monarch')": [
+      1258,
+      1536
+    ],
+    "('frog_monarch', 'blackwing')": [
+      1131,
+      1536
+    ],
+    "('blackwing', 'machina_gadget')": [
+      424,
+      1536
+    ],
+    "('machina_gadget', 'blackwing')": [
+      1063,
+      1536
+    ],
+    "('frog_monarch', 'machina_gadget')": [
+      965,
+      1536
+    ],
+    "('machina_gadget', 'frog_monarch')": [
+      1393,
+      1536
+    ]
+  },
+  "endings": {
+    "fixtures": {
+      "(True, 1)": 6234,
+      "(False, 1)": 2980,
+      "(False, -1)": 2
+    },
+    "gauntlet": {
+      "(True, 1)": 12852,
+      "(False, 1)": 3193,
+      "(False, -1)": 61,
+      "(True, -1)": 22
+    },
+    "gauntlet-no-guard": {
+      "(True, 1)": 12750,
+      "(False, 1)": 3198,
+      "(False, -1)": 55,
+      "(True, -1)": 29
+    }
+  },
+  "real_duel_audit": {
+    "counts": {
+      "later_decisions": 124138,
+      "later_deck_prompts": 2736,
+      "duels": 1008,
+      "decisions": 159456,
+      "mismatches": 0,
+      "extra_deck_rows": 0,
+      "options": 316597
+    },
+    "fields": {
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "12": 0,
+      "13": 0
+    },
+    "max_turn": 49
+  },
+  "metamorphic": {
+    "reviewer_privacy": [
+      {
+        "own_deck": 2,
+        "mixed": 1,
+        "selected": 0,
+        "revealed": 0,
+        "decisions": 14,
+        "prompts_with_different_true_sequences": 2,
+        "seed": 84000000,
+        "case": "A",
+        "later_decisions": 13,
+        "later_deck_prompts": 2,
+        "max_turn": 4
+      },
+      {
+        "own_deck": 2,
+        "mixed": 0,
+        "selected": 1,
+        "revealed": 0,
+        "decisions": 10,
+        "prompts_with_different_true_sequences": 2,
+        "seed": 84000000,
+        "case": "B",
+        "later_decisions": 9,
+        "later_deck_prompts": 2,
+        "max_turn": 4
+      },
+      {
+        "own_deck": 2,
+        "mixed": 0,
+        "selected": 1,
+        "revealed": 0,
+        "decisions": 13,
+        "prompts_with_different_true_sequences": 2,
+        "seed": 84000000,
+        "case": "C",
+        "later_decisions": 12,
+        "later_deck_prompts": 2,
+        "max_turn": 4
+      },
+      {
+        "own_deck": 2,
+        "mixed": 1,
+        "selected": 0,
+        "revealed": 0,
+        "decisions": 14,
+        "prompts_with_different_true_sequences": 2,
+        "seed": 84000100,
+        "case": "A",
+        "later_decisions": 13,
+        "later_deck_prompts": 2,
+        "max_turn": 4
+      },
+      {
+        "own_deck": 2,
+        "mixed": 0,
+        "selected": 1,
+        "revealed": 0,
+        "decisions": 10,
+        "prompts_with_different_true_sequences": 2,
+        "seed": 84000100,
+        "case": "B",
+        "later_decisions": 9,
+        "later_deck_prompts": 2,
+        "max_turn": 4
+      },
+      {
+        "own_deck": 2,
+        "mixed": 0,
+        "selected": 1,
+        "revealed": 0,
+        "decisions": 13,
+        "prompts_with_different_true_sequences": 2,
+        "seed": 84000100,
+        "case": "C",
+        "later_decisions": 12,
+        "later_deck_prompts": 2,
+        "max_turn": 4
+      },
+      {
+        "own_deck": 2,
+        "mixed": 1,
+        "selected": 0,
+        "revealed": 0,
+        "decisions": 14,
+        "prompts_with_different_true_sequences": 2,
+        "seed": 84000200,
+        "case": "A",
+        "later_decisions": 13,
+        "later_deck_prompts": 2,
+        "max_turn": 4
+      },
+      {
+        "own_deck": 2,
+        "mixed": 0,
+        "selected": 1,
+        "revealed": 0,
+        "decisions": 10,
+        "prompts_with_different_true_sequences": 2,
+        "seed": 84000200,
+        "case": "B",
+        "later_decisions": 9,
+        "later_deck_prompts": 2,
+        "max_turn": 4
+      },
+      {
+        "own_deck": 2,
+        "mixed": 0,
+        "selected": 1,
+        "revealed": 0,
+        "decisions": 13,
+        "prompts_with_different_true_sequences": 2,
+        "seed": 84000200,
+        "case": "C",
+        "later_decisions": 12,
+        "later_deck_prompts": 2,
+        "max_turn": 4
+      },
+      {
+        "own_deck": 2,
+        "mixed": 1,
+        "selected": 0,
+        "revealed": 0,
+        "decisions": 14,
+        "prompts_with_different_true_sequences": 2,
+        "seed": 84000300,
+        "case": "A",
+        "later_decisions": 13,
+        "later_deck_prompts": 2,
+        "max_turn": 4
+      },
+      {
+        "own_deck": 2,
+        "mixed": 0,
+        "selected": 1,
+        "revealed": 0,
+        "decisions": 10,
+        "prompts_with_different_true_sequences": 2,
+        "seed": 84000300,
+        "case": "B",
+        "later_decisions": 9,
+        "later_deck_prompts": 2,
+        "max_turn": 4
+      },
+      {
+        "own_deck": 2,
+        "mixed": 0,
+        "selected": 1,
+        "revealed": 0,
+        "decisions": 13,
+        "prompts_with_different_true_sequences": 2,
+        "seed": 84000300,
+        "case": "C",
+        "later_decisions": 12,
+        "later_deck_prompts": 2,
+        "max_turn": 4
+      }
+    ],
+    "reviewer_hidden": [
+      {
+        "seed": 84001000,
+        "viewer": 0,
+        "mode": "own-deck",
+        "compared": 7,
+        "later": 6,
+        "private_differences": 0,
+        "hidden_set_cards": 3
+      },
+      {
+        "seed": 84001000,
+        "viewer": 0,
+        "mode": "opponent-deck",
+        "compared": 7,
+        "later": 6,
+        "private_differences": 0,
+        "hidden_set_cards": 3
+      },
+      {
+        "seed": 84001000,
+        "viewer": 0,
+        "mode": "opponent-hand-and-set",
+        "compared": 7,
+        "later": 6,
+        "private_differences": 14,
+        "hidden_set_cards": 3
+      },
+      {
+        "seed": 84001000,
+        "viewer": 1,
+        "mode": "own-deck",
+        "compared": 8,
+        "later": 8,
+        "private_differences": 0,
+        "hidden_set_cards": 4
+      },
+      {
+        "seed": 84001000,
+        "viewer": 1,
+        "mode": "opponent-deck",
+        "compared": 8,
+        "later": 8,
+        "private_differences": 0,
+        "hidden_set_cards": 4
+      },
+      {
+        "seed": 84001000,
+        "viewer": 1,
+        "mode": "opponent-hand-and-set",
+        "compared": 8,
+        "later": 8,
+        "private_differences": 14,
+        "hidden_set_cards": 4
+      },
+      {
+        "seed": 84001100,
+        "viewer": 0,
+        "mode": "own-deck",
+        "compared": 7,
+        "later": 6,
+        "private_differences": 0,
+        "hidden_set_cards": 3
+      },
+      {
+        "seed": 84001100,
+        "viewer": 0,
+        "mode": "opponent-deck",
+        "compared": 7,
+        "later": 6,
+        "private_differences": 0,
+        "hidden_set_cards": 3
+      },
+      {
+        "seed": 84001100,
+        "viewer": 0,
+        "mode": "opponent-hand-and-set",
+        "compared": 7,
+        "later": 6,
+        "private_differences": 14,
+        "hidden_set_cards": 3
+      },
+      {
+        "seed": 84001100,
+        "viewer": 1,
+        "mode": "own-deck",
+        "compared": 8,
+        "later": 8,
+        "private_differences": 0,
+        "hidden_set_cards": 4
+      },
+      {
+        "seed": 84001100,
+        "viewer": 1,
+        "mode": "opponent-deck",
+        "compared": 8,
+        "later": 8,
+        "private_differences": 0,
+        "hidden_set_cards": 4
+      },
+      {
+        "seed": 84001100,
+        "viewer": 1,
+        "mode": "opponent-hand-and-set",
+        "compared": 8,
+        "later": 8,
+        "private_differences": 14,
+        "hidden_set_cards": 4
+      },
+      {
+        "seed": 84001200,
+        "viewer": 0,
+        "mode": "own-deck",
+        "compared": 7,
+        "later": 6,
+        "private_differences": 0,
+        "hidden_set_cards": 3
+      },
+      {
+        "seed": 84001200,
+        "viewer": 0,
+        "mode": "opponent-deck",
+        "compared": 7,
+        "later": 6,
+        "private_differences": 0,
+        "hidden_set_cards": 3
+      },
+      {
+        "seed": 84001200,
+        "viewer": 0,
+        "mode": "opponent-hand-and-set",
+        "compared": 7,
+        "later": 6,
+        "private_differences": 14,
+        "hidden_set_cards": 3
+      },
+      {
+        "seed": 84001200,
+        "viewer": 1,
+        "mode": "own-deck",
+        "compared": 8,
+        "later": 8,
+        "private_differences": 0,
+        "hidden_set_cards": 4
+      },
+      {
+        "seed": 84001200,
+        "viewer": 1,
+        "mode": "opponent-deck",
+        "compared": 8,
+        "later": 8,
+        "private_differences": 0,
+        "hidden_set_cards": 4
+      },
+      {
+        "seed": 84001200,
+        "viewer": 1,
+        "mode": "opponent-hand-and-set",
+        "compared": 8,
+        "later": 8,
+        "private_differences": 14,
+        "hidden_set_cards": 4
+      },
+      {
+        "seed": 84001300,
+        "viewer": 0,
+        "mode": "own-deck",
+        "compared": 7,
+        "later": 6,
+        "private_differences": 0,
+        "hidden_set_cards": 3
+      },
+      {
+        "seed": 84001300,
+        "viewer": 0,
+        "mode": "opponent-deck",
+        "compared": 7,
+        "later": 6,
+        "private_differences": 0,
+        "hidden_set_cards": 3
+      },
+      {
+        "seed": 84001300,
+        "viewer": 0,
+        "mode": "opponent-hand-and-set",
+        "compared": 7,
+        "later": 6,
+        "private_differences": 14,
+        "hidden_set_cards": 3
+      },
+      {
+        "seed": 84001300,
+        "viewer": 1,
+        "mode": "own-deck",
+        "compared": 8,
+        "later": 8,
+        "private_differences": 0,
+        "hidden_set_cards": 4
+      },
+      {
+        "seed": 84001300,
+        "viewer": 1,
+        "mode": "opponent-deck",
+        "compared": 8,
+        "later": 8,
+        "private_differences": 0,
+        "hidden_set_cards": 4
+      },
+      {
+        "seed": 84001300,
+        "viewer": 1,
+        "mode": "opponent-hand-and-set",
+        "compared": 8,
+        "later": 8,
+        "private_differences": 14,
+        "hidden_set_cards": 4
+      }
+    ],
+    "reviewer_targets": [
+      {
+        "seed": 84002000,
+        "turn": 3,
+        "decisions_compared": 4,
+        "hidden_targets": 2
+      },
+      {
+        "seed": 84002100,
+        "turn": 3,
+        "decisions_compared": 4,
+        "hidden_targets": 2
+      },
+      {
+        "seed": 84002200,
+        "turn": 3,
+        "decisions_compared": 4,
+        "hidden_targets": 2
+      },
+      {
+        "seed": 84002300,
+        "turn": 3,
+        "decisions_compared": 4,
+        "hidden_targets": 2
+      }
+    ]
+  }
+}

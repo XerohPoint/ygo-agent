@@ -1,0 +1,1378 @@
+{
+  "matrix": {
+    "eval/control-on-gauntlet": {
+      "cells": 168,
+      "outcomes": {
+        "win": 672,
+        "loss": 672
+      },
+      "void": {},
+      "reasons": {
+        "1": 1338,
+        "-1": 6
+      },
+      "max_steps": 1130,
+      "replays": 7,
+      "guard_fires": 0,
+      "hashes": {}
+    },
+    "eval/control-pilot": {
+      "cells": 12,
+      "outcomes": {
+        "win": 384,
+        "loss": 384
+      },
+      "void": {},
+      "reasons": {
+        "1": 768
+      },
+      "max_steps": 497,
+      "replays": 1,
+      "guard_fires": 0,
+      "hashes": {}
+    },
+    "eval/control-random-pilot": {
+      "cells": 12,
+      "outcomes": {
+        "win": 732,
+        "loss": 36
+      },
+      "void": {},
+      "reasons": {
+        "1": 766,
+        "-1": 2
+      },
+      "max_steps": 717,
+      "replays": 1,
+      "guard_fires": 0,
+      "hashes": {}
+    },
+    "eval/gauntlet1280-on-gauntlet": {
+      "cells": 504,
+      "outcomes": {
+        "win": 3036,
+        "loss": 996
+      },
+      "void": {},
+      "reasons": {
+        "1": 4009,
+        "-1": 23
+      },
+      "max_steps": 1281,
+      "replays": 21,
+      "guard_fires": 3809,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-1280": "83bfacdbf32d4f4113c9e1081c51b980f3519ca8788b1e914d3cb6d2d6da9d39",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-1280": "2bf7150218824e8529d743881cb9d0cab407279e7117535ceece8527e15a1f06",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-1280": "b03af5c20b3eb7a2f3f4b2313af8050b7e98e532488e9ef4d73f633f2a17b47c"
+      }
+    },
+    "eval/gauntlet1280-pilot": {
+      "cells": 36,
+      "outcomes": {
+        "win": 1392,
+        "loss": 912
+      },
+      "void": {},
+      "reasons": {
+        "1": 2303,
+        "-1": 1
+      },
+      "max_steps": 1052,
+      "replays": 2,
+      "guard_fires": 0,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-1280": "83bfacdbf32d4f4113c9e1081c51b980f3519ca8788b1e914d3cb6d2d6da9d39",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-1280": "2bf7150218824e8529d743881cb9d0cab407279e7117535ceece8527e15a1f06",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-1280": "b03af5c20b3eb7a2f3f4b2313af8050b7e98e532488e9ef4d73f633f2a17b47c"
+      }
+    },
+    "eval/gauntlet160-on-gauntlet": {
+      "cells": 504,
+      "outcomes": {
+        "loss": 1654,
+        "win": 2378
+      },
+      "void": {},
+      "reasons": {
+        "1": 3997,
+        "-1": 35
+      },
+      "max_steps": 989,
+      "replays": 21,
+      "guard_fires": 4152,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-0160": "56e7541f7a08cf5a0c66b2af5ad83aded1be419e3f187bf6340f33802ea77520",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-0160": "69ae44be02cb452ff3bfab84cf0da98138ba235a0a0d99350efdfd4930968809",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-0160": "39e470003fa9ddae7b76a2936694c0f1b7346c19d598007b2bb73a3edeec4dbc"
+      }
+    },
+    "eval/gauntlet160-pilot": {
+      "cells": 36,
+      "outcomes": {
+        "win": 1022,
+        "loss": 1282
+      },
+      "void": {},
+      "reasons": {
+        "1": 2302,
+        "-1": 2
+      },
+      "max_steps": 948,
+      "replays": 2,
+      "guard_fires": 0,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-0160": "56e7541f7a08cf5a0c66b2af5ad83aded1be419e3f187bf6340f33802ea77520",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-0160": "69ae44be02cb452ff3bfab84cf0da98138ba235a0a0d99350efdfd4930968809",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-0160": "39e470003fa9ddae7b76a2936694c0f1b7346c19d598007b2bb73a3edeec4dbc"
+      }
+    },
+    "eval/gauntlet2560-on-gauntlet": {
+      "cells": 504,
+      "outcomes": {
+        "win": 3199,
+        "loss": 833
+      },
+      "void": {},
+      "reasons": {
+        "1": 4002,
+        "-1": 30
+      },
+      "max_steps": 1260,
+      "replays": 21,
+      "guard_fires": 3910,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-2560": "cb4cb1ad86aa5f6e33a339809e421f726225c9c13b70eaed5394f38cec6798cd",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-2560": "03132b3f63c97f6aeec7b54c544ce45e450080f235389ac05075950f33f28ce0",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-2560": "ddbdcee21ccceb9a60485aa785888b08c8c735ba79b46550ff18f83a9412a3a8"
+      }
+    },
+    "eval/gauntlet2560-pilot": {
+      "cells": 72,
+      "outcomes": {
+        "win": 3857,
+        "loss": 751
+      },
+      "void": {},
+      "reasons": {
+        "1": 4606,
+        "-1": 2
+      },
+      "max_steps": 926,
+      "replays": 3,
+      "guard_fires": 0,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-2560": "cb4cb1ad86aa5f6e33a339809e421f726225c9c13b70eaed5394f38cec6798cd",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-2560": "03132b3f63c97f6aeec7b54c544ce45e450080f235389ac05075950f33f28ce0",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-2560": "ddbdcee21ccceb9a60485aa785888b08c8c735ba79b46550ff18f83a9412a3a8"
+      }
+    },
+    "eval/gauntlet2560-vs-numpy-pilot-1702": {
+      "cells": 12,
+      "outcomes": {
+        "win": 583,
+        "loss": 185
+      },
+      "void": {},
+      "reasons": {
+        "1": 768
+      },
+      "max_steps": 422,
+      "replays": 1,
+      "guard_fires": 0,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-2560": "cb4cb1ad86aa5f6e33a339809e421f726225c9c13b70eaed5394f38cec6798cd"
+      }
+    },
+    "eval/gauntlet2560-vs-numpy-pilot-1703": {
+      "cells": 12,
+      "outcomes": {
+        "win": 524,
+        "loss": 244
+      },
+      "void": {},
+      "reasons": {
+        "1": 768
+      },
+      "max_steps": 412,
+      "replays": 1,
+      "guard_fires": 0,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-2560": "03132b3f63c97f6aeec7b54c544ce45e450080f235389ac05075950f33f28ce0"
+      }
+    },
+    "eval/gauntlet2560-vs-numpy-pilot-1704": {
+      "cells": 12,
+      "outcomes": {
+        "loss": 230,
+        "win": 538
+      },
+      "void": {},
+      "reasons": {
+        "1": 768
+      },
+      "max_steps": 370,
+      "replays": 1,
+      "guard_fires": 0,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-2560": "ddbdcee21ccceb9a60485aa785888b08c8c735ba79b46550ff18f83a9412a3a8"
+      }
+    },
+    "eval/gauntlet320-on-gauntlet": {
+      "cells": 504,
+      "outcomes": {
+        "loss": 1435,
+        "win": 2597
+      },
+      "void": {},
+      "reasons": {
+        "1": 3982,
+        "-1": 50
+      },
+      "max_steps": 1310,
+      "replays": 21,
+      "guard_fires": 4399,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-0320": "5c8ae7ff30c35da9fbf08ff54f5a1ae091cdeb9cdf8cad01d82c974816ef6833",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-0320": "43bc6b9207099fdb5e256b8d39915edccd8ca40b5388794e21f8f372f7a8caf7",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-0320": "33ace38be55a8d075c3475324adfb334db271b298ea4f976232923a353c024dc"
+      }
+    },
+    "eval/gauntlet320-pilot": {
+      "cells": 36,
+      "outcomes": {
+        "win": 1142,
+        "loss": 1162
+      },
+      "void": {},
+      "reasons": {
+        "1": 2304
+      },
+      "max_steps": 842,
+      "replays": 2,
+      "guard_fires": 0,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-0320": "5c8ae7ff30c35da9fbf08ff54f5a1ae091cdeb9cdf8cad01d82c974816ef6833",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-0320": "43bc6b9207099fdb5e256b8d39915edccd8ca40b5388794e21f8f372f7a8caf7",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-0320": "33ace38be55a8d075c3475324adfb334db271b298ea4f976232923a353c024dc"
+      }
+    },
+    "eval/gauntlet640-on-gauntlet": {
+      "cells": 504,
+      "outcomes": {
+        "win": 2725,
+        "loss": 1307
+      },
+      "void": {},
+      "reasons": {
+        "1": 3991,
+        "-1": 41
+      },
+      "max_steps": 1141,
+      "replays": 21,
+      "guard_fires": 4442,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-0640": "72bc415beffb10ed708a34db5f642a16647a0b10f8418ef8b49aa10322204bd7",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-0640": "9cb96809b63979cacd9a269501979473686d84dbb36f0394cb5f9e62c75a9528",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-0640": "7cdb667df3b44a0ff51c36c322201ff6fd42719cbd0636f9f0a3cf8404c671b8"
+      }
+    },
+    "eval/gauntlet640-pilot": {
+      "cells": 36,
+      "outcomes": {
+        "win": 1191,
+        "loss": 1113
+      },
+      "void": {},
+      "reasons": {
+        "1": 2304
+      },
+      "max_steps": 965,
+      "replays": 2,
+      "guard_fires": 0,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-0640": "72bc415beffb10ed708a34db5f642a16647a0b10f8418ef8b49aa10322204bd7",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-0640": "9cb96809b63979cacd9a269501979473686d84dbb36f0394cb5f9e62c75a9528",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-0640": "7cdb667df3b44a0ff51c36c322201ff6fd42719cbd0636f9f0a3cf8404c671b8"
+      }
+    },
+    "eval/numpy-on-gauntlet": {
+      "cells": 504,
+      "outcomes": {
+        "win": 2181,
+        "loss": 1851
+      },
+      "void": {},
+      "reasons": {
+        "1": 4026,
+        "-1": 6
+      },
+      "max_steps": 794,
+      "replays": 21,
+      "guard_fires": 0,
+      "hashes": {}
+    },
+    "eval/numpy-pilot": {
+      "cells": 72,
+      "outcomes": {
+        "loss": 1355,
+        "win": 3253
+      },
+      "void": {},
+      "reasons": {
+        "1": 4606,
+        "-1": 2
+      },
+      "max_steps": 727,
+      "replays": 3,
+      "guard_fires": 0,
+      "hashes": {}
+    },
+    "final/control-fixtures": {
+      "cells": 12,
+      "outcomes": {
+        "win": 1536,
+        "loss": 1536
+      },
+      "void": {},
+      "reasons": {
+        "1": 3072
+      },
+      "max_steps": 837,
+      "replays": 1,
+      "guard_fires": 0,
+      "hashes": {}
+    },
+    "final/control-gauntlet": {
+      "cells": 168,
+      "outcomes": {
+        "win": 2688,
+        "loss": 2688
+      },
+      "void": {},
+      "reasons": {
+        "1": 5370,
+        "-1": 6
+      },
+      "max_steps": 1119,
+      "replays": 7,
+      "guard_fires": 0,
+      "hashes": {}
+    },
+    "final/fixtures": {
+      "cells": 36,
+      "outcomes": {
+        "win": 6234,
+        "loss": 2982
+      },
+      "void": {},
+      "reasons": {
+        "1": 9214,
+        "-1": 2
+      },
+      "max_steps": 884,
+      "replays": 2,
+      "guard_fires": 0,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-2560": "cb4cb1ad86aa5f6e33a339809e421f726225c9c13b70eaed5394f38cec6798cd",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-2560": "03132b3f63c97f6aeec7b54c544ce45e450080f235389ac05075950f33f28ce0",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-2560": "ddbdcee21ccceb9a60485aa785888b08c8c735ba79b46550ff18f83a9412a3a8"
+      }
+    },
+    "final/gauntlet": {
+      "cells": 504,
+      "outcomes": {
+        "win": 12874,
+        "loss": 3254
+      },
+      "void": {},
+      "reasons": {
+        "1": 16045,
+        "-1": 83
+      },
+      "max_steps": 1450,
+      "replays": 21,
+      "guard_fires": 16140,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-2560": "cb4cb1ad86aa5f6e33a339809e421f726225c9c13b70eaed5394f38cec6798cd",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-2560": "03132b3f63c97f6aeec7b54c544ce45e450080f235389ac05075950f33f28ce0",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-2560": "ddbdcee21ccceb9a60485aa785888b08c8c735ba79b46550ff18f83a9412a3a8"
+      }
+    },
+    "final/gauntlet-no-guard": {
+      "cells": 504,
+      "outcomes": {
+        "win": 12779,
+        "loss": 3253
+      },
+      "void": {
+        "ContractError: decision limit; not a completed duel": 96
+      },
+      "reasons": {
+        "1": 15948,
+        "-1": 84
+      },
+      "max_steps": 1103,
+      "replays": 21,
+      "guard_fires": 0,
+      "hashes": {
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1702/checkpoint-2560": "cb4cb1ad86aa5f6e33a339809e421f726225c9c13b70eaed5394f38cec6798cd",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1703/checkpoint-2560": "03132b3f63c97f6aeec7b54c544ce45e450080f235389ac05075950f33f28ce0",
+        "/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs/gauntlet-1704/checkpoint-2560": "ddbdcee21ccceb9a60485aa785888b08c8c735ba79b46550ff18f83a9412a3a8"
+      }
+    }
+  },
+  "training": {
+    "1702": {
+      "rounds": 2560,
+      "duels": 245760,
+      "void": 0,
+      "run": {
+        "config": {
+          "arm": "gauntlet",
+          "optimizer_seed": 1702,
+          "rounds": 2560,
+          "games_per_cell": 8,
+          "seed_base": 81000000,
+          "deck_set": "gauntlet",
+          "cells_per_round": 12,
+          "opponents": "league",
+          "snapshot_every": 4,
+          "learning_rate": 0.001,
+          "minibatch": 256,
+          "epochs": 4,
+          "clip": 0.2,
+          "entropy": 0.01,
+          "value_coef": 0.5,
+          "grad_norm": 0.5,
+          "kl_stop": 0.03,
+          "gae_lambda": 0.95,
+          "row_grouping": true,
+          "id_dim": 32,
+          "channels": 64,
+          "layers": 2,
+          "heads": 4,
+          "critic_hidden": 128
+        },
+        "config_hash": "5d9ed57df8fb3f8f4fb48a06dc3731d53994062e03ffb87738b8f2c3af05b1a2",
+        "provenance": {
+          "format": "edison_league_run_v1",
+          "git_commit": "f747b444bd3f60c9ea3135539bf3961fc1c8d4c5",
+          "learner_sources": {
+            "actor.py": "511d26433e1265e1e57a4e4bcc7499d96a5e8cc9de3195b2385c9ebdc02849cd",
+            "net.py": "30948366900063ac23774eaed96adb006f81728a17b5e4f9ee5bf223e4b43716",
+            "obs.py": "c97b867545b0ef0a45ebc8ca51755a099c82e571f779c454180bffc03bb8f5e6",
+            "train.py": "8ffc06abe38ef07c2675a216deceb1a096034b05dbe4fb8901c5fc1a4009654b",
+            "decks.py": "e9789285b61ecf9c33dffb6b6bfaa66710f1a86d5472d1e83428e468570aadba",
+            "codes_v1.txt": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab"
+          },
+          "native_binaries": {
+            "ygopro_ygoenv.cpython-310-x86_64-linux-gnu.so": "b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f",
+            "ygopro_ygoenv.so": "55ad5f03a65530df6d3e4aa56d928bc7c134070d1e178bc4fa7cc834e5726a57"
+          },
+          "edison_policy": "c5ad070941c038910ccc1bc1892308e1a1894df7b7163991d11d923fd866edef",
+          "assets_lock": "ad99782d0048494b973056da11eded6f68bb94065e39b5e591cee797d3ba3865",
+          "codes_sha256": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab",
+          "jax": "0.6.2",
+          "numpy": "2.2.6"
+        },
+        "workers": 5,
+        "learner_device": "gpu",
+        "learner_cpus": 8,
+        "network_input": "cards_ global_ actions_ h_actions_ decision_ selection_ only"
+      },
+      "first": {
+        "round": 1,
+        "duels": 96,
+        "void_games": 0,
+        "void_reasons": [],
+        "sampled_training_results": {
+          "heuristic": {
+            "wins": 1,
+            "draws": 0,
+            "games": 32
+          },
+          "past": {
+            "wins": 29,
+            "draws": 0,
+            "games": 32
+          }
+        },
+        "learner_decisions": 13500,
+        "decisions": 22240,
+        "rollout_sha256": [
+          "6be7f959c9481eedccadf5b945f44b893f0940e66d01273b8a74eb50c606699f",
+          "d90d6654a1249f4c2699cb0dbab6271c42c6f0c821d87b79a4e450da8d071abd",
+          "77ffeb0d8a6db2935ce9ab1e73f64fad8a79984bebb8334da809d9097418cffc",
+          "6f2696d2446e43700c56691c68400246e10d46fbd7cb48f64c609ba1d957de34",
+          "75007010706e8e5ecd4a353fcb64776d11a9fb07b6c81b836143baf6af270a66",
+          "df1c6323822c411cc3623d15fceb7797cf76f8327dff5aeb7c60fab5fb0fcf71",
+          "007fdc10513f7305715ec8e3f0e6561b825d2cd5b7189eeb2315b478c96665b5",
+          "7a3a550757f8e736d8f2b41a07815ebb2f4ba7d70f2c2d2ff5a75e26e5ab8fb4",
+          "440a669128df3e987864e9ee68a80b66bb45ed03597a60553cbe2bbe09f3118d",
+          "9ae669b6636074a8c1ce75150dfc78161c6509e4aece8ef97743a5b894116a67",
+          "33766f3180650f4051a9b34bbe72b50eef08209e3ac0107abcace04d6fd30318",
+          "228d8e7acd8d9bb1cea4f1687782a94603233d7fe8514b8e9097e859d9564d94"
+        ],
+        "params_sha256": "702b91046e50028b91bbe9d8cc9f292cf780cf8e4f3bdbb156644aac647255f1",
+        "optimizer_sha256": "2dd1748589689ac671f2cd5a6132341faaec34f1c7af6fda2c00f6d379f167fa",
+        "collect_seconds": 28.95856248398195,
+        "update_seconds": 197.61636916699354,
+        "wall_seconds": 226.7484214809956,
+        "updates": 212,
+        "history": [
+          {
+            "approx_kl": 0.0003360496166179765,
+            "clip_fraction": 0.0,
+            "entropy": 1.2019340946989239,
+            "grad_norm": 0.19397487280503758,
+            "loss": -0.033013231349441244,
+            "policy_loss": -0.04487391237942678,
+            "value_mse": 0.09552006451588757,
+            "epoch": 1,
+            "updates": 53
+          },
+          {
+            "approx_kl": 0.00356720247358646,
+            "clip_fraction": 0.02673122343027367,
+            "entropy": 1.1986495683778007,
+            "grad_norm": 0.21804100612424454,
+            "loss": -0.04143325787670207,
+            "policy_loss": -0.04630032575355386,
+            "value_mse": 0.06741418928470251,
+            "epoch": 2,
+            "updates": 53
+          },
+          {
+            "approx_kl": 0.0024196303115700778,
+            "clip_fraction": 0.02813223622879892,
+            "entropy": 1.2000404213959317,
+            "grad_norm": 0.16961903841990345,
+            "loss": -0.043077599327519256,
+            "policy_loss": -0.045146537276933775,
+            "value_mse": 0.05627732007008678,
+            "epoch": 3,
+            "updates": 53
+          },
+          {
+            "approx_kl": 0.003914432424419331,
+            "clip_fraction": 0.03712587761429121,
+            "entropy": 1.1984899268960052,
+            "grad_norm": 0.19396621776076983,
+            "loss": -0.048358112011315686,
+            "policy_loss": -0.047017979172040834,
+            "value_mse": 0.042579075075545404,
+            "epoch": 4,
+            "updates": 53
+          }
+        ]
+      },
+      "last": {
+        "round": 2560,
+        "duels": 245760,
+        "void_games": 0,
+        "void_reasons": [],
+        "sampled_training_results": {
+          "heuristic": {
+            "wins": 30,
+            "draws": 0,
+            "games": 32
+          },
+          "past": {
+            "wins": 17,
+            "draws": 0,
+            "games": 32
+          }
+        },
+        "learner_decisions": 10371,
+        "decisions": 16533,
+        "rollout_sha256": [
+          "35c19721a8f3b4a6125b18f34c9488a1436744d6adb99aa36207ca722b0417c6",
+          "9ce13520aacc105c1c25eb10103915b8b20149c9becb0278d8dbe012b6eaddbb",
+          "8397c64fff624d42394625edaf89012ba1ab60ca854dff3615cba1b3dadc7a3b",
+          "8b26fe7ebf09d8e1aab531529700450acbada8b2d6936a17d8d5d60ccb136e40",
+          "6cf0a5fa760dafd7a34358823f9bd11eb08f3b0d4882f2a4985a8e444ed76b7e",
+          "87186aa5524f6459c3f4ebd6c6119ef624e864a748e28cf72a53daf96e7f08b1",
+          "f4021fd0bbd92b61423a3229befbbf35ef7ba2e55052a7558c59450f1e8f51d4",
+          "dba31cb89bb7ebb188b693610e8c76526d329d11d37bc39307ce5b8af4de4fa4",
+          "a19f1296b59684b60d58cc470d77b8afde494720a42ca8031225a74bf31878c0",
+          "14b5b6d7eea3456b207e483926b4a169dbb1841682e7f0f19761043794ba0e38",
+          "5de94333cc799424cdf96a2cefba783447eb052200b310a1b809e944397b968c",
+          "294e8d5901473a03b7f2869474a8ad5e3eb1b40ca46bcf369a4aae053d41f88b"
+        ],
+        "params_sha256": "cb4cb1ad86aa5f6e33a339809e421f726225c9c13b70eaed5394f38cec6798cd",
+        "optimizer_sha256": "4bbcddd143f80246ca2f753ca0368c6500e2ab32f8119a517cbcf72a8198c746",
+        "collect_seconds": 7.585974381014239,
+        "update_seconds": 1.4160112629760988,
+        "wall_seconds": 9.124474768002983,
+        "updates": 164,
+        "history": [
+          {
+            "approx_kl": 0.013105706470768625,
+            "clip_fraction": 0.11052461949790396,
+            "entropy": 0.5676209054342131,
+            "grad_norm": 1.014269200766959,
+            "loss": 0.02516942198683576,
+            "policy_loss": -0.0013826839262392463,
+            "value_mse": 0.12891325136510337,
+            "epoch": 1,
+            "updates": 41
+          },
+          {
+            "approx_kl": 0.025154852285617736,
+            "clip_fraction": 0.1653729531823135,
+            "entropy": 0.5801537676555354,
+            "grad_norm": 0.7858112614329268,
+            "loss": 0.003302086417267962,
+            "policy_loss": -0.020886645084474145,
+            "value_mse": 0.11996106403629954,
+            "epoch": 2,
+            "updates": 41
+          },
+          {
+            "approx_kl": 0.028720469009585498,
+            "clip_fraction": 0.18633511008285894,
+            "entropy": 0.571973195890101,
+            "grad_norm": 0.7423018943972703,
+            "loss": -0.0044161124927241625,
+            "policy_loss": -0.027357691671790148,
+            "value_mse": 0.11464520198542898,
+            "epoch": 3,
+            "updates": 41
+          },
+          {
+            "approx_kl": 0.03552159739703667,
+            "clip_fraction": 0.2109991166649795,
+            "entropy": 0.569965734714415,
+            "grad_norm": 0.6791709341653963,
+            "loss": -0.012292699116032297,
+            "policy_loss": -0.033482813253635314,
+            "value_mse": 0.10755912269034036,
+            "epoch": 4,
+            "updates": 41
+          }
+        ]
+      }
+    },
+    "1703": {
+      "rounds": 2560,
+      "duels": 245752,
+      "void": 8,
+      "run": {
+        "config": {
+          "arm": "gauntlet",
+          "optimizer_seed": 1703,
+          "rounds": 2560,
+          "games_per_cell": 8,
+          "seed_base": 81000000,
+          "deck_set": "gauntlet",
+          "cells_per_round": 12,
+          "opponents": "league",
+          "snapshot_every": 4,
+          "learning_rate": 0.001,
+          "minibatch": 256,
+          "epochs": 4,
+          "clip": 0.2,
+          "entropy": 0.01,
+          "value_coef": 0.5,
+          "grad_norm": 0.5,
+          "kl_stop": 0.03,
+          "gae_lambda": 0.95,
+          "row_grouping": true,
+          "id_dim": 32,
+          "channels": 64,
+          "layers": 2,
+          "heads": 4,
+          "critic_hidden": 128
+        },
+        "config_hash": "a5a12890a65dfc06d7a4b328b813300b6bbf958fa907818bfe14aac50c4a57eb",
+        "provenance": {
+          "format": "edison_league_run_v1",
+          "git_commit": "f747b444bd3f60c9ea3135539bf3961fc1c8d4c5",
+          "learner_sources": {
+            "actor.py": "511d26433e1265e1e57a4e4bcc7499d96a5e8cc9de3195b2385c9ebdc02849cd",
+            "net.py": "30948366900063ac23774eaed96adb006f81728a17b5e4f9ee5bf223e4b43716",
+            "obs.py": "c97b867545b0ef0a45ebc8ca51755a099c82e571f779c454180bffc03bb8f5e6",
+            "train.py": "8ffc06abe38ef07c2675a216deceb1a096034b05dbe4fb8901c5fc1a4009654b",
+            "decks.py": "e9789285b61ecf9c33dffb6b6bfaa66710f1a86d5472d1e83428e468570aadba",
+            "codes_v1.txt": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab"
+          },
+          "native_binaries": {
+            "ygopro_ygoenv.cpython-310-x86_64-linux-gnu.so": "b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f",
+            "ygopro_ygoenv.so": "55ad5f03a65530df6d3e4aa56d928bc7c134070d1e178bc4fa7cc834e5726a57"
+          },
+          "edison_policy": "c5ad070941c038910ccc1bc1892308e1a1894df7b7163991d11d923fd866edef",
+          "assets_lock": "ad99782d0048494b973056da11eded6f68bb94065e39b5e591cee797d3ba3865",
+          "codes_sha256": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab",
+          "jax": "0.6.2",
+          "numpy": "2.2.6"
+        },
+        "workers": 5,
+        "learner_device": "gpu",
+        "learner_cpus": 8,
+        "network_input": "cards_ global_ actions_ h_actions_ decision_ selection_ only"
+      },
+      "first": {
+        "round": 1,
+        "duels": 96,
+        "void_games": 0,
+        "void_reasons": [],
+        "sampled_training_results": {
+          "heuristic": {
+            "wins": 1,
+            "draws": 0,
+            "games": 32
+          },
+          "past": {
+            "wins": 29,
+            "draws": 0,
+            "games": 32
+          }
+        },
+        "learner_decisions": 13500,
+        "decisions": 22240,
+        "rollout_sha256": [
+          "6be7f959c9481eedccadf5b945f44b893f0940e66d01273b8a74eb50c606699f",
+          "d90d6654a1249f4c2699cb0dbab6271c42c6f0c821d87b79a4e450da8d071abd",
+          "77ffeb0d8a6db2935ce9ab1e73f64fad8a79984bebb8334da809d9097418cffc",
+          "6f2696d2446e43700c56691c68400246e10d46fbd7cb48f64c609ba1d957de34",
+          "75007010706e8e5ecd4a353fcb64776d11a9fb07b6c81b836143baf6af270a66",
+          "df1c6323822c411cc3623d15fceb7797cf76f8327dff5aeb7c60fab5fb0fcf71",
+          "007fdc10513f7305715ec8e3f0e6561b825d2cd5b7189eeb2315b478c96665b5",
+          "7a3a550757f8e736d8f2b41a07815ebb2f4ba7d70f2c2d2ff5a75e26e5ab8fb4",
+          "440a669128df3e987864e9ee68a80b66bb45ed03597a60553cbe2bbe09f3118d",
+          "9ae669b6636074a8c1ce75150dfc78161c6509e4aece8ef97743a5b894116a67",
+          "33766f3180650f4051a9b34bbe72b50eef08209e3ac0107abcace04d6fd30318",
+          "228d8e7acd8d9bb1cea4f1687782a94603233d7fe8514b8e9097e859d9564d94"
+        ],
+        "params_sha256": "5f8668106d65edb0a1fa9cbde541fa4388ef62c62ea0f4c6e67606fa11cbee7c",
+        "optimizer_sha256": "df220d80f36f60318564ccdf8e53d89a7405d0d5ac5775f8f259c6129c739a73",
+        "collect_seconds": 29.14784662798047,
+        "update_seconds": 173.4206535939884,
+        "wall_seconds": 202.72756778699113,
+        "updates": 212,
+        "history": [
+          {
+            "approx_kl": 0.0008673704457732867,
+            "clip_fraction": 0.0014235346384768217,
+            "entropy": 1.2011795043945312,
+            "grad_norm": 0.21070985974005932,
+            "loss": -0.03134194410072183,
+            "policy_loss": -0.04489447035879459,
+            "value_mse": 0.10225730572106703,
+            "epoch": 1,
+            "updates": 53
+          },
+          {
+            "approx_kl": 0.001731092075131974,
+            "clip_fraction": 0.017378927401776583,
+            "entropy": 1.1997469776081588,
+            "grad_norm": 0.193941242289993,
+            "loss": -0.04065662509990188,
+            "policy_loss": -0.04640913009643555,
+            "value_mse": 0.07099985626508605,
+            "epoch": 2,
+            "updates": 53
+          },
+          {
+            "approx_kl": 0.002262249729543362,
+            "clip_fraction": 0.018275311533010232,
+            "entropy": 1.1996572962347067,
+            "grad_norm": 0.2062666191245025,
+            "loss": -0.044638228866289244,
+            "policy_loss": -0.04791306549648069,
+            "value_mse": 0.06108568749337826,
+            "epoch": 3,
+            "updates": 53
+          },
+          {
+            "approx_kl": 0.005312428721841777,
+            "clip_fraction": 0.06313072060639004,
+            "entropy": 1.1980417359550044,
+            "grad_norm": 0.23385405990312685,
+            "loss": -0.04863783548463066,
+            "policy_loss": -0.04927077833211647,
+            "value_mse": 0.05045340645988033,
+            "epoch": 4,
+            "updates": 53
+          }
+        ]
+      },
+      "last": {
+        "round": 2560,
+        "duels": 245752,
+        "void_games": 0,
+        "void_reasons": [],
+        "sampled_training_results": {
+          "heuristic": {
+            "wins": 22,
+            "draws": 0,
+            "games": 32
+          },
+          "past": {
+            "wins": 20,
+            "draws": 0,
+            "games": 32
+          }
+        },
+        "learner_decisions": 9561,
+        "decisions": 15789,
+        "rollout_sha256": [
+          "214f31bd91027dd32cdf119093cbc1a14a87ae833ae4d8acfc01c7c72c404cab",
+          "09506e512cee221af069709fb572dced0a4f321987b6b264409357dc93fc38f6",
+          "217d9eaab103191e6f9d7704303744f934bdf9378d28a386a69e3eb41c2c2208",
+          "84047ddf55310d477ec96460a96ac03bb5387f553904ccc29cf321daaebde09f",
+          "f42318798e5d4cb20973d5fbde53a80f38ddf8e37593732739d9ab7b91790246",
+          "2a0a103e7cce7199eb98e2a5d863447e3e35fd30bcd6a7781d6bf4c07339b5ef",
+          "6bef3a42b39c98e9d3918d6e61f0be3ea626636bcd8e20dc2445c06ff9825a3f",
+          "f2b06981d58b7ffbc3bd8628a63583bf463ddb0a83195688a5eba7501ccfa9f1",
+          "3442a38b3cf854e7d6bf405ab2317d35e1ceb3228bc91fb41b3051c99f7801f1",
+          "7727e819850ab16fd0acd61575243fe7cb52614c330c5bc75a223c028bdbc061",
+          "44e045884f6d361e67f8aa78f09d9d809d4b3774adb48e7e57a5704498decbe9",
+          "a9794b44ab2c65d2784464427351ff7a92c1a46db0b934f732483f3bc429226c"
+        ],
+        "params_sha256": "03132b3f63c97f6aeec7b54c544ce45e450080f235389ac05075950f33f28ce0",
+        "optimizer_sha256": "d0f1b2e60f00eaab0d3e5ddcd8f4c6cbb442b39f8fa49b95939de411c48127ae",
+        "collect_seconds": 6.419517652015202,
+        "update_seconds": 0.8405349769745953,
+        "wall_seconds": 7.3365714339888655,
+        "updates": 114,
+        "history": [
+          {
+            "approx_kl": 0.011853421989240144,
+            "clip_fraction": 0.10783088834662187,
+            "entropy": 0.6180788341321444,
+            "grad_norm": 0.8728833449514288,
+            "loss": 0.029834245380602385,
+            "policy_loss": 3.231091326788852e-05,
+            "value_mse": 0.143930899469476,
+            "epoch": 1,
+            "updates": 38
+          },
+          {
+            "approx_kl": 0.027571392686743485,
+            "clip_fraction": 0.17132040073997096,
+            "entropy": 0.6197479147660104,
+            "grad_norm": 0.7572271447432669,
+            "loss": 0.010775115144880195,
+            "policy_loss": -0.015946978016903524,
+            "value_mse": 0.13167825498079,
+            "epoch": 2,
+            "updates": 38
+          },
+          {
+            "approx_kl": 0.032049640228873806,
+            "clip_fraction": 0.18399653936687269,
+            "entropy": 0.6261458145944696,
+            "grad_norm": 0.611191147252133,
+            "loss": -0.00044132533826326067,
+            "policy_loss": -0.025321549490878458,
+            "value_mse": 0.12456674324838739,
+            "epoch": 3,
+            "updates": 38
+          }
+        ]
+      }
+    },
+    "1704": {
+      "rounds": 2560,
+      "duels": 245760,
+      "void": 0,
+      "run": {
+        "config": {
+          "arm": "gauntlet",
+          "optimizer_seed": 1704,
+          "rounds": 2560,
+          "games_per_cell": 8,
+          "seed_base": 81000000,
+          "deck_set": "gauntlet",
+          "cells_per_round": 12,
+          "opponents": "league",
+          "snapshot_every": 4,
+          "learning_rate": 0.001,
+          "minibatch": 256,
+          "epochs": 4,
+          "clip": 0.2,
+          "entropy": 0.01,
+          "value_coef": 0.5,
+          "grad_norm": 0.5,
+          "kl_stop": 0.03,
+          "gae_lambda": 0.95,
+          "row_grouping": true,
+          "id_dim": 32,
+          "channels": 64,
+          "layers": 2,
+          "heads": 4,
+          "critic_hidden": 128
+        },
+        "config_hash": "8992fc3592b80aed09dcfcd16e0f2a4847fee61ce21bea67efac1aa384e2c9a7",
+        "provenance": {
+          "format": "edison_league_run_v1",
+          "git_commit": "f747b444bd3f60c9ea3135539bf3961fc1c8d4c5",
+          "learner_sources": {
+            "actor.py": "511d26433e1265e1e57a4e4bcc7499d96a5e8cc9de3195b2385c9ebdc02849cd",
+            "net.py": "30948366900063ac23774eaed96adb006f81728a17b5e4f9ee5bf223e4b43716",
+            "obs.py": "c97b867545b0ef0a45ebc8ca51755a099c82e571f779c454180bffc03bb8f5e6",
+            "train.py": "8ffc06abe38ef07c2675a216deceb1a096034b05dbe4fb8901c5fc1a4009654b",
+            "decks.py": "e9789285b61ecf9c33dffb6b6bfaa66710f1a86d5472d1e83428e468570aadba",
+            "codes_v1.txt": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab"
+          },
+          "native_binaries": {
+            "ygopro_ygoenv.cpython-310-x86_64-linux-gnu.so": "b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f",
+            "ygopro_ygoenv.so": "55ad5f03a65530df6d3e4aa56d928bc7c134070d1e178bc4fa7cc834e5726a57"
+          },
+          "edison_policy": "c5ad070941c038910ccc1bc1892308e1a1894df7b7163991d11d923fd866edef",
+          "assets_lock": "ad99782d0048494b973056da11eded6f68bb94065e39b5e591cee797d3ba3865",
+          "codes_sha256": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab",
+          "jax": "0.6.2",
+          "numpy": "2.2.6"
+        },
+        "workers": 5,
+        "learner_device": "gpu",
+        "learner_cpus": 8,
+        "network_input": "cards_ global_ actions_ h_actions_ decision_ selection_ only"
+      },
+      "first": {
+        "round": 1,
+        "duels": 96,
+        "void_games": 0,
+        "void_reasons": [],
+        "sampled_training_results": {
+          "heuristic": {
+            "wins": 1,
+            "draws": 0,
+            "games": 32
+          },
+          "past": {
+            "wins": 29,
+            "draws": 0,
+            "games": 32
+          }
+        },
+        "learner_decisions": 13500,
+        "decisions": 22240,
+        "rollout_sha256": [
+          "6be7f959c9481eedccadf5b945f44b893f0940e66d01273b8a74eb50c606699f",
+          "d90d6654a1249f4c2699cb0dbab6271c42c6f0c821d87b79a4e450da8d071abd",
+          "77ffeb0d8a6db2935ce9ab1e73f64fad8a79984bebb8334da809d9097418cffc",
+          "6f2696d2446e43700c56691c68400246e10d46fbd7cb48f64c609ba1d957de34",
+          "75007010706e8e5ecd4a353fcb64776d11a9fb07b6c81b836143baf6af270a66",
+          "df1c6323822c411cc3623d15fceb7797cf76f8327dff5aeb7c60fab5fb0fcf71",
+          "007fdc10513f7305715ec8e3f0e6561b825d2cd5b7189eeb2315b478c96665b5",
+          "7a3a550757f8e736d8f2b41a07815ebb2f4ba7d70f2c2d2ff5a75e26e5ab8fb4",
+          "440a669128df3e987864e9ee68a80b66bb45ed03597a60553cbe2bbe09f3118d",
+          "9ae669b6636074a8c1ce75150dfc78161c6509e4aece8ef97743a5b894116a67",
+          "33766f3180650f4051a9b34bbe72b50eef08209e3ac0107abcace04d6fd30318",
+          "228d8e7acd8d9bb1cea4f1687782a94603233d7fe8514b8e9097e859d9564d94"
+        ],
+        "params_sha256": "8cf285d158e5171dc452d5b699a274f3c2337c5d83d6ef8321a49c8121762bef",
+        "optimizer_sha256": "88476f534892e93fc7fb2cb890d1a8402650131dbed02e0452252d875d387724",
+        "collect_seconds": 29.125441509007942,
+        "update_seconds": 200.82519976000185,
+        "wall_seconds": 230.1156146049907,
+        "updates": 212,
+        "history": [
+          {
+            "approx_kl": 0.00039004762920568574,
+            "clip_fraction": 0.0,
+            "entropy": 1.201613372226931,
+            "grad_norm": 0.19104415965530108,
+            "loss": -0.032643675804138184,
+            "policy_loss": -0.04469386136756753,
+            "value_mse": 0.0962652620279564,
+            "epoch": 1,
+            "updates": 53
+          },
+          {
+            "approx_kl": 0.0022573324869263845,
+            "clip_fraction": 0.02034888852317378,
+            "entropy": 1.1996205887704525,
+            "grad_norm": 0.23222836908304467,
+            "loss": -0.04273207232637225,
+            "policy_loss": -0.046830595664258276,
+            "value_mse": 0.06437885986184175,
+            "epoch": 2,
+            "updates": 53
+          },
+          {
+            "approx_kl": 0.0041379346600118674,
+            "clip_fraction": 0.03856423665892403,
+            "entropy": 1.1983179056419517,
+            "grad_norm": 0.20834514330018242,
+            "loss": -0.0457593450006449,
+            "policy_loss": -0.047478059552750494,
+            "value_mse": 0.054807604483838354,
+            "epoch": 3,
+            "updates": 53
+          },
+          {
+            "approx_kl": 0.005049146571249332,
+            "clip_fraction": 0.049827998539186874,
+            "entropy": 1.196749561237839,
+            "grad_norm": 0.21422483336250736,
+            "loss": -0.05270255286738558,
+            "policy_loss": -0.05098816583741386,
+            "value_mse": 0.041012476075370355,
+            "epoch": 4,
+            "updates": 53
+          }
+        ]
+      },
+      "last": {
+        "round": 2560,
+        "duels": 245760,
+        "void_games": 0,
+        "void_reasons": [],
+        "sampled_training_results": {
+          "heuristic": {
+            "wins": 28,
+            "draws": 0,
+            "games": 32
+          },
+          "past": {
+            "wins": 18,
+            "draws": 0,
+            "games": 32
+          }
+        },
+        "learner_decisions": 9822,
+        "decisions": 15394,
+        "rollout_sha256": [
+          "109626b1b956e341b304c3b291de49ebc6a58dffa66084b7651a9171f19ca1c6",
+          "a3929b4168420d49789622b52723979b8359d9a00cd166dd656661fd6cee764d",
+          "dd78f535ec561a8207a271bf41677e731d57413ba2cc6e3c0924e0367029b119",
+          "f4e3122cae2796676d153e38a61f12c02f6922acd974fd95b344c9e548e0c098",
+          "5446d39625677806b8c91c37772957692ac857ce9ed40be09e0a98da7033e8cc",
+          "84d5ba9aff998f372ea7ca3c529c4afc39045299d780ee28484a5a767ddb0f4c",
+          "c80ebe078a3fd618387d2b5f8546d671e6f4ecfeb593df368213af39917cdba5",
+          "ff20b625e825aefda04681f259f9b4e7812b0296911d85d169e910f589b89a75",
+          "fb4523b39a7b1de31e42b903bbe13826e773e18032f8b4708f82d8ff13b52058",
+          "3047d731b08fed95ae7fc4f7fae84ea2fa3a719b8979bcb3f365501a59d410a9",
+          "f3b7dbcd10e91c8f246335c14cc1f00978fbd7506d6fab34aa6867023eb212e4",
+          "6b77d68def03cd0b27c800271ff5d98480f932ddd07ce5ed4851306de8565b8f"
+        ],
+        "params_sha256": "ddbdcee21ccceb9a60485aa785888b08c8c735ba79b46550ff18f83a9412a3a8",
+        "optimizer_sha256": "99f26a9673b7519b69024ec5c4372b355781a54ffa92151924c74c9fb764dbca",
+        "collect_seconds": 5.317387376970146,
+        "update_seconds": 0.5110152609995566,
+        "wall_seconds": 5.911638499994297,
+        "updates": 117,
+        "history": [
+          {
+            "approx_kl": 0.01324925972865178,
+            "clip_fraction": 0.10799839557745518,
+            "entropy": 0.5743549542549329,
+            "grad_norm": 1.2882908552120893,
+            "loss": 0.04645814345433162,
+            "policy_loss": 0.01704777968235505,
+            "value_mse": 0.14061565888233674,
+            "epoch": 1,
+            "updates": 39
+          },
+          {
+            "approx_kl": 0.027685868434416942,
+            "clip_fraction": 0.15369542439778647,
+            "entropy": 0.6066046494704026,
+            "grad_norm": 0.9632874513283755,
+            "loss": 0.025731471868661735,
+            "policy_loss": 0.0003029270909535579,
+            "value_mse": 0.1259783475826948,
+            "epoch": 2,
+            "updates": 39
+          },
+          {
+            "approx_kl": 0.031951020925472945,
+            "clip_fraction": 0.16752927731244993,
+            "entropy": 0.5906516344119341,
+            "grad_norm": 0.7875336378048627,
+            "loss": 0.010599770607092442,
+            "policy_loss": -0.01267296457901979,
+            "value_mse": 0.11671700844397911,
+            "epoch": 3,
+            "updates": 39
+          }
+        ]
+      }
+    }
+  },
+  "eval": {
+    "fixtures": {
+      "rates": {
+        "160": [
+          43.61979166666667,
+          46.484375,
+          42.96875
+        ],
+        "320": [
+          53.125,
+          48.17708333333333,
+          47.39583333333333
+        ],
+        "640": [
+          53.515625,
+          46.61458333333333,
+          54.947916666666664
+        ],
+        "1280": [
+          59.765625,
+          60.677083333333336,
+          60.807291666666664
+        ],
+        "2560": [
+          73.046875,
+          65.234375,
+          68.09895833333334
+        ]
+      },
+      "G1_gains": [
+        29.42708333333333,
+        18.75,
+        25.130208333333343
+      ],
+      "G1": "MORE_GAMES_HELP",
+      "G2_gain": 8.376736111111121,
+      "G2": "STILL_RISING",
+      "G3_pass": true,
+      "baseline_rates": [
+        43.88020833333333,
+        51.692708333333336,
+        51.953125
+      ],
+      "G4_gains": [
+        29.166666666666668,
+        13.541666666666666,
+        16.145833333333336
+      ]
+    },
+    "gauntlet": {
+      "rates": {
+        "160": [
+          59.226190476190474,
+          60.11904761904761,
+          57.58928571428571
+        ],
+        "320": [
+          62.202380952380956,
+          65.17857142857143,
+          65.84821428571429
+        ],
+        "640": [
+          66.96428571428571,
+          64.58333333333334,
+          71.20535714285714
+        ],
+        "1280": [
+          75.96726190476191,
+          74.03273809523809,
+          75.89285714285714
+        ],
+        "2560": [
+          81.62202380952381,
+          77.38095238095238,
+          79.01785714285714
+        ]
+      },
+      "G1_gains": [
+        22.395833333333336,
+        17.261904761904766,
+        21.42857142857143
+      ],
+      "G1": "MORE_GAMES_HELP",
+      "G2_gain": 4.042658730158735,
+      "G2": "STILL_RISING",
+      "G3_pass": true,
+      "baseline_rates": [
+        48.88392857142857,
+        55.80357142857143,
+        57.58928571428571
+      ],
+      "G4_gains": [
+        32.73809523809524,
+        21.577380952380953,
+        21.428571428571427
+      ]
+    },
+    "h2h": [
+      75.91145833333334,
+      68.22916666666666,
+      70.05208333333334
+    ]
+  },
+  "final": {
+    "fixtures": {
+      "rates": [
+        70.18229166666666,
+        64.55078125,
+        68.19661458333334
+      ],
+      "mean": 67.64322916666667,
+      "wins": [
+        2156,
+        1983,
+        2095
+      ],
+      "games": [
+        3072,
+        3072,
+        3072
+      ],
+      "lows": [
+        68.54020486723955,
+        62.8419596442611,
+        66.52787357562367
+      ],
+      "by_deck": {
+        "blackwing": 54.752604166666664,
+        "frog_monarch": 68.22916666666666,
+        "machina_gadget": 79.94791666666666
+      },
+      "by_seat": {
+        "0": 71.13715277777779,
+        "1": 64.14930555555556
+      },
+      "void": [
+        0,
+        0,
+        0
+      ],
+      "checks": {
+        "mean": true,
+        "lower_bounds": true,
+        "seats": true,
+        "valid": true,
+        "decks": true
+      },
+      "pass": true
+    },
+    "gauntlet": {
+      "rates": [
+        82.32886904761905,
+        77.28794642857143,
+        79.85491071428571
+      ],
+      "mean": 79.82390873015873,
+      "wins": [
+        4426,
+        4155,
+        4293
+      ],
+      "games": [
+        5376,
+        5376,
+        5376
+      ],
+      "lows": [
+        81.28627516464772,
+        76.14871056164553,
+        78.76159743387697
+      ],
+      "by_deck": {
+        "blackwing": 62.760416666666664,
+        "frog_monarch": 79.16666666666666,
+        "g_blackwing": 76.5625,
+        "g_diva_frog": 67.1875,
+        "g_diva_hero": 77.60416666666666,
+        "g_diva_hero_beat": 90.234375,
+        "g_dragon_turbo": 69.40104166666666,
+        "g_frog_monarch": 90.36458333333334,
+        "g_frog_otk": 85.546875,
+        "g_gigavise": 88.671875,
+        "g_gladiator_beast": 79.6875,
+        "g_hero_beat": 94.53125,
+        "g_hero_frog": 90.234375,
+        "g_lightsworn": 86.19791666666666,
+        "g_lightsworn_fairy": 75.91145833333334,
+        "g_machina_control": 91.66666666666666,
+        "g_quickdraw_plant": 74.86979166666666,
+        "g_vayu_turbo": 76.953125,
+        "g_vayu_turbo_ddev08": 77.47395833333334,
+        "g_zombie_teledad": 58.59375,
+        "machina_gadget": 82.68229166666666
+      },
+      "by_seat": {
+        "0": 81.90724206349206,
+        "1": 77.74057539682539
+      },
+      "void": [
+        0,
+        0,
+        0
+      ],
+      "checks": {
+        "mean": true,
+        "lower_bounds": true,
+        "seats": true,
+        "valid": true
+      },
+      "pass": true
+    },
+    "gauntlet-no-guard": {
+      "rates": [
+        81.2125748502994,
+        77.80877976190477,
+        80.12048192771084
+      ],
+      "mean": 79.713945513305,
+      "wins": [
+        4340,
+        4183,
+        4256
+      ],
+      "games": [
+        5344,
+        5376,
+        5312
+      ],
+      "lows": [
+        80.14299678311986,
+        76.6783529800175,
+        79.02562975156386
+      ],
+      "by_deck": {
+        "blackwing": 64.84375,
+        "frog_monarch": 79.42708333333334,
+        "g_blackwing": 76.43229166666666,
+        "g_diva_frog": 66.14583333333334,
+        "g_diva_hero": 78.25520833333334,
+        "g_diva_hero_beat": 89.84375,
+        "g_dragon_turbo": 67.96875,
+        "g_frog_monarch": 91.015625,
+        "g_frog_otk": 84.89583333333334,
+        "g_gigavise": 89.19270833333334,
+        "g_gladiator_beast": 81.11979166666666,
+        "g_hero_beat": 94.40104166666666,
+        "g_hero_frog": 89.84375,
+        "g_lightsworn": 85.08522727272727,
+        "g_lightsworn_fairy": 74.32065217391305,
+        "g_machina_control": 91.27604166666666,
+        "g_quickdraw_plant": 76.82291666666666,
+        "g_vayu_turbo": 76.5625,
+        "g_vayu_turbo_ddev08": 75.91145833333334,
+        "g_zombie_teledad": 57.421875,
+        "machina_gadget": 83.33333333333334
+      },
+      "by_seat": {
+        "0": 81.89484126984127,
+        "1": 77.49748995983936
+      },
+      "void": [
+        32,
+        0,
+        64
+      ],
+      "checks": {
+        "mean": true,
+        "lower_bounds": true,
+        "seats": true,
+        "valid": false
+      },
+      "pass": false
+    },
+    "guard_gain": [
+      1.1040419161676647,
+      -0.5208333333333333,
+      -0.3200301204819277
+    ]
+  },
+  "verdict": "M1_EXIT_MET"
+}

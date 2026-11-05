@@ -1,0 +1,256 @@
+{
+ "protocol_sha256": "052198a63725ac514e916e50932b54cc4e3487835537c0e4241295140f6160a3",
+ "verdict": "M1_EXIT_MET",
+ "F1_fixtures": {
+  "by_optimizer": [
+   70.18,
+   64.55,
+   68.2
+  ],
+  "mean": 67.64,
+  "lower_bounds": [
+   68.54,
+   62.84,
+   66.53
+  ],
+  "games": [
+   3072,
+   3072,
+   3072
+  ],
+  "void_games": {
+   "1702": 0,
+   "1703": 0,
+   "1704": 0
+  },
+  "void_reasons": {},
+  "by_deck": {
+   "blackwing": 54.75,
+   "frog_monarch": 68.23,
+   "machina_gadget": 79.95
+  },
+  "by_seat": {
+   "0": 71.14,
+   "1": 64.15
+  },
+  "by_optimizer_deck": {
+   "1702": {
+    "blackwing": 57.32,
+    "frog_monarch": 73.05,
+    "machina_gadget": 80.18
+   },
+   "1703": {
+    "blackwing": 52.44,
+    "frog_monarch": 62.4,
+    "machina_gadget": 78.81
+   },
+   "1704": {
+    "blackwing": 54.49,
+    "frog_monarch": 69.24,
+    "machina_gadget": 80.86
+   }
+  },
+  "checks": {
+   "mean_at_least_55": true,
+   "every_lower_bound_above_50": true,
+   "both_seats_at_least_50": true,
+   "valid": true,
+   "every_deck_at_least_50": true
+  },
+  "verdict": "PASS"
+ },
+ "F2_gauntlet": {
+  "by_optimizer": [
+   82.33,
+   77.29,
+   79.85
+  ],
+  "mean": 79.82,
+  "lower_bounds": [
+   81.29,
+   76.15,
+   78.76
+  ],
+  "games": [
+   5376,
+   5376,
+   5376
+  ],
+  "void_games": {
+   "1702": 0,
+   "1703": 0,
+   "1704": 0
+  },
+  "void_reasons": {},
+  "by_deck": {
+   "blackwing": 62.76,
+   "frog_monarch": 79.17,
+   "g_blackwing": 76.56,
+   "g_diva_frog": 67.19,
+   "g_diva_hero": 77.6,
+   "g_diva_hero_beat": 90.23,
+   "g_dragon_turbo": 69.4,
+   "g_frog_monarch": 90.36,
+   "g_frog_otk": 85.55,
+   "g_gigavise": 88.67,
+   "g_gladiator_beast": 79.69,
+   "g_hero_beat": 94.53,
+   "g_hero_frog": 90.23,
+   "g_lightsworn": 86.2,
+   "g_lightsworn_fairy": 75.91,
+   "g_machina_control": 91.67,
+   "g_quickdraw_plant": 74.87,
+   "g_vayu_turbo": 76.95,
+   "g_vayu_turbo_ddev08": 77.47,
+   "g_zombie_teledad": 58.59,
+   "machina_gadget": 82.68
+  },
+  "by_seat": {
+   "0": 81.91,
+   "1": 77.74
+  },
+  "by_optimizer_deck": {
+   "1702": {
+    "blackwing": 64.45,
+    "frog_monarch": 80.47,
+    "g_blackwing": 80.08,
+    "g_diva_frog": 67.97,
+    "g_diva_hero": 82.03,
+    "g_diva_hero_beat": 92.19,
+    "g_dragon_turbo": 72.27,
+    "g_frog_monarch": 94.53,
+    "g_frog_otk": 87.89,
+    "g_gigavise": 89.45,
+    "g_gladiator_beast": 80.86,
+    "g_hero_beat": 96.09,
+    "g_hero_frog": 93.36,
+    "g_lightsworn": 88.67,
+    "g_lightsworn_fairy": 79.69,
+    "g_machina_control": 94.92,
+    "g_quickdraw_plant": 77.73,
+    "g_vayu_turbo": 81.25,
+    "g_vayu_turbo_ddev08": 79.69,
+    "g_zombie_teledad": 61.33,
+    "machina_gadget": 83.98
+   },
+   "1703": {
+    "blackwing": 62.11,
+    "frog_monarch": 75.0,
+    "g_blackwing": 76.17,
+    "g_diva_frog": 59.38,
+    "g_diva_hero": 74.22,
+    "g_diva_hero_beat": 90.23,
+    "g_dragon_turbo": 64.84,
+    "g_frog_monarch": 86.72,
+    "g_frog_otk": 85.55,
+    "g_gigavise": 85.94,
+    "g_gladiator_beast": 78.52,
+    "g_hero_beat": 92.97,
+    "g_hero_frog": 85.16,
+    "g_lightsworn": 84.38,
+    "g_lightsworn_fairy": 72.66,
+    "g_machina_control": 89.45,
+    "g_quickdraw_plant": 70.31,
+    "g_vayu_turbo": 73.83,
+    "g_vayu_turbo_ddev08": 76.56,
+    "g_zombie_teledad": 55.08,
+    "machina_gadget": 83.98
+   },
+   "1704": {
+    "blackwing": 61.72,
+    "frog_monarch": 82.03,
+    "g_blackwing": 73.44,
+    "g_diva_frog": 74.22,
+    "g_diva_hero": 76.56,
+    "g_diva_hero_beat": 88.28,
+    "g_dragon_turbo": 71.09,
+    "g_frog_monarch": 89.84,
+    "g_frog_otk": 83.2,
+    "g_gigavise": 90.62,
+    "g_gladiator_beast": 79.69,
+    "g_hero_beat": 94.53,
+    "g_hero_frog": 92.19,
+    "g_lightsworn": 85.55,
+    "g_lightsworn_fairy": 75.39,
+    "g_machina_control": 90.62,
+    "g_quickdraw_plant": 76.56,
+    "g_vayu_turbo": 75.78,
+    "g_vayu_turbo_ddev08": 76.17,
+    "g_zombie_teledad": 59.38,
+    "machina_gadget": 80.08
+   }
+  },
+  "checks": {
+   "mean_at_least_55": true,
+   "every_lower_bound_above_50": true,
+   "both_seats_at_least_50": true,
+   "valid": true
+  },
+  "verdict": "PASS"
+ },
+ "F4_guard_diagnostic": {
+  "no_guard": {
+   "by_optimizer": [
+    81.21,
+    77.81,
+    80.12
+   ],
+   "mean": 79.71,
+   "games": [
+    5344,
+    5376,
+    5312
+   ],
+   "void_games": {
+    "1702": 32,
+    "1703": 0,
+    "1704": 64
+   },
+   "void_reasons": {
+    "ContractError: decision limit; not a completed duel": 96
+   }
+  },
+  "paired": [
+   {
+    "common_games": 5344,
+    "guard_minus_no_guard": 1.1
+   },
+   {
+    "common_games": 5376,
+    "guard_minus_no_guard": -0.52
+   },
+   {
+    "common_games": 5312,
+    "guard_minus_no_guard": -0.32
+   }
+  ],
+  "guard_fires": 16140
+ },
+ "controls": {
+  "control-fixtures": 50.0,
+  "control-gauntlet": 50.0
+ },
+ "controls_seat_zero": {
+  "control-fixtures": 54.75,
+  "control-gauntlet": 50.93
+ },
+ "provenance": {
+  "replayed_cells": 52,
+  "replay_mismatches": 0,
+  "native_sha256": [
+   "b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f"
+  ],
+  "policy_sha256": {
+   "net-1702": "cb4cb1ad86aa5f6e33a339809e421f726225c9c13b70eaed5394f38cec6798cd",
+   "net-1703": "03132b3f63c97f6aeec7b54c544ce45e450080f235389ac05075950f33f28ce0",
+   "net-1704": "ddbdcee21ccceb9a60485aa785888b08c8c735ba79b46550ff18f83a9412a3a8"
+  },
+  "elapsed_seconds": {
+   "control-fixtures": 31,
+   "fixtures": 156,
+   "control-gauntlet": 58,
+   "gauntlet": 326,
+   "gauntlet-no-guard": 390
+  }
+ }
+}

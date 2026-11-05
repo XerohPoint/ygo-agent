@@ -110,10 +110,10 @@ games, so they are only as trustworthy as the play policy underneath them.
 - **Keep the network on CPU for search, and use the GPU for training.** A leaf evaluation at 0.19 ms inline beats any plausible GPU round trip. The
   next search dependency is a native forward pass.
 - **Greedy play needs a repetition guard outside the fixtures.** Free negated effects can loop to the decision limit, which matches open defect D12.
-- **M1 final test: not met.** [The report](edison-learner.md#long-gauntlet-run-and-m1-final-test) has gauntlet-trained networks at 71.3% on the gauntlet and 55.9% on fixtures against the heuristic on fresh seeds, with Blackwing,
-  Frog Monarch and one optimizer's lower bound below 50%. They were still rising at the end of training.
+- **M1 exit met on the fixed labels.** [The report](edison-learner.md#m1-exit-on-the-fixed-deck-labels) has round 2560 networks at 67.6% on fixtures and 79.8% on the gauntlet against the heuristic on fresh seeds, with all three replications, fixture decks and seats past the predeclared bar. The earlier 55.9% and 71.3% run on the defective interface did not pass.
+  The heuristic is weak and the decks are familiar, so this is not human or tournament strength. One matchup is still badly lost (Blackwing against Machina Gadget, 27.6%), and training was still rising.
 - **Deck option labels are fixed; earlier strength results no longer stand.** [The defect](edison-learner.md#known-defect-deck-option-labels) showed policies the wrong cards at Deck prompts and exposed hidden Deck cards to their owner, for every result up to then.
-  [The fix](edison-deck-labels.md) is merged with 593 certification cases. Retrain and re-evaluate on fresh seeds. Test expert lines such as [the Substitoad line](edison-learner.md#the-substitoad-line) again then.
+  [The fix](edison-deck-labels.md) is merged with 593 certification cases, and the networks are retrained. [Substitoad chains](edison-learner.md#on-the-fixed-deck-labels) became about 5 times as common, though the whole line stays rare.
 - **Independent review and differential checks for interface code.** A prompt differential now compares observations with the engine's own prompts. New checks must also run on the old build, because a check that passes on both proves nothing.
 - **Open: loading a position from a real external game.** Replay needs private data and construction
   fails, so M6 and the position suite need their own solution.
@@ -136,7 +136,7 @@ Exit: a decision for M1's learner and M2's search, each backed by measurement.
 GPU training on a card-embedding network, self-play against a league of frozen
 opponents rather than only the heuristic, and every existing privacy contract kept
 for anything used at play time. Exit: clearly beats the heuristic on fresh seeds
-across all fixture decks and both seats, with replications.
+across all fixture decks and both seats, with replications. **Met by [predeclared rule](edison-learner.md#m1-exit-on-the-fixed-deck-labels), November 5, 2026.**
 
 ### M2 — Search: the actual engine
 

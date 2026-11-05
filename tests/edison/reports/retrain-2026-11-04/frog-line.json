@@ -1,0 +1,1629 @@
+{
+ "heuristic/frog_monarch": {
+  "counts": {
+   "games": 256,
+   "wins": 52,
+   "treeborn_revive_offered": 102,
+   "treeborn_revived": 91,
+   "treeborn_tributed_for_summon": 38,
+   "own_turns": 1378,
+   "turns_1plus": 0,
+   "turns_2plus": 0,
+   "turns_3plus": 0,
+   "turns_5plus": 0,
+   "end_board": 6,
+   "end_board_after_2plus": 0,
+   "treeborn_fed": 0,
+   "swap_sent_toad_turns": 211,
+   "deck_thinned_turns": 0,
+   "full_line": 0,
+   "decisions_with_activation": 684,
+   "swap_taken": 300,
+   "games_reached": 153,
+   "games_used": 0
+  },
+  "tributed": [],
+  "summoned": [],
+  "swap_sent": [
+   [
+    "Substitoad",
+    223
+   ],
+   [
+    "Dupe Frog",
+    16
+   ],
+   [
+    "Swap Frog",
+    3
+   ],
+   [
+    "Raiza the Storm Monarch",
+    2
+   ],
+   [
+    "Caius the Shadow Monarch",
+    1
+   ]
+  ],
+  "most_in_one_turn": [
+   [
+    0,
+    256
+   ]
+  ],
+  "examples": []
+ },
+ "net1280/frog_monarch": {
+  "counts": {
+   "games": 768,
+   "wins": 422,
+   "treeborn_revive_offered": 3897,
+   "treeborn_revived": 3887,
+   "treeborn_tributed_for_summon": 1097,
+   "decisions_with_activation": 2016,
+   "summons_without_deck_prompt": 133,
+   "deck_prompts": 1227,
+   "label_right": 1227,
+   "chance_x1000": 310208,
+   "options_shown": 5858,
+   "options_frog_label": 5858,
+   "own_turns": 5160,
+   "turns_1plus": 676,
+   "turns_2plus": 269,
+   "turns_3plus": 198,
+   "turns_5plus": 77,
+   "end_board": 26,
+   "end_board_after_2plus": 16,
+   "treeborn_fed": 278,
+   "swap_sent_toad_turns": 194,
+   "deck_thinned_turns": 148,
+   "full_line": 5,
+   "swap_taken": 697,
+   "games_reached": 539,
+   "games_used": 506
+  },
+  "tributed": [
+   [
+    "Substitoad",
+    589
+   ],
+   [
+    "Treeborn Frog",
+    442
+   ],
+   [
+    "Dupe Frog",
+    249
+   ],
+   [
+    "Swap Frog",
+    73
+   ],
+   [
+    "Tragoedia",
+    5
+   ],
+   [
+    "Gorz the Emissary of Darkness",
+    3
+   ],
+   [
+    "Thestalos the Firestorm Monarch",
+    2
+   ],
+   [
+    "Battle Fader",
+    2
+   ]
+  ],
+  "summoned": [
+   [
+    "Treeborn Frog",
+    498
+   ],
+   [
+    "Dupe Frog",
+    439
+   ],
+   [
+    "Swap Frog",
+    423
+   ]
+  ],
+  "swap_sent": [
+   [
+    "Substitoad",
+    253
+   ],
+   [
+    "Treeborn Frog",
+    226
+   ],
+   [
+    "Swap Frog",
+    103
+   ],
+   [
+    "Dupe Frog",
+    41
+   ],
+   [
+    "Raiza the Storm Monarch",
+    6
+   ],
+   [
+    "Caius the Shadow Monarch",
+    3
+   ],
+   [
+    "Thestalos the Firestorm Monarch",
+    2
+   ],
+   [
+    "Gorz the Emissary of Darkness",
+    1
+   ]
+  ],
+  "most_in_one_turn": [
+   [
+    0,
+    262
+   ],
+   [
+    1,
+    242
+   ],
+   [
+    2,
+    66
+   ],
+   [
+    3,
+    85
+   ],
+   [
+    4,
+    36
+   ],
+   [
+    5,
+    47
+   ],
+   [
+    6,
+    28
+   ],
+   [
+    7,
+    2
+   ]
+  ],
+  "examples": [
+   {
+    "seed": 82000001,
+    "turn": 4,
+    "activations": 3,
+    "summoned": [
+     "Dupe Frog",
+     "Dupe Frog",
+     "Dupe Frog"
+    ],
+    "field": [
+     "Dupe Frog",
+     "Substitoad",
+     "Swap Frog",
+     "?"
+    ],
+    "frogs_in_gy": 5,
+    "full_line": false
+   },
+   {
+    "seed": 82000025,
+    "turn": 10,
+    "activations": 3,
+    "summoned": [
+     "Treeborn Frog",
+     "Swap Frog",
+     "Dupe Frog"
+    ],
+    "field": [
+     "Substitoad",
+     "Dupe Frog",
+     "Caius the Shadow Monarch"
+    ],
+    "frogs_in_gy": 7,
+    "full_line": false
+   },
+   {
+    "seed": 82000060,
+    "turn": 16,
+    "activations": 3,
+    "summoned": [
+     "Swap Frog",
+     "Dupe Frog",
+     "Dupe Frog"
+    ],
+    "field": [
+     "Dupe Frog",
+     "Substitoad",
+     "Dupe Frog"
+    ],
+    "frogs_in_gy": 6,
+    "full_line": false
+   }
+  ]
+ },
+ "net160/frog_monarch": {
+  "counts": {
+   "games": 768,
+   "wins": 206,
+   "treeborn_revive_offered": 2953,
+   "treeborn_revived": 2448,
+   "treeborn_tributed_for_summon": 611,
+   "own_turns": 5015,
+   "turns_1plus": 393,
+   "turns_2plus": 70,
+   "turns_3plus": 36,
+   "turns_5plus": 6,
+   "end_board": 2,
+   "end_board_after_2plus": 0,
+   "treeborn_fed": 52,
+   "swap_sent_toad_turns": 77,
+   "deck_thinned_turns": 22,
+   "full_line": 0,
+   "decisions_with_activation": 981,
+   "summons_without_deck_prompt": 17,
+   "deck_prompts": 503,
+   "label_right": 503,
+   "chance_x1000": 106710,
+   "options_shown": 2725,
+   "options_frog_label": 2725,
+   "games_reached": 364,
+   "games_used": 322,
+   "swap_taken": 247
+  },
+  "tributed": [
+   [
+    "Substitoad",
+    405
+   ],
+   [
+    "Treeborn Frog",
+    86
+   ],
+   [
+    "Dupe Frog",
+    23
+   ],
+   [
+    "Light and Darkness Dragon",
+    3
+   ],
+   [
+    "Thestalos the Firestorm Monarch",
+    2
+   ],
+   [
+    "Raiza the Storm Monarch",
+    1
+   ],
+   [
+    "Battle Fader",
+    1
+   ],
+   [
+    "Gorz the Emissary of Darkness",
+    1
+   ]
+  ],
+  "summoned": [
+   [
+    "Treeborn Frog",
+    316
+   ],
+   [
+    "Dupe Frog",
+    156
+   ],
+   [
+    "Swap Frog",
+    48
+   ]
+  ],
+  "swap_sent": [
+   [
+    "Substitoad",
+    85
+   ],
+   [
+    "Treeborn Frog",
+    80
+   ],
+   [
+    "Dupe Frog",
+    25
+   ],
+   [
+    "Swap Frog",
+    17
+   ],
+   [
+    "Light and Darkness Dragon",
+    1
+   ],
+   [
+    "Raiza the Storm Monarch",
+    1
+   ]
+  ],
+  "most_in_one_turn": [
+   [
+    0,
+    446
+   ],
+   [
+    1,
+    252
+   ],
+   [
+    2,
+    34
+   ],
+   [
+    3,
+    21
+   ],
+   [
+    4,
+    9
+   ],
+   [
+    5,
+    3
+   ],
+   [
+    6,
+    3
+   ]
+  ],
+  "examples": []
+ },
+ "net2560/frog_monarch": {
+  "counts": {
+   "games": 768,
+   "wins": 542,
+   "treeborn_revive_offered": 4054,
+   "treeborn_revived": 3998,
+   "treeborn_tributed_for_summon": 1136,
+   "decisions_with_activation": 1735,
+   "summons_without_deck_prompt": 182,
+   "deck_prompts": 1252,
+   "label_right": 1252,
+   "chance_x1000": 314320,
+   "options_shown": 6037,
+   "options_frog_label": 6037,
+   "own_turns": 5201,
+   "turns_1plus": 704,
+   "turns_2plus": 288,
+   "turns_3plus": 192,
+   "turns_5plus": 76,
+   "end_board": 39,
+   "end_board_after_2plus": 17,
+   "treeborn_fed": 284,
+   "swap_sent_toad_turns": 90,
+   "deck_thinned_turns": 138,
+   "full_line": 4,
+   "games_reached": 558,
+   "games_used": 540,
+   "swap_taken": 673
+  },
+  "tributed": [
+   [
+    "Substitoad",
+    634
+   ],
+   [
+    "Treeborn Frog",
+    380
+   ],
+   [
+    "Dupe Frog",
+    214
+   ],
+   [
+    "Swap Frog",
+    203
+   ],
+   [
+    "Tragoedia",
+    5
+   ],
+   [
+    "Battle Fader",
+    4
+   ]
+  ],
+  "summoned": [
+   [
+    "Dupe Frog",
+    624
+   ],
+   [
+    "Swap Frog",
+    461
+   ],
+   [
+    "Treeborn Frog",
+    348
+   ],
+   [
+    "Substitoad",
+    1
+   ]
+  ],
+  "swap_sent": [
+   [
+    "Treeborn Frog",
+    352
+   ],
+   [
+    "Swap Frog",
+    131
+   ],
+   [
+    "Substitoad",
+    108
+   ],
+   [
+    "Dupe Frog",
+    28
+   ],
+   [
+    "Gorz the Emissary of Darkness",
+    2
+   ],
+   [
+    "Raiza the Storm Monarch",
+    1
+   ]
+  ],
+  "most_in_one_turn": [
+   [
+    0,
+    228
+   ],
+   [
+    1,
+    265
+   ],
+   [
+    2,
+    83
+   ],
+   [
+    3,
+    49
+   ],
+   [
+    4,
+    67
+   ],
+   [
+    5,
+    47
+   ],
+   [
+    6,
+    22
+   ],
+   [
+    7,
+    6
+   ],
+   [
+    8,
+    1
+   ]
+  ],
+  "examples": [
+   {
+    "seed": 82000009,
+    "turn": 14,
+    "activations": 3,
+    "summoned": [
+     "Dupe Frog",
+     "Swap Frog",
+     "Swap Frog"
+    ],
+    "field": [
+     "Swap Frog",
+     "Substitoad",
+     "Dupe Frog"
+    ],
+    "frogs_in_gy": 7,
+    "full_line": true
+   },
+   {
+    "seed": 82000001,
+    "turn": 4,
+    "activations": 5,
+    "summoned": [
+     "Treeborn Frog",
+     "Treeborn Frog",
+     "Dupe Frog",
+     "Dupe Frog",
+     "Dupe Frog"
+    ],
+    "field": [
+     "Dupe Frog",
+     "Swap Frog",
+     "Substitoad"
+    ],
+    "frogs_in_gy": 7,
+    "full_line": true
+   },
+   {
+    "seed": 82000009,
+    "turn": 10,
+    "activations": 4,
+    "summoned": [
+     "Dupe Frog",
+     "Dupe Frog",
+     "Swap Frog",
+     "Swap Frog"
+    ],
+    "field": [
+     "Swap Frog",
+     "Dupe Frog",
+     "Substitoad"
+    ],
+    "frogs_in_gy": 5,
+    "full_line": true
+   }
+  ]
+ },
+ "net2560-gauntlet/frog_monarch": {
+  "counts": {
+   "games": 192,
+   "wins": 159,
+   "treeborn_revive_offered": 806,
+   "treeborn_revived": 788,
+   "treeborn_tributed_for_summon": 248,
+   "own_turns": 1230,
+   "turns_1plus": 144,
+   "turns_2plus": 52,
+   "turns_3plus": 26,
+   "turns_5plus": 8,
+   "end_board": 7,
+   "end_board_after_2plus": 3,
+   "treeborn_fed": 50,
+   "swap_sent_toad_turns": 15,
+   "deck_thinned_turns": 18,
+   "full_line": 0,
+   "games_reached": 120,
+   "games_used": 118,
+   "swap_taken": 129,
+   "decisions_with_activation": 305,
+   "summons_without_deck_prompt": 35,
+   "deck_prompts": 213,
+   "label_right": 213,
+   "chance_x1000": 49966,
+   "options_shown": 1108,
+   "options_frog_label": 1108
+  },
+  "tributed": [
+   [
+    "Substitoad",
+    128
+   ],
+   [
+    "Treeborn Frog",
+    59
+   ],
+   [
+    "Dupe Frog",
+    33
+   ],
+   [
+    "Swap Frog",
+    26
+   ],
+   [
+    "Light and Darkness Dragon",
+    1
+   ],
+   [
+    "Caius the Shadow Monarch",
+    1
+   ],
+   [
+    "Battle Fader",
+    1
+   ]
+  ],
+  "summoned": [
+   [
+    "Dupe Frog",
+    95
+   ],
+   [
+    "Swap Frog",
+    82
+   ],
+   [
+    "Treeborn Frog",
+    71
+   ]
+  ],
+  "swap_sent": [
+   [
+    "Treeborn Frog",
+    74
+   ],
+   [
+    "Swap Frog",
+    29
+   ],
+   [
+    "Substitoad",
+    15
+   ],
+   [
+    "Dupe Frog",
+    7
+   ],
+   [
+    "Light and Darkness Dragon",
+    1
+   ],
+   [
+    "Mirror Force",
+    1
+   ],
+   [
+    "Raiza the Storm Monarch",
+    1
+   ],
+   [
+    "Caius the Shadow Monarch",
+    1
+   ]
+  ],
+  "most_in_one_turn": [
+   [
+    0,
+    74
+   ],
+   [
+    1,
+    69
+   ],
+   [
+    2,
+    23
+   ],
+   [
+    3,
+    14
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    5,
+    2
+   ],
+   [
+    6,
+    3
+   ],
+   [
+    7,
+    3
+   ]
+  ],
+  "examples": []
+ },
+ "net2560-gauntlet/g_diva_frog": {
+  "counts": {
+   "games": 192,
+   "wins": 119,
+   "treeborn_revive_offered": 455,
+   "treeborn_revived": 444,
+   "treeborn_tributed_for_summon": 90,
+   "decisions_with_activation": 422,
+   "summons_without_deck_prompt": 41,
+   "deck_prompts": 241,
+   "label_right": 241,
+   "chance_x1000": 60730,
+   "options_shown": 1101,
+   "options_frog_label": 1101,
+   "own_turns": 1125,
+   "turns_1plus": 203,
+   "turns_2plus": 58,
+   "turns_3plus": 33,
+   "turns_5plus": 5,
+   "end_board": 21,
+   "end_board_after_2plus": 5,
+   "treeborn_fed": 54,
+   "swap_sent_toad_turns": 25,
+   "deck_thinned_turns": 38,
+   "full_line": 1,
+   "swap_taken": 215,
+   "games_reached": 128,
+   "games_used": 126
+  },
+  "tributed": [
+   [
+    "Substitoad",
+    185
+   ],
+   [
+    "Treeborn Frog",
+    54
+   ],
+   [
+    "Swap Frog",
+    30
+   ],
+   [
+    "Dupe Frog",
+    29
+   ],
+   [
+    "Junk Synchron",
+    10
+   ],
+   [
+    "Unifrog",
+    6
+   ],
+   [
+    "Sangan",
+    2
+   ],
+   [
+    "Caius the Shadow Monarch",
+    1
+   ]
+  ],
+  "summoned": [
+   [
+    "Swap Frog",
+    102
+   ],
+   [
+    "Dupe Frog",
+    100
+   ],
+   [
+    "Treeborn Frog",
+    65
+   ],
+   [
+    "Unifrog",
+    15
+   ]
+  ],
+  "swap_sent": [
+   [
+    "Swap Frog",
+    86
+   ],
+   [
+    "Treeborn Frog",
+    56
+   ],
+   [
+    "Substitoad",
+    26
+   ],
+   [
+    "Unifrog",
+    24
+   ],
+   [
+    "Junk Synchron",
+    18
+   ],
+   [
+    "Dupe Frog",
+    7
+   ],
+   [
+    "Caius the Shadow Monarch",
+    1
+   ]
+  ],
+  "most_in_one_turn": [
+   [
+    0,
+    66
+   ],
+   [
+    1,
+    75
+   ],
+   [
+    2,
+    19
+   ],
+   [
+    3,
+    13
+   ],
+   [
+    4,
+    14
+   ],
+   [
+    5,
+    5
+   ]
+  ],
+  "examples": [
+   {
+    "seed": 82010000,
+    "turn": 7,
+    "activations": 3,
+    "summoned": [
+     "Dupe Frog",
+     "Swap Frog",
+     "Swap Frog"
+    ],
+    "field": [
+     "Substitoad",
+     "Dupe Frog",
+     "Swap Frog"
+    ],
+    "frogs_in_gy": 7,
+    "full_line": true
+   },
+   {
+    "seed": 82010002,
+    "turn": 9,
+    "activations": 4,
+    "summoned": [
+     "Dupe Frog",
+     "Swap Frog",
+     "Swap Frog",
+     "Swap Frog"
+    ],
+    "field": [
+     "Substitoad",
+     "Swap Frog",
+     "Dupe Frog"
+    ],
+    "frogs_in_gy": 3,
+    "full_line": false
+   },
+   {
+    "seed": 82010003,
+    "turn": 15,
+    "activations": 4,
+    "summoned": [
+     "Dupe Frog",
+     "Swap Frog",
+     "Swap Frog",
+     "Swap Frog"
+    ],
+    "field": [
+     "Dupe Frog",
+     "Swap Frog",
+     "Caius the Shadow Monarch",
+     "Substitoad"
+    ],
+    "frogs_in_gy": 7,
+    "full_line": false
+   }
+  ]
+ },
+ "net2560-gauntlet/g_frog_monarch": {
+  "counts": {
+   "games": 192,
+   "wins": 180,
+   "treeborn_revive_offered": 567,
+   "treeborn_revived": 517,
+   "treeborn_tributed_for_summon": 114,
+   "swap_taken": 205,
+   "own_turns": 1328,
+   "turns_1plus": 217,
+   "turns_2plus": 97,
+   "turns_3plus": 66,
+   "turns_5plus": 34,
+   "end_board": 30,
+   "end_board_after_2plus": 13,
+   "treeborn_fed": 67,
+   "swap_sent_toad_turns": 11,
+   "deck_thinned_turns": 16,
+   "full_line": 1,
+   "games_reached": 140,
+   "games_used": 135,
+   "decisions_with_activation": 881,
+   "summons_without_deck_prompt": 67,
+   "deck_prompts": 492,
+   "label_right": 492,
+   "chance_x1000": 97446,
+   "options_shown": 3222,
+   "options_frog_label": 3222
+  },
+  "tributed": [
+   [
+    "Substitoad",
+    203
+   ],
+   [
+    "Treeborn Frog",
+    107
+   ],
+   [
+    "Dupe Frog",
+    75
+   ],
+   [
+    "Flip Flop Frog",
+    60
+   ],
+   [
+    "Swap Frog",
+    46
+   ],
+   [
+    "Fishborg Blaster",
+    18
+   ],
+   [
+    "Dandylion",
+    16
+   ],
+   [
+    "Unifrog",
+    15
+   ]
+  ],
+  "summoned": [
+   [
+    "Des Frog",
+    157
+   ],
+   [
+    "Flip Flop Frog",
+    118
+   ],
+   [
+    "Dupe Frog",
+    114
+   ],
+   [
+    "Swap Frog",
+    82
+   ],
+   [
+    "Treeborn Frog",
+    60
+   ],
+   [
+    "Unifrog",
+    28
+   ]
+  ],
+  "swap_sent": [
+   [
+    "Treeborn Frog",
+    128
+   ],
+   [
+    "Swap Frog",
+    29
+   ],
+   [
+    "Unifrog",
+    23
+   ],
+   [
+    "Substitoad",
+    16
+   ],
+   [
+    "Flip Flop Frog",
+    5
+   ]
+  ],
+  "most_in_one_turn": [
+   [
+    0,
+    57
+   ],
+   [
+    1,
+    49
+   ],
+   [
+    2,
+    26
+   ],
+   [
+    3,
+    21
+   ],
+   [
+    4,
+    6
+   ],
+   [
+    5,
+    12
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    7,
+    7
+   ],
+   [
+    8,
+    3
+   ],
+   [
+    10,
+    2
+   ],
+   [
+    11,
+    1
+   ],
+   [
+    12,
+    1
+   ],
+   [
+    13,
+    1
+   ],
+   [
+    17,
+    4
+   ]
+  ],
+  "examples": [
+   {
+    "seed": 82010001,
+    "turn": 5,
+    "activations": 3,
+    "summoned": [
+     "Des Frog",
+     "Des Frog",
+     "Flip Flop Frog"
+    ],
+    "field": [
+     "Substitoad",
+     "Flip Flop Frog",
+     "Des Frog",
+     "Des Frog"
+    ],
+    "frogs_in_gy": 1,
+    "full_line": false
+   },
+   {
+    "seed": 82010005,
+    "turn": 15,
+    "activations": 4,
+    "summoned": [
+     "Des Frog",
+     "Dupe Frog",
+     "Dupe Frog",
+     "Unifrog"
+    ],
+    "field": [
+     "Substitoad",
+     "Unifrog",
+     "Des Frog"
+    ],
+    "frogs_in_gy": 10,
+    "full_line": false
+   },
+   {
+    "seed": 82010002,
+    "turn": 10,
+    "activations": 8,
+    "summoned": [
+     "Des Frog",
+     "Des Frog",
+     "Treeborn Frog",
+     "Treeborn Frog",
+     "Dupe Frog",
+     "Dupe Frog",
+     "Swap Frog",
+     "Unifrog"
+    ],
+    "field": [
+     "Unifrog",
+     "Substitoad",
+     "Swap Frog",
+     "Des Frog",
+     "Des Frog"
+    ],
+    "frogs_in_gy": 9,
+    "full_line": false
+   }
+  ]
+ },
+ "net2560-gauntlet/g_frog_otk": {
+  "counts": {
+   "games": 192,
+   "wins": 168,
+   "treeborn_revive_offered": 409,
+   "treeborn_revived": 393,
+   "treeborn_tributed_for_summon": 58,
+   "own_turns": 1303,
+   "turns_1plus": 340,
+   "turns_2plus": 203,
+   "turns_3plus": 149,
+   "turns_5plus": 69,
+   "end_board": 33,
+   "end_board_after_2plus": 24,
+   "treeborn_fed": 115,
+   "swap_sent_toad_turns": 15,
+   "deck_thinned_turns": 36,
+   "full_line": 3,
+   "decisions_with_activation": 1398,
+   "summons_without_deck_prompt": 173,
+   "deck_prompts": 858,
+   "label_right": 858,
+   "chance_x1000": 169454,
+   "options_shown": 5612,
+   "options_frog_label": 5612,
+   "swap_taken": 265,
+   "games_reached": 168,
+   "games_used": 166
+  },
+  "tributed": [
+   [
+    "Substitoad",
+    350
+   ],
+   [
+    "Flip Flop Frog",
+    136
+   ],
+   [
+    "Treeborn Frog",
+    131
+   ],
+   [
+    "Swap Frog",
+    128
+   ],
+   [
+    "Dupe Frog",
+    120
+   ],
+   [
+    "Fishborg Blaster",
+    52
+   ],
+   [
+    "Unifrog",
+    24
+   ],
+   [
+    "Dandylion",
+    21
+   ]
+  ],
+  "summoned": [
+   [
+    "Des Frog",
+    416
+   ],
+   [
+    "Dupe Frog",
+    181
+   ],
+   [
+    "Flip Flop Frog",
+    177
+   ],
+   [
+    "Swap Frog",
+    165
+   ],
+   [
+    "Treeborn Frog",
+    53
+   ],
+   [
+    "Unifrog",
+    39
+   ]
+  ],
+  "swap_sent": [
+   [
+    "Treeborn Frog",
+    108
+   ],
+   [
+    "Swap Frog",
+    84
+   ],
+   [
+    "Unifrog",
+    35
+   ],
+   [
+    "Substitoad",
+    17
+   ],
+   [
+    "Dupe Frog",
+    12
+   ],
+   [
+    "Flip Flop Frog",
+    10
+   ],
+   [
+    "Des Frog",
+    1
+   ],
+   [
+    "Fishborg Blaster",
+    1
+   ]
+  ],
+  "most_in_one_turn": [
+   [
+    0,
+    26
+   ],
+   [
+    1,
+    30
+   ],
+   [
+    2,
+    24
+   ],
+   [
+    3,
+    29
+   ],
+   [
+    4,
+    21
+   ],
+   [
+    5,
+    19
+   ],
+   [
+    6,
+    10
+   ],
+   [
+    7,
+    7
+   ],
+   [
+    8,
+    5
+   ],
+   [
+    9,
+    6
+   ],
+   [
+    10,
+    2
+   ],
+   [
+    11,
+    5
+   ],
+   [
+    12,
+    2
+   ],
+   [
+    13,
+    3
+   ],
+   [
+    14,
+    1
+   ],
+   [
+    15,
+    2
+   ]
+  ],
+  "examples": [
+   {
+    "seed": 82010002,
+    "turn": 6,
+    "activations": 3,
+    "summoned": [
+     "Dupe Frog",
+     "Treeborn Frog",
+     "Swap Frog"
+    ],
+    "field": [
+     "Substitoad",
+     "Swap Frog",
+     "Swap Frog",
+     "Dupe Frog"
+    ],
+    "frogs_in_gy": 9,
+    "full_line": false
+   },
+   {
+    "seed": 82010002,
+    "turn": 4,
+    "activations": 13,
+    "summoned": [
+     "Des Frog",
+     "Des Frog",
+     "Flip Flop Frog",
+     "Dupe Frog",
+     "Dupe Frog",
+     "Dupe Frog",
+     "Unifrog",
+     "Treeborn Frog",
+     "Swap Frog",
+     "Swap Frog",
+     "Flip Flop Frog",
+     "Treeborn Frog",
+     "Swap Frog"
+    ],
+    "field": [
+     "Substitoad",
+     "Unifrog",
+     "Substitoad",
+     "Swap Frog",
+     "Des Frog"
+    ],
+    "frogs_in_gy": 9,
+    "full_line": true
+   },
+   {
+    "seed": 82010002,
+    "turn": 4,
+    "activations": 13,
+    "summoned": [
+     "Flip Flop Frog",
+     "Des Frog",
+     "Des Frog",
+     "Dupe Frog",
+     "Dupe Frog",
+     "Dupe Frog",
+     "Treeborn Frog",
+     "Unifrog",
+     "Swap Frog",
+     "Swap Frog",
+     "Swap Frog",
+     "Des Frog",
+     "Flip Flop Frog"
+    ],
+    "field": [
+     "Substitoad",
+     "Flip Flop Frog",
+     "Des Frog",
+     "Des Frog",
+     "Des Frog"
+    ],
+    "frogs_in_gy": 7,
+    "full_line": false
+   }
+  ]
+ },
+ "net2560-gauntlet/g_hero_frog": {
+  "counts": {
+   "games": 192,
+   "wins": 172,
+   "treeborn_revive_offered": 310,
+   "treeborn_revived": 305,
+   "treeborn_tributed_for_summon": 63,
+   "decisions_with_activation": 464,
+   "summons_without_deck_prompt": 79,
+   "deck_prompts": 248,
+   "label_right": 248,
+   "chance_x1000": 66492,
+   "options_shown": 1101,
+   "options_frog_label": 1101,
+   "own_turns": 1172,
+   "turns_1plus": 152,
+   "turns_2plus": 68,
+   "turns_3plus": 53,
+   "turns_5plus": 23,
+   "end_board": 26,
+   "end_board_after_2plus": 8,
+   "treeborn_fed": 57,
+   "swap_sent_toad_turns": 10,
+   "deck_thinned_turns": 29,
+   "full_line": 0,
+   "games_reached": 118,
+   "games_used": 110,
+   "swap_taken": 150
+  },
+  "tributed": [
+   [
+    "Substitoad",
+    112
+   ],
+   [
+    "Treeborn Frog",
+    83
+   ],
+   [
+    "Dupe Frog",
+    53
+   ],
+   [
+    "Swap Frog",
+    39
+   ],
+   [
+    "Unifrog",
+    20
+   ],
+   [
+    "Elemental HERO Stratos",
+    8
+   ],
+   [
+    "Evil HERO Infernal Prodigy",
+    7
+   ],
+   [
+    "Junk Synchron",
+    6
+   ]
+  ],
+  "summoned": [
+   [
+    "Dupe Frog",
+    118
+   ],
+   [
+    "Swap Frog",
+    93
+   ],
+   [
+    "Treeborn Frog",
+    84
+   ],
+   [
+    "Unifrog",
+    32
+   ]
+  ],
+  "swap_sent": [
+   [
+    "Treeborn Frog",
+    82
+   ],
+   [
+    "Unifrog",
+    28
+   ],
+   [
+    "Swap Frog",
+    17
+   ],
+   [
+    "Substitoad",
+    10
+   ],
+   [
+    "Dupe Frog",
+    7
+   ],
+   [
+    "Junk Synchron",
+    2
+   ]
+  ],
+  "most_in_one_turn": [
+   [
+    0,
+    82
+   ],
+   [
+    1,
+    47
+   ],
+   [
+    2,
+    11
+   ],
+   [
+    3,
+    20
+   ],
+   [
+    4,
+    9
+   ],
+   [
+    5,
+    5
+   ],
+   [
+    6,
+    15
+   ],
+   [
+    7,
+    3
+   ]
+  ],
+  "examples": [
+   {
+    "seed": 82010006,
+    "turn": 3,
+    "activations": 5,
+    "summoned": [
+     "Dupe Frog",
+     "Dupe Frog",
+     "Unifrog",
+     "Swap Frog",
+     "Swap Frog"
+    ],
+    "field": [
+     "Substitoad",
+     "Dupe Frog",
+     "Swap Frog",
+     "Dupe Frog"
+    ],
+    "frogs_in_gy": 4,
+    "full_line": false
+   },
+   {
+    "seed": 82010003,
+    "turn": 6,
+    "activations": 6,
+    "summoned": [
+     "Treeborn Frog",
+     "Dupe Frog",
+     "Dupe Frog",
+     "Unifrog",
+     "Swap Frog",
+     "Swap Frog"
+    ],
+    "field": [
+     "Dupe Frog",
+     "Swap Frog",
+     "Swap Frog",
+     "Substitoad",
+     "Dupe Frog"
+    ],
+    "frogs_in_gy": 4,
+    "full_line": false
+   },
+   {
+    "seed": 82010001,
+    "turn": 5,
+    "activations": 6,
+    "summoned": [
+     "Dupe Frog",
+     "Dupe Frog",
+     "Swap Frog",
+     "Swap Frog",
+     "Swap Frog",
+     "Unifrog"
+    ],
+    "field": [
+     "Substitoad",
+     "Unifrog",
+     "Dupe Frog"
+    ],
+    "frogs_in_gy": 7,
+    "full_line": false
+   }
+  ]
+ }
+}

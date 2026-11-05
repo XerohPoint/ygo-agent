@@ -1,0 +1,15 @@
+[
+ {"label": "net2560", "phase": "gauntlet2560-pilot", "challenger": "gauntlet2560-1702", "opponent": "heuristic", "decks": ["frog_monarch"]},
+ {"label": "net2560", "phase": "gauntlet2560-pilot", "challenger": "gauntlet2560-1703", "opponent": "heuristic", "decks": ["frog_monarch"]},
+ {"label": "net2560", "phase": "gauntlet2560-pilot", "challenger": "gauntlet2560-1704", "opponent": "heuristic", "decks": ["frog_monarch"]},
+ {"label": "net1280", "phase": "gauntlet1280-pilot", "challenger": "gauntlet1280-1702", "opponent": "heuristic", "decks": ["frog_monarch"]},
+ {"label": "net1280", "phase": "gauntlet1280-pilot", "challenger": "gauntlet1280-1703", "opponent": "heuristic", "decks": ["frog_monarch"]},
+ {"label": "net1280", "phase": "gauntlet1280-pilot", "challenger": "gauntlet1280-1704", "opponent": "heuristic", "decks": ["frog_monarch"]},
+ {"label": "net160", "phase": "gauntlet160-pilot", "challenger": "gauntlet160-1702", "opponent": "heuristic", "decks": ["frog_monarch"]},
+ {"label": "net160", "phase": "gauntlet160-pilot", "challenger": "gauntlet160-1703", "opponent": "heuristic", "decks": ["frog_monarch"]},
+ {"label": "net160", "phase": "gauntlet160-pilot", "challenger": "gauntlet160-1704", "opponent": "heuristic", "decks": ["frog_monarch"]},
+ {"label": "heuristic", "phase": "control-pilot", "challenger": "heuristic-mirror", "opponent": "heuristic", "decks": ["frog_monarch"]},
+ {"label": "net2560-gauntlet", "phase": "gauntlet2560-on-gauntlet", "challenger": "gauntlet2560-1702", "opponent": "heuristic", "decks": ["frog_monarch", "g_frog_monarch", "g_frog_otk", "g_diva_frog", "g_hero_frog"]},
+ {"label": "net2560-gauntlet", "phase": "gauntlet2560-on-gauntlet", "challenger": "gauntlet2560-1703", "opponent": "heuristic", "decks": ["frog_monarch", "g_frog_monarch", "g_frog_otk", "g_diva_frog", "g_hero_frog"]},
+ {"label": "net2560-gauntlet", "phase": "gauntlet2560-on-gauntlet", "challenger": "gauntlet2560-1704", "opponent": "heuristic", "decks": ["frog_monarch", "g_frog_monarch", "g_frog_otk", "g_diva_frog", "g_hero_frog"]}
+]

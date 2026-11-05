@@ -63,6 +63,12 @@ def tables(name):
     return per, voids, reasons
 
 
+def seat_zero_rate(name):
+    """Seat 0's wins in a mirror control, each duel once. Both challenger seats replay the same duels, so the challenger's own rate is always 50%."""
+    duels = {(row["deck0"], row["deck1"], duel["seed"]): duel["winner"] for row in load(name) for duel in row.get("duels", ())}
+    return round(100 * sum(winner == 0 for winner in duels.values()) / len(duels), 2)
+
+
 def wilson_low(wins, games, z=1.96):
     p = wins / games
     denominator = 1 + z * z / games
@@ -110,7 +116,7 @@ def report(output):
               "F1_fixtures": fixtures, "F2_gauntlet": gauntlet,
               "F4_guard_diagnostic": {"no_guard": {k: bare[k] for k in ("by_optimizer", "mean", "games", "void_games", "void_reasons")}, "paired": differences,
                                       "guard_fires": summaries["gauntlet"]["guard_fires"]},
-              "controls": mirror,
+              "controls": mirror, "controls_seat_zero": {name: seat_zero_rate(name) for name in mirror},
               "provenance": {"replayed_cells": sum(s["replayed_cells"] for s in summaries.values()), "replay_mismatches": sum(len(s["replay_mismatches"]) for s in summaries.values()),
                              "native_sha256": sorted({v for s in summaries.values() for k, v in s["native_sha256"].items() if "cpython" in k}),
                              "policy_sha256": summaries["fixtures"]["policy_sha256"], "elapsed_seconds": {k: round(s["elapsed_seconds"]) for k, s in summaries.items()}}}

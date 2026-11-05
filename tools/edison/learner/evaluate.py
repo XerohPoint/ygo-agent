@@ -98,7 +98,7 @@ def main():
     if output.exists():
         raise ValueError("Refusing to overwrite: use a fresh --output")
     output.mkdir(parents=True)
-    forbidden = [(22000000, 22999999), (50000000, 50999999), (60000000, 60999999), (70000000, 72999999), (74000000, 74999999), (79000000, 79999999)]
+    forbidden = [(22000000, 22999999), (50000000, 50999999), (60000000, 60999999), (70000000, 72999999), (74000000, 74999999), (79000000, 79999999), (83000000, 83999999)]
     if any(lo <= args.seed <= hi for lo, hi in forbidden):
         raise ValueError("Seed is in a consumed or reserved block")
     challengers = dict(item.split("=", 1) for item in args.challenger)

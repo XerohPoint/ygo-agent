@@ -28,6 +28,12 @@ def load(name):
         return json.load(f)
 
 
+def seat_zero_rate(rows):
+    """Seat 0's wins in a mirror control, each duel once. Both challenger seats replay the same duels, so the challenger's own rate is always 50%."""
+    duels = {(row["deck0"], row["deck1"], duel["seed"]): duel["winner"] for row in rows for duel in row.get("duels", ())}
+    return round(100 * sum(winner == 0 for winner in duels.values()) / len(duels), 2)
+
+
 def outcomes(rows, challenger, opponent):
     table, void, reasons = {}, 0, {}
     for row in rows:
@@ -132,7 +138,8 @@ def main():
     report["head_to_head"] = {"by_optimizer": h2h, "mean": round(float(np.mean(h2h)), 2), "void_games": h2h_void}
     report["controls"] = {"fixture_mirror": pct(outcomes(load("control-pilot"), "heuristic-mirror", "heuristic")[0]),
                           "fixture_heuristic_vs_random": pct(outcomes(load("control-random-pilot"), "heuristic-vs-random", "random")[0]),
-                          "gauntlet_mirror": pct(outcomes(load("control-on-gauntlet"), "heuristic-mirror", "heuristic")[0])}
+                          "gauntlet_mirror": pct(outcomes(load("control-on-gauntlet"), "heuristic-mirror", "heuristic")[0]),
+                          "fixture_mirror_seat_zero": seat_zero_rate(load("control-pilot")), "gauntlet_mirror_seat_zero": seat_zero_rate(load("control-on-gauntlet"))}
     conclusions = {"G1": {}, "G2": {}, "G4": {}}
     for block in BLOCKS:
         top, start, middle = (blocks[block][f"gauntlet{r}"] for r in (TOP, START, MIDDLE))
