@@ -6,7 +6,9 @@ M2's exit: search at a fixed decision budget beats the same network without sear
 
 ## Frozen before any game
 
-`m2_final.py freeze` writes `m2-manifest.json`, which is committed alone on top of the commit it names. It records that commit and the sha256 of the binary, the Lua scripts, the card database, the lists, the code list, the nets, all job lines and the search scripts. `play` and `analyze` refuse to run if any of these differ. Before freezing, `test_search.py` passes on all stages, `run_all.sh` passes, and `m2_final.py selftest` passes on that build.
+`m2_final.py freeze` writes `m2-manifest.json`, which is committed alone directly on the commit it names. It records that commit and the sha256 of the binary, the Lua scripts, the card database, the lists, the code list, the net files, all job lines and the search scripts. `play` and `analyze` refuse to run unless HEAD is that manifest commit, nothing is uncommitted, and every hash still matches. Before freezing, `test_search.py` passes on all stages, `run_all.sh` passes, and `m2_final.py selftest` passes on that build. Those three are steps the operator runs and reports. `freeze` doesn't enforce them.
+
+`analyze` checks results before scoring anything. Each must sit under its own file name, hold its exact job line and name the frozen build, and each directory's recorded inputs and attempt log must match the manifest.
 
 A code change after that voids the run. A voided run is still reported, and a new one uses a new seed block.
 
@@ -24,7 +26,7 @@ Budget 64, depth 48, 4 candidates, margin 1.0, halving on. Chosen on pilots with
 
 Win 1, draw 1/2, loss 0, for the seat in question. A **comparison** is one search game and the plain game with the same seed and net, read from the same seat. D is its search score minus its plain score. If either game is void, the comparison is excluded. One void plain game excludes two.
 
-Every block counts once: a block's value is the mean of its surviving comparisons, in whatever subset is being measured, and a statistic is the mean over blocks. Ranges are 95% percentile intervals from resampling whole blocks: 20,000 resamples, generator `numpy.default_rng(87000000)`, drawn in the script's fixed order.
+Every block with a surviving comparison in the subset being measured counts once: its value is the mean of those comparisons, and a statistic is the mean over such blocks. Ranges are 95% percentile intervals from resampling whole blocks: 20,000 resamples, generator `numpy.default_rng(87000000)`, drawn in the script's fixed order.
 
 The unit of inference is the block, and the claim covers these 168 ordered pairs at these seeds' mix, not any one matchup. With no exclusions a net's plain score is exactly 50%, because each plain game is read from both seats. So D and score carry the same information overall and per net. A seat's plain score is not fixed that way.
 
@@ -34,17 +36,18 @@ The unit of inference is the block, and the claim covers these 168 ordered pairs
 2. For each net, D's lower bound is above 0.
 3. For each search seat, D's lower bound is above 0.
 4. At most 10 of 1,008 comparisons are excluded.
-5. Counting each excluded comparison as the worst result, overall D's lower bound stays above 0: `(1 - f) x low - f > 0`, for excluded fraction `f`.
-6. No missing games, worker deaths, failures in any attempt's log, network refusals of a true observation, rollout network errors, option mismatches, step overruns or job mismatches.
-7. **Ranker.** From 32 finished, decisive search games drawn with `random.Random(87000000)` before reading scores, take each game's last real choice by the winner (closing), and 2 random real choices (middle). Rank them with budget 256, depth 48. An all-refused position abstains and is counted. These must hold:
-   - Every shown mean and error follows from the rollout results it reports.
+5. Counting each excluded comparison as D = -1 in its own block, and bootstrapping as above, overall D's lower bound stays above 0. A real comparison can't always reach -1, given its known plain game, so this is conservative.
+6. No missing games, worker deaths, worker failures in any attempt's log, missing logs, logs or inputs that don't match the manifest, network refusals of a true observation, rollout network errors, option mismatches, step overruns, or results with the wrong job, name or build.
+7. **Ranker.** There must be at least 32 finished, decisive search games. From those, draw 32 with `random.Random(87000000)`, a draw that doesn't read which seat won beyond eligibility. Take each game's last real choice by the winner (closing), which need not end the game itself, and 2 random real choices (middle). Rank them with budget 256, depth 48. An all-refused position abstains and is counted. These must hold:
+   - Every shown number is finite and in range, and follows from the rollout results reported with it.
    - At least 20 closing positions were estimated. In at least 70%, the move played is estimated at 80% or higher, and in at least 70% it is within 5 points of the best option.
-   - At least 10 middle positions on each side. The move played is estimated at least 25 points higher when that seat went on to win.
-   - The whole ranking repeats exactly.
+   - At least 10 middle positions on each side. The move played is estimated at least 25 points higher when that seat went on to win, on the unrounded numbers.
+   - **Branches.** In positions where the shown best and worst options are at least 20 points apart, play each in the true duel, through any forced steps, and rank from there with the same settings. At least 15 such positions must be usable, and in at least 75% the shown best must really come out above the shown worst.
+   - No ranking lost a world to a failure, and the whole ranking repeats exactly.
 
-These thresholds were set from the check runs in `test_search.py`'s `estimates` stage on seeds 86007200-86007231, not from this test's games. They are a floor for "the numbers mean what they say", not a measure of how accurate the estimates are.
+These thresholds were set from the check runs in `test_search.py`'s `estimates` stage on seeds 86007200-86007231, not from this test's games. There, the correct ranker had 21 of 24 branches agree, and rankers with numbers on the wrong options had 15 and 5. They are floors for "the numbers mean what they say", not measures of how accurate the estimates are, and a branch compares estimates with estimates, not with a known truth.
 
-There are no interim looks at scores. An infrastructure failure may resume missing jobs on the same inputs. Void files stay and every attempt is logged, so a resume can't hide a failure.
+There are no interim looks at scores. An infrastructure failure may resume missing jobs on the same inputs. Void files stay and every attempt is logged, including one cut off or exiting with an error. Those are reported, and don't fail the test by themselves. A worker failure inside any attempt does.
 
 These are separate 95% ranges, not a simultaneous region. All of them must pass, so no multiplicity correction is applied.
 

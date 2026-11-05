@@ -70,7 +70,7 @@ def calibration(games):
     """Estimated win rate of the option played against how those games ended, a draw counting half. Decisions in one game are not independent."""
     bins = [[0, 0.0, 0.0] for _ in range(10)]
     for g in games:
-        won = score(g, g["search_seat"])
+        won = score(g, g.get("search_seat"))
         if won is None:
             continue
         for row in g.get("log", []):

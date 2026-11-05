@@ -39,6 +39,9 @@ CLOSING_HIGH = 0.8  # a move that ended the game, for the seat that won, should 
 CLOSING_SHARE = 0.7  # in at least this share of such positions
 CLOSING_TOP = 0.7  # and to rank within CLOSING_TIE of the best option in at least this share, so numbers on the wrong option fail
 CLOSING_TIE = 0.05
+BRANCH_SPREAD = 0.2  # options this far apart in win rate are compared against what really follows them
+BRANCH_MIN = 15
+BRANCH_SHARE = 0.75
 
 
 FAILURES = []
@@ -387,7 +390,7 @@ def stage_ranker(args, names):
 
 
 def closing_decision(game):
-    """The last real choice of the seat that won. None if the game has none."""
+    """The last real choice of the seat that won, which need not end the game itself. None if the game has none."""
     for decision in range(game["decisions"] - 1, -1, -1):
         if game["counts"][decision] > 1 and game["seats"][decision] == game["winner"]:
             return decision
@@ -395,14 +398,17 @@ def closing_decision(game):
 
 
 def judge_rank(position, out):
-    """The numbers a ranking shows must follow from its samples. Returns the recorded move's estimate as a win rate, or None if it wasn't compared."""
+    """The numbers a ranking shows must be finite, in range, and follow from its samples. Returns the count broken, and the recorded move's estimate as a win rate if it was compared."""
     bad = 0
     for o in out["options"]:
         n = len(o["samples"])
         bad += o["deals"] != n
+        if not all(math.isfinite(v) and abs(v) <= 1 for v in o["samples"] + [o["mean"]]) or not math.isfinite(o["error"]) or o["error"] < 0:
+            bad += 1
+            continue
         if n:
             mean = sum(o["samples"]) / n
-            error = math.sqrt(max(0.0, sum((v - mean) ** 2 for v in o["samples"]) / (n - 1)) / n) if n > 1 else 0.0
+            error = math.sqrt(sum((v - mean) ** 2 for v in o["samples"]) / (n - 1) / n) if n > 1 else 0.0
             bad += abs(o["mean"] - mean) > 1e-9 or abs(o["error"] - error) > 1e-9
     played = out["options"][position["move"]]
     return bad, (played["mean"] + 1) / 2 if played["deals"] else None
@@ -415,13 +421,63 @@ def rank_positions(positions, workers, binary=sc.BIN, **options):
         return pool.map(one, positions)
 
 
-def judge_estimates(closing, closing_out, middle, middle_out):
-    """Against outcomes the ranker can't see: moves that won the game at once, and mid-game positions by who went on to win."""
+def follow(position, option, viewer, **options):
+    """What really follows an option: the true duel plays it, through any forced steps, and ranks from there. Win rate for viewer, None if nothing was sampled."""
+    moves = position["moves"] + [option]
+    while True:
+        out = json.loads(sc.rank(*position["start"], moves, net=position["net"], **options))
+        if out["status"] == "OVER":
+            return 1.0 if out["winner"] == viewer else (0.0 if out["winner"] == 1 - viewer else 0.5)
+        if len(out["options"]) > 1:
+            base = out["options"][out["greedy"]]
+            if not base["deals"]:
+                return None
+            rate = (base["mean"] + 1) / 2
+            return rate if out["seat"] == viewer else 1 - rate
+        moves = moves + [0]
+
+
+def branches(positions, outs):
+    """In each position with options far enough apart, the shown best and worst."""
+    found = []
+    for position, out in zip(positions, outs):
+        compared = [o for o in out["options"] if o["deals"] > 1 and math.isfinite(o["mean"])]
+        if len(compared) < 2:
+            continue
+        best = max(compared, key=lambda o: o["mean"])
+        worst = min(compared, key=lambda o: o["mean"])
+        if (best["mean"] - worst["mean"]) / 2 >= BRANCH_SPREAD:
+            found.append((position, out["seat"], best["option"], worst["option"]))
+    return found
+
+
+class Followed:
+    """Remembers what follows each option, so a planted ranking pays only for options the clean one didn't ask about."""
+
+    def __init__(self, workers, **options):
+        self.workers, self.options, self.known = workers, options, {}
+
+    def values(self, wanted):
+        def key(task):
+            position, viewer, option = task
+            return (position["id"], position["decision"], viewer, option)
+        missing = {key(t): t for t in wanted if key(t) not in self.known}
+
+        def one(item):
+            position, viewer, option = item[1]
+            return item[0], follow(position, option, viewer, **self.options)
+        with ThreadPool(self.workers) as pool:
+            self.known.update(pool.map(one, missing.items()))
+        return [self.known[key(t)] for t in wanted]
+
+
+def judge_estimates(closing, closing_out, middle, middle_out, followed):
+    """Against facts the ranker can't see: each winner's last choice, mid-game positions by who went on to win, and what the true duel does after a shown best and worst."""
     bad = high = top = compared = 0
     for position, out in zip(closing, closing_out):
         wrong, estimate = judge_rank(position, out)
         bad += wrong
-        if estimate is not None:
+        if estimate is not None and not wrong:
             compared += 1
             high += estimate >= CLOSING_HIGH
             top += estimate >= max((o["mean"] + 1) / 2 for o in out["options"] if o["deals"]) - CLOSING_TIE
@@ -429,17 +485,24 @@ def judge_estimates(closing, closing_out, middle, middle_out):
     for position, out in zip(middle, middle_out):
         wrong, estimate = judge_rank(position, out)
         bad += wrong
-        if estimate is not None:
+        if estimate is not None and not wrong:
             (won if position["won"] else lost).append(estimate)
     gap = float(np.mean(won) - np.mean(lost)) if won and lost else 0.0
-    return {"numbers_not_from_samples": bad, "closing": compared, "closing_high": high, "closing_top": top, "middle": [len(won), len(lost)], "middle_gap": round(gap, 3)}
+    found = branches(closing + middle, closing_out + middle_out)
+    values = followed.values([t for position, viewer, best, worst in found for t in ((position, viewer, best), (position, viewer, worst))])
+    pairs = [(values[2 * i], values[2 * i + 1]) for i in range(len(found)) if values[2 * i] is not None and values[2 * i + 1] is not None]
+    outs = closing_out + middle_out
+    return {"numbers_broken": bad, "closing": compared, "closing_high": high, "closing_top": top, "middle": [len(won), len(lost)], "middle_gap": gap,
+            "branches": len(pairs), "branches_agree": sum(a > b for a, b in pairs), "abstained": sum(not any(o["deals"] for o in out["options"]) for out in outs),
+            "ranker_failures": sum(out["net_errors"] + out["worlds_void"] for out in outs)}
 
 
 def estimate_rules(result):
-    broken = ["a shown number does not follow from its samples"] * bool(result["numbers_not_from_samples"])
+    broken = ["a shown number is not finite, or does not follow from its samples"] * bool(result["numbers_broken"])
     broken += ["too few closing positions"] * (result["closing"] < 20) + ["moves that won are not estimated high"] * (result["closing_high"] < CLOSING_SHARE * max(1, result["closing"]))
     broken += ["moves that won don't rank near the top"] * (result["closing_top"] < CLOSING_TOP * max(1, result["closing"]))
-    broken += ["too few middle positions"] * (min(result["middle"]) < 10) + ["estimates do not separate later wins from losses"] * (result["middle_gap"] < SEMANTIC_GAP)
+    broken += ["too few middle positions"] * (min(result["middle"]) < 10) + ["estimates do not separate later wins from losses"] * (not result["middle_gap"] >= SEMANTIC_GAP)
+    broken += ["too few options far enough apart"] * (result["branches"] < BRANCH_MIN) + ["the shown best isn't better than the shown worst in the true duel"] * (result["branches_agree"] < BRANCH_SHARE * max(1, result["branches"]))
     return broken
 
 
@@ -461,14 +524,15 @@ def game_positions(jobs, played, rng, middle_per_game=2):
 
 def stage_estimates(args, names):
     """The ranker's estimates, labels and errors, on positions with known outcomes. The planted rankers must all fail."""
+    followed = Followed(args.workers, budget=64, depth=48)
     pairs = sc.neighbour_pairs(names)
     lines = [sc.job_line(f"g{i}", *pairs[i * 5 % len(pairs)], SEED + 7200 + i, -1, "n1702") for i in range(32)]
     played = play(lines, "estimates", args.workers)
     closing, middle = game_positions(lines, played, random.Random(SEED + 7200))
     options = {"budget": 64, "depth": 48}
-    run = lambda binary=sc.BIN, **more: judge_estimates(closing, rank_positions(closing, args.workers, binary=binary, **options, **more), middle, rank_positions(middle, args.workers, binary=binary, **options, **more))
+    run = lambda binary=sc.BIN, **more: judge_estimates(closing, rank_positions(closing, args.workers, binary=binary, **options, **more), middle, rank_positions(middle, args.workers, binary=binary, **options, **more), followed)
     clean = run()
-    planted = {name: run(binary=sc.TEST_BIN, rank_mutant=name) for name in ("zero", "blank", "rotate")}
+    planted = {name: run(binary=sc.TEST_BIN, rank_mutant=name) for name in ("zero", "blank", "rotate", "others")}
     broken = estimate_rules(clean)
     broken += [f"the planted {name} ranker passed" for name, result in planted.items() if not estimate_rules(result)]
     # Labels: at a game's first decision, every card an option names comes from the acting seat's own list.

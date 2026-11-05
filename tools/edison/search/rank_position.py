@@ -83,6 +83,9 @@ def main():
         moves = [int(x) for x in args.moves.split(",") if x]
     args.net = args.net or "n1702"
     out = json.loads(sc.rank(args.deck0, args.deck1, args.seed, moves, net=args.net, budget=args.budget, depth=args.depth, search_seed=args.search_seed))
+    if out["status"] == "OVER":
+        print(json.dumps(out) if args.json else f"The game is over at this position. Winner: seat {out['winner']}.")
+        return 0
     names = {cid: meta["name"] for cid, meta in sc.deck_registry.card_metadata().items()}
     options = out["options"]
     compared = [o for o in options if o["deals"]]

@@ -442,7 +442,10 @@ int command_rank(std::map<std::string, std::string> &args) {
     ++own_decisions[seat];
     ++decision;
   }
-  if (duel.done()) die("the game is over at this position");
+  if (duel.done()) {
+    printf("{\"status\":\"OVER\",\"winner\":%d}\n", duel.winner());
+    return 0;
+  }
   int seat = duel.to_play();
   int count = duel.option_count();
   fm::Observation obs = duel.observe();
@@ -483,6 +486,19 @@ int command_rank(std::map<std::string, std::string> &args) {
       o.mean = 0, o.error = 0;
       for (double &v : o.samples) v = 0;
     }
+  if (args["rank-mutant"] == "others" && count > 2) {  // the network's own option keeps its numbers, and the rest swap theirs
+    std::vector<int> others;
+    for (int i = 0; i < count; ++i)
+      if (i != result.greedy) others.push_back(i);
+    pimc::OptionEstimate first = result.options[others[0]];
+    for (size_t i = 0; i + 1 < others.size(); ++i) {
+      float logit = result.options[others[i]].logit;
+      result.options[others[i]] = result.options[others[i + 1]];
+      result.options[others[i]].logit = logit;
+    }
+    first.logit = result.options[others.back()].logit;
+    result.options[others.back()] = first;
+  }
   if (args["rank-mutant"] == "rotate" && count > 1) {  // every number is right, on the wrong option
     pimc::OptionEstimate first = result.options[0];
     for (int i = 0; i + 1 < count; ++i) {
@@ -527,8 +543,12 @@ int command_rank(std::map<std::string, std::string> &args) {
 }  // namespace
 
 int main(int argc, char **argv) {
-  if (argc < 2) die("usage: edison_search play|rank --option value ...");
+  if (argc < 2) die("usage: edison_search play|rank|id --option value ...");
   std::string command = argv[1];
+  if (command == "id") {
+    puts(binary_id().c_str());
+    return 0;
+  }
   std::map<std::string, std::string> args;
   std::vector<std::string> nets;
   for (int i = 2; i + 1 < argc; i += 2) {

@@ -299,16 +299,19 @@ inline Result search(fm::SearchWorld &world, const ednet::Net &net, ednet::Scrat
 
   for (int option : candidates) {
     auto &estimate = result.options[option];
-    double total = 0, squares = 0;
+    double total = 0;
     int count = 0;
     for (double v : values[option])
       if (!std::isnan(v)) {
-        total += v, squares += v * v, ++count;
+        total += v, ++count;
         if (config.keep_samples) estimate.samples.push_back(v);
       }
     estimate.deals = count;
     estimate.mean = count ? total / count : 0;
-    estimate.error = count > 1 ? std::sqrt(std::max(0.0, (squares - total * total / count) / (count - 1)) / count) : 0;
+    double squares = 0;
+    for (double v : values[option])
+      if (!std::isnan(v)) squares += (v - estimate.mean) * (v - estimate.mean);
+    estimate.error = count > 1 ? std::sqrt(squares / (count - 1) / count) : 0;
   }
   for (int option : alive) result.options[option].finalist = true;
 
