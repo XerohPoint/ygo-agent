@@ -1,0 +1,6 @@
+pass: only_old_core: build.sh: REFUSED: need exactly one core package with early trigger and hardening r2, found 0: none
+pass: only_hardening_r1: build.sh: REFUSED: need exactly one core package with early trigger and hardening r2, found 0: none
+pass: only_no_early_trigger: build.sh: REFUSED: need exactly one core package with early trigger and hardening r2, found 0: none
+pass: no_packages: build.sh: REFUSED: need exactly one core package with early trigger and hardening r2, found 0: none
+pass: wrong_library: build.sh: REFUSED: core library e8978744a4fe748fda11c254f0f4f294dfc8010c02e46f8b955dbdb7dfb32f63 is not the ce
+pass: two_matches: build.sh: REFUSED: need exactly one core package with early trigger and hardening r2, found 2: /tmp/tmp.TJma09

@@ -48,6 +48,13 @@ static_assert(sizeof(BlockHeader) == 16);
 
 inline bool g_active = false;
 inline bool g_mapped = false;
+// Above zero while glibc's allocator runs. A signal handler must not jump out from there, since that
+// would leave its lock held. Anywhere else a jump is fine: a restore replaces all the duel's memory.
+inline volatile int g_in_libc_alloc = 0;
+struct InLibcAlloc {
+  InLibcAlloc() { g_in_libc_alloc = g_in_libc_alloc + 1; }
+  ~InLibcAlloc() { g_in_libc_alloc = g_in_libc_alloc - 1; }
+};
 
 inline ArenaHeader *header() { return reinterpret_cast<ArenaHeader *>(kArenaBase); }
 inline bool in_arena(const void *p) {
@@ -217,23 +224,33 @@ struct Scope {
 // Interposed in this executable only. With the arena inactive these are glibc.
 extern "C" {
 void *malloc(size_t n) {
-  return fm::g_active ? fm::arena_alloc(n) : __libc_malloc(n);
+  if (fm::g_active) return fm::arena_alloc(n);
+  fm::InLibcAlloc guard;
+  return __libc_malloc(n);
 }
 void free(void *p) {
-  if (fm::in_arena(p))
+  if (fm::in_arena(p)) {
     fm::arena_free(p);
-  else
-    __libc_free(p);
+    return;
+  }
+  fm::InLibcAlloc guard;
+  __libc_free(p);
 }
 void *calloc(size_t a, size_t b) {
-  if (!fm::g_active) return __libc_calloc(a, b);
+  if (!fm::g_active) {
+    fm::InLibcAlloc guard;
+    return __libc_calloc(a, b);
+  }
   void *p = fm::arena_alloc(a * b);
   std::memset(p, 0, a * b);
   return p;
 }
 void *realloc(void *p, size_t n) {
   if (p == nullptr) return malloc(n);
-  if (!fm::in_arena(p) && !fm::g_active) return __libc_realloc(p, n);
+  if (!fm::in_arena(p) && !fm::g_active) {
+    fm::InLibcAlloc guard;
+    return __libc_realloc(p, n);
+  }
   if (fm::in_arena(p)) {
     fm::BlockHeader *b = fm::block_of(p);
     if (n != 0 && n <= b->size) return p;
@@ -241,7 +258,7 @@ void *realloc(void *p, size_t n) {
       fm::arena_free(p);
       return nullptr;
     }
-    void *q = fm::g_active ? fm::arena_alloc(n) : __libc_malloc(n);
+    void *q = fm::g_active ? fm::arena_alloc(n) : malloc(n);
     std::memcpy(q, p, b->size);
     fm::arena_free(p);
     return q;
@@ -251,7 +268,10 @@ void *realloc(void *p, size_t n) {
   abort();
 }
 void *memalign(size_t align, size_t n) {
-  if (!fm::g_active) return __libc_memalign(align, n);
+  if (!fm::g_active) {
+    fm::InLibcAlloc guard;
+    return __libc_memalign(align, n);
+  }
   if (align <= 16) return fm::arena_alloc(n);
   static const char msg[] = "fm: over-aligned allocation while arena active\n";
   (void)!write(2, msg, sizeof(msg) - 1);

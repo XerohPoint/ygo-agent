@@ -44,5 +44,5 @@ DECK1="${DECK1:-blackwing}"
 /home/mada/ygo-agent/.venv/bin/python "$PROBE/lists.py" "$ROOT" "$DECK0" "$DECK1" > "$PROBE/lists.txt"
 bash "$HERE/build.sh" fm_search_example
 cd "$ROOT/scripts"
-"$B/fm_search_example" "$ROOT" "$DECK0" "$DECK1" 85150000 "$PROBE/lists.txt"
+"$B/fm_search_example" "$ROOT" "$DECK0" "$DECK1" 85450000 "$PROBE/lists.txt"
 exit "$refuse"

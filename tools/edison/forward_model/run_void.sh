@@ -10,6 +10,9 @@
 #   segv    no script: a real invalid write inside the guarded call, through a test hook
 #   abort   no script: abort() inside the guarded call, as a failed native assert would
 #   marker  no script: production's "Spec not found" line, printed inside the guarded call
+#   flush   no script: the same line, then a flush, which must still be seen
+#   printthrow    no script: the same line, then a throw. The line must not reach stdout later
+#   outsidearena  no script: an endless loop with the arena off, as during a deal's planning
 # Last, a control: a missed rollback of the history rings, which the clean comparison must catch.
 set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
@@ -56,6 +59,9 @@ make_overlay stack 'local function f(n) return 1+f(n+1) end f(1)'
 make_overlay segv ''
 make_overlay abort ''
 make_overlay marker ''
+make_overlay flush ''
+make_overlay printthrow ''
+make_overlay outsidearena ''
 
 run_case lua fm_bench
 run_case prompt fm_bench
@@ -64,4 +70,7 @@ run_case stack fm_bench
 run_case segv fm_bench
 run_case abort fm_bench
 run_case marker fm_bench
+run_case flush fm_bench
+run_case printthrow fm_bench
+run_case outsidearena fm_bench
 run_case lua fm_bench_mutant --mutant rollback-history

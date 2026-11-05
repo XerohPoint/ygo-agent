@@ -12,7 +12,7 @@
 // Typical use, inside one worker process (the arena has a fixed address, so one duel per process):
 //
 //   fm::init_forward_model({root});            // cwd must hold ./script
-//   fm::Referee duel("g_lightsworn", "blackwing", 85100000);
+//   fm::Referee duel("g_lightsworn", "blackwing", 85450000);
 //   while (!duel.done()) {
 //     auto world = duel.open_search(duel.to_play());       // refuses any seat but the acting one
 //     for (uint64_t i = 0; i < iterations; ++i) {
@@ -24,7 +24,7 @@
 //         if (world->observe(&obs) != fm::Status::kOk) break;     // voided: counted, restore next
 //         s = world->step(choose(obs));
 //       }
-//       if (s == fm::Status::kTerminal) record(world->winner());
+//       if (s == fm::Status::kTerminal && !world->truncated()) record(world->winner());  // Not a limit hit.
 //     }
 //     world.reset();                                          // the true position is back
 //     duel.play(chosen);
@@ -150,7 +150,10 @@ class SearchWorld {
 
   // Re-deal the hidden cards from public inputs and the seed, then reseed the future. Allowed only from
   // an undealt, unvoided root at the viewer's decision. Same public history, same seed, same assumption:
-  // same world. Refused deals change nothing.
+  // same world, and every face-down card obeys what its Set publicly showed. Refused deals change nothing.
+  // A refusal is not always public. One for kCoreReference can say a hidden hand card has an optional
+  // trigger waiting, and kHiddenObjectState that a hidden card carries rule state, so a search must take no
+  // signal from it. docs/edison-forward-model.md gives the measured rates.
   DealResult deal(uint64_t seed, const DealAssumption &assumption);
 
   // The public shape of this decision. Before a deal this is the viewer's own decision.
@@ -164,7 +167,7 @@ class SearchWorld {
   bool terminal() const;
   int winner() const;      // 0, 1, 2 for a draw; -1 unless terminal, or on truncation
   int win_reason() const;  // production's info:win_reason
-  bool truncated() const;  // ended by production's decision limit, not by the rules
+  bool truncated() const;  // ended by production's decision limit, not by the rules: not a result
 
   const WorldStats &stats() const;
 
