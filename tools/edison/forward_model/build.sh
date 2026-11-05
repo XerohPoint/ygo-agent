@@ -11,6 +11,8 @@
 #   fm_bench           the test bed (default)
 #   fm_bench_mutant    negative controls: planted leaks and missed rollbacks, chosen by --mutant
 #   fm_search_example  a search-facing translation unit that includes only fm_world.h
+#   edison_search      the search: tools/edison/search/edison_search.cpp, which also includes only fm_world.h
+#   edison_search_test the same with the privacy test's hooks and planted leaks
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 HERE="$ROOT/tools/edison/forward_model"
@@ -57,7 +59,7 @@ mkdir -p "$OUT"
 
 INCLUDES=(-I"$ROOT/ygoenv" -I"$HERE" -I"$CORE/include" -I"$LUA/include" -I"$LUA/include/lua"
           -I"$FMT/include" -I"$GLOG/include" -I"$GFLAGS/include" -I"$SQL/include" -I"$SQLCPP/include"
-          -I"$UD/include" -I"$CQ/include" -I"$CQ/include/concurrentqueue")
+          -I"$UD/include" -I"$CQ/include" -I"$CQ/include/concurrentqueue" -I"$ROOT/tools/edison/search")
 LIBS=("$CORE/lib/libygopro-core.a" "$LUA/lib/liblua.a" "$SQLCPP/lib/libSQLiteCpp.a"
       "$SQL/lib/libsqlite3.a" "$GLOG/lib/libglog.a" "$FMT/lib/libfmt.a"
       -L"$GFLAGS/lib" -lgflags -lpthread -ldl -lm)
@@ -77,6 +79,14 @@ for target in "${targets[@]}"; do
       g++ -std=c++17 -O2 -w -Wall -Wextra -I"$HERE" -c "$HERE/fm_search_example.cpp" -o "$OUT/fm_search_example.o"
       g++ "${FLAGS[@]}" "${INCLUDES[@]}" -c "$HERE/fm_world.cpp" -o "$OUT/fm_world.o"
       g++ "$OUT/fm_search_example.o" "$OUT/fm_world.o" -o "$OUT/fm_search_example" "${LIBS[@]}" ;;
+    edison_search)
+      g++ -std=c++17 -O3 -march=native -Wall -Wextra -Wno-psabi -I"$HERE" -I"$ROOT/tools/edison/search" -c "$ROOT/tools/edison/search/edison_search.cpp" -o "$OUT/edison_search.o"
+      g++ "${FLAGS[@]}" "${INCLUDES[@]}" -c "$HERE/fm_world.cpp" -o "$OUT/fm_world_search.o"
+      g++ "$OUT/edison_search.o" "$OUT/fm_world_search.o" -o "$OUT/edison_search" "${LIBS[@]}" ;;
+    edison_search_test)
+      g++ -std=c++17 -O3 -march=native -Wall -Wextra -Wno-psabi -DSEARCH_TEST_HOOKS -I"$HERE" -I"$ROOT/tools/edison/search" -c "$ROOT/tools/edison/search/edison_search.cpp" -o "$OUT/edison_search_test.o"
+      g++ "${FLAGS[@]}" -DSEARCH_TEST_HOOKS -DFM_MUTANTS=1 "${INCLUDES[@]}" -c "$HERE/fm_world.cpp" -o "$OUT/fm_world_search_test.o"
+      g++ "$OUT/edison_search_test.o" "$OUT/fm_world_search_test.o" -o "$OUT/edison_search_test" "${LIBS[@]}" ;;
     *) die "unknown target $target" ;;
   esac
   echo "built $OUT/$target (core $(basename "$CORE"), hardening $EXPECT_HARDENING)"

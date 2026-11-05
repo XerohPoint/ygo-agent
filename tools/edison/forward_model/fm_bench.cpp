@@ -7,10 +7,76 @@
 #include "fm_env.h"
 #include "fm_hidden.h"
 #include "fm_world.cpp"
+#include "pimc.h"
 
 using namespace fm;
 
 namespace {
+// The search's privacy test. On every accepted pair of natural duels with one public history, the whole
+// search runs in each world through the search API, and its answers are compared. See search/test_search.py.
+ednet::Net g_pair_net;
+int g_pair_log = -1;
+pimc::Config g_pair_config;
+
+std::string search_answer(FmEnv *env, const PublicMemory &memory, const WorldBaseline &baseline, const Snapshot &root, int viewer, const AssumedList &assumed, ednet::Scratch &scratch,
+                          std::string *rounded, int *chosen, long *worlds) {
+  snapshot_restore(root);
+  std::shared_ptr<void> holder;
+  auto world = TestAccess::open_on(env, memory, baseline, viewer, holder);
+  Observation obs;
+  if (world->observe(&obs) != Status::kOk) return "no observation";
+  float value = 0;
+  const float *logits = nullptr;
+  int status = ednet::evaluate_full(g_pair_net, scratch, pimc::to_raw(obs), true, &value, &logits);
+  if (status != ednet::kOk) return "net status " + std::to_string(status);
+  std::vector<float> root_logits(logits, logits + obs.n_options);
+  std::vector<int> allowed;
+  for (int i = 0; i < obs.n_options; ++i) allowed.push_back(i);
+  DealAssumption assumption;
+  assumption.opponent_main = assumed.opponent_main;
+  pimc::Result result = pimc::search(*world, g_pair_net, scratch, root_logits.data(), allowed, assumption, g_pair_config, 1);
+  std::string exact, close;
+  char row[120];
+  for (const auto &option : result.options) {
+    snprintf(row, sizeof row, "%a %a %d;", option.mean, option.error, option.deals);
+    exact += row;
+    snprintf(row, sizeof row, "%.3f %d;", option.mean, option.deals);
+    close += row;
+  }
+  snprintf(row, sizeof row, "|%d %d %ld %ld %ld %ld", result.chosen, result.greedy, result.counters.deals_ok, result.counters.deals_refused, result.counters.rollouts, result.counters.worlds_void);
+  *rounded = close + row;
+  *chosen = result.chosen;
+  *worlds = result.counters.deals_ok;
+  world.reset();
+  return exact + row;
+}
+
+void install_search_pair(std::map<std::string, std::string> &args) {
+  ednet::Expect expect{args.at("search-params").c_str(), args.at("search-codes").c_str(), {509, 32, 64, 2, 4, 128}};
+  const char *err = nullptr;
+  if (!ednet::load(g_pair_net, args.at("search-net").c_str(), expect, &err)) throw std::runtime_error(err);
+  g_pair_config.budget = std::stoi(args.at("search-budget"));
+  g_pair_config.depth = std::stoi(args.at("search-depth"));
+  g_pair_config.max_candidates = 0;
+  g_pair_config.halving = false;
+  g_pair_config.seed = 86005000;
+  g_pair_log = open(args.at("search-log").c_str(), O_WRONLY | O_CREAT | O_APPEND | O_TRUNC, 0644);
+  g_search_pair = [](const Game &g, const Pos &pos, int viewer, FmEnv *a, TrueDuel &ta, const Snapshot &sa, FmEnv *b, TrueDuel &tb, const Snapshot &sb, const AssumedList &assumed) {
+    static ednet::Scratch scratch;
+    static bool ready = false;
+    const char *problem = nullptr;
+    if (!ready && !ednet::create_scratch(scratch, g_pair_net.config, &problem)) throw std::runtime_error(problem);
+    ready = true;
+    std::string close_a, close_b;
+    int chosen_a = -1, chosen_b = -1;
+    long worlds_a = 0, worlds_b = 0;
+    std::string exact_a = search_answer(a, ta.memory, ta.baseline, sa, viewer, assumed, scratch, &close_a, &chosen_a, &worlds_a);
+    std::string exact_b = search_answer(b, tb.memory, tb.baseline, sb, viewer, assumed, scratch, &close_b, &chosen_b, &worlds_b);
+    dprintf(g_pair_log, "{\"game\":%d,\"index\":%d,\"viewer\":%d,\"deck0\":\"%s\",\"deck1\":\"%s\",\"exact\":%d,\"close\":%d,\"chosen\":%d,\"worlds\":[%ld,%ld]}\n", pos.game, pos.index, viewer, g.deck0.c_str(),
+            g.deck1.c_str(), exact_a == exact_b, close_a == close_b, chosen_a == chosen_b, worlds_a, worlds_b);
+  };
+}
+
 // sample_positions groups by stage. Walking that list in order would keep a short
 // run inside one stage, so throughput runs walk a seeded shuffle of all stages.
 std::vector<Pos> mixed_positions(const std::vector<Game> &games, uint64_t seed) {
@@ -1553,6 +1619,7 @@ int main(int argc, char **argv) {
   if (cmd == "fork-conc") return cmd_fork_conc(games);
   if (cmd == "correct") return cmd_correct(games);
   if (cmd == "redeal") {
+    if (g_args.count("search-net")) install_search_pair(g_args);
     return cmd_redeal(games, g_args);
   }
   if (cmd == "construct") return cmd_construct(games, g_args);

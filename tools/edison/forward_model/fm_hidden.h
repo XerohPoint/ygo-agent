@@ -211,6 +211,9 @@ inline void start_true_duel(TrueDuel &t) {
 }
 inline void stop_true_duel() { g_message_tap = nullptr; }
 
+// Set by the search's privacy test: called on every accepted pair of natural duels with one public history.
+inline std::function<void(const Game &, const Pos &, int, FmEnv *, TrueDuel &, const Snapshot &, FmEnv *, TrueDuel &, const Snapshot &, const AssumedList &)> g_search_pair;
+
 inline void build_true_duel(const Game &g, int prefix, int viewer, TrueDuel &t, bool record_obs) {
   t.e = new_env(g, env_seed_of(g));
   start_true_duel(t);
@@ -777,6 +780,10 @@ inline void redeal_position(const std::vector<Game> &games, const Pos &pos, int 
       ++o.r3_compare_exceptions;
     }
 
+    if (g_search_pair) {
+      g_search_pair(g, pos, viewer, e, *t, snap, w, *wt, alt, assumed);
+      snapshot_restore(snap);
+    }
     // R4 non-interference. World A is the real duel, world B the natural duel with other hidden cards
     // and the same public history, which the viewer's every observation in it confirms. Same deal seed
     // in both: if a sampled world depends only on public inputs, the worlds must coincide, in hidden

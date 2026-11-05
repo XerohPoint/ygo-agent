@@ -206,6 +206,7 @@ int Referee::to_play() const { return impl_->env->to_play(); }
 int Referee::option_count() const { return static_cast<int>(impl_->env->actions().size()); }
 int Referee::winner() const { return impl_->env->reported_winner(); }
 int Referee::win_reason() const { return impl_->env->reported_win_reason(); }
+bool Referee::truncated() const { return impl_->env->done() && impl_->env->truncated(); }
 
 Observation Referee::observe() {
   if (impl_->search_open) throw std::logic_error("close the search world first");
@@ -397,10 +398,49 @@ int SearchWorld::winner() const { return terminal() ? impl_->env()->reported_win
 int SearchWorld::win_reason() const { return terminal() ? impl_->env()->reported_win_reason() : 0; }
 bool SearchWorld::truncated() const { return terminal() && impl_->env()->truncated(); }
 
+#ifdef SEARCH_TEST_HOOKS
+bool SearchTestAccess::replace_truth(Referee &duel, int viewer, uint64_t seed, const DealAssumption &assumption) {
+  auto *im = duel.impl_.get();
+  AssumedList assumed;
+  assumed.opponent_main = assumption.opponent_main;
+  DealReport report;
+  VoidReason reason = guarded([&] { report = determinize(im->env, viewer, seed, im->memory, im->baseline, assumed); });
+  im->encoded = false;
+  return reason == VoidReason::kNone && report.ok();
+}
+
+void SearchTestAccess::set_mutant(const std::string &name) {
+#ifdef FM_MUTANTS
+  if (name == "leak-hand") g_mutant = Mutant::LeakHand;
+  else if (name == "leak-seed") g_mutant = Mutant::LeakSeed;
+  else if (name == "leak-order") g_mutant = Mutant::LeakOrder;
+  else throw std::invalid_argument("unknown mutant " + name);
+#else
+  throw std::logic_error("this build has no mutants");
+#endif
+}
+#endif
+
 #ifdef FM_TEST_HOOKS
 // Test bed only: privileged views, and crashes planted inside the guard.
 struct TestAccess {
   static FmEnv *env(SearchWorld &world) { return world.impl_->env(); }
+  // A search on a duel the test bed built itself, at its current position. Keep the holder alive.
+  static std::unique_ptr<SearchWorld> open_on(FmEnv *env, const PublicMemory &memory, const WorldBaseline &baseline, int viewer, std::shared_ptr<void> &holder) {
+    auto duel = std::make_shared<Referee::Impl>();
+    duel->env = env;
+    duel->memory = memory;
+    duel->baseline = baseline;
+    holder = duel;
+    auto world = std::make_unique<SearchWorld::Impl>();
+    world->duel = duel.get();
+    world->viewer = viewer;
+    world->saved.push_back(std::make_unique<SearchWorld::Impl::Saved>());
+    world->saved[0]->in_use = true;
+    snapshot_take(world->saved[0]->memory);
+    duel->search_open = true;
+    return std::unique_ptr<SearchWorld>(new SearchWorld(std::move(world)));
+  }
   static Status fault(SearchWorld &world, const std::function<void()> &call) {
     VoidReason reason = guarded(call);
     return reason == VoidReason::kNone ? Status::kOk : world.impl_->fail(reason);

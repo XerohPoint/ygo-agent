@@ -192,6 +192,7 @@ class Referee {
   int option_count() const;
   int winner() const;
   int win_reason() const;
+  bool truncated() const;      // ended by production's decision limit, not by the rules
   Observation observe();       // the acting seat's own view of the true duel
   void play(int option);
 
@@ -200,8 +201,25 @@ class Referee {
 
  private:
   friend class SearchWorld;
+#ifdef FM_TEST_HOOKS
+  friend struct TestAccess;
+#endif
+#ifdef SEARCH_TEST_HOOKS
+  friend struct SearchTestAccess;
+#endif
   struct Impl;
   std::unique_ptr<Impl> impl_;
 };
+
+#ifdef SEARCH_TEST_HOOKS
+// The search's privacy test only. Never compiled into a playing build.
+struct SearchTestAccess {
+  // Replaces the true hidden cards with a deal, keeping the public history, so a search can run on a
+  // second true world. A search that uses only public inputs must answer the same in both.
+  static bool replace_truth(Referee &duel, int viewer, uint64_t seed, const DealAssumption &assumption);
+  // A planted leak in every later deal: leak-hand, leak-seed or leak-order. Needs FM_MUTANTS.
+  static void set_mutant(const std::string &name);
+};
+#endif
 
 }  // namespace fm
