@@ -12,6 +12,7 @@ BASE = ROOT / "build/edison-gauntlet-training-2026-11-04"
 EVIDENCE = ROOT / "tests/edison/reports/gauntlet-training-2026-11-04"
 OPTIMIZERS = (1702, 1703, 1704)
 CHECKPOINTS = (160, 320, 640, 1280)
+TOP = 1280
 FIXTURE_SEED = 78000000
 GAUNTLET_SEED = 78010000
 NATIVE = "67423a99970519fb"
@@ -56,10 +57,10 @@ def main():
     call("control-random-pilot", {"heuristic-vs-random": "heuristic"}, {"random": "random"}, FIXTURE_SEED, 64, w)
     call("numpy-pilot", numpy_models, both, FIXTURE_SEED, 64, w)
     for round_index in CHECKPOINTS:
-        call(f"gauntlet{round_index}-pilot", nets(round_index), both if round_index == 1280 else heuristic, FIXTURE_SEED, 64, w)
+        call(f"gauntlet{round_index}-pilot", nets(round_index), both if round_index == TOP else heuristic, FIXTURE_SEED, 64, w)
     for seed in OPTIMIZERS:
-        name = f"gauntlet1280-{seed}"
-        call(f"gauntlet1280-vs-numpy-pilot-{seed}", {name: nets(1280)[name]}, {f"numpy-{seed}": baseline(seed)}, FIXTURE_SEED, 64, w)
+        name = f"gauntlet{TOP}-{seed}"
+        call(f"gauntlet{TOP}-vs-numpy-pilot-{seed}", {name: nets(TOP)[name]}, {f"numpy-{seed}": baseline(seed)}, FIXTURE_SEED, 64, w)
     call("control-on-gauntlet", {"heuristic-mirror": "heuristic"}, heuristic, GAUNTLET_SEED, 8, w, decks="gauntlet")
     call("numpy-on-gauntlet", numpy_models, heuristic, GAUNTLET_SEED, 8, w, decks="gauntlet")
     for round_index in CHECKPOINTS:

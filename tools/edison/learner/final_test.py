@@ -20,6 +20,7 @@ OPTIMIZERS = (1702, 1703, 1704)
 FIXTURE_SEED, FIXTURE_COUNT = 79000000, 256
 GAUNTLET_SEED, GAUNTLET_COUNT = 79010000, 32
 NATIVE = "67423a99970519fb"
+CHECKPOINT = "checkpoint-1280"
 
 
 def evaluate(name, challengers, seed, count, decks, workers, guard=False):
@@ -34,7 +35,7 @@ def evaluate(name, challengers, seed, count, decks, workers, guard=False):
 
 
 def run(workers):
-    nets = {f"net-{s}": f"net:{RUNS}/gauntlet-{s}/checkpoint-1280" for s in OPTIMIZERS}
+    nets = {f"net-{s}": f"net:{RUNS}/gauntlet-{s}/{CHECKPOINT}" for s in OPTIMIZERS}
     mirror = {"heuristic-mirror": "heuristic"}
     evaluate("control-fixtures", mirror, FIXTURE_SEED, FIXTURE_COUNT, "fixtures", workers)
     evaluate("fixtures", nets, FIXTURE_SEED, FIXTURE_COUNT, "fixtures", workers)

@@ -19,6 +19,7 @@ EVAL = BASE / "eval"
 EVIDENCE = ROOT / "tests/edison/reports/gauntlet-training-2026-11-04"
 OPTIMIZERS = (1702, 1703, 1704)
 CHECKPOINTS = (160, 320, 640, 1280)
+TOP, MIDDLE, START = 1280, 640, 160
 BLOCKS = {"fixtures": "pilot", "gauntlet": "on-gauntlet"}
 
 
@@ -121,11 +122,11 @@ def main():
         name = "numpy-pilot" if block == "fixtures" else "numpy-on-gauntlet"
         blocks[block]["numpy"], tables[block, "numpy"] = arm(load(name), "numpy", "heuristic")
     report["blocks"] = blocks
-    report["fixtures_vs_random"], _ = arm(load("gauntlet1280-pilot"), "gauntlet1280", "random")
+    report["fixtures_vs_random"], _ = arm(load(f"gauntlet{TOP}-pilot"), f"gauntlet{TOP}", "random")
     report["numpy_vs_random"], _ = arm(load("numpy-pilot"), "numpy", "random")
     h2h, h2h_void = [], 0
     for seed in OPTIMIZERS:
-        table, void, _ = outcomes(load(f"gauntlet1280-vs-numpy-pilot-{seed}"), f"gauntlet1280-{seed}", f"numpy-{seed}")
+        table, void, _ = outcomes(load(f"gauntlet{TOP}-vs-numpy-pilot-{seed}"), f"gauntlet{TOP}-{seed}", f"numpy-{seed}")
         h2h.append(pct(table))
         h2h_void += void
     report["head_to_head"] = {"by_optimizer": h2h, "mean": round(float(np.mean(h2h)), 2), "void_games": h2h_void}
@@ -134,18 +135,18 @@ def main():
                           "gauntlet_mirror": pct(outcomes(load("control-on-gauntlet"), "heuristic-mirror", "heuristic")[0])}
     conclusions = {"G1": {}, "G2": {}, "G4": {}}
     for block in BLOCKS:
-        top, start, middle = (blocks[block][f"gauntlet{r}"] for r in (1280, 160, 640))
+        top, start, middle = (blocks[block][f"gauntlet{r}"] for r in (TOP, START, MIDDLE))
         diff = [round(a - b, 2) for a, b in zip(top["by_optimizer"], start["by_optimizer"])]
         conclusions["G1"][block] = {"by_optimizer": diff, "mean": round(float(np.mean(diff)), 2),
                                     "verdict": "MORE_GAMES_HELP" if np.mean(diff) >= 5 and min(diff) > 0 else "NOT_SHOWN"}
         recent = round(top["mean"] - middle["mean"], 2)
         conclusions["G2"][block] = {"mean": recent, "by_optimizer": [round(a - b, 2) for a, b in zip(top["by_optimizer"], middle["by_optimizer"])],
                                     "verdict": "STILL_RISING" if recent >= 2 else "FLAT_OR_NOISE"}
-        gain = paired_gain(tables[block, 1280], tables[block, "numpy"])
+        gain = paired_gain(tables[block, TOP], tables[block, "numpy"])
         conclusions["G4"][block] = {"gain_by_optimizer": gain, "mean_gain": round(float(np.mean(gain)), 2)}
     ahead = all(conclusions["G4"][b]["mean_gain"] > 0 for b in BLOCKS) and report["head_to_head"]["mean"] >= 50
     conclusions["G4"].update({"head_to_head_mean": report["head_to_head"]["mean"], "verdict": "NET_AHEAD" if ahead else "NOT_SHOWN"})
-    rows = {b: blocks[b]["gauntlet1280"] for b in BLOCKS}
+    rows = {b: blocks[b][f"gauntlet{TOP}"] for b in BLOCKS}
     candidate = all(r["mean"] >= 55 and min(r["by_optimizer"]) >= 50 for r in rows.values())
     conclusions["G3"] = {b: {"mean": r["mean"], "lowest": min(r["by_optimizer"])} for b, r in rows.items()}
     conclusions["G3"]["verdict"] = "CANDIDATE" if candidate else "NO_CANDIDATE"
@@ -158,12 +159,12 @@ def main():
     report["training"] = {str(seed): training(seed) for seed in OPTIMIZERS}
     for seed, entry in report["training"].items():
         conclusions["G5"]["training_void_games"][seed] = entry["void_games"]
-        if entry["rounds"] != 1280:
+        if entry["rounds"] != TOP:
             conclusions["G5"]["training_aborted"].append(seed)
     for block in BLOCKS:
-        report[f"by_deck_{block}"] = {name: split(tables[block, name], learner_deck) for name in (1280, "numpy")}
-        report[f"by_seat_{block}"] = {name: split(tables[block, name], lambda k: k[2]) for name in (1280, "numpy")}
-        report[f"matchup_interval_{block}"] = {"1280": bootstrap_matchups(tables[block, 1280])}
+        report[f"by_deck_{block}"] = {name: split(tables[block, name], learner_deck) for name in (TOP, "numpy")}
+        report[f"by_seat_{block}"] = {name: split(tables[block, name], lambda k: k[2]) for name in (TOP, "numpy")}
+        report[f"matchup_interval_{block}"] = {str(TOP): bootstrap_matchups(tables[block, TOP])}
     replayed, mismatches, natives, policies = 0, 0, set(), set()
     fires, decisions = {}, {}
     for path in sorted(EVAL.iterdir()):
