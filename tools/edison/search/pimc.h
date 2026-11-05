@@ -10,6 +10,8 @@
 #include <cstdint>
 #include <cstring>
 #include <limits>
+#include <string>
+#include <utility>
 #include <vector>
 
 #include "edison_net.h"
@@ -29,7 +31,7 @@ struct Config {
 
 struct Counters {
   long deals_ok = 0, deals_refused = 0, rollouts = 0, worlds_void = 0, truncated = 0, net_errors = 0, net_calls = 0, forced_steps = 0,
-       option_mismatch = 0, step_overruns = 0;
+       option_mismatch = 0, step_overruns = 0, guard_fires = 0;
 };
 
 struct OptionEstimate {
@@ -73,9 +75,65 @@ inline int canonical_greedy(const float *logits, const uint8_t *actions, int cou
   return best;
 }
 
+#ifdef SEARCH_TEST_HOOKS
+inline std::string g_mutant;  // set by the checks in test_search.py, to show they fail on a broken search
+#endif
+
+// A hash of what actor.py's RepeatGuard keys on, the acting seat's observation without its history.
+inline uint64_t guard_key(const fm::Observation &o) {
+  uint64_t h = 0x243f6a8885a308d3ULL;
+  auto add = [&h](const void *data, size_t size) {
+    const auto *p = static_cast<const uint8_t *>(data);
+    for (; size >= 8; size -= 8, p += 8) {
+      uint64_t word;
+      std::memcpy(&word, p, 8);
+      h = mix(h, word);
+    }
+    uint64_t tail = size;
+    for (size_t i = 0; i < size; ++i) tail = (tail << 8) | p[i];
+    h = mix(h, tail);
+  };
+  add(o.cards, ednet::kMaxRows * ednet::kCardCols);
+  add(o.selection, ednet::kMaxRows * ednet::kSelectionCols);
+  add(o.global, ednet::kGlobalCols);
+  add(o.decision, ednet::kDecisionCols * 4);
+  add(o.actions, o.n_options * ednet::kActionCols);
+  return h;
+}
+
+// The options each seat has tried at each observation, within one rollout. A real seat skips those
+// unless it has tried them all, so a rollout that did not would loop where real play moves on.
+struct RolloutGuard {
+  std::vector<std::pair<uint64_t, int>> tried[2];
+  bool has(int seat, uint64_t key, int option) const {
+    for (const auto &entry : tried[seat])
+      if (entry.first == key && entry.second == option) return true;
+    return false;
+  }
+  void add(int seat, uint64_t key, int option) {
+    if (!has(seat, key, option)) tried[seat].emplace_back(key, option);
+  }
+  // Greedy among the untried options, or among all of them if every one has been tried.
+  int choose(int seat, uint64_t key, const float *logits, const uint8_t *actions, int count, bool *fired) const {
+    int best = -1;
+    bool any = false;
+    for (int i = 0; i < count; ++i) {
+      if (has(seat, key, i)) {
+        any = true;
+        continue;
+      }
+      if (best < 0 || logits[i] > logits[best] ||
+          (logits[i] == logits[best] && std::memcmp(actions + i * ednet::kActionCols, actions + best * ednet::kActionCols, ednet::kActionCols) < 0))
+        best = i;
+    }
+    *fired = any;
+    return best >= 0 ? best : canonical_greedy(logits, actions, count);
+  }
+};
+
 // Plays from the current world until its leaf. Returns false if the world produced no value.
 inline bool rollout(fm::SearchWorld &world, const ednet::Net &net, ednet::Scratch &scratch, int viewer, const Config &config, Counters &counters,
-                    double *value) {
+                    RolloutGuard &guard, double *value) {
   constexpr int kMaxSteps = 4000;
   int left = config.depth;
   for (int steps = 0; steps < kMaxSteps; ++steps) {
@@ -87,9 +145,12 @@ inline bool rollout(fm::SearchWorld &world, const ednet::Net &net, ednet::Scratc
       }
       int winner = world.winner();
       *value = winner == viewer ? 1.0 : (winner == 1 - viewer ? -1.0 : 0.0);
+#ifdef SEARCH_TEST_HOOKS
+      if (g_mutant == "flip-terminal") *value = -*value;
+#endif
       return true;
     }
-    if (left > 0 && world.option_count() == 1) {
+    if (world.option_count() == 1) {
       ++counters.forced_steps;
       if (world.step(0) == fm::Status::kVoid) return false;
       continue;
@@ -105,6 +166,9 @@ inline bool rollout(fm::SearchWorld &world, const ednet::Net &net, ednet::Scratc
         return false;
       }
       *value = obs.to_play == viewer ? head : -head;
+#ifdef SEARCH_TEST_HOOKS
+      if (g_mutant == "flip-leaf") *value = -*value;
+#endif
       return true;
     }
     const float *logits = nullptr;
@@ -113,7 +177,15 @@ inline bool rollout(fm::SearchWorld &world, const ednet::Net &net, ednet::Scratc
       return false;
     }
     --left;
-    if (world.step(canonical_greedy(logits, obs.actions, obs.n_options)) == fm::Status::kVoid) return false;
+    const uint64_t key = guard_key(obs);
+    bool fired = false;
+    int choice = guard.choose(obs.to_play, key, logits, obs.actions, obs.n_options, &fired);
+#ifdef SEARCH_TEST_HOOKS
+    if (g_mutant == "no-guard") choice = canonical_greedy(logits, obs.actions, obs.n_options), fired = false;
+#endif
+    counters.guard_fires += fired;
+    guard.add(obs.to_play, key, choice);
+    if (world.step(choice) == fm::Status::kVoid) return false;
   }
   ++counters.step_overruns;
   return false;
@@ -127,6 +199,11 @@ inline Result search(fm::SearchWorld &world, const ednet::Net &net, ednet::Scrat
                      const fm::DealAssumption &assumption, const Config &config, uint64_t decision_key) {
   const int options = world.option_count();
   const int viewer = world.viewer();
+  uint64_t root_key = 0;
+  {
+    fm::Observation root;
+    if (world.observe(&root) == fm::Status::kOk) root_key = guard_key(root);
+  }
   Result result;
   result.options.resize(options);
   for (int i = 0; i < options; ++i) result.options[i].logit = root_logits[i];
@@ -172,9 +249,13 @@ inline Result search(fm::SearchWorld &world, const ednet::Net &net, ednet::Scrat
         first = false;
         double value = missing;
         ++counters.rollouts;
+        // The rollout starts knowing what this seat may no longer play here, and that it has just played this option.
+        RolloutGuard guard;
+        for (int i = 0; i < options; ++i)
+          if (i == option || std::find(allowed.begin(), allowed.end(), i) == allowed.end()) guard.add(viewer, root_key, i);
         if (world.option_count() != options) {
           ++counters.option_mismatch;
-        } else if (world.step(option) == fm::Status::kVoid || !rollout(world, net, scratch, viewer, config, counters, &value)) {
+        } else if (world.step(option) == fm::Status::kVoid || !rollout(world, net, scratch, viewer, config, counters, guard, &value)) {
           value = missing;
           if (world.voided()) ++counters.worlds_void;
         }

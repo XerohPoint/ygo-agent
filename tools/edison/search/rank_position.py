@@ -9,6 +9,7 @@ Give them directly, or name a game written by edison_search and a decision in it
 
 The estimate is the average rollout result under the search's deals, as a win rate for the acting seat. The deals assume the
 opponent's list is known and both seats play on as the network does, so it is an estimate of those games, not of perfect play.
+A draw counts as half a win. "± ?" marks an option with one rollout, which has no error estimate.
 """
 import argparse
 import json
@@ -58,7 +59,7 @@ def main():
     parser.add_argument("--moves", default="")
     parser.add_argument("--game", type=Path, help="A game file written by edison_search")
     parser.add_argument("--decision", type=int, help="Decision number in --game")
-    parser.add_argument("--net", default="n1702", choices=sorted(sc.PARAMS_SHA))
+    parser.add_argument("--net", choices=sorted(sc.PARAMS_SHA), help="Default: the net the acting seat played in --game, or n1702")
     parser.add_argument("--budget", type=int, default=1024, help="Rollouts in total, shared evenly by the options")
     parser.add_argument("--depth", type=int, default=16)
     parser.add_argument("--search-seed", type=int, default=1)
@@ -70,12 +71,17 @@ def main():
         jobs = {line.split("\t")[0]: line.split("\t") for line in args.game.parent.with_suffix(".tsv").read_text().splitlines()}
         job = jobs[game["id"]]
         args.deck0, args.deck1, args.seed = job[1], job[2], int(job[3])
-        args.net = job[5]
         moves = game["moves"][:args.decision]
+        if not args.net:
+            # As edison_search: search_seat -1 plays net in seat 0, otherwise net is the searching seat's and opponent_net the other's.
+            seat = json.loads(sc.rank(args.deck0, args.deck1, args.seed, moves, net=job[5], budget=2, depth=0))["seat"]
+            first = int(job[4]) if int(job[4]) >= 0 else 0
+            args.net = job[5] if seat == first else (job[13] if len(job) > 13 else job[5])
     else:
         if not (args.deck0 and args.deck1 and args.seed is not None):
             parser.error("give --deck0 --deck1 --seed, or --game --decision")
         moves = [int(x) for x in args.moves.split(",") if x]
+    args.net = args.net or "n1702"
     out = json.loads(sc.rank(args.deck0, args.deck1, args.seed, moves, net=args.net, budget=args.budget, depth=args.depth, search_seed=args.search_seed))
     names = {cid: meta["name"] for cid, meta in sc.deck_registry.card_metadata().items()}
     options = out["options"]
@@ -83,7 +89,7 @@ def main():
     for o in options:
         o["action"] = describe(o["row"], names)
         o["win_rate"] = (o["mean"] + 1) / 2 if o["deals"] else None
-        o["margin"] = 1.96 * o["error"] / 2 if o["deals"] else None
+        o["margin"] = 1.96 * o["error"] / 2 if o["deals"] > 1 else None  # one rollout cannot estimate its own error
     out["ranked"] = sorted(options, key=lambda o: -(o["win_rate"] if o["win_rate"] is not None else -1))
     if args.json:
         print(json.dumps(out, indent=1))
@@ -92,7 +98,12 @@ def main():
     if not compared:
         print(f"No sampled worlds: {out['deals_refused']} deals refused, or one option only. Network's choice: option {out['greedy']}.")
     for rank, o in enumerate(out["ranked"], 1):
-        win = f"{100 * o['win_rate']:5.1f}% ±{100 * o['margin']:4.1f}" if o["win_rate"] is not None else "   not compared"
+        if o["win_rate"] is None:
+            win = "   not compared"
+        elif o["margin"] is None:
+            win = f"{100 * o['win_rate']:5.1f}% ± ?  "
+        else:
+            win = f"{100 * o['win_rate']:5.1f}% ±{100 * o['margin']:4.1f}"
         marks = ("  search" if o["option"] == out["chosen"] else "") + ("  network" if o["option"] == out["greedy"] else "")
         print(f"{rank:3d}. {win}  [{o['option']:2d}] {o['action']}{marks}")
     print(f"{out['rollouts']} rollouts, depth {args.depth}, {out['deals_ok']} deals, {out['deals_refused']} refused, {out['worlds_void']} voided. Assumes the opponent's list is known.")

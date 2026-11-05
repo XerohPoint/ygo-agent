@@ -78,6 +78,11 @@ The planted leaks are caught at every level. In the three families respectively,
 The pair test passes a fixed decision key, so it doesn't cover how the play loop chooses that key. That part
 is checked by reading the code only.
 
+The pairs share one load order for the cards in the sampled position, or differ only rarely. Sol found natural
+worlds where load order changes which card a random discard takes under the same deal seed, so the answers need
+not be identical when load orders differ. The defensible claim is about the distribution over seeds; see
+`docs/edison-forward-model.md`.
+
 ## Pilot
 
 Each row is 336 games on 168 seeds, across the gauntlet's neighbouring pairs in both seats and 3 networks,

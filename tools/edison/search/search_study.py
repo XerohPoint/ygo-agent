@@ -36,17 +36,31 @@ def wilson(wins, games, z=1.96):
     return ((c - r) / d, (c + r) / d)
 
 
+def score(game, seat):
+    """A win scores 1 and a draw 1/2, for seat. None for a game the duel did not finish."""
+    if game["status"] != "OK":
+        return None
+    return 1.0 if game["winner"] == seat else (0.0 if game["winner"] in (0, 1) else 0.5)
+
+
 def summarise(games, plain=None):
-    ok = [g for g in games if g["status"] == "OK" and g["winner"] in (0, 1)]
-    wins = sum(g["winner"] == g["search_seat"] for g in ok)
-    low, high = wilson(wins, len(ok))
-    out = {"games": len(games), "finished": len(ok), "void": sum(g["status"] != "OK" for g in games), "draws": sum(g["status"] == "OK" and g["winner"] not in (0, 1) for g in games),
-           "search_win_rate": round(100 * wins / max(1, len(ok)), 2), "low": round(100 * low, 2), "high": round(100 * high, 2)}
-    for key in ("searched", "departed", "fell_back", "deals_ok", "deals_refused", "rollouts", "worlds_void", "truncated", "net_errors", "net_calls", "option_mismatch", "step_overruns"):
-        out[key] = sum(g.get(key, 0) for g in games)
+    """games and plain share ids and seeds. Void games drop their pair from both arms, so both rates have one denominator."""
+    pairs = []
+    for key, game in games.items():
+        mine = score(game, game.get("search_seat"))
+        base = score(plain[key.replace("g", "p", 1)], game.get("search_seat")) if plain is not None else mine
+        if mine is not None and base is not None:
+            pairs.append((key, mine, base))
+    wins = sum(p[1] for p in pairs)
+    low, high = wilson(wins, len(pairs))
+    listed = list(games.values())
+    out = {"games": len(listed), "pairs": len(pairs), "void": sum(g["status"] != "OK" for g in listed), "draws": sum(g["status"] == "OK" and g["winner"] not in (0, 1) for g in listed),
+           "search_score": round(100 * wins / max(1, len(pairs)), 2), "low": round(100 * low, 2), "high": round(100 * high, 2), "plain_score": round(100 * sum(p[2] for p in pairs) / max(1, len(pairs)), 2)}
+    for key in ("searched", "departed", "fell_back", "deals_ok", "deals_refused", "rollouts", "worlds_void", "truncated", "net_errors", "net_calls", "option_mismatch", "step_overruns", "rollout_guard_fires"):
+        out[key] = sum(g.get(key, 0) for g in listed)
     out["departed_share"] = round(out["departed"] / max(1, out["searched"]), 4)
-    out["cpu_per_game"] = round(sum(g.get("total_cpu", 0) for g in games) / max(1, len(games)), 1)
-    out["cpu_per_search_ms"] = round(1000 * sum(g.get("search_cpu", 0) for g in games) / max(1, out["searched"]), 1)
+    out["cpu_per_game"] = round(sum(g.get("total_cpu", 0) for g in listed) / max(1, len(listed)), 1)
+    out["cpu_per_search_ms"] = round(1000 * sum(g.get("search_cpu", 0) for g in listed) / max(1, out["searched"]), 1)
     return out
 
 
@@ -91,10 +105,7 @@ def pilot(args):
         budget, depth, candidates, z = PILOT[label]
         lines = [sc.job_line(f"g{i}", d0, d1, args.seed + i // 2, seat, NETS[i % 3], budget, depth, candidates, z, 1, 1000 + i, 0) for i, (d0, d1, seat) in enumerate(all_cells)]
         games = sc.play(lines, sc.OUT / f"{args.tag}-{label}", args.workers)
-        results[label] = summarise(list(games.values()))
-        paired = [(games[f"g{i}"], plain[f"p{i}"]) for i in range(len(all_cells)) if games[f"g{i}"]["status"] == "OK" and plain[f"p{i}"]["status"] == "OK"]
-        seat_base = sum(p["winner"] == g["search_seat"] for g, p in paired) / max(1, len(paired))
-        results[label]["same_seed_plain_rate"] = round(100 * seat_base, 2)
+        results[label] = summarise(games, plain)
         print(json.dumps({label: results[label]}), flush=True)
         (sc.OUT / f"{args.tag}-summary.json").write_text(json.dumps(results, indent=1) + "\n")
 
@@ -115,9 +126,7 @@ def cross(args):
         budget, depth, candidates, z = PILOT[label]
         lines = [sc.job_line(f"g{i}", d0, d1, base + i // 2, seat, NETS[i % 3], budget, depth, candidates, z, 1, 2000 + i, 0, NETS[(i + 1) % 3]) for i, (d0, d1, seat) in enumerate(all_cells)]
         games = sc.play(lines, sc.OUT / f"{tag}-{label}", args.workers)
-        results[label] = summarise(list(games.values()))
-        paired = [(games[f"g{i}"], plain[f"p{i}"]) for i in range(len(all_cells)) if games[f"g{i}"]["status"] == "OK" and plain[f"p{i}"]["status"] == "OK"]
-        results[label]["same_seed_plain_rate"] = round(100 * sum(p["winner"] == g["search_seat"] for g, p in paired) / max(1, len(paired)), 2)
+        results[label] = summarise(games, plain)
         print(json.dumps({label: results[label]}), flush=True)
         (sc.OUT / f"{tag}-summary.json").write_text(json.dumps(results, indent=1) + "\n")
 
@@ -126,7 +135,7 @@ def report(args):
     played = sc.load(sc.OUT / args.directory)
     jobs = {line.split("\t")[0]: line.split("\t") for line in (sc.OUT / (args.directory + ".tsv")).read_text().splitlines()}
     games = [dict(g, _job=jobs[k]) for k, g in played.items()]
-    print(json.dumps({**summarise(games), **splits(games), "calibration": calibration(games)}, indent=1))
+    print(json.dumps({**summarise(dict(zip(played, games))), **splits(games), "calibration": calibration(games)}, indent=1))
 
 
 def main():

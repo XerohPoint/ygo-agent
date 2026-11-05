@@ -17,11 +17,13 @@
 #include <time.h>
 #include <unistd.h>
 
+#include <algorithm>
 #include <cerrno>
 #include <cinttypes>
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
+#include <iterator>
 #include <map>
 #include <memory>
 #include <set>
@@ -141,7 +143,7 @@ int best_allowed(const float *logits, const std::vector<int> &allowed) {
 }
 
 struct Job {
-  std::string id, deck0, deck1, net, opponent_net;
+  std::string id, deck0, deck1, net, opponent_net, text;
   uint64_t seed = 0, search_seed = 0;
   int search_seat = -1, mode = 0;
   pimc::Config config;
@@ -162,6 +164,8 @@ std::vector<Job> read_jobs(const std::string &path) {
       die("bad job: " + line);
     j.config.halving = halving != 0;
     j.config.seed = j.search_seed;
+    j.text = line;
+    std::replace(j.text.begin(), j.text.end(), '\t', ' ');
     if (!g_nets.count(j.net) || !g_nets.count(j.opponent_net)) die("job names an unloaded net: " + j.net + " or " + j.opponent_net);
     jobs.push_back(j);
   }
@@ -208,6 +212,7 @@ struct Totals {
     c.worlds_void += r.counters.worlds_void, c.truncated += r.counters.truncated, c.net_errors += r.counters.net_errors;
     c.net_calls += r.counters.net_calls, c.forced_steps += r.counters.forced_steps, c.option_mismatch += r.counters.option_mismatch;
     c.step_overruns += r.counters.step_overruns;
+    c.guard_fires += r.counters.guard_fires;
     ++searched;
     departed += r.chosen != r.greedy;
     fell_back += r.fell_back;
@@ -231,7 +236,7 @@ void play_one(const Job &job, const std::string &out_dir) {
   assumption[0].opponent_main = main_deck_of(job.deck1);  // for the viewer in seat 0
   assumption[1].opponent_main = main_deck_of(job.deck0);
 
-  std::string text = "{\"id\":" + json_text(job.id);
+  std::string text = "{\"id\":" + json_text(job.id) + ",\"job\":" + json_text(job.text);
   std::string moves, log;
   uint32_t crc = 0;
   int decision = 0;
@@ -265,7 +270,11 @@ void play_one(const Job &job, const std::string &out_dir) {
           double started = cpu_seconds();
           auto world = duel.open_search(seat);
           if (!world) throw std::runtime_error("no search world at the acting seat");
-          pimc::Result result = pimc::search(*world, search_net, scratch, root.data(), allowed, assumption[seat], job.config, static_cast<uint64_t>(own_decisions[seat]));
+          long key = own_decisions[seat];
+#ifdef SEARCH_TEST_HOOKS
+          if (pimc::g_mutant == "total-key") key = decision;
+#endif
+          pimc::Result result = pimc::search(*world, search_net, scratch, root.data(), allowed, assumption[seat], job.config, static_cast<uint64_t>(key));
           totals.add_stats(world->stats());
           world.reset();
           search_seconds += cpu_seconds() - started;
@@ -274,8 +283,8 @@ void play_one(const Job &job, const std::string &out_dir) {
           char row[200];
           const auto &best = result.options[result.chosen];
           const auto &base = result.options[result.greedy];
-          snprintf(row, sizeof row, "%s[%d,%d,%d,%d,%d,%.4f,%.4f,%.4f,%.4f,%.3f]", log.empty() ? "" : ",", decision, count, result.compared, result.greedy, result.chosen,
-                   value, base.mean, best.mean, result.gain, result.gain_error);
+          snprintf(row, sizeof row, "%s[%d,%d,%d,%d,%d,%.4f,%.4f,%.4f,%.4f,%.3f,%ld]", log.empty() ? "" : ",", decision, count, result.compared, result.greedy, result.chosen,
+                   value, base.mean, best.mean, result.gain, result.gain_error, key);
           log += row;
         }
         guards[seat].tried[key].insert(choice);
@@ -309,6 +318,7 @@ void play_one(const Job &job, const std::string &out_dir) {
     for (int i = 0; i < count; ++i) out += (i ? "," : "") + std::to_string(values[i]);
     return out + "]";
   };
+  text += ",\"rollout_guard_fires\":" + std::to_string(totals.c.guard_fires);
   text += ",\"void_reasons\":" + list(totals.voids, static_cast<int>(fm::VoidReason::kCount));
   text += ",\"refusal_reasons\":" + list(totals.refusals, static_cast<int>(fm::DealRefusal::kCount));
   text += ",\"reason\":" + json_text(reason) + ",\"moves\":[" + moves + "],\"log\":[" + log + "]}\n";
@@ -324,12 +334,17 @@ int command_play(const std::string &jobs_path, const std::string &out_dir, int w
   auto path_of = [&](size_t i) { return out_dir + "/" + jobs[i].id + ".json"; };
   auto mark_void = [&](size_t i, const std::string &why) {
     ++failed;
-    write_all(path_of(i), "{\"id\":" + json_text(jobs[i].id) + ",\"status\":\"VOID\",\"reason\":" + json_text(why) + "}\n");
+    write_all(path_of(i), "{\"id\":" + json_text(jobs[i].id) + ",\"job\":" + json_text(jobs[i].text) + ",\"status\":\"VOID\",\"reason\":" + json_text(why) + "}\n");
   };
   while (next < jobs.size() || !running.empty()) {
     while (next < jobs.size() && static_cast<int>(running.size()) < workers) {
       size_t i = next++;
-      if (access(path_of(i).c_str(), F_OK) == 0) continue;  // finished in an earlier run
+      if (access(path_of(i).c_str(), F_OK) == 0) {  // finished in an earlier run, which must have been this job
+        std::ifstream earlier(path_of(i));
+        std::string found((std::istreambuf_iterator<char>(earlier)), std::istreambuf_iterator<char>());
+        if (found.find("\"job\":" + json_text(jobs[i].text)) == std::string::npos) die(path_of(i) + " holds a different job");
+        continue;
+      }
       fflush(nullptr);
       pid_t pid = fork();
       if (pid < 0) die("fork failed");
@@ -477,6 +492,9 @@ int main(int argc, char **argv) {
     fm::init_forward_model(config);
     load_registry(args.at("registry"));
     for (const auto &spec : nets) load_net(spec, args.at("codes-sha"));
+#ifdef SEARCH_TEST_HOOKS
+    if (command == "play" && args.count("mutant")) pimc::g_mutant = args["mutant"];
+#endif
     if (command == "play") return command_play(args.at("jobs"), args.at("out"), std::stoi(args.at("workers")), args.count("timeout") ? std::stoi(args["timeout"]) : 3600);
     if (command == "rank") return command_rank(args);
   } catch (const std::exception &ex) {

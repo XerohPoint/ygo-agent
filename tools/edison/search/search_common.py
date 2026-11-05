@@ -1,6 +1,8 @@
 """Shared by the search's tests and study: the nets, the job format, and running the native binary."""
+import hashlib
 import json
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 
@@ -41,14 +43,26 @@ def job_line(job_id, deck0, deck1, seed, seat, net, budget=0, depth=0, candidate
     return f"{job_id}\t{deck0}\t{deck1}\t{seed}\t{seat}\t{net}\t{budget}\t{depth}\t{candidates}\t{z}\t{halving}\t{search_seed}\t{mode}\t{opponent_net or net}\n"
 
 
-def play(lines, out_dir, workers, binary=BIN, cwd=SCRIPTS, timeout=3600, nets=None):
+def play(lines, out_dir, workers, binary=BIN, cwd=SCRIPTS, timeout=3600, nets=None, fresh=False, extra=()):
+    """Games in out_dir must come from these jobs and this binary, so a directory resumes one run and nothing else. fresh discards it first."""
     out_dir = Path(out_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
     jobs = out_dir.with_suffix(".tsv")
+    meta = out_dir.with_suffix(".binary")
+    built = hashlib.sha256(Path(binary).read_bytes()).hexdigest()
+    if fresh and out_dir.exists():
+        shutil.rmtree(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    if any(out_dir.glob("*.json")):
+        if not meta.exists() or meta.read_text().strip() != built:
+            raise SystemExit(f"{out_dir} holds games from another binary. Use another directory")
+        if not jobs.exists() or jobs.read_text() != "".join(lines):
+            raise SystemExit(f"{out_dir} holds games from other jobs. Use another directory")
+    meta.write_text(built + "\n")
     jobs.write_text("".join(lines))
     subprocess.run([str(binary), "play", "--root", str(ROOT), "--registry", str(REGISTRY), *net_args(nets), "--codes-sha", CODES_SHA, "--jobs", str(jobs),
-                    "--out", str(out_dir), "--workers", str(workers), "--timeout", str(timeout)], cwd=cwd, check=True, stdout=subprocess.DEVNULL)
-    return load(out_dir)
+                    "--out", str(out_dir), "--workers", str(workers), "--timeout", str(timeout)] + list(extra), cwd=cwd, check=True, stdout=subprocess.DEVNULL)
+    wanted = {line.split("\t")[0] for line in lines}
+    return {k: v for k, v in load(out_dir).items() if k in wanted}
 
 
 def load(out_dir):

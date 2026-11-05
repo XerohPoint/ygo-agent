@@ -7,6 +7,12 @@
   privacy     a search on two natural duels with one public history answers the same; planted leaks must show
   refusal     an assumed list that cannot be true gives no worlds, and the network's choice stands
   voids       failures planted in card scripts void sampled worlds only
+  semantics   estimates must point the right way: a broken leaf or terminal sign fails it
+  key         deal seeds come from the seat's own decisions: the duel's whole count fails it
+  provenance  an output directory refuses games from other jobs
+  ranker      the ranking command's network choice is the move the acting seat played, with the right net
+
+A stage fails if its result breaks its rule, and the program's exit code is the verdict. Every stage plays into a fresh directory.
 """
 import argparse
 import json
@@ -25,13 +31,24 @@ import search_common as sc  # noqa: E402
 
 TESTS = sc.OUT / "tests"
 SEED = 86000000
+SEMANTIC_GAP = 0.25  # a position estimated high must end in a win this much more often than one estimated low
 
 
-def report(name, result):
+FAILURES = []
+
+
+def report(name, result, broken=()):
+    """broken holds the stage's rules that its result breaks."""
     TESTS.mkdir(parents=True, exist_ok=True)
+    result = {**result, "broken": list(broken)}
     (TESTS / f"{name}.json").write_text(json.dumps(result, indent=1) + "\n")
-    print(json.dumps({"stage": name, **{k: v for k, v in result.items() if not isinstance(v, (list, dict)) or len(str(v)) < 300}}), flush=True)
+    print(json.dumps({"stage": name, "verdict": "FAIL" if broken else "pass", **{k: v for k, v in result.items() if not isinstance(v, (list, dict)) or len(str(v)) < 300}}), flush=True)
+    FAILURES.extend(f"{name}: {b}" for b in broken)
     return result
+
+
+def play(lines, out, workers, **options):
+    return sc.play(lines, TESTS / out, workers, fresh=True, **options)
 
 
 def plain_jobs(names, games, seed, net="n1702"):
@@ -52,7 +69,7 @@ def stage_production(args, names):
         raise SystemExit(f"Native module is not certified: {native}")
     games = args.games
     lines = plain_jobs(names, games, SEED)
-    native_games = sc.play(lines, TESTS / "production", args.workers)
+    native_games = play(lines, "production", args.workers)
     cwd = os.getcwd()
     os.chdir(sc.SCRIPTS)
     registry = sc.deck_registry.registry()
@@ -81,33 +98,36 @@ def stage_production(args, names):
         if mine["crc"] != crc or mine["winner"] != finished[0] or mine["decisions"] != len(buffers[0]):
             diffs.append({"job": job_id, "deck0": deck0, "deck1": deck1, "native": [mine["crc"], mine["winner"], mine["decisions"]], "jax": [crc, finished[0], len(buffers[0])]})
     os.chdir(cwd)
-    return report("production", {"games": games, "decisions": decisions, "games_differing": len(diffs), "diffs": diffs[:12]})
+    return report("production", {"games": games, "decisions": decisions, "games_differing": len(diffs), "diffs": diffs[:12]}, ["games differ"] * bool(diffs) + ["no decisions"] * (not decisions))
 
 
 def stage_ignored(args, names):
     games = args.games
     pairs = sc.neighbour_pairs(names)
-    plain = sc.play([sc.job_line(f"g{i}", *pairs[i % len(pairs)], SEED + 1000 + i, -1, "n1703") for i in range(games)], TESTS / "ignored-plain", args.workers)
-    ran = sc.play([sc.job_line(f"g{i}", *pairs[i % len(pairs)], SEED + 1000 + i, i % 2, "n1703", 24, 8, 4, 1.0, 1, 7, 1) for i in range(games)], TESTS / "ignored-search", args.workers)
+    plain = play([sc.job_line(f"g{i}", *pairs[i % len(pairs)], SEED + 1000 + i, -1, "n1703") for i in range(games)], "ignored-plain", args.workers)
+    ran = play([sc.job_line(f"g{i}", *pairs[i % len(pairs)], SEED + 1000 + i, i % 2, "n1703", 24, 8, 4, 1.0, 1, 7, 1) for i in range(games)], "ignored-search", args.workers)
     keys = ("status", "winner", "win_reason", "decisions", "crc", "moves")
     bad = [k for k in plain if any(plain[k].get(f) != ran[k].get(f) for f in keys)]
-    return report("ignored", {"games": games, "decisions": sum(v.get("decisions", 0) for v in plain.values()), "searches_run": sum(v.get("searched", 0) for v in ran.values()),
-                              "games_differing": len(bad), "first": bad[:8]})
+    searches = sum(v.get("searched", 0) for v in ran.values())
+    voided = sum(v["status"] != "OK" for v in ran.values())
+    return report("ignored", {"games": games, "decisions": sum(v.get("decisions", 0) for v in plain.values()), "searches_run": searches, "games_differing": len(bad), "void": voided, "first": bad[:8]},
+                  ["games differ"] * bool(bad) + ["no searches ran"] * (not searches) + ["games voided"] * bool(voided))
 
 
 def stage_determinism(args, names):
     games = min(args.games, 64)
     pairs = sc.neighbour_pairs(names)
     lines = [sc.job_line(f"g{i}", *pairs[i % len(pairs)], SEED + 2000 + i, i % 2, "n1704", 24, 8, 4, 1.0, 1, 11, 0) for i in range(games)]
-    one = sc.play(lines, TESTS / "det-one", 1)
-    many = sc.play(lines, TESTS / "det-many", args.workers)
+    one = play(lines, "det-one", 1)
+    many = play(lines, "det-many", args.workers)
     strip = lambda d: {k: v for k, v in d.items() if k not in ("search_cpu", "total_cpu")}
     bad = [k for k in one if strip(one[k]) != strip(many[k])]
-    return report("determinism", {"games": games, "searches": sum(v.get("searched", 0) for v in one.values()), "games_differing": len(bad), "first": bad[:8]})
+    searches = sum(v.get("searched", 0) for v in one.values())
+    return report("determinism", {"games": games, "searches": searches, "games_differing": len(bad), "first": bad[:8]}, ["games differ"] * bool(bad) + ["no searches ran"] * (not searches))
 
 
 def positions(names, games, seed):
-    played = sc.play(plain_jobs(names, games, seed, "n1702"), TESTS / "position-games", 3)
+    played = play(plain_jobs(names, games, seed, "n1702"), "position-games", 3)
     lines = (TESTS / "position-games.tsv").read_text().splitlines()
     rng = random.Random(seed)
     out = []
@@ -150,7 +170,19 @@ def stage_privacy(args, names):
     summary = {"clean": pair_run("clean", sc.ROOT / "build/forward_model/fm_bench", args.per_cell, args.workers, 48, 6)}
     for mutant in ("leak-hand", "leak-seed", "leak-order"):
         summary[mutant] = pair_run(mutant, sc.ROOT / "build/forward_model/fm_bench_mutant", 2, args.workers, 48, 6, mutant)
-    return report("privacy", summary)
+    broken = []
+    for family, c in summary["clean"].items():
+        if not c["both_searched"]:
+            broken.append(f"clean {family}: no pairs")
+        if c["exact_same"] != c["both_searched"]:
+            broken.append(f"clean {family}: answers differ")
+        if c["one_refused"] > 0.01 * c["pairs"]:
+            broken.append(f"clean {family}: too many one-sided refusals")
+    for mutant in ("leak-hand", "leak-seed", "leak-order"):
+        for family, c in summary[mutant].items():
+            if c["exact_same"] == c["both_searched"]:
+                broken.append(f"{mutant} {family}: the planted leak went unseen")
+    return report("privacy", summary, broken)
 
 
 def stage_refusal(args, names):
@@ -162,7 +194,7 @@ def stage_refusal(args, names):
         total += 1
         compared += d["deals_refused"] > 0
         bad += not (d["deals_ok"] == 0 and d["rollouts"] == 0 and d["chosen"] == d["greedy"])
-    return report("refusal", {"positions": total, "positions_with_refused_deals": compared, "searched_on_a_wrong_list": bad})
+    return report("refusal", {"positions": total, "positions_with_refused_deals": compared, "searched_on_a_wrong_list": bad}, ["searched on a wrong list"] * bool(bad) + ["too few refused positions"] * (compared < total // 2))
 
 
 PLANTS = {"lua": 'error("planted failure in a sampled world")', "prompt": "Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_DECK,1,1,nil)", "hang": "while true do end"}
@@ -204,11 +236,126 @@ def stage_voids(args, names):
         out = TESTS / f"voids-{name}"
         if out.exists():
             shutil.rmtree(out)
-        played = sc.play(lines, out, args.workers, cwd=cwd, timeout=1800)
+        played = sc.play(lines, out, args.workers, cwd=cwd, timeout=1800, fresh=True)
         ok = [d for d in played.values() if d["status"] == "OK"]
         summary[name] = {"games": games, "finished": len(ok), "worlds_void": sum(d.get("worlds_void", 0) for d in played.values()), "worker_deaths": sum("worker ended" in d.get("reason", "") for d in played.values()),
                          "true_duel_voids": sum("true duel" in d.get("reason", "") for d in played.values()), "reasons": sorted({d.get("reason", "")[:80] for d in played.values() if d["status"] != "OK"})}
-    return report("voids", summary)
+    broken = []
+    for name, c in summary.items():
+        if c["worker_deaths"]:
+            broken.append(f"{name}: workers died")
+        if not c["worlds_void"]:
+            broken.append(f"{name}: the plant voided no sampled world")
+        if not c["finished"]:
+            broken.append(f"{name}: no game finished")
+    return report("voids", summary, broken)
+
+
+def direction(played, low=0.6):
+    """Won share of decisions by the sign of the network choice's estimate: all of them, and the near-certain ones, which are mostly finished rollouts."""
+    table = {"mid": [[0, 0], [0, 0]], "sure": [[0, 0], [0, 0]]}
+    for g in played.values():
+        if g["status"] != "OK" or g["winner"] not in (0, 1):
+            continue
+        for row in g["log"]:
+            if row[2] < 2:
+                continue
+            mean = row[6]
+            band = "sure" if abs(mean) >= 0.97 else ("mid" if 0.3 <= abs(mean) <= low + 0.3 else None)
+            if band:
+                cell = table[band][mean > 0]
+                cell[0] += g["winner"] == g["search_seat"]
+                cell[1] += 1
+    rate = lambda c: c[0] / max(1, c[1])
+    return {band: {"won_when_low": round(rate(t[0]), 3), "won_when_high": round(rate(t[1]), 3), "decisions": [t[0][1], t[1][1]]} for band, t in table.items()}
+
+
+def stage_semantics(args, names):
+    """Estimates against how the games ended, in games where the network plays regardless. Rows carry the mean of the network's own option."""
+    pairs = sc.neighbour_pairs(names)
+    lines = [sc.job_line(f"g{i}", *pairs[i % len(pairs)], SEED + 5000 + i, i % 2, "n1702", 24, 8, 4, 1.0, 1, 13, 1) for i in range(args.games)]
+    runs = {"clean": direction(play(lines, "semantics-clean", args.workers))}
+    for mutant in ("flip-leaf", "flip-terminal"):
+        runs[mutant] = direction(play(lines, f"semantics-{mutant}", args.workers, binary=sc.TEST_BIN, extra=("--mutant", mutant)))
+    points = lambda d: d["won_when_high"] - d["won_when_low"]
+    broken = []
+    for band in ("mid", "sure"):
+        if points(runs["clean"][band]) < SEMANTIC_GAP:
+            broken.append(f"clean {band}: estimates do not separate wins from losses")
+    if points(runs["flip-leaf"]["mid"]) > 0:
+        broken.append("flip-leaf went unseen")
+    if points(runs["flip-terminal"]["sure"]) > 0:
+        broken.append("flip-terminal went unseen")
+    return report("semantics", runs, broken)
+
+
+def stage_key(args, names):
+    """A row's last column is the deal key. A seat's own count falls behind the duel's whenever the other seat has decisions."""
+    pairs = sc.neighbour_pairs(names)
+    lines = [sc.job_line(f"g{i}", *pairs[i % len(pairs)], SEED + 6000 + i, i % 2, "n1702", 12, 4, 4, 1.0, 1, 17, 1) for i in range(8)]
+
+    def check(played):
+        bad = behind = rows = 0
+        for g in played.values():
+            last = -1
+            for row in g["log"]:
+                decision, key = row[0], row[-1]
+                rows += 1
+                bad += key <= last or key > decision
+                behind += key < decision
+                last = key
+        return {"rows": rows, "out_of_order": bad, "behind_the_duel": behind}
+    clean = check(play(lines, "key-clean", args.workers))
+    planted = check(play(lines, "key-total", args.workers, binary=sc.TEST_BIN, extra=("--mutant", "total-key")))
+    broken = ["no rows"] * (not clean["rows"]) + ["keys out of order"] * bool(clean["out_of_order"]) + ["key follows the duel's count"] * (clean["behind_the_duel"] < 0.9 * clean["rows"])
+    broken += ["the planted key went unseen"] * (planted["behind_the_duel"] >= 0.9 * planted["rows"])
+    return report("key", {"clean": clean, "total-key": planted}, broken)
+
+
+def stage_provenance(args, names):
+    """A directory must not hand back games from other jobs, through the script or the binary."""
+    pairs = sc.neighbour_pairs(names)
+    first = [sc.job_line("g0", *pairs[0], SEED + 7000, -1, "n1702")]
+    second = [sc.job_line("g0", *pairs[0], SEED + 7001, -1, "n1702")]
+    play(first, "provenance", 1)
+    refused_script = refused_binary = False
+    try:
+        sc.play(second, TESTS / "provenance", 1)
+    except SystemExit:
+        refused_script = True
+    (TESTS / "provenance.tsv").write_text("".join(second))
+    done = subprocess.run([str(sc.BIN), "play", "--root", str(sc.ROOT), "--registry", str(sc.REGISTRY), *sc.net_args(["n1702"]), "--codes-sha", sc.CODES_SHA, "--jobs", str(TESTS / "provenance.tsv"),
+                           "--out", str(TESTS / "provenance"), "--workers", "1"], cwd=sc.SCRIPTS, capture_output=True, text=True)
+    refused_binary = done.returncode != 0
+    return report("provenance", {"script_refuses": refused_script, "binary_refuses": refused_binary}, ["the script reused other jobs' games"] * (not refused_script) + ["the binary reused other jobs' games"] * (not refused_binary))
+
+
+def stage_ranker(args, names):
+    """In games between two nets, the ranker's network choice must be the move the acting seat played, so it loaded that seat's net at that decision."""
+    pairs = sc.neighbour_pairs(names)
+    lines = [sc.job_line(f"g{i}", *pairs[i * 7 % len(pairs)], SEED + 7100 + i, -1, "n1702", opponent_net="n1703") for i in range(4)]
+    played = play(lines, "ranker", args.workers)
+    rng = random.Random(SEED + 7100)
+    script = str(sc.HERE / "rank_position.py")
+
+    def rank(path, decision, *more):
+        done = subprocess.run([sys.executable, script, "--game", str(path), "--decision", str(decision), "--budget", "2", "--depth", "0", "--json", *more], cwd=sc.SCRIPTS, capture_output=True, text=True, check=True)
+        return json.loads(done.stdout)
+    checked = right = wrong_net_right = seats = 0
+    for key, game in played.items():
+        path = TESTS / "ranker" / f"{key}.json"
+        for decision in rng.sample(range(game["decisions"]), 12):
+            d = rank(path, decision)
+            if len(d["options"]) < 2:
+                continue
+            checked += 1
+            seats += d["seat"]
+            right += d["greedy"] == game["moves"][decision]
+            wrong = rank(path, decision, "--net", "n1703" if d["seat"] == 0 else "n1702")
+            wrong_net_right += wrong["greedy"] == game["moves"][decision]
+    broken = ["too few decisions"] * (checked < 20) + ["one seat never checked"] * (seats in (0, checked))
+    broken += ["the ranker's network choice is not the move played"] * (right != checked) + ["using the other net went unseen"] * (wrong_net_right == checked)
+    return report("ranker", {"checked": checked, "seat_1": seats, "network_choice_is_the_move": right, "with_the_other_net": wrong_net_right}, broken)
 
 
 def main():
@@ -221,7 +368,11 @@ def main():
     names = sc.write_registry()
     for stage in args.stages:
         globals()[f"stage_{stage}"](args, names)
+    if FAILURES:
+        print("FAILED:\n  " + "\n  ".join(FAILURES), file=sys.stderr)
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
