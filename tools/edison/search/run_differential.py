@@ -40,6 +40,8 @@ ENV = {**os.environ, "JAX_PLATFORMS": "cpu", "OPENBLAS_NUM_THREADS": "1", "OMP_N
 GATES = {"value_error.max": 2e-5, "value_error.p99.9": 8e-6, "value_error.mean": 4e-7,
          "logit_error.max": 2.5e-3, "logit_error_scaled.max": 3e-4, "logit_error_scaled.p99.9": 5e-5, "logit_error_scaled.mean": 1.5e-6,
          "state_error.mean": 3.5e-6, "row_error.mean": 2.6e-7}
+# About two float32 ulps at the largest logits seen. Set after the fact, from the two mismatches on real play (1.5e-5 and 9.2e-5).
+GREEDY_TIE_GAP = 5e-4
 COUNT_GATES = ("verdict_mismatch", "hist_mismatch", "pack_size_mismatch", "pack_cards_mismatch", "pack_actions_mismatch",
                "pack_decision_mismatch", "pack_global_mismatch", "eval_fail", "nonfinite", "value_only_vs_full_bit_mismatch")
 BYTE_GATES = ("hist_mismatch", "pack_size_mismatch", "pack_cards_mismatch", "pack_actions_mismatch", "pack_decision_mismatch", "pack_global_mismatch")
@@ -179,9 +181,23 @@ def gate_failures(report, forward=True):
 
 
 def near_tie_check(report):
-    """Every greedy mismatch must be a tie within the measured error for that decision."""
-    bad = [m for m in report["greedy_mismatch"] if m["python_gap"] > 2 * m["worst_logit_error"]]
+    """Every greedy mismatch must be a tie within GREEDY_TIE_GAP. The decision's own error can't judge this: a gap never exceeds twice it, whatever the logits."""
+    bad = [m for m in report["greedy_mismatch"] if m["python_gap"] > GREEDY_TIE_GAP]
     return {"mismatches": report["greedy_mismatch_count"], "not_near_ties": len(bad), "examples": report["greedy_mismatch"][:10]}
+
+
+def overall_failures(summary):
+    """Everything that must make the command fail. A report nobody reads gates nothing."""
+    failures = {}
+    for block in ("correct", "extremes"):
+        for seed, row in summary[block].items():
+            if row["failed_gates"]:
+                failures[f"{block}/{seed}/gates"] = row["failed_gates"]
+            if row["greedy"]["not_near_ties"]:
+                failures[f"{block}/{seed}/greedy"] = row["greedy"]["not_near_ties"]
+    if summary["mutated"].get("verdict_mismatch"):
+        failures["mutated/verdicts"] = summary["mutated"]["verdict_mismatch"]
+    return failures
 
 
 def trim(report):
@@ -476,7 +492,12 @@ def main():
              "correct_failed": {s: c["failed_gates"] for s, c in correct.items()},
              "greedy": {s: {k: c["greedy"][k] for k in ("mismatches", "not_near_ties")} for s, c in correct.items()}}
     print(json.dumps(brief, indent=1))
+    failures = overall_failures(summary)
+    if failures:
+        print("FAILED: " + json.dumps(failures, default=str))
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

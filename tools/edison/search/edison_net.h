@@ -19,8 +19,10 @@
 //
 // A nonzero status means no output was produced and the decision cannot count.
 // The audit is optional. The history rule, row range checks and embedding range
-// checks always run, so an unaudited bad observation is an error and never reads
-// outside a table. (Python returns NaN there.)
+// checks on what a path reads always run, so an unaudited bad observation never
+// reads outside a table. (Python returns NaN there.) Without the audit, the value
+// path does not look at action fields, so bad ones can still return a value. Leave
+// the audit on for any observation not fresh from the certified encoder.
 //
 // Arena and allocator contract (tools/edison/forward_model/arena.h):
 //   - Nothing here calls malloc, new, stdio or any other interposed allocator, in
@@ -846,7 +848,7 @@ inline int normalize_history_turn(const uint8_t *hist, const uint8_t *global, ui
 // source passes its audit. Here it is an error.
 inline int pack(const RawObs &o, Scratch &s) {
   const int count = o.num_options;
-  if (count < 0 || count > kMaxOptions) return kBadOptions;
+  if (count <= 0 || count > kMaxOptions) return kBadOptions;
   const int source = o.decision[3];
   if (source < 0 || source > kMaxRows) return kBadSource;
   uint8_t keep[kMaxRows];
@@ -1155,7 +1157,7 @@ inline int encode(const Net &net, Scratch &s) {
   put(p, net.first, g[6], bad);
   put(p, net.my_turn, g[7], bad);
   for (int i = 8; i < 22; i++) *p++ = float(g[i]) / 40.0f;
-  const int hint_index = d[1] == 0 ? 0 : d[1] - kHintMin + (kFault == kFaultHintOffByOne ? 0 : 1);
+  const int64_t hint_index = d[1] == 0 ? 0 : int64_t(d[1]) - kHintMin + (kFault == kFaultHintOffByOne ? 0 : 1);
   put(p, net.hint, unsigned(hint_index), bad);
   put(p, net.stage, unsigned(d[2]), bad);
   *p++ = float(d[4]) / 5.0f;

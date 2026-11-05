@@ -250,3 +250,12 @@ bash "$W/tools/edison/search/run_bench.sh" 5         # pins to CPU 5
 
 `net_arena_test` takes the net file, both hashes and a decisions file. A smoke run also used seeds
 85090000-85090011, and its games are in no result here.
+
+## Independent review
+
+[Sol's review](../tools/edison/search/evidence/review/reviewer_report.md) of 96b2ca9 wrote its own differential on 42 new games (seeds 85200000-85200041, lists paired differently, through the production JAX path in batches of 16). Over 8,487 decisions on all 3 checkpoints it found packed arrays identical, value error at most 4.2e-6, logit error at most 7.3e-4 and 0 greedy differences. Sanitizers and arena probes were clean. It still did not run a real duel in the arena. Its findings, all now fixed:
+
+- **The differential command exited 0 on failed gates.** It now exits 1. I confirmed this by tightening one gate.
+- **The near-tie check could not fail,** because a gap never exceeds twice the error from the same two vectors. It now uses a fixed 5e-4 gap. That gap is set after the fact, from the two real mismatches.
+- **Zero options returned a value,** and **an extreme invalid hint overflowed a signed int** with the audit off. Both now refuse. Neither occurs in real observations.
+- **Unaudited value evaluation ignores action fields.** This is by design, and the header comment now says so instead of promising refusal.
