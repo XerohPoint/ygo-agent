@@ -28,7 +28,7 @@ SETTING = {"budget": 64, "depth": 48, "candidates": 4, "z": 1.0}
 BLOCKS = 168
 RESAMPLES = 20000
 MAX_EXCLUDED = 10  # of 1,008 comparisons
-RANK_GAMES = 32
+RANK_GAMES = 64
 RANK_OPTIONS = {"budget": 256, "depth": 48}
 SEARCH_DIR = sc.OUT / "m2-final-search"
 PLAIN_DIR = sc.OUT / "m2-final-plain"
@@ -201,6 +201,9 @@ def selftest_records():
             swapped[f"g{b}_{net}_0"], swapped[f"g{b}_{net}_1"] = search[f"g{b}_{net}_1"], search[f"g{b}_{net}_0"]
     expect("files swapped between seats", run(swapped, plain), "name_mismatches")
     expect("a job changed", run({**search, "g0_n1702_0": {**search["g0_n1702_0"], "job": "other"}}, plain), "job_mismatches")
+    shadow = {k: {**g, "binary": "wrong"} for k, g in search.items()}
+    expect("wrong-build results hidden by good copies in the other directory", run(shadow, {**plain, **search}), "build_mismatches")
+    expect("search results copied into the plain directory", run(search, {**plain, **search}), "name_mismatches")
     expect("a game missing", run({k: g for k, g in search.items() if k != "g0_n1702_0"}, plain), "missing_games")
     died = {"id": "g0_n1702_0", "job": search["g0_n1702_0"]["job"], "binary": "good", "status": "VOID", "reason": "worker ended with status 9"}
     expect("a worker died", run({**search, "g0_n1702_0": died}, plain), "worker_deaths")
@@ -258,12 +261,12 @@ def play(args):
     sc.play(search_jobs(names), SEARCH_DIR, args.workers)
 
 
-def attempt_logs(manifest):
-    """What each directory's log says about every attempt on it, against the frozen inputs. A start with no end is a run that was cut off."""
+def attempt_logs(manifest, names):
+    """What each directory's log says about every attempt on it, against the frozen inputs and that directory's jobs. A start with no end is a run that was cut off."""
     out = {"logs_missing": 0, "logs_other_inputs": 0, "worker_failures": 0, "interrupted": 0, "nonzero_exits": 0, "inputs_differ": 0}
     frozen = {k: v for k, v in manifest["inputs"].items() if k not in ("jobs", "binary_id")}
-    identity = hashlib.sha256(json.dumps(frozen, sort_keys=True).encode()).hexdigest()
-    for directory in (SEARCH_DIR, PLAIN_DIR):
+    for directory, lines in ((SEARCH_DIR, search_jobs(names)), (PLAIN_DIR, plain_jobs(names))):
+        identity = sc.attempt_identity(frozen, lines)
         log, meta = directory.with_suffix(".attempts"), directory.with_suffix(".inputs")
         out["inputs_differ"] += not meta.exists() or json.loads(meta.read_text()) != frozen
         if not log.exists():
@@ -281,13 +284,12 @@ def attempt_logs(manifest):
 
 def record_problems(search, plain, names, binary_id, logs):
     """Every result must sit under its own name, hold its own job, and come from the frozen build. Checked before anything is scored."""
-    jobs = {line.split("\t")[0]: line.rstrip("\n").replace("\t", " ") for line in search_jobs(names) + plain_jobs(names)}
-    games = {**search, **plain}
-    listed = list(games.values())
+    expected = [(search, {line.split("\t")[0]: line.rstrip("\n").replace("\t", " ") for line in search_jobs(names)}), (plain, {line.split("\t")[0]: line.rstrip("\n").replace("\t", " ") for line in plain_jobs(names)})]
+    listed = list(search.values()) + list(plain.values())
     counters = {key: sum(g.get(key, 0) for g in listed) for key in ("net_errors", "option_mismatch", "step_overruns")}
-    return {"missing_games": sum(k not in games for k in jobs),
-            "name_mismatches": sum(g.get("id") != k for k, g in games.items()) + sum(k not in jobs for k in games),
-            "job_mismatches": sum(g.get("job", "").strip() != jobs.get(k, "").strip() for k, g in games.items()),
+    return {"missing_games": sum(k not in games for games, jobs in expected for k in jobs),
+            "name_mismatches": sum(g.get("id") != k or k not in jobs for games, jobs in expected for k, g in games.items()),
+            "job_mismatches": sum(g.get("job", "").strip() != jobs.get(k, "").strip() for games, jobs in expected for k, g in games.items()),
             "build_mismatches": sum(g.get("binary") != binary_id for g in listed),
             "worker_deaths": sum("worker ended" in g.get("reason", "") for g in listed),
             "root_refusals": sum("network refused" in g.get("reason", "") for g in listed),
@@ -316,9 +318,13 @@ def ranker_gate(search, names):
     closing, middle = checks.game_positions([done[i] for i in chosen], search, rng)
     first_closing = checks.rank_positions(closing, 4, **RANK_OPTIONS)
     first_middle = checks.rank_positions(middle, 4, **RANK_OPTIONS)
-    result = checks.judge_estimates(closing, first_closing, middle, first_middle, checks.Followed(4, **RANK_OPTIONS))
+    followed = checks.Followed(4, **RANK_OPTIONS)
+    result = checks.judge_estimates(closing, first_closing, middle, first_middle, followed)
+    result.update(checks.alone(closing + middle, first_closing + first_middle, 4, **RANK_OPTIONS))
     again = checks.rank_positions(closing, 4, **RANK_OPTIONS) + checks.rank_positions(middle, 4, **RANK_OPTIONS)
-    result["repeats_exactly"] = json.dumps(again) == json.dumps(first_closing + first_middle)
+    followed_again = checks.Followed(4, **RANK_OPTIONS)
+    followed_again.values(list(followed.tasks.values()))
+    result["repeats_exactly"] = json.dumps(again) == json.dumps(first_closing + first_middle) and followed_again.known == followed.known
     result["positions"] = [len(closing), len(middle)]
     result["broken"] = checks.estimate_rules(result) + ["a ranking did not repeat exactly"] * (not result["repeats_exactly"]) + ["a ranking lost worlds to a failure"] * bool(result["ranker_failures"])
     return result
@@ -329,7 +335,7 @@ def analyze(args):
     names = sc.write_registry()
     manifest = check_frozen(names)
     search, plain = sc.load(SEARCH_DIR), sc.load(PLAIN_DIR)
-    integrity = record_problems(search, plain, names, manifest["inputs"]["binary_id"], attempt_logs(manifest))
+    integrity = record_problems(search, plain, names, manifest["inputs"]["binary_id"], attempt_logs(manifest, names))
     if any(integrity[key] for key in ("missing_games", "name_mismatches", "job_mismatches", "build_mismatches")):
         ranker = {"broken": ["not run: the results are not this run's"]}
     else:

@@ -443,7 +443,7 @@ int command_rank(std::map<std::string, std::string> &args) {
     ++decision;
   }
   if (duel.done()) {
-    printf("{\"status\":\"OVER\",\"winner\":%d}\n", duel.winner());
+    printf("{\"status\":\"OVER\",\"winner\":%d,\"truncated\":%s}\n", duel.winner(), duel.truncated() ? "true" : "false");
     return 0;
   }
   int seat = duel.to_play();
@@ -474,6 +474,10 @@ int command_rank(std::map<std::string, std::string> &args) {
   config.halving = false;
   config.seed = args.count("search-seed") ? std::strtoull(args["search-seed"].c_str(), nullptr, 10) : 1;
   config.keep_samples = args.count("samples") != 0;
+  if (args.count("only-option")) config.only_option = std::stoi(args["only-option"]);
+#ifdef SEARCH_TEST_HOOKS
+  if (args["rank-mutant"] == "step-next") pimc::g_mutant = "step-next";
+#endif
   auto world = duel.open_search(seat);
   if (!world) die("no search world at the acting seat");
   pimc::Result result = pimc::search(*world, net, scratch, root.data(), allowed, assumption[seat], config, static_cast<uint64_t>(own_decisions[seat]));
@@ -499,6 +503,18 @@ int command_rank(std::map<std::string, std::string> &args) {
     first.logit = result.options[others.back()].logit;
     result.options[others.back()] = first;
   }
+  if (args["rank-mutant"] == "interior") {  // the best, the worst and the network's own option keep their numbers, and those between swap theirs
+    std::vector<int> between;
+    int high = result.greedy, low = result.greedy;
+    for (int i = 0; i < count; ++i)
+      if (result.options[i].deals) {
+        if (result.options[i].mean > result.options[high].mean) high = i;
+        if (result.options[i].mean < result.options[low].mean) low = i;
+      }
+    for (int i = 0; i < count; ++i)
+      if (result.options[i].deals && i != result.greedy && i != high && i != low) between.push_back(i);
+    for (size_t i = 0; i + 1 < between.size(); ++i) std::swap(result.options[between[i]], result.options[between[i + 1]]);
+  }
   if (args["rank-mutant"] == "rotate" && count > 1) {  // every number is right, on the wrong option
     pimc::OptionEstimate first = result.options[0];
     for (int i = 0; i + 1 < count; ++i) {
@@ -511,7 +527,7 @@ int command_rank(std::map<std::string, std::string> &args) {
   }
 #endif
   std::string text = "{\"status\":\"OK\",\"seat\":" + std::to_string(seat) + ",\"decision\":" + std::to_string(decision) + ",\"chosen\":" + std::to_string(result.chosen) +
-                     ",\"greedy\":" + std::to_string(result.greedy) + ",\"fell_back\":" + (result.fell_back ? "true" : "false");
+                     ",\"greedy\":" + std::to_string(result.greedy) + ",\"compared\":" + std::to_string(result.compared) + ",\"fell_back\":" + (result.fell_back ? "true" : "false");
   char number[260];
   snprintf(number, sizeof number, ",\"network_value\":%.17g,\"gain\":%.17g,\"gain_error\":%.17g,\"paired\":%d", value, result.gain, result.gain_error, result.paired);
   text += number;

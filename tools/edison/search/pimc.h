@@ -27,6 +27,7 @@ struct Config {
   bool halving = true;     // false gives every candidate the same number of deals
   bool audit = true;       // audit every observation in a sampled world
   bool keep_samples = false;  // keep each option's rollout results, so a ranking can show its working
+  int only_option = -1;       // roll out this option alone, on the deals it would have had, so a check can compare the two
   uint64_t seed = 0;
 };
 
@@ -255,13 +256,17 @@ inline Result search(fm::SearchWorld &world, const ednet::Net &net, ednet::Scrat
         first = false;
         double value = missing;
         ++counters.rollouts;
+        int played = option;
+#ifdef SEARCH_TEST_HOOKS
+        if (g_mutant == "step-next") played = (option + 1) % options;
+#endif
         // The rollout starts knowing what this seat may no longer play here, and that it has just played this option.
         RolloutGuard guard;
         for (int i = 0; i < options; ++i)
           if (i == option || std::find(allowed.begin(), allowed.end(), i) == allowed.end()) guard.add(viewer, root_key, i);
         if (world.option_count() != options) {
           ++counters.option_mismatch;
-        } else if (world.step(option) == fm::Status::kVoid || !rollout(world, net, scratch, viewer, config, counters, guard, &value)) {
+        } else if (world.step(played) == fm::Status::kVoid || !rollout(world, net, scratch, viewer, config, counters, guard, &value)) {
           value = missing;
           if (world.voided()) {
             ++counters.worlds_void;
@@ -284,6 +289,7 @@ inline Result search(fm::SearchWorld &world, const ednet::Net &net, ednet::Scrat
   };
 
   std::vector<int> alive = candidates;
+  if (config.only_option >= 0) alive = {config.only_option};
   int rounds = 1;
   if (config.halving)
     while ((1 << rounds) < static_cast<int>(alive.size())) ++rounds;

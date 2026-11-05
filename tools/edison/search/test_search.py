@@ -40,7 +40,7 @@ CLOSING_SHARE = 0.7  # in at least this share of such positions
 CLOSING_TOP = 0.7  # and to rank within CLOSING_TIE of the best option in at least this share, so numbers on the wrong option fail
 CLOSING_TIE = 0.05
 BRANCH_SPREAD = 0.2  # options this far apart in win rate are compared against what really follows them
-BRANCH_MIN = 15
+BRANCH_MIN = 15  # with BRANCH_SPREAD, this takes about 64 games of positions. Fewer gave 9-24 usable
 BRANCH_SHARE = 0.75
 
 
@@ -422,18 +422,22 @@ def rank_positions(positions, workers, binary=sc.BIN, **options):
 
 
 def follow(position, option, viewer, **options):
-    """What really follows an option: the true duel plays it, through any forced steps, and ranks from there. Win rate for viewer, None if nothing was sampled."""
+    """What really follows an option: the true duel plays it, through any forced steps, and ranks from there. Win rate for viewer, or None if there is none, and the worlds lost on the way."""
     moves = position["moves"] + [option]
+    failures = 0
     while True:
         out = json.loads(sc.rank(*position["start"], moves, net=position["net"], **options))
         if out["status"] == "OVER":
-            return 1.0 if out["winner"] == viewer else (0.0 if out["winner"] == 1 - viewer else 0.5)
+            if out["truncated"] or out["winner"] < 0:
+                return None, failures  # a decision limit is not a result
+            return (1.0 if out["winner"] == viewer else (0.0 if out["winner"] == 1 - viewer else 0.5)), failures
+        failures += out["net_errors"] + out["worlds_void"]
         if len(out["options"]) > 1:
             base = out["options"][out["greedy"]]
             if not base["deals"]:
-                return None
+                return None, failures
             rate = (base["mean"] + 1) / 2
-            return rate if out["seat"] == viewer else 1 - rate
+            return (rate if out["seat"] == viewer else 1 - rate), failures
         moves = moves + [0]
 
 
@@ -455,7 +459,7 @@ class Followed:
     """Remembers what follows each option, so a planted ranking pays only for options the clean one didn't ask about."""
 
     def __init__(self, workers, **options):
-        self.workers, self.options, self.known = workers, options, {}
+        self.workers, self.options, self.known, self.tasks = workers, options, {}, {}
 
     def values(self, wanted):
         def key(task):
@@ -466,9 +470,26 @@ class Followed:
         def one(item):
             position, viewer, option = item[1]
             return item[0], follow(position, option, viewer, **self.options)
+        self.tasks.update(missing)
         with ThreadPool(self.workers) as pool:
             self.known.update(pool.map(one, missing.items()))
-        return [self.known[key(t)] for t in wanted]
+        return [self.known[key(t)][0] for t in wanted]
+
+    def failures(self):
+        return sum(failures for _, failures in self.known.values())
+
+
+def alone(positions, outs, workers, binary=sc.BIN, **options):
+    """Every compared option, rolled out alone on the same deals, must give the same results to the last bit. This ties each option's numbers to that option, whichever it is."""
+    wanted = [(position, out, o) for position, out in zip(positions, outs) for o in out["options"] if o["deals"]]
+    budget = options.pop("budget")
+
+    def one(item):
+        position, out, o = item
+        single = json.loads(sc.rank(*position["start"], position["moves"], net=position["net"], binary=binary, samples=1, budget=max(1, budget // out["compared"]), only_option=o["option"], **options))
+        return single["options"][o["option"]]["samples"] != o["samples"] or sum(x["deals"] > 0 for x in single["options"]) != 1
+    with ThreadPool(workers) as pool:
+        return {"options_alone": len(wanted), "options_differ": sum(pool.map(one, wanted))}
 
 
 def judge_estimates(closing, closing_out, middle, middle_out, followed):
@@ -494,11 +515,12 @@ def judge_estimates(closing, closing_out, middle, middle_out, followed):
     outs = closing_out + middle_out
     return {"numbers_broken": bad, "closing": compared, "closing_high": high, "closing_top": top, "middle": [len(won), len(lost)], "middle_gap": gap,
             "branches": len(pairs), "branches_agree": sum(a > b for a, b in pairs), "abstained": sum(not any(o["deals"] for o in out["options"]) for out in outs),
-            "ranker_failures": sum(out["net_errors"] + out["worlds_void"] for out in outs)}
+            "ranker_failures": sum(out["net_errors"] + out["worlds_void"] for out in outs) + followed.failures()}
 
 
 def estimate_rules(result):
     broken = ["a shown number is not finite, or does not follow from its samples"] * bool(result["numbers_broken"])
+    broken += ["no option was checked alone"] * (not result["options_alone"]) + ["an option's numbers aren't what it gives alone"] * bool(result["options_differ"])
     broken += ["too few closing positions"] * (result["closing"] < 20) + ["moves that won are not estimated high"] * (result["closing_high"] < CLOSING_SHARE * max(1, result["closing"]))
     broken += ["moves that won don't rank near the top"] * (result["closing_top"] < CLOSING_TOP * max(1, result["closing"]))
     broken += ["too few middle positions"] * (min(result["middle"]) < 10) + ["estimates do not separate later wins from losses"] * (not result["middle_gap"] >= SEMANTIC_GAP)
@@ -526,15 +548,26 @@ def stage_estimates(args, names):
     """The ranker's estimates, labels and errors, on positions with known outcomes. The planted rankers must all fail."""
     followed = Followed(args.workers, budget=64, depth=48)
     pairs = sc.neighbour_pairs(names)
-    lines = [sc.job_line(f"g{i}", *pairs[i * 5 % len(pairs)], SEED + 7200 + i, -1, "n1702") for i in range(32)]
+    lines = [sc.job_line(f"g{i}", *pairs[i * 5 % len(pairs)], SEED + 7200 + i, -1, "n1702") for i in range(64)]
     played = play(lines, "estimates", args.workers)
     closing, middle = game_positions(lines, played, random.Random(SEED + 7200))
     options = {"budget": 64, "depth": 48}
-    run = lambda binary=sc.BIN, **more: judge_estimates(closing, rank_positions(closing, args.workers, binary=binary, **options, **more), middle, rank_positions(middle, args.workers, binary=binary, **options, **more), followed)
+
+    def run(binary=sc.BIN, reference=followed, **more):
+        closing_out = rank_positions(closing, args.workers, binary=binary, **options, **more)
+        middle_out = rank_positions(middle, args.workers, binary=binary, **options, **more)
+        # A planted ranker need only be seen on some positions, so it takes the first 24 of each kind.
+        limit = None if binary == sc.BIN else 24
+        return {**judge_estimates(closing, closing_out, middle, middle_out, reference),
+                **alone(closing[:limit] + middle[:limit], closing_out[:limit] + middle_out[:limit], args.workers, binary=binary, **options, **more)}
     clean = run()
-    planted = {name: run(binary=sc.TEST_BIN, rank_mutant=name) for name in ("zero", "blank", "rotate", "others")}
+    planted = {name: run(binary=sc.TEST_BIN, rank_mutant=name) for name in ("zero", "blank", "rotate", "others", "interior")}
+    planted["step-next"] = run(binary=sc.TEST_BIN, rank_mutant="step-next")
     broken = estimate_rules(clean)
     broken += [f"the planted {name} ranker passed" for name, result in planted.items() if not estimate_rules(result)]
+    broken += ["a planted ranker that the alone check should see got past it"] * any(not planted[name]["options_differ"] for name in ("others", "interior"))
+    # An option stepped wrongly gives consistent numbers on the wrong action, so only the true duel can show it.
+    broken += ["stepping the wrong option went unseen by the true duel"] * (planted["step-next"]["branches_agree"] >= BRANCH_SHARE * max(1, planted["step-next"]["branches"]))
     # Labels: at a game's first decision, every card an option names comes from the acting seat's own list.
     from rank_position import describe
     metadata = sc.deck_registry.card_metadata()
