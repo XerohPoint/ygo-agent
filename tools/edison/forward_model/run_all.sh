@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Everything in docs/edison-forward-model.md's newest section, in order, then the verdict: this script's exit code is
-# check_results.py's. About 1 hour 45 minutes on 4 threads on a machine with other work running.
+# check_results.py's. Up to about 1 hour 45 minutes on 4 threads on a machine with other work running.
 # Game seeds: 85600000-85641015 for the corpus, 85650002 and 85650100 upward for fixtures, 85650000 for the API check,
 # 85660000-85660002 for the load-order lines.
 set -uo pipefail

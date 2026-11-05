@@ -2,11 +2,11 @@
 
 ## November 5, 2026: the forward model on the certified rules build, after review
 
-Branch `m2-forward-model`. Sol reviewed `fae7262` and then `9380186`, and both reviews found real problems. This section replaces those commits' reports, and every number in it comes from the final build, unless it is marked as a replay of the older corpus. Nothing here is search. The older spike below keeps its own measurements, labelled as old core.
+Sol reviewed `fae7262`, then `9380186`, then `8554f63`, and all three reviews found real problems. This section replaces those commits' reports, and every number in it comes from the final build, unless it is marked as a replay of the older corpus. Nothing here is search. The older spike below keeps its own measurements, labelled as old core.
 
-**Result: the forward model runs on today's certified rules, on all 21 gauntlet lists. It matches production at every decision, restores byte-exactly, and deals only what the public history allows.** One deal seed gives one set of hidden cards across true worlds with one public history, in all 5,440 of 5,440 dealt pairs of the wider leak test. It does not always give one future. A random pick over a group reads the true load order, so one seed can discard another card: 119 of 2,265 compared worlds on Sol's Thestalos line. **The defensible claim is about seeds as samples: over deal seeds, tests found no dependence on load order,** and the same tests catch a planted first-card pick at p below 1e-100. See [What holds across true worlds](#what-holds-across-true-worlds). A hand trap declined in private no longer shows: Gorz differs in 0 of 1,842 compared decisions, against 915 on the old rule. The suite now has a verdict: `run_all.sh` returns the exit code of a checker, and the checker is itself tested on 65 planted faults.
+**Result: the forward model runs on today's certified rules, on all 21 gauntlet lists. It matches production at every decision, restores byte-exactly, and deals only what the public history allows.** One deal seed gives one set of hidden cards across true worlds with one public history, in all 5,440 of 5,440 dealt pairs of the wider leak test. It does not always give one future. A random pick over a group reads the true load order, so one seed can discard another card: 119 of 2,265 compared worlds on Sol's Thestalos line. **So treat seeds as samples: over deal seeds, the random picks tested showed no dependence on load order,** and the same tests catch a planted first-card pick at p below 1e-100. That is not general. Return from the Different Dimension summons in true load order on every seed, so a policy that treats its first and second prompts differently gets a different value. See [What holds across true worlds](#what-holds-across-true-worlds). A hand trap declined in private no longer shows: Gorz differs in 0 of 1,842 compared decisions, against 915 on the old rule. The suite now has a verdict: `run_all.sh` returns the exit code of a checker, and the checker is itself tested on 68 planted faults.
 
-**What is not resolved:** the deal still assumes the opposing decklist is known, a refusal can still reveal a little, one seed does not name one future across load orders, 2.1% of positions refuse every deal, and deals ignore what an opponent's passes imply. See [Still open](#still-open).
+**What is not resolved:** the deal still assumes the opposing decklist is known, a refusal can still reveal a little, one seed does not name one future across load orders, a group summon's order follows true load order, 2.1% of positions refuse every deal, and deals ignore what an opponent's passes imply. See [Still open](#still-open).
 
 ### What the review found
 
@@ -29,7 +29,19 @@ Branch `m2-forward-model`. Sol reviewed `fae7262` and then `9380186`, and both r
 | 2 | The checker read no continuation observation, winner or coverage counter | Fixed. All six of Sol's mutations exit nonzero, and are in `test_checker.py`. Five of the six pass the old checker; the sixth, which it always caught, is Sol's control |
 | 3 | `KNOWN` was a number, so an unrelated failure under it passed | Fixed. Each pair that fails any comparison must be listed and verified as load order. See [The suite's verdict](#the-suites-verdict) |
 
-R4W found two bugs neither review did: a dealt monster's attack counts (below), and an effect-id limit that read the opening hands (below).
+**The third review** (of `8554f63`) found five things:
+
+| # | Finding | Now |
+| --- | --- | --- |
+| 1 | Return from the Different Dimension summons in true load order on every deal: Vayu first in 100 of 100 under one load order, Sirocco first in 100 of 100 under the other, from one public history. Sol's seed 85760400 | True, and left in place. The contract now says it. See [What holds](#what-holds-across-true-worlds) |
+| 2 | Power Tool Dragon's line misclassified real picks, and comparing load orders can't show its odds are flat | Removed the line and the claim. Its cards never moved, so it couldn't test load order |
+| 3 | The causal test accepted a difference that went away on an untouched retry. Planted only: no natural pair was shown to be misattributed | Fixed. A pair must differ again on an untouched retry first. All 6 pairs here do |
+| 4 | Zeroing the distribution test's degrees of freedom skipped its gate | Fixed, and added to `test_checker.py` |
+| 5 | The first-arrival limit read the core's `temp_card`, whose `fieldid` is unset. No wrong value in 210 duels | Fixed: that card is skipped. Every count in the suite is unchanged |
+
+Sol also ran Secutor (seed 85760200): 0 of 3,584 paired differences under a symmetric policy, on that line. Gyzarus (85760201) gave no result, since its variants didn't share a public history. An Armory Arm attempt hung on an artificial board, so it stays unrun.
+
+R4W found two bugs neither of the first two reviews did: a dealt monster's attack counts (below), and an effect-id limit that read the opening hands (below).
 
 ### The pin
 
@@ -180,13 +192,13 @@ The core-reference count rose in one way, deliberately. A viewer's own Deck card
 | R2. **Viewer's own observation changed by the deal** | **0 of 11,844**, including 1074 own Deck options re-bound |
 | R1, R2. Invariant failures, diagnostics, exceptions | 0, 0, 0 |
 | R2. **A slot's attack state changed by the deal** | **0 of 11,844**. Control, state left on the object: 750 of 750 |
-| R2. Cost per deal | 284 µs on this loaded machine |
+| R2. Cost per deal | 148 µs |
 | R3. Re-deal vs natural duel, same assignment: board | 1,538 of 1,538 |
 | R3. Forward chain, canonical order | **1,538 of 1,538** |
 | R3. Winner | 1,538 of 1,538 |
 | R3. Exact option order against the natural duel | 1,470 of 1,538. Not a leak measure: see below |
 | R3. Alternate-history acceptance | 1,747 of 5,922: early 1107/1986, mid 328/1971, late 312/1965 |
-| R5. Cards outside the true list: playouts completed | 12,048 of 12,048, 276 µs. 70.7% of those cards moved in play |
+| R5. Cards outside the true list: playouts completed | 12,048 of 12,048, 147 µs. 70.7% of those cards moved in play |
 
 **R3 exact order** fell, and that is the cost of the fix below. A sampled world's effect order no longer follows the true duel's arrival order, so it no longer copies the natural duel's arbitrary order among equal effects. Canonical chains, the rule outcome, are unchanged.
 
@@ -270,9 +282,10 @@ For one public history, one assumed list and one deal seed:
 | Same true world, same seed: same world, to the last byte | **Yes** | R1, R2 repeats: 0 differ |
 | Same load order: same future, every byte | **Yes, in every pair measured** | R4 with one load order: 3,076 of 3,076 canonical, 3,076 every byte. R4 only. R4W does not split on this |
 | Different load orders: same future | **No** | Same-seed differences below |
-| Over deal seeds, a sampled world's distribution given the public history does not depend on load order | **Not refuted, tested on the lines below** | Homogeneity tests below |
+| Over deal seeds, a random pick's distribution given the public history does not depend on load order | **Not refuted, tested on the lines below** | Homogeneity tests below |
+| Over deal seeds, every sampled world's future does not depend on load order | **No** | Return from the Different Dimension, below |
 
-So a search must treat seeds as samples. It must not compare or cache sampled results seed for seed between true positions, and a finite set of seeds gives slightly different evaluations in different true worlds. Those differences should average out. A proof would have to cover every group a script can read, and the audit below is that far and no further. `fm_world.h` says this on `deal`.
+So a search must treat seeds as samples. It must not compare or cache sampled results seed for seed between true positions, and a finite set of seeds gives slightly different evaluations in different true worlds. At a random pick those differences should average out. At a fixed-order read they don't, as Return shows. `fm_world.h` says this on `deal`.
 
 **Why the seed stops short.** The core reads `cardid` in one place, `card_sort`, which orders every `card_set`. `cardid` is a card's place in the loaded list, and a hidden slot's number and a public card's number both reflect the true list. Group.RandomSelect draws an index into a group, so one draw takes another card when the numbers fall in another order.
 
@@ -282,7 +295,6 @@ So a search must treat seeds as samples. It must not compare or cache sampled re
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | Thestalos discards from the viewer's hand, with a searched card in it (Sol's line) | 16 of 16 | 4,000 | 18,202 of 64,000 | 0 | 119 of 2,265 | 74 on 90, p = 0.892 | 346 on 360, p = 0.693 |
 | The viewer's Thestalos discards from the opposing hand, with a card they searched in public | 16 of 16 | 1,500 | 24,000 of 24,000 | 0 | 944 of 7,680 | 80 on 75, p = 0.324 | 411 on 390, p = 0.221 |
-| Power Tool Dragon picks from three Equip Spells in the viewer's Deck | 16 of 16 | 1,000 | 15,222 of 16,000 | 0 | 0 of 7,320 | 36 on 45, p = 0.830 | 22 on 30, p = 0.860 |
 
 **The plants**, in a Lua override in those runs only. `first` takes the group's first card, which reads load order. `min2` draws twice and keeps whichever comes first in the group, a weaker lean. The last column is the estimate in [Renumbering](#renumbering-an-estimate).
 
@@ -290,9 +302,8 @@ So a search must treat seeds as samples. It must not compare or cache sampled re
 | --- | ---: | ---: | ---: | ---: |
 | Thestalos, viewer's hand | 4,079 on 30, p < 1e-100 | 447 of 2,265 | 107 on 90, p = 0.102 | 0 of 2,265 |
 | Thestalos, opposing hand | 13,357 on 15, p < 1e-100 | 2,880 of 7,680 | 134 on 75, p = 3.3e-05 | 0 of 7,680 |
-| Power Tool Dragon | 49 on 45, p = 0.300 | 0 of 7,305 | 31 on 45, p = 0.944 | 0 of 7,275 |
 
-Power Tool's three cards never moved, so their numbers keep Deck order whatever the load order was. One seed takes one card there, which is why the plant changes nothing on that line. The line shows the pick's odds are flat. It cannot show more.
+**Return from the Different Dimension does not average out.** It reads `GetFirst`/`GetNext` and summons in that order. Banished cards are public and keep their true numbers, so neither the deal nor the reseed changes it. Sol's line, on two rigged load orders with one public history, chooses Attack for the first monster prompted and Defense for the second: 100 of 100 deals gave one card in Attack under one order, 100 of 100 the other card under the other, and 512 of 512 paired seeds differed. This tells a search which public card the engine will prompt first, which the true duel would also do. It says nothing about which cards are in hidden slots. Return is in 3 of the 21 lists.
 
 **Across the corpus.** In the wider leak test, 169 accepted pairs, 100 deal seeds a world, own seeds each, winner by game length: chi-square 371 on 409, p = 0.913, 3 pairs past 3 sigma. Control, a deal that keeps the true opposing hand: chi-square 776 on 340, p = 3.7e-36. This covers true worlds that differ in private prompts as well as load order. It has little power per pair, and it is random play.
 
@@ -331,11 +342,11 @@ From Sol's audit and a wider scan of 220 scripts for 223 codes, read by hand. Wh
 
 | What the script does | Scripts | Reads order? | Checked |
 | --- | --- | --- | --- |
-| Random pick from a group | Thestalos, Power Tool Dragon, X-Saber Urbellum | Index into the group, uniform | Thestalos and Power Tool: tests above. **Urbellum: not tested.** On `g_frog_monarch` the only Tuner is Fishborg Blaster, whose `EFFECT_TUNER_MATERIAL_LIMIT` stops the Synchro on my scripted line (0 of 960 worlds reached it in a trial), so it needs a Tuner taken from the other player |
+| Random pick from a group | Thestalos, Power Tool Dragon, X-Saber Urbellum | Index into the group, uniform | Thestalos: tests above. Power Tool: by reading, since its cards never move. **Urbellum: not tested.** On `g_frog_monarch` the only Tuner is Fishborg Blaster, whose `EFFECT_TUNER_MATERIAL_LIMIT` stops the Synchro on my scripted line (0 of 960 worlds reached it in a trial), so it needs a Tuner taken from the other player |
 | One card out of a mandatory one-card selection or target | About 50 sites | No | By reading |
 | `GetFirstMatchingCard` | Gadgets, Destiny HERO - Malicious, White Stone, Starlight Road | By zone and sequence, not number | By reading the core. Filters are one code |
 | Sum or apply to all | Junk Warrior, Sirocco, Limiter Removal, Tempest Magician, Armor Master, Super Rejuvenation, `aux.sumreg`, Future Fusion | Yes, with the same result in any order | By reading |
-| Summon a selected group one by one | Rescue Cat, Gyzarus, Secutor, Return from the Different Dimension | **Yes: which card is placed and prompted first** | Cat: Sol, 1,500 paired, 0 layouts differ. **Gyzarus, Secutor, Return: not run.** With a random or symmetric policy the order should not change the odds, but a policy that treats first and second prompts differently could read it |
+| Summon a selected group one by one | Rescue Cat, Gyzarus, Secutor, Return from the Different Dimension | **Yes: which card is placed and prompted first** | Cat: Sol, 1,500 paired, 0 layouts differ. Secutor: Sol, 0 of 3,584 under a symmetric policy, on one line. **Return: a policy that treats first and second prompts differently reads it, above.** **Gyzarus: no result** |
 | Ties, then the player chooses | Fissure, Smashing Ground | Option order only | By reading |
 | `eg:GetFirst()` on a one-card event | Bottomless Trap Hole's Normal Summon path, Black Whirlwind | No | By reading. Its Special Summon path takes the whole group |
 | **`eg:GetFirst()` on a group of up to two** | **Armory Arm**, when both monsters are destroyed by battle | **Yes: this decides whether the damage happens** | **Not run.** By reading, the two usually have different owners, whose number ranges do not depend on load order. If one player controls both, it does. It is the one site I found where order can decide a rule outcome outside a random pick |
@@ -428,19 +439,20 @@ One-sided refusals in R4 and R4W are now required to be 0, as they are. Hand-tra
 
 ### Throughput
 
-Through the search API, on a shuffled mix of real roots, 15 s per cell, Ryzen 7 9800X3D under WSL2. **Another agent's search pilot was running, so the machine was loaded. These are lower than an idle machine would give. Treat absolutes as ±30% at best.** One-minute load average at each cell's start is in the table.
+Through the search API, on a shuffled mix of real roots, 15 s per cell, Ryzen 7 9800X3D under WSL2. Other reviews were running at the same time, though lightly. Treat absolutes as ±30% at best. One-minute load average at each cell's start is in the table.
 
 | Workers | Nodes/s per worker | Nodes/s total | Node, µs | Restore | Deal | Step | Observe | Load |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | 1,991 | 1,991 | 502 | 77 | 162 | 70 | 192 | 9.05 |
-| 2 | 1,971 | 3,942 | 507 | 76 | 165 | 64 | 201 | 9.04 |
-| 4 | 1,858 | 7,432 | 538 | 81 | 172 | 66 | 218 | 9.31 |
+| 1 | 2,834 | 2,834 | 353 | 69 | 114 | 46 | 121 | 1.47 |
+| 2 | 2,801 | 5,601 | 357 | 71 | 116 | 43 | 126 | 1.37 |
+| 4 | 2,646 | 10,583 | 378 | 73 | 123 | 44 | 136 | 1.51 |
 
-A node is restore + deal + one step + encode. The deal's cost rose in this round: it orders every effect in the duel and counts legal assignments. Full random playouts with a deal and the encoder: 30 / 27 / 26 per worker on 1 / 2 / 4 workers, about 4,200 decisions/s each on 4. The older playout bench, no deal, on these lists: 130 / 126 / 115 playouts/s per worker without the encoder, 29 / 28 / 22 with it.
+A node is restore + deal + one step + encode. The deal's cost rose in this round: it orders every effect in the duel and counts legal assignments. Full random playouts with a deal and the encoder: 49 / 47 / 44 per worker on 1 / 2 / 4 workers, about 7,200 decisions/s each on 4. The older playout bench, no deal, on these lists: 201 / 166 / 174 playouts/s per worker without the encoder, 44 / 42 / 40 with it.
 
 ### Still open
 
 - **The known-list assumption.** A real opponent's list is not known. R5 shows cards outside the list work mechanically, and the API does not offer it. A wrong list is refused, so a caller guessing a list learns one bit per call.
+- **Group summons follow true load order.** See Return, under [What holds](#what-holds-across-true-worlds). Numbering by a seeded shuffle of places would remove this, and is unbuilt. Armory Arm and Gyzarus have no result.
 - **One seed, one future.** Not across load orders. See [What holds](#what-holds-across-true-worlds) and [Renumbering](#renumbering-an-estimate).
 - **The refusal bit.** See Refusals. Measured at 1 of 3,996 in the hand-trap pairs and 0 of 5,540 in R4W. Refusal parity in R4W now includes worlds the first world refuses.
 - **2.1% of positions refuse every deal,** mostly a prompt or chain that holds a hidden card, such as a target among set cards. Following the slot instead of the object may recover many of these. I did not try it.
@@ -462,7 +474,7 @@ A node is restore + deal + one step + encode. The deal's cost rose in this round
 
 ### Reproduce
 
-Link the git-ignored assets, then run everything. About 1 hour 45 minutes on 4 threads on a loaded machine, and the build does not use xmake. The exit code is the verdict:
+Link the git-ignored assets, then run everything. Up to about 1 hour 45 minutes on 4 threads on a loaded machine, and the build does not use xmake. The exit code is the verdict:
 
 ~~~bash
 W=/path/to/worktree

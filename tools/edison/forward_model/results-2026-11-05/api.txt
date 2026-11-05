@@ -6,7 +6,7 @@ pass: referee_internals does not compile
 pass: world_to_referee does not compile
 pass: true_cards does not compile
 pass: test_hooks does not compile
-built /home/mada/ygo-agent/.claude/worktrees/agent-ab53c43e04e63263e/build/forward_model/fm_search_example (core 5fe29f6ad6dd4ebb83a1f1b5123c1837, hardening r2)
+built /home/mada/ygo-agent/.claude/worktrees/m2-search/build/forward_model/fm_search_example (core 5fe29f6ad6dd4ebb83a1f1b5123c1837, hardening r2)
 pass: only the acting seat can open a search
 pass: the acting seat can open a search
 pass: a new world is undealt
