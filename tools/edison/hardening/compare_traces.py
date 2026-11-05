@@ -38,7 +38,8 @@ def certification(old_dir, new_dir):
     report["rule5_trace_differs"] = [name for name in rule5 if old[name] != new[name]]
     report["edison_cases"] = len(edison)
     report["edison_trace_differs"] = [name for name in edison if old[name] != new[name]]
-    report["new_cases_failing"] = [name for name in report["only_new"] if "RESULT: FAIL" in new[name]]
+    # A new case passes only with a completed verdict: a crash leaves no RESULT line at all.
+    report["new_cases_failing"] = [name for name in report["only_new"] if "RESULT: FAIL" in new[name] or "RESULT: PASS" not in new[name]]
     return report
 
 

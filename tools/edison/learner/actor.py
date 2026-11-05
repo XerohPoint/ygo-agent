@@ -402,7 +402,11 @@ class Worker:
             return {"status": "VOID", "reason": "worker pipe closed before the job"}
         result = self._read(timeout)
         if result is None:
-            code = self.process.poll()
+            # The reply pipe can close just before a dying process is reaped.
+            try:
+                code = self.process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                code = None
             self.restart()
             return {"status": "VOID", "reason": f"worker died or timed out (exit {code})"}
         self.log.flush()

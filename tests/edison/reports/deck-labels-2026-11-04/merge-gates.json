@@ -1,0 +1,47 @@
+{
+ "reviewed_commit": "983af2652999a537162ae2b81f8d4748c6c9d93b",
+ "first_certification_on_main": {
+  "status": "FAIL",
+  "error": "Repeated runs produced different event/response traces",
+  "cause": "Test 088D read exit None, a race in Worker.run; fixed in actor.py"
+ },
+ "void_test_repeats_under_load": {
+  "repeats": 6,
+  "cases_passed": 54,
+  "cases": 54
+ },
+ "certification": {
+  "status": "PASS",
+  "cases_passed": 593,
+  "binary_sha256": "6df1bd58680d681624c02e5bd8ec19159b96cc4204b4af6a543ed7c30b411778",
+  "production_binary_sha256": "b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f",
+  "sources": 110,
+  "run_sha256": [
+   "b7cd1c5a79f7e5c48d8dc489ae248b2a68dc6aa5bcacf5dc85e3c3d8c664e7ef",
+   "b7cd1c5a79f7e5c48d8dc489ae248b2a68dc6aa5bcacf5dc85e3c3d8c664e7ef"
+  ]
+ },
+ "conformance": "AS RECORDED: 149 cases, 139 pass, 10 recorded failures",
+ "test_learner": {
+  "status": "PASS",
+  "checks": 13
+ },
+ "supervisor_truth_check": {
+  "meaning": "Picked own Deck card reaches a public own zone within 8 of that player's decisions, random policy",
+  "old_build": [
+   {
+    "seed": 80960000,
+    "found_pct": 15.2
+   },
+   {
+    "seed": 80970000,
+    "found_pct": 16.16
+   }
+  ],
+  "final_build": {
+   "seed": 80980000,
+   "found": 1624,
+   "judged": 1624
+  }
+ }
+}

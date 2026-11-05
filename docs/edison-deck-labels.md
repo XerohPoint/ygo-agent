@@ -1,6 +1,6 @@
 # Edison Deck option labels
 
-Prepared November 4, 2026, on `edison` at `0027cc9`, in an isolated worktree, and revised after two independent reviews. Nothing is merged or pushed.
+Prepared November 4, 2026, on `edison` at `0027cc9`, in an isolated worktree, and revised after independent reviews by Sol (`gpt-6.1-sol`). Merged to local `edison` and recertified there; not pushed.
 Current evidence is in [reports/deck-labels-2026-11-04/review2](../tests/edison/reports/deck-labels-2026-11-04/review2/). The folders `review` and its parent hold earlier rounds.
 
 **Result: at an own Deck prompt every option shows the card the engine offered, its row shows the same card, no further Deck card is revealed, and what a policy
@@ -280,6 +280,25 @@ Certification fingerprints are at 110 sources. See [hashes.json](../tests/edison
   The later commits add no difference on the soak's duels.
 
 All training and evaluation results to date belong to the defective interface. No training or win-rate study ran here.
+
+## Merge to `edison`
+
+Sol's final check of `983af26` found no new defect reachable with a legal Edison deck, and recommended merging for validated play with `oppo_info=False`. It ran 086, 087 and 088 and negative controls, not the full suites. Certification on main then caught what the worktree's run did not:
+
+- **Test 088 was flaky.** One of two runs read exit `None` rather than `-6`, because the reply pipe can close just before the dying worker is reaped. The cell voided correctly either way. `Worker.run` in `actor.py` now waits up to 5 s for the real status. 088 then passed 6 of 6 repeats under CPU load, 54 of 54 cases.
+- **`compare_traces.py` accepted a crashed new case,** as Sol reported. A new case now needs a completed `RESULT: PASS`. I checked crash, pass and fail on synthetic input.
+
+Final gates on main, module `b8fcd2bc...`, matching the reviewed build: certification 593 PASS, 0 FAIL, identical replay traces, `edison_rules` `6df1bd58...`, 110 sources; conformance as recorded; `test_learner.py` 13 of 13. See [merge-gates.json](../tests/edison/reports/deck-labels-2026-11-04/merge-gates.json).
+
+Supervisor's check, independent of the audit code: after a random policy picks an own Deck option, does that card reach the player's hand, field, Graveyard or banished zone within their next decisions? On identical choices, the old build gave 15.2% and 16.2% on two seed blocks, and the final build gave 1,624 of 1,624 (block 80980000). My first version of this check compared labels with rows, and it passed on the old build too, so it was discarded. Misses on intermediate builds were Equip Spells that also appear in Power Tool Dragon's pick-three prompts, and, on one block, cases that fit an opponent's Trap Dustshoot or Phoenix Wing Wind Blast.
+
+**Left open by decision, below the merge bar:**
+
+- **The selected-card audit accepts two same-code cards aliased to one row.** Sol reproduced this in a unit harness. No binder path is known to produce it, and fixtures assert distinct rows.
+- **Painful Choice** (74191942) offers own Deck cards to the opponent, which would void. It is limit 0, and the loader rejected a deck containing it, so no legal deck reaches it. This corrects the wider "no pool card" wording above: Sol's stronger search still is not proof.
+- **A void loses its whole cell,** including other games in that cell, and no pool game has voided this way.
+- **`oppo_info=True` still leaks Deck order** with legal decks. Edison play must not use it.
+- **Morale Boost's Lua error** (`c93671934.lua:30`) fails its worker if reached. It is in no gauntlet or fixture list, and it is not fixed.
 
 ## Not verified, and open points
 
