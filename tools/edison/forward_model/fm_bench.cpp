@@ -61,7 +61,7 @@ void install_search_pair(std::map<std::string, std::string> &args) {
   g_pair_config.halving = false;
   g_pair_config.seed = 86005000;
   g_pair_log = open(args.at("search-log").c_str(), O_WRONLY | O_CREAT | O_APPEND | O_TRUNC, 0644);
-  g_search_pair = [](const Game &g, const Pos &pos, int viewer, FmEnv *a, TrueDuel &ta, const Snapshot &sa, FmEnv *b, TrueDuel &tb, const Snapshot &sb, const AssumedList &assumed) {
+  g_search_pair = [](const Game &g, const Pos &pos, int viewer, FmEnv *a, TrueDuel &ta, const Snapshot &sa, FmEnv *b, TrueDuel &tb, const Snapshot &sb, const AssumedList &assumed, int family) {
     static ednet::Scratch scratch;
     static bool ready = false;
     const char *problem = nullptr;
@@ -72,7 +72,7 @@ void install_search_pair(std::map<std::string, std::string> &args) {
     long worlds_a = 0, worlds_b = 0;
     std::string exact_a = search_answer(a, ta.memory, ta.baseline, sa, viewer, assumed, scratch, &close_a, &chosen_a, &worlds_a);
     std::string exact_b = search_answer(b, tb.memory, tb.baseline, sb, viewer, assumed, scratch, &close_b, &chosen_b, &worlds_b);
-    dprintf(g_pair_log, "{\"game\":%d,\"index\":%d,\"viewer\":%d,\"deck0\":\"%s\",\"deck1\":\"%s\",\"exact\":%d,\"close\":%d,\"chosen\":%d,\"worlds\":[%ld,%ld]}\n", pos.game, pos.index, viewer, g.deck0.c_str(),
+    dprintf(g_pair_log, "{\"family\":%d,\"game\":%d,\"index\":%d,\"viewer\":%d,\"deck0\":\"%s\",\"deck1\":\"%s\",\"exact\":%d,\"close\":%d,\"chosen\":%d,\"worlds\":[%ld,%ld]}\n", family, pos.game, pos.index, viewer, g.deck0.c_str(),
             g.deck1.c_str(), exact_a == exact_b, close_a == close_b, chosen_a == chosen_b, worlds_a, worlds_b);
   };
 }

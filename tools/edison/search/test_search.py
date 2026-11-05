@@ -132,6 +132,10 @@ def pair_run(label, binary, per_cell, workers, budget, depth, mutant=None):
         command += ["--mutant", mutant]
     subprocess.run(command, cwd=sc.SCRIPTS, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     rows = [json.loads(line) for line in log.read_text().splitlines()]
+    return {family: pair_counts([r for r in rows if r["family"] == code]) for family, code in (("r4", 0), ("r4w_same_timeline", 1), ("r4w_private_difference", 2))}
+
+
+def pair_counts(rows):
     searched = [r for r in rows if r["worlds"][0] and r["worlds"][1]]
     return {"pairs": len(rows), "both_searched": len(searched), "one_refused": sum(bool(r["worlds"][0]) != bool(r["worlds"][1]) for r in rows),
             "exact_same": sum(r["exact"] for r in searched), "rounded_same": sum(r["close"] for r in searched), "chosen_same": sum(r["chosen"] for r in searched),
@@ -139,7 +143,7 @@ def pair_run(label, binary, per_cell, workers, budget, depth, mutant=None):
 
 
 def stage_privacy(args, names):
-    """Two natural duels with one public history, built by the forward model's R4 rig on its corpus (seeds 85100000-85141015, read not replayed by policy)."""
+    """Two natural duels with one public history, built by the forward model's R4 and R4W rigs on its corpus (read, not replayed by policy)."""
     corpus = sc.ROOT / "build/forward_model/corpus"
     if not (corpus / "games.txt").exists():
         raise SystemExit("needs the forward model's corpus: collect_corpus.py")

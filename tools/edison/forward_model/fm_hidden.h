@@ -218,7 +218,8 @@ inline void start_true_duel(TrueDuel &t) {
 inline void stop_true_duel() { g_message_tap = nullptr; }
 
 // Set by the search's privacy test: called on every accepted pair of natural duels with one public history.
-inline std::function<void(const Game &, const Pos &, int, FmEnv *, TrueDuel &, const Snapshot &, FmEnv *, TrueDuel &, const Snapshot &, const AssumedList &)> g_search_pair;
+// family is 0 for R4's pairs, 1 for R4W's, 2 for R4W's where the opponent's private timelines differ.
+inline std::function<void(const Game &, const Pos &, int, FmEnv *, TrueDuel &, const Snapshot &, FmEnv *, TrueDuel &, const Snapshot &, const AssumedList &, int)> g_search_pair;
 
 inline void build_true_duel(const Game &g, int prefix, int viewer, TrueDuel &t, bool record_obs) {
   t.e = new_env(g, env_seed_of(g));
@@ -862,7 +863,7 @@ inline void redeal_position(const std::vector<Game> &games, const Pos &pos, int 
     }
 
     if (g_search_pair) {
-      g_search_pair(g, pos, viewer, e, *t, snap, w, *wt, alt, assumed);
+      g_search_pair(g, pos, viewer, e, *t, snap, w, *wt, alt, assumed, 0);
       snapshot_restore(snap);
     }
     // R4 non-interference. World A is the real duel, world B the natural duel with other hidden cards
@@ -1098,6 +1099,10 @@ inline void redeal_position(const std::vector<Game> &games, const Pos &pos, int 
     o.w_skipped_prompts += skipped;
     snapshot_take(alt);
     bool differs_privately = extra > 0 || skipped > 0;
+    if (g_search_pair) {
+      g_search_pair(g, pos, viewer, e, *t, snap, w, *wt, alt, assumed, differs_privately ? 2 : 1);
+      snapshot_restore(snap);
+    }
     try {
       for (int seed_i = 0; seed_i < 2; ++seed_i) {
         uint64_t deal_seed = mix(mix(y, 29), seed_i), policy = mix(mix(y, 31), seed_i);

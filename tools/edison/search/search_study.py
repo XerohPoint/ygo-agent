@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Search against the same network without search, on the gauntlet's neighbouring pairs in both seats.
 
-  pilot      seeds 86100000-86199999: compares settings, to choose what the final test will use
+  pilot      compares settings, to choose what the final test will use. Seeds 86100000-86199999 ran on the deals before Sol's fixes, 86300000 on after
   cross      search on one net against another net without search, beside the same two nets without search
   report D   summarises the games under build/edison-search/D
 """
@@ -84,19 +84,19 @@ def splits(games):
 def pilot(args):
     names = sc.write_registry()
     all_cells = cells(names)
-    plain_lines = [sc.job_line(f"p{i}", d0, d1, PILOT_SEED + i // 2, -1, NETS[i % 3]) for i, (d0, d1, seat) in enumerate(all_cells)]
-    plain = sc.play(plain_lines, sc.OUT / "pilot-plain", args.workers)
+    plain_lines = [sc.job_line(f"p{i}", d0, d1, args.seed + i // 2, -1, NETS[i % 3]) for i, (d0, d1, seat) in enumerate(all_cells)]
+    plain = sc.play(plain_lines, sc.OUT / f"{args.tag}-plain", args.workers)
     results = {}
     for label in args.configs or PILOT:
         budget, depth, candidates, z = PILOT[label]
-        lines = [sc.job_line(f"g{i}", d0, d1, PILOT_SEED + i // 2, seat, NETS[i % 3], budget, depth, candidates, z, 1, 1000 + i, 0) for i, (d0, d1, seat) in enumerate(all_cells)]
-        games = sc.play(lines, sc.OUT / f"pilot-{label}", args.workers)
+        lines = [sc.job_line(f"g{i}", d0, d1, args.seed + i // 2, seat, NETS[i % 3], budget, depth, candidates, z, 1, 1000 + i, 0) for i, (d0, d1, seat) in enumerate(all_cells)]
+        games = sc.play(lines, sc.OUT / f"{args.tag}-{label}", args.workers)
         results[label] = summarise(list(games.values()))
         paired = [(games[f"g{i}"], plain[f"p{i}"]) for i in range(len(all_cells)) if games[f"g{i}"]["status"] == "OK" and plain[f"p{i}"]["status"] == "OK"]
         seat_base = sum(p["winner"] == g["search_seat"] for g, p in paired) / max(1, len(paired))
         results[label]["same_seed_plain_rate"] = round(100 * seat_base, 2)
         print(json.dumps({label: results[label]}), flush=True)
-        (sc.OUT / "pilot-summary.json").write_text(json.dumps(results, indent=1) + "\n")
+        (sc.OUT / f"{args.tag}-summary.json").write_text(json.dumps(results, indent=1) + "\n")
 
 
 def cross(args):
@@ -135,6 +135,8 @@ def main():
     p = commands.add_parser("pilot")
     p.add_argument("--workers", type=int, default=8)
     p.add_argument("--configs", nargs="*")
+    p.add_argument("--seed", type=int, default=PILOT_SEED)
+    p.add_argument("--tag", default="pilot")
     p.set_defaults(run=pilot)
     c = commands.add_parser("cross")
     c.add_argument("--workers", type=int, default=8)
