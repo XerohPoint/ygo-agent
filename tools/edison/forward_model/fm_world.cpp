@@ -3,8 +3,13 @@
 // How failure inside a sampled world stays inside it. Everything a duel touches is in the arena, and a
 // restore replaces all of it, allocator included. So any way out of a core call is fine, however much
 // it left half done: return, C++ throw, or a signal handler's siglongjmp out of the core or Lua. Only
-// process-wide state could survive a restore, and there is little: stdio (pinned to static storage and
-// checked for markers, see Guard), the signal state below, and the core's static function pointers.
+// process-wide state could survive a restore, and there is little: stdio (our own stream, captured during a
+// guard, see pin_stdio), the signal state below, and the core's static function pointers.
+//
+// One process-wide cost for the host: this installs handlers for SIGSEGV, SIGBUS, SIGFPE, SIGILL, SIGABRT and
+// SIGVTALRM, an alternate signal stack, and a periodic ITIMER_VIRTUAL, none restored when a world closes. Outside
+// a guard the timer does nothing and a fatal signal stays fatal, after a best-effort report that is not
+// async-signal-safe. A host that needs those for itself must not share a process with this.
 #include "fm_world.h"
 
 #include <execinfo.h>
@@ -38,7 +43,9 @@ bool g_referee_alive = false;
 
 void on_guard_signal(int sig, siginfo_t *info, void *context) {
   if (sig == SIGVTALRM) {
-    if (!g_guard_armed || !g_active) return;
+    // Wait out glibc's allocator, as jumping from there leaves its lock held. All other code in the guard,
+    // arena on or off, may be left at any point.
+    if (!g_guard_armed || g_in_libc_alloc) return;
     if (g_watch_epoch != g_guard_epoch) {
       g_watch_epoch = g_guard_epoch;
       g_watch_ticks = 0;
@@ -99,14 +106,34 @@ char g_last_message[320] = {0};
 // left, and only a restore makes it usable.
 template <typename F>
 VoidReason guarded(F &&call) {
-  char *stdout_mark = stdout->_IO_write_ptr;
+  // Anything already printed goes out first. From here to the end of the guard, printed bytes are captured.
+  fflush(stdout);
+  g_stdout_captured = 0;
+  g_stdout_capturing = true;
   long diagnostics = g_diagnostics;
   VoidReason reason = VoidReason::kNone;
+  auto finish = [&](VoidReason found) {
+    // Every way out comes here, so a marker printed before a throw or a signal is dropped, not emitted later.
+    fflush(stdout);
+    g_stdout_capturing = false;
+    if (found != VoidReason::kNone) return found;
+    if (g_diagnostics != diagnostics) {
+      snprintf(g_last_message, sizeof g_last_message, "%s", g_last_diagnostic);
+      return VoidReason::kLuaError;
+    }
+    // Production prints these markers and carries on with a blank row. Its workers fail closed by reading
+    // their output.
+    if (g_stdout_captured) {
+      snprintf(g_last_message, sizeof g_last_message, "%s", g_stdout_text);
+      return VoidReason::kNativeDiagnostic;
+    }
+    return VoidReason::kNone;
+  };
   ++g_guard_epoch;
   if (sigsetjmp(g_guard_jump, 0)) {
     g_active = false;
     snprintf(g_last_message, sizeof g_last_message, "signal %d", int(g_guard_signal));
-    return g_guard_signal == SIGVTALRM ? VoidReason::kHang : VoidReason::kFatalSignal;
+    return finish(g_guard_signal == SIGVTALRM ? VoidReason::kHang : VoidReason::kFatalSignal);
   }
   g_guard_armed = 1;
   try {
@@ -120,21 +147,7 @@ VoidReason guarded(F &&call) {
     reason = VoidReason::kEnvironmentThrow;
   }
   g_guard_armed = 0;
-  if (reason != VoidReason::kNone) return reason;
-  if (g_diagnostics != diagnostics) {
-    snprintf(g_last_message, sizeof g_last_message, "%s", g_last_diagnostic);
-    return VoidReason::kLuaError;
-  }
-  // Production prints these markers and carries on with a blank row. Its workers fail closed by
-  // reading their output. Here the text is still in the static stdio buffer: read it and drop it.
-  if (stdout->_IO_write_ptr != stdout_mark) {
-    size_t n = std::min<size_t>(stdout->_IO_write_ptr - stdout_mark, sizeof g_last_message - 1);
-    std::memcpy(g_last_message, stdout_mark, n);
-    g_last_message[n] = 0;
-    stdout->_IO_write_ptr = stdout_mark;
-    return VoidReason::kNativeDiagnostic;
-  }
-  return VoidReason::kNone;
+  return finish(reason);
 }
 
 void fill_observation(FmEnv *e, Observation *out) {

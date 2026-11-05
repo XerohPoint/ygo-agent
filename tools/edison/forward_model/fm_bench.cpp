@@ -251,7 +251,7 @@ int cmd_verify(const std::vector<Game> &games) {
            t.field_bad[1], t.field_bad[2], t.field_bad[3], t.field_bad[4], t.field_bad[5], digests.empty() ? "false" : "true", t.stamp_bad,
            t.diagnostics);
   emit_kv(buf);
-  return t.games_bad != 0 || t.stamp_bad != 0;
+  return t.games_bad != 0 || t.stamp_bad != 0 || t.diagnostics != 0;
 }
 
 // replay: the cost of recreating a position from seed plus action prefix.
@@ -1247,11 +1247,11 @@ int cmd_statics(const std::vector<Game> &games) {
 // randomly to the end, chaining every observation byte and the privileged deep hash into a digest.
 constexpr int kVoidSeeds = 512;
 struct VoidRun {
-  uint8_t status[kVoidSeeds];       // 0 finished, 1 voided, 2 refused
+  uint8_t status[kVoidSeeds];       // 0 finished, 1 voided, 2 refused, 3 stopped by a cap or the decision limit
   uint8_t reason[kVoidSeeds];       // VoidReason of a void
   uint64_t digest[kVoidSeeds];
   long voids[int(VoidReason::kCount)];
-  long refused, finished, decisions, prefix_diagnostics;
+  long refused, finished, capped, truncated, decisions, prefix_diagnostics;
   char sample[200];
 };
 
@@ -1289,6 +1289,12 @@ void play_void_iteration(SearchWorld &world, uint64_t seed, const DealAssumption
     out.reason[i] = static_cast<uint8_t>(world.void_reason());
     ++out.voids[int(world.void_reason())];
     if (!out.sample[0]) snprintf(out.sample, sizeof out.sample, "%s", world.last_diagnostic());
+    return;
+  }
+  // A world counts as finished only if the rules ended it. Anything else is not a result to compare.
+  if (s != Status::kTerminal || world.truncated()) {
+    out.status[i] = 3;
+    (s == Status::kTerminal ? out.truncated : out.capped)++;
     return;
   }
   ++out.finished;
@@ -1356,7 +1362,7 @@ int cmd_void(const std::vector<Game> &games) {
       auto duel = build();
       auto world = duel->open_search(root.viewer);
       for (int i : order) {
-        if ((plant == "segv" || plant == "abort" || plant == "marker") && i % 16 == 3) {
+        if ((plant == "segv" || plant == "abort" || plant == "marker" || plant == "flush" || plant == "printthrow" || plant == "outsidearena") && i % 16 == 3) {
           // A real fault inside the guarded call, as a crash in the core, a failed native assert, or
           // production printing its fail-closed marker and carrying on would be.
           world->restore(SearchWorld::kRoot);
@@ -1365,6 +1371,22 @@ int cmd_void(const std::vector<Game> &games) {
             TestAccess::fault(*world, [] { *reinterpret_cast<volatile int *>(16) = 1; });
           else if (plant == "abort")
             TestAccess::fault(*world, [] { abort(); });
+          else if (plant == "flush")
+            TestAccess::fault(*world, [] {
+              fmt::println("Spec not found: flushed marker");
+              fflush(stdout);
+            });
+          else if (plant == "printthrow")
+            TestAccess::fault(*world, [] {
+              fmt::println("Spec not found: planted before a throw");
+              throw std::runtime_error("thrown after printing a marker");
+            });
+          else if (plant == "outsidearena")
+            TestAccess::fault(*world, [] {
+              Scope off(false);
+              timespec spin;
+              for (;;) clock_gettime(CLOCK_MONOTONIC, &spin);
+            });
           else
             TestAccess::fault(*world, [] { fmt::println("Spec not found: planted"); });
           run.status[i] = 1;
@@ -1410,11 +1432,11 @@ int cmd_void(const std::vector<Game> &games) {
   char buf[1200];
   snprintf(buf, sizeof buf,
            "{\"void_test\":\"%s\",\"mutant\":\"%s\",\"planted_card\":%u,\"game\":\"%s/%s seed=%u env=%d\",\"root_index\":%d,\"viewer\":%d,"
-           "\"seeds\":%d,\"finished\":%ld,\"refused\":%ld,\"voids\":{\"lua_error\":%ld,\"environment_throw\":%ld,\"native_diagnostic\":%ld,"
+           "\"seeds\":%d,\"finished\":%ld,\"capped\":%ld,\"truncated\":%ld,\"refused\":%ld,\"voids\":{\"lua_error\":%ld,\"environment_throw\":%ld,\"native_diagnostic\":%ld,"
            "\"fatal_signal\":%ld,\"hang\":%ld},\"clean_run_compared\":%zu,\"clean_status_differences\":%ld,\"clean_digest_differences\":%ld,"
            "\"voids_reproduced_alone\":%zu,\"void_reproduce_differences\":%ld,\"true_game_finished_after_search\":%d,\"sample\":\"%.80s\"}",
            plant.c_str(), arg("mutant", "none").c_str(), planted, g.deck0.c_str(), g.deck1.c_str(), g.seed, g.env, root.index, root.viewer, seeds,
-           mixed.finished, mixed.refused, mixed.voids[int(VoidReason::kLuaError)], mixed.voids[int(VoidReason::kEnvironmentThrow)],
+           mixed.finished, mixed.capped, mixed.truncated, mixed.refused, mixed.voids[int(VoidReason::kLuaError)], mixed.voids[int(VoidReason::kEnvironmentThrow)],
            mixed.voids[int(VoidReason::kNativeDiagnostic)], mixed.voids[int(VoidReason::kFatalSignal)], mixed.voids[int(VoidReason::kHang)],
            clean_order.size(), status_bad, digest_bad, void_order.size(), reproduce_bad, mixed.prefix_diagnostics == 0, mixed.sample);
   emit_kv(buf);
@@ -1592,6 +1614,7 @@ int main(int argc, char **argv) {
     std::string name = arg("mutant", "none");
     static const std::map<std::string, Mutant> kinds = {
         {"none", Mutant::None}, {"leak-hand", Mutant::LeakHand}, {"leak-seed", Mutant::LeakSeed}, {"leak-order", Mutant::LeakOrder},
+        {"relax-set", Mutant::RelaxSet}, {"refuse-relate", Mutant::RefuseRelate}, {"stay-attack-state", Mutant::StayAttackState},
         {"rollback-history", Mutant::RollbackHistory}, {"rollback-cursor", Mutant::RollbackCursor}, {"rollback-reveal", Mutant::RollbackReveal},
         {"rollback-bind", Mutant::RollbackBind}, {"rollback-rng", Mutant::RollbackRng}};
     g_mutant = kinds.at(name);
@@ -1624,6 +1647,9 @@ int main(int argc, char **argv) {
   }
   if (cmd == "construct") return cmd_construct(games, g_args);
   if (cmd == "uniform") return cmd_uniform(games, g_args);
+  if (cmd == "rules") return cmd_rules(games, g_args);
+  if (cmd == "setfixture") return cmd_setfixture(g_args);
+  if (cmd == "handtrap") return cmd_handtrap(games, g_args);
   if (cmd == "deepdiff") return cmd_deepdiff(games);
   if (cmd == "statics") return cmd_statics(games);
   if (cmd == "void") return cmd_void(games);

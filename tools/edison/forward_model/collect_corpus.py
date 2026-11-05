@@ -6,7 +6,7 @@ and the bytes of every observation field at every decision of every game.
 
 Pairs: each of the 21 registry lists against its next neighbour, in both seats (42 cells).
 Policy: production's Heuristic in both seats, seeded as tools/edison/learner/actor.py seeds it.
-Seeds: 85100000 + cell * 1000 + env. Only 85100000-85199999 may be used here.
+Seeds: 85400000 + cell * 1000 + env. Only 85400000-85499999 may be used here.
 
 Output, under --output:
   registry.txt  name and .ydk path of each list, read by the native bench
@@ -29,7 +29,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "ygoenv"))
 import decks as deck_registry  # noqa: E402
 
-SEED_FIRST, SEED_LAST = 85100000, 85199999
+SEED_FIRST, SEED_LAST = 85400000, 85499999
 CERTIFIED_MODULE = "b8fcd2bcf7774ae4"
 MODULE = ROOT / "ygoenv/ygoenv/ygopro/ygopro_ygoenv.cpython-310-x86_64-linux-gnu.so"
 MAX_STEPS = 10000

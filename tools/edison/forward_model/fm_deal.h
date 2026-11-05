@@ -15,6 +15,8 @@
 //   - Face-down banished cards are not re-dealt. An opposing one the viewer has not seen would keep the
 //     true identity out of the pool, so the pool would depend on it: the deal is refused
 //     (kFaceDownBanished). DealReport::facedown_banished_not_redealt counts the rest.
+//   - A face-down monster put there by a Normal Set can hold only a card that Set could have held: its Level
+//     must match the public Tributes paid. check_set_rules.py holds the facts these rules rest on.
 #pragma once
 #include <array>
 
@@ -24,7 +26,7 @@ namespace fm {
 
 #ifdef FM_MUTANTS
 // Negative controls, compiled only into fm_bench_mutant. Set by the --mutant argument.
-enum class Mutant { None, LeakHand, LeakSeed, LeakOrder, RollbackHistory, RollbackCursor, RollbackReveal, RollbackBind, RollbackRng };
+enum class Mutant { None, LeakHand, LeakSeed, LeakOrder, RelaxSet, RefuseRelate, StayAttackState, RollbackHistory, RollbackCursor, RollbackReveal, RollbackBind, RollbackRng };
 inline Mutant g_mutant = Mutant::None;
 #endif
 
@@ -42,6 +44,12 @@ struct SlotState {
   card *reason_card, *pre_reason_card;
   effect *reason_effect, *pre_reason_effect;
   card::sendto_param_t sendto;
+  card_set material;  // Tributes paid to put this slot's card there: public, and they belong to the slot.
+  // What this slot's card did this turn. The core's card constructor leaves these bytes unset and only clears them when a
+  // card reaches the field or a turn starts, so a card from the Deck can hold anything. Left on the object, they could
+  // decide whether the dealt card may change position, which depends on heap residue.
+  uint8 attack_announce_count, announce_count, attacked_count, attack_all_target, attack_controler, direct_attackable;
+  card::effect_count indestructible;
 };
 
 inline SlotState capture_slot(card *c) {
@@ -75,6 +83,14 @@ inline SlotState capture_slot(card *c) {
   s.turn_counter = c->turn_counter;
   s.cardid = c->cardid;
   s.sendto = c->sendto_param;
+  s.material = c->material_cards;
+  s.attack_announce_count = c->attack_announce_count;
+  s.announce_count = c->announce_count;
+  s.attacked_count = c->attacked_count;
+  s.attack_all_target = c->attack_all_target;
+  s.attack_controler = c->attack_controler;
+  s.direct_attackable = c->direct_attackable;
+  s.indestructible = c->indestructable_effects;
   return s;
 }
 
@@ -107,7 +123,47 @@ inline void occupy_slot(card *c, const SlotState &s, bool inherit_cardid) {
   c->turn_counter = s.turn_counter;
   if (inherit_cardid) c->cardid = s.cardid;
   c->sendto_param = s.sendto;
+  c->material_cards = s.material;
+#ifdef FM_MUTANTS
+  if (g_mutant != Mutant::StayAttackState) {
+#endif
+    c->attack_announce_count = s.attack_announce_count;
+    c->announce_count = s.announce_count;
+    c->attacked_count = s.attacked_count;
+    c->attack_all_target = s.attack_all_target;
+    c->attack_controler = s.attack_controler;
+    c->direct_attackable = s.direct_attackable;
+    c->indestructable_effects = s.indestructible;
+#ifdef FM_MUTANTS
+  }
+#endif
+  for (card *tribute : s.material) {
+    if (tribute->current.reason_card == s.holder) tribute->current.reason_card = c;
+    if (tribute->previous.reason_card == s.holder) tribute->previous.reason_card = c;
+  }
   c->q_cache.clear_cache();
+}
+
+// What each slot's card did this turn, walked by slot. A deal must leave this unchanged: it belongs to the slot.
+inline std::vector<uint32_t> slot_attack_state(FmEnv *e) {
+  std::vector<uint32_t> out;
+  auto *f = e->core()->game_field;
+  auto add = [&](const card *c) {
+    if (!c) {
+      out.push_back(0xffffffffu);
+      return;
+    }
+    out.push_back(uint32_t(c->attack_announce_count) | uint32_t(c->announce_count) << 8 | uint32_t(c->attacked_count) << 16 | uint32_t(c->direct_attackable) << 24);
+    out.push_back(uint32_t(c->attack_all_target) | uint32_t(c->attack_controler) << 8);
+    out.push_back(static_cast<uint32_t>(c->indestructable_effects.size()));
+  };
+  for (int p = 0; p < 2; ++p) {
+    for (const card *c : f->player[p].list_main) add(c);
+    for (const card *c : f->player[p].list_hand) add(c);
+    for (const card *c : f->player[p].list_mzone) add(c);
+    for (const card *c : f->player[p].list_szone) add(c);
+  }
+  return out;
 }
 
 inline card *&slot_ref(field *f, const SlotState &s) {
@@ -168,22 +224,61 @@ inline int rebuild_card_sets(duel *d) {
   return rebuilt;
 }
 
-// The core sorts offered effects by effect id, and a card's in-range effects take fresh ids from the
-// duel's counter each time it arrives somewhere (card::enable_field_effect). So an id says when a card
-// arrived, and that belongs to the slot. A dealt card must take the slot's time: left alone it would keep
-// the ids of where it truly was, and option order in a sampled world's prompts would read the true
-// history. R4 caught this: option order differed between worlds with identical slots. The new ids start
-// from the slot's arrival (its fieldid, from the same counter) and follow the core's own order.
-inline void take_slot_effect_ids(card *c, uint32_t arrival) {
-  uint32_t next = arrival + 1;
-  for (auto &it : c->single_effect)
-    if (it.second->is_flag(EFFECT_FLAG_SINGLE_RANGE) && it.second->in_range(c)) it.second->id = next++;
-  for (auto &it : c->field_effect)
-    if (it.second->in_range(c)) it.second->id = next++;
-  if (c->current.location == LOCATION_SZONE)
-    for (auto &it : c->equip_effect) it.second->id = next++;
-  for (auto &it : c->target_effect)
-    if (it.second->in_range(c)) it.second->id = next++;
+// The core sorts offered effects by effect id. An id has two lives. Each effect gets one when its card is created at
+// the start of the duel, in Deck order. Then a card's in-range effects take fresh ones from the duel's counter each time
+// it arrives somewhere (card::enable_field_effect), so such an id says when it arrived. Both belong to the slot: a dealt
+// card left alone keeps the ids of where it truly was, and option order in a sampled world's prompts reads the true
+// opening order and history. R4 caught each part of this in turn.
+//
+// So every effect in the duel is put in order, and handed back the same id values in that order, since only order is
+// ever read from an id. Oldest first: effects that kept their first id, by the cardid of the slot their card is in, as a
+// natural duel with this layout would have them. Then the rest by time: a public card's by its own id, a dealt card's
+// in-range effects by the slot's arrival (its fieldid, from the same counter). Writing new ids near the arrival would not
+// do: the gap before the next arrival is how many effects the true card had.
+//
+// One more thing lives on the effect. A conditional effect takes a fresh id the first time its condition holds after it
+// last did not (effect::is_available), and the flag saying so records what was true of that object in the true duel:
+// whether a Swap Frog in hand had its Summon open last turn, say. A dealt card starts with the flag clear.
+inline void order_effects_by_arrival(duel *d, const std::vector<card *> &occupants, const std::vector<SlotState> &slots, uint32_t load_id_limit) {
+  Scope off(false);
+  struct Keyed {
+    uint64_t key;
+    effect *e;
+  };
+  constexpr uint64_t kByTime = uint64_t(1) << 60;
+  std::vector<Keyed> keyed;
+  std::vector<effect *> dealt;
+  for (size_t i = 0; i < occupants.size(); ++i) {
+    card *c = occupants[i];
+    bool arrived = slots[i].location != LOCATION_DECK;
+    uint64_t at_arrival = kByTime + (uint64_t(slots[i].fieldid) << 8) + 1, at_load = uint64_t(c->cardid) << 32;
+    auto add = [&](effect *e, bool in_range) {
+      e->status &= ~EFFECT_STATUS_AVAILABLE;
+      dealt.push_back(e);
+      keyed.push_back({arrived && in_range ? at_arrival++ : at_load++, e});
+    };
+    for (auto &it : c->single_effect) add(it.second, it.second->is_flag(EFFECT_FLAG_SINGLE_RANGE) && it.second->in_range(c));
+    for (auto &it : c->field_effect) add(it.second, it.second->in_range(c));
+    for (auto &it : c->equip_effect) add(it.second, c->current.location == LOCATION_SZONE);
+    for (auto &it : c->target_effect) add(it.second, it.second->in_range(c));
+    for (auto &it : c->xmaterial_effect) add(it.second, false);
+  }
+  std::sort(dealt.begin(), dealt.end());
+  for (effect *e : d->effects) {
+    if (std::binary_search(dealt.begin(), dealt.end(), e)) continue;
+    if (e->id >= load_id_limit) {
+      keyed.push_back({kByTime + (uint64_t(e->id) << 8), e});
+      continue;
+    }
+    card *handler = e->get_handler();
+    keyed.push_back({(uint64_t(handler ? handler->cardid : 0) << 32) + e->id, e});
+  }
+  std::vector<uint32_t> ids;
+  ids.reserve(keyed.size());
+  for (const auto &k : keyed) ids.push_back(k.e->id);
+  std::sort(ids.begin(), ids.end());
+  std::sort(keyed.begin(), keyed.end(), [](const Keyed &a, const Keyed &b) { return a.key < b.key; });
+  for (size_t i = 0; i < keyed.size(); ++i) keyed[i].e->id = ids[i];
 }
 
 // assignment[i] is the object that takes over the slot currently held by holders[i]. Every object's
@@ -191,7 +286,7 @@ inline void take_slot_effect_ids(card *c, uint32_t arrival) {
 // keeps same-code effects in registration order and lists options in that order, so keeping a card's old
 // place in those lists would carry where it truly was into a sampled world's prompts.
 inline int apply_assignment(duel *d, const std::vector<card *> &holders, const std::vector<card *> &assignment,
-                            bool inherit_cardid) {
+                            bool inherit_cardid, uint32_t load_id_limit) {
   field *f = d->game_field;
   std::vector<SlotState> slots;
   slots.reserve(holders.size());
@@ -202,10 +297,8 @@ inline int apply_assignment(duel *d, const std::vector<card *> &holders, const s
     occupy_slot(assignment[i], slots[i], inherit_cardid);
     slot_ref(f, slots[i]) = assignment[i];
   }
-  for (size_t i = 0; i < holders.size(); ++i) {
-    assignment[i]->apply_field_effect();
-    if (slots[i].location != LOCATION_DECK) take_slot_effect_ids(assignment[i], slots[i].fieldid);
-  }
+  for (size_t i = 0; i < holders.size(); ++i) assignment[i]->apply_field_effect();
+  order_effects_by_arrival(d, assignment, slots, load_id_limit);
   f->refresh_player_info(0);
   f->refresh_player_info(1);
   return inherit_cardid ? rebuild_card_sets(d) : 0;
@@ -228,6 +321,10 @@ struct PublicMemory {
   long tap_confirms = 0, tap_decktops = 0, tap_unmatched = 0;
   // One flag per history ring row: was the row's card public to the other seat when it was written?
   std::array<uint8_t, 64> row_public[2] = {};
+  // A Normal Set with no Tribute, by its slot's field id: could a Set procedure have allowed a higher Level?
+  // A Set procedure's condition reads public board counts at the moment of the Set.
+  std::unordered_map<uint32_t, uint8_t> set_procedure_open;
+  int previous_monsters[2] = {0, 0};
 };
 
 inline card *card_at(field *f, int controller, int location, int sequence) {
@@ -293,6 +390,20 @@ inline int face_down_on_field(const player_info &pl) {
 // Run at every decision of the true duel, before it is acted on.
 inline void note_public(FmEnv *e, PublicMemory &m) {
   field *f = e->core()->game_field;
+  {
+    // Blackwing - Sirocco the Dawn is the only Set procedure on these lists (check_set_rules.py holds that): no
+    // monsters of your own, and the opponent has one. That is read from the last decision's public board.
+    int monsters_now[2] = {0, 0};
+    for (int p = 0; p < 2; ++p)
+      for (card *c : f->player[p].list_mzone) monsters_now[p] += c != nullptr;
+    for (int p = 0; p < 2; ++p)
+      for (card *c : f->player[p].list_mzone)
+        if (c && (c->current.position & POS_FACEDOWN) && (c->summon_info & SUMMON_TYPE_NORMAL) && c->material_cards.empty() &&
+            !m.set_procedure_open.count(c->fieldid))
+          m.set_procedure_open[c->fieldid] = m.previous_monsters[p] == 0 && m.previous_monsters[1 - p] > 0;
+    m.previous_monsters[0] = monsters_now[0];
+    m.previous_monsters[1] = monsters_now[1];
+  }
   for (int p = 0; p < 2; ++p) {
     auto &pl = f->player[p];
     int set_now = face_down_on_field(pl), deck_now = static_cast<int>(pl.list_main.size());
@@ -343,13 +454,19 @@ inline void note_public(FmEnv *e, PublicMemory &m) {
 struct WorldBaseline {
   std::vector<int> effects = std::vector<int>(4096, -1);  // effects on each object at the start of the duel
   std::vector<uint8_t> main_origin = std::vector<uint8_t>(4096, 0);
+  std::vector<uint32_t> set_procedure_codes;  // codes with a Set procedure, from the cards' own effects at load
+  uint32_t load_id_limit = 0;                 // every id a card got at creation is below this
 };
 
 inline void capture_baseline(FmEnv *e, WorldBaseline &b) {
   for (card *c : e->core()->cards) {
     b.effects[c->cardid] = static_cast<int>(c->indexer.size());
     b.main_origin[c->cardid] = c->data.code && !c->is_extra_deck_monster();
+    for (const auto &kv : c->single_effect)
+      if (kv.second->code == EFFECT_SET_PROC || kv.second->code == EFFECT_LIMIT_SET_PROC) b.set_procedure_codes.push_back(c->data.code);
   }
+  std::sort(b.set_procedure_codes.begin(), b.set_procedure_codes.end());
+  b.load_id_limit = e->core()->game_field->infos.field_id;
 }
 
 struct AssumedList {
@@ -518,33 +635,140 @@ inline bool references_hidden(FmEnv *e, const HiddenSet &hidden) {
   return false;
 }
 
-// Rule state that belongs to the object and a slot swap would not transfer. Reading it reads a hidden
-// card, which is why the only thing this may do is refuse the whole deal.
-inline bool carries_object_state(card *c, const WorldBaseline &baseline) {
-  if (!c->relations.empty() || !c->counters.empty() || c->equiping_target || !c->effect_target_cards.empty() ||
-      !c->effect_target_owner.empty() || !c->relate_effect.empty() || !c->equiping_cards.empty() ||
-      !c->xyz_materials.empty() || c->overlay_target || !c->material_cards.empty() || !c->battled_cards.empty() ||
-      !c->attacked_cards.empty() || !c->announced_cards.empty() || c->assume_type)
-    return true;
-  return baseline.effects[c->cardid] >= 0 && static_cast<int>(c->indexer.size()) != baseline.effects[c->cardid];
+// Rule state that belongs to the object and a slot swap would not transfer. Reading it reads a hidden card, which
+// is why the only thing this may do is refuse the whole deal. Returns what it found, or null. Not listed:
+// relate_effect, where only an entry in a live chain means anything (see stale_relation_refused), and
+// material_cards, which are public Tributes and move with the slot.
+inline const char *object_state_kind(card *c, const WorldBaseline &baseline) {
+  if (!c->relations.empty()) return "relations";
+  if (!c->counters.empty()) return "counters";
+  if (c->equiping_target || !c->equiping_cards.empty()) return "equip";
+  if (!c->effect_target_cards.empty() || !c->effect_target_owner.empty()) return "effect target";
+  if (!c->xyz_materials.empty() || c->overlay_target) return "overlay";
+  if (!c->battled_cards.empty()) return "battled";
+  if (!c->attacked_cards.empty() || !c->announced_cards.empty()) return "attacked";
+  if (c->assume_type) return "assume";
+  if (baseline.effects[c->cardid] >= 0 && static_cast<int>(c->indexer.size()) != baseline.effects[c->cardid]) return "added effect";
+  return nullptr;
+}
+inline const char *g_state_kind = "";
+
+// A chain entry on a card (card::create_relation) means something only while that chain is live: the core looks it
+// up by effect and chain id, and chain ids are never reused. The core also writes one when it merely offers a
+// private trigger, and does not take it off if the player declines. So a declined Gorz keeps one entry for as long as
+// it stays in hand. Refusing on that told a caller a hidden hand trap was there. A stale entry is cleared by the deal.
+// An entry whose chain is still live is refused, as moving the card would retarget it.
+using ChainKeys = std::vector<std::pair<effect *, uint16>>;
+inline ChainKeys live_chain_keys(duel *d) {
+  ChainKeys keys;
+  auto &core = d->game_field->core;
+  auto add = [&](const chain &ch) { keys.push_back({ch.triggering_effect, ch.chain_id}); };
+  for (const auto &ch : core.current_chain) add(ch);
+  for (const auto &ch : core.select_chains) add(ch);
+  for (const auto *list : {&core.continuous_chain, &core.solving_continuous, &core.sub_solving_continuous,
+                           &core.delayed_continuous_tp, &core.delayed_continuous_ntp, &core.desrep_chain,
+                           &core.new_fchain, &core.new_fchain_s, &core.new_ochain, &core.new_ochain_s,
+                           &core.new_fchain_b, &core.new_ochain_b, &core.new_ochain_h, &core.new_chains})
+    for (const auto &ch : *list) add(ch);
+  for (const auto &kv : core.quick_f_chain) add(kv.second);
+  std::sort(keys.begin(), keys.end());
+  return keys;
+}
+inline bool relation_is_live(const card *c, const ChainKeys &keys) {
+  for (const auto &entry : c->relate_effect) {
+    // An entry with no chain id was made by a script for an effect, not a chain: live while that effect is in one.
+    if (entry.second == 0) {
+      auto it = std::lower_bound(keys.begin(), keys.end(), std::make_pair(entry.first, uint16(0)));
+      if (it != keys.end() && it->first == entry.first) return true;
+    } else if (std::binary_search(keys.begin(), keys.end(), std::make_pair(entry.first, entry.second))) {
+      return true;
+    }
+  }
+  return false;
 }
 
 inline uint32_t type_of_code(uint32_t code) { return ygopro::cards_data_.at(code).type; }
-enum SlotClass : uint8_t { kFree = 0, kMonsterSlot = 1, kBackRowSlot = 2, kFieldSlot = 3 };
+inline uint32_t level_of_code(uint32_t code) { return ygopro::cards_data_.at(code).level & 0xff; }
 
-inline SlotClass class_of_slot(const card *slot) {
-  if (slot->current.location == LOCATION_MZONE) return kMonsterSlot;
-  if (slot->current.location == LOCATION_SZONE) return slot->current.sequence == 5 ? kFieldSlot : kBackRowSlot;
-  return kFree;
+// What the public facts allow in a slot. How a face-down monster got there, and how many Tributes it took, are public.
+enum SlotClass : uint8_t {
+  kFree = 0,             // Deck and hand: nothing public says what is there
+  kMonsterSlot,          // a face-down monster not put there by a Normal Set: any monster
+  kBackRowSlot,          // Spell and Trap zone: a Spell or Trap, not a Field Spell
+  kFieldSlot,            // Field Zone: a Field Spell
+  kNormalSetNoTribute,   // Level 4 or lower, or a Set procedure when one was open
+  kNormalSetOneTribute,  // Level 5 or 6
+  kNormalSetTwoTributes, // Level 7 or higher
+};
+struct SlotRule {
+  SlotClass cls = kFree;
+  bool procedure_open = false;
+};
+
+inline SlotRule rule_of_slot(const card *slot, const PublicMemory &m) {
+  SlotRule rule;
+  if (slot->current.location == LOCATION_SZONE) {
+    rule.cls = slot->current.sequence == 5 ? kFieldSlot : kBackRowSlot;
+  } else if (slot->current.location == LOCATION_MZONE) {
+    rule.cls = kMonsterSlot;
+#ifdef FM_MUTANTS
+    if (g_mutant == Mutant::RelaxSet) return rule;
+#endif
+    if (slot->summon_info & SUMMON_TYPE_NORMAL) {
+      size_t tributes = slot->material_cards.size();
+      rule.cls = tributes == 0 ? kNormalSetNoTribute : tributes == 1 ? kNormalSetOneTribute : tributes == 2 ? kNormalSetTwoTributes : kMonsterSlot;
+      auto it = m.set_procedure_open.find(slot->fieldid);
+      rule.procedure_open = it != m.set_procedure_open.end() && it->second;
+    }
+  }
+  return rule;
 }
-inline bool code_fits(uint32_t code, SlotClass cls) {
-  uint32_t type = type_of_code(code);
-  switch (cls) {
+
+inline bool rule_fits(uint32_t code, const SlotRule &rule, const WorldBaseline &baseline) {
+  uint32_t type = type_of_code(code), level = level_of_code(code);
+  bool can_normal_set = (type & TYPE_MONSTER) && !(type & (TYPE_RITUAL | TYPE_SPSUMMON | TYPE_TOKEN | TYPES_EXTRA_DECK));
+  switch (rule.cls) {
     case kMonsterSlot: return type & TYPE_MONSTER;
     case kBackRowSlot: return !(type & TYPE_MONSTER) && !(type & TYPE_FIELD);
     case kFieldSlot: return type & TYPE_FIELD;
+    case kNormalSetNoTribute:
+      return can_normal_set && (level <= 4 || (rule.procedure_open && std::binary_search(baseline.set_procedure_codes.begin(), baseline.set_procedure_codes.end(), code)));
+    case kNormalSetOneTribute: return can_normal_set && level >= 5 && level <= 6;
+    case kNormalSetTwoTributes: return can_normal_set && level >= 7;
     default: return true;
   }
+}
+
+// An independent reading of the hard rules, used only by tests, not by the deal: is what this viewer cannot see in
+// the opposing face-down zones something the public history allows? It works from each card's own data.
+inline int hard_rule_violations(FmEnv *e, int viewer, const PublicMemory &m, const WorldBaseline &baseline) {
+  int bad = 0;
+  auto &pl = e->core()->game_field->player[1 - viewer];
+  for (card *c : pl.list_mzone) {
+    if (!c || !(c->current.position & POS_FACEDOWN) || m.cls[viewer][c->cardid] != kUntracked) continue;
+    if (c->owner != 1 - viewer) continue;  // A deal refuses these, so no rule is applied to them.
+    if (!(c->data.type & TYPE_MONSTER)) {
+      ++bad;
+      continue;
+    }
+    if (!(c->summon_info & SUMMON_TYPE_NORMAL)) continue;
+    if (c->data.type & (TYPE_RITUAL | TYPE_SPSUMMON | TYPE_TOKEN)) ++bad;
+    int level = c->data.level & 0xff, tributes = static_cast<int>(c->material_cards.size());
+    int needed = level >= 7 ? 2 : level >= 5 ? 1 : 0;
+    if (tributes == needed) continue;
+    auto open = m.set_procedure_open.find(c->fieldid);
+    bool by_procedure = tributes == 0 && open != m.set_procedure_open.end() && open->second &&
+                        std::binary_search(baseline.set_procedure_codes.begin(), baseline.set_procedure_codes.end(), c->data.code);
+    if (!by_procedure) ++bad;
+  }
+  for (size_t i = 0; i < pl.list_szone.size(); ++i) {
+    card *c = pl.list_szone[i];
+    if (!c || !(c->current.position & POS_FACEDOWN) || m.cls[viewer][c->cardid] != kUntracked) continue;
+    if (c->owner != 1 - viewer || c->equiping_target) continue;  // Refused too: a foreign card, or a monster equipped face-down.
+    if (c->data.type & TYPE_MONSTER) ++bad;
+    else if ((i == 5) != bool(c->data.type & TYPE_FIELD)) ++bad;
+  }
+  return bad;
 }
 
 // The slots that are dealt and what the viewer may assume about them, read in one canonical order.
@@ -769,6 +993,41 @@ inline void after_true_step(FmEnv *e, PublicMemory &m, const RowMarker &marker) 
   }
 }
 
+// The core sorts a prompt's candidates with card_operation_sort, which breaks a tie between copies of one code by Deck
+// position. After a deal, option k must again be the k-th copy by position. Left in the old order, the same option would
+// take a copy from a different slot depending on the true Deck, so the Deck beneath would differ for the rest of the game.
+// R3 and R4 caught this: chains parted some turns after an own Deck search at the root.
+struct LiveOrder {
+  bool select_sorted = false, unselect_sorted = false;
+};
+inline LiveOrder capture_live_order(FmEnv *e) {
+  LiveOrder order;
+  if (!selection_prompt(e->msg())) return order;
+  auto &core = e->core()->game_field->core;
+  order.select_sorted = std::is_sorted(core.select_cards.begin(), core.select_cards.end(), card::card_operation_sort);
+  order.unselect_sorted = std::is_sorted(core.unselect_cards.begin(), core.unselect_cards.end(), card::card_operation_sort);
+  return order;
+}
+inline void restore_live_order(FmEnv *e, const LiveOrder &order) {
+  auto &core = e->core()->game_field->core;
+  if (order.select_sorted) std::sort(core.select_cards.begin(), core.select_cards.end(), card::card_operation_sort);
+  if (order.unselect_sorted) std::sort(core.unselect_cards.begin(), core.unselect_cards.end(), card::card_operation_sort);
+}
+
+inline bool own_deck_referenced(FmEnv *e, const HiddenSlots &h) {
+  auto &core = e->core()->game_field->core;
+  std::vector<card *> unseen;
+  bool live = selection_prompt(e->msg());
+  auto candidate = [&](card *c) {
+    for (const auto *list : {&core.select_cards, &core.unselect_cards, &core.must_select_cards})
+      if (live && std::find(list->begin(), list->end(), c) != list->end()) return true;
+    return false;
+  };
+  for (card *c : h.own_deck)
+    if (!candidate(c)) unseen.push_back(c);
+  return references_hidden(e, HiddenSet(unseen));
+}
+
 // The determinizer. Refusals produce no world and leave the duel untouched.
 inline DealReport determinize(FmEnv *e, int viewer, uint64_t seed, const PublicMemory &m, const WorldBaseline &baseline,
                               const AssumedList &assumed, bool inherit_cardid = true, DealPlan *out = nullptr) {
@@ -787,17 +1046,47 @@ inline DealReport determinize(FmEnv *e, int viewer, uint64_t seed, const PublicM
     rep.status = DealStatus::kPromptBinding;
     return rep;
   }
-  // Only opposing slots: those cards change identity under the pointer. The viewer's own Deck is the same
-  // set of objects in another order, so anything holding one of those objects still holds the right card.
+  // Opposing slots change identity under a pointer, so any pointer to one refuses. The viewer's Deck is the same set
+  // of objects in another order, so a candidate of the viewer's live prompt, whose card the viewer can see, may move
+  // with its pointer. Any other pointer into that Deck names a card the viewer has not seen, such as the top card an
+  // effect is about to Summon. It would carry the true card into the sampled world, so that refuses too.
   if (references_hidden(e, HiddenSet(h.opp_slots))) {
     rep.status = DealStatus::kCoreReference;
     return rep;
   }
-  for (card *c : h.opp_slots)
-    if (carries_object_state(c, baseline)) {
+  if (own_deck_referenced(e, h)) {
+    rep.status = DealStatus::kCoreReference;
+    return rep;
+  }
+  for (card *c : h.opp_slots) {
+    const char *kind = object_state_kind(c, baseline);
+    if (kind) {
+      g_state_kind = kind;
       rep.status = DealStatus::kHiddenObjectState;
       return rep;
     }
+  }
+  bool stale_relations = false;
+  {
+    ChainKeys keys = live_chain_keys(e->core());
+    for (card *c : h.opp_slots) {
+#ifdef FM_MUTANTS
+      if (g_mutant == Mutant::RefuseRelate && !c->relate_effect.empty()) {
+        g_state_kind = "relate effect";
+        rep.status = DealStatus::kHiddenObjectState;
+        return rep;
+      }
+#endif
+      if (c->relate_effect.empty()) continue;
+      if (relation_is_live(c, keys)) {
+        refuse_as("relation in a live chain");
+        snprintf(g_reference_detail, sizeof g_reference_detail, "card %u", c->data.code);
+        rep.status = DealStatus::kCoreReference;
+        return rep;
+      }
+      stale_relations = true;
+    }
+  }
 
   // The pool: the assumed list, minus every opposing Main Deck object outside the dealt slots. Those
   // objects are public, or banished face-down and seen, so their codes are known.
@@ -842,26 +1131,97 @@ inline DealReport determinize(FmEnv *e, int viewer, uint64_t seed, const PublicM
     for (card *c : h.opp_slots) codes.push_back(c->data.code);
   }
 #endif
-  // Constrained slots first, each drawing uniformly from the codes that fit, then the rest shuffled.
-  // Every valid assignment of the pool is equally likely, and nothing is rejected and retried.
-  std::vector<int> free_slots;
+  // Constrained slots first, then the rest shuffled. Slot rules can overlap, as a monster put face-down by an effect
+  // and a Normal Set both accept a low-Level card, so drawing slot by slot from what fits would not be uniform. Each
+  // slot draws in proportion to how many ways the remaining slots can still be filled. Every legal assignment of the
+  // pool is equally likely, and nothing is rejected and retried. The rules come from public facts about the slot.
+  std::vector<int> constrained, free_slots;
+  std::vector<SlotRule> rules;
+  std::vector<int> rule_index;
   std::vector<uint32_t> dealt(h.opp_slots.size(), 0);
   for (size_t i = 0; i < h.opp_slots.size(); ++i) {
-    SlotClass slot_class = class_of_slot(h.opp_slots[i]);
-    if (slot_class == kFree) {
+    SlotRule rule = rule_of_slot(h.opp_slots[i], m);
+    if (rule.cls == kFree) {
       free_slots.push_back(static_cast<int>(i));
       continue;
     }
-    std::vector<int> fits;
-    for (size_t k = 0; k < codes.size(); ++k)
-      if (code_fits(codes[k], slot_class)) fits.push_back(static_cast<int>(k));
-    if (fits.empty()) {
+    size_t r = 0;
+    while (r < rules.size() && (rules[r].cls != rule.cls || rules[r].procedure_open != rule.procedure_open)) ++r;
+    if (r == rules.size()) rules.push_back(rule);
+    constrained.push_back(static_cast<int>(i));
+    rule_index.push_back(static_cast<int>(r));
+  }
+  if (!constrained.empty()) {
+    // Which rules each pool entry fits, as a mask. Entries with the same mask are interchangeable here.
+    std::vector<int> mask_of(codes.size());
+    std::map<int, int> remaining;
+    for (size_t k = 0; k < codes.size(); ++k) {
+      int mask = 0;
+      for (size_t r = 0; r < rules.size(); ++r)
+        if (rule_fits(codes[k], rules[r], baseline)) mask |= 1 << r;
+      mask_of[k] = mask;
+      ++remaining[mask];
+    }
+    std::vector<int> masks;
+    for (const auto &kv : remaining)
+      if (kv.first) masks.push_back(kv.first);
+    std::vector<int> left(masks.size());
+    for (size_t j = 0; j < masks.size(); ++j) left[j] = remaining[masks[j]];
+    std::map<std::pair<size_t, std::vector<int>>, uint64_t> memo;
+    std::function<uint64_t(size_t)> fills = [&](size_t at) -> uint64_t {
+      if (at == constrained.size()) return 1;
+      auto key = std::make_pair(at, left);
+      auto found = memo.find(key);
+      if (found != memo.end()) return found->second;
+      uint64_t total = 0;
+      for (size_t j = 0; j < masks.size(); ++j) {
+        if (!left[j] || !(masks[j] & (1 << rule_index[at]))) continue;
+        uint64_t count = left[j];
+        --left[j];
+        total += count * fills(at + 1);
+        ++left[j];
+      }
+      memo[key] = total;
+      return total;
+    };
+    if (fills(0) == 0) {
       rep.status = DealStatus::kNoValidAssignment;
       return rep;
     }
-    int pick = fits[splitmix(x) % fits.size()];
-    dealt[i] = codes[pick];
-    codes.erase(codes.begin() + pick);
+    std::vector<uint8_t> used_entry(codes.size(), 0);
+    for (size_t at = 0; at < constrained.size(); ++at) {
+      uint64_t total = fills(at), roll = splitmix(x) % total;
+      size_t chosen = masks.size();
+      for (size_t j = 0; j < masks.size(); ++j) {
+        if (!left[j] || !(masks[j] & (1 << rule_index[at]))) continue;
+        uint64_t count = left[j];
+        --left[j];
+        uint64_t ways = count * fills(at + 1);
+        ++left[j];
+        if (roll < ways) {
+          chosen = j;
+          break;
+        }
+        roll -= ways;
+      }
+      if (chosen == masks.size()) throw std::logic_error("assignment count is inconsistent");
+      // Uniform among the pool entries with this mask that are still unused.
+      uint64_t pick = splitmix(x) % left[chosen];
+      for (size_t k = 0; k < codes.size(); ++k) {
+        if (used_entry[k] || mask_of[k] != masks[chosen]) continue;
+        if (pick == 0) {
+          used_entry[k] = 1;
+          dealt[constrained[at]] = codes[k];
+          break;
+        }
+        --pick;
+      }
+      --left[chosen];
+    }
+    std::vector<uint32_t> rest;
+    for (size_t k = 0; k < codes.size(); ++k)
+      if (!used_entry[k]) rest.push_back(codes[k]);
+    codes.swap(rest);
   }
   for (int i = static_cast<int>(codes.size()) - 1; i > 0; --i) std::swap(codes[i], codes[splitmix(x) % (i + 1)]);
   for (size_t i = 0; i < free_slots.size(); ++i) dealt[free_slots[i]] = codes[i];
@@ -894,8 +1254,14 @@ inline DealReport determinize(FmEnv *e, int viewer, uint64_t seed, const PublicM
   holders.insert(holders.end(), h.own_deck.begin(), h.own_deck.end());
   assignment.insert(assignment.end(), own.begin(), own.end());
 
+  if (stale_relations) {
+    Scope arena(true);
+    for (card *c : h.opp_slots) c->relate_effect.clear();
+  }
   std::vector<DeckBinding> bindings = DealAccess::capture_bindings(e, viewer);
-  rep.sets_rebuilt = apply_assignment(e->core(), holders, assignment, inherit_cardid);
+  LiveOrder live_order = capture_live_order(e);
+  rep.sets_rebuilt = apply_assignment(e->core(), holders, assignment, inherit_cardid, baseline.load_id_limit);
+  restore_live_order(e, live_order);
   rep.deck_options_rebound = DealAccess::rebind(e, viewer, bindings);
   rep.rows_scrubbed = DealAccess::scrub_other_seat_history(e, viewer, m);
   uint32_t core_seed = static_cast<uint32_t>(splitmix(x)), env_seed = static_cast<uint32_t>(splitmix(x));

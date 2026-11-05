@@ -102,7 +102,9 @@ int main(int argc, char **argv) {
       s = world->observe(&obs);
       if (s == fm::Status::kOk) s = world->step(static_cast<int>(next_random(x) % obs.n_options));
     }
-    if (s == fm::Status::kTerminal) {
+    // Only a duel the rules finished is evidence. Production's decision limit also ends a world, with no
+    // winner, and counting it would score it as a loss. Voids and refusals are skipped the same way.
+    if (s == fm::Status::kTerminal && !world->truncated()) {
       ++games[option];
       wins[option] += world->winner() == viewer;
     }

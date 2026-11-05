@@ -25,14 +25,9 @@ pass: a handle remembers its world was dealt
 pass: restore returns to the snapshot
 pass: a released handle is gone
 pass: the root is undealt again
-option 0: 26 wins of 29
-option 1: 27 wins of 29
-option 2: 27 wins of 29
-option 3: 24 wins of 29
-option 4: 24 wins of 28
-option 5: 25 wins of 28
-option 6: 22 wins of 28
-restores 202, deals 201, steps 31908, observes 31710
+option 0: 69 wins of 100
+option 1: 76 wins of 100
+restores 202, deals 201, steps 32327, observes 32129
 pass: closing the world gives back the true decision
 pass: the referee plays on
 0 failures

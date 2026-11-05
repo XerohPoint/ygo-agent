@@ -1,6 +1,7 @@
 // Shared test bed: the unmodified production environment class, driven natively.
 #pragma once
 #include <fcntl.h>
+#include <stdio.h>
 #include <sys/wait.h>
 #include <time.h>
 #include <cinttypes>
@@ -801,11 +802,40 @@ T in_child(F fn) {
   return result;
 }
 
-// Stdio allocates its buffer on first use. If that happened with the arena active, the buffer would
-// live in rolled-back memory, so it gets static storage before anything runs.
+// Stdout goes through a stream of ours, for two reasons. Stdio allocates its buffer on first use, and with
+// the arena active that buffer would live in rolled-back memory, so it gets static storage. And production
+// prints fail-closed markers and carries on: while a guard is capturing, every byte that leaves the buffer
+// lands here to be counted and dropped, so a marker cannot hide behind a flush or survive a failed world.
+inline bool g_stdout_capturing = false;
+inline long g_stdout_captured = 0;
+inline char g_stdout_text[320] = {0};
+
+inline ssize_t stdout_write(void *, const char *data, size_t size) {
+  if (g_stdout_capturing) {
+    size_t have = g_stdout_captured < long(sizeof g_stdout_text) - 1 ? size_t(g_stdout_captured) : sizeof g_stdout_text - 1;
+    size_t take = std::min(size, sizeof g_stdout_text - 1 - have);
+    std::memcpy(g_stdout_text + have, data, take);
+    g_stdout_text[have + take] = 0;
+    g_stdout_captured += size;
+    return size;
+  }
+  size_t done = 0;
+  while (done < size) {
+    ssize_t n = write(1, data + done, size - done);
+    if (n <= 0) return done ? ssize_t(done) : -1;
+    done += n;
+  }
+  return size;
+}
+
 inline void pin_stdio() {
   static char out[1 << 16];
-  setvbuf(stdout, out, _IOFBF, sizeof out);
+  cookie_io_functions_t functions{};
+  functions.write = stdout_write;
+  FILE *stream = fopencookie(nullptr, "w", functions);
+  if (!stream) throw std::runtime_error("fopencookie");
+  setvbuf(stream, out, _IOFBF, sizeof out);
+  stdout = stream;
 }
 
 // The 21 registry lists and the learner's code list, exactly as tools/edison/learner/actor.py
