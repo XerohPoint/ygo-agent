@@ -1,0 +1,28 @@
+{
+ "b64d48k4z1": {
+  "games": 336,
+  "pairs": 336,
+  "void": 0,
+  "draws": 0,
+  "search_score": 79.46,
+  "low": 74.82,
+  "high": 83.44,
+  "plain_score": 50.6,
+  "searched": 24037,
+  "departed": 3810,
+  "fell_back": 1915,
+  "deals_ok": 596046,
+  "deals_refused": 15320,
+  "rollouts": 1389962,
+  "worlds_void": 0,
+  "truncated": 0,
+  "net_errors": 0,
+  "net_calls": 55908126,
+  "option_mismatch": 0,
+  "step_overruns": 0,
+  "rollout_guard_fires": 929703,
+  "departed_share": 0.1585,
+  "cpu_per_game": 55.6,
+  "cpu_per_search_ms": 775.9
+ }
+}

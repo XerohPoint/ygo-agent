@@ -1,0 +1,22 @@
+{
+  "fresh_games": 60,
+  "fresh_OK": 60,
+  "fresh_search_wins": 44,
+  "eligible_selected_positions": 46,
+  "completed_continuations": 46,
+  "valid_pairs": 46,
+  "truncated": 0,
+  "mean_estimate": 0.5532467391304348,
+  "continued_search_score": 0.7608695652173914,
+  "plain_future_score": 0.5869565217391305,
+  "paired_gain_from_continued_search": 0.17391304347826086,
+  "continued_search_minus_estimate": 0.2076228260869566,
+  "plain_future_minus_estimate": 0.033709782608695726,
+  "search_only_wins": 11,
+  "plain_only_wins": 3,
+  "paired_exact_two_sided_sign_p": 0.057373046875,
+  "paired_game_bootstrap_95": [
+    0.021739130434782608,
+    0.32608695652173914
+  ]
+}

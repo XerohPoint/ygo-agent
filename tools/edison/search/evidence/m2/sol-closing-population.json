@@ -1,0 +1,173 @@
+{
+  "population": {
+    "games": 1008,
+    "immediate": 986,
+    "search_winners": 809,
+    "immediate_search_winners": 791,
+    "plain_winners": 199,
+    "immediate_plain_winners": 195
+  },
+  "nonterminal_closings": [
+    {
+      "id": "g7_n1702_1",
+      "winner": 0,
+      "search_seat": 1,
+      "closing": 76,
+      "decisions": 78
+    },
+    {
+      "id": "g12_n1703_0",
+      "winner": 0,
+      "search_seat": 0,
+      "closing": 199,
+      "decisions": 210
+    },
+    {
+      "id": "g126_n1703_1",
+      "winner": 1,
+      "search_seat": 1,
+      "closing": 108,
+      "decisions": 111
+    },
+    {
+      "id": "g24_n1702_0",
+      "winner": 0,
+      "search_seat": 0,
+      "closing": 219,
+      "decisions": 221
+    },
+    {
+      "id": "g70_n1703_1",
+      "winner": 1,
+      "search_seat": 1,
+      "closing": 107,
+      "decisions": 114
+    },
+    {
+      "id": "g108_n1703_1",
+      "winner": 1,
+      "search_seat": 1,
+      "closing": 213,
+      "decisions": 215
+    },
+    {
+      "id": "g114_n1703_1",
+      "winner": 1,
+      "search_seat": 1,
+      "closing": 179,
+      "decisions": 181
+    },
+    {
+      "id": "g59_n1702_0",
+      "winner": 0,
+      "search_seat": 0,
+      "closing": 109,
+      "decisions": 116
+    },
+    {
+      "id": "g138_n1704_1",
+      "winner": 0,
+      "search_seat": 1,
+      "closing": 186,
+      "decisions": 191
+    },
+    {
+      "id": "g8_n1702_0",
+      "winner": 1,
+      "search_seat": 0,
+      "closing": 151,
+      "decisions": 163
+    },
+    {
+      "id": "g147_n1703_1",
+      "winner": 1,
+      "search_seat": 1,
+      "closing": 79,
+      "decisions": 84
+    },
+    {
+      "id": "g97_n1704_0",
+      "winner": 0,
+      "search_seat": 0,
+      "closing": 129,
+      "decisions": 135
+    },
+    {
+      "id": "g53_n1703_0",
+      "winner": 0,
+      "search_seat": 0,
+      "closing": 65,
+      "decisions": 82
+    },
+    {
+      "id": "g77_n1702_0",
+      "winner": 1,
+      "search_seat": 0,
+      "closing": 151,
+      "decisions": 156
+    },
+    {
+      "id": "g71_n1704_1",
+      "winner": 1,
+      "search_seat": 1,
+      "closing": 170,
+      "decisions": 175
+    },
+    {
+      "id": "g150_n1702_1",
+      "winner": 1,
+      "search_seat": 1,
+      "closing": 136,
+      "decisions": 144
+    },
+    {
+      "id": "g4_n1703_0",
+      "winner": 0,
+      "search_seat": 0,
+      "closing": 178,
+      "decisions": 189
+    },
+    {
+      "id": "g123_n1703_1",
+      "winner": 1,
+      "search_seat": 1,
+      "closing": 155,
+      "decisions": 158
+    },
+    {
+      "id": "g141_n1702_1",
+      "winner": 1,
+      "search_seat": 1,
+      "closing": 104,
+      "decisions": 120
+    },
+    {
+      "id": "g19_n1702_0",
+      "winner": 0,
+      "search_seat": 0,
+      "closing": 234,
+      "decisions": 236
+    },
+    {
+      "id": "g69_n1703_1",
+      "winner": 1,
+      "search_seat": 1,
+      "closing": 89,
+      "decisions": 95
+    },
+    {
+      "id": "g53_n1702_0",
+      "winner": 0,
+      "search_seat": 0,
+      "closing": 93,
+      "decisions": 99
+    }
+  ],
+  "probability_all_64_immediate_under_uniform_draw": 0.23248973685370544,
+  "estimated_gate_closing_action_codes": {
+    "7": 59,
+    "8": 1,
+    "6": 2,
+    "0": 1
+  }
+}

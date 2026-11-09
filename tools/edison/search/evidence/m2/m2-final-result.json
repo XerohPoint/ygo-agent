@@ -1,0 +1,318 @@
+{
+ "verdict": "PASS",
+ "broken": [],
+ "comparisons": 1008,
+ "excluded": 0,
+ "overall": {
+  "difference": {
+   "blocks": 168,
+   "mean": 0.30257936507936506,
+   "low": 0.2777777777777778,
+   "high": 0.3263888888888889
+  },
+  "score": {
+   "blocks": 168,
+   "mean": 0.8025793650793651,
+   "low": 0.7777777777777777,
+   "high": 0.8273809523809523
+  }
+ },
+ "n1702": {
+  "difference": {
+   "blocks": 168,
+   "mean": 0.2857142857142857,
+   "low": 0.24702380952380953,
+   "high": 0.3244047619047619
+  },
+  "score": {
+   "blocks": 168,
+   "mean": 0.7857142857142857,
+   "low": 0.7470238095238095,
+   "high": 0.8244047619047619
+  }
+ },
+ "n1703": {
+  "difference": {
+   "blocks": 168,
+   "mean": 0.34226190476190477,
+   "low": 0.30654761904761907,
+   "high": 0.37797619047619047
+  },
+  "score": {
+   "blocks": 168,
+   "mean": 0.8422619047619048,
+   "low": 0.8065476190476191,
+   "high": 0.8779761904761905
+  }
+ },
+ "n1704": {
+  "difference": {
+   "blocks": 168,
+   "mean": 0.27976190476190477,
+   "low": 0.23809523809523808,
+   "high": 0.31845238095238093
+  },
+  "score": {
+   "blocks": 168,
+   "mean": 0.7797619047619048,
+   "low": 0.7380952380952381,
+   "high": 0.8214285714285714
+  }
+ },
+ "seat_0": {
+  "difference": {
+   "blocks": 168,
+   "mean": 0.3075396825396825,
+   "low": 0.25595238095238093,
+   "high": 0.3591269841269841
+  },
+  "score": {
+   "blocks": 168,
+   "mean": 0.8472222222222221,
+   "low": 0.8075396825396824,
+   "high": 0.884920634920635
+  }
+ },
+ "seat_1": {
+  "difference": {
+   "blocks": 168,
+   "mean": 0.2976190476190476,
+   "low": 0.24404761904761904,
+   "high": 0.3492063492063492
+  },
+  "score": {
+   "blocks": 168,
+   "mean": 0.7579365079365079,
+   "low": 0.7142857142857143,
+   "high": 0.7996031746031746
+  }
+ },
+ "overall_worst_case_low": 0.2777777777777778,
+ "integrity": {
+  "missing_games": 0,
+  "name_mismatches": 0,
+  "job_mismatches": 0,
+  "build_mismatches": 0,
+  "worker_deaths": 0,
+  "root_refusals": 0,
+  "attempt_logs_missing": 0,
+  "attempt_logs_other_inputs": 0,
+  "worker_failures": 0,
+  "inputs_differ": 0,
+  "interrupted_attempts": 0,
+  "nonzero_exits": 0,
+  "void_games": 0,
+  "void_reasons": [],
+  "net_errors": 0,
+  "option_mismatch": 0,
+  "step_overruns": 0
+ },
+ "ranker": {
+  "numbers_broken": 0,
+  "closing": 63,
+  "closing_high": 63,
+  "closing_top": 63,
+  "middle": [
+   73,
+   48
+  ],
+  "middle_gap": 0.38242891053945044,
+  "branches": 34,
+  "branches_agree": 33,
+  "abstained": 8,
+  "ranker_failures": 0,
+  "options_alone": 668,
+  "options_differ": 0,
+  "repeats_exactly": true,
+  "positions": [
+   64,
+   128
+  ],
+  "broken": []
+ },
+ "reported": {
+  "searched": 69427,
+  "departed": 10950,
+  "fell_back": 5482,
+  "deals_ok": 1724396,
+  "deals_refused": 43856,
+  "rollouts": 4017620,
+  "worlds_void": 0,
+  "truncated": 0,
+  "rollout_guard_fires": 2665281,
+  "cpu_per_game": 57.3,
+  "first_voids": [],
+  "by_seat": {
+   "0": {
+    "games": 504,
+    "score": 84.7
+   },
+   "1": {
+    "games": 504,
+    "score": 75.8
+   }
+  },
+  "by_net": {
+   "n1702": {
+    "games": 336,
+    "score": 78.6
+   },
+   "n1703": {
+    "games": 336,
+    "score": 84.2
+   },
+   "n1704": {
+    "games": 336,
+    "score": 78.0
+   }
+  },
+  "by_search_deck": {
+   "blackwing": {
+    "games": 48,
+    "score": 66.7
+   },
+   "frog_monarch": {
+    "games": 48,
+    "score": 91.7
+   },
+   "g_blackwing": {
+    "games": 48,
+    "score": 77.1
+   },
+   "g_diva_frog": {
+    "games": 48,
+    "score": 75.0
+   },
+   "g_diva_hero": {
+    "games": 48,
+    "score": 81.2
+   },
+   "g_diva_hero_beat": {
+    "games": 48,
+    "score": 89.6
+   },
+   "g_dragon_turbo": {
+    "games": 48,
+    "score": 70.8
+   },
+   "g_frog_monarch": {
+    "games": 48,
+    "score": 91.7
+   },
+   "g_frog_otk": {
+    "games": 48,
+    "score": 62.5
+   },
+   "g_gigavise": {
+    "games": 48,
+    "score": 83.3
+   },
+   "g_gladiator_beast": {
+    "games": 48,
+    "score": 58.3
+   },
+   "g_hero_beat": {
+    "games": 48,
+    "score": 72.9
+   },
+   "g_hero_frog": {
+    "games": 48,
+    "score": 91.7
+   },
+   "g_lightsworn": {
+    "games": 48,
+    "score": 83.3
+   },
+   "g_lightsworn_fairy": {
+    "games": 48,
+    "score": 89.6
+   },
+   "g_machina_control": {
+    "games": 48,
+    "score": 83.3
+   },
+   "g_quickdraw_plant": {
+    "games": 48,
+    "score": 81.2
+   },
+   "g_vayu_turbo": {
+    "games": 48,
+    "score": 83.3
+   },
+   "g_vayu_turbo_ddev08": {
+    "games": 48,
+    "score": 79.2
+   },
+   "g_zombie_teledad": {
+    "games": 48,
+    "score": 79.2
+   },
+   "machina_gadget": {
+    "games": 48,
+    "score": 93.8
+   }
+  },
+  "calibration": [
+   {
+    "bin": 0.0,
+    "decisions": 2549,
+    "estimate": 4.0,
+    "won": 10.0
+   },
+   {
+    "bin": 0.1,
+    "decisions": 2763,
+    "estimate": 15.2,
+    "won": 35.3
+   },
+   {
+    "bin": 0.2,
+    "decisions": 3636,
+    "estimate": 25.2,
+    "won": 53.9
+   },
+   {
+    "bin": 0.3,
+    "decisions": 4966,
+    "estimate": 35.2,
+    "won": 64.2
+   },
+   {
+    "bin": 0.4,
+    "decisions": 5675,
+    "estimate": 45.1,
+    "won": 72.5
+   },
+   {
+    "bin": 0.5,
+    "decisions": 11689,
+    "estimate": 52.7,
+    "won": 80.2
+   },
+   {
+    "bin": 0.6,
+    "decisions": 7156,
+    "estimate": 65.1,
+    "won": 88.6
+   },
+   {
+    "bin": 0.7,
+    "decisions": 7549,
+    "estimate": 75.0,
+    "won": 92.9
+   },
+   {
+    "bin": 0.8,
+    "decisions": 8081,
+    "estimate": 85.0,
+    "won": 96.5
+   },
+   {
+    "bin": 0.9,
+    "decisions": 14534,
+    "estimate": 97.1,
+    "won": 99.0
+   }
+  ]
+ }
+}

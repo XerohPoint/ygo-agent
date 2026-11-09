@@ -74,7 +74,9 @@ def calibration(games):
         if won is None:
             continue
         for row in g.get("log", []):
-            if row[2] < 2:
+            # A fall-back logs zero means, gain and error, which would read as a 50% estimate. The log has no fall-back
+            # flag, so a real search landing on exactly zero is dropped too: 3 of 68,598 rows in the M2 test.
+            if row[2] < 2 or not any(row[6:10]):
                 continue
             estimate = (row[7] + 1) / 2
             b = bins[min(9, int(estimate * 10))]

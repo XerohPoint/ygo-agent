@@ -1,0 +1,32 @@
+{
+  "checks": {
+    "1_overall_D": true,
+    "2_all_nets_D": true,
+    "3_both_seats_D": true,
+    "4_exclusions": true,
+    "5_worst_case": true,
+    "6_copied_integrity": true,
+    "7_numbers": true,
+    "7_closing": true,
+    "7_middle": true,
+    "7_Alone": true,
+    "7_Branches": true,
+    "7_failures_and_repeats": true,
+    "audit_reruns": true,
+    "audit_openings_and_replays": true,
+    "audit_all_gate_calls_no_failures": true,
+    "audit_all_numeric_outputs": true,
+    "audit_closing_terminal_results": true,
+    "audit_plain_continuation_method": true
+  },
+  "all_pass": true,
+  "extra_failures": [],
+  "saved_gate_differences": [
+    {
+      "field": "middle_gap",
+      "saved": 0.38242891053945044,
+      "recount": 0.38242891053945033,
+      "absolute_difference": 1.1102230246251565e-16
+    }
+  ]
+}

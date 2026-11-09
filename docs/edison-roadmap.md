@@ -115,6 +115,12 @@ games, so they are only as trustworthy as the play policy underneath them.
 - **Deck option labels are fixed; earlier strength results no longer stand.** [The defect](edison-learner.md#known-defect-deck-option-labels) showed policies the wrong cards at Deck prompts and exposed hidden Deck cards to their owner, for every result up to then.
   [The fix](edison-deck-labels.md) is merged with 593 certification cases, and the networks are retrained. [Substitoad chains](edison-learner.md#on-the-fixed-deck-labels) became about 5 times as common, though the whole line stays rare.
 - **Independent review and differential checks for interface code.** A prompt differential now compares observations with the engine's own prompts. New checks must also run on the old build, because a check that passes on both proves nothing.
+- **M2 exit met.** [The final test](edison-search.md#m2-final-test) has search at 64 rollouts and depth 48 scoring 80.3% (77.8-82.7)
+  against the same network without search, on fresh seeds, with every net and both seats past the predeclared bar and `rank_position.py`
+  passing the ranker rules. Against a different network it scored 79.5%. Sol recounted it with separate code and reran frozen games and
+  every ranker position with no differences. Every opponent is one of three networks from one training method, some wins punish that
+  network's own mistakes, the search is told the opposing list, and hidden cards are dealt uniformly rather than from a belief. So this
+  is not human strength.
 - **Open: loading a position from a real external game.** Replay needs private data and construction
   fails, so M6 and the position suite need their own solution.
 
@@ -143,7 +149,9 @@ across all fixture decks and both seats, with replications. **Met by [predeclare
 Search over sampled hidden states guided by the M1 network, built on the forward
 model chosen in M0. Includes opponent-hand and deck belief. Exit: search at a fixed
 decision budget beats the same network without search on fresh seeds, and a command
-ranks actions with estimated win rates from a recorded position.
+ranks actions with estimated win rates from a recorded position. **Met by [predeclared rule](edison-search.md#m2-final-test),
+November 5, 2026.** The belief is not built yet: hidden cards are dealt uniformly over what the public record allows,
+and the opposing list is given.
 
 ### M3 — Real metagame coverage
 

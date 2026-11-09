@@ -4,8 +4,9 @@ Determinized search for the play engine: for each decision, deal the hidden card
 network's best few options on the same deals, and leave the network's choice only if an option does
 measurably better. Code is in `tools/edison/search/`.
 
-**Status:** pilot results only, and they choose settings. The M2 test's plan is in
-[`edison-m2-protocol.md`](edison-m2-protocol.md). See [What this does not show](#what-this-does-not-show).
+**Status:** M2's exit is met. Search passed every rule of the [predeclared final test](edison-m2-protocol.md)
+on fresh seeds, scoring 80.3% against the same network without search, which scores 50%. See [M2 final test](#m2-final-test)
+and [What this does not show](#what-this-does-not-show).
 
 ## How one decision works
 
@@ -109,6 +110,79 @@ seeds the random picks tested showed no dependence, but a group summon such as R
 follows true load order on every seed. So a search can learn which public card the engine will prompt first, which a
 player couldn't. It doesn't learn what's in a hidden slot. `docs/edison-forward-model.md` gives the limits.
 
+## M2 final test
+
+Frozen at commit 0123ea7 before any game was played. Seeds 87000000-87000167, budget 64, depth 48, 4 candidates,
+margin 1.0. There are 1,008 search games, each compared with the plain game on the same seed and net, read from the
+same seat. A plain game scores exactly 50% over both seats. Ranges are 95% block bootstrap intervals.
+
+| Search | Score | 95% range | Gain over plain | 95% range |
+| --- | --- | --- | --- | --- |
+| All | 80.3% | 77.8-82.7 | +30.3 points | 27.8-32.6 |
+| Net n1702 | 78.6% | 74.7-82.4 | +28.6 | 24.7-32.4 |
+| Net n1703 | 84.2% | 80.7-87.8 | +34.2 | 30.7-37.8 |
+| Net n1704 | 78.0% | 73.8-82.1 | +28.0 | 23.8-31.8 |
+| Search in seat 0 | 84.7% | 80.8-88.5 | +30.8 | 25.6-35.9 |
+| Search in seat 1 | 75.8% | 71.4-80.0 | +29.8 | 24.4-34.9 |
+
+**Integrity.** All 1,008 comparisons counted, with none excluded. There were no void games, worker deaths or failures,
+network errors, option mismatches or step overruns, and no attempt logs or inputs that differ from the manifest.
+No sampled world was voided in 4.0M rollouts. Each run directory has a single attempt.
+
+**Ranker**, on 64 drawn decisive games at budget 256 and depth 48:
+
+| Rule | Floor | Result |
+| --- | --- | --- |
+| Shown numbers wrong | 0 | 0 |
+| Options rolled out alone that differ | 0 | 0 of 668 |
+| Closing positions estimated | 20 | 63 |
+| Move played estimated at 80%+ | 70% | 63 of 63 |
+| Move played within 5 points of the best | 70% | 63 of 63 |
+| Middle positions, winner's side and loser's side | 10 each | 73 and 48 |
+| Gap between them | 25 points | 38.2 points |
+| Usable branches agreeing | 15 at 75% | 33 of 34 |
+| Rankings that repeat exactly | all | all |
+
+8 positions abstained because every deal was refused.
+
+**Independent recount.** Sol rescored all 2,184 records with its own code, which neither imports nor copies the test's
+scripts. It regenerated the job design and matched every score, range and counter, the ranges exactly once its
+draws ran in the protocol's order. On the frozen binary:
+
+- 30 search and 30 plain games, drawn by Sol, reran at 1 and 4 workers with 0 differences in any field but CPU time.
+- All 64 ranker games reran with the same counts. The middle gap differed by 1e-16 from summation order.
+- 279 replays matched their records, and opening hands and first player matched in all 156 search and plain pairs.
+- Every search game plays the plain game's moves until its first departure.
+
+Sol's report and summaries are in [`tools/edison/search/evidence/m2/`](../tools/edison/search/evidence/m2/). Its main
+readings:
+
+- **63 of 63 closings is the position class, not a selection leak.** In 986 of 1,008 games the winner's last real choice
+  ends the game, nearly all lethal direct attacks. So a 64-game draw has only such closings 23% of the time.
+- **No win comes from a rule edge.** There are no draws or decision-limit endings. 802 of 809 search wins end on life
+  points and 7 on deck-out, and without the deck-out games search scores the same.
+- **The load-order channel doesn't explain it.** Leaving out the three lists with Return from the Different Dimension
+  leaves search at 79.6% on 122 blocks. That cut was made after the fact.
+- **Some wins exploit the plain network.** In one reproduced game the plain net attacked a face-up 1900 DEF Honest
+  with 800 ATK at 700 LP and lost. How often this happens isn't measured, and a person wouldn't do it.
+- **Most of the low calibration is continued search.** On 46 fresh positions (seeds 86610000-86610059) estimated at
+  55.3%, playing on with search won 76.1%, and playing on with the plain net won 58.7%. That is one exploratory sample.
+- **Refusals** are mostly hidden cards that a pending selection, chain, processor or script still points at. A few are
+  added effects on a hidden card (3 games), and one is a hidden slot holding the other player's card.
+
+**Reported, not gated.**
+
+- **Different opposing network**, seeds 87100000-87100167: 79.5% (74.8-83.4) on 336 games, against 50.6% for the
+  plain network on the same seats and seeds.
+- **Per list**, 48 games each: from 58.3% (Gladiator Beast) to 93.8% (Machina Gadget). One seed per matchup supports no
+  claim about a single list.
+- **Rates.** Search left the network's choice on 15.8% of 69,427 searched decisions. 7.9% fell back because the first 8
+  deals were all refused, and every refused deal was in such a position. Search took 57 s of CPU per game.
+- **Calibration** runs low, as in the pilots. Decisions estimated at 55.1% came from games won 82.8% of the time, and
+  those at 97.1% from games won 99.0% of the time. The saved result file gives 52.7% and 80.2% because it counted the
+  5,482 fall-backs as 50% estimates. Sol found this in the recount, and `search_study.calibration` now drops them.
+  Against a different network, decisions estimated at 55.1% came from games won 78.4% of the time.
+
 ## Pilot
 
 Each row is 336 games on 168 seeds, across the gauntlet's neighbouring pairs in both seats and 3 networks,
@@ -156,17 +230,21 @@ other kinds of opponent.
 71.0% ± 1.3 (2,046 rollouts). At depth 48 "Set Treeborn Frog" led at 81.7% ± 2.5, with "End turn" at 78.3% ± 2.9.
 I read this as a horizon effect in the shallow search, not proven. It is one position.
 
-**Calibration.** Estimates run low. At depth 48, decisions estimated around 54% came from games that were won 84.5% of
-the time. The likely reason is that rollouts play on as the network while the real game keeps searching, and
+**Calibration.** Estimates run low. At depth 48, decisions estimated around 55% came from games that were won 84.3% of
+the time. An earlier version of this table counted fall-backs as 50% estimates and gave 54% and 84.5%. The likely reason is that rollouts play on as the network while the real game keeps searching, and
 decisions within a game aren't independent, so this is a pattern and not a measurement.
 
 ## What this does not show
 
 - It has not been tried against a person, or against anything but the three networks of one training method.
+  Some of the gain comes from punishing that network's mistakes, such as attacking into a defender it can see is
+  stronger, and that part need not carry over to people.
+- The privacy pairs don't include two natural duels that look the same to the viewer but where the opponent made
+  different private choices other than declining. No leak there has been shown, but it isn't tested.
 - It knows the opposing list, which a real player would have to infer.
 - Sampled worlds can still fail. They are discarded and counted, and the true duel isn't affected. At depth 48 on the
-  fixed deals, 241 of 1.36M rollouts failed, all in one game.
-- When deals are refused, about 4-6% of searched decisions, the network plays without search. A refusal can
+  fixed deals in the pilot, 241 of 1.36M rollouts failed, all in one game. In the final test none of 4.0M did.
+- When deals are refused, 7.9% of searched decisions in the final test, the network plays without search. A refusal can
   reflect a hidden card (`docs/edison-forward-model.md`), so a seat's search being on or off is not perfectly
   independent of hidden information, though no estimate is steered by it.
 - No search of the hidden information's game tree is done: each deal is searched as if the viewer knew it. That

@@ -1,0 +1,531 @@
+{
+  "numbers_broken": 0,
+  "closing": 63,
+  "closing_high": 63,
+  "closing_top": 63,
+  "middle": [
+    73,
+    48
+  ],
+  "middle_gap": 0.38242891053945033,
+  "branches": 34,
+  "branches_agree": 33,
+  "abstained": 8,
+  "ranker_failures": 0,
+  "options_alone": 668,
+  "options_differ": 0,
+  "repeats_exactly": true,
+  "positions": [
+    64,
+    128
+  ],
+  "details": {
+    "bad": [],
+    "closing": [
+      {
+        "id": "g3_n1702_0",
+        "decision": 96,
+        "rate": 0.9948942314949818,
+        "top": true,
+        "terminal_samples": 0.9765625,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g3_n1704_0",
+        "decision": 121,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g4_n1704_0",
+        "decision": 127,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g9_n1703_0",
+        "decision": 83,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g10_n1702_0",
+        "decision": 128,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g12_n1703_1",
+        "decision": 57,
+        "rate": 0.9942347055184655,
+        "top": true,
+        "terminal_samples": 0.96875,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g15_n1702_0",
+        "decision": 124,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g16_n1703_1",
+        "decision": 182,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g17_n1704_1",
+        "decision": 87,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g19_n1704_1",
+        "decision": 169,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g20_n1703_1",
+        "decision": 169,
+        "rate": 0.951543356741176,
+        "top": true,
+        "terminal_samples": 0.9882352941176471,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g21_n1703_1",
+        "decision": 222,
+        "rate": 0.9591755431364564,
+        "top": true,
+        "terminal_samples": 0.8823529411764706,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g24_n1703_0",
+        "decision": 81,
+        "rate": 0.9623733048929888,
+        "top": true,
+        "terminal_samples": 0.8705882352941177,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g25_n1702_1",
+        "decision": 124,
+        "rate": 0.9607011878761114,
+        "top": true,
+        "terminal_samples": 0.890625,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g26_n1704_1",
+        "decision": 58,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g27_n1704_1",
+        "decision": 169,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g32_n1703_1",
+        "decision": 195,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g33_n1703_1",
+        "decision": 173,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g34_n1702_1",
+        "decision": 135,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g36_n1703_0",
+        "decision": 80,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g42_n1702_1",
+        "decision": 90,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g48_n1703_0",
+        "decision": 105,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g52_n1704_1",
+        "decision": 109,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g53_n1704_1",
+        "decision": 27,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g55_n1703_1",
+        "decision": 123,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g61_n1703_0",
+        "decision": 29,
+        "rate": 0.9818610937218182,
+        "top": true,
+        "terminal_samples": 0.9296875,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g68_n1702_0",
+        "decision": 71,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g69_n1702_1",
+        "decision": 165,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g70_n1703_0",
+        "decision": 65,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g75_n1704_0",
+        "decision": 122,
+        "rate": 0.9565491596549691,
+        "top": true,
+        "terminal_samples": 0.9609375,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g79_n1702_0",
+        "decision": 78,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g81_n1704_1",
+        "decision": 65,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g85_n1702_1",
+        "decision": 68,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g91_n1703_1",
+        "decision": 143,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g95_n1703_0",
+        "decision": 32,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g99_n1703_1",
+        "decision": 90,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g104_n1702_0",
+        "decision": 52,
+        "rate": 0.8757300320430659,
+        "top": true,
+        "terminal_samples": 0.84375,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g104_n1703_0",
+        "decision": 71,
+        "rate": 0.8051272759912536,
+        "top": true,
+        "terminal_samples": 0.8671875,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g104_n1703_1",
+        "decision": 119,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g108_n1704_1",
+        "decision": 206,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g109_n1704_0",
+        "decision": 112,
+        "rate": 0.9776702855015174,
+        "top": true,
+        "terminal_samples": 0.9296875,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g112_n1703_1",
+        "decision": 270,
+        "rate": 0.9521115300594829,
+        "top": true,
+        "terminal_samples": 0.90625,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g116_n1704_1",
+        "decision": 73,
+        "rate": 0.9981302923988551,
+        "top": true,
+        "terminal_samples": 0.9609375,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g125_n1703_0",
+        "decision": 86,
+        "rate": 0.9840393597260118,
+        "top": true,
+        "terminal_samples": 0.8125,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g128_n1703_0",
+        "decision": 72,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g130_n1703_1",
+        "decision": 126,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g131_n1702_1",
+        "decision": 186,
+        "rate": 0.8941176470588235,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g131_n1703_0",
+        "decision": 183,
+        "rate": 0.9803921568627452,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g135_n1703_0",
+        "decision": 270,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g137_n1702_0",
+        "decision": 108,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g137_n1703_1",
+        "decision": 100,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g138_n1702_1",
+        "decision": 123,
+        "rate": 0.9975634546840892,
+        "top": true,
+        "terminal_samples": 0.9764705882352941,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g139_n1702_1",
+        "decision": 207,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g144_n1703_1",
+        "decision": 88,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g146_n1702_1",
+        "decision": 198,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g153_n1703_0",
+        "decision": 131,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g153_n1704_1",
+        "decision": 71,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g154_n1703_1",
+        "decision": 248,
+        "rate": 0.8757729954522802,
+        "top": true,
+        "terminal_samples": 0.9765625,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g155_n1704_1",
+        "decision": 50,
+        "rate": 0.9910537030766993,
+        "top": true,
+        "terminal_samples": 0.9764705882352941,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g158_n1703_1",
+        "decision": 70,
+        "rate": 1.0,
+        "top": true,
+        "terminal_samples": 1.0,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g160_n1703_1",
+        "decision": 129,
+        "rate": 0.9157638144097291,
+        "top": true,
+        "terminal_samples": 0.9453125,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g164_n1704_0",
+        "decision": 237,
+        "rate": 0.968308073002845,
+        "top": true,
+        "terminal_samples": 0.984375,
+        "remaining_moves": 1
+      },
+      {
+        "id": "g166_n1704_0",
+        "decision": 152,
+        "rate": 0.9747946477145888,
+        "top": true,
+        "terminal_samples": 0.9609375,
+        "remaining_moves": 1
+      }
+    ]
+  }
+}
