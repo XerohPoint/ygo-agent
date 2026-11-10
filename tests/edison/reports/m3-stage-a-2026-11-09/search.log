@@ -1,0 +1,47 @@
+{
+ "pairs": 240,
+ "comparisons_planned": 480,
+ "missing": {},
+ "void": {},
+ "void_reasons": {},
+ "all": {
+  "comparisons": 480,
+  "builds": 60,
+  "search": 0.79375,
+  "plain": 0.5083333333333333,
+  "difference": 0.28541666666666665,
+  "low": 0.23958333333333334,
+  "high": 0.33125
+ },
+ "by_seat": {
+  "0": {
+   "comparisons": 240,
+   "builds": 60,
+   "search": 0.8208333333333333,
+   "plain": 0.49583333333333335,
+   "difference": 0.325,
+   "low": 0.26666666666666666,
+   "high": 0.38333333333333336
+  },
+  "1": {
+   "comparisons": 240,
+   "builds": 60,
+   "search": 0.7666666666666667,
+   "plain": 0.5208333333333334,
+   "difference": 0.24583333333333332,
+   "low": 0.17916666666666667,
+   "high": 0.3125
+  }
+ },
+ "far": {
+  "comparisons": 80,
+  "builds": 10,
+  "search": 0.7875,
+  "plain": 0.5875,
+  "difference": 0.2,
+  "low": 0.0875,
+  "high": 0.3125
+ },
+ "note": "Reported only. The interval resamples held-out builds. The search is told the opposing list and deals hidden cards uniformly, as in M2."
+}
+search exit 0

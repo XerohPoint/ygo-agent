@@ -1,0 +1,71 @@
+{
+ "pairs": 240,
+ "comparisons_planned": 480,
+ "missing": {},
+ "void": {},
+ "void_reasons": {},
+ "all": {
+  "comparisons": 480,
+  "builds": 60,
+  "search": 0.79375,
+  "plain": 0.5083333333333333,
+  "difference": 0.28541666666666665,
+  "low": 0.23958333333333334,
+  "high": 0.33125
+ },
+ "by_seat": {
+  "0": {
+   "comparisons": 240,
+   "builds": 60,
+   "search": 0.8208333333333333,
+   "plain": 0.49583333333333335,
+   "difference": 0.325,
+   "low": 0.26666666666666666,
+   "high": 0.38333333333333336
+  },
+  "1": {
+   "comparisons": 240,
+   "builds": 60,
+   "search": 0.7666666666666667,
+   "plain": 0.5208333333333334,
+   "difference": 0.24583333333333332,
+   "low": 0.17916666666666667,
+   "high": 0.3125
+  }
+ },
+ "far": {
+  "comparisons": 80,
+  "builds": 10,
+  "search": 0.7875,
+  "plain": 0.5875,
+  "difference": 0.2,
+  "low": 0.0875,
+  "high": 0.3125
+ },
+ "search_games": {
+  "games": 480,
+  "pairs": 480,
+  "void": 0,
+  "draws": 0,
+  "search_score": 79.38,
+  "low": 75.53,
+  "high": 82.75,
+  "searched": 30468,
+  "departed": 4935,
+  "fell_back": 1861,
+  "deals_ok": 770714,
+  "deals_refused": 14888,
+  "rollouts": 1793518,
+  "worlds_void": 24,
+  "truncated": 0,
+  "net_errors": 0,
+  "net_calls": 70591844,
+  "option_mismatch": 0,
+  "step_overruns": 0,
+  "rollout_guard_fires": 1291843,
+  "departed_share": 0.162,
+  "cpu_per_game": 64.7,
+  "cpu_per_search_ms": 1019.0
+ },
+ "note": "Reported only. The interval resamples held-out builds. The search is told the opposing list and deals hidden cards uniformly, as in M2."
+}

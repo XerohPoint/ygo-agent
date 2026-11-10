@@ -157,7 +157,10 @@ and the opposing list is given.
 
 Expand from 3 fixtures to a sourced gauntlet of Edison archetypes, and fix the rule
 and card defects that this exposes. Test against decks held out of training to
-measure generalization. Exit: the policy performs on held-out decks, not only known ones.
+measure generalization. Exit: the policy performs on held-out decks, not only known ones. **Stage A, new builds of
+known cards, met by [predeclared rule](edison-heldout.md), November 10, 2026:** 80.6% piloting 488 placed builds no
+network trained on, with the edge over the heuristic within a point of the edge on each build's nearest training list.
+Stage B, cards no training list plays, needs code list v2, an unknown-identity row and retraining, and is not started.
 
 ### M4 — Deck builder
 
