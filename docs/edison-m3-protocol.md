@@ -87,9 +87,11 @@ corpus soak's, which `selftest` checks against the corpus summary.
 
 **Running.** Every 127th cell is replayed at 4 env threads. That covers both blocks, every arm and both counted seats, and
 any mismatch stops the run. Each cell's start and result are journaled as they happen, so a pause or crash of the runner
-loses nothing finished. A result is never replaced, so a failure stays recorded. A cell that was running when the runner
-stopped is run again, and its row records the interrupted attempt. Every stored chunk is checked against its planned
-jobs: each row's job, decks, seats, policies and seeds, every duel's seed and winner, and the exact set of replays.
+loses nothing finished. A result is never replaced, so a failure stays recorded. A cell or replay that was running when the runner
+stopped is run again, and its cell's row records the interrupted attempt. Before a resume appends, a write cut short by
+the interruption is trimmed back to the last whole record. Every stored chunk is checked against its planned jobs (each
+row's job, decks, seats, policies and seeds, every duel's seed and winner, the exact set of replays, and the recorded
+interruptions) and must equal what its journal holds.
 
 **Provenance.** `freeze` runs on a clean commit and records it. The manifest is committed alone on top of that commit.
 `play`, `analyze` and `search` refuse to run unless HEAD is that manifest commit and every input still matches it: this
@@ -103,7 +105,9 @@ All must hold. Rates are per optimizer, then averaged. Draws are not wins. "Both
 **Intervals** resample in two stages, 10,000 times from seed 88810001: builds with replacement, then each drawn build's
 42 cells, one per opponent and seat, with replacement. Each training list's 42 cells are also resampled once per draw,
 and every build with that twin shares the draw. All arms of a cell share its seeds, so they move together. This keeps
-the clustering by build and by matchup, and carries the known block's own noise into the gap.
+the clustering by build and by matchup, and carries the known block's own noise into the gap. If a draw leaves a drawn
+build, or its twin, with no game for a rate the gap needs, that build counts at the lowest possible gap, −2, in that
+draw. It is never dropped. The number of such draws is reported.
 
 1. **A1, pilot.** On all 488 builds, and again on F: the mean is at least 55%, every optimizer's 2.5th percentile is above
    50%, and each seat is at least 50%.
@@ -121,8 +125,8 @@ the clustering by build and by matchup, and carries the known block's own noise 
 4. **A4, integrity.** Void games are reported by reason and don't count. It fails if:
    - any block, arm and optimizer is above 1% void;
    - any build, arm, optimizer and seat has no completed game;
-   - counting every void game, and every game in a cell with an interrupted attempt, as a loss for the counted side, the
-     pilot or face mean falls below 55% on all builds or on F;
+   - counting every void game, and every game in a cell with an interrupted first run or replay, as a loss for the counted
+     side, the pilot or face mean falls below 55% on all builds or on F;
    - a chunk is missing or fails its checks, or a replay differs.
 
 F is gated only if it holds at least 10 builds. It holds 102.
@@ -199,6 +203,17 @@ list with a network or search. Its findings and what changed:
 Design changes from the same review: one entry per distinct build, not per list; intervals that resample builds and
 matchups, with shared twins resampled too, in place of Wilson bounds over games; a worst-case void rule; and replays on
 both counted seats. The search check now runs only after the verdict, and the selection check covers card copies.
+
+Sol's second pass, at `50a784d`, confirmed those fixes and found three more, all fixed:
+
+| Finding | Class | Change |
+| --- | --- | --- |
+| A resume after a cut journal write appended to the fragment, so the next read failed | Reachable | The cut tail is trimmed, or a whole last record gets its newline, before appending |
+| An interrupted replay didn't count its cell in the worst case | Reachable | A cell's interruptions include its replay's, and the chunk records and checks both |
+| A draw with no game for a build's rate dropped the build from that draw's gap | Reachable | It counts at the lowest possible gap, as above |
+
+It also noted that a stored chunk could drop its interruption counts, and that an empty far set crashed the rules. A
+chunk must now equal what its journal holds, and an empty set is handled.
 
 ## Commands
 

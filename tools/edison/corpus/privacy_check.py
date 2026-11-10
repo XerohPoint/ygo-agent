@@ -6,9 +6,9 @@ from the raw responses, then searches the given files for each as a whole word, 
 It fails if the raw cache is missing or yields nothing, or on any hit outside ALLOWED: words that
 are also card, archetype or community names, each reviewed by hand.
 
-Strings shorter than 3 characters are not searched, and numeric ids are not searched as text,
-because they collide with passcodes and deck ids. Instead, every committed JSON file is checked
-structurally: no key may name a person field.
+Strings shorter than 3 characters are not searched, and ids stored as JSON numbers are not
+collected, because they collide with passcodes and deck ids. Ids stored as digit strings are searched.
+Every committed JSON file is also checked structurally: no key may name a person field.
 """
 import argparse, json, re, sys
 from pathlib import Path

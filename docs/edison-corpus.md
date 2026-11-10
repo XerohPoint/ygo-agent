@@ -59,8 +59,9 @@ have that ruleset.
 - **No player name, handle, Discord id or user id is committed.** `privacy_check.py` collected 2,152 such strings from the raw responses and searched the
   1,336 files this corpus commits. The only matches are four that are also card, archetype, community or event words: "Jinzo" (Jinzo Machina), "Rose" and "Soul"
   (card names), and "beastmode" (a community and its Beastmode Circuit Series). The check now fails on any other match, on a missing raw cache, and on any
-  JSON key that names a person field; a planted name and a planted `builderId` key each make it fail. Numeric ids and strings under 3 characters are not
-  searched as text, because they collide with passcodes and deck ids; the key check covers numeric id fields instead.
+  JSON key that names a person field; a planted name and a planted `builderId` key each make it fail. Strings under 3 characters are not searched, and
+  ids stored as JSON numbers are not collected, because they collide with passcodes and deck ids; the key check covers those fields instead. Ids
+  stored as digit strings are searched.
 
 Each row has the archetype label as the source gives it (`deckTypeName`) and a normalized label. The normalized label is the source label casefolded,
 with `&` as `and`, punctuation dropped and words joined by `_`. Nothing is merged by meaning, so `diva_hero` and `diva_hero_beat` stay apart. One list
@@ -229,8 +230,9 @@ Of the 601 held-out lists inside v1, 551 have no untrained card, 49 have one and
   activation), and the frozen rule-based Heuristic from `ygoai/edison_policy.py`, which has no weights. No network played.
 - **Stages:** Main and Extra, then Side-in. Side-in swaps each Side card, in turn, for a random card of its zone, as the audit did. A Side card whose zone
   is empty stays in the Side; one list has no Extra Deck. **This does not put the whole Side in play.** A later swap can take out a Side card an earlier
-  swap put in, so 245,230 of the 254,016 played decks lacked at least one Side card's copies (Sol's review counted 238,790 by card presence instead of
-  copies). Side-in is a stress test of Side cards in play, not of whole Sides.
+  swap put in. Of the 254,016 played decks, 238,790 hold fewer copies of some card in their played Main and Extra than the Side has (Sol's count),
+  245,230 hold fewer copies of some Side card than the original Main and Extra plus the Side have (mine), and 135,019 lack any copy of some Side card.
+  Side-in is a stress test of Side cards in play, not of whole Sides.
 - **Checks:** the audit worker's observation contract, including the candidate-row and finish and cancel checks that hardening added. Every decision
   is flushed to disk, so an abort leaves the last card chosen. Each stderr line is tied to the duel that printed it.
 - **Workers:** 12, with `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1`.

@@ -287,7 +287,8 @@ def worker_job(job, **extra):
 # ---------------------------------------------------------------- journal and result checks
 
 def read_journal(path):
-    """Results by key, and keys started with no result. Only the last line may be cut short, by an interrupted write."""
+    """Results by key, and keys started with no result. Each record is written whole with its newline, so only the text after
+    the last newline can be cut short, by an interrupted write. That text is ignored unless it is a whole record."""
     results, started = {}, Counter()
     if not path.exists():
         return results, started
@@ -298,7 +299,7 @@ def read_journal(path):
         try:
             entry = json.loads(line)
         except ValueError:
-            if n == len(lines) - 1 or (n == len(lines) - 2 and not lines[-1]):
+            if n == len(lines) - 1:
                 break
             raise SystemExit(f"{path} is damaged at line {n + 1}")
         if entry["event"] == "start":
@@ -309,9 +310,28 @@ def read_journal(path):
     return results, unresolved
 
 
+def repair_journal(path):
+    """Before appending: cut a partial last write back to the last whole record, and end a whole last record with its newline."""
+    if not path.exists():
+        return
+    data = path.read_bytes()
+    tail = data[data.rfind(b"\n") + 1:]
+    if not tail:
+        return
+    try:
+        json.loads(tail)
+    except ValueError:
+        with path.open("r+b") as f:
+            f.truncate(len(data) - len(tail))
+        return
+    with path.open("ab") as f:
+        f.write(b"\n")
+
+
 def run_tasks(pool, tasks, journal_path, done):
     """Run the (key, job) tasks with no result in done, journaling each start and each result as it happens.
     A result written once is never replaced, so a failure survives any later attempt."""
+    repair_journal(journal_path)
     queue = [t for t in tasks if t[0] not in done]
     lock = threading.Lock()
     with journal_path.open("a") as journal:
@@ -341,8 +361,10 @@ def assemble(n, part, indices, results, unresolved):
     rows = []
     for job, i in zip(part, indices):
         r = results[f"first:{i}"]
+        first, again = unresolved.get(f"first:{i}", 0), unresolved.get(f"replay:{i}", 0)
         rows.append({"cell": i, "job_sha256": text_sha(job_text(job)), **{k: job[k] for k in JOB_FIELDS}, "status": r.get("status"),
-                     "duels": r.get("duels"), "reason": r.get("reason"), "counters": r.get("counters"), "unresolved_starts": unresolved.get(f"first:{i}", 0)})
+                     "duels": r.get("duels"), "reason": r.get("reason"), "counters": r.get("counters"),
+                     "unresolved_first": first, "unresolved_replay": again, "unresolved_starts": first + again})
     replays = []
     for i in replayed(indices):
         r = results[f"replay:{i}"]
@@ -372,10 +394,28 @@ def validate(record, part, indices):
                 problems.append(f"cell {i}: a winner outside 0, 1, 2")
         elif row["status"] != "VOID":
             problems.append(f"cell {i}: status {row['status']}")
+        counts = [row.get(k) for k in ("unresolved_first", "unresolved_replay", "unresolved_starts")]
+        if not all(isinstance(c, int) and c >= 0 for c in counts) or counts[0] + counts[1] != counts[2]:
+            problems.append(f"cell {i}: interrupted attempts not recorded")
     replays = record.get("replays", [])
     if [r.get("cell") for r in replays] != replayed(indices):
         problems.append("replays are not the scheduled cells")
+    for r in replays:
+        if r.get("cell") in by_cell and r.get("unresolved_starts") != by_cell[r["cell"]].get("unresolved_replay"):
+            problems.append(f"cell {r.get('cell')}: replay interruptions disagree")
+    for i in set(indices) - set(replayed(indices)):
+        if by_cell.get(i, {}).get("unresolved_replay"):
+            problems.append(f"cell {i}: a replay interruption on a cell with no replay")
     mismatches = sum(1 for r in replays if r.get("cell") in by_cell and (r.get("status") != by_cell[r["cell"]].get("status") or r.get("duels") != by_cell[r["cell"]].get("duels")))
+    return problems, mismatches
+
+
+def check_chunk(n, record, part, indices, journal):
+    """validate(), and the chunk must be exactly what its journal holds, so a stored row can't drop an interrupted attempt or a failure."""
+    problems, mismatches = validate(record, part, indices)
+    if not problems and (not journal.exists() or sha(journal) != record.get("journal_sha256")
+                         or {k: v for k, v in record.items() if k != "journal_sha256"} != assemble(n, part, indices, *read_journal(journal))):
+        problems.append("the chunk is not what its journal holds")
     return problems, mismatches
 
 
@@ -388,7 +428,7 @@ def load_results(jobs):
             continue
         with gzip.open(path, "rt") as f:
             record = json.load(f)
-        problems, mismatches = validate(record, [jobs[i] for i in indices], indices)
+        problems, mismatches = check_chunk(n, record, [jobs[i] for i in indices], indices, OUT / f"chunk-{n:03d}.jsonl")
         if problems:
             integrity["invalid_chunks"] += 1
             continue
@@ -436,13 +476,13 @@ def gap_of(w, g, wk, gk, twins):
 def bootstrap(data, subset, twins, rng, resamples):
     """Resample lists, then each drawn list's 42 (opponent, seat) cells, and each training list's cells once per draw,
     shared by every list whose twin it is. All columns of a cell share its seeds, so they move together.
-    Returns the pooled pilot and face rates by optimizer, and the mean gap, for each draw."""
+    Returns the pooled pilot and face rates by optimizer and the mean gap, for each draw, and how many drawn values were undefined."""
     held, known = data["held"], data["known"]
     W, G = held["wins"][subset], held["games"][subset]
     WK, GK = known["wins"], known["games"]
     tw = twins[subset]
     n, units = W.shape[0], W.shape[1]
-    rates, gaps = np.empty((resamples, 6)), np.empty(resamples)
+    rates, gaps, undefined = np.empty((resamples, 6)), np.empty(resamples), 0
     k_rows = np.arange(WK.shape[0])[:, None]
     for r in range(resamples):
         lists = rng.integers(0, n, n)
@@ -450,9 +490,13 @@ def bootstrap(data, subset, twins, rng, resamples):
         w, g = W[lists[:, None], cells_].sum(axis=1), G[lists[:, None], cells_].sum(axis=1)
         known_cells = rng.integers(0, units, (WK.shape[0], units))
         wk, gk = WK[k_rows, known_cells].sum(axis=1), GK[k_rows, known_cells].sum(axis=1)
-        rates[r] = ratio(w[:, :6].sum(axis=0), g[:, :6].sum(axis=0))
-        gaps[r] = np.nanmean(gap_of(w, g, wk, gk, tw[lists]))
-    return rates, gaps
+        drawn = ratio(w[:, :6].sum(axis=0), g[:, :6].sum(axis=0))
+        gap = gap_of(w, g, wk, gk, tw[lists])
+        # A drawn build whose cells, or whose twin's, hold no game for a rate the gap needs counts at the lowest possible gap.
+        undefined += int(np.isnan(gap).sum()) + int(np.isnan(drawn).sum())
+        rates[r] = np.where(np.isnan(drawn), 0.0, drawn)
+        gaps[r] = np.where(np.isnan(gap), -2.0, gap).mean()
+    return rates, gaps, undefined
 
 
 def decide(data, lists, training, integrity, resamples=RESAMPLES):
@@ -466,11 +510,17 @@ def decide(data, lists, training, integrity, resamples=RESAMPLES):
     held, known = data["held"], data["known"]
     numbers, broken = {"lists": len(names), "far_lists": int(len(far)), "far_gated": gate_far}, []
     for label, subset, gated in (("all", everything, True), ("far", far, gate_far)):
+        if not len(subset):
+            numbers[label] = {"lists": 0, "note": "no builds"}
+            if gated:
+                broken.append(f"A1 on {label}: there are no builds")
+            continue
         W, G, V, S = (held[key][subset].sum(axis=(0, 1)) for key in ("wins", "games", "void", "suspect"))
-        seat_w = held["wins"][subset].reshape(len(subset), -1, 2, len(COLUMNS)).sum(axis=(0, 1))
-        seat_g = held["games"][subset].reshape(len(subset), -1, 2, len(COLUMNS)).sum(axis=(0, 1))
-        rates, gaps = bootstrap(data, subset, twins, rng, resamples) if len(subset) else (np.full((1, 6), np.nan), np.full(1, np.nan))
-        per = {"lists": int(len(subset))}
+        shape = (len(subset), len(training), 2, len(COLUMNS))
+        seat_w = held["wins"][subset].reshape(shape).sum(axis=(0, 1))
+        seat_g = held["games"][subset].reshape(shape).sum(axis=(0, 1))
+        rates, gaps, undefined = bootstrap(data, subset, twins, rng, resamples)
+        per = {"lists": int(len(subset)), "undefined_draws": undefined}
         for arm, rule, cols in (("pilot", "A1", range(0, 3)), ("face", "A2", range(3, 6))):
             by = {k: {"games": int(G[c]), "rate": float(ratio(W[c], G[c])), "low": float(np.nanpercentile(rates[:, c], 2.5))} for k, c in zip(OPTIMIZERS, cols)}
             mean = float(np.mean([v["rate"] for v in by.values()]))
@@ -489,9 +539,9 @@ def decide(data, lists, training, integrity, resamples=RESAMPLES):
                     broken.append(f"{rule} {arm} on {label}: seat {s} is below {SEAT_BAR:.0%}")
             if not worst >= BAR:
                 broken.append(f"A4 {arm} on {label}: counting void and interrupted games as losses, the mean is below {BAR:.0%}")
-        point = gap_of(held["wins"][subset].sum(axis=1), held["games"][subset].sum(axis=1), known["wins"].sum(axis=1), known["games"].sum(axis=1), twins[subset]) if len(subset) else np.array([np.nan])
+        point = gap_of(held["wins"][subset].sum(axis=1), held["games"][subset].sum(axis=1), known["wins"].sum(axis=1), known["games"].sum(axis=1), twins[subset])
         raw = (ratio(held["wins"][subset].sum(axis=1)[:, :3], held["games"][subset].sum(axis=1)[:, :3])
-               - ratio(known["wins"].sum(axis=1)[:, :3], known["games"].sum(axis=1)[:, :3])[twins[subset]]).mean(axis=1) if len(subset) else np.array([np.nan])
+               - ratio(known["wins"].sum(axis=1)[:, :3], known["games"].sum(axis=1)[:, :3])[twins[subset]]).mean(axis=1)
         per["gap"] = {"mean": float(np.nanmean(point)), "low": float(np.nanpercentile(gaps, 2.5)), "high": float(np.nanpercentile(gaps, 97.5))}
         per["raw_gap"] = {"mean": float(np.nanmean(raw))}
         if gated and not per["gap"]["low"] > GAP_BAR:
@@ -509,7 +559,7 @@ def decide(data, lists, training, integrity, resamples=RESAMPLES):
     # Coverage: every list has completed games in every arm, optimizer and seat.
     empty = []
     for block in ("known", "held"):
-        per_seat = data[block]["games"].reshape(data[block]["games"].shape[0], -1, 2, len(COLUMNS)).sum(axis=1)
+        per_seat = data[block]["games"].reshape(data[block]["games"].shape[0], len(training), 2, len(COLUMNS)).sum(axis=1)
         for i, s, c in zip(*np.nonzero(per_seat == 0)):
             empty.append(f"{block}/{i}/seat {s}/{COLUMNS[c][0]}/{COLUMNS[c][1]}")
     numbers["integrity"] = {**integrity, "empty_list_arms": len(empty)}
@@ -568,7 +618,7 @@ def made_up(held_rows, training, rates, void=None, seed=1):
     rng = np.random.default_rng(seed)
     rows = []
     for i, job in enumerate(cells([r["name"] for r in held_rows], training, FAKE)):
-        base = {"cell": i, "job_sha256": text_sha(job_text(job)), **{k: job[k] for k in JOB_FIELDS}, "unresolved_starts": 0}
+        base = {"cell": i, "job_sha256": text_sha(job_text(job)), **{k: job[k] for k in JOB_FIELDS}, "unresolved_first": 0, "unresolved_replay": 0, "unresolved_starts": 0}
         if void and void(job):
             rows.append({**base, "status": "VOID", "reason": "made up", "duels": None})
             continue
@@ -655,6 +705,19 @@ def selftest():
     ok = got == [1, 3, 4, 1]
     print(f"{'pass' if ok else 'FAIL'}: draws, voids and interrupted cells: {got}")
     failed += not ok
+    # Sparse but allowed mirror voids: some draws hold no mirror game for a build, which then counts at the lowest gap, never dropped.
+    data = arrays(made_up(held, training, make(), lambda j: j["block"] == "held" and j["list"] == "h007" and j["arm"] == "mirror"
+                          and not (j["opponent"] == "t00")), names, training)
+    numbers, broken = decide(data, held, training, clean, resamples=1000)
+    plain, _ = decide(arrays(made_up(held, training, make()), names, training), held, training, clean, resamples=1000)
+    ok = numbers["all"]["undefined_draws"] > 0 and numbers["all"]["gap"]["low"] < plain["all"]["gap"]["low"] and not any("no completed game" in b for b in broken)
+    print(f"{'pass' if ok else 'FAIL'}: an empty draw counts at the lowest gap: {numbers['all']['undefined_draws']} undefined, low {numbers['all']['gap']['low']:.4f} against {plain['all']['gap']['low']:.4f}")
+    failed += not ok
+    nofar = [dict(r, far=False) for r in held]
+    numbers, broken = decide(arrays(made_up(nofar, training, make()), names, training), nofar, training, clean, resamples=200)
+    ok = not broken and numbers["far"]["lists"] == 0 and not numbers["far_gated"]
+    print(f"{'pass' if ok else 'FAIL'}: no far builds: {broken[:2]}")
+    failed += not ok
     failed += selftest_records(held, training)
     failed += selftest_journal()
     failed += selftest_matrix(held, training)
@@ -710,6 +773,41 @@ def selftest_records(held, training):
     header = json.loads(json.dumps(good))
     header["jobs_sha256"] = "0" * 64
     expect("a wrong job digest", header)
+    dropped = json.loads(json.dumps(good))
+    del dropped["rows"][4]["unresolved_first"]
+    expect("a row without its interrupted attempts", dropped)
+    # A replay interrupted and rerun: its cell counts in the worst case, and the replay record agrees.
+    cell = next(i for i in replayed(indices) if any(d["winner"] == rows[i]["seat"] for d in rows[i]["duels"]))
+    again = assemble(21, part, indices, results, Counter({f"replay:{cell}": 1}))
+    row = next(r for r in again["rows"] if r["cell"] == cell)
+    expect("a replay interrupted once", again, problem=False)
+    a = arrays(again["rows"], [r["name"] for r in held], training)
+    suspect = a[row["block"]]["suspect"].sum()
+    ok = row["unresolved_starts"] == 1 and row["unresolved_replay"] == 1 and suspect == sum(d["winner"] == row["seat"] for d in row["duels"]) and suspect > 0
+    print(f"{'pass' if ok else 'FAIL'}: a replay interruption counts its cell in the worst case: {suspect}")
+    failed += not ok
+    hidden = json.loads(json.dumps(again))
+    next(r for r in hidden["replays"] if r["cell"] == cell)["unresolved_starts"] = 0
+    expect("a replay interruption the row and replay disagree on", hidden)
+    # The chunk must be what its journal holds.
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        journal = Path(tmp) / "c.jsonl"
+        journal.write_text("".join(json.dumps({"event": e, "key": k, **({"result": v} if e == "result" else {})}) + "\n"
+                                   for k, v in results.items() for e in ("start", "result")))
+        record = {**assemble(21, part, indices, *read_journal(journal)), "journal_sha256": sha(journal)}
+        problems, _ = check_chunk(21, record, part, indices, journal)
+        ok = not problems
+        edited = json.loads(json.dumps(record))
+        edited["rows"][0]["status"], edited["rows"][0]["duels"] = "VOID", None
+        problems2, _ = check_chunk(21, edited, part, indices, journal)
+        record3 = json.loads(json.dumps(record))
+        record3["rows"][9]["duels"][0]["winner"] = 1 - record3["rows"][9]["duels"][0]["winner"]
+        problems3, _ = check_chunk(21, record3, part, indices, journal)
+        missing, _ = check_chunk(21, record, part, indices, Path(tmp) / "none.jsonl")
+        ok = ok and bool(problems2) and bool(problems3) and bool(missing)
+        print(f"{'pass' if ok else 'FAIL'}: a chunk must match its journal: {problems2[:1]} {problems3[:1]} {missing[:1]}")
+        failed += not ok
     return failed
 
 
@@ -733,6 +831,29 @@ def selftest_journal():
         print(f"{'pass' if ok else 'FAIL'}: {name} {detail}")
         failed += not ok
     with tempfile.TemporaryDirectory() as tmp:
+        # A cut write, then a resume that appends, then a reread: the journal must stay whole.
+        start = lambda k: json.dumps({"event": "start", "key": k}) + "\n"
+        result = lambda k, status: json.dumps({"event": "result", "key": k, "result": {"status": status, "duels": []}})
+        tasks4 = [(f"first:{i}", {"seed": i + 10}) for i in range(4)]
+        for name, text, runs, left in (
+                ("a cut start", start("first:0") + result("first:0", "VOID") + "\n" + start("first:1") + result("first:1", "PASS") + "\n" + '{"event": "sta',
+                 [12, 13], {}),
+                ("a cut result", start("first:0") + result("first:0", "VOID") + "\n" + start("first:1") + '{"event": "result", "key": "first:1", "res',
+                 [11, 12, 13], {"first:1": 1}),
+                ("a whole last record with no newline", start("first:0") + result("first:0", "VOID") + "\n" + start("first:1") + result("first:1", "PASS"),
+                 [12, 13], {})):
+            path = Path(tmp) / f"{name}.jsonl"
+            path.write_text(text)
+            calls = []
+            done, _ = read_journal(path)
+            run_tasks(type("P", (), {"workers": [FakeWorker(calls)], "cell_timeout": 1})(), tasks4, path, done)
+            try:
+                after, unresolved = read_journal(path)
+                ok = calls == runs and len(after) == 4 and after["first:0"]["status"] == "VOID" and dict(unresolved) == left
+                detail = f"{calls} {dict(unresolved)}"
+            except SystemExit as error:
+                ok, detail = False, str(error)
+            check(f"resume after {name}", ok, detail)
         journal = Path(tmp) / "j.jsonl"
         tasks = [(f"first:{i}", {"seed": i}) for i in range(8)]
         calls = []
@@ -917,7 +1038,7 @@ def play(workers):
         path = OUT / f"chunk-{n:03d}.json.gz"
         if path.exists():
             with gzip.open(path, "rt") as f:
-                problems, mismatches = validate(json.load(f), [jobs[i] for i in indices], indices)
+                problems, mismatches = check_chunk(n, json.load(f), [jobs[i] for i in indices], indices, OUT / f"chunk-{n:03d}.jsonl")
             if problems:
                 raise SystemExit(f"{path} fails its checks: {problems[:3]}")
             if mismatches:
@@ -963,7 +1084,7 @@ def analyze():
     reasons = Counter(str(r.get("reason"))[:120] for r in rows if r["status"] != "PASS")
     passing = [r for r in rows if r["status"] == "PASS"]
     result = {"verdict": "STAGE_A_MET" if not broken else "NOT_MET", "broken": broken, "numbers": numbers, "reported": reported(data, lists["lists"], training),
-              "void_reasons": dict(reasons), "unresolved_starts": sum(r.get("unresolved_starts", 0) for r in rows),
+              "void_reasons": dict(reasons), "unresolved_first": sum(r["unresolved_first"] for r in rows), "unresolved_replay": sum(r["unresolved_replay"] for r in rows),
               "draws": sum(d["winner"] == 2 for r in passing for d in r["duels"]), "decisions": sum(r["counters"]["decisions"] for r in passing),
               "guard_fires": sum(r["counters"].get("guard_fires", 0) for r in passing), "manifest_sha256": sha(MANIFEST)}
     RESULT.write_text(json.dumps(result, indent=1) + "\n")
