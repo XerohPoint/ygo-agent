@@ -8,6 +8,10 @@ and 601 of those are not training lists. The crash soak played 254,016 duels of 
 a segmentation fault in the production module, reproducible only some of the time, and found so far only in one pairing of a Hero Frog list with a
 Neo-Spacian list. Neo-Spacian Dark Panther is the lead card, not a confirmed cause. It is in 7 lists, none inside v1.
 
+**Update, November 10, 2026: the root cause is found and fixed.** It was a use-after-free from our own core patch, which Dark Panther copying
+Treeborn Frog sets off. A separate rules bug let Dark Panther reuse its effect by copying another Dark Panther. See
+[edison-dark-panther.md](edison-dark-panther.md). The text below is the soak as reported on November 9.
+
 Evidence is in [reports/corpus-2026-11-09](../tests/edison/reports/corpus-2026-11-09/summary.json). Lists are in
 [assets/edison/corpus](../assets/edison/corpus/manifest.json). Tools are in [tools/edison/corpus](../tools/edison/corpus/).
 

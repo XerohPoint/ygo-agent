@@ -162,6 +162,8 @@ known cards, met by [predeclared rule](edison-heldout.md), November 10, 2026:** 
 network trained on, with the edge over the heuristic within a point of the edge on each build's nearest training list.
 Sol recounted it with separate code and reran 84 cell runs and 48 search games with no differences.
 Stage B, cards no training list plays, needs code list v2, an unknown-identity row and retraining, and is not started.
+The corpus crash that blocked Stage B's Dark Panther lists is [fixed](edison-dark-panther.md) in core hardening r3, along with
+a Dark Panther repeat; Stage B also needs a search binary rebuilt on r3.
 
 ### M4 — Deck builder
 

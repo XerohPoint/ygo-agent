@@ -1,0 +1,125 @@
+{
+ "stages": {
+  "lists": {
+   "duels_old": 0,
+   "duels_new": 0,
+   "rule_differences": 0,
+   "first_differences": [],
+   "chosen_actions_differ": 0,
+   "label_traces_differ": 0
+  },
+  "sidein": {
+   "duels_old": 0,
+   "duels_new": 0,
+   "rule_differences": 0,
+   "first_differences": [],
+   "chosen_actions_differ": 0,
+   "label_traces_differ": 0
+  },
+  "targets": {
+   "duels_old": 400,
+   "duels_new": 400,
+   "rule_differences": 21,
+   "first_differences": [
+    {
+     "duel": "80720002",
+     "fields": [
+      "steps",
+      "max_options",
+      "prompts"
+     ]
+    },
+    {
+     "duel": "80720010",
+     "fields": [
+      "steps",
+      "max_options",
+      "prompts"
+     ]
+    },
+    {
+     "duel": "80720023",
+     "fields": [
+      "steps",
+      "max_options",
+      "prompts"
+     ]
+    },
+    {
+     "duel": "80720026",
+     "fields": [
+      "steps",
+      "max_options",
+      "prompts"
+     ]
+    },
+    {
+     "duel": "80720027",
+     "fields": [
+      "steps",
+      "winner",
+      "prompts"
+     ]
+    },
+    {
+     "duel": "80720035",
+     "fields": [
+      "steps",
+      "max_options",
+      "prompts"
+     ]
+    },
+    {
+     "duel": "80720036",
+     "fields": [
+      "steps",
+      "prompts"
+     ]
+    },
+    {
+     "duel": "80720044",
+     "fields": [
+      "steps",
+      "reason",
+      "prompts"
+     ]
+    },
+    {
+     "duel": "80720046",
+     "fields": [
+      "steps",
+      "winner",
+      "max_options",
+      "prompts"
+     ]
+    },
+    {
+     "duel": "80720048",
+     "fields": [
+      "steps",
+      "prompts"
+     ]
+    }
+   ],
+   "chosen_actions_differ": 21,
+   "label_traces_differ": 21
+  },
+  "uniform": {
+   "duels_old": 0,
+   "duels_new": 0,
+   "rule_differences": 0,
+   "first_differences": [],
+   "chosen_actions_differ": 0,
+   "label_traces_differ": 0
+  }
+ },
+ "identical": false,
+ "problems": [
+  "lists: no duels (0 old, 0 new)",
+  "sidein: no duels (0 old, 0 new)",
+  "targets: 21 rule differences",
+  "targets: chosen actions differ in 21 duels",
+  "uniform: no duels (0 old, 0 new)"
+ ],
+ "passed": false
+}

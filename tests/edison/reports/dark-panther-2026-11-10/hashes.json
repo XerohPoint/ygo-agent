@@ -1,0 +1,26 @@
+{
+ "production_module": {
+  "certified_before": "b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f",
+  "this_commit": "75d1967b64683e967b45440863c4bb85808f6bf4cee0d9fa1d8cb4a3f340caf4",
+  "built": "75d1967b64683e967b45440863c4bb85808f6bf4cee0d9fa1d8cb4a3f340caf4"
+ },
+ "edison_rules": {
+  "before": "6df1bd58680d681624c02e5bd8ec19159b96cc4204b4af6a543ed7c30b411778",
+  "this_commit": "1ae071beeeb77c66f47e6017b6c581fef149934b593ddf858bad3297393428f6"
+ },
+ "edison_conformance": {
+  "before": "ac41e4d3ea72a4d6711c970c2e74602a5aaacafff6234eb759e7c74c0d5a8066",
+  "this_commit": "23bb2a2c660fe866217f4ef20ad4a872072bdee82c3b90ca8a89060f702713e6"
+ },
+ "core_package": {
+  "r2": "5fe29f6ad6dd4ebb83a1f1b5123c1837",
+  "r3": "792b98d401b34303be27a588cc4c8318",
+  "r2_lib": "e3adf73d2dbd6f6d144c0679bc00219debfacf3d610c6880fb6c01279bdb3d27",
+  "r3_lib": "984301c4a0a675b610eaf295b03249cb627a408061a347cab98f914ef6198402"
+ },
+ "edison_hardening_patch": {
+  "r2": "9adf1905ebb577cdbd13dbf51737eb28cd07dfb0cf088b2275d0c6e0d3a1fff5",
+  "r3": "d1ded6e6083904ed8734c3f49c47322bad008be4e56fa23ec982c471b806d8fb"
+ },
+ "stock_dark_panther_script": "570cd2dc9daa5eeb6433b2f7039c008c7d570fa9e24d147080e0b816952f7913"
+}
