@@ -1712,7 +1712,9 @@ end
   // official). The stock script's count limit belongs to one effect object, and each copy is a
   // new object with an unused limit. A card flag in the cost, as the stock Phantom of Chaos script
   // uses, is seen by every copy. RESETS_STANDARD clears it when the card is flipped face-down or
-  // leaves the field, which the same rulings allow to start over.
+  // leaves the field, which the same rulings allow to start over. The copied name and effects apply
+  // only while the copying player controls the card (DP03 text), so they also reset on a control
+  // change, which the stock script misses. The flag does not: the effect stays used that turn.
   // Source: https://yugipedia.com/wiki/Card_Rulings:Neo-Spacian_Dark_Panther
   if(name == "c43237273.lua") return R"lua(
 --N・ブラック・パンサー
@@ -1752,12 +1754,12 @@ function c43237273.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_CONTROL+RESET_PHASE+PHASE_END)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(code)
 		c:RegisterEffect(e1)
 		if not tc:IsType(TYPE_TRAPMONSTER) then
-			cid=c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
+			cid=c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_CONTROL+RESET_PHASE+PHASE_END,1)
 		end
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(aux.Stringid(43237273,1))
@@ -1766,7 +1768,7 @@ function c43237273.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		e2:SetCountLimit(1)
 		e2:SetRange(LOCATION_MZONE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_CONTROL+RESET_PHASE+PHASE_END)
 		e2:SetLabelObject(e1)
 		e2:SetLabel(cid)
 		e2:SetOperation(c43237273.rstop)

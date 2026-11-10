@@ -52,10 +52,12 @@ inline void panther_copy_reset(certification::Assets& assets, int options, bool 
         for (auto* c : copies)
           require(c->is_flag(EFFECT_FLAG_COUNT_LIMIT) == !historical && d.effect_rechargeable(c) == !historical,
                   "Copied Standby effect's limit and turn-reset membership disagree");
+        require(d.query_value(0, LOCATION_MZONE, 0, QUERY_ALIAS) == target, "Dark Panther did not take the copied name");
         d.respond(7);
       } else if (turns == 2) {
         for (auto* c : copies)
           require(!d.effect_live(c) && !d.effect_rechargeable(c), "Copied effect outlived its End Phase reset");
+        require(d.query_value(0, LOCATION_MZONE, 0, QUERY_ALIAS) == dark_panther, "Dark Panther kept the copied name");
         d.respond(7);
       } else {
         require(turns == 3, "Unexpected turn");
@@ -86,7 +88,8 @@ inline void panther_copy_reset(certification::Assets& assets, int options, bool 
 
 // 089C: Dark Panther copies the opponent's Dark Panther. In Edison the copied effect is the one
 // it just used, so it cannot be activated again that turn; the stock script offers it again.
-// The opponent's Dark Panther keeps its own use on its controller's turn.
+// The opponent's Dark Panther keeps its own use on its controller's turn, and the used one is offered
+// again on its controller's next turn, so a flag that never resets would fail.
 inline void panther_copy_panther(certification::Assets& assets, int options, bool historical, bool trace) {
   using namespace certification;
   using namespace panther_detail;
@@ -115,13 +118,17 @@ inline void panther_copy_panther(certification::Assets& assets, int options, boo
           require(activations == 2, "Unexpected activation count");
           d.respond(7);
         }
-      } else {
-        require(turns == 2 && e.player == 1, "Unexpected turn");
+      } else if (turns == 2) {
+        require(e.player == 1, "Unexpected turn");
         opponent_offers = idle_index(e, 5, 1, 0) >= 0;
         require(opponent_offers == 1, "Opponent's Dark Panther lost its own use");
+        d.respond(7);
+      } else {
+        require(turns == 3 && e.player == 0, "Unexpected turn");
+        require(idle_index(e, 5, 0, 0) >= 0, "Used Dark Panther not offered on its controller's next turn");
         std::cout << "Observed: Dark Panther copied Dark Panther; activations in that turn " << activations
                   << (historical ? " (copy not offered again)" : " (stock script offers the copy)")
-                  << "; the opponent's Dark Panther is offered on its own turn.\n";
+                  << "; the opponent's Dark Panther is offered on its own turn, and the used one on the next.\n";
         return true;
       }
     } else if (e.kind == MSG_SELECT_CARD) {
@@ -227,6 +234,75 @@ inline void panther_own_uses(certification::Assets& assets, int options, bool fl
     else if (e.kind == MSG_SELECT_EFFECTYN || e.kind == MSG_SELECT_YESNO || e.kind == MSG_SELECT_OPTION ||
              e.kind == MSG_CHAIN_NEGATED || e.kind == MSG_CHAIN_DISABLED)
       throw std::runtime_error("Unexpected Dark Panther event");
+    return false;
+  });
+}
+
+// 089F: Dark Panther copies Bazoo, then Creature Swap gives it to the opponent. The copied name and
+// effects apply only while the copying player controls the card, so in Edison it is Dark Panther
+// again under the opponent. The stock script keeps the copy until the End Phase.
+inline void panther_control_change(certification::Assets& assets, int options, bool historical, bool trace) {
+  using namespace certification;
+  using namespace panther_detail;
+  TestDuel d(assets, 0, 0, trace, options);
+  d.add({dark_panther, 0, 0, LOCATION_MZONE, 0, POS_FACEUP_ATTACK});
+  d.add({creature_swap, 0, 0, LOCATION_SZONE, 0, POS_FACEDOWN_DEFENSE});
+  d.add({bazoo, 1, 1, LOCATION_MZONE, 0, POS_FACEUP_ATTACK});
+  int step = 0, solved = 0, swaps = 0, places = 0, panther_zone = -1;
+  d.start(options);
+  d.run([&](const Event& e) {
+    if (e.kind == MSG_NEW_TURN) require(e.player == 0 && step == 0, "Unexpected turn");
+    else if (e.kind == MSG_SELECT_IDLECMD) {
+      d.check_rechargeable();
+      require(e.player == 0 && d.phase() == PHASE_MAIN1, "Unexpected idle prompt");
+      if (step == 0) {
+        int i = idle_index(e, 5, 0, 0);
+        require(i >= 0, "Dark Panther not offered");
+        ++step; d.respond((i << 16) | 5);
+      } else if (step == 1) {
+        require(solved == 1 && d.query_value(0, LOCATION_MZONE, 0, QUERY_ALIAS) == bazoo, "Dark Panther did not copy Bazoo");
+        int swap = -1;
+        for (size_t i = 0; i < e.idle[5].size(); ++i)
+          if (e.idle[5][i].code == creature_swap) swap = int(i);
+        require(swap >= 0, "Creature Swap not offered");
+        ++step; d.respond((swap << 16) | 5);
+      } else {
+        require(swaps == 1 && solved == 2 && places == 2 && panther_zone >= 0, "Creature Swap did not resolve");
+        require(d.code(1, LOCATION_MZONE, panther_zone) == dark_panther, "The opponent does not control Dark Panther");
+        const uint32_t name = d.query_value(1, LOCATION_MZONE, panther_zone, QUERY_ALIAS);
+        require(name == (historical ? dark_panther : bazoo), historical ? "The copy outlived the control change"
+                                                                        : "Stock script control: the copy ended on the control change");
+        std::cout << "Observed: Dark Panther copied Bazoo and was given away by Creature Swap; under the opponent its name is "
+                  << (name == bazoo ? "still Bazoo" : "Dark Panther") << ".\n";
+        return true;
+      }
+    } else if (e.kind == MSG_SELECT_CARD) {
+      int i = -1;
+      if (step == 1) i = pick(e, 1, bazoo);
+      else if (e.player == 0) i = pick(e, 0, dark_panther);
+      else i = pick(e, 1, bazoo);
+      require(i >= 0, "Selection missing");
+      d.respond({1, uint8_t(i)});
+    } else if (e.kind == MSG_SELECT_CHAIN) {
+      require(!e.forced, "Unexpected forced chain");
+      d.respond(-1);
+    } else if (e.kind == MSG_SELECT_PLACE) {
+      // The swapping player places both monsters. Set bits mark unavailable zones: bits 0-4 its own Monster
+      // Zones, bits 16-20 the opponent's. The first prompt places Bazoo, the second Dark Panther.
+      require(step == 2 && places < 2 && e.player == 0, "Unexpected zone prompt");
+      const bool own = (e.mask & 0x1f) != 0x1f;
+      const uint32_t zones = own ? e.mask : e.mask >> 16;
+      int seq = 0;
+      while (seq < 5 && (zones >> seq & 1)) ++seq;
+      require(seq < 5 && own == (places == 0), "No free Monster Zone on the expected side");
+      if (!own) panther_zone = seq;
+      ++places;
+      d.respond({uint8_t(own ? 0 : 1), uint8_t(LOCATION_MZONE), uint8_t(seq)});
+    } else if (e.kind == MSG_CHAIN_SOLVED) ++solved;
+    else if (e.kind == MSG_SWAP) ++swaps;
+    else if (e.kind == MSG_SELECT_EFFECTYN || e.kind == MSG_SELECT_YESNO || e.kind == MSG_SELECT_OPTION ||
+             e.kind == MSG_CHAIN_NEGATED || e.kind == MSG_CHAIN_DISABLED)
+      throw std::runtime_error("Unexpected Creature Swap event");
     return false;
   });
 }

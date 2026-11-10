@@ -1135,6 +1135,12 @@ int main(int argc, char** argv) {
         panther_own_uses(assets,historical?options:5<<16,flip,trace);
       });
     }
+    for(bool historical : {false,true}) {
+      test(historical?"EDISON RULE TEST 089F - DARK PANTHER CHANGES CONTROL":"CONTROL 089F - STOCK DARK PANTHER CONTROL CHANGE",
+           "The copied name and effects end when another player takes control; the stock script keeps them until the End Phase.",[&] {
+        panther_control_change(assets,historical?options:5<<16,historical,trace);
+      });
+    }
     require(total > 0, "No certification cases matched the requested test number");
     std::cout << "\nSUMMARY: " << total - failures << " PASS, " << failures << " FAIL\n";
     return failures ? 1 : 0;

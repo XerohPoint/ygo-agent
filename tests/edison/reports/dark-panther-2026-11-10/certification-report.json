@@ -99,7 +99,8 @@
       "c80921533.lua": "43f3c6f5d65a50bff655b9214ca1467baab43d6f2cf3c8393ee5b520f30b6a83",
       "c80604091.lua": "ef0189908e9c68c063595d41dc53c1191fc53bf2e403864e8f7e70077040a657",
       "c94634433.lua": "19e7736fce96da83eae1d089e8566c340b46339658929d2a801c2a902999fae6",
-      "c43237273.lua": "570cd2dc9daa5eeb6433b2f7039c008c7d570fa9e24d147080e0b816952f7913"
+      "c43237273.lua": "570cd2dc9daa5eeb6433b2f7039c008c7d570fa9e24d147080e0b816952f7913",
+      "c31036355.lua": "2a8502fd3913b0938e7487c31f09ded54c6be1e4937aa77d22acf1baad65eb86"
     },
     "core_patch_sha256": "5a6d18d7bdac6cb305cf414a7409b374c3ea7519c18a4cc41884686f05fede61",
     "legality_sha256": {
@@ -198,13 +199,14 @@
     "/home/mada/ygopro-scripts/c80921533.lua": "43f3c6f5d65a50bff655b9214ca1467baab43d6f2cf3c8393ee5b520f30b6a83",
     "/home/mada/ygopro-scripts/c80604091.lua": "ef0189908e9c68c063595d41dc53c1191fc53bf2e403864e8f7e70077040a657",
     "/home/mada/ygopro-scripts/c94634433.lua": "19e7736fce96da83eae1d089e8566c340b46339658929d2a801c2a902999fae6",
-    "/home/mada/ygopro-scripts/c43237273.lua": "570cd2dc9daa5eeb6433b2f7039c008c7d570fa9e24d147080e0b816952f7913"
+    "/home/mada/ygopro-scripts/c43237273.lua": "570cd2dc9daa5eeb6433b2f7039c008c7d570fa9e24d147080e0b816952f7913",
+    "/home/mada/ygopro-scripts/c31036355.lua": "2a8502fd3913b0938e7487c31f09ded54c6be1e4937aa77d22acf1baad65eb86"
   },
   "core_patch_sha256": "5a6d18d7bdac6cb305cf414a7409b374c3ea7519c18a4cc41884686f05fede61",
   "core_hardening_patch_sha256": "d1ded6e6083904ed8734c3f49c47322bad008be4e56fa23ec982c471b806d8fb",
   "core_recipe_sha256": "6530a9ba96d8bc99ea3a7a27d6cee225f89905525914d3026be1e0112352469f",
   "binary": "/home/mada/ygo-agent/.claude/worktrees/panther-fix/build/linux/x86_64/release/edison_rules",
-  "binary_sha256": "1ae071beeeb77c66f47e6017b6c581fef149934b593ddf858bad3297393428f6",
+  "binary_sha256": "5a715b9b7198cd4d3bede01742725761a80b4407f886907baf46a9ec8bc8069c",
   "source_sha256": {
     "xmake.lua": "967ce8bb89b55d90f3c24cea301c878512cb69021fabaa650abd3b422e5519ef",
     "ygoenv/ygoenv/ygopro/ygopro.h": "d1c58e4644412fcac940388df04d29d5712813a885c49c10d2f028f484bb49b4",
@@ -212,7 +214,7 @@
     "ygoenv/ygoenv/ygopro/observation_visibility.h": "d6991b96b199fa1c53e6cd06e55d67703c69c3a49da264d390ac6b1a1a654953",
     "ygoenv/ygoenv/ygopro/decision_context.h": "b3dda10232dfa59d94aa79cdaae7c3805426ebc25d2fd33f41d4d4f3d5a7a068",
     "ygoenv/ygoenv/ygopro/prompt_audit.h": "f022cb58ff645f29712ef38590ed6ef7df995e1106c4dd38c1960b5ccec79c17",
-    "ygoenv/ygoenv/ygopro/historical_scripts.h": "72ee08f8c35ecf9368a0d048ef1bde85665bab21f4408a9e63db922f8f7c90e3",
+    "ygoenv/ygoenv/ygopro/historical_scripts.h": "1d7d42364f3a80a7c901997b16ae2e7e2ff9f5b32b5ae8de9069428e1ba0c9a9",
     "ygoenv/ygoenv/ygopro/script_loader.h": "5d48985681f3fb079055463f071ed6aac5331f565bbca52b28d565672f45ac21",
     "ygoenv/ygoenv/ygopro/deck_validation.h": "1e86e02e949695c7413b14ab9a3256edf28593aabb4acdb4649ee1bc24b56350",
     "ygoenv/ygoenv/ygopro/deck_file.h": "8205f4de1b3d9c44cf650994036d268821b84cb294f46c0480ecb762de393ccb",
@@ -257,7 +259,7 @@
     "tests/edison/generate_legality.py": "7ea491382abbdbe9fe1396c7bf696e8decccc0442eb5ea1cb40095a3c95e283a",
     "tests/edison/goyo_material_tests.h": "3c60ce95631e16e4feb8bb2812094e25b37a9083d1663789f09e7c0aab44b19a",
     "tests/edison/graveyard_negation_tests.h": "fdd088ab5354e36037e6730e2af9501fec5d485392776f69173363364032c89c",
-    "tests/edison/harness.h": "45ed717b16c105eb70bb2b9a5e1b3ae01f7845f8456063930f5086245ddbe5b6",
+    "tests/edison/harness.h": "f14007281bfde1141f83bea1b830cce5a315651f642a31197d49a342f91d39a7",
     "tests/edison/historical_damage_tests.h": "47f2bf1691232546221395f1d9671cbbf0fbb230597dab49340d2a61b62a0bbb",
     "tests/edison/ladd_sequence_tests.h": "ccb3b2c8f264426ebea2b802d128fa760b8671de0ca7e4e04009ded269a80024",
     "tests/edison/layered_negation_tests.h": "f14a1d9700a17aa31e9729927014109232528f23cc4a2bed3502e5772a724706",
@@ -270,7 +272,7 @@
     "tests/edison/necrovalley_tests.h": "9f543ed93bb7c0da23f2ef8be20c7f3705e7ff07f8e372830205ab94f3e6c11c",
     "tests/edison/nested_trigger_tests.h": "cfcb481c9836141f14ceadbbc2b87b9fe0beea337b49dfb5399a0d966b52f0e8",
     "tests/edison/optional_trigger_tests.h": "d92cef5ce133678aa36366b24bb7e7856201b3aa36bde94c87cd8187d364e17a",
-    "tests/edison/panther_copy_tests.h": "924e6b101bf163a859adcfe34dbde9257cbb788b49945dd27f4a5813295a023b",
+    "tests/edison/panther_copy_tests.h": "6fc6b53508e43714d310630a3b9798abb39002aefa1c9ab35fa497ed4cd08784",
     "tests/edison/persistent_negation_tests.h": "b28ea9b824e4c38175851be21f67cdfc32622b0ed7f834e38b7004c2b1c6cff2",
     "tests/edison/phase_retry_tests.h": "713c374113f5e75d42e3ca4e98d5111b5da9015941146f21b17bb7af95ad1f61",
     "tests/edison/prisma_tests.h": "0c31871273f93bdf29bf10cf3f6d55993787c834baecfcc78cac9330736e738c",
@@ -293,12 +295,12 @@
     "tests/edison/return_cost_tests.h": "8ff9ad4443787c2db61d01ae26994e1ed809e42a6fb950af9c283daa5cfcc878",
     "tests/edison/revival_negation_tests.h": "1788446f862e938a3d730a3c951dbdae37e34dcd646435cc4a2ffc1f8b6f3d6c",
     "tests/edison/rl_tests.py": "f0dd2f8046e0b3cd3309a94b5cfbda34547ca0c4a8b2b2f143c5afa79d0af190",
-    "tests/edison/rules.cpp": "cdac7e0d6c1137edb89b6520eab6d5a8fc623cabd5e925f9f945a99b46c76c43",
+    "tests/edison/rules.cpp": "88ea31650b4cbe6a6692748899dc0df63af25737ca4a1e25b1f79183336973e4",
     "tests/edison/run.py": "13af1b80df88f47eb81a4dff698a3378b50b0219e0e37b156c92032f130f8e05",
     "tests/edison/ryko_target_tests.h": "75928d850faa3dbf2d85e90c68238975ee10ad3140c305987ee7828ea8169c45",
     "tests/edison/sangan_repeat_tests.h": "35b36f7503435cb8b9f613063cc8ccf5201bd8b5fa8d1767b136b28ad63df5b8",
     "tests/edison/sangan_search_tests.h": "69a128aca24f055515273aaa73f301d62ad8ee742a24ee6c1fd9b5b7a254f106",
-    "tests/edison/script_consistency_tests.h": "4e6b12a561fb516f0e5345e44ae4bb1dcf11380666b66750ab539073ca373191",
+    "tests/edison/script_consistency_tests.h": "92b8d8b78ab13ae154520efe546c0b946c59f70aad0d2ba24721f73c9af05d17",
     "tests/edison/set_window_tests.h": "0b5128d6c6a26bf558ea33863694e2476e88c587abdc854e1b800f41235409fd",
     "tests/edison/simultaneous_battle_tests.h": "98a74817c6ed87d63d0eb1203e4c4a8ad1345494b3c031c84428cc0bc267d22d",
     "tests/edison/smoke.py": "657781da39454cd7739703c518a2d1065bd91ab0e4e36c7a3bb93971aa90b84a",
@@ -319,7 +321,7 @@
     "tests/edison/urgent_tuning_tests.h": "fbf24001aaf9ab4806a265b68901336b3ac06714aa52d731338885646095453b"
   },
   "production_binary": "/home/mada/ygo-agent/.claude/worktrees/panther-fix/build/linux/x86_64/release/ygopro_ygoenv.cpython-310-x86_64-linux-gnu.so",
-  "production_binary_sha256": "75d1967b64683e967b45440863c4bb85808f6bf4cee0d9fa1d8cb4a3f340caf4",
+  "production_binary_sha256": "eca27bd59908cd7dc7054899f3945bfdd51876911a52c41ab05f062f0cd42bd0",
   "token_resource_sha256": "a1024692d585532c3f5a64b70cfdc4092fd7fb5572f70e64fc8dce7df7182e4a",
   "smoke_assets_sha256": {
     "assets/locale/en/cards.cdb": "4c5de5831fade7601d55092dec594d5aab220b4321bf9dddbc3707a45df4000d",
@@ -528,12 +530,12 @@
     {
       "returncode": 0,
       "trace": "/home/mada/ygo-agent/.claude/worktrees/panther-fix/build/edison-certification/run-1.txt",
-      "sha256": "9d9fe1f6ff0d392bc8058d589a010202516a5514d827f2b49e8ae33b987ce260"
+      "sha256": "d419246e7808b2cae9701e7511f79061bdd025fa1a310bb4a55c2068a300e32d"
     },
     {
       "returncode": 0,
       "trace": "/home/mada/ygo-agent/.claude/worktrees/panther-fix/build/edison-certification/run-2.txt",
-      "sha256": "9d9fe1f6ff0d392bc8058d589a010202516a5514d827f2b49e8ae33b987ce260"
+      "sha256": "d419246e7808b2cae9701e7511f79061bdd025fa1a310bb4a55c2068a300e32d"
     }
   ],
   "deterministic_replay": true

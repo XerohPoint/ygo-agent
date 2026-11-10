@@ -1,18 +1,20 @@
 {
  "certification": {
   "cases_old": 593,
-  "cases_new": 603,
+  "cases_new": 605,
   "only_new": [
    "CONTROL 089A",
    "CONTROL 089B",
    "CONTROL 089C",
    "CONTROL 089D",
    "CONTROL 089E",
+   "CONTROL 089F",
    "EDISON RULE TEST 089A",
    "EDISON RULE TEST 089B",
    "EDISON RULE TEST 089C",
    "EDISON RULE TEST 089D",
-   "EDISON RULE TEST 089E"
+   "EDISON RULE TEST 089E",
+   "EDISON RULE TEST 089F"
   ],
   "only_old": [],
   "rule5_cases": 245,

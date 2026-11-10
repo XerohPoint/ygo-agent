@@ -9,7 +9,7 @@ inline void script_consistency(certification::Assets& assets,int rule) {
   std::vector<std::string> files{"constant.lua","utility.lua","procedure.lua"};
   for(auto [code,data]:assets.cards)
     if(code!=blue_eyes&&code!=jerry_beans&&code!=rose_token) files.push_back("c"+std::to_string(code)+".lua");
-  require(files.size()==89&&changed.size()==28,"Update reviewed script inventory for new fixtures/overrides");
+  require(files.size()==90&&changed.size()==28,"Update reviewed script inventory for new fixtures/overrides");
   assets.script_rule=rule;
   int overrides=0,suffixes=0;
   for(auto file:files) {
