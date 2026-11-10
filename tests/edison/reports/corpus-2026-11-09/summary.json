@@ -1,0 +1,2201 @@
+{
+ "date": "2026-11-09",
+ "base_commit": "6752ce9",
+ "inputs": {
+  "production_module_sha256": "b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f",
+  "full_code_list_sha256": "4d52f62e2498fe0423556612de9e265bf0164d665f3730e46c5c6a793a795e4d",
+  "code_list_v1_sha256": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab",
+  "legality_sha256": "541ccf819cd38ec693ec7ac1c4782f3567c993e41acf81a11aa72873fc092cc3",
+  "training_lists": [
+   "blackwing",
+   "frog_monarch",
+   "g_blackwing",
+   "g_diva_frog",
+   "g_diva_hero",
+   "g_diva_hero_beat",
+   "g_dragon_turbo",
+   "g_frog_monarch",
+   "g_frog_otk",
+   "g_gigavise",
+   "g_gladiator_beast",
+   "g_hero_beat",
+   "g_hero_frog",
+   "g_lightsworn",
+   "g_lightsworn_fairy",
+   "g_machina_control",
+   "g_quickdraw_plant",
+   "g_vayu_turbo",
+   "g_vayu_turbo_ddev08",
+   "g_zombie_teledad",
+   "machina_gadget"
+  ]
+ },
+ "retrieved": {
+  "first_utc": "2026-11-04T08:59:12.646036+00:00",
+  "last_utc": "2026-11-10T01:56:38.821746+00:00",
+  "responses_from_pool_audit_cache": 91,
+  "responses_fetched_now": 1469
+ },
+ "privacy": "No player names, handles, Discord ids or user ids. Raw responses stay in build/edison-corpus/raw/.",
+ "sources": {
+  "events_in_gallery": 176,
+  "events_excluded": 1,
+  "events_used": 175,
+  "events_without_published_decks": [],
+  "deck_exclusions": 1,
+  "appearances": 1384,
+  "distinct_lists": 1324,
+  "lists_with_more_than_one_appearance": 46,
+  "lists_with_conflicting_labels": 1,
+  "ydk_card_array_mismatches": [],
+  "deck_event_mismatches": []
+ },
+ "exclusions": {
+  "by_reason": {
+   "Konami Time Wizard event: modern mechanics, not traditional Edison": 1,
+   "deck response not fetched (HTTP Error 500: Internal Server Error, on two attempts)": 1
+  },
+  "rows": [
+   {
+    "level": "event",
+    "event": "UTWT23",
+    "event_name": "Ultimate Time Wizard Tournament 2023",
+    "event_date": "2023-07-08",
+    "event_size": 271,
+    "community": "Konami",
+    "reason": "Konami Time Wizard event: modern mechanics, not traditional Edison"
+   },
+   {
+    "level": "deck",
+    "deck_id": 67937,
+    "event": "DDEV09",
+    "event_name": "Deck Devastators 9",
+    "event_date": "2025-10-25",
+    "event_size": 172,
+    "community": "EdisonFormat.com",
+    "reason": "deck response not fetched (HTTP Error 500: Internal Server Error, on two attempts)"
+   }
+  ]
+ },
+ "counts_by_archetype": {
+  "blackwing": {
+   "lists": 255,
+   "appearances": 267,
+   "production_legal": 255,
+   "inside_v1_main_extra": 177,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 176,
+   "held_out_inside_v1_no_untrained": 160
+  },
+  "vayu_turbo": {
+   "lists": 240,
+   "appearances": 263,
+   "production_legal": 240,
+   "inside_v1_main_extra": 193,
+   "in_training": 2,
+   "held_out_candidates_inside_v1": 191,
+   "held_out_inside_v1_no_untrained": 178
+  },
+  "hero_frog": {
+   "lists": 106,
+   "appearances": 111,
+   "production_legal": 106,
+   "inside_v1_main_extra": 93,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 92,
+   "held_out_inside_v1_no_untrained": 83
+  },
+  "gladiator_beast": {
+   "lists": 78,
+   "appearances": 79,
+   "production_legal": 78,
+   "inside_v1_main_extra": 19,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 18,
+   "held_out_inside_v1_no_untrained": 18
+  },
+  "lightsworn": {
+   "lists": 50,
+   "appearances": 51,
+   "production_legal": 50,
+   "inside_v1_main_extra": 11,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 10,
+   "held_out_inside_v1_no_untrained": 7
+  },
+  "frog_monarch": {
+   "lists": 49,
+   "appearances": 53,
+   "production_legal": 49,
+   "inside_v1_main_extra": 14,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 13,
+   "held_out_inside_v1_no_untrained": 10
+  },
+  "dragon_turbo": {
+   "lists": 44,
+   "appearances": 45,
+   "production_legal": 44,
+   "inside_v1_main_extra": 4,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 3,
+   "held_out_inside_v1_no_untrained": 2
+  },
+  "diva_hero": {
+   "lists": 41,
+   "appearances": 42,
+   "production_legal": 40,
+   "inside_v1_main_extra": 17,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 16,
+   "held_out_inside_v1_no_untrained": 16
+  },
+  "diva_zombie": {
+   "lists": 38,
+   "appearances": 38,
+   "production_legal": 38,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "hero_beat": {
+   "lists": 35,
+   "appearances": 36,
+   "production_legal": 35,
+   "inside_v1_main_extra": 6,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 5,
+   "held_out_inside_v1_no_untrained": 4
+  },
+  "diva_hero_beat": {
+   "lists": 29,
+   "appearances": 30,
+   "production_legal": 29,
+   "inside_v1_main_extra": 12,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 11,
+   "held_out_inside_v1_no_untrained": 11
+  },
+  "frog_otk": {
+   "lists": 29,
+   "appearances": 34,
+   "production_legal": 29,
+   "inside_v1_main_extra": 17,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 16,
+   "held_out_inside_v1_no_untrained": 16
+  },
+  "machina_control": {
+   "lists": 29,
+   "appearances": 29,
+   "production_legal": 29,
+   "inside_v1_main_extra": 15,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 14,
+   "held_out_inside_v1_no_untrained": 12
+  },
+  "quickdraw_plant": {
+   "lists": 27,
+   "appearances": 27,
+   "production_legal": 27,
+   "inside_v1_main_extra": 6,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 5,
+   "held_out_inside_v1_no_untrained": 5
+  },
+  "gigavise": {
+   "lists": 21,
+   "appearances": 21,
+   "production_legal": 21,
+   "inside_v1_main_extra": 16,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 15,
+   "held_out_inside_v1_no_untrained": 15
+  },
+  "fairy": {
+   "lists": 17,
+   "appearances": 17,
+   "production_legal": 17,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "diva_frog": {
+   "lists": 13,
+   "appearances": 13,
+   "production_legal": 13,
+   "inside_v1_main_extra": 5,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 4,
+   "held_out_inside_v1_no_untrained": 3
+  },
+  "diva_hero_zombie": {
+   "lists": 13,
+   "appearances": 14,
+   "production_legal": 13,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "lightsworn_fairy": {
+   "lists": 13,
+   "appearances": 14,
+   "production_legal": 13,
+   "inside_v1_main_extra": 1,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "dragon_beat": {
+   "lists": 12,
+   "appearances": 12,
+   "production_legal": 12,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "zombie_teledad": {
+   "lists": 12,
+   "appearances": 12,
+   "production_legal": 12,
+   "inside_v1_main_extra": 1,
+   "in_training": 1,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "machina_gadget": {
+   "lists": 10,
+   "appearances": 10,
+   "production_legal": 10,
+   "inside_v1_main_extra": 1,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 1,
+   "held_out_inside_v1_no_untrained": 1
+  },
+  "cat_control": {
+   "lists": 9,
+   "appearances": 9,
+   "production_legal": 9,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "amaryllis": {
+   "lists": 7,
+   "appearances": 7,
+   "production_legal": 7,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "ancient_gear_machina": {
+   "lists": 7,
+   "appearances": 7,
+   "production_legal": 7,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "flamvell": {
+   "lists": 6,
+   "appearances": 6,
+   "production_legal": 6,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "jinzo_machina": {
+   "lists": 6,
+   "appearances": 7,
+   "production_legal": 6,
+   "inside_v1_main_extra": 2,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 2,
+   "held_out_inside_v1_no_untrained": 2
+  },
+  "plant_frog": {
+   "lists": 5,
+   "appearances": 5,
+   "production_legal": 5,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "teledad": {
+   "lists": 5,
+   "appearances": 5,
+   "production_legal": 5,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "zombie": {
+   "lists": 5,
+   "appearances": 5,
+   "production_legal": 5,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "cat_plant": {
+   "lists": 4,
+   "appearances": 5,
+   "production_legal": 4,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "monster_mash": {
+   "lists": 4,
+   "appearances": 4,
+   "production_legal": 4,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "twilight": {
+   "lists": 4,
+   "appearances": 5,
+   "production_legal": 4,
+   "inside_v1_main_extra": 2,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 2,
+   "held_out_inside_v1_no_untrained": 1
+  },
+  "vayu_control": {
+   "lists": 4,
+   "appearances": 4,
+   "production_legal": 4,
+   "inside_v1_main_extra": 3,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 3,
+   "held_out_inside_v1_no_untrained": 3
+  },
+  "evil_hero": {
+   "lists": 3,
+   "appearances": 3,
+   "production_legal": 3,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "flamvell_zombie": {
+   "lists": 3,
+   "appearances": 3,
+   "production_legal": 3,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "frog_control": {
+   "lists": 3,
+   "appearances": 3,
+   "production_legal": 3,
+   "inside_v1_main_extra": 3,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 3,
+   "held_out_inside_v1_no_untrained": 3
+  },
+  "machina_cat": {
+   "lists": 3,
+   "appearances": 3,
+   "production_legal": 3,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "neo_spacian_diva_hero": {
+   "lists": 3,
+   "appearances": 3,
+   "production_legal": 3,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "volcanic_quickdraw": {
+   "lists": 3,
+   "appearances": 3,
+   "production_legal": 3,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "x_saber": {
+   "lists": 3,
+   "appearances": 3,
+   "production_legal": 3,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "zombie_turbo": {
+   "lists": 3,
+   "appearances": 3,
+   "production_legal": 3,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "alien": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "assault_turbo": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "fish_otk": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "flamvell_cat": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "flamvell_frog": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "frog_quickdraw_plant": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "gadget": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "gravekeeper": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "lightsworn_monarch": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "machina_frog": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "macro_stun": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "mausoleum_frog": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "phantom_turbo": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "quickdraw_hero": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "quickdraw_turbo": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "turbo_frog": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "vaskii_turbo": {
+   "lists": 2,
+   "appearances": 2,
+   "production_legal": 2,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "60_card_flamvell_machina_gadget": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "ancient_gear_hero_frog": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "ancient_gear_machina_plant": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "ancient_gear_plant": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "chain_burn": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "chaos_fairy": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "chaos_hero": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "dark_plant": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "diva_ancient_gear_machina": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "diva_cat": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "diva_hero_frog": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "fish_control": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "flamvell_lightsworn": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "fusion_gate_hero": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "gladiator_cat": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "gravekeeper_burn": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "hero_quickdraw_plant": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "insect": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "machina_hero": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "machina_quickdraw_plant": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "machina_volcanic_quickdraw": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "macro_monarch": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "neo_spacian_quickdraw_plant": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "ocean_control": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "plant_control": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "quickdraw_dragon_turbo": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "quickdraw_frog": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 1,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 1,
+   "held_out_inside_v1_no_untrained": 1
+  },
+  "quickdraw_machina": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "salvo_dad": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "six_samurai": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "spaceship": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "tethys_turbo": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "uo_junk_frog": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "virus_dragon": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "virus_drain_beat": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "volcanic_monarch": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "zombie_plant": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "zombie_quickdraw": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  },
+  "zombie_vayu_turbo": {
+   "lists": 1,
+   "appearances": 1,
+   "production_legal": 1,
+   "inside_v1_main_extra": 0,
+   "in_training": 0,
+   "held_out_candidates_inside_v1": 0,
+   "held_out_inside_v1_no_untrained": 0
+  }
+ },
+ "lists_by_first_event_year": {
+  "2010": 16,
+  "2020": 9,
+  "2021": 28,
+  "2022": 184,
+  "2023": 310,
+  "2024": 271,
+  "2025": 300,
+  "2026": 206
+ },
+ "appearances_by_event_year": {
+  "2010": 16,
+  "2020": 9,
+  "2021": 28,
+  "2022": 188,
+  "2023": 320,
+  "2024": 286,
+  "2025": 321,
+  "2026": 216
+ },
+ "held_out_candidates_by_first_event_year": {
+  "2010": 1,
+  "2020": 2,
+  "2021": 3,
+  "2022": 49,
+  "2023": 125,
+  "2024": 142,
+  "2025": 177,
+  "2026": 102
+ },
+ "appearances_by_ruleset": {
+  "Community traditional Edison": 1368,
+  "2010 official event (Konami SJC, April 2010), rules as judged then": 16
+ },
+ "legality": {
+  "production_legal": 1323,
+  "production_illegal": 1,
+  "failure_reasons": {
+   "RuntimeError: Combined Main/Extra/Side copies exceed 1 for N": 1
+  },
+  "failures": [
+   {
+    "list_id": "fl27828",
+    "archetype": "diva_hero",
+    "reason": "RuntimeError: Combined Main/Extra/Side copies exceed 1 for 32807846, file: assets/edison/corpus/ydk/fl27828.ydk",
+    "outside_pool": [],
+    "over_limit": [
+     {
+      "code": 32807846,
+      "name": "Reinforcement of the Army",
+      "copies": 2,
+      "limit": 1
+     }
+    ],
+    "sizes": {
+     "main": 40,
+     "extra": 15,
+     "side": 15
+    }
+   }
+  ],
+  "outside_pool_cards_by_lists": []
+ },
+ "code_list_v1": {
+  "inside_v1_main_extra": 619,
+  "inside_v1_strict": 380,
+  "inside_v1_main_extra_and_side": 395,
+  "inside_only_after_gottoms_rule": 31,
+  "held_out_candidates_inside_v1": 601,
+  "top_cards_outside_v1": [
+   {
+    "code": 15800838,
+    "name": "Mind Crush",
+    "lists_any_zone": 170,
+    "lists_main_extra": 10
+   },
+   {
+    "code": 82732705,
+    "name": "Skill Drain",
+    "lists_any_zone": 132,
+    "lists_main_extra": 25
+   },
+   {
+    "code": 23205979,
+    "name": "Spirit Reaper",
+    "lists_any_zone": 129,
+    "lists_main_extra": 127
+   },
+   {
+    "code": 60682203,
+    "name": "Cold Wave",
+    "lists_any_zone": 125,
+    "lists_main_extra": 92
+   },
+   {
+    "code": 5309481,
+    "name": "Revived King Ha Des",
+    "lists_any_zone": 80,
+    "lists_main_extra": 80
+   },
+   {
+    "code": 52352005,
+    "name": "XX-Saber Gottoms",
+    "lists_any_zone": 76,
+    "lists_main_extra": 76,
+    "removed_by_gottoms_rule": true
+   },
+   {
+    "code": 17259470,
+    "name": "Zombie Master",
+    "lists_any_zone": 74,
+    "lists_main_extra": 74
+   },
+   {
+    "code": 77044671,
+    "name": "Pyramid Turtle",
+    "lists_any_zone": 69,
+    "lists_main_extra": 69
+   },
+   {
+    "code": 6021033,
+    "name": "Doomkaiser Dragon",
+    "lists_any_zone": 68,
+    "lists_main_extra": 68
+   },
+   {
+    "code": 71587526,
+    "name": "Karma Cut",
+    "lists_any_zone": 63,
+    "lists_main_extra": 11
+   },
+   {
+    "code": 3819470,
+    "name": "Seven Tools of the Bandit",
+    "lists_any_zone": 57,
+    "lists_main_extra": 23
+   },
+   {
+    "code": 83011277,
+    "name": "Mystic Tomato",
+    "lists_any_zone": 56,
+    "lists_main_extra": 56
+   },
+   {
+    "code": 31924889,
+    "name": "Arcanite Magician",
+    "lists_any_zone": 55,
+    "lists_main_extra": 55
+   },
+   {
+    "code": 77538567,
+    "name": "Dark Bribe",
+    "lists_any_zone": 50,
+    "lists_main_extra": 36
+   },
+   {
+    "code": 69514125,
+    "name": "Avenging Knight Parshath",
+    "lists_any_zone": 49,
+    "lists_main_extra": 49
+   },
+   {
+    "code": 38411870,
+    "name": "Needle Ceiling",
+    "lists_any_zone": 43,
+    "lists_main_extra": 1
+   },
+   {
+    "code": 3657444,
+    "name": "Cyber Valley",
+    "lists_any_zone": 41,
+    "lists_main_extra": 41
+   },
+   {
+    "code": 83968380,
+    "name": "Jar of Greed",
+    "lists_any_zone": 36,
+    "lists_main_extra": 36
+   },
+   {
+    "code": 12607053,
+    "name": "Waboku",
+    "lists_any_zone": 34,
+    "lists_main_extra": 32
+   },
+   {
+    "code": 45939841,
+    "name": "Twister",
+    "lists_any_zone": 33,
+    "lists_main_extra": 0
+   },
+   {
+    "code": 31036355,
+    "name": "Creature Swap",
+    "lists_any_zone": 31,
+    "lists_main_extra": 27
+   },
+   {
+    "code": 4929256,
+    "name": "Mobius the Frost Monarch",
+    "lists_any_zone": 30,
+    "lists_main_extra": 9
+   },
+   {
+    "code": 99590524,
+    "name": "Treacherous Trap Hole",
+    "lists_any_zone": 30,
+    "lists_main_extra": 20
+   },
+   {
+    "code": 30459350,
+    "name": "Imperial Iron Wall",
+    "lists_any_zone": 29,
+    "lists_main_extra": 6
+   },
+   {
+    "code": 43711255,
+    "name": "Prohibition",
+    "lists_any_zone": 29,
+    "lists_main_extra": 1
+   },
+   {
+    "code": 4253484,
+    "name": "Gladiator Beast Hoplomus",
+    "lists_any_zone": 29,
+    "lists_main_extra": 15
+   },
+   {
+    "code": 90508760,
+    "name": "X-Saber Airbellum",
+    "lists_any_zone": 28,
+    "lists_main_extra": 27
+   },
+   {
+    "code": 4064256,
+    "name": "Zombie World",
+    "lists_any_zone": 26,
+    "lists_main_extra": 4
+   },
+   {
+    "code": 40391316,
+    "name": "Ojama Knight",
+    "lists_any_zone": 26,
+    "lists_main_extra": 26
+   },
+   {
+    "code": 76891401,
+    "name": "Sea Dragon Lord Gishilnodon",
+    "lists_any_zone": 26,
+    "lists_main_extra": 26
+   },
+   {
+    "code": 67300516,
+    "name": "Red-Eyes Wyvern",
+    "lists_any_zone": 26,
+    "lists_main_extra": 18
+   },
+   {
+    "code": 24317029,
+    "name": "Gravekeeper's Spy",
+    "lists_any_zone": 25,
+    "lists_main_extra": 23
+   },
+   {
+    "code": 56907389,
+    "name": "Musician King",
+    "lists_any_zone": 24,
+    "lists_main_extra": 24
+   },
+   {
+    "code": 81510157,
+    "name": "Soul Taker",
+    "lists_any_zone": 23,
+    "lists_main_extra": 2
+   },
+   {
+    "code": 40529384,
+    "name": "Exploder Dragonwing",
+    "lists_any_zone": 22,
+    "lists_main_extra": 22
+   },
+   {
+    "code": 70074904,
+    "name": "D.D. Assailant",
+    "lists_any_zone": 22,
+    "lists_main_extra": 3
+   },
+   {
+    "code": 95956346,
+    "name": "Shining Angel",
+    "lists_any_zone": 21,
+    "lists_main_extra": 21
+   },
+   {
+    "code": 54974237,
+    "name": "Eradicator Epidemic Virus",
+    "lists_any_zone": 21,
+    "lists_main_extra": 8
+   },
+   {
+    "code": 2322421,
+    "name": "Road Warrior",
+    "lists_any_zone": 21,
+    "lists_main_extra": 21
+   },
+   {
+    "code": 73628505,
+    "name": "Terraforming",
+    "lists_any_zone": 21,
+    "lists_main_extra": 20
+   }
+  ],
+  "sole_main_extra_blocker_of_legal_lists": [
+   {
+    "code": 23205979,
+    "name": "Spirit Reaper",
+    "lists": 38
+   },
+   {
+    "code": 83968380,
+    "name": "Jar of Greed",
+    "lists": 29
+   },
+   {
+    "code": 3819470,
+    "name": "Seven Tools of the Bandit",
+    "lists": 21
+   },
+   {
+    "code": 60682203,
+    "name": "Cold Wave",
+    "lists": 20
+   },
+   {
+    "code": 40391316,
+    "name": "Ojama Knight",
+    "lists": 17
+   },
+   {
+    "code": 76891401,
+    "name": "Sea Dragon Lord Gishilnodon",
+    "lists": 14
+   },
+   {
+    "code": 77538567,
+    "name": "Dark Bribe",
+    "lists": 10
+   },
+   {
+    "code": 674561,
+    "name": "Dark Eruption",
+    "lists": 8
+   },
+   {
+    "code": 69514125,
+    "name": "Avenging Knight Parshath",
+    "lists": 8
+   },
+   {
+    "code": 49522489,
+    "name": "Beelze Frog",
+    "lists": 8
+   },
+   {
+    "code": 2322421,
+    "name": "Road Warrior",
+    "lists": 7
+   },
+   {
+    "code": 12607053,
+    "name": "Waboku",
+    "lists": 7
+   },
+   {
+    "code": 46710683,
+    "name": "Blackwing - Mistral the Silver Shield",
+    "lists": 6
+   },
+   {
+    "code": 54974237,
+    "name": "Eradicator Epidemic Virus",
+    "lists": 6
+   },
+   {
+    "code": 99590524,
+    "name": "Treacherous Trap Hole",
+    "lists": 5
+   },
+   {
+    "code": 82732705,
+    "name": "Skill Drain",
+    "lists": 5
+   },
+   {
+    "code": 40529384,
+    "name": "Exploder Dragonwing",
+    "lists": 5
+   },
+   {
+    "code": 3657444,
+    "name": "Cyber Valley",
+    "lists": 5
+   },
+   {
+    "code": 57839750,
+    "name": "Mother Grizzly",
+    "lists": 5
+   },
+   {
+    "code": 56907389,
+    "name": "Musician King",
+    "lists": 4
+   }
+  ]
+ },
+ "untrained": {
+  "inside_v1_no_untrained_main_extra": 569,
+  "inside_v1_no_untrained_not_in_training": 551,
+  "by_archetype": {
+   "vayu_turbo": {
+    "10+": 48,
+    "1-9": 121,
+    "0": 11
+   },
+   "blackwing": {
+    "10+": 98,
+    "1-9": 62,
+    "0": 1
+   },
+   "hero_frog": {
+    "10+": 83,
+    "0": 1
+   },
+   "gladiator_beast": {
+    "1-9": 13,
+    "0": 1,
+    "10+": 5
+   },
+   "diva_hero": {
+    "10+": 16,
+    "0": 1
+   },
+   "frog_otk": {
+    "1-9": 12,
+    "10+": 4,
+    "0": 1
+   },
+   "gigavise": {
+    "10+": 12,
+    "1-9": 3,
+    "0": 1
+   },
+   "machina_control": {
+    "10+": 12,
+    "0": 1
+   },
+   "diva_hero_beat": {
+    "10+": 9,
+    "1-9": 2,
+    "0": 1
+   },
+   "frog_monarch": {
+    "10+": 9,
+    "0": 1,
+    "1-9": 1
+   },
+   "lightsworn": {
+    "1-9": 4,
+    "10+": 3,
+    "0": 1
+   },
+   "quickdraw_plant": {
+    "10+": 5,
+    "0": 1
+   },
+   "hero_beat": {
+    "10+": 4,
+    "0": 1
+   },
+   "diva_frog": {
+    "10+": 3,
+    "0": 1
+   },
+   "dragon_turbo": {
+    "1-9": 2,
+    "0": 1
+   },
+   "frog_control": {
+    "10+": 3
+   },
+   "vayu_control": {
+    "10+": 1,
+    "1-9": 2
+   },
+   "jinzo_machina": {
+    "10+": 2
+   },
+   "lightsworn_fairy": {
+    "0": 1
+   },
+   "machina_gadget": {
+    "10+": 1
+   },
+   "quickdraw_frog": {
+    "10+": 1
+   },
+   "twilight": {
+    "10+": 1
+   },
+   "zombie_teledad": {
+    "0": 1
+   }
+  },
+  "by_distance_band": {
+   "10+": 320,
+   "0": 27,
+   "1-9": 222
+  },
+  "by_distance_band_not_in_training": {
+   "10+": 320,
+   "1-9": 222,
+   "0": 9
+  },
+  "held_out_inside_v1_by_untrained_count": {
+   "0": 551,
+   "1": 49,
+   "2": 1
+  },
+  "top_untrained_cards_in_held_out_inside_v1": [
+   {
+    "code": 69279219,
+    "name": "My Body as a Shield",
+    "lists": 15
+   },
+   {
+    "code": 11613567,
+    "name": "Blackwing - Elphin the Raven",
+    "lists": 13
+   },
+   {
+    "code": 89111398,
+    "name": "Dark Dust Spirit",
+    "lists": 8
+   },
+   {
+    "code": 17449108,
+    "name": "Nobleman of Extermination",
+    "lists": 5
+   },
+   {
+    "code": 84290642,
+    "name": "Snipe Hunter",
+    "lists": 4
+   },
+   {
+    "code": 42009836,
+    "name": "Fossil Dyna Pachycephalo",
+    "lists": 2
+   },
+   {
+    "code": 71564252,
+    "name": "Thunder King Rai-Oh",
+    "lists": 1
+   },
+   {
+    "code": 25773409,
+    "name": "Legendary Jujitsu Master",
+    "lists": 1
+   },
+   {
+    "code": 47084486,
+    "name": "Vanity's Fiend",
+    "lists": 1
+   },
+   {
+    "code": 12298909,
+    "name": "Prime Material Dragon",
+    "lists": 1
+   }
+  ]
+ },
+ "soak": [
+  {
+   "output": "build/edison-corpus/soak/main",
+   "seeds": [
+    88000000,
+    88127007
+   ],
+   "lists": 1323,
+   "planned": 127008,
+   "finished": 127008,
+   "decisions": 25986082,
+   "statuses": {
+    "ok": 127008
+   },
+   "by_policy": {
+    "uniform": 42336,
+    "eager": 42336,
+    "heuristic": 42336
+   },
+   "crashes": 0,
+   "diagnostic_lines": 0,
+   "diagnostic_lines_outside_crashed_duels": 0,
+   "diagnostic_classes": {},
+   "contract_violations": {},
+   "max_options": 71,
+   "max_repeat": 63,
+   "elapsed_seconds": 1885.4,
+   "non_ok_duels": [],
+   "card_choice_coverage": {
+    "distinct_cards_in_played_zones": 583,
+    "chosen_in_an_action": 557,
+    "activated": 500,
+    "never_chosen": [
+     {
+      "code": 1546123,
+      "name": "Cyber End Dragon"
+     },
+     {
+      "code": 7841112,
+      "name": "Majestic Star Dragon"
+     },
+     {
+      "code": 9910360,
+      "name": "D.3.S. Frog"
+     },
+     {
+      "code": 10526791,
+      "name": "Elemental HERO Wildedge"
+     },
+     {
+      "code": 13293158,
+      "name": "Evil HERO Wild Cyclone"
+     },
+     {
+      "code": 17032740,
+      "name": "Elemental HERO Chaos Neos"
+     },
+     {
+      "code": 21947653,
+      "name": "Evil HERO Lightning Golem"
+     },
+     {
+      "code": 25366484,
+      "name": "Elemental HERO Shining Flare Wingman"
+     },
+     {
+      "code": 29343734,
+      "name": "Elemental HERO Electrum"
+     },
+     {
+      "code": 40173854,
+      "name": "Amphibious Bugroth"
+     },
+     {
+      "code": 48453776,
+      "name": "Sky Scourge Norleras"
+     },
+     {
+      "code": 53539634,
+      "name": "Sanwitch"
+     },
+     {
+      "code": 55615891,
+      "name": "Elemental HERO Wild Wingman"
+     },
+     {
+      "code": 58054262,
+      "name": "Machina Force"
+     },
+     {
+      "code": 58528964,
+      "name": "Flame Ghost"
+     },
+     {
+      "code": 71628381,
+      "name": "Multiple Piece Golem"
+     },
+     {
+      "code": 76263644,
+      "name": "Destiny End Dragoon"
+     },
+     {
+      "code": 78512663,
+      "name": "Elemental HERO Magma Neos"
+     },
+     {
+      "code": 78734254,
+      "name": "Neo-Spacian Marine Dolphin"
+     },
+     {
+      "code": 79407975,
+      "name": "Rainbow Dark Dragon"
+     },
+     {
+      "code": 81003500,
+      "name": "Elemental HERO Necroid Shaman"
+     },
+     {
+      "code": 81566151,
+      "name": "Elemental HERO Flare Neos"
+     },
+     {
+      "code": 83121692,
+      "name": "Elemental HERO Tempest"
+     },
+     {
+      "code": 90140980,
+      "name": "Ojama King"
+     },
+     {
+      "code": 90957527,
+      "name": "Gladiator Beast Gaiodiaz"
+     },
+     {
+      "code": 98927491,
+      "name": "Ambulance Rescueroid"
+     }
+    ]
+   },
+   "crash_classes": []
+  },
+  {
+   "output": "build/edison-corpus/soak/sidein",
+   "seeds": [
+    88200000,
+    88327007
+   ],
+   "lists": 1323,
+   "planned": 127008,
+   "finished": 127007,
+   "decisions": 28039373,
+   "statuses": {
+    "ok": 127007
+   },
+   "by_policy": {
+    "uniform": 42335,
+    "eager": 42336,
+    "heuristic": 42336
+   },
+   "crashes": 1,
+   "diagnostic_lines": 0,
+   "diagnostic_lines_outside_crashed_duels": 0,
+   "diagnostic_classes": {},
+   "contract_violations": {},
+   "max_options": 75,
+   "max_repeat": 136,
+   "elapsed_seconds": 2083.2,
+   "non_ok_duels": [],
+   "card_choice_coverage": {
+    "distinct_cards_in_played_zones": 653,
+    "chosen_in_an_action": 626,
+    "activated": 556,
+    "never_chosen": [
+     {
+      "code": 1546123,
+      "name": "Cyber End Dragon"
+     },
+     {
+      "code": 7841112,
+      "name": "Majestic Star Dragon"
+     },
+     {
+      "code": 9910360,
+      "name": "D.3.S. Frog"
+     },
+     {
+      "code": 10526791,
+      "name": "Elemental HERO Wildedge"
+     },
+     {
+      "code": 13293158,
+      "name": "Evil HERO Wild Cyclone"
+     },
+     {
+      "code": 17032740,
+      "name": "Elemental HERO Chaos Neos"
+     },
+     {
+      "code": 21947653,
+      "name": "Evil HERO Lightning Golem"
+     },
+     {
+      "code": 25366484,
+      "name": "Elemental HERO Shining Flare Wingman"
+     },
+     {
+      "code": 28593363,
+      "name": "Deepsea Shark"
+     },
+     {
+      "code": 29343734,
+      "name": "Elemental HERO Electrum"
+     },
+     {
+      "code": 40173854,
+      "name": "Amphibious Bugroth"
+     },
+     {
+      "code": 48453776,
+      "name": "Sky Scourge Norleras"
+     },
+     {
+      "code": 53539634,
+      "name": "Sanwitch"
+     },
+     {
+      "code": 55615891,
+      "name": "Elemental HERO Wild Wingman"
+     },
+     {
+      "code": 58054262,
+      "name": "Machina Force"
+     },
+     {
+      "code": 58528964,
+      "name": "Flame Ghost"
+     },
+     {
+      "code": 71628381,
+      "name": "Multiple Piece Golem"
+     },
+     {
+      "code": 76263644,
+      "name": "Destiny End Dragoon"
+     },
+     {
+      "code": 78512663,
+      "name": "Elemental HERO Magma Neos"
+     },
+     {
+      "code": 78734254,
+      "name": "Neo-Spacian Marine Dolphin"
+     },
+     {
+      "code": 79407975,
+      "name": "Rainbow Dark Dragon"
+     },
+     {
+      "code": 81003500,
+      "name": "Elemental HERO Necroid Shaman"
+     },
+     {
+      "code": 81566151,
+      "name": "Elemental HERO Flare Neos"
+     },
+     {
+      "code": 83121692,
+      "name": "Elemental HERO Tempest"
+     },
+     {
+      "code": 90140980,
+      "name": "Ojama King"
+     },
+     {
+      "code": 90957527,
+      "name": "Gladiator Beast Gaiodiaz"
+     },
+     {
+      "code": 98927491,
+      "name": "Ambulance Rescueroid"
+     }
+    ]
+   },
+   "crash_classes": [
+    {
+     "signature": "exit44330098: See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.",
+     "duels": 1,
+     "policies": {
+      "uniform": 1
+     },
+     "seeds": [
+      88264285
+     ],
+     "cards": [
+      {
+       "code": 16304628,
+       "name": "Elemental HERO Gaia",
+       "duels": 1
+      }
+     ],
+     "lists": {
+      "fl41606": 1,
+      "fl41081": 1
+     }
+    }
+   ]
+  }
+ ],
+ "controls": [
+  {
+   "name": "pilot-main",
+   "seeds": [
+    88900000,
+    88900023
+   ],
+   "stage": "main",
+   "lists": 4,
+   "planned": 24,
+   "finished": 24,
+   "statuses": {
+    "ok": 24
+   },
+   "crashes": 0,
+   "crash_signatures": {},
+   "diagnostic_lines": 0,
+   "elapsed_seconds": 2.2
+  },
+  {
+   "name": "pilot-throughput",
+   "seeds": [
+    88901000,
+    88904011
+   ],
+   "stage": "main",
+   "lists": 251,
+   "planned": 3012,
+   "finished": 3012,
+   "statuses": {
+    "ok": 3012
+   },
+   "crashes": 0,
+   "crash_signatures": {},
+   "diagnostic_lines": 0,
+   "elapsed_seconds": 45.3
+  },
+  {
+   "name": "pilot-sidein",
+   "seeds": [
+    88902000,
+    88902035
+   ],
+   "stage": "sidein",
+   "lists": 6,
+   "planned": 36,
+   "finished": 36,
+   "statuses": {
+    "ok": 36
+   },
+   "crashes": 0,
+   "crash_signatures": {},
+   "diagnostic_lines": 0,
+   "elapsed_seconds": 2.4
+  },
+  {
+   "name": "negative-control",
+   "seeds": [
+    88990000,
+    88990011
+   ],
+   "stage": "main",
+   "lists": 2,
+   "planned": 12,
+   "finished": 0,
+   "statuses": {},
+   "crashes": 12,
+   "crash_signatures": {
+    "exit-6: what():  [card_reader_callback] Card not found: N": 12
+   },
+   "diagnostic_lines": 24,
+   "elapsed_seconds": 6.7
+  },
+  {
+   "name": "negative-lua",
+   "seeds": [
+    88991000,
+    88991023
+   ],
+   "stage": "main",
+   "lists": 4,
+   "planned": 24,
+   "finished": 24,
+   "statuses": {
+    "ok": 24
+   },
+   "crashes": 0,
+   "crash_signatures": {},
+   "diagnostic_lines": 9,
+   "elapsed_seconds": 2.7
+  },
+  {
+   "name": "probe-pair-sidein",
+   "seeds": [
+    88500000,
+    88505999
+   ],
+   "stage": "sidein",
+   "lists": 2,
+   "planned": 6000,
+   "finished": 6000,
+   "statuses": {
+    "ok": 6000
+   },
+   "crashes": 0,
+   "crash_signatures": {},
+   "diagnostic_lines": 0,
+   "elapsed_seconds": 107.2
+  },
+  {
+   "name": "probe-pair-main",
+   "seeds": [
+    88510000,
+    88515999
+   ],
+   "stage": "main",
+   "lists": 2,
+   "planned": 6000,
+   "finished": 5999,
+   "statuses": {
+    "ok": 5999
+   },
+   "crashes": 1,
+   "crash_signatures": {
+    "exit73146473: See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.": 1
+   },
+   "diagnostic_lines": 0,
+   "elapsed_seconds": 101.3
+  }
+ ],
+ "probes": [
+  {
+   "name": "probe-targets",
+   "first_seed": 88600000,
+   "last_seed": 88614999,
+   "per_target": 3000,
+   "targets": {
+    "43237273": {
+     "duels": 3000,
+     "finished": 3000,
+     "statuses": {
+      "ok": 3000
+     },
+     "crashes": 0,
+     "signatures": {},
+     "crash_seeds": []
+    },
+    "12538374": {
+     "duels": 3000,
+     "finished": 3000,
+     "statuses": {
+      "ok": 3000
+     },
+     "crashes": 0,
+     "signatures": {},
+     "crash_seeds": []
+    },
+    "37195861": {
+     "duels": 3000,
+     "finished": 3000,
+     "statuses": {
+      "ok": 3000
+     },
+     "crashes": 0,
+     "signatures": {},
+     "crash_seeds": []
+    },
+    "29071332": {
+     "duels": 3000,
+     "finished": 3000,
+     "statuses": {
+      "ok": 3000
+     },
+     "crashes": 0,
+     "signatures": {},
+     "crash_seeds": []
+    },
+    "77565204": {
+     "duels": 3000,
+     "finished": 3000,
+     "statuses": {
+      "ok": 3000
+     },
+     "crashes": 0,
+     "signatures": {},
+     "crash_seeds": []
+    }
+   },
+   "elapsed_seconds": 198.4
+  },
+  {
+   "name": "probe-debug",
+   "first_seed": 88690000,
+   "last_seed": 88690002,
+   "per_target": 3,
+   "targets": {
+    "43237273": {
+     "duels": 3,
+     "finished": 3,
+     "statuses": {
+      "ok": 3
+     },
+     "crashes": 0,
+     "signatures": {},
+     "crash_seeds": []
+    }
+   },
+   "elapsed_seconds": 0.5
+  },
+  {
+   "name": "probe-pair-A",
+   "first_seed": 88700000,
+   "last_seed": 88723999,
+   "per_target": 24000,
+   "targets": {
+    "0": {
+     "duels": 24000,
+     "finished": 23996,
+     "statuses": {
+      "ok": 23996
+     },
+     "crashes": 4,
+     "signatures": {
+      "exit-11: exit-11": 4
+     },
+     "crash_seeds": [
+      88707769,
+      88711111,
+      88715221,
+      88721413
+     ]
+    }
+   },
+   "pair": [
+    "/home/mada/ygo-agent/.claude/worktrees/m3-corpus/build/edison-corpus/probe/fl41606.ydk",
+    "/home/mada/ygo-agent/.claude/worktrees/m3-corpus/build/edison-corpus/probe/fl41081.ydk"
+   ],
+   "elapsed_seconds": 392.6
+  },
+  {
+   "name": "probe-pair-B",
+   "first_seed": 88730000,
+   "last_seed": 88753999,
+   "per_target": 24000,
+   "targets": {
+    "0": {
+     "duels": 24000,
+     "finished": 24000,
+     "statuses": {
+      "ok": 24000
+     },
+     "crashes": 0,
+     "signatures": {},
+     "crash_seeds": []
+    }
+   },
+   "pair": [
+    "/home/mada/ygo-agent/.claude/worktrees/m3-corpus/build/edison-corpus/probe/fl41606.ydk",
+    "/home/mada/ygo-agent/.claude/worktrees/m3-corpus/build/edison-corpus/probe/fl41081_no_panther.ydk"
+   ],
+   "elapsed_seconds": 378.9
+  }
+ ],
+ "notes": {
+  "no_network_runs": "No network, learner, search or strength evaluation ran on a corpus list. No win rate was computed. The soak's Heuristic is the frozen rule-based policy in ygoai/edison_policy.py with no weights.",
+  "module": "Certified production module copied from the main checkout, sha256 b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f, not rebuilt. build_corpus.py refuses any other hash.",
+  "audit_module_not_used": "tools/edison/pool_audit/soak.py defaults to an audit module that build_audit_module.py compiles from this checkout's ygopro.h with a chain and Summon logger and its own message handler, linked against ygopro-core variant bedb42dd (edison_early_trigger only). Production links variant 5fe29f6a (edison_hardening r2). The audit module would play without the hardening rule fixes, and its handler replaces production's stderr diagnostics. It was not built. The corpus soak uses the certified module, so it has no MSG_CHAINING log; card coverage counts cards chosen in an action row instead.",
+  "code_list_refusal": "preload_deck in ygopro.h has no caller. A Main card outside the code list aborts the duel at reset in card_reader_callback (negative control 88990000-88990011). An Extra card outside it fails init_module in sort_extra_deck with '[c_get_card] Card not found' (checked on fl875 with codes_v1.txt).",
+  "full_code_list": "build/edison-pool-audit-2026-11-04/codes_full.txt regenerated in this worktree by build_codelist.py: 4,035 lines, sha256 4d52f62e. The main checkout's copy has 4,021 lines from before hardening.",
+  "legality_negative_tests": "Five planted variants of fl875 each failed production init_module with the expected message: a Forbidden card (Pot of Greed), 39 Main Deck cards, four copies, an Extra Deck monster in the Main Deck (Stardust Dragon), and a card outside the pool (Tour Guide From the Underworld).",
+  "seed_overlap": "The Side-in pilot (88902000-88902035) reused seeds inside the throughput pilot's range (88901000-88904011), with different stages and lists. Replays reuse the seeds of the duels they replay. The two full stages and the probes overlap nothing else.",
+  "training_count": "The gauntlet manifest holds 18 deck ids, not 19. Training is those 18 plus the 3 fixtures, as decks.py registry() builds them."
+ },
+ "crash_investigation": {
+  "recorded_signature_is_wrong": "The Side-in stage's one crash is recorded as 'exit44330098: See the migration guide...'. That is a bug in soak.py at run time: a loop variable named code overwrote the exit status, and the signature fell back to a benign Gym warning. Both are fixed after the run. The kernel log gives the true cause: SIGSEGV in ygopro_ygoenv.cpython-310-x86_64-linux-gnu.so at file offset 0x327f5b, at 02:47:39 UTC, matching the batch log's last write. The fixed soak records later crashes as 'exit-11'.",
+  "fault": "The faulting instruction reads the next pointer in a loop that frees a list of objects, up to an object embedded at offset 0x588 of its parent. The surrounding code matches Lua's luaC_freeallobjects (gcstp set to 4, white-bit masks 0x18): deletelist over allgc during lua_close. The module is stripped, so this is read from the machine code, not a symbol. In production the duel's Lua state closes in _duel_end, when the duel is won. A freed or corrupted object on that list means memory was damaged earlier in the duel.",
+  "duel": "Side-in stage seed 88264285, fl41606 (Hero Frog, EWCQ07) against fl41081 (Neo-Spacian Diva Hero, BCS16), uniform random play. It died on the 241st decision, a lethal direct attack.",
+  "replays": "The same duel replays with an identical decision trace every time, and the 5 duels before it in its batch match their recorded traces. Run alone one at a time it crashed in 2 of 15 runs: 0 of 7 normally or with malloc perturbation, 2 of 8 with address randomization off. With 12 runs in parallel it crashed in 7 of 96 alone and 6 of 96 inside its batch. The rest of that batch, run without it, crashed in 0 of 192 runs. One crashing replay died at decision 124 in libc instead, right after Neo-Spacian Dark Panther chose Treeborn Frog as its target. So the damage depends on this game's path, and whether it shows depends on memory layout.",
+  "pair_probes": "The same two lists, fresh seeds: Main and Extra 1 crash in 6,000 duels (88510000-88515999, same fault offset, eager play, died on a decision after Gorz attacked); Side-in 0 in 6,000 (88500000-88505999). The Main and Extra probe ran before the fix, so its crash is also recorded with a wrong exit status (exit73146473); the kernel log shows SIGSEGV at the same offset.",
+  "dark_panther_lead": "Neo-Spacian Dark Panther is the lead, not a confirmed cause. All 6 crash duels used its copy effect, 2 to 74 times. In the pair probe's crash one player activated it 52 times in 60 consecutive decisions, all their own. One once-per-turn effect should not allow that unless each activation gains a fresh copy of the effect, which deserves its own rules check. Played 24,000 times each, the original pair crashed 4 times (88700000-88723999, all SIGSEGV in the module, 3 at offset 0x327f5b and 1 at 0x32569e) and the pair with fl41081's 3 Dark Panther replaced by Gene-Warped Warwolf crashed 0 times (88730000-88753999). A 4 to 0 split has probability 1 in 16 if the rates were equal. Decks generated around Dark Panther, Treeborn Frog, Elemental HERO Ocean, Armory Arm and Future Fusion crashed 0 times in 3,000 duels each (88600000-88614999).",
+  "attribution_rule": "The report's per-crash card is the last card chosen, here Elemental HERO Gaia's lethal attack. It is not the cause.",
+  "lists_affected": "Dark Panther is in 7 corpus lists: fl2515, fl3547, fl29186, fl41081, fl41096, fl56136 in the Main Deck and fl28689 in the Side. None is a training list and none is inside code list v1."
+ },
+ "seeds": {
+  "block": [
+   88000000,
+   88999999
+  ],
+  "main_stage": [
+   88000000,
+   88127007
+  ],
+  "sidein_stage": [
+   88200000,
+   88327007
+  ],
+  "pilots": [
+   [
+    88900000,
+    88900023
+   ],
+   [
+    88901000,
+    88904011
+   ],
+   [
+    88902000,
+    88902035
+   ]
+  ],
+  "negative_controls": [
+   [
+    88990000,
+    88990011
+   ],
+   [
+    88991000,
+    88991023
+   ]
+  ],
+  "probes": {
+   "pair_sidein": [
+    88500000,
+    88505999
+   ],
+   "pair_main": [
+    88510000,
+    88515999
+   ],
+   "targets": [
+    88600000,
+    88614999
+   ],
+   "targets_debug": [
+    88690000,
+    88690002
+   ],
+   "pair_with_dark_panther": [
+    88700000,
+    88723999
+   ],
+   "pair_without_dark_panther": [
+    88730000,
+    88753999
+   ]
+  },
+  "replays": "88264280-88264299 (the crashed batch) and 88515054"
+ }
+}

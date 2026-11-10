@@ -1,0 +1,33 @@
+{
+ "notes": {
+  "no_network_runs": "No network, learner, search or strength evaluation ran on a corpus list. No win rate was computed. The soak's Heuristic is the frozen rule-based policy in ygoai/edison_policy.py with no weights.",
+  "module": "Certified production module copied from the main checkout, sha256 b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f, not rebuilt. build_corpus.py refuses any other hash.",
+  "audit_module_not_used": "tools/edison/pool_audit/soak.py defaults to an audit module that build_audit_module.py compiles from this checkout's ygopro.h with a chain and Summon logger and its own message handler, linked against ygopro-core variant bedb42dd (edison_early_trigger only). Production links variant 5fe29f6a (edison_hardening r2). The audit module would play without the hardening rule fixes, and its handler replaces production's stderr diagnostics. It was not built. The corpus soak uses the certified module, so it has no MSG_CHAINING log; card coverage counts cards chosen in an action row instead.",
+  "code_list_refusal": "preload_deck in ygopro.h has no caller. A Main card outside the code list aborts the duel at reset in card_reader_callback (negative control 88990000-88990011). An Extra card outside it fails init_module in sort_extra_deck with '[c_get_card] Card not found' (checked on fl875 with codes_v1.txt).",
+  "full_code_list": "build/edison-pool-audit-2026-11-04/codes_full.txt regenerated in this worktree by build_codelist.py: 4,035 lines, sha256 4d52f62e. The main checkout's copy has 4,021 lines from before hardening.",
+  "legality_negative_tests": "Five planted variants of fl875 each failed production init_module with the expected message: a Forbidden card (Pot of Greed), 39 Main Deck cards, four copies, an Extra Deck monster in the Main Deck (Stardust Dragon), and a card outside the pool (Tour Guide From the Underworld).",
+  "seed_overlap": "The Side-in pilot (88902000-88902035) reused seeds inside the throughput pilot's range (88901000-88904011), with different stages and lists. Replays reuse the seeds of the duels they replay. The two full stages and the probes overlap nothing else.",
+  "training_count": "The gauntlet manifest holds 18 deck ids, not 19. Training is those 18 plus the 3 fixtures, as decks.py registry() builds them."
+ },
+ "crash_investigation": {
+  "recorded_signature_is_wrong": "The Side-in stage's one crash is recorded as 'exit44330098: See the migration guide...'. That is a bug in soak.py at run time: a loop variable named code overwrote the exit status, and the signature fell back to a benign Gym warning. Both are fixed after the run. The kernel log gives the true cause: SIGSEGV in ygopro_ygoenv.cpython-310-x86_64-linux-gnu.so at file offset 0x327f5b, at 02:47:39 UTC, matching the batch log's last write. The fixed soak records later crashes as 'exit-11'.",
+  "fault": "The faulting instruction reads the next pointer in a loop that frees a list of objects, up to an object embedded at offset 0x588 of its parent. The surrounding code matches Lua's luaC_freeallobjects (gcstp set to 4, white-bit masks 0x18): deletelist over allgc during lua_close. The module is stripped, so this is read from the machine code, not a symbol. In production the duel's Lua state closes in _duel_end, when the duel is won. A freed or corrupted object on that list means memory was damaged earlier in the duel.",
+  "duel": "Side-in stage seed 88264285, fl41606 (Hero Frog, EWCQ07) against fl41081 (Neo-Spacian Diva Hero, BCS16), uniform random play. It died on the 241st decision, a lethal direct attack.",
+  "replays": "The same duel replays with an identical decision trace every time, and the 5 duels before it in its batch match their recorded traces. Run alone one at a time it crashed in 2 of 15 runs: 0 of 7 normally or with malloc perturbation, 2 of 8 with address randomization off. With 12 runs in parallel it crashed in 7 of 96 alone and 6 of 96 inside its batch. The rest of that batch, run without it, crashed in 0 of 192 runs. One crashing replay died at decision 124 in libc instead, right after Neo-Spacian Dark Panther chose Treeborn Frog as its target. So the damage depends on this game's path, and whether it shows depends on memory layout.",
+  "pair_probes": "The same two lists, fresh seeds: Main and Extra 1 crash in 6,000 duels (88510000-88515999, same fault offset, eager play, died on a decision after Gorz attacked); Side-in 0 in 6,000 (88500000-88505999). The Main and Extra probe ran before the fix, so its crash is also recorded with a wrong exit status (exit73146473); the kernel log shows SIGSEGV at the same offset.",
+  "dark_panther_lead": "Neo-Spacian Dark Panther is the lead, not a confirmed cause. All 6 crash duels used its copy effect, 2 to 74 times. In the pair probe's crash one player activated it 52 times in 60 consecutive decisions, all their own. One once-per-turn effect should not allow that unless each activation gains a fresh copy of the effect, which deserves its own rules check. Played 24,000 times each, the original pair crashed 4 times (88700000-88723999, all SIGSEGV in the module, 3 at offset 0x327f5b and 1 at 0x32569e) and the pair with fl41081's 3 Dark Panther replaced by Gene-Warped Warwolf crashed 0 times (88730000-88753999). A 4 to 0 split has probability 1 in 16 if the rates were equal. Decks generated around Dark Panther, Treeborn Frog, Elemental HERO Ocean, Armory Arm and Future Fusion crashed 0 times in 3,000 duels each (88600000-88614999).",
+  "attribution_rule": "The report's per-crash card is the last card chosen, here Elemental HERO Gaia's lethal attack. It is not the cause.",
+  "lists_affected": "Dark Panther is in 7 corpus lists: fl2515, fl3547, fl29186, fl41081, fl41096, fl56136 in the Main Deck and fl28689 in the Side. None is a training list and none is inside code list v1."
+ },
+ "seeds": {
+  "block": [88000000, 88999999],
+  "main_stage": [88000000, 88127007],
+  "sidein_stage": [88200000, 88327007],
+  "pilots": [[88900000, 88900023], [88901000, 88904011], [88902000, 88902035]],
+  "negative_controls": [[88990000, 88990011], [88991000, 88991023]],
+  "probes": {"pair_sidein": [88500000, 88505999], "pair_main": [88510000, 88515999], "targets": [88600000, 88614999],
+             "targets_debug": [88690000, 88690002], "pair_with_dark_panther": [88700000, 88723999],
+             "pair_without_dark_panther": [88730000, 88753999]},
+  "replays": "88264280-88264299 (the crashed batch) and 88515054"
+ }
+}
