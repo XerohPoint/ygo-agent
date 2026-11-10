@@ -1,6 +1,17 @@
 diff --git a/field.cpp b/field.cpp
 --- a/field.cpp
 +++ b/field.cpp
+@@ -1281,8 +1281,8 @@
+ 			effects.pheff.erase(peffect);
+ 		if(peffect->reset_flag & RESET_CHAIN)
+ 			effects.cheff.erase(peffect);
+-		if(peffect->is_flag(EFFECT_FLAG_COUNT_LIMIT))
+-			effects.rechargeable.erase(peffect);
++		// Edison: erase whatever the flag says now, since RemoveCountLimit clears it after the insert.
++		effects.rechargeable.erase(peffect);
+ 		core.reseted_effects.insert(peffect);
+ 		if(peffect->is_flag(EFFECT_FLAG_PLAYER_TARGET) && peffect->is_flag(EFFECT_FLAG_CLIENT_HINT)) {
+ 			bool target_player[2] = {false, false};
 @@ -2327,7 +2327,8 @@
  			return TRUE;
  	}
@@ -205,3 +216,31 @@ diff --git a/field.h b/field.h
  	uint32 copy_reset{ 0 };
  	int32 copy_reset_count{ 0 };
  	uint32 last_control_changed_id{ 0 };
+diff --git a/card.cpp b/card.cpp
+--- a/card.cpp
++++ b/card.cpp
+@@ -1991,8 +1991,8 @@
+ 		pduel->game_field->effects.pheff.erase(peffect);
+ 	if(peffect->reset_flag & RESET_CHAIN)
+ 		pduel->game_field->effects.cheff.erase(peffect);
+-	if(peffect->is_flag(EFFECT_FLAG_COUNT_LIMIT))
+-		pduel->game_field->effects.rechargeable.erase(peffect);
++	// Edison: erase whatever the flag says now, since RemoveCountLimit clears it after the insert.
++	pduel->game_field->effects.rechargeable.erase(peffect);
+ 	if(peffect->get_code_type() == CODE_COUNTER && (peffect->code & 0xf0000) == EFFECT_COUNTER_PERMIT && (peffect->type & EFFECT_TYPE_SINGLE)) {
+ 		auto cmit = counters.find(peffect->code & 0xffff);
+ 		if(cmit != counters.end()) {
+diff --git a/libeffect.cpp b/libeffect.cpp
+--- a/libeffect.cpp
++++ b/libeffect.cpp
+@@ -135,6 +135,10 @@
+ 	check_param(L, PARAM_TYPE_EFFECT, 1);
+ 	effect* peffect = *(effect**) lua_touserdata(L, 1);
+ 	peffect->flag[0] &= ~EFFECT_FLAG_COUNT_LIMIT;
++	// RegisterEffect put the effect in the rechargeable set for that default. With no limit left,
++	// it has nothing to recharge, and a deleted copy (Dark Panther copying Treeborn Frog) must not
++	// stay in the set, which the turn start reads.
++	peffect->pduel->game_field->effects.rechargeable.erase(peffect);
+ 	peffect->count_limit = 0;
+ 	peffect->count_limit_max = 0;
+ 	peffect->count_code = 0;
