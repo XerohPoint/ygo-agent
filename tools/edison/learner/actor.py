@@ -135,6 +135,13 @@ class Runtime:
         from ygoenv.ygopro import init_module
         self.np, self.ygoenv = np, ygoenv
         reg = deck_registry.registry()
+        # Held-out lists for evaluation only, as {name: path}. They never enter the code list or training.
+        extra = os.environ.get("EDISON_EXTRA_DECKS")
+        if extra:
+            added = json.loads(Path(extra).read_text())
+            if set(added) & set(reg):
+                raise ValueError("An extra deck reuses a registry name")
+            reg = {**reg, **added}
         init_module(str(deck_registry.DB), str(deck_registry.CODES), {k: str(v) for k, v in reg.items()})
         self.metadata = deck_registry.card_metadata()
         self.n_codes = len(self.metadata)
