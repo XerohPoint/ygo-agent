@@ -1,0 +1,96 @@
+{
+ "eligible_lists": 542,
+ "distinct_builds": 488,
+ "excluded": {
+  "a Main or Extra card outside code list v1": 704,
+  "a Main or Extra card that no training list plays": 50,
+  "a training list": 18,
+  "not production legal": 1,
+  "a training list's exact Main and Extra": 9,
+  "the same Main and Extra as a lower-numbered held-out list": 54
+ },
+ "gottoms_removed_lists": [
+  "fl23318",
+  "fl28374",
+  "fl46665",
+  "fl46710",
+  "fl47245",
+  "fl47894",
+  "fl47910",
+  "fl47917",
+  "fl50693",
+  "fl55320",
+  "fl60936",
+  "fl62332",
+  "fl62349",
+  "fl63447",
+  "fl63845",
+  "fl65146",
+  "fl65816",
+  "fl67575",
+  "fl68030",
+  "fl68110",
+  "fl68112",
+  "fl68191",
+  "fl73068",
+  "fl75678",
+  "fl81932",
+  "fl84966",
+  "fl85534"
+ ],
+ "closure_only_cards": {
+  "79979666": {
+   "name": "Elemental HERO Bubbleman",
+   "builds": [
+    "h_fl1242"
+   ]
+  }
+ },
+ "band_archetypes": {
+  "1-9": {
+   "vayu_turbo": 96,
+   "blackwing": 57,
+   "diva_hero_beat": 2,
+   "lightsworn": 3,
+   "frog_otk": 8,
+   "gladiator_beast": 10,
+   "vayu_control": 1,
+   "gigavise": 2,
+   "frog_monarch": 1,
+   "dragon_turbo": 2
+  },
+  "10-19": {
+   "vayu_turbo": 39,
+   "blackwing": 69,
+   "hero_beat": 3,
+   "diva_hero_beat": 8,
+   "machina_control": 5,
+   "quickdraw_plant": 3,
+   "hero_frog": 48,
+   "diva_frog": 1,
+   "frog_monarch": 4,
+   "gigavise": 11,
+   "frog_otk": 4,
+   "twilight": 1,
+   "gladiator_beast": 5,
+   "frog_control": 3
+  },
+  "20+": {
+   "blackwing": 22,
+   "vayu_turbo": 8,
+   "diva_hero": 16,
+   "hero_frog": 32,
+   "frog_monarch": 4,
+   "quickdraw_plant": 2,
+   "quickdraw_frog": 1,
+   "machina_control": 6,
+   "hero_beat": 1,
+   "diva_hero_beat": 1,
+   "vayu_control": 1,
+   "diva_frog": 2,
+   "machina_gadget": 1,
+   "jinzo_machina": 2,
+   "lightsworn": 3
+  }
+ }
+}

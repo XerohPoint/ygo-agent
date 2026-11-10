@@ -1,0 +1,53 @@
+You are independently recounting a frozen test of a Yu-Gi-Oh Edison-format AI project. Your worktree is this folder, detached at commit 555f75c. That commit adds the results on top of commit 86ddb40, which holds only the test's manifest. Write your report to sol-m3-recount.md at the worktree root, and any summaries or scripts under sol-recount/. Do not commit, and do not edit any file outside this worktree.
+
+## What ran
+
+M3 Stage A asks whether three trained networks play deck builds they never trained on as well as their 21 training lists. The rules were fixed before any game:
+
+- docs/edison-m3-protocol.md: the protocol and its rules A1-A4, the reported items and the search check.
+- tools/edison/heldout/stage_a.py: the runner, meant to be the protocol's exact form.
+- tools/edison/heldout/stage-a-lists.json: the 488 held-out builds, with twin, distance and far flag.
+- tools/edison/heldout/m3a-manifest.json: the frozen inputs, jobs hash and search groups.
+
+Results:
+
+- tests/edison/reports/m3-stage-a-2026-11-09/stage-a-result.json: verdict STAGE_A_MET, with gated and reported numbers.
+- tests/edison/reports/m3-stage-a-2026-11-09/search-check-result.json: the reported search check.
+- docs/edison-heldout.md: the written report.
+
+Raw records, read-only copies identical to the run's files:
+
+- build/edison-heldout/stage-a/chunk-NNN.json.gz: the stored chunk rows, 82 chunks.
+- build/edison-heldout/stage-a/chunk-NNN.jsonl: each chunk's journal of start and result events.
+- build/edison-heldout/search-check/: the search check's 11 groups, their registries, result tables and worker logs.
+- build/edison-heldout/decks/ and extra-decks.json: the env copies of the held-out builds (Main and Extra after the Gottoms rule, no Side).
+- The search registries in build/edison-heldout/search-check/registry-NN.txt name deck files under /home/mada/ygo-agent/.claude/worktrees/m3-corpus. Your worktree holds identical copies; when you rerun search pairs, write your own registries under sol-recount/ that point at them, and never write into the m3-corpus worktree.
+
+Context if you need it: docs/edison-learner.md (the networks, M1), docs/edison-search.md (the search, M2), docs/edison-corpus.md (where the builds come from), tools/edison/learner/actor.py, evaluate.py, decks.py, tools/edison/search/search_common.py and search_study.py.
+
+## Tasks
+
+1. **Recount with your own code.** It must neither import nor copy stage_a.py's selection, assembly, validation or analysis code. Reading its file formats is fine. From the protocol and stage-a-lists.json, regenerate the job design yourself: the sorted builds, the 21 training lists, every cell, its seeds, arm, seats and policies, in both blocks. Check that every stored row matches it, that each duel has a seed and a winner, that the replay set is exactly every 127th cell, and that each replay agrees with its cell.
+2. **Recompute the verdict.** Recompute every gated number for A1-A4 on all builds and on the far set F, and every reported number in stage-a-result.json: rates per optimizer, per seat, the gap and the gap without mirror terms, bands, archetypes, the known block per training list, the mirror's seat-0 rate, draws, decisions and guard fires. Write the two-stage bootstrap yourself from the protocol's description. The intervals will match exactly only if your draws run in the same order; report any difference, and say whether any difference changes a rule's outcome.
+3. **Check the arms.** From the records, confirm that in the pilot arm the network played the held-out build, in the face arm it played the training list, and in the mirror arm the heuristic played both, in both seats, and that the counted seat is the one the rates use.
+4. **Rerun frozen games.** Draw at least 40 cells with your own RNG, across both blocks, all three arms, both seats and all three optimizers, and rerun them on their recorded seeds at 1 and at 4 env threads. You may use actor.py and evaluate.py to play; they are the play code, not the analysis. Compare every recorded field except time. Also rerun at least 10 search-check pairs, search and plain games, on the frozen search binary, and compare them with the records.
+5. **Check the written report.** Read docs/edison-heldout.md and list every statement that the data does not support or gets wrong, with the correct value or wording.
+6. **Look for an artifact.** Look for anything that could make the result come from the setup rather than from the networks playing new builds well: a held-out build that is really a training list, a seat or deck mix-up, the repetition guard deciding games, a deck played without cards it should hold, void or interrupted games counted as wins, or anything else you find.
+
+## Hard limits
+
+- Do not run stage_a.py play, freeze, analyze or search. New games are allowed only as reruns of recorded cells and search pairs, on their recorded seeds. If you need a fresh game for a check, use env seeds 86640000-86649999 and say why.
+- Use at most 12 processes at once.
+- Read-only: the native module ygoenv/ygoenv/ygopro/*.so, assets/locale/en/cards.cdb, scripts/script (a link to /home/mada/ygopro-scripts), build/edison-retrain-2026-11-04/runs (a link to the trained checkpoints), build/forward_model/edison_search, build/edison-search/nets, and everything under build/edison-heldout/.
+- Run Python through WSL as /home/mada/ygo-agent/.venv/bin/python, with OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1, from /home/mada/ygo-agent/.claude/worktrees/sol-m3-recount. Do not fetch anything from the web, and do not install packages.
+
+## Report
+
+Start with one line: whether the verdict stands. Then a table of every gated number, as reported and as you recomputed it. Then findings, each with a class:
+
+- WRONG: a gated or reported number differs from the records;
+- CLAIM: the written report says something the data does not support;
+- ARTIFACT: something in the setup could explain the result;
+- NOTE: anything else worth knowing.
+
+For each finding give the evidence and the command that shows it. End with the reruns: how many cells and pairs, which ones, and how many differed in any field.

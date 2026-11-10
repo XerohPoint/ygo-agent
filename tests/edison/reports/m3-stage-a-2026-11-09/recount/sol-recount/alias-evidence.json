@@ -1,0 +1,132 @@
+{
+ "artwork_passcodes_used": [
+  "h_fl79564",
+  "h_fl80904",
+  "h_fl81917",
+  "h_fl81932",
+  "h_fl83424",
+  "h_fl84930",
+  "h_fl85597"
+ ],
+ "canonical_training_duplicates": [],
+ "canonical_held_duplicate_pairs": [
+  [
+   "h_fl75591",
+   "h_fl85597"
+  ]
+ ],
+ "changed_metadata": [
+  {
+   "name": "h_fl1443",
+   "old_twin": "g_vayu_turbo",
+   "new_twin": "g_vayu_turbo",
+   "old_distance": 31,
+   "new_distance": 29,
+   "old_far": true,
+   "new_far": true
+  },
+  {
+   "name": "h_fl22763",
+   "old_twin": "g_frog_monarch",
+   "new_twin": "g_frog_monarch",
+   "old_distance": 44,
+   "new_distance": 42,
+   "old_far": true,
+   "new_far": true
+  },
+  {
+   "name": "h_fl60921",
+   "old_twin": "g_frog_monarch",
+   "new_twin": "g_frog_monarch",
+   "old_distance": 14,
+   "new_distance": 12,
+   "old_far": false,
+   "new_far": false
+  },
+  {
+   "name": "h_fl66941",
+   "old_twin": "g_frog_monarch",
+   "new_twin": "g_frog_monarch",
+   "old_distance": 20,
+   "new_distance": 18,
+   "old_far": true,
+   "new_far": false
+  },
+  {
+   "name": "h_fl67930",
+   "old_twin": "g_frog_monarch",
+   "new_twin": "g_frog_monarch",
+   "old_distance": 18,
+   "new_distance": 16,
+   "old_far": false,
+   "new_far": false
+  },
+  {
+   "name": "h_fl68910",
+   "old_twin": "g_vayu_turbo",
+   "new_twin": "g_vayu_turbo",
+   "old_distance": 7,
+   "new_distance": 5,
+   "old_far": false,
+   "new_far": false
+  },
+  {
+   "name": "h_fl73072",
+   "old_twin": "g_frog_monarch",
+   "new_twin": "g_frog_monarch",
+   "old_distance": 14,
+   "new_distance": 12,
+   "old_far": false,
+   "new_far": false
+  },
+  {
+   "name": "h_fl74826",
+   "old_twin": "g_frog_monarch",
+   "new_twin": "g_frog_monarch",
+   "old_distance": 11,
+   "new_distance": 9,
+   "old_far": false,
+   "new_far": false
+  },
+  {
+   "name": "h_fl81932",
+   "old_twin": "g_gigavise",
+   "new_twin": "g_gigavise",
+   "old_distance": 10,
+   "new_distance": 8,
+   "old_far": false,
+   "new_far": false
+  },
+  {
+   "name": "h_fl85576",
+   "old_twin": "g_vayu_turbo",
+   "new_twin": "g_vayu_turbo",
+   "old_distance": 23,
+   "new_distance": 21,
+   "old_far": true,
+   "new_far": true
+  },
+  {
+   "name": "h_fl85597",
+   "old_twin": "g_frog_otk",
+   "new_twin": "g_frog_otk",
+   "old_distance": 10,
+   "new_distance": 8,
+   "old_far": false,
+   "new_far": false
+  }
+ ],
+ "changed_metadata_count": 11,
+ "far_flag_changes": [
+  {
+   "name": "h_fl66941",
+   "old_twin": "g_frog_monarch",
+   "new_twin": "g_frog_monarch",
+   "old_distance": 20,
+   "new_distance": 18,
+   "old_far": true,
+   "new_far": false
+  }
+ ],
+ "canonical_unique_builds": 487
+}

@@ -1,0 +1,49 @@
+{
+ "network_decisions": 40414152,
+ "heuristic_decisions": 86021256,
+ "all_decisions": 126435408,
+ "guard_fires": 659253,
+ "guard_share_network": 0.016312429368801305,
+ "guard_share_all": 0.005214148555600817,
+ "guard_by_block_arm": {
+  "known/pilot": {
+   "guard_fires": 85248,
+   "net_decisions": 5287044,
+   "share": 0.01612394373869406
+  },
+  "known/face": {
+   "guard_fires": 85368,
+   "net_decisions": 5303902,
+   "share": 0.016095320011568843
+  },
+  "held/pilot": {
+   "guard_fires": 240177,
+   "net_decisions": 14426769,
+   "share": 0.016648010375711984
+  },
+  "held/face": {
+   "guard_fires": 248460,
+   "net_decisions": 15396437,
+   "share": 0.016137499864416684
+  }
+ },
+ "worker_logs": 15,
+ "diagnostic_markers": [],
+ "max_duel_steps": 1582,
+ "max_duel_cell_seed": [
+  108016,
+  88159096
+ ],
+ "win_reasons": {
+  "1": 768333,
+  "-1": 3123
+ },
+ "cell_elapsed_seconds": {
+  "first": 199949.0660199068,
+  "replay": 1317.165102234183
+ },
+ "first_cell_hours": 55.54140722775189,
+ "first_cell_hours_per15": 3.702760481850126,
+ "all_cell_hours_per15": 3.727152428187796,
+ "wall_clock_timestamps_in_journals": false
+}

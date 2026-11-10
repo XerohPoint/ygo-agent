@@ -1,0 +1,248 @@
+{
+ "deck_pairs": 12,
+ "seat_comparisons": 24,
+ "games": 48,
+ "different_games": 0,
+ "results": [
+  {
+   "id": "g14_0",
+   "group": 0,
+   "differences": []
+  },
+  {
+   "id": "g14_1",
+   "group": 0,
+   "differences": []
+  },
+  {
+   "id": "p14_0",
+   "group": 0,
+   "differences": []
+  },
+  {
+   "id": "p14_1",
+   "group": 0,
+   "differences": []
+  },
+  {
+   "id": "g31_0",
+   "group": 1,
+   "differences": []
+  },
+  {
+   "id": "g31_1",
+   "group": 1,
+   "differences": []
+  },
+  {
+   "id": "g32_0",
+   "group": 1,
+   "differences": []
+  },
+  {
+   "id": "g32_1",
+   "group": 1,
+   "differences": []
+  },
+  {
+   "id": "p31_0",
+   "group": 1,
+   "differences": []
+  },
+  {
+   "id": "p31_1",
+   "group": 1,
+   "differences": []
+  },
+  {
+   "id": "p32_0",
+   "group": 1,
+   "differences": []
+  },
+  {
+   "id": "p32_1",
+   "group": 1,
+   "differences": []
+  },
+  {
+   "id": "g59_0",
+   "group": 2,
+   "differences": []
+  },
+  {
+   "id": "g59_1",
+   "group": 2,
+   "differences": []
+  },
+  {
+   "id": "p59_0",
+   "group": 2,
+   "differences": []
+  },
+  {
+   "id": "p59_1",
+   "group": 2,
+   "differences": []
+  },
+  {
+   "id": "g73_0",
+   "group": 3,
+   "differences": []
+  },
+  {
+   "id": "g73_1",
+   "group": 3,
+   "differences": []
+  },
+  {
+   "id": "p73_0",
+   "group": 3,
+   "differences": []
+  },
+  {
+   "id": "p73_1",
+   "group": 3,
+   "differences": []
+  },
+  {
+   "id": "g106_0",
+   "group": 4,
+   "differences": []
+  },
+  {
+   "id": "g106_1",
+   "group": 4,
+   "differences": []
+  },
+  {
+   "id": "p106_0",
+   "group": 4,
+   "differences": []
+  },
+  {
+   "id": "p106_1",
+   "group": 4,
+   "differences": []
+  },
+  {
+   "id": "g130_0",
+   "group": 5,
+   "differences": []
+  },
+  {
+   "id": "g130_1",
+   "group": 5,
+   "differences": []
+  },
+  {
+   "id": "p130_0",
+   "group": 5,
+   "differences": []
+  },
+  {
+   "id": "p130_1",
+   "group": 5,
+   "differences": []
+  },
+  {
+   "id": "g160_0",
+   "group": 6,
+   "differences": []
+  },
+  {
+   "id": "g160_1",
+   "group": 6,
+   "differences": []
+  },
+  {
+   "id": "p160_0",
+   "group": 6,
+   "differences": []
+  },
+  {
+   "id": "p160_1",
+   "group": 6,
+   "differences": []
+  },
+  {
+   "id": "g182_0",
+   "group": 7,
+   "differences": []
+  },
+  {
+   "id": "g182_1",
+   "group": 7,
+   "differences": []
+  },
+  {
+   "id": "p182_0",
+   "group": 7,
+   "differences": []
+  },
+  {
+   "id": "p182_1",
+   "group": 7,
+   "differences": []
+  },
+  {
+   "id": "g191_0",
+   "group": 8,
+   "differences": []
+  },
+  {
+   "id": "g191_1",
+   "group": 8,
+   "differences": []
+  },
+  {
+   "id": "p191_0",
+   "group": 8,
+   "differences": []
+  },
+  {
+   "id": "p191_1",
+   "group": 8,
+   "differences": []
+  },
+  {
+   "id": "g213_0",
+   "group": 9,
+   "differences": []
+  },
+  {
+   "id": "g213_1",
+   "group": 9,
+   "differences": []
+  },
+  {
+   "id": "p213_0",
+   "group": 9,
+   "differences": []
+  },
+  {
+   "id": "p213_1",
+   "group": 9,
+   "differences": []
+  },
+  {
+   "id": "g233_0",
+   "group": 10,
+   "differences": []
+  },
+  {
+   "id": "g233_1",
+   "group": 10,
+   "differences": []
+  },
+  {
+   "id": "p233_0",
+   "group": 10,
+   "differences": []
+  },
+  {
+   "id": "p233_1",
+   "group": 10,
+   "differences": []
+  }
+ ]
+}

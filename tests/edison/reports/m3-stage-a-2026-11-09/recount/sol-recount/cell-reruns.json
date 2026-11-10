@@ -1,0 +1,428 @@
+{
+ "cells": 42,
+ "runs": 84,
+ "games": 1120,
+ "different_runs": 0,
+ "results": [
+  {
+   "cell": 1248,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 1248,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 1300,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 1300,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 2142,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 2142,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 2293,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 2293,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 2684,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 2684,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 3381,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 3381,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 4017,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 4017,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 4049,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 4049,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 4621,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 4621,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 4741,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 4741,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 5143,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 5143,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 5186,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 5186,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 5216,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 5216,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 6010,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 6010,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 13393,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 13393,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 17375,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 17375,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 18961,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 18961,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 21453,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 21453,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 38395,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 38395,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 40330,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 40330,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 42566,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 42566,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 46227,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 46227,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 53946,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 53946,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 54105,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 54105,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 57286,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 57286,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 58619,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 58619,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 69377,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 69377,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 80370,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 80370,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 81214,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 81214,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 81384,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 81384,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 86892,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 86892,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 98095,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 98095,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 98509,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 98509,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 108888,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 108888,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 126396,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 126396,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 128103,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 128103,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 128484,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 128484,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 130280,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 130280,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 131268,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 131268,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 141992,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 141992,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 142291,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 142291,
+   "threads": 4,
+   "differences": []
+  },
+  {
+   "cell": 148064,
+   "threads": 1,
+   "differences": []
+  },
+  {
+   "cell": 148064,
+   "threads": 4,
+   "differences": []
+  }
+ ]
+}

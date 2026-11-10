@@ -1,0 +1,216 @@
+{
+ "totals": {
+  "cells": 149646,
+  "games": 771456,
+  "unresolved_first": 0,
+  "unresolved_replay": 0,
+  "draws": 0,
+  "decisions": 126435408,
+  "net_decisions": 40414152,
+  "guard_fires": 659253,
+  "chunks": 82,
+  "replays": 1179,
+  "missing_chunks": 0,
+  "invalid_chunks": 0,
+  "replay_mismatches": 0,
+  "empty_list_arms": 0
+ },
+ "voids": {
+  "known/pilot/1702": {
+   "void": 0,
+   "games": 28224,
+   "share": 0.0
+  },
+  "known/pilot/1703": {
+   "void": 0,
+   "games": 28224,
+   "share": 0.0
+  },
+  "known/pilot/1704": {
+   "void": 0,
+   "games": 28224,
+   "share": 0.0
+  },
+  "known/face/1702": {
+   "void": 0,
+   "games": 28224,
+   "share": 0.0
+  },
+  "known/face/1703": {
+   "void": 0,
+   "games": 28224,
+   "share": 0.0
+  },
+  "known/face/1704": {
+   "void": 0,
+   "games": 28224,
+   "share": 0.0
+  },
+  "known/mirror/heuristic": {
+   "void": 0,
+   "games": 28224,
+   "share": 0.0
+  },
+  "held/pilot/1702": {
+   "void": 0,
+   "games": 81984,
+   "share": 0.0
+  },
+  "held/pilot/1703": {
+   "void": 0,
+   "games": 81984,
+   "share": 0.0
+  },
+  "held/pilot/1704": {
+   "void": 0,
+   "games": 81984,
+   "share": 0.0
+  },
+  "held/face/1702": {
+   "void": 0,
+   "games": 81984,
+   "share": 0.0
+  },
+  "held/face/1703": {
+   "void": 0,
+   "games": 81984,
+   "share": 0.0
+  },
+  "held/face/1704": {
+   "void": 0,
+   "games": 81984,
+   "share": 0.0
+  },
+  "held/mirror/heuristic": {
+   "void": 0,
+   "games": 81984,
+   "share": 0.0
+  }
+ },
+ "void_reasons": {},
+ "guard_by_arm": {
+  "known/pilot/1702": {
+   "decisions": 4639718,
+   "net_decisions": 1725618,
+   "guard_fires": 32713,
+   "cells_guarded": 882,
+   "wins": 22896,
+   "games": 28224
+  },
+  "known/pilot/1703": {
+   "decisions": 4594042,
+   "net_decisions": 1787012,
+   "guard_fires": 27212,
+   "cells_guarded": 882,
+   "wins": 21648,
+   "games": 28224
+  },
+  "known/pilot/1704": {
+   "decisions": 4478488,
+   "net_decisions": 1774414,
+   "guard_fires": 25323,
+   "cells_guarded": 881,
+   "wins": 22198,
+   "games": 28224
+  },
+  "known/face/1702": {
+   "decisions": 4649251,
+   "net_decisions": 1724974,
+   "guard_fires": 32637,
+   "cells_guarded": 882,
+   "wins": 22840,
+   "games": 28224
+  },
+  "known/face/1703": {
+   "decisions": 4634573,
+   "net_decisions": 1799008,
+   "guard_fires": 27420,
+   "cells_guarded": 882,
+   "wins": 21504,
+   "games": 28224
+  },
+  "known/face/1704": {
+   "decisions": 4492434,
+   "net_decisions": 1779920,
+   "guard_fires": 25311,
+   "cells_guarded": 882,
+   "wins": 22287,
+   "games": 28224
+  },
+  "known/mirror/heuristic": {
+   "decisions": 5058404,
+   "net_decisions": 0,
+   "guard_fires": 0,
+   "cells_guarded": 0,
+   "wins": 14189,
+   "games": 28224
+  },
+  "held/pilot/1702": {
+   "decisions": 12644603,
+   "net_decisions": 4640015,
+   "guard_fires": 88626,
+   "cells_guarded": 19889,
+   "wins": 67705,
+   "games": 81984
+  },
+  "held/pilot/1703": {
+   "decisions": 12861314,
+   "net_decisions": 4950956,
+   "guard_fires": 78381,
+   "cells_guarded": 19694,
+   "wins": 64376,
+   "games": 81984
+  },
+  "held/pilot/1704": {
+   "decisions": 12229973,
+   "net_decisions": 4835798,
+   "guard_fires": 73170,
+   "cells_guarded": 18964,
+   "wins": 66035,
+   "games": 81984
+  },
+  "held/face/1702": {
+   "decisions": 14185548,
+   "net_decisions": 5048553,
+   "guard_fires": 96096,
+   "cells_guarded": 20054,
+   "wins": 60624,
+   "games": 81984
+  },
+  "held/face/1703": {
+   "decisions": 13991183,
+   "net_decisions": 5188961,
+   "guard_fires": 78627,
+   "cells_guarded": 19578,
+   "wins": 56412,
+   "games": 81984
+  },
+  "held/face/1704": {
+   "decisions": 13558053,
+   "net_decisions": 5158923,
+   "guard_fires": 73737,
+   "cells_guarded": 19089,
+   "wins": 58819,
+   "games": 81984
+  },
+  "held/mirror/heuristic": {
+   "decisions": 14417824,
+   "net_decisions": 0,
+   "guard_fires": 0,
+   "cells_guarded": 0,
+   "wins": 47594,
+   "games": 81984
+  }
+ },
+ "win_reasons": {
+  "1": 768333,
+  "-1": 3123
+ },
+ "journal_result_fields": {
+  "status": 149646,
+  "duels": 149646,
+  "elapsed": 149646,
+  "counters": 149646,
+  "learner_decisions": 149646
+ }
+}

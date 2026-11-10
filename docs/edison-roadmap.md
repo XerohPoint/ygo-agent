@@ -160,6 +160,7 @@ and card defects that this exposes. Test against decks held out of training to
 measure generalization. Exit: the policy performs on held-out decks, not only known ones. **Stage A, new builds of
 known cards, met by [predeclared rule](edison-heldout.md), November 10, 2026:** 80.6% piloting 488 placed builds no
 network trained on, with the edge over the heuristic within a point of the edge on each build's nearest training list.
+Sol recounted it with separate code and reran 84 cell runs and 48 search games with no differences.
 Stage B, cards no training list plays, needs code list v2, an unknown-identity row and retraining, and is not started.
 
 ### M4 — Deck builder

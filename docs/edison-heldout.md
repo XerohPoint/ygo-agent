@@ -9,7 +9,12 @@ bf2f736. The result files are in [`tests/edison/reports/m3-stage-a-2026-11-09/`]
 ## Stage A: new builds of known cards
 
 **Verdict: `STAGE_A_MET`**, November 10, 2026. Every rule held, on all 488 held-out builds and on the far set F
-(the 102 builds at distance 20 or more from every training list, so about 10 or more cards differ).
+(the 102 builds at distance 20 or more from every training list, so about 10 or more cards differ). Sol recounted it
+independently and the verdict stands; see [the recount](#independent-recount).
+
+A known card is one that some training list plays in its Main or Extra, or one of code list v1's tokens and closure
+cards, as the protocol says. One build, h_fl1242, uses a closure card no training list holds: Elemental HERO Bubbleman.
+Every other card in the 488 builds is in some training list's Main or Extra.
 
 The networks are `checkpoint-2560` of optimizers 1702, 1703 and 1704, playing greedily with the repetition guard. The
 opponent is the rule-based heuristic. Every held-out build met each of the 21 training lists in both seats, 4 seeds per
@@ -42,9 +47,11 @@ training list (its twin), averaged over optimizers. The mean is +0.3 points (−
 (−1.2 to +4.3) on F. Without the mirror terms, the pilot rate on a build minus the pilot rate on its twin averages
 −0.7 points on all builds and −0.8 on F. Between builds the gap runs from −5.9 points (10th percentile) to +6.7 (90th).
 
-**The run.** 149,646 cells and 771,456 games took 3.8 hours on 15 workers. There were no void games, draws or
-interrupted cells. All 1,179 replays, run at 4 env threads, matched their first run. The networks made 126.4 million
-decisions, and the repetition guard fired on 0.52% of them.
+**The run.** 149,646 cells and 771,456 games ran on 15 workers; the play log's chunk times sum to 3.8 hours. There
+were no void games, draws or interrupted cells. All 1,179 replays, run at 4 env threads, matched their first run. Every
+game ended on life points (768,333) or a failed draw (3,123), and the longest took 1,582 decisions. The networks made
+40.4 million decisions and the heuristic 86.0 million. The repetition guard fired on 1.63% of the networks' decisions;
+a fire need not change the choice.
 
 ### Reported, not gated
 
@@ -76,11 +83,10 @@ Hero Frog (32), which the networks face at 87%.
 
 With each of the 21 archetypes weighted equally, the pilot rate is 79.6%.
 
-**Against the training lists.** In the known block, each training list met the others with 32 seeds per cell. There the
+**Against the training lists.** In the known block, each training list met all 21 training lists, itself included, with 32 seeds per cell. There the
 networks scored 78.8% as pilot, 78.7% as face, and the heuristic's mirror rate averaged 50.3%. On the held-out builds,
 the pilot rate is about the same (80.6%) but the face rate is lower (71.5%). The held-out builds are also stronger in
-the heuristic's hands: their mirror rate averages 58.1%, and the mirror's seat 0 wins 59.7% against 52.1% in the known
-block. Most of this is Blackwing, which is 30% of the held-out builds and 2 of the 21 training lists. The heuristic
+the heuristic's hands: their mirror rate averages 58.1%. Most of this is Blackwing, which is 30% of the held-out builds and 2 of the 21 training lists. The heuristic
 plays it well, and the networks face it poorly in the known block too: 48.2% against `g_blackwing`, the lowest of the 21,
 and 57.3% against `blackwing`. Without the 148 Blackwing builds, the face rate is 79.4% and the mirror rate 50.2%, close
 to the known block's 78.7% and 50.3%. That cut was made after the run. Face has no rule that takes out how strong the
@@ -94,6 +100,39 @@ build is, so its rates are not a measured drop in generalization either way.
 five lowest are Blackwing builds whose nearest training list is `g_vayu_turbo_ddev08` (−24.5, −21.0 and −16.6 points), so
 their twin is another archetype's list. The other two are a Quickdraw Frog build at distance 44 (−20.9) and a Machina
 Gadget build at distance 40 (−18.4).
+
+**Artwork aliases.** Distance and duplicates count passcodes, so an alternate artwork counts as a different card.
+Seven builds use one. h_fl75591 and h_fl85597 differ only in which Foolish Burial artwork they play, so they are one
+deck, and with aliases merged 11 builds move 2 closer to their twin, one of them out of F. Sol rescored the same games on
+that basis, keeping h_fl75591: on 487 builds the pilot rate is 80.6%, face 71.4% and the gap's 2.5th percentile
+−1.1 points; on the 101 builds of F they are 81.7%, 77.8% and −1.3. Every rule still holds. That cut was made after the
+run, and the frozen test is the passcode one.
+
+## Independent recount
+
+Sol recounted the run with its own code, which neither imports nor copies the runner's analysis, from read-only copies
+of the raw records. Its report and summaries are in
+[`tests/edison/reports/m3-stage-a-2026-11-09/recount/`](../tests/edison/reports/m3-stage-a-2026-11-09/recount/).
+
+- It regenerated the job design from the protocol and matched the frozen jobs hash, and the search check's. Every row,
+  duel seed and winner, journal and replay checked out, and all 534 frozen hashes matched.
+- Every gated and reported number matched to 1e−12, except the bootstrap percentiles and two seat fields. Its own
+  bootstrap drew in a different order. Its 2.5th percentiles differ by at most 0.11 points, and none changes a rule.
+- It checked that the pilot arm counts the network on the held-out build, face counts the network on the training list,
+  and mirror counts the held-out build with the heuristic on both sides, in both seats.
+- It reran 42 cells drawn across both blocks, all arms, optimizers and seats, at 1 and at 4 env threads: 84 runs and
+  1,120 duels, none different. It reran 12 search pairs, 48 games including the one with voided worlds, none different.
+
+Its findings, all now reflected here:
+
+- **The result file's mirror seat-0 fields are mislabeled.** `known_mirror_seat0` and `held_mirror_seat0` are the held-out
+  side's win rate when it sits in seat 0, not seat 0's rate. Seat 0 wins 51.8% of known mirror games and 51.7% of
+  held-out ones. An earlier draft of this report quoted the mislabeled fields. No rule uses them.
+- **The decision count included the heuristic.** The networks made 40.4 million of the 126.4 million decisions, and the
+  guard fired on 1.63% of theirs, not 0.52%.
+- **Wording:** the closure card above, the known block's self-matchups, the source of the run time, and the search's
+  departures.
+- **Scope:** the guard is part of the tested player, and artwork aliases are counted as different cards, both above.
 
 ## Search check, reported only
 
@@ -113,8 +152,8 @@ plain network play, so it need not be 50%. Ranges resample held-out builds.
 All 480 comparisons counted, with no missing or void games and no draws. On the training lists, M2's final test gave
 80.3% and a gain of +30.3 points (27.8-32.6). F holds only 10 of the drawn builds, so its range is wide.
 
-Search left the network's choice on 16.2% of 30,468 searched decisions, and fell back on 6.1% because the first 8 deals
-were all refused. It took 65 s of CPU per game. 24 sampled worlds were voided in 1.79 million rollouts, all in one game
+Search departed from the network's choice on 16.2% of 30,468 searched decisions, and fell back to it on 6.1% because
+the first 8 deals were all refused. It took 65 s of CPU per game. 24 sampled worlds were voided in 1.79 million rollouts, all in one game
 (h_fl39260 against `g_lightsworn_fairy`, seed 88800031). The first diagnostic was "Deck card in unsupported prompt:
 select_card". That game finished normally. M2 had no voided world in 4.0 million rollouts.
 
@@ -123,7 +162,7 @@ belief, and every opponent is one of the same three networks.
 
 ## What Stage A shows
 
-On new builds made from cards the networks trained on, the networks play about as well as on their 21 training lists.
+On new builds of known cards, the networks play about as well as on their 21 training lists.
 The pilot rate is 80.6%. The edge over the heuristic is, on average, within a point of the edge on each build's nearest
 training list (+0.3 points, −1.1 to +1.9), and neither is lower on the far set, where about 10 or more cards differ
 from every training list. M2's search gains about as much on these builds as on the training lists. This is the first
@@ -136,7 +175,9 @@ It does not show:
 - coverage of the format, since the builds are placed lists from one site's events, weighted toward Blackwing, Vayu Turbo
   and Hero Frog;
 - anything about a single build or matchup;
-- strength with siding or in matches, since these are single game-1 duels.
+- the strength of the bare networks, since the repetition guard is part of the tested player and was not removed;
+- strength with siding or in matches, since these are single game-1 duels, played without Sides and, in 24 builds,
+  without XX-Saber Gottoms.
 
 ## Next: Stage B
 
