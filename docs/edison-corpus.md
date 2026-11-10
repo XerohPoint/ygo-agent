@@ -56,9 +56,11 @@ have that ruleset.
   section lines equal the source's. Only the header changed. The source's first line reads `created by ...` and can hold a name, so it is replaced by
   provenance lines: source, event, placement, archetype, ruleset. The gauntlet's `build_gauntlet.py` wrote cards as integers, so its files drop leading
   zeros. The cards are the same.
-- **No player name, handle, Discord id or user id is committed.** `privacy_check.py` collected 2,152 such strings from the raw responses and searched all
-  1,337 committed files. The only matches are four that are also card, archetype, community or event words: "Jinzo" (Jinzo Machina), "Rose" and "Soul"
-  (card names), and "beastmode" (a community and its Beastmode Circuit Series).
+- **No player name, handle, Discord id or user id is committed.** `privacy_check.py` collected 2,152 such strings from the raw responses and searched the
+  1,336 files this corpus commits. The only matches are four that are also card, archetype, community or event words: "Jinzo" (Jinzo Machina), "Rose" and "Soul"
+  (card names), and "beastmode" (a community and its Beastmode Circuit Series). The check now fails on any other match, on a missing raw cache, and on any
+  JSON key that names a person field; a planted name and a planted `builderId` key each make it fail. Numeric ids and strings under 3 characters are not
+  searched as text, because they collide with passcodes and deck ids; the key check covers numeric id fields instead.
 
 Each row has the archetype label as the source gives it (`deckTypeName`) and a normalized label. The normalized label is the source label casefolded,
 with `&` as `and`, punctuation dropped and words joined by `_`. Nothing is merged by meaning, so `diva_hero` and `diva_hero_beat` stay apart. One list
@@ -225,8 +227,10 @@ Of the 601 held-out lists inside v1, 551 have no untrained card, 49 have one and
 - **Lists:** all 1,323 legal lists, sorted by id. Each plays the next 16 in that cycle, 6 duels per pair, so each list is in 192 duels per stage.
 - **Play:** each pair's 6 duels cover both seat orders with three policies: uniform random, the audit's eager rule (80% prefer a Summon or
   activation), and the frozen rule-based Heuristic from `ygoai/edison_policy.py`, which has no weights. No network played.
-- **Stages:** Main and Extra, then Side-in. Side-in moves the whole Side in, as the audit did. A Side card whose zone is empty stays in the Side;
-  one list has no Extra Deck.
+- **Stages:** Main and Extra, then Side-in. Side-in swaps each Side card, in turn, for a random card of its zone, as the audit did. A Side card whose zone
+  is empty stays in the Side; one list has no Extra Deck. **This does not put the whole Side in play.** A later swap can take out a Side card an earlier
+  swap put in, so 245,230 of the 254,016 played decks lacked at least one Side card's copies (Sol's review counted 238,790 by card presence instead of
+  copies). Side-in is a stress test of Side cards in play, not of whole Sides.
 - **Checks:** the audit worker's observation contract, including the candidate-row and finish and cancel checks that hardening added. Every decision
   is flushed to disk, so an abort leaves the last card chosen. Each stderr line is tied to the duel that printed it.
 - **Workers:** 12, with `OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1`.
@@ -242,7 +246,7 @@ by the core.
 | Stage | Seeds | Duels | Decisions | Crashes | Diagnostics | Contract violations | Other non-ok | Wall time |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | Main and Extra | 88000000-88127007 | 127,008 | 25,986,082 | 0 | 0 | 0 | 0 | 31 min |
-| Whole Side moved in | 88200000-88327007 | 127,008 | 28,039,373 | 1 | 0 | 0 | 0 | 35 min |
+| Side-in, each Side card swapped in | 88200000-88327007 | 127,008 | 28,039,373 | 1 | 0 | 0 | 0 | 35 min |
 
 The largest offered set was 75 options, and the most a state repeated in one duel was 136 times. No duel was truncated or timed out.
 
@@ -314,7 +318,8 @@ The two stages took 66 minutes. Probes, replays, pilots and controls took about 
 - **Rulesets come from the community and event name only.** I did not read event rules, and early community events may have differed in rulings.
 - **Archetype labels are the source's.** Similar lists can carry different labels, and labels were not checked against card content.
 - **The soak shows that lists run, not that rules are right.** Random and rule-based play reach many paths, but crashes behind rare prompts can hide.
-- **Side-in moves the whole Side at once**, as the audit did. It is a stress test, not a siding plan.
+- **Side-in does not play whole Sides.** Each swap can undo an earlier one, as in the audit. It is a stress test, not a siding plan. M5's siding work needs
+  a soak that swaps without replacement.
 - **One deck could not be fetched** (67937, HTTP 500 twice), and 91 responses date from November 4. An event that published more decks since then is not reflected.
 
 ## Reproduce
