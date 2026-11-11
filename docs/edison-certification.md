@@ -1442,5 +1442,7 @@ Test 089 covers Neo-Spacian Dark Panther. In 089A and 089B it copies Treeborn Fr
 limit, and two turn starts follow the copy's deletion; `check_rechargeable()` requires every member of the turn-reset set to be a live effect
 with a count limit. 089C has it copy the opponent's Dark Panther, which must not be offered again that turn. 089D plays two on one side, and
 089E flips one face-down with Book of Moon and Flip Summons it, which allows the effect again. In 089F Creature Swap gives a Dark Panther that has
-copied Bazoo to the opponent, and the copy must end. Each has a Rule 5 control on the stock scripts. The harness now pins 90 scripts, reads
-`MSG_SWAP`, and passes the core a full `SIZE_RETURN_VALUE` response buffer. The full suite now passes 605 cases. See [edison-dark-panther.md](edison-dark-panther.md).
+copied Bazoo to the opponent, and the name change, every copied effect and the End Phase cleanup must leave the card. In 089G the opponent
+chains Enemy Controller to take Dark Panther before the copy resolves, and nothing may be copied. Each has a Rule 5 control on the stock
+scripts. The harness now pins 90 scripts, reads `MSG_SWAP`, lists a card's attached effects with `card_effects()`, and passes the core a full
+`SIZE_RETURN_VALUE` response buffer. The full suite now passes 607 cases. See [edison-dark-panther.md](edison-dark-panther.md).

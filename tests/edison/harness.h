@@ -505,6 +505,15 @@ class TestDuel {
       if (peffect->handler == pcard && peffect->copy_id != 0 && peffect->code == code) out.push_back(peffect);
     return out;
   }
+  // The effects still attached to the card in that Monster Zone. A reset effect leaves the card's indexer at
+  // once, though the core deletes it only at the next turn start.
+  std::vector<effect*> card_effects(int player, int sequence) const {
+    std::vector<effect*> out;
+    card* pcard = core->game_field->player[player].list_mzone.at(sequence);
+    require(pcard != nullptr, "No card in that Monster Zone");
+    for (const auto& entry : pcard->indexer) out.push_back(entry.first);
+    return out;
+  }
   void run(const std::function<bool(const Event&)>& on_event) {
     bool confirmation_wait = false;
     for (int steps = 0; steps < 5000; ++steps) {

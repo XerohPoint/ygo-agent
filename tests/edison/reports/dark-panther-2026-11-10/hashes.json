@@ -2,16 +2,17 @@
  "production_module": {
   "certified_before": "b8fcd2bcf7774ae4edf8a4a800c2c55c006f62cb5cc1ef925fe316365a1ddf6f",
   "first_round_75d1967b": "75d1967b64683e967b45440863c4bb85808f6bf4cee0d9fa1d8cb4a3f340caf4",
-  "this_commit": "eca27bd59908cd7dc7054899f3945bfdd51876911a52c41ab05f062f0cd42bd0",
-  "built": "eca27bd59908cd7dc7054899f3945bfdd51876911a52c41ab05f062f0cd42bd0"
+  "second_round_eca27bd5": "eca27bd59908cd7dc7054899f3945bfdd51876911a52c41ab05f062f0cd42bd0",
+  "this_commit": "7e39a1138658050c75dc99996834ade20865a173ffbd765564cdcd11dca063ea",
+  "built": "7e39a1138658050c75dc99996834ade20865a173ffbd765564cdcd11dca063ea"
  },
  "edison_rules": {
   "before": "6df1bd58680d681624c02e5bd8ec19159b96cc4204b4af6a543ed7c30b411778",
-  "this_commit": "5a715b9b7198cd4d3bede01742725761a80b4407f886907baf46a9ec8bc8069c"
+  "this_commit": "fa23666642c0745e3d2e1f2b1491d2a3ade8565bb928eb3378cc05cfeba6a364"
  },
  "edison_conformance": {
   "before": "ac41e4d3ea72a4d6711c970c2e74602a5aaacafff6234eb759e7c74c0d5a8066",
-  "this_commit": "def47b70f6708463d4bc54fd50e757b76045f554541c3b7623f0750aef5d4f24"
+  "this_commit": "091eca63a9144b933964b5f188a774aa15f13a437acd21c6a72158cf7c9980e0"
  },
  "core_package": {
   "r2": "5fe29f6ad6dd4ebb83a1f1b5123c1837",

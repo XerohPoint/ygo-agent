@@ -1140,6 +1140,10 @@ int main(int argc, char** argv) {
            "The copied name and effects end when another player takes control; the stock script keeps them until the End Phase.",[&] {
         panther_control_change(assets,historical?options:5<<16,historical,trace);
       });
+      test(historical?"EDISON RULE TEST 089G - DARK PANTHER TAKEN IN THE CHAIN":"CONTROL 089G - STOCK DARK PANTHER TAKEN IN THE CHAIN",
+           "Enemy Controller chained to the copy takes Dark Panther, so its player no longer controls it when the copy resolves and nothing is copied; the stock script copies for the new controller.",[&] {
+        panther_chained_control(assets,historical?options:5<<16,historical,trace);
+      });
     }
     require(total > 0, "No certification cases matched the requested test number");
     std::cout << "\nSUMMARY: " << total - failures << " PASS, " << failures << " FAIL\n";

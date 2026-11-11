@@ -1714,7 +1714,9 @@ end
   // uses, is seen by every copy. RESETS_STANDARD clears it when the card is flipped face-down or
   // leaves the field, which the same rulings allow to start over. The copied name and effects apply
   // only while the copying player controls the card (DP03 text), so they also reset on a control
-  // change, which the stock script misses. The flag does not: the effect stays used that turn.
+  // change, which the stock script misses, and nothing is copied if that player no longer controls
+  // the card when the effect resolves (Enemy Controller chained to it). The flag does not reset on
+  // a control change: the effect stays used that turn.
   // Source: https://yugipedia.com/wiki/Card_Rulings:Neo-Spacian_Dark_Panther
   if(name == "c43237273.lua") return R"lua(
 --N・ブラック・パンサー
@@ -1748,7 +1750,7 @@ end
 function c43237273.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsType(TYPE_TOKEN) then
+	if tc and c:IsRelateToEffect(e) and c:IsFaceup() and c:IsControler(tp) and tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsType(TYPE_TOKEN) then
 		local code=tc:GetOriginalCodeRule()
 		local cid=0
 		local e1=Effect.CreateEffect(c)

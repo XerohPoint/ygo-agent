@@ -1,5 +1,5 @@
 {
- "note": "Production modules, no sanitizer. certified b8fcd2bc, fixed eca27bd5. Worker tools/edison/corpus/soak_worker.py; a run with no end record died (bash reported Segmentation fault).",
+ "note": "Production modules, no sanitizer. certified b8fcd2bc, fixed 7e39a113. Worker tools/edison/corpus/soak_worker.py; a run with no end record died (bash reported Segmentation fault).",
  "crash_duels": {
   "88264285": {
    "certified": {

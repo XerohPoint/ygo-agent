@@ -3,11 +3,12 @@
 Prepared November 10, 2026, on branch `panther-fix` from `edison` at `3dd4daf`. Not pushed. Review status is under [Reviews](#reviews).
 
 **Result: the corpus soak's crash was a heap use-after-free that our own core patch caused, and it is fixed in `edison-hardening` r3. Neo-Spacian
-Dark Panther could use its once-per-turn effect again and again by copying the opponent's Dark Panther, and kept a copy after a control change; an
-Edison override now stops both. The production module is now `eca27bd5...`, replacing `b8fcd2bc...`. Certification passes 605 of 605. On the same
-seeds, the fixed and old modules play all 3,376 soak duels identically. No card in code list v1 copies effects, so no M1, M2 or Stage A game could
-reach these bugs. The review found a separate use-after-free, already in the certified engine, that training lists do reach through Gold
-Sarcophagus; it is [reported below](#found-in-review-not-fixed-here) and not fixed here.**
+Dark Panther could use its once-per-turn effect again and again by copying the opponent's Dark Panther, kept a copy after a control change, and
+gave the copy to an opponent who took it in the chain; an Edison override now stops all three. The production module is now `7e39a113...`,
+replacing `b8fcd2bc...`. Certification passes 607 of 607. On the same seeds, the fixed and old modules play all 3,376 soak duels identically. No
+card in code list v1 copies effects, so no M1, M2 or Stage A game could reach these bugs. The first review found a separate use-after-free, already in
+the certified engine, that training lists do reach through Gold Sarcophagus; it is [reported below](#found-in-review-not-fixed-here) and not fixed
+here.**
 
 The investigation is in [investigation.md](../tests/edison/reports/dark-panther-2026-11-10/investigation.md), and the evidence is in
 [reports/dark-panther-2026-11-10](../tests/edison/reports/dark-panther-2026-11-10/).
@@ -40,19 +41,23 @@ The independent review found one more Dark Panther defect, in the stock script t
 and effects only while you control Dark Panther, but the script did not end them on a control change. After Creature Swap, the opponent's Dark
 Panther kept the copied name until the End Phase.
 
+Sol's review found the other half of that defect. The copy never checked who controls Dark Panther when it resolves, so if the opponent chains
+Enemy Controller to take it, the copy applies to the opponent's new Dark Panther. The override now copies nothing unless the activating player
+still controls it at resolution.
+
 ## The change
 
 | File | Change |
 | --- | --- |
 | `repo/packages/y/ygopro-core/edison-hardening.patch` | r3. `RemoveCountLimit` also erases the effect from `rechargeable`. `card::remove_effect` and `field::remove_effect` erase it whatever the flag says. The r2 hunks are byte for byte unchanged |
 | `xmake.lua`, `tests/edison/conformance/xmake.lua` | `edison_hardening` r2 to r3 |
-| `ygoenv/ygoenv/ygopro/historical_scripts.h` | A Dark Panther override: the stock script plus a cost that requires and sets card flag 43237273, reset by `RESETS_STANDARD` and the End Phase, as the stock Phantom of Chaos script guards its own copy. A copy of the effect checks the same card's flag. The copied name, the copied effects and the End Phase reset also reset on a control change (`RESET_CONTROL`); the flag does not, so the effect stays used that turn |
-| `tests/edison/panther_copy_tests.h`, `rules.cpp`, `harness.h` | Test 089. The harness pins Dark Panther's and Creature Swap's scripts, reads `MSG_SWAP`, and gains `check_rechargeable()`, which requires every member of the set to be a live effect with a count limit, checking membership before reading any flag. Its response buffer is now the core's `SIZE_RETURN_VALUE`, 512 bytes; it was 64, and `set_responseb` read past it |
+| `ygoenv/ygoenv/ygopro/historical_scripts.h` | A Dark Panther override: the stock script plus a cost that requires and sets card flag 43237273, reset by `RESETS_STANDARD` and the End Phase, as the stock Phantom of Chaos script guards its own copy. A copy of the effect checks the same card's flag. The copied name, the copied effects and the End Phase reset also reset on a control change (`RESET_CONTROL`); the flag does not, so the effect stays used that turn. Nothing is copied unless the activating player still controls Dark Panther when the effect resolves |
+| `tests/edison/panther_copy_tests.h`, `rules.cpp`, `harness.h` | Test 089. The harness pins Dark Panther's and Creature Swap's scripts, reads `MSG_SWAP`, and gains `check_rechargeable()`, which requires every member of the set to be a live effect with a count limit, checking membership before reading any flag, and `card_effects()`, the effects still attached to a card. Its response buffer is now the core's `SIZE_RETURN_VALUE`, 512 bytes; it was 64, and `set_responseb` read past it |
 | `tests/edison/script_consistency_tests.h`, `assets.lock.json` | 90 pinned scripts and 28 overrides; the r3 patch hash. The lock pins the stock Dark Panther file; the override is covered by the source hashes in the certification report |
 | `tools/edison/forward_model/build.sh`, `test_build_refusal.sh` | The search build now requires r3 and its library hash, and the refusal test also refuses r2 |
 
 The r3 core sources match, byte for byte apart from comments, the tree the investigation tested under AddressSanitizer. The override is the
-tested script plus `RESET_CONTROL` in three resets.
+tested script plus `RESET_CONTROL` in three resets and the check at resolution that its player controls the card.
 
 **Test 089**, each case with a Rule 5 control on the stock scripts:
 
@@ -62,30 +67,39 @@ tested script plus `RESET_CONTROL` in three resets.
 | 089C: Dark Panther copies the opponent's Dark Panther | Not offered again that turn. The opponent's Dark Panther is offered on its own turn, and the used one on its controller's next turn | The stock script offers the copy, and it resolves a second time |
 | 089D: two Dark Panthers on one side | Each activates once | The same |
 | 089E: used, flipped face-down by Book of Moon, Flip Summoned | Offered again | The same |
-| 089F: copies Bazoo, then Creature Swap gives it to the opponent | Its name is Dark Panther again under the opponent | The stock script keeps Bazoo's name |
+| 089F: copies Bazoo, then Creature Swap gives it to the opponent | Its name is Dark Panther again under the opponent. The name change, the copied effect and the End Phase cleanup have left the card; only the usage flag stays | The stock script keeps all three, and Bazoo's name |
+| 089G: targets Bazoo, and the opponent chains Enemy Controller, Tributing Blue-Eyes, to take Dark Panther | Nothing is copied: the name stays Dark Panther, and the usage flag is all it gained | The stock script gives the opponent's new Dark Panther Bazoo's name and effect |
 
-Four mutants show the cases can fail, each one edit to this commit:
+Eight mutants show the cases can fail, each one edit to this commit:
 
 | Mutant | Fails |
 | --- | --- |
 | Linked against the r2 core | Edison 089A and 089B, at the first prompt, on Treeborn Frog's own flagless entry |
-| No override | Edison 089C and 089F |
-| The flag never resets at the End Phase | Edison 089C, on the next turn. The reviewer found that the first version of 089 passed this mutant |
+| No override | Edison 089C, 089F and 089G |
+| The flag never resets at the End Phase | Edison 089C, on the next turn. The first review found that the first version of 089 passed this mutant |
 | No `RESET_CONTROL` | Edison 089F |
+| `RESET_CONTROL` dropped from the name change only | Edison 089F |
+| `RESET_CONTROL` dropped from the copy only | Edison 089F. Sol found that 089F as of `c9efc60` passed this mutant |
+| `RESET_CONTROL` dropped from the End Phase cleanup only | Edison 089F |
+| No controller check at resolution | Edison 089G |
 
-Every other case passes on each. See [mutants.txt](../tests/edison/reports/dark-panther-2026-11-10/mutants.txt). 089A and 089B check the set's
+Every other case passes on each. See [mutants.txt](../tests/edison/reports/dark-panther-2026-11-10/mutants.txt), made by
+[mutants.py](../tests/edison/reports/dark-panther-2026-11-10/mutants.py). 089A and 089B check the set's
 invariant, not freed memory, so on r2 they fail before any copy is deleted. The two `remove_effect` hunks are a safeguard that no case reaches: in r3
-nothing in the set can lack the flag, so removing them passes every case.
+nothing in the set can lack the flag, and the first review's build without them passed every case 089 then had.
 
 ## Gates
 
-On module `eca27bd5...`, reproduced by a forced rebuild. The first round, before the review's fixes, ran the same gates on `75d1967b...` with the same results.
+On module `7e39a113...`, reproduced by a rebuild without xmake's object cache. Two earlier rounds ran the same gates with the same outcomes: on
+`75d1967b...` before the first review's fixes, when certification had 603 cases, and on `eca27bd5...` before Sol's, with 605. The soaks, the
+observation fields and the crash pair gave the same numbers in all three rounds, and the copier soak's 400 games are identical between the second
+and third, so the controller check changed none of them.
 
 | Gate | Result |
 | --- | --- |
-| Certification | **605 PASS, 0 FAIL**, two identical replay traces, `edison_rules` `5a715b9b...`, 111 sources |
+| Certification | **607 PASS, 0 FAIL**, two identical replay traces, `edison_rules` `fa236666...`, 111 sources |
 | Certification traces against the certified build | All 593 earlier cases identical except 075A-C, whose counts are now 90 scripts and 28 overrides, and 081C, whose text included the run's closing summary line, now followed by 089 |
-| Conformance | As recorded. All 114 test files and `results.json` byte-identical to the certified build's. `edison_conformance` is now `def47b70...` |
+| Conformance | As recorded. All 114 test files and `results.json` byte-identical to the certified build's. `edison_conformance` is now `091eca63...` |
 | `test_learner.py` | 13 of 13, every detail identical |
 | Observation fields, 64 duels, uniform policy, seed 80730000 | No field differs in 15,708 decisions |
 | Forward-model refusal test | All 7 configurations refused, including r2 |
@@ -114,7 +128,8 @@ See [pair-results.json](../tests/edison/reports/dark-panther-2026-11-10/pair-res
 
 ## What this changes
 
-- **Results to date stand.** Of the 26 scripts that copy effects, none is a card in code list v1, so M1, M2 and Stage A could not reach either bug.
+- **Results to date stand.** Of the 27 scripts that copy effects, 26 through `CopyEffect` or `ReplaceEffect` and Majestic Star Dragon through
+  `MajesticCopy`, none is a card in code list v1, so M1, M2 and Stage A could not reach either bug.
   The soak's 21 training lists, and the observation fields, are identical on both modules.
 - **The corpus soak's crash is explained.** All six recorded crash duels show the same freed read. Its classification in
   [edison-corpus.md](edison-corpus.md) was right to call Dark Panther the lead and not the cause.
@@ -168,7 +183,24 @@ to certify, with no remaining use-after-free from copying and no change in play.
 | Other field-level sets share the weakness | GAP | Reported above. No pool script reaches it |
 | `SetCountLimit` after `RemoveCountLimit` would not recharge on r3 | GAP | No script does this |
 
-**Sol** (`gpt-6.1-sol`) reviews the final commit. Its first attempt hit its usage limit before it started.
+**Sol** (`gpt-6.1-sol`) reviewed `c9efc60`: [review-sol.md](../tests/edison/reports/dark-panther-2026-11-10/review-sol.md). Its first attempt hit
+its usage limit. Its second stopped after its first reads, when OpenAI's filter flagged the brief's and the report's memory-error detail as a
+possible cybersecurity risk. For the third, its brief left the memory-checker work to the investigation and the first review, and asked for the
+engine fix by reading, the rulings, the tests and the report's later sections. Its verdict: r3 is safe to merge; the override was not, until two
+fixes. Its fixtures and mutant builds are in its worktree and are not committed. What was done with each finding:
+
+| Finding | Class | Done |
+| --- | --- | --- |
+| Enemy Controller chained to the copy takes Dark Panther, and the copy then applies to the opponent's Dark Panther | BUG | Confirmed: the new 089G fails on the `c9efc60` override. Fixed: the copy needs its player to control Dark Panther at resolution |
+| 089F passed a mutant whose copied effects outlive the control change | BUG | Confirmed: that mutant passes 089F as of `c9efc60`. 089F now checks every effect the copy attached, and each `RESET_CONTROL` has its own mutant |
+| 26 scripts copy effects | CLAIM | Fixed: 27, counting Majestic Star Dragon's `MajesticCopy`. None is in code list v1 |
+| The first round had "the same results" | CLAIM | Fixed: the same outcomes; certification then had 603 cases |
+| r3 is right for the legal paths; the other field sets depend on fields a script could change | NOTE | Agrees with the first review. No pool script does it |
+| Negation, Phantom of Chaos in both orders, Brain Control after use, flips and two Dark Panthers follow the rulings | NOTE | Recorded |
+| 089E stops at the second offer and does not resolve it | NOTE | Left as is; the offer is what the ruling is about |
+
+Neither review covered a target that changes control before the copy resolves, for example Dark Panther's player chaining Enemy Controller to
+take Bazoo. The override, like the stock script, still copies it then. That was not checked against a ruling.
 
 ## Reproduce
 
@@ -188,6 +220,7 @@ python tools/edison/hardening/soak.py --stage a2 --per-pair 8 --seed 80700000 --
 python tests/edison/prompt_audit.py compare-soak build/recert/soak-old build/recert/soak-new
 python tests/edison/prompt_audit.py compare-fields OLD_MODULE NEW_MODULE --seed 80730000 --games 16
 bash tools/edison/forward_model/test_build_refusal.sh
+python tests/edison/reports/dark-panther-2026-11-10/mutants.py      # test 089 on the eight mutants, built by hand
 ```
 
 The other soak stages are `sidein --per-pair 8 --seed 80701000`, `targets --targets tests/edison/reports/deck-labels-2026-11-04/crash-targets.json
