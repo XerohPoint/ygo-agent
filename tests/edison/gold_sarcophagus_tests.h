@@ -248,9 +248,12 @@ inline void gold_sarcophagus_rescue_cat(certification::Assets& assets, int optio
       } else {
         auto koala = d.cards_in(0, LOCATION_GRAVE, sea_koala);
         require(destroyed == 2 && koala.size() == 2, "The Koala were not destroyed");
-        if (!destroyer) destroyer = koala[0]->current.reason_effect;
-        require(destroyer && destroyer != activation && destroyer->owner->data.code == rescue_cat &&
-                    !(destroyer->reset_flag & RESET_PHASE), "The Koala do not name the End Phase effect");
+        // Read the End Phase effect only on turn 2, while it is live; on turn 3 it is deleted and only compared.
+        if (turns == 2) {
+          destroyer = koala[0]->current.reason_effect;
+          require(destroyer && d.effect_live(destroyer) && destroyer != activation && destroyer->owner->data.code == rescue_cat &&
+                      !(destroyer->reset_flag & RESET_PHASE), "The Koala do not name the End Phase effect");
+        }
         for (auto* pcard : koala)
           require(pcard->spsummon.reason_effect == activation, "A Koala lost its Special Summon reason");
         require(d.card_in(0, LOCATION_GRAVE, rescue_cat)->current.reason_effect == activation && d.effect_live(activation),
