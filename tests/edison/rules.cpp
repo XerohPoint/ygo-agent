@@ -99,6 +99,8 @@
 
 #include "panther_copy_tests.h"
 
+#include "gold_sarcophagus_tests.h"
+
 using namespace certification;
 
 void first_turn_draw(Assets& assets, int options, bool expected_draw, bool trace) {
@@ -1143,6 +1145,12 @@ int main(int argc, char** argv) {
       test(historical?"EDISON RULE TEST 089G - DARK PANTHER TAKEN IN THE CHAIN":"CONTROL 089G - STOCK DARK PANTHER TAKEN IN THE CHAIN",
            "Enemy Controller chained to the copy takes Dark Panther, so its player no longer controls it when the copy resolves and nothing is copied; the stock script copies for the new controller.",[&] {
         panther_chained_control(assets,historical?options:5<<16,historical,trace);
+      });
+    }
+    for(bool historical : {false,true}) {
+      test(historical?"EDISON RULE TEST 090A - GOLD SARCOPHAGUS CARD AFTER ITS EFFECT IS DELETED":"CONTROL 090A - STOCK GOLD SARCOPHAGUS CARD AFTER ITS EFFECT IS DELETED",
+           "The card Gold Sarcophagus adds keeps the reset Standby effect as its reason effect until the next turn start deletes that effect, then keeps none; a live reason effect is kept.",[&] {
+        gold_sarcophagus_reason(assets,historical?options:5<<16,trace);
       });
     }
     require(total > 0, "No certification cases matched the requested test number");
