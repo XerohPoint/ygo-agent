@@ -2,7 +2,7 @@ add_rules("mode.debug", "mode.release")
 
 add_repositories("my-repo repo")
 
-add_requires("ygopro-core 0.0.2", {configs = {edison_early_trigger = true, edison_hardening = "r2"}})
+add_requires("ygopro-core 0.0.2", {configs = {edison_early_trigger = true, edison_hardening = "r3"}})
 
 add_requires(
     "pybind11 2.13.*", "fmt 10.2.*", "glog 0.6.0",

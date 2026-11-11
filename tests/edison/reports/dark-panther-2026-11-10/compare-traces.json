@@ -1,0 +1,42 @@
+{
+ "certification": {
+  "cases_old": 593,
+  "cases_new": 607,
+  "only_new": [
+   "CONTROL 089A",
+   "CONTROL 089B",
+   "CONTROL 089C",
+   "CONTROL 089D",
+   "CONTROL 089E",
+   "CONTROL 089F",
+   "CONTROL 089G",
+   "EDISON RULE TEST 089A",
+   "EDISON RULE TEST 089B",
+   "EDISON RULE TEST 089C",
+   "EDISON RULE TEST 089D",
+   "EDISON RULE TEST 089E",
+   "EDISON RULE TEST 089F",
+   "EDISON RULE TEST 089G"
+  ],
+  "only_old": [],
+  "rule5_cases": 245,
+  "rule5_trace_differs": [
+   "CONTROL 075B"
+  ],
+  "edison_cases": 348,
+  "edison_trace_differs": [
+   "EDISON RULE TEST 075A",
+   "EDISON RULE TEST 075C",
+   "EDISON RULE TEST 081C"
+  ],
+  "new_cases_failing": []
+ },
+ "conformance": {
+  "tests_old": 114,
+  "tests_new": 114,
+  "test_files_differ": [],
+  "only_old": [],
+  "only_new": [],
+  "results.json_identical": true
+ }
+}

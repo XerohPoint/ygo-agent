@@ -1,0 +1,37 @@
+{
+ "what": "Sanitizer replays of new duels between training lists, seeds 89003000-89003503: each of g_diva_hero, g_gigavise, g_lightsworn_fairy and g_zombie_teledad against all 21 lists, 6 seeds each. Module: the investigation's AddressSanitizer build of the certified (r2) sources; halts at the first error.",
+ "duels": 504,
+ "heap_use_after_free": 3,
+ "hits": [
+  {
+   "seed": 89003179,
+   "lists": [
+    "g_gigavise",
+    "g_frog_otk"
+   ],
+   "policy": "eager",
+   "read_in": "interpreter::push_param",
+   "freed_at": "turn start (process_turn via process)"
+  },
+  {
+   "seed": 89003187,
+   "lists": [
+    "g_gigavise",
+    "g_gladiator_beast"
+   ],
+   "policy": "uniform",
+   "read_in": "interpreter::push_param",
+   "freed_at": "turn start (process_turn via process)"
+  },
+  {
+   "seed": 89003307,
+   "lists": [
+    "g_lightsworn_fairy",
+    "g_gigavise"
+   ],
+   "policy": "uniform",
+   "read_in": "interpreter::push_param",
+   "freed_at": "turn start (process_turn via process)"
+  }
+ ]
+}

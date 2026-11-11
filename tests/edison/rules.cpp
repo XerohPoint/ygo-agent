@@ -97,6 +97,8 @@
 
 #include "swap_after_extra_tests.h"
 
+#include "panther_copy_tests.h"
+
 using namespace certification;
 
 void first_turn_draw(Assets& assets, int options, bool expected_draw, bool trace) {
@@ -1112,6 +1114,36 @@ int main(int argc, char** argv) {
       test(historical?"EDISON RULE TEST 081C - RESOLVING DISCARD CONTEXT":"CONTROL 081C - RULE 5 RESOLVING DISCARD CONTEXT",
            "Dark World Dealings discards during its operation, not as an activation cost.",
            [&] { decision_operation_stage(assets,historical?options:5<<16,trace); });
+    }
+    for(bool historical : {false,true}) for(bool dragoon : {false,true}) {
+      std::string label=historical?"EDISON RULE TEST 089":"CONTROL 089";
+      label+=dragoon?'B':'A';label+=dragoon?" - DARK PANTHER COPIES D-END":" - DARK PANTHER COPIES TREEBORN";
+      test(label,"A copied Standby effect without a count limit leaves the turn-reset set; after its End Phase reset and deletion, turn starts find only live members.",[&] {
+        panther_copy_reset(assets,historical?options:5<<16,historical,dragoon?destiny_dragoon:treeborn,trace);
+      });
+    }
+    for(bool historical : {false,true}) {
+      test(historical?"EDISON RULE TEST 089C - DARK PANTHER COPIES DARK PANTHER":"CONTROL 089C - STOCK DARK PANTHER REPEAT",
+           "The copied Dark Panther effect is the one just used, so it is not offered again that turn; the stock script offers it.",[&] {
+        panther_copy_panther(assets,historical?options:5<<16,historical,trace);
+      });
+    }
+    for(bool historical : {false,true}) for(bool flip : {false,true}) {
+      std::string label=historical?"EDISON RULE TEST 089":"CONTROL 089";
+      label+=flip?'E':'D';label+=flip?" - DARK PANTHER FLIPPED AND REUSED":" - TWO DARK PANTHERS";
+      test(label,"Two Dark Panthers on one side each use their effect once; one flipped face-down and Flip Summoned can use it again.",[&] {
+        panther_own_uses(assets,historical?options:5<<16,flip,trace);
+      });
+    }
+    for(bool historical : {false,true}) {
+      test(historical?"EDISON RULE TEST 089F - DARK PANTHER CHANGES CONTROL":"CONTROL 089F - STOCK DARK PANTHER CONTROL CHANGE",
+           "The copied name and effects end when another player takes control; the stock script keeps them until the End Phase.",[&] {
+        panther_control_change(assets,historical?options:5<<16,historical,trace);
+      });
+      test(historical?"EDISON RULE TEST 089G - DARK PANTHER TAKEN IN THE CHAIN":"CONTROL 089G - STOCK DARK PANTHER TAKEN IN THE CHAIN",
+           "Enemy Controller chained to the copy takes Dark Panther, so its player no longer controls it when the copy resolves and nothing is copied; the stock script copies for the new controller.",[&] {
+        panther_chained_control(assets,historical?options:5<<16,historical,trace);
+      });
     }
     require(total > 0, "No certification cases matched the requested test number");
     std::cout << "\nSUMMARY: " << total - failures << " PASS, " << failures << " FAIL\n";

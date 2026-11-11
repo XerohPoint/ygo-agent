@@ -1,0 +1,184 @@
+{
+ "note": "Production modules, no sanitizer. certified b8fcd2bc, fixed 7e39a113. Worker tools/edison/corpus/soak_worker.py; a run with no end record died (bash reported Segmentation fault).",
+ "crash_duels": {
+  "88264285": {
+   "certified": {
+    "runs": 10,
+    "finished": 9,
+    "died": 1,
+    "distinct_traces": 1,
+    "steps": [
+     241
+    ],
+    "dark_panther_activations": [
+     10
+    ]
+   },
+   "fixed": {
+    "runs": 10,
+    "finished": 10,
+    "died": 0,
+    "distinct_traces": 1,
+    "steps": [
+     241
+    ],
+    "dark_panther_activations": [
+     10
+    ]
+   },
+   "same_trace": true
+  },
+  "88515054": {
+   "certified": {
+    "runs": 10,
+    "finished": 10,
+    "died": 0,
+    "distinct_traces": 1,
+    "steps": [
+     306
+    ],
+    "dark_panther_activations": [
+     74
+    ]
+   },
+   "fixed": {
+    "runs": 10,
+    "finished": 10,
+    "died": 0,
+    "distinct_traces": 1,
+    "steps": [
+     231
+    ],
+    "dark_panther_activations": [
+     12
+    ]
+   },
+   "same_trace": false
+  },
+  "88707769": {
+   "certified": {
+    "runs": 10,
+    "finished": 10,
+    "died": 0,
+    "distinct_traces": 1,
+    "steps": [
+     399
+    ],
+    "dark_panther_activations": [
+     2
+    ]
+   },
+   "fixed": {
+    "runs": 10,
+    "finished": 10,
+    "died": 0,
+    "distinct_traces": 1,
+    "steps": [
+     399
+    ],
+    "dark_panther_activations": [
+     2
+    ]
+   },
+   "same_trace": true
+  },
+  "88711111": {
+   "certified": {
+    "runs": 10,
+    "finished": 9,
+    "died": 1,
+    "distinct_traces": 1,
+    "steps": [
+     259
+    ],
+    "dark_panther_activations": [
+     13
+    ]
+   },
+   "fixed": {
+    "runs": 10,
+    "finished": 10,
+    "died": 0,
+    "distinct_traces": 1,
+    "steps": [
+     259
+    ],
+    "dark_panther_activations": [
+     13
+    ]
+   },
+   "same_trace": true
+  },
+  "88715221": {
+   "certified": {
+    "runs": 10,
+    "finished": 10,
+    "died": 0,
+    "distinct_traces": 1,
+    "steps": [
+     328
+    ],
+    "dark_panther_activations": [
+     10
+    ]
+   },
+   "fixed": {
+    "runs": 10,
+    "finished": 10,
+    "died": 0,
+    "distinct_traces": 1,
+    "steps": [
+     328
+    ],
+    "dark_panther_activations": [
+     10
+    ]
+   },
+   "same_trace": true
+  },
+  "88721413": {
+   "certified": {
+    "runs": 10,
+    "finished": 10,
+    "died": 0,
+    "distinct_traces": 1,
+    "steps": [
+     261
+    ],
+    "dark_panther_activations": [
+     2
+    ]
+   },
+   "fixed": {
+    "runs": 10,
+    "finished": 10,
+    "died": 0,
+    "distinct_traces": 1,
+    "steps": [
+     261
+    ],
+    "dark_panther_activations": [
+     2
+    ]
+   },
+   "same_trace": true
+  }
+ },
+ "new_pair": {
+  "lists": "fl41606 against fl41081, seats alternate by seed, policy uniform/eager/heuristic by seed % 3",
+  "seeds": "89002000-89002399",
+  "certified": {
+   "ok": 400
+  },
+  "fixed": {
+   "ok": 400
+  },
+  "traces_differ": [
+   {
+    "seed": 89002023,
+    "dark_panther_activations_certified": 17,
+    "dark_panther_activations_fixed": 9
+   }
+  ]
+ }
+}

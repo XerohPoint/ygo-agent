@@ -1,0 +1,39 @@
+{
+ "stage": "targets",
+ "first_seed": 80702000,
+ "last_seed": 80703367,
+ "planned": 1368,
+ "finished": 1368,
+ "statuses": {
+  "ok": 1368
+ },
+ "crashes": 0,
+ "crash_signatures": {},
+ "diagnostic_lines": {},
+ "other_output_lines": {},
+ "contract_violations": {},
+ "decisions": 201234,
+ "prompt_rows_by_msg_id": {
+  "1": 95325,
+  "2": 8323,
+  "3": 14446,
+  "4": 2912,
+  "5": 1621,
+  "6": 1995,
+  "7": 909,
+  "8": 33953,
+  "9": 395,
+  "10": 1644,
+  "11": 37774,
+  "12": 50,
+  "13": 164,
+  "14": 214,
+  "15": 267,
+  "16": 1065,
+  "17": 177
+ },
+ "max_options": 40,
+ "max_repeat": 8,
+ "elapsed_seconds": 32.1,
+ "lists": []
+}

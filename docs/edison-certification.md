@@ -1435,3 +1435,14 @@ audit commands' verdicts. Test 087 plays one seed with two hidden Deck orders an
 first turn. Test 088 plants the prompts that cannot show a Deck card safely and requires each to void its cell through a real actor worker.
 Test 082D now compares against a baseline regenerated after the fix, because its interaction counts record the labels shown. The full
 suite now passes 593 cases. See [edison-deck-labels.md](edison-deck-labels.md).
+
+## Dark Panther copies (089)
+
+Test 089 covers Neo-Spacian Dark Panther. In 089A and 089B it copies Treeborn Frog or D-END, whose historical scripts remove the default phase
+limit, and two turn starts follow the copy's deletion; `check_rechargeable()` requires every member of the turn-reset set to be a live effect
+with a count limit. 089C has it copy the opponent's Dark Panther, which must not be offered again that turn. 089D plays two on one side, and
+089E flips one face-down with Book of Moon and Flip Summons it, which allows the effect again. In 089F Creature Swap gives a Dark Panther that has
+copied Bazoo to the opponent, and the name change, every copied effect and the End Phase cleanup must leave the card. In 089G the opponent
+chains Enemy Controller to take Dark Panther before the copy resolves, and nothing may be copied. Each has a Rule 5 control on the stock
+scripts. The harness now pins 90 scripts, reads `MSG_SWAP`, lists a card's attached effects with `card_effects()`, and passes the core a full
+`SIZE_RETURN_VALUE` response buffer. The full suite now passes 607 cases. See [edison-dark-panther.md](edison-dark-panther.md).
