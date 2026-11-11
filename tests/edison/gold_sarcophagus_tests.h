@@ -128,3 +128,175 @@ inline void gold_sarcophagus_reason(certification::Assets& assets, int options, 
     return false;
   });
 }
+
+// 090C: Dark Panther copies the opponent's Destiny HERO - Doom Lord, and the copied effect banishes the opponent's
+// Blue-Eyes until its controller's second Standby Phase (REASON_TEMPORARY). The copy resets at that End Phase and the
+// next turn start deletes it, so the banished card's reason effect is cleared. Duel.ReturnToField compares the
+// banishing effect's owner with the returning effect's owner; both are Dark Panther, and the card must return.
+// Idle group 5 lists Dark Panther once per effect, told apart by description.
+inline void gold_sarcophagus_doom_lord(certification::Assets& assets, int options, bool trace) {
+  using namespace certification;
+  TestDuel d(assets, 0, 0, trace, options);
+  d.add({dark_panther, 0, 0, LOCATION_MZONE, 0, POS_FACEUP_ATTACK});
+  d.add({blue_eyes, 1, 1, LOCATION_MZONE, 0, POS_FACEUP_ATTACK});
+  d.add({doom_lord, 1, 1, LOCATION_MZONE, 1, POS_FACEUP_ATTACK});
+  int turns = 0, step = 0, banished = 0, returned = 0;
+  const effect* copy = nullptr;
+  d.start(options);
+  d.run([&](const Event& e) {
+    if (e.kind == MSG_NEW_TURN) {
+      require(e.player == turns % 2 && turns < 5, "Unexpected turn");
+      ++turns;
+    } else if (e.kind == MSG_SELECT_IDLECMD) {
+      require(e.player == (turns + 1) % 2 && d.phase() == PHASE_MAIN1, "Unexpected idle prompt");
+      if (turns == 1 && step < 2) {
+        uint32_t want = (step == 0 ? dark_panther : doom_lord) * 16;
+        int pick = -1;
+        for (size_t i = 0; i < e.idle[5].size(); ++i)
+          if (e.idle[5][i].controller == 0 && e.idle[5][i].code == dark_panther && e.idle[5][i].description == want) pick = int(i);
+        require(pick >= 0, step == 0 ? "Dark Panther not offered" : "Copied Doom Lord effect not offered");
+        ++step;
+        d.respond((pick << 16) | 5);
+        return false;
+      }
+      if (turns == 1) {
+        require(banished == 1, "Copied Doom Lord effect did not banish Blue-Eyes");
+        card* pcard = d.card_in(1, LOCATION_REMOVED, blue_eyes);
+        copy = pcard->current.reason_effect;
+        require(copy && d.effect_live(copy) && copy->copy_id != 0 && copy->owner->data.code == dark_panther &&
+                    (pcard->current.reason & REASON_TEMPORARY), "Banished card does not name the copied effect");
+      } else if (turns < 5) {
+        card* pcard = d.card_in(1, LOCATION_REMOVED, blue_eyes);
+        require(returned == 0 && !d.effect_live(copy) && pcard->current.reason_effect == nullptr &&
+                    (pcard->current.reason & REASON_TEMPORARY), "The deleted copy was not cleared from the banished card");
+      } else {
+        require(returned == 1 && d.count(1, LOCATION_REMOVED) == 0 && d.cards_in(1, LOCATION_MZONE, blue_eyes).size() == 1,
+                "Blue-Eyes did not return");
+        std::cout << "Observed: the copied Doom Lord effect banished Blue-Eyes; after the next turn start deleted the copy, "
+                     "the card named no reason effect, and Doom Lord's return, owned by Dark Panther, still brought it back "
+                     "on turn 5.\n";
+        return true;
+      }
+      d.respond(7);
+    } else if (e.kind == MSG_SELECT_CARD) {
+      require(turns == 1 && e.player == 0 && (step == 1 || step == 2), "Unexpected card prompt");
+      uint32_t want = step == 1 ? doom_lord : blue_eyes;
+      int pick = -1;
+      for (size_t i = 0; i < e.cards.size(); ++i)
+        if (e.cards[i].code == want && e.cards[i].controller == 1) pick = int(i);
+      require(pick >= 0, "Target not offered");
+      d.respond({1, uint8_t(pick)});
+    } else if (e.kind == MSG_SELECT_CHAIN) {
+      require(!e.forced, "Unexpected forced chain");
+      d.respond(-1);
+    } else if (e.kind == MSG_SELECT_PLACE) {
+      require(turns == 5 && e.player == 1 && e.count == 1, "Unexpected placement");
+      int slot = 0;
+      while (slot < 5 && (e.mask & (1u << slot))) ++slot;
+      require(slot < 5, "No free monster zone");
+      d.respond({1, LOCATION_MZONE, uint8_t(slot)});
+    } else if (e.kind == MSG_MOVE && e.from.code == blue_eyes) {
+      if (e.to.location == LOCATION_REMOVED) {
+        require(turns == 1 && e.from.location == LOCATION_MZONE && (e.reason & REASON_TEMPORARY), "Wrong banishment");
+        ++banished;
+      } else {
+        require(turns == 5 && d.phase() == PHASE_STANDBY && e.from.location == LOCATION_REMOVED && e.to.location == LOCATION_MZONE,
+                "Wrong return");
+        ++returned;
+      }
+    } else if (e.kind == MSG_SELECT_EFFECTYN || e.kind == MSG_SELECT_YESNO || e.kind == MSG_SELECT_OPTION ||
+               e.kind == MSG_CHAIN_NEGATED || e.kind == MSG_CHAIN_DISABLED)
+      throw std::runtime_error("Unexpected Doom Lord event");
+    return false;
+  });
+}
+
+// 090D: Rescue Cat recruits two Sea Koala and destroys them at the End Phase through a player effect with no reset.
+// That effect resets itself at the next End Phase, once no recruit is left, and the turn start after that deletes it.
+// The Koala in the GY then name no reason effect. Rescue Cat, sent to the GY as its own cost, still names its own
+// live effect at that turn start, and the Koala still name it as their Special Summon reason.
+inline void gold_sarcophagus_rescue_cat(certification::Assets& assets, int options, bool trace) {
+  using namespace certification;
+  TestDuel d(assets, 0, 0, trace, options);
+  d.add({rescue_cat, 0, 0, LOCATION_MZONE, 0, POS_FACEUP_ATTACK});
+  for (int i = 0; i < 2; ++i) d.add({sea_koala, 0, 0, LOCATION_DECK, 0, POS_FACEDOWN_DEFENSE});
+  int turns = 0, recruited = 0, destroyed = 0;
+  bool activated = false;
+  const effect* activation = nullptr;
+  const effect* destroyer = nullptr;
+  d.start(options);
+  d.run([&](const Event& e) {
+    if (e.kind == MSG_NEW_TURN) {
+      require(e.player == turns % 2 && turns < 3, "Unexpected turn");
+      ++turns;
+    } else if (e.kind == MSG_SELECT_IDLECMD) {
+      require(e.player == (turns + 1) % 2 && d.phase() == PHASE_MAIN1, "Unexpected idle prompt");
+      if (turns == 1 && !activated) {
+        int pick = -1;
+        for (size_t i = 0; i < e.idle[5].size(); ++i)
+          if (e.idle[5][i].code == rescue_cat) pick = int(i);
+        require(pick >= 0, "Rescue Cat not offered");
+        activated = true;
+        d.respond((pick << 16) | 5);
+        return false;
+      }
+      if (turns == 1) {
+        require(recruited == 2, "Rescue Cat did not recruit two Koala");
+        activation = d.card_in(0, LOCATION_GRAVE, rescue_cat)->current.reason_effect;
+        require(activation && d.effect_live(activation) && activation->owner->data.code == rescue_cat,
+                "Rescue Cat does not name its own effect");
+      } else {
+        auto koala = d.cards_in(0, LOCATION_GRAVE, sea_koala);
+        require(destroyed == 2 && koala.size() == 2, "The Koala were not destroyed");
+        if (!destroyer) destroyer = koala[0]->current.reason_effect;
+        require(destroyer && destroyer != activation && destroyer->owner->data.code == rescue_cat &&
+                    !(destroyer->reset_flag & RESET_PHASE), "The Koala do not name the End Phase effect");
+        for (auto* pcard : koala)
+          require(pcard->spsummon.reason_effect == activation, "A Koala lost its Special Summon reason");
+        require(d.card_in(0, LOCATION_GRAVE, rescue_cat)->current.reason_effect == activation && d.effect_live(activation),
+                "The turn start cleared Rescue Cat's live reason effect");
+        if (turns == 2) {
+          for (auto* pcard : koala)
+            require(pcard->current.reason_effect == destroyer && d.effect_live(destroyer) && !d.effect_reset(destroyer),
+                    "The End Phase effect changed before it reset");
+        } else {
+          for (auto* pcard : koala)
+            require(pcard->current.reason_effect == nullptr && !d.effect_live(destroyer),
+                    "A Koala kept the deleted End Phase effect");
+          std::cout << "Observed: the Koala named Rescue Cat's End Phase effect, which has no reset, until it reset itself "
+                       "and the next turn start deleted it; Rescue Cat's own effect stayed as the Cat's reason and the "
+                       "Koala's Special Summon reason.\n";
+          return true;
+        }
+      }
+      d.respond(7);
+    } else if (e.kind == MSG_SELECT_CARD) {
+      require(turns == 1 && e.player == 0 && e.minimum == 2 && e.maximum == 2 && e.cards.size() == 2, "Unexpected card prompt");
+      d.respond({2, 0, 1});
+    } else if (e.kind == MSG_SELECT_PLACE) {
+      require(turns == 1 && e.player == 0 && e.count == 1, "Unexpected placement");
+      int slot = 0;
+      while (slot < 5 && (e.mask & (1u << slot))) ++slot;
+      require(slot < 5, "No free monster zone");
+      d.respond({0, LOCATION_MZONE, uint8_t(slot)});
+    } else if (e.kind == MSG_SELECT_POSITION) {
+      d.respond(POS_FACEUP_ATTACK);
+    } else if (e.kind == MSG_SELECT_CHAIN) {
+      if (e.forced) {
+        require(turns == 1 && d.phase() == PHASE_END && !e.cards.empty() && e.cards[0].code == rescue_cat, "Unexpected forced chain");
+        d.respond(0);
+      } else d.respond(-1);
+    } else if (e.kind == MSG_MOVE && e.from.code == sea_koala) {
+      if (e.from.location == LOCATION_DECK) {
+        require(turns == 1 && e.to.location == LOCATION_MZONE, "Wrong recruitment");
+        ++recruited;
+      } else {
+        require(turns == 1 && d.phase() == PHASE_END && e.to.location == LOCATION_GRAVE && (e.reason & REASON_DESTROY),
+                "Wrong destruction");
+        ++destroyed;
+      }
+    } else if (e.kind == MSG_SELECT_EFFECTYN || e.kind == MSG_SELECT_YESNO || e.kind == MSG_SELECT_OPTION || e.kind == MSG_CHAIN_NEGATED)
+      throw std::runtime_error("Unexpected Rescue Cat event");
+    return false;
+  });
+}

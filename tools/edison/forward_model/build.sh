@@ -3,7 +3,7 @@
 # xmake.lua, the production module or the certification binary. No xmake is run.
 #
 # The core package is found by what its manifest says, never by a hash written here, and the
-# build refuses every configuration except the certified one: early trigger on, hardening r4,
+# build refuses every configuration except the certified one: early trigger on, hardening r5,
 # release, static, no debug. The library's sha256 is then checked against the certified build,
 # so changing the patch in place cannot go unnoticed.
 #
@@ -17,8 +17,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 HERE="$ROOT/tools/edison/forward_model"
 PKG="$HOME/.xmake/packages"
-EXPECT_HARDENING=r4
-EXPECT_CORE_SHA256=5ac42d872f002812c2eb6708131ab7c164f2794d7bce1dd6ee1d183411fd9579
+EXPECT_HARDENING=r5
+EXPECT_CORE_SHA256=4fd0ffdc51f4418f05b75108a44a6d3069d36d92c6f159ce82e0bc0bb1e581c2
 
 die() { echo "build.sh: REFUSED: $*" >&2; exit 1; }
 

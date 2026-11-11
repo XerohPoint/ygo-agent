@@ -34,22 +34,24 @@ NO_TRIGGER=3d3542c926ac4002a490d7c8de06787e
 R2=5fe29f6ad6dd4ebb83a1f1b5123c1837
 R3=792b98d401b34303be27a588cc4c8318
 R4=0548bcc875c44da68fd587df8348eed2
+R5=5334b050d0594d1dafe66cdcddde1cfe
 
 package only_old_core "$OLD"
 package only_hardening_r1 "$R1"
 package only_hardening_r2 "$R2"
 package only_hardening_r3 "$R3"
+package only_hardening_r4 "$R4"
 package only_no_early_trigger "$NO_TRIGGER"
 mkdir -p "$SCRATCH/no_packages/.xmake/packages/y/ygopro-core/0.0.2"
 
 # The right manifest on the wrong library: what changing a patch in place would look like.
-mkdir -p "$SCRATCH/wrong_library/.xmake/packages/y/ygopro-core/0.0.2/$R4/lib"
-cp "$REAL/$R4/manifest.txt" "$SCRATCH/wrong_library/.xmake/packages/y/ygopro-core/0.0.2/$R4/manifest.txt"
-cp "$REAL/$R3/lib/libygopro-core.a" "$SCRATCH/wrong_library/.xmake/packages/y/ygopro-core/0.0.2/$R4/lib/libygopro-core.a"
+mkdir -p "$SCRATCH/wrong_library/.xmake/packages/y/ygopro-core/0.0.2/$R5/lib"
+cp "$REAL/$R5/manifest.txt" "$SCRATCH/wrong_library/.xmake/packages/y/ygopro-core/0.0.2/$R5/manifest.txt"
+cp "$REAL/$R4/lib/libygopro-core.a" "$SCRATCH/wrong_library/.xmake/packages/y/ygopro-core/0.0.2/$R5/lib/libygopro-core.a"
 
 # Two packages claiming the certified configuration.
-package two_matches "$R4"
-ln -s "$REAL/$R4" "$SCRATCH/two_matches/.xmake/packages/y/ygopro-core/0.0.2/copy"
+package two_matches "$R5"
+ln -s "$REAL/$R5" "$SCRATCH/two_matches/.xmake/packages/y/ygopro-core/0.0.2/copy"
 
-for name in only_old_core only_hardening_r1 only_hardening_r2 only_hardening_r3 only_no_early_trigger no_packages wrong_library two_matches; do try "$name"; done
+for name in only_old_core only_hardening_r1 only_hardening_r2 only_hardening_r3 only_hardening_r4 only_no_early_trigger no_packages wrong_library two_matches; do try "$name"; done
 exit "$failures"

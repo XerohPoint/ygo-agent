@@ -1156,6 +1156,14 @@ int main(int argc, char** argv) {
            "Discarded for hand size in the same turn, the card keeps the reset Standby effect in its temp state until the next turn start deletes that effect and clears it there.",[&] {
         gold_sarcophagus_reason(assets,historical?options:5<<16,true,trace);
       });
+      test(historical?"EDISON RULE TEST 090C - DOOM LORD COPY RETURNS AFTER ITS DELETE":"CONTROL 090C - STOCK DOOM LORD COPY RETURNS AFTER ITS DELETE",
+           "Dark Panther's copied Doom Lord effect banishes Blue-Eyes; the copy is deleted at the next turn start, and the return it scheduled still brings Blue-Eyes back.",[&] {
+        gold_sarcophagus_doom_lord(assets,historical?options:5<<16,trace);
+      });
+      test(historical?"EDISON RULE TEST 090D - RESCUE CAT EFFECT WITHOUT A RESET":"CONTROL 090D - STOCK RESCUE CAT EFFECT WITHOUT A RESET",
+           "Rescue Cat's End Phase effect has no reset and resets itself; its deletion clears the Koala's pointer and leaves the live effects others name.",[&] {
+        gold_sarcophagus_rescue_cat(assets,historical?options:5<<16,trace);
+      });
     }
     require(total > 0, "No certification cases matched the requested test number");
     std::cout << "\nSUMMARY: " << total - failures << " PASS, " << failures << " FAIL\n";
