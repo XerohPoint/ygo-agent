@@ -8,7 +8,7 @@ gave the copy to an opponent who took it in the chain; an Edison override now st
 replacing `b8fcd2bc...`. Certification passes 607 of 607. On the same seeds, the fixed and old modules play all 3,376 soak duels identically. No
 card in code list v1 copies effects, so no M1, M2 or Stage A game could reach these bugs. The first review found a separate use-after-free, already in
 the certified engine, that training lists do reach through Gold Sarcophagus; it is [reported below](#found-in-review-not-fixed-here) and not fixed
-here.**
+here. It was fixed afterwards in r5; see [edison-gold-sarcophagus.md](edison-gold-sarcophagus.md).**
 
 The investigation is in [investigation.md](../tests/edison/reports/dark-panther-2026-11-10/investigation.md), and the evidence is in
 [reports/dark-panther-2026-11-10](../tests/edison/reports/dark-panther-2026-11-10/).
@@ -143,6 +143,8 @@ See [pair-results.json](../tests/edison/reports/dark-panther-2026-11-10/pair-res
 
 ## Found in review, not fixed here
 
+The first finding below was fixed afterwards in `edison-hardening` r5; see [edison-gold-sarcophagus.md](edison-gold-sarcophagus.md).
+
 **A second use-after-free, already in the certified engine, that legal games reach through Gold Sarcophagus.** It is separate from Dark Panther
 and from our patches, and neither commit touches it.
 
@@ -172,7 +174,7 @@ to certify, with no remaining use-after-free from copying and no change in play.
 
 | Finding | Class | Done |
 | --- | --- | --- |
-| Gold Sarcophagus use-after-free, already there | GAP | Confirmed on the investigation's own r2 sanitizer build, measured on the training lists, reported above. Not fixed |
+| Gold Sarcophagus use-after-free, already there | GAP | Confirmed on the investigation's own r2 sanitizer build, measured on the training lists, reported above. Not fixed here; fixed afterwards in r5 ([report](edison-gold-sarcophagus.md)) |
 | The copy stays after a control change | RULING | Fixed: `RESET_CONTROL`, and test 089F |
 | More copy routes reach the crash | NOTE | Recorded above. r3 closes them all |
 | `cd8b92e` alone left r2 pins | GAP | Already closed by `0e6ba2c` |

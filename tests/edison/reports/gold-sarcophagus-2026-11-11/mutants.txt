@@ -1,0 +1,204 @@
+== no_fix
+  --test=090: SUMMARY: 0 PASS, 12 FAIL
+    CONTROL 090A: A card keeps a deleted effect as its reason effect (card 97077563, current state)
+    CONTROL 090B: A card keeps a deleted effect as its reason effect (card 97077563, temp state)
+    CONTROL 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    CONTROL 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    CONTROL 090E: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    CONTROL 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090A: A card keeps a deleted effect as its reason effect (card 97077563, current state)
+    EDISON RULE TEST 090B: A card keeps a deleted effect as its reason effect (card 97077563, temp state)
+    EDISON RULE TEST 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    EDISON RULE TEST 090E: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+  --test=052: SUMMARY: 7 PASS, 1 FAIL
+    EDISON RULE TEST 052C: A card keeps a deleted effect as its reason effect (card 40473581, current state)
+  full suite: SUMMARY: 526 PASS, 13 FAIL
+    EDISON RULE TEST 052C: A card keeps a deleted effect as its reason effect (card 40473581, current state)
+    CONTROL 090A: A card keeps a deleted effect as its reason effect (card 97077563, current state)
+    CONTROL 090B: A card keeps a deleted effect as its reason effect (card 97077563, temp state)
+    CONTROL 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    CONTROL 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    CONTROL 090E: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    CONTROL 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090A: A card keeps a deleted effect as its reason effect (card 97077563, current state)
+    EDISON RULE TEST 090B: A card keeps a deleted effect as its reason effect (card 97077563, temp state)
+    EDISON RULE TEST 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    EDISON RULE TEST 090E: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+== r4_no_owner_kept
+  --test=090: crashed with signal 11 in CONTROL 090C
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: crashed with signal 11 in CONTROL 090C
+== owner_not_kept
+  --test=090: SUMMARY: 8 PASS, 4 FAIL
+    CONTROL 090C: Blue-Eyes did not return
+    CONTROL 090F: The second Dark Panther's return did not bring Blue-Eyes back
+    EDISON RULE TEST 090C: Blue-Eyes did not return
+    EDISON RULE TEST 090F: The second Dark Panther's return did not bring Blue-Eyes back
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 535 PASS, 4 FAIL
+    CONTROL 090C: Blue-Eyes did not return
+    CONTROL 090F: The second Dark Panther's return did not bring Blue-Eyes back
+    EDISON RULE TEST 090C: Blue-Eyes did not return
+    EDISON RULE TEST 090F: The second Dark Panther's return did not bring Blue-Eyes back
+== return_reads_reason_effect
+  --test=090: crashed with signal 11 in CONTROL 090C
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: crashed with signal 11 in CONTROL 090C
+== return_null_guard_only
+  --test=090: SUMMARY: 10 PASS, 2 FAIL
+    CONTROL 090F: The first Dark Panther's return took back the second Dark Panther's banishment
+    EDISON RULE TEST 090F: The first Dark Panther's return took back the second Dark Panther's banishment
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 537 PASS, 2 FAIL
+    CONTROL 090F: The first Dark Panther's return took back the second Dark Panther's banishment
+    EDISON RULE TEST 090F: The first Dark Panther's return took back the second Dark Panther's banishment
+== current_only
+  --test=090: SUMMARY: 8 PASS, 4 FAIL
+    CONTROL 090B: A card keeps a deleted effect as its reason effect (card 97077563, temp state)
+    CONTROL 090E: A card keeps a deleted effect as its reason effect (card 89631139, spsummon state)
+    EDISON RULE TEST 090B: A card keeps a deleted effect as its reason effect (card 97077563, temp state)
+    EDISON RULE TEST 090E: A card keeps a deleted effect as its reason effect (card 89631139, spsummon state)
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 535 PASS, 4 FAIL
+    CONTROL 090B: A card keeps a deleted effect as its reason effect (card 97077563, temp state)
+    CONTROL 090E: A card keeps a deleted effect as its reason effect (card 89631139, spsummon state)
+    EDISON RULE TEST 090B: A card keeps a deleted effect as its reason effect (card 97077563, temp state)
+    EDISON RULE TEST 090E: A card keeps a deleted effect as its reason effect (card 89631139, spsummon state)
+== current_temp
+  --test=090: SUMMARY: 10 PASS, 2 FAIL
+    CONTROL 090E: A card keeps a deleted effect as its reason effect (card 89631139, spsummon state)
+    EDISON RULE TEST 090E: A card keeps a deleted effect as its reason effect (card 89631139, spsummon state)
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 537 PASS, 2 FAIL
+    CONTROL 090E: A card keeps a deleted effect as its reason effect (card 89631139, spsummon state)
+    EDISON RULE TEST 090E: A card keeps a deleted effect as its reason effect (card 89631139, spsummon state)
+== no_spsummon
+  --test=090: SUMMARY: 10 PASS, 2 FAIL
+    CONTROL 090E: A card keeps a deleted effect as its reason effect (card 89631139, spsummon state)
+    EDISON RULE TEST 090E: A card keeps a deleted effect as its reason effect (card 89631139, spsummon state)
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 537 PASS, 2 FAIL
+    CONTROL 090E: A card keeps a deleted effect as its reason effect (card 89631139, spsummon state)
+    EDISON RULE TEST 090E: A card keeps a deleted effect as its reason effect (card 89631139, spsummon state)
+== after_delete
+  --test=090: SUMMARY: 0 PASS, 12 FAIL
+    CONTROL 090A: A card keeps a deleted effect as its reason effect (card 97077563, current state)
+    CONTROL 090B: A card keeps a deleted effect as its reason effect (card 97077563, temp state)
+    CONTROL 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    CONTROL 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    CONTROL 090E: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    CONTROL 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090A: A card keeps a deleted effect as its reason effect (card 97077563, current state)
+    EDISON RULE TEST 090B: A card keeps a deleted effect as its reason effect (card 97077563, temp state)
+    EDISON RULE TEST 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    EDISON RULE TEST 090E: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+  --test=052: SUMMARY: 7 PASS, 1 FAIL
+    EDISON RULE TEST 052C: A card keeps a deleted effect as its reason effect (card 40473581, current state)
+  full suite: SUMMARY: 526 PASS, 13 FAIL
+    EDISON RULE TEST 052C: A card keeps a deleted effect as its reason effect (card 40473581, current state)
+    CONTROL 090A: A card keeps a deleted effect as its reason effect (card 97077563, current state)
+    CONTROL 090B: A card keeps a deleted effect as its reason effect (card 97077563, temp state)
+    CONTROL 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    CONTROL 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    CONTROL 090E: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    CONTROL 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090A: A card keeps a deleted effect as its reason effect (card 97077563, current state)
+    EDISON RULE TEST 090B: A card keeps a deleted effect as its reason effect (card 97077563, temp state)
+    EDISON RULE TEST 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    EDISON RULE TEST 090E: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+== clear_all
+  --test=090: SUMMARY: 8 PASS, 4 FAIL
+    CONTROL 090A: The turn start cleared a pointer to the live activation effect
+    CONTROL 090D: The Koala do not name the End Phase effect
+    EDISON RULE TEST 090A: The turn start cleared a pointer to the live activation effect
+    EDISON RULE TEST 090D: The Koala do not name the End Phase effect
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 535 PASS, 4 FAIL
+    CONTROL 090A: The turn start cleared a pointer to the live activation effect
+    CONTROL 090D: The Koala do not name the End Phase effect
+    EDISON RULE TEST 090A: The turn start cleared a pointer to the live activation effect
+    EDISON RULE TEST 090D: The Koala do not name the End Phase effect
+== clear_current_always
+  --test=090: SUMMARY: 10 PASS, 2 FAIL
+    CONTROL 090D: The Koala do not name the End Phase effect
+    EDISON RULE TEST 090D: The Koala do not name the End Phase effect
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 537 PASS, 2 FAIL
+    CONTROL 090D: The Koala do not name the End Phase effect
+    EDISON RULE TEST 090D: The Koala do not name the End Phase effect
+== clear_spsummon_always
+  --test=090: SUMMARY: 10 PASS, 2 FAIL
+    CONTROL 090D: A Koala lost its Special Summon reason
+    EDISON RULE TEST 090D: A Koala lost its Special Summon reason
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 537 PASS, 2 FAIL
+    CONTROL 090D: A Koala lost its Special Summon reason
+    EDISON RULE TEST 090D: A Koala lost its Special Summon reason
+== phase_reset_only
+  --test=090: SUMMARY: 10 PASS, 2 FAIL
+    CONTROL 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    EDISON RULE TEST 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 537 PASS, 2 FAIL
+    CONTROL 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    EDISON RULE TEST 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+== field_type_only
+  --test=090: SUMMARY: 12 PASS, 0 FAIL
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 539 PASS, 0 FAIL
+== owner0_only
+  --test=090: SUMMARY: 8 PASS, 4 FAIL
+    CONTROL 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    CONTROL 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 535 PASS, 4 FAIL
+    CONTROL 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    CONTROL 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+== ended_turn_owner_only
+  --test=090: SUMMARY: 6 PASS, 6 FAIL
+    CONTROL 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    CONTROL 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    CONTROL 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    EDISON RULE TEST 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 533 PASS, 6 FAIL
+    CONTROL 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    CONTROL 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    CONTROL 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090C: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+    EDISON RULE TEST 090D: A card keeps a deleted effect as its reason effect (card 87685879, current state)
+    EDISON RULE TEST 090F: A card keeps a deleted effect as its reason effect (card 89631139, current state)
+== at_reset
+  --test=090: SUMMARY: 4 PASS, 8 FAIL
+    CONTROL 090A: Added card does not name the reset Standby effect
+    CONTROL 090B: Added card does not name the reset Standby effect
+    CONTROL 090C: Blue-Eyes did not return
+    CONTROL 090F: The second Dark Panther's return did not bring Blue-Eyes back
+    EDISON RULE TEST 090A: Added card does not name the reset Standby effect
+    EDISON RULE TEST 090B: Added card does not name the reset Standby effect
+    EDISON RULE TEST 090C: Blue-Eyes did not return
+    EDISON RULE TEST 090F: The second Dark Panther's return did not bring Blue-Eyes back
+  --test=052: SUMMARY: 8 PASS, 0 FAIL
+  full suite: SUMMARY: 531 PASS, 8 FAIL
+    CONTROL 090A: Added card does not name the reset Standby effect
+    CONTROL 090B: Added card does not name the reset Standby effect
+    CONTROL 090C: Blue-Eyes did not return
+    CONTROL 090F: The second Dark Panther's return did not bring Blue-Eyes back
+    EDISON RULE TEST 090A: Added card does not name the reset Standby effect
+    EDISON RULE TEST 090B: Added card does not name the reset Standby effect
+    EDISON RULE TEST 090C: Blue-Eyes did not return
+    EDISON RULE TEST 090F: The second Dark Panther's return did not bring Blue-Eyes back

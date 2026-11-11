@@ -114,6 +114,9 @@ constexpr uint32_t offering = 80604091;
 constexpr uint32_t urgent_tuning = 94634433;
 constexpr uint32_t dark_panther = 43237273;
 constexpr uint32_t creature_swap = 31036355;
+constexpr uint32_t gold_sarcophagus = 75500286;
+constexpr uint32_t doom_lord = 41613948;
+constexpr uint32_t ddr = 9622164;
 constexpr uint32_t seed = 20100424;
 
 inline void require(bool condition, const std::string& why) {
@@ -133,7 +136,7 @@ struct Assets {
 
   Assets(const std::string& database, const std::string& script_dir) : scripts(script_dir), database_path(database) {
     SQLite::Database db(database, SQLite::OPEN_READONLY);
-    for (auto code : {bazoo, bottomless, blue_eyes, yami, forest, sangan, caius, torrential, dupe, treeborn, brain, dealings, broww, watapon, bell, jar, dekoichi, tomato, rush, walls, lily, wrath, herald, chalice, skill_drain, mst, book_moon, compulsory, lonefire, exiled_force, jerry_beans, call_haunted, enemy_controller, dd_crow, swap_frog, cyber_valley, honest, kalut, bora, debris_dragon, goyo, gale, psychic_commander, sacred_crane, survivor, catapult_turtle, brionac, necrovalley, darkness_approaches, ryko, quickdraw, lumina, susa, light_dark_dragon, prisma, blue_eyes_ultimate, rescue_cat, sea_koala, strike_ninja, redmd, fortune_light, future_fusion, vanity_fiend, dark_end, light_end, cyber_phoenix, jade_knight, armory_arm, colossal, gearframe, black_garden, shallow_grave, rose_token, mark_rose, cold_wave, polymerization, destiny_dragoon, plasma, dogma, soul_exchange, cyber_dragon, my_body, oppression, man_eater, judgment, mausoleum, offering, urgent_tuning, dark_panther, creature_swap}) {
+    for (auto code : {bazoo, bottomless, blue_eyes, yami, forest, sangan, caius, torrential, dupe, treeborn, brain, dealings, broww, watapon, bell, jar, dekoichi, tomato, rush, walls, lily, wrath, herald, chalice, skill_drain, mst, book_moon, compulsory, lonefire, exiled_force, jerry_beans, call_haunted, enemy_controller, dd_crow, swap_frog, cyber_valley, honest, kalut, bora, debris_dragon, goyo, gale, psychic_commander, sacred_crane, survivor, catapult_turtle, brionac, necrovalley, darkness_approaches, ryko, quickdraw, lumina, susa, light_dark_dragon, prisma, blue_eyes_ultimate, rescue_cat, sea_koala, strike_ninja, redmd, fortune_light, future_fusion, vanity_fiend, dark_end, light_end, cyber_phoenix, jade_knight, armory_arm, colossal, gearframe, black_garden, shallow_grave, rose_token, mark_rose, cold_wave, polymerization, destiny_dragoon, plasma, dogma, soul_exchange, cyber_dragon, my_body, oppression, man_eater, judgment, mausoleum, offering, urgent_tuning, dark_panther, creature_swap, gold_sarcophagus, doom_lord, ddr}) {
       SQLite::Statement q(db, "SELECT * FROM datas WHERE id=?");
       q.bind(1, static_cast<int>(code));
       require(q.executeStep(), "Missing fixture card " + std::to_string(code));
@@ -180,9 +183,9 @@ struct Assets {
     auto file = std::filesystem::path(name).filename().string();
     // The core probes c0 and normal monsters; these intentionally have no script.
     if (file == "c0.lua" || file == "c89631139.lua" || file == "c23635815.lua" || file == "c71645243.lua") return nullptr;
-    const std::array<std::string, 90> allowed = {
+    const std::array<std::string, 93> allowed = {
         "constant.lua", "utility.lua", "procedure.lua", "c40133511.lua", "c29401950.lua",
-        "c59197169.lua", "c87430998.lua", "c26202165.lua", "c9748752.lua", "c53582587.lua", "c46239604.lua", "c12538374.lua", "c87910978.lua", "c74117290.lua", "c79126789.lua", "c87774234.lua", "c20228463.lua", "c83968380.lua", "c87621407.lua", "c83011277.lua", "c70046172.lua", "c44209392.lua", "c79575620.lua", "c49010598.lua", "c17266660.lua", "c25789292.lua", "c82732705.lua", "c5318639.lua", "c14087893.lua", "c94192409.lua", "c48686504.lua", "c74131780.lua", "c97077563.lua", "c98045062.lua", "c24508238.lua", "c9126351.lua", "c3657444.lua", "c37742478.lua", "c85215458.lua", "c49003716.lua", "c14943837.lua", "c7391448.lua", "c2009101.lua", "c21454943.lua", "c30914564.lua", "c48092532.lua", "c95727991.lua", "c50321796.lua", "c47355498.lua", "c80168720.lua", "c21502796.lua", "c20932152.lua", "c95503687.lua", "c40473581.lua", "c47297616.lua", "c89312388.lua", "c23995346.lua", "c14878871.lua", "c87685879.lua", "c41006930.lua", "c88264978.lua", "c34471458.lua", "c77565204.lua", "c47084486.lua", "c88643579.lua", "c25132288.lua", "c3370104.lua", "c44364207.lua", "c29071332.lua", "c23693634.lua", "c42940404.lua", "c71645242.lua", "c43434803.lua", "c45247637.lua", "c60682203.lua", "c24094653.lua", "c76263644.lua", "c83965310.lua", "c17132130.lua", "c68005187.lua", "c70095154.lua", "c69279219.lua", "c93016201.lua", "c54652250.lua", "c41420027.lua", "c80921533.lua", "c80604091.lua", "c94634433.lua", "c43237273.lua", "c31036355.lua"};
+        "c59197169.lua", "c87430998.lua", "c26202165.lua", "c9748752.lua", "c53582587.lua", "c46239604.lua", "c12538374.lua", "c87910978.lua", "c74117290.lua", "c79126789.lua", "c87774234.lua", "c20228463.lua", "c83968380.lua", "c87621407.lua", "c83011277.lua", "c70046172.lua", "c44209392.lua", "c79575620.lua", "c49010598.lua", "c17266660.lua", "c25789292.lua", "c82732705.lua", "c5318639.lua", "c14087893.lua", "c94192409.lua", "c48686504.lua", "c74131780.lua", "c97077563.lua", "c98045062.lua", "c24508238.lua", "c9126351.lua", "c3657444.lua", "c37742478.lua", "c85215458.lua", "c49003716.lua", "c14943837.lua", "c7391448.lua", "c2009101.lua", "c21454943.lua", "c30914564.lua", "c48092532.lua", "c95727991.lua", "c50321796.lua", "c47355498.lua", "c80168720.lua", "c21502796.lua", "c20932152.lua", "c95503687.lua", "c40473581.lua", "c47297616.lua", "c89312388.lua", "c23995346.lua", "c14878871.lua", "c87685879.lua", "c41006930.lua", "c88264978.lua", "c34471458.lua", "c77565204.lua", "c47084486.lua", "c88643579.lua", "c25132288.lua", "c3370104.lua", "c44364207.lua", "c29071332.lua", "c23693634.lua", "c42940404.lua", "c71645242.lua", "c43434803.lua", "c45247637.lua", "c60682203.lua", "c24094653.lua", "c76263644.lua", "c83965310.lua", "c17132130.lua", "c68005187.lua", "c70095154.lua", "c69279219.lua", "c93016201.lua", "c54652250.lua", "c41420027.lua", "c80921533.lua", "c80604091.lua", "c94634433.lua", "c43237273.lua", "c31036355.lua", "c75500286.lua", "c41613948.lua", "c9622164.lua"};
     if (std::find(allowed.begin(), allowed.end(), file) == allowed.end()) {
       active->error = "Unpinned script requested: " + file;
       return nullptr;
@@ -493,6 +496,39 @@ class TestDuel {
     }
   }
   bool effect_live(const effect* peffect) const { return core->effects.count(const_cast<effect*>(peffect)) == 1; }
+  // A card keeps the effect that last moved or summoned it in four states. The turn start deletes reset
+  // effects, so each pointer must be null or name a live effect. Membership is checked, never the effect.
+  void check_reason_effects() const {
+    static constexpr const char* names[] = {"current", "temp", "previous", "spsummon"};
+    for (auto* pcard : core->cards) {
+      const card_state* states[] = {&pcard->current, &pcard->temp, &pcard->previous, &pcard->spsummon};
+      for (int i = 0; i < 4; ++i)
+        if (states[i]->reason_effect && core->effects.count(states[i]->reason_effect) != 1)
+          require(false, "A card keeps a deleted effect as its reason effect (card " + std::to_string(pcard->data.code) +
+                             ", " + names[i] + " state)");
+    }
+  }
+  bool effect_reset(const effect* peffect) const {
+    return core->game_field->core.reseted_effects.count(const_cast<effect*>(peffect)) == 1;
+  }
+  // The cards with that code in that player's Monster Zone, hand, GY or banishment.
+  std::vector<card*> cards_in(int player, int location, uint32_t code) const {
+    const auto& side = core->game_field->player[player];
+    require(location == LOCATION_MZONE || location == LOCATION_HAND || location == LOCATION_GRAVE || location == LOCATION_REMOVED,
+            "Expected the Monster Zone, hand, GY or banishment");
+    const auto& list = location == LOCATION_MZONE ? side.list_mzone : location == LOCATION_HAND ? side.list_hand
+                     : location == LOCATION_GRAVE ? side.list_grave : side.list_remove;
+    std::vector<card*> found;
+    for (auto* pcard : list)
+      if (pcard && pcard->data.code == code) found.push_back(pcard);
+    return found;
+  }
+  // The one card with that code there.
+  card* card_in(int player, int location, uint32_t code) const {
+    auto found = cards_in(player, location, code);
+    require(found.size() == 1, "Expected exactly one card with that code there");
+    return found.front();
+  }
   bool effect_rechargeable(const effect* peffect) const {
     return core->game_field->effects.rechargeable.count(const_cast<effect*>(peffect)) == 1;
   }
@@ -519,6 +555,7 @@ class TestDuel {
     for (int steps = 0; steps < 5000; ++steps) {
       auto result = process(handle());
       assets.check();
+      check_reason_effects();
       // The pinned core exposes the buffer size; allocate before calling the
       // legacy get_message API, which takes no destination capacity.
       std::vector<byte> data(core->message_buffer.size());

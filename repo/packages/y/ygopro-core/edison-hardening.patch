@@ -205,6 +205,28 @@ diff --git a/processor.cpp b/processor.cpp
  					bd[0] = TRUE;
  					bd[1] = TRUE;
  				}
+@@ -3700,6 +3713,21 @@
+ 				pduel->delete_group(ev.event_cards);
+ 		}
+ 		core.used_event.clear();
++		// Edison: a card keeps the effect that last moved or summoned it, and some later moves leave
++		// that pointer as it is (a destroy with no reason effect, a self-destroy). Clear each card's
++		// pointer to an effect deleted here, so no later event or GetReasonEffect reads a freed effect.
++		if(!core.reseted_effects.empty()) {
++			for(auto& pcard : pduel->cards) {
++				for(card_state* pstate : {&pcard->current, &pcard->temp, &pcard->previous, &pcard->spsummon}) {
++					if(pstate->reason_effect && core.reseted_effects.count(pstate->reason_effect)) {
++						// ReturnToField checks which card banished it temporarily, so keep that card.
++						if(pstate == &pcard->current && (pcard->current.reason & REASON_TEMPORARY))
++							pcard->temp_remove_owner = pstate->reason_effect->owner;
++						pstate->reason_effect = nullptr;
++					}
++				}
++			}
++		}
+ 		for(auto& peffect : core.reseted_effects) {
+ 			pduel->delete_effect(peffect);
+ 		}
 diff --git a/field.h b/field.h
 --- a/field.h
 +++ b/field.h
@@ -244,3 +266,29 @@ diff --git a/libeffect.cpp b/libeffect.cpp
  	peffect->count_limit = 0;
  	peffect->count_limit_max = 0;
  	peffect->count_code = 0;
+diff --git a/card.h b/card.h
+--- a/card.h
++++ b/card.h
+@@ -189,6 +189,8 @@
+ 	card* equiping_target;
+ 	card* pre_equip_target;
+ 	card* overlay_target;
++	// Edison: owner of the deleted effect that temporarily banished this card (process_turn, move_to_field).
++	card* temp_remove_owner{ nullptr };
+ 	relation_map relations;
+ 	counter_map counters;
+ 	effect_count indestructable_effects;
+diff --git a/operations.cpp b/operations.cpp
+--- a/operations.cpp
++++ b/operations.cpp
+@@ -4550,7 +4550,9 @@
+ 	switch(step) {
+ 	case 0: {
+ 		returns.ivalue[0] = FALSE;
+-		if((ret == RETURN_TEMP_REMOVE_TO_FIELD) && (!(target->current.reason & REASON_TEMPORARY) || (target->current.reason_effect->owner != core.reason_effect->owner)))
++		// Edison: if the effect that banished the card was deleted, compare the owner process_turn kept.
++		if((ret == RETURN_TEMP_REMOVE_TO_FIELD) && (!(target->current.reason & REASON_TEMPORARY)
++		        || ((target->current.reason_effect ? target->current.reason_effect->owner : target->temp_remove_owner) != core.reason_effect->owner)))
+ 			return TRUE;
+ 		if(location == LOCATION_SZONE && zone == 0x1 << 5 && (target->data.type & TYPE_FIELD) && (target->data.type & TYPE_SPELL)) {
+ 			card* pcard = get_field_card(playerid, LOCATION_SZONE, 5);

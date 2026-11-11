@@ -99,6 +99,8 @@
 
 #include "panther_copy_tests.h"
 
+#include "gold_sarcophagus_tests.h"
+
 using namespace certification;
 
 void first_turn_draw(Assets& assets, int options, bool expected_draw, bool trace) {
@@ -1143,6 +1145,32 @@ int main(int argc, char** argv) {
       test(historical?"EDISON RULE TEST 089G - DARK PANTHER TAKEN IN THE CHAIN":"CONTROL 089G - STOCK DARK PANTHER TAKEN IN THE CHAIN",
            "Enemy Controller chained to the copy takes Dark Panther, so its player no longer controls it when the copy resolves and nothing is copied; the stock script copies for the new controller.",[&] {
         panther_chained_control(assets,historical?options:5<<16,historical,trace);
+      });
+    }
+    for(bool historical : {false,true}) {
+      test(historical?"EDISON RULE TEST 090A - GOLD SARCOPHAGUS CARD AFTER ITS EFFECT IS DELETED":"CONTROL 090A - STOCK GOLD SARCOPHAGUS CARD AFTER ITS EFFECT IS DELETED",
+           "The card Gold Sarcophagus adds keeps the reset Standby effect as its reason effect until the next turn start deletes that effect, then keeps none; a live reason effect is kept.",[&] {
+        gold_sarcophagus_reason(assets,historical?options:5<<16,false,trace);
+      });
+      test(historical?"EDISON RULE TEST 090B - GOLD SARCOPHAGUS CARD DISCARDED BEFORE THE DELETE":"CONTROL 090B - STOCK GOLD SARCOPHAGUS CARD DISCARDED BEFORE THE DELETE",
+           "Discarded for hand size in the same turn, the card keeps the reset Standby effect in its temp state until the next turn start deletes that effect and clears it there.",[&] {
+        gold_sarcophagus_reason(assets,historical?options:5<<16,true,trace);
+      });
+      test(historical?"EDISON RULE TEST 090C - DOOM LORD COPY RETURNS AFTER ITS DELETE":"CONTROL 090C - STOCK DOOM LORD COPY RETURNS AFTER ITS DELETE",
+           "Dark Panther's copied Doom Lord effect banishes Blue-Eyes; the copy is deleted at the next turn start, and the return it scheduled still brings Blue-Eyes back.",[&] {
+        gold_sarcophagus_doom_lord(assets,historical?options:5<<16,trace);
+      });
+      test(historical?"EDISON RULE TEST 090D - RESCUE CAT EFFECT WITHOUT A RESET":"CONTROL 090D - STOCK RESCUE CAT EFFECT WITHOUT A RESET",
+           "Rescue Cat's End Phase effect has no reset and resets itself; its deletion clears the Koala's pointer and leaves the live effects others name.",[&] {
+        gold_sarcophagus_rescue_cat(assets,historical?options:5<<16,trace);
+      });
+      test(historical?"EDISON RULE TEST 090E - COPIED SPECIAL SUMMON REASON AFTER ITS DELETE":"CONTROL 090E - STOCK COPIED SPECIAL SUMMON REASON AFTER ITS DELETE",
+           "Blue-Eyes, Special Summoned by Dark Panther's copied Red-Eyes Darkness Metal Dragon effect, loses the copy as its current and Special Summon reason when the copy is deleted.",[&] {
+        gold_sarcophagus_copied_summon(assets,historical?options:5<<16,trace);
+      });
+      test(historical?"EDISON RULE TEST 090F - TWO DOOM LORD COPIES, ONE RETURN EACH":"CONTROL 090F - STOCK TWO DOOM LORD COPIES, ONE RETURN EACH",
+           "Two Dark Panthers banish the same Blue-Eyes with copied Doom Lord effects; after the second copy is deleted, the first Panther's return is refused and the second's brings it back.",[&] {
+        gold_sarcophagus_two_banishers(assets,historical?options:5<<16,trace);
       });
     }
     require(total > 0, "No certification cases matched the requested test number");

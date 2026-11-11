@@ -1,0 +1,105 @@
+{
+ "status": "PASS",
+ "failed": [],
+ "checks": {
+  "codes-closure": {
+   "status": "PASS",
+   "seconds": 0.01,
+   "detail": {
+    "codes": 509,
+    "sha256": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab",
+    "lists": 21
+   }
+  },
+  "audit-rejects-planted-violations": {
+   "status": "PASS",
+   "seconds": 0.03,
+   "detail": [
+    "action embed bound",
+    "action/card id",
+    "beyond offered",
+    "embed bound",
+    "hidden stats",
+    "id beyond list",
+    "overflow",
+    "own hand id",
+    "private hint",
+    "stale selection",
+    "unknown schema"
+   ]
+  },
+  "repeat-guard": {
+   "status": "PASS",
+   "seconds": 0.0,
+   "detail": "top option first, then untried options, then top again"
+  },
+  "softmax-offered-only": {
+   "status": "PASS",
+   "seconds": 0.59,
+   "detail": "padding excluded"
+  },
+  "gae-terminal-only": {
+   "status": "PASS",
+   "seconds": 0.0,
+   "detail": "lambda=1 gives Monte Carlo"
+  },
+  "cell-determinism": {
+   "status": "PASS",
+   "seconds": 9.71,
+   "detail": {
+    "rollout": "7a842ec4f4eacc7f",
+    "decisions": 578
+   }
+  },
+  "pack-preserves-references": {
+   "status": "PASS",
+   "seconds": 0.0,
+   "detail": {
+    "decisions": 200,
+    "hidden_private_rows_kept": 0
+   }
+  },
+  "void-on-native-abort-and-truncation": {
+   "status": "PASS",
+   "seconds": 5.35,
+   "detail": {
+    "truncated": "ContractError: environment truncation is not a natural resul",
+    "aborted": "worker died or timed out (exit -6)"
+   }
+  },
+  "checkpoint-fails-closed": {
+   "status": "PASS",
+   "seconds": 0.05,
+   "detail": "tamper, code list, format"
+  },
+  "generated-list-matches-production-worker": {
+   "status": "PASS",
+   "seconds": 2.06,
+   "detail": {
+    "games_identical_outcome_and_length": 16
+   }
+  },
+  "hidden-cards-do-not-reach-network": {
+   "status": "PASS",
+   "seconds": 0.18,
+   "detail": "packed network inputs byte-identical; info:deck and mask_ never read"
+  },
+  "order-equivariant": {
+   "status": "PASS",
+   "seconds": 0.82,
+   "detail": {
+    "options": 16,
+    "rows": 48,
+    "logit_spread": 0.19057339429855347
+   }
+  },
+  "resume-matches-uninterrupted": {
+   "status": "PASS",
+   "seconds": 109.94,
+   "detail": {
+    "rounds": 3,
+    "final_params": "198b064b51d3af36"
+   }
+  }
+ }
+}

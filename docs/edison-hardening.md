@@ -257,7 +257,10 @@ pinned variant. Instead, the new `edison_hardening` string config installs side 
 | --- | --- | --- |
 | `bedb42dd...`, pinned | `def13f39...` | Byte-identical; `references.txt` also unchanged |
 | `aa797b55...`, `edison_hardening = "r1"` | `e8978744...` | New, reproduced by a clean reinstall |
-| `5fe29f6a...`, `edison_hardening = "r2"` | `e3adf73d...` | Current. See [the trigger-order report](edison-trigger-order.md) |
+| `5fe29f6a...`, `edison_hardening = "r2"` | `e3adf73d...` | See [the trigger-order report](edison-trigger-order.md) |
+| `792b98d4...`, `edison_hardening = "r3"` | `984301c4...` | See [the Dark Panther report](edison-dark-panther.md) |
+| `0548bcc8...`, `edison_hardening = "r4"` | `5ac42d87...` | Never merged: it crashed copied Doom Lord returns. See [the Gold Sarcophagus report](edison-gold-sarcophagus.md) |
+| `5334b050...`, `edison_hardening = "r5"` | `4fd0ffdc...` | Current. See [the Gold Sarcophagus report](edison-gold-sarcophagus.md) |
 
 Main's `.xmake` and `build/linux` file digest is unchanged. Evidence:
 [before](../tests/edison/reports/hardening-2026-11-04/baseline-before.txt),

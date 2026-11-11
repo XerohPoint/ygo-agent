@@ -1,0 +1,33 @@
+{
+ "raw_files": 1563,
+ "strings_checked": 2152,
+ "files": 24,
+ "json_files": 10,
+ "hits": {
+  "Jinzo": [
+   "docs/edison-gold-sarcophagus.md",
+   "docs/edison-dark-panther.md",
+   "tests/edison/reports/gold-sarcophagus-2026-11-11/mk_g4.py",
+   "tests/edison/reports/gold-sarcophagus-2026-11-11/review-claude.md",
+   "tests/edison/reports/gold-sarcophagus-2026-11-11/sanitizer.json"
+  ],
+  "Koala": [
+   "docs/edison-gold-sarcophagus.md",
+   "docs/edison-certification.md",
+   "tests/edison/reports/gold-sarcophagus-2026-11-11/mutants.txt",
+   "tests/edison/reports/gold-sarcophagus-2026-11-11/review-claude-2.md",
+   "tests/edison/gold_sarcophagus_tests.h"
+  ],
+  "Rose": [
+   "docs/edison-certification.md",
+   "tests/edison/reports/gold-sarcophagus-2026-11-11/certification-report.json"
+  ],
+  "Soul": [
+   "docs/edison-certification.md",
+   "docs/edison-roadmap.md",
+   "tests/edison/reports/gold-sarcophagus-2026-11-11/certification-report.json"
+  ]
+ },
+ "unreviewed_hits": 0,
+ "person_keys": {}
+}
