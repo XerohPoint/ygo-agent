@@ -1,6 +1,6 @@
 # Edison Dark Panther crash and repeat fix
 
-Prepared November 10, 2026, on branch `panther-fix` from `edison` at `3dd4daf`. Not pushed. Review status is under [Reviews](#reviews).
+Prepared November 10-11, 2026, on branch `panther-fix` from `edison` at `3dd4daf`. Not pushed. Both reviews are done; see [Reviews](#reviews).
 
 **Result: the corpus soak's crash was a heap use-after-free that our own core patch caused, and it is fixed in `edison-hardening` r3. Neo-Spacian
 Dark Panther could use its once-per-turn effect again and again by copying the opponent's Dark Panther, kept a copy after a control change, and
@@ -198,6 +198,11 @@ fixes. Its fixtures and mutant builds are in its worktree and are not committed.
 | r3 is right for the legal paths; the other field sets depend on fields a script could change | NOTE | Agrees with the first review. No pool script does it |
 | Negation, Phantom of Chaos in both orders, Brain Control after use, flips and two Dark Panthers follow the rulings | NOTE | Recorded |
 | 089E stops at the second offer and does not resolve it | NOTE | Left as is; the offer is what the ruling is about |
+
+Sol's follow-up on `df801be` ([review-sol-2.md](../tests/edison/reports/dark-panther-2026-11-10/review-sol-2.md)) found both fixes hold: its
+own fixture now copies nothing after the steal, its copy-only mutant fails 089F, and a mutant without the controller check fails 089G. It found
+no way for 089F or 089G to pass for the wrong reason, and its negation, Phantom of Chaos and Brain Control fixtures give the same results as
+before. Its verdict: the override is safe to merge. No new findings.
 
 Neither review covered a target that changes control before the copy resolves, for example Dark Panther's player chaining Enemy Controller to
 take Bazoo. The override, like the stock script, still copies it then. That was not checked against a ruling.
