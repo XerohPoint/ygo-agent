@@ -1164,6 +1164,14 @@ int main(int argc, char** argv) {
            "Rescue Cat's End Phase effect has no reset and resets itself; its deletion clears the Koala's pointer and leaves the live effects others name.",[&] {
         gold_sarcophagus_rescue_cat(assets,historical?options:5<<16,trace);
       });
+      test(historical?"EDISON RULE TEST 090E - COPIED SPECIAL SUMMON REASON AFTER ITS DELETE":"CONTROL 090E - STOCK COPIED SPECIAL SUMMON REASON AFTER ITS DELETE",
+           "Blue-Eyes, Special Summoned by Dark Panther's copied Red-Eyes Darkness Metal Dragon effect, loses the copy as its current and Special Summon reason when the copy is deleted.",[&] {
+        gold_sarcophagus_copied_summon(assets,historical?options:5<<16,trace);
+      });
+      test(historical?"EDISON RULE TEST 090F - TWO DOOM LORD COPIES, ONE RETURN EACH":"CONTROL 090F - STOCK TWO DOOM LORD COPIES, ONE RETURN EACH",
+           "Two Dark Panthers banish the same Blue-Eyes with copied Doom Lord effects; after the second copy is deleted, the first Panther's return is refused and the second's brings it back.",[&] {
+        gold_sarcophagus_two_banishers(assets,historical?options:5<<16,trace);
+      });
     }
     require(total > 0, "No certification cases matched the requested test number");
     std::cout << "\nSUMMARY: " << total - failures << " PASS, " << failures << " FAIL\n";

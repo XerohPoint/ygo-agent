@@ -303,3 +303,162 @@ inline void gold_sarcophagus_rescue_cat(certification::Assets& assets, int optio
     return false;
   });
 }
+
+namespace gold_sarcophagus_detail {
+inline int effect_index(const Event& e, uint32_t code, int sequence, uint32_t description) {
+  for (size_t i = 0; i < e.idle[5].size(); ++i) {
+    const auto& c = e.idle[5][i];
+    if (c.controller == 0 && c.code == code && (sequence < 0 || c.sequence == sequence) && c.description == description) return int(i);
+  }
+  return -1;
+}
+inline void place_monster(TestDuel& d, const Event& e) {
+  int slot = 0;
+  while (slot < 5 && (e.mask & (1u << slot))) ++slot;
+  require(slot < 5, "No free monster zone");
+  d.respond({uint8_t(e.player), LOCATION_MZONE, uint8_t(slot)});
+}
+}  // namespace gold_sarcophagus_detail
+
+// 090E, from Sol's review: Dark Panther copies the opponent's Red-Eyes Darkness Metal Dragon and Special Summons
+// Blue-Eyes from the hand with the copied effect. The copy resets at that End Phase and the next turn start
+// deletes it, so Blue-Eyes's current and Special Summon reasons must both be cleared.
+inline void gold_sarcophagus_copied_summon(certification::Assets& assets, int options, bool trace) {
+  using namespace certification;
+  using namespace gold_sarcophagus_detail;
+  TestDuel d(assets, 0, 0, trace, options);
+  d.add({dark_panther, 0, 0, LOCATION_MZONE, 0, POS_FACEUP_ATTACK});
+  d.add({redmd, 1, 1, LOCATION_MZONE, 0, POS_FACEUP_ATTACK});
+  d.add({blue_eyes, 0, 0, LOCATION_HAND, 0, POS_FACEDOWN_DEFENSE});
+  int turns = 0, step = 0;
+  const effect* copy = nullptr;
+  d.start(options);
+  d.run([&](const Event& e) {
+    if (e.kind == MSG_NEW_TURN) {
+      require(e.player == turns % 2 && turns < 2, "Unexpected turn");
+      ++turns;
+    } else if (e.kind == MSG_SELECT_IDLECMD) {
+      require(e.player == (turns + 1) % 2 && d.phase() == PHASE_MAIN1, "Unexpected idle prompt");
+      if (turns == 1 && step < 2) {
+        int i = effect_index(e, dark_panther, 0, (step == 0 ? dark_panther : redmd) * 16);
+        require(i >= 0, step == 0 ? "Dark Panther not offered" : "Copied Red-Eyes Darkness Metal Dragon effect not offered");
+        ++step;
+        d.respond((i << 16) | 5);
+        return false;
+      }
+      auto summoned = d.cards_in(0, LOCATION_MZONE, blue_eyes);
+      require(summoned.size() == 1, "Blue-Eyes was not Special Summoned");
+      card* pcard = summoned[0];
+      if (turns == 1) {
+        copy = pcard->spsummon.reason_effect;
+        require(copy && d.effect_live(copy) && copy->copy_id != 0 && copy->owner->data.code == dark_panther &&
+                    pcard->current.reason_effect == copy, "Blue-Eyes does not name the copied summoning effect");
+        d.respond(7);
+      } else {
+        require(!d.effect_live(copy) && pcard->current.reason_effect == nullptr && pcard->spsummon.reason_effect == nullptr,
+                "Blue-Eyes kept the deleted copy as a reason");
+        std::cout << "Observed: Blue-Eyes, Special Summoned by Dark Panther's copied Red-Eyes Darkness Metal Dragon effect, "
+                     "named the copy in its current and Special Summon states until the next turn start deleted it, then "
+                     "named none.\n";
+        return true;
+      }
+    } else if (e.kind == MSG_SELECT_CARD) {
+      require(turns == 1 && e.player == 0 && (step == 1 || step == 2), "Unexpected card prompt");
+      uint32_t want = step == 1 ? redmd : blue_eyes;
+      int pick = -1;
+      for (size_t i = 0; i < e.cards.size(); ++i)
+        if (e.cards[i].code == want) pick = int(i);
+      require(pick >= 0, "Card not offered");
+      d.respond({1, uint8_t(pick)});
+    } else if (e.kind == MSG_SELECT_CHAIN) {
+      require(!e.forced, "Unexpected forced chain");
+      d.respond(-1);
+    } else if (e.kind == MSG_SELECT_POSITION) d.respond(POS_FACEUP_ATTACK);
+    else if (e.kind == MSG_SELECT_PLACE) place_monster(d, e);
+    else if (e.kind == MSG_SELECT_EFFECTYN || e.kind == MSG_SELECT_YESNO || e.kind == MSG_SELECT_OPTION ||
+             e.kind == MSG_CHAIN_NEGATED || e.kind == MSG_CHAIN_DISABLED)
+      throw std::runtime_error("Unexpected copied summon event");
+    return false;
+  });
+}
+
+// 090F, from Sol's review: two Dark Panthers copy the opponent's Doom Lord on turns 1 and 3 and banish the same
+// Blue-Eyes, which D.D.R. Special Summons in between. When the turn 4 start deletes the second copy, the card
+// must keep the second Panther as its banisher: the first Panther's return on turn 5 is refused, and the second
+// Panther's return on turn 7 brings it back. Skipping the owner check when the reason effect is null returns it
+// on turn 5.
+inline void gold_sarcophagus_two_banishers(certification::Assets& assets, int options, bool trace) {
+  using namespace certification;
+  using namespace gold_sarcophagus_detail;
+  TestDuel d(assets, 0, 0, trace, options);
+  for (uint8_t i = 0; i < 2; ++i) d.add({dark_panther, 0, 0, LOCATION_MZONE, i, POS_FACEUP_ATTACK});
+  d.add({doom_lord, 1, 1, LOCATION_MZONE, 0, POS_FACEUP_ATTACK});
+  d.add({blue_eyes, 1, 1, LOCATION_MZONE, 1, POS_FACEUP_ATTACK});
+  d.add({ddr, 1, 1, LOCATION_SZONE, 0, POS_FACEDOWN_DEFENSE});
+  d.add({jerry_beans, 1, 1, LOCATION_HAND, 0, POS_FACEDOWN_DEFENSE});
+  int turns = 0, step = 0, banished = 0, revived = 0, returned = 0;
+  bool reborn = false;
+  d.start(options);
+  d.run([&](const Event& e) {
+    if (e.kind == MSG_NEW_TURN) {
+      require(e.player == turns % 2 && turns < 7, "Unexpected turn");
+      ++turns;
+      step = 0;
+    } else if (e.kind == MSG_SELECT_IDLECMD) {
+      require(e.player == (turns + 1) % 2 && d.phase() == PHASE_MAIN1, "Unexpected idle prompt");
+      if ((turns == 1 || turns == 3) && step < 2) {
+        int i = effect_index(e, dark_panther, turns == 1 ? 0 : 1, (step == 0 ? dark_panther : doom_lord) * 16);
+        require(i >= 0, "Dark Panther or its copied Doom Lord effect not offered");
+        ++step;
+        d.respond((i << 16) | 5);
+        return false;
+      }
+      if (turns == 2 && !reborn) {
+        int i = -1;
+        for (size_t k = 0; k < e.idle[5].size(); ++k)
+          if (e.idle[5][k].controller == 1 && e.idle[5][k].code == ddr) i = int(k);
+        require(i >= 0 && banished == 1, "D.D.R. not offered for the banished Blue-Eyes");
+        reborn = true;
+        d.respond((i << 16) | 5);
+        return false;
+      }
+      if (turns == 5) {
+        require(banished == 2 && revived == 1 && returned == 0 && d.cards_in(1, LOCATION_REMOVED, blue_eyes).size() == 1,
+                "The first Dark Panther's return took back the second Dark Panther's banishment");
+      } else if (turns == 7) {
+        require(returned == 1 && d.count(1, LOCATION_REMOVED) == 0 && d.cards_in(1, LOCATION_MZONE, blue_eyes).size() == 1,
+                "The second Dark Panther's return did not bring Blue-Eyes back");
+        std::cout << "Observed: after D.D.R. revived Blue-Eyes and the second Dark Panther banished it again, the first "
+                     "Panther's return on turn 5 was refused and the second's on turn 7 brought it back.\n";
+        return true;
+      }
+      d.respond(7);
+    } else if (e.kind == MSG_SELECT_CARD) {
+      uint32_t want;
+      if (turns == 2) want = e.cards.at(0).location == LOCATION_HAND ? jerry_beans : blue_eyes;
+      else want = step == 1 ? doom_lord : blue_eyes;
+      int pick = -1;
+      for (size_t i = 0; i < e.cards.size(); ++i)
+        if (e.cards[i].code == want) pick = int(i);
+      require(pick >= 0, "Card not offered");
+      d.respond({1, uint8_t(pick)});
+    } else if (e.kind == MSG_SELECT_CHAIN) {
+      d.respond(e.forced ? 0 : -1);
+    } else if (e.kind == MSG_SELECT_POSITION) d.respond(POS_FACEUP_ATTACK);
+    else if (e.kind == MSG_SELECT_PLACE) place_monster(d, e);
+    else if (e.kind == MSG_MOVE && e.from.code == blue_eyes) {
+      if (e.to.location == LOCATION_REMOVED) {
+        require((turns == 1 || turns == 3) && (e.reason & REASON_TEMPORARY), "Wrong banishment");
+        ++banished;
+      } else if (e.from.location == LOCATION_REMOVED && e.to.location == LOCATION_MZONE) {
+        if (turns == 2) ++revived;
+        else {
+          require(d.phase() == PHASE_STANDBY, "Return outside the Standby Phase");
+          ++returned;
+        }
+      }
+    } else if (e.kind == MSG_SELECT_EFFECTYN || e.kind == MSG_SELECT_YESNO || e.kind == MSG_SELECT_OPTION)
+      throw std::runtime_error("Unexpected two-banisher event");
+    return false;
+  });
+}
