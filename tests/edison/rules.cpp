@@ -1150,7 +1150,11 @@ int main(int argc, char** argv) {
     for(bool historical : {false,true}) {
       test(historical?"EDISON RULE TEST 090A - GOLD SARCOPHAGUS CARD AFTER ITS EFFECT IS DELETED":"CONTROL 090A - STOCK GOLD SARCOPHAGUS CARD AFTER ITS EFFECT IS DELETED",
            "The card Gold Sarcophagus adds keeps the reset Standby effect as its reason effect until the next turn start deletes that effect, then keeps none; a live reason effect is kept.",[&] {
-        gold_sarcophagus_reason(assets,historical?options:5<<16,trace);
+        gold_sarcophagus_reason(assets,historical?options:5<<16,false,trace);
+      });
+      test(historical?"EDISON RULE TEST 090B - GOLD SARCOPHAGUS CARD DISCARDED BEFORE THE DELETE":"CONTROL 090B - STOCK GOLD SARCOPHAGUS CARD DISCARDED BEFORE THE DELETE",
+           "Discarded for hand size in the same turn, the card keeps the reset Standby effect in its temp state until the next turn start deletes that effect and clears it there.",[&] {
+        gold_sarcophagus_reason(assets,historical?options:5<<16,true,trace);
       });
     }
     require(total > 0, "No certification cases matched the requested test number");

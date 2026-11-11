@@ -509,13 +509,20 @@ class TestDuel {
   bool effect_reset(const effect* peffect) const {
     return core->game_field->core.reseted_effects.count(const_cast<effect*>(peffect)) == 1;
   }
-  // The only card in that player's hand or banishment.
-  card* only_card(int player, int location) const {
-    const auto& list = location == LOCATION_HAND ? core->game_field->player[player].list_hand
-                                                 : core->game_field->player[player].list_remove;
-    require(location == LOCATION_HAND || location == LOCATION_REMOVED, "Expected the hand or banishment");
-    require(list.size() == 1, "Expected exactly one card there");
-    return list.front();
+  // The one card with that code in that player's hand, GY or banishment.
+  card* card_in(int player, int location, uint32_t code) const {
+    const auto& side = core->game_field->player[player];
+    require(location == LOCATION_HAND || location == LOCATION_GRAVE || location == LOCATION_REMOVED,
+            "Expected the hand, GY or banishment");
+    const auto& list = location == LOCATION_HAND ? side.list_hand : location == LOCATION_GRAVE ? side.list_grave : side.list_remove;
+    card* found = nullptr;
+    for (auto* pcard : list)
+      if (pcard->data.code == code) {
+        require(!found, "Expected one card with that code there");
+        found = pcard;
+      }
+    require(found != nullptr, "Card not found there");
+    return found;
   }
   bool effect_rechargeable(const effect* peffect) const {
     return core->game_field->effects.rechargeable.count(const_cast<effect*>(peffect)) == 1;
