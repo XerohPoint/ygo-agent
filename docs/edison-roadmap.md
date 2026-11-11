@@ -163,7 +163,8 @@ network trained on, with the edge over the heuristic within a point of the edge 
 Sol recounted it with separate code and reran 84 cell runs and 48 search games with no differences.
 Stage B, cards no training list plays, needs code list v2, an unknown-identity row and retraining, and is not started.
 The corpus crash that blocked Stage B's Dark Panther lists is [fixed](edison-dark-panther.md) in core hardening r3, along with
-a Dark Panther repeat; Stage B also needs a search binary rebuilt on r3.
+a Dark Panther repeat. A stale reason effect that Gold Sarcophagus reached in legal games is [fixed](edison-gold-sarcophagus.md) in r5.
+Stage B also needs a search binary rebuilt on r5.
 
 ### M4 — Deck builder
 

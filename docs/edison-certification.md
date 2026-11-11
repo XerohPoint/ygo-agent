@@ -1446,3 +1446,18 @@ copied Bazoo to the opponent, and the name change, every copied effect and the E
 chains Enemy Controller to take Dark Panther before the copy resolves, and nothing may be copied. Each has a Rule 5 control on the stock
 scripts. The harness now pins 90 scripts, reads `MSG_SWAP`, lists a card's attached effects with `card_effects()`, and passes the core a full
 `SIZE_RETURN_VALUE` response buffer. The full suite now passes 607 cases. See [edison-dark-panther.md](edison-dark-panther.md).
+
+## Reason effects after a delete (090)
+
+Every case now checks, after each `process()` call, that no card's `current`, `temp`, `previous` or `spsummon` reason effect names an effect
+the core has deleted (`check_reason_effects()`). The cases of test 090:
+- **090A:** the card Gold Sarcophagus banishes and adds names the live activation effect through three turn starts. It then names the reset
+  Standby effect until the next turn start deletes that effect and `edison-hardening` r5 clears the pointer.
+- **090B:** the card is discarded for hand size first, so the cleared pointer is in `temp`.
+- **090C:** Dark Panther's copied Doom Lord effect banishes a monster. The copy is deleted, and its return still brings the monster back.
+- **090D:** Rescue Cat's End Phase effect has no reset. Its delete clears the Koala's pointers and leaves the live effects others name.
+- **090E:** a copied Red-Eyes Darkness Metal Dragon effect summons Blue-Eyes, and the delete clears the Special Summon reason too.
+- **090F:** two Dark Panthers banish the same Blue-Eyes, and only the one that banished it last may return it.
+
+Each has a Rule 5 control on the stock scripts. The harness now pins 93 scripts. The full suite now passes 619 cases. See
+[edison-gold-sarcophagus.md](edison-gold-sarcophagus.md).

@@ -40,7 +40,8 @@ def walk(value, inside=False, out=None):
     return out
 
 
-ALLOWED = {"jinzo", "rose", "soul", "beastmode"}  # card, archetype and community words; reviewed November 9, 2026
+ALLOWED = {"jinzo", "rose", "soul", "beastmode", "koala"}  # card, archetype and community words; reviewed November 9, 2026
+# "koala": the card Sea Koala, in the Rescue Cat tests and the Gold Sarcophagus report; reviewed November 11, 2026
 
 
 def person_keys(value, path="", out=None):

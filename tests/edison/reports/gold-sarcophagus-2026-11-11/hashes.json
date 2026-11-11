@@ -1,0 +1,14 @@
+{
+ "what": "Hashes for edison-hardening r5 at 626e759, built by xmake in the sarc-fix worktree and reproduced by a rebuild without xmake's object cache.",
+ "core_package": "5334b050d0594d1dafe66cdcddde1cfe",
+ "core_library": "4fd0ffdc51f4418f05b75108a44a6d3069d36d92c6f159ce82e0bc0bb1e581c2",
+ "edison_hardening_patch": "88afe488ba7a70e5ebf2894fbc7cc5cce2859564d055bef16c7dcbad2713ec02",
+ "production_module": "d1f1f701e571cdaecc4270283bc0ae8e87533e0021ddf4ee84929dae81359983",
+ "edison_rules": "29ca41fd6225fc8241f41e95973ab9d43010b6530770e6aa4a6ab41779fac0dc",
+ "edison_conformance": "8a3a107b63cbaa26459f29c29372b3edefbf8b3b1f752226ee6c9810b7ec24a1",
+ "replaced": {
+  "production_module_r3": "7e39a1138658050c",
+  "r4_package_not_merged": "0548bcc875c44da68fd587df8348eed2",
+  "r4_module_not_merged": "64c4abc8e0b8105c"
+ }
+}

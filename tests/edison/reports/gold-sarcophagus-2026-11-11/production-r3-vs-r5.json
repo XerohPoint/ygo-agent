@@ -1,0 +1,178 @@
+{
+ "g4": {
+  "same": 1100,
+  "differ": [],
+  "missing": 0,
+  "decision_lines": 208026
+ },
+ "t4": {
+  "same": 1600,
+  "differ": [],
+  "missing": 0,
+  "decision_lines": 329738
+ },
+ "v1": {
+  "same": 504,
+  "differ": [],
+  "missing": 0,
+  "decision_lines": 102121
+ },
+ "dl": {
+  "same": 10,
+  "differ": [
+   {
+    "duel": "92001586",
+    "first_difference_at_line": 108,
+    "lines": [
+     276,
+     346
+    ]
+   },
+   {
+    "duel": "92001925",
+    "first_difference_at_line": 87,
+    "lines": [
+     163,
+     249
+    ]
+   },
+   {
+    "duel": "92002137",
+    "first_difference_at_line": 368,
+    "lines": [
+     446,
+     501
+    ]
+   },
+   {
+    "duel": "92002650",
+    "first_difference_at_line": 82,
+    "lines": [
+     500,
+     322
+    ]
+   },
+   {
+    "duel": "92002762",
+    "first_difference_at_line": 100,
+    "lines": [
+     170,
+     326
+    ]
+   },
+   {
+    "duel": "92002774",
+    "first_difference_at_line": 41,
+    "lines": [
+     176,
+     408
+    ]
+   },
+   {
+    "duel": "92002959",
+    "first_difference_at_line": 280,
+    "lines": [
+     282,
+     306
+    ]
+   },
+   {
+    "duel": "92003143",
+    "first_difference_at_line": 158,
+    "lines": [
+     271,
+     285
+    ]
+   },
+   {
+    "duel": "92003149",
+    "first_difference_at_line": 217,
+    "lines": [
+     274,
+     411
+    ]
+   },
+   {
+    "duel": "92003346",
+    "first_difference_at_line": 75,
+    "lines": [
+     154,
+     175
+    ]
+   }
+  ],
+  "missing": 0,
+  "decision_lines": 5891
+ },
+ "d2": {
+  "same": 1992,
+  "differ": [
+   {
+    "duel": "92001586",
+    "first_difference_at_line": 108,
+    "lines": [
+     276,
+     346
+    ]
+   },
+   {
+    "duel": "92001925",
+    "first_difference_at_line": 87,
+    "lines": [
+     163,
+     249
+    ]
+   },
+   {
+    "duel": "92002137",
+    "first_difference_at_line": 368,
+    "lines": [
+     446,
+     501
+    ]
+   },
+   {
+    "duel": "92002650",
+    "first_difference_at_line": 82,
+    "lines": [
+     500,
+     322
+    ]
+   },
+   {
+    "duel": "92002762",
+    "first_difference_at_line": 100,
+    "lines": [
+     170,
+     326
+    ]
+   },
+   {
+    "duel": "92003143",
+    "first_difference_at_line": 158,
+    "lines": [
+     271,
+     285
+    ]
+   },
+   {
+    "duel": "92003149",
+    "first_difference_at_line": 217,
+    "lines": [
+     274,
+     411
+    ]
+   },
+   {
+    "duel": "92003346",
+    "first_difference_at_line": 75,
+    "lines": [
+     154,
+     175
+    ]
+   }
+  ],
+  "missing": 0,
+  "decision_lines": 426063
+ }
+}

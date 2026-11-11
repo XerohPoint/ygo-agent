@@ -1,0 +1,298 @@
+{
+ "what": "Duel.ReturnToField checks in the 7 Doom Lord spec batches (build/sarc/specs/d2-*.json, the independent review's seeds) that hold the 8 duels where r3 and r5 production play differs. Logged by r3 and r5 builds that print each check in move_to_field step 0; their decision logs are byte-identical to the production modules' for these batches. r3: 'live' is whether the banishing reason effect is still in duel::effects (a reused address also counts as live). r5: 'kept' is whether the check used the owner process_turn kept.",
+ "differing_duels": [
+  "92001586",
+  "92001925",
+  "92002137",
+  "92002650",
+  "92002762",
+  "92003143",
+  "92003149",
+  "92003346"
+ ],
+ "r3": {
+  "checks": 120,
+  "refused": [
+   {
+    "duel": "92001586",
+    "card": 41613948,
+    "turn": 12,
+    "temporary": 1,
+    "live": 1,
+    "match": 0
+   },
+   {
+    "duel": "92001925",
+    "card": 41613948,
+    "turn": 13,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   },
+   {
+    "duel": "92002137",
+    "card": 41613948,
+    "turn": 41,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   },
+   {
+    "duel": "92002650",
+    "card": 63977008,
+    "turn": 10,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   },
+   {
+    "duel": "92002650",
+    "card": 73125233,
+    "turn": 14,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   },
+   {
+    "duel": "92002762",
+    "card": 41613948,
+    "turn": 12,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   },
+   {
+    "duel": "92003143",
+    "card": 12538374,
+    "turn": 15,
+    "temporary": 1,
+    "live": 1,
+    "match": 0
+   },
+   {
+    "duel": "92003149",
+    "card": 41613948,
+    "turn": 19,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   },
+   {
+    "duel": "92003346",
+    "card": 41613948,
+    "turn": 10,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   }
+  ],
+  "stale_or_kept": [
+   {
+    "duel": "92001586",
+    "card": 41613948,
+    "turn": 12,
+    "temporary": 1,
+    "live": 1,
+    "match": 0
+   },
+   {
+    "duel": "92001925",
+    "card": 41613948,
+    "turn": 13,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   },
+   {
+    "duel": "92002129",
+    "card": 73125233,
+    "turn": 37,
+    "temporary": 1,
+    "live": 0,
+    "match": 1
+   },
+   {
+    "duel": "92002137",
+    "card": 41613948,
+    "turn": 41,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   },
+   {
+    "duel": "92002650",
+    "card": 63977008,
+    "turn": 10,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   },
+   {
+    "duel": "92002650",
+    "card": 73125233,
+    "turn": 14,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   },
+   {
+    "duel": "92002762",
+    "card": 41613948,
+    "turn": 12,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   },
+   {
+    "duel": "92003143",
+    "card": 12538374,
+    "turn": 15,
+    "temporary": 1,
+    "live": 1,
+    "match": 0
+   },
+   {
+    "duel": "92003149",
+    "card": 41613948,
+    "turn": 19,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   },
+   {
+    "duel": "92003335",
+    "card": 41613948,
+    "turn": 7,
+    "temporary": 1,
+    "live": 0,
+    "match": 1
+   },
+   {
+    "duel": "92003346",
+    "card": 41613948,
+    "turn": 10,
+    "temporary": 1,
+    "live": 0,
+    "match": 0
+   }
+  ]
+ },
+ "r5": {
+  "checks": 123,
+  "refused": [],
+  "stale_or_kept": [
+   {
+    "duel": "92001586",
+    "card": 41613948,
+    "turn": 12,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92001586",
+    "card": 41613948,
+    "turn": 16,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92001925",
+    "card": 41613948,
+    "turn": 13,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92002129",
+    "card": 73125233,
+    "turn": 37,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92002137",
+    "card": 41613948,
+    "turn": 41,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92002650",
+    "card": 63977008,
+    "turn": 10,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92002650",
+    "card": 63977008,
+    "turn": 14,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92002762",
+    "card": 41613948,
+    "turn": 12,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92003143",
+    "card": 12538374,
+    "turn": 15,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92003149",
+    "card": 41613948,
+    "turn": 19,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92003149",
+    "card": 41613948,
+    "turn": 23,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92003149",
+    "card": 41613948,
+    "turn": 27,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92003335",
+    "card": 41613948,
+    "turn": 7,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   },
+   {
+    "duel": "92003346",
+    "card": 41613948,
+    "turn": 10,
+    "temporary": 1,
+    "kept": 1,
+    "match": 1
+   }
+  ]
+ }
+}

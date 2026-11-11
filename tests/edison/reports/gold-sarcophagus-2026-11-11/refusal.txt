@@ -1,0 +1,9 @@
+pass: only_old_core: build.sh: REFUSED: need exactly one core package with early trigger and hardening r5, found 0: none
+pass: only_hardening_r1: build.sh: REFUSED: need exactly one core package with early trigger and hardening r5, found 0: none
+pass: only_hardening_r2: build.sh: REFUSED: need exactly one core package with early trigger and hardening r5, found 0: none
+pass: only_hardening_r3: build.sh: REFUSED: need exactly one core package with early trigger and hardening r5, found 0: none
+pass: only_hardening_r4: build.sh: REFUSED: need exactly one core package with early trigger and hardening r5, found 0: none
+pass: only_no_early_trigger: build.sh: REFUSED: need exactly one core package with early trigger and hardening r5, found 0: none
+pass: no_packages: build.sh: REFUSED: need exactly one core package with early trigger and hardening r5, found 0: none
+pass: wrong_library: build.sh: REFUSED: core library 5ac42d872f002812c2eb6708131ab7c164f2794d7bce1dd6ee1d183411fd9579 is not the ce
+pass: two_matches: build.sh: REFUSED: need exactly one core package with early trigger and hardening r5, found 2: /tmp/tmp.WlG78h

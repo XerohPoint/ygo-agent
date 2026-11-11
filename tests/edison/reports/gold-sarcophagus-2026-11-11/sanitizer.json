@@ -1,0 +1,198 @@
+{
+ "what": "Sanitizer and trace runs for edison-hardening r4 and r5. Modules are hand builds (build/sarc/build.sh) of this worktree's ygopro.cpp against core-r3 (r3 sources) and core-r4 (r4 sources); the trace builds add a report-only check at the turn-start delete (build/sarc/prep_core.py --trace) that prints every pointer still naming an effect about to be deleted, after the fix on r4. r5 sources are build/sarc/core-r4b (core-src commit r4b).",
+ "crash_duels": {
+  "note": "The three duels the first review found on r3 (x-) and the three training-list duels measured on r2 (v1-).",
+  "asan_r3": {
+   "x-86662165": [
+    {
+     "error": "heap-use-after-free",
+     "read_in": "interpreter::push_param",
+     "freed_in": "field::process_turn"
+    }
+   ],
+   "x-86662582": [
+    {
+     "error": "heap-use-after-free",
+     "read_in": "interpreter::push_param",
+     "freed_in": "field::process_turn"
+    }
+   ],
+   "x-86663122": [
+    {
+     "error": "heap-use-after-free",
+     "read_in": "interpreter::push_param",
+     "freed_in": "field::process_turn"
+    }
+   ],
+   "v1-89003179": [
+    {
+     "error": "heap-use-after-free",
+     "read_in": "interpreter::push_param",
+     "freed_in": "field::process_turn"
+    }
+   ],
+   "v1-89003187": [
+    {
+     "error": "heap-use-after-free",
+     "read_in": "interpreter::push_param",
+     "freed_in": "field::process_turn"
+    }
+   ],
+   "v1-89003307": [
+    {
+     "error": "heap-use-after-free",
+     "read_in": "interpreter::push_param",
+     "freed_in": "field::process_turn"
+    }
+   ]
+  },
+  "asan_r4": {
+   "x-86662165": [],
+   "x-86662582": [],
+   "x-86663122": [],
+   "v1-89003179": [],
+   "v1-89003187": [],
+   "v1-89003307": []
+  },
+  "trace_r3_stale_pointers": {
+   "v1-89003179": {
+    "turn_starts": 27,
+    "stale_pointers": {
+     "card_current": 6,
+     "card_temp": 3
+    }
+   },
+   "v1-89003187": {
+    "turn_starts": 31,
+    "stale_pointers": {
+     "card_current": 2,
+     "card_temp": 1
+    }
+   },
+   "v1-89003307": {
+    "turn_starts": 30,
+    "stale_pointers": {
+     "card_temp": 6,
+     "card_current": 3
+    }
+   },
+   "x-86662165": {
+    "turn_starts": 25,
+    "stale_pointers": {
+     "card_current": 1
+    }
+   },
+   "x-86662582": {
+    "turn_starts": 40,
+    "stale_pointers": {
+     "card_current": 15,
+     "card_temp": 3
+    }
+   },
+   "x-86663122": {
+    "turn_starts": 38,
+    "stale_pointers": {
+     "card_current": 3,
+     "card_temp": 1
+    }
+   }
+  },
+  "trace_r4_stale_pointers": {
+   "v1-89003179": {
+    "turn_starts": 27,
+    "stale_pointers": {}
+   },
+   "v1-89003187": {
+    "turn_starts": 31,
+    "stale_pointers": {}
+   },
+   "v1-89003307": {
+    "turn_starts": 30,
+    "stale_pointers": {}
+   },
+   "x-86662165": {
+    "turn_starts": 25,
+    "stale_pointers": {}
+   },
+   "x-86662582": {
+    "turn_starts": 40,
+    "stale_pointers": {}
+   },
+   "x-86663122": {
+    "turn_starts": 38,
+    "stale_pointers": {}
+   }
+  },
+  "trace_r3_stale_pointers_total": {
+   "card_current": 30,
+   "card_temp": 14
+  },
+  "trace_r4_stale_pointers_total": {}
+ },
+ "gold_sarcophagus_set": {
+  "note": "g4: the 110 production-legal corpus lists with Gold Sarcophagus or Jinzo - Returner in the Main Deck, 10 duels each against random production-legal opponents, seeds 91000000-91001099 (build/sarc/mk_g4.py). On r3 each duel ran in its own process (g4s), since the sanitizer stops a process at its first error.",
+  "asan_r3_one_duel_per_process": {
+   "spec_runs": 1100,
+   "errors": [
+    {
+     "spec": "g4s-91000713",
+     "error": "heap-use-after-free",
+     "read_in": "interpreter::push_param",
+     "freed_in": "field::process_turn"
+    },
+    {
+     "spec": "g4s-91000822",
+     "error": "heap-use-after-free",
+     "read_in": "interpreter::push_param",
+     "freed_in": "field::process_turn"
+    }
+   ]
+  },
+  "asan_r4": {
+   "spec_runs": 22,
+   "errors": []
+  }
+ },
+ "corpus_t4": {
+  "note": "The first review's 1,600 corpus duels without copiers (seeds 86662000-86663599), 100 per process; it found 3 errors on r3.",
+  "asan_r4": {
+   "spec_runs": 16,
+   "errors": []
+  }
+ },
+ "training_v1": {
+  "note": "504 training-list duels, seeds 89003000-89003503 (gold-sarcophagus-v1.json in the Dark Panther report found 3 on r2).",
+  "asan_r4": {
+   "spec_runs": 504,
+   "errors": []
+  }
+ },
+ "r5": {
+  "note": "The r5 sanitizer module (out-asan-r5) on every set, the review's Doom Lord duels included. The trace build of r5 (out-trace-r5) found no pointer to a deleted effect at any of 191 turn starts in the six recorded duels.",
+  "asan_r5": {
+   "g4": {
+    "spec_runs": 22,
+    "errors": []
+   },
+   "t4": {
+    "spec_runs": 16,
+    "errors": []
+   },
+   "v1": {
+    "spec_runs": 504,
+    "errors": []
+   },
+   "dl_review_crash_duels": {
+    "spec_runs": 20,
+    "errors": []
+   },
+   "d2_review_doom_lord_set": {
+    "spec_runs": 40,
+    "errors": []
+   }
+  },
+  "trace_r5_stale_pointers": 0,
+  "trace_r5_turn_starts": 191,
+  "doom_lord_sets": "dl: the 20 duels the review found crashing on r4, one per process (seeds 92001586-92003346). d2: the review's 2,000 duels of fl22344, the only corpus list with Destiny HERO - Doom Lord, against the six Dark Panther lists, seeds 92001566-92003565, 50 per process."
+ }
+}
