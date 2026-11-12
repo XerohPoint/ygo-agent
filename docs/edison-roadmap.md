@@ -1,6 +1,7 @@
 # Edison AI roadmap
 
 Started November 4, 2026. Owner: project supervisor session. Read
+[the Fable 5.2 handoff](fable-5.2-handoff-2026-11-12.md) for the current state and working rules, and
 [the Opus 5.5 handoff](opus-5.5-handoff-2026-11-04.md) for simulator invariants
 and experiment history. This file holds direction; evidence stays in study reports.
 
