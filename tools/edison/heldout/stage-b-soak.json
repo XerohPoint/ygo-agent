@@ -795,8 +795,9 @@
  "decisions": 2613994,
  "max_options": 51,
  "longest_duel": 1016,
+ "lists_with_a_prompt_only_the_wider_tables_hold": 21,
  "void_cells": 0,
  "void_lists": [],
  "void_reasons": {},
- "seconds": 115
+ "seconds": 190
 }

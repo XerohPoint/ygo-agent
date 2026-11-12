@@ -1,0 +1,414 @@
+{
+ "unit": {
+  "failed": []
+ },
+ "static": {
+  "identity_sha256": "800fb1dab816fc098a86c4781ac190946ae2a9b2305b935f0560008cf1e15839",
+  "ids": 4042,
+  "unknown_row": 4043,
+  "known_ids": 247,
+  "rows": 225,
+  "different": []
+ },
+ "training": {
+  "duels": 1680,
+  "seeds": [
+   89280004,
+   89281759
+  ],
+  "identities": 17332203,
+  "read_the_unknown_row": 0,
+  "unknown_cards_seen": {},
+  "known_rows": 225,
+  "known_rows_seen": 225,
+  "known_rows_never_seen": []
+ },
+ "collect_v2": {
+  "decisions": 18371,
+  "lists_available": 780,
+  "native_sha256": "d1f1f701e571cdaecc4270283bc0ae8e87533e0021ddf4ee84929dae81359983",
+  "void": [],
+  "untrained_copies_per_list": [
+   35,
+   32,
+   31,
+   29,
+   27,
+   27,
+   26,
+   26,
+   26,
+   24,
+   23,
+   22,
+   21,
+   21,
+   20,
+   20,
+   20,
+   13,
+   10,
+   8,
+   7,
+   5,
+   4,
+   3,
+   3,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ "inputs_v2": {
+  "code_list": "v2",
+  "mutant": null,
+  "planted_id": null,
+  "records": 18371,
+  "rejected_by_audit": 0,
+  "actions.identities": 37556,
+  "actions.not_the_expected_row": 0,
+  "actions.read_unknown_row": 5792,
+  "actions.reads_an_uncovered_row": 0,
+  "decisions": 18371,
+  "history.identities": 125188,
+  "history.not_the_expected_row": 0,
+  "history.read_unknown_row": 16716,
+  "history.reads_an_uncovered_row": 0,
+  "other_bytes_changed": 0,
+  "rows.identities": 707538,
+  "rows.not_the_expected_row": 0,
+  "rows.read_unknown_row": 90960,
+  "rows.reads_an_uncovered_row": 0,
+  "violations": 0,
+  "examples": {}
+ },
+ "collect_v1": {
+  "decisions": 16558,
+  "lists_available": 51,
+  "native_sha256": "d1f1f701e571cdaecc4270283bc0ae8e87533e0021ddf4ee84929dae81359983",
+  "void": [],
+  "untrained_copies_per_list": [
+   2,
+   2,
+   2,
+   2,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ "inputs_v1": {
+  "code_list": "v1",
+  "mutant": null,
+  "planted_id": null,
+  "records": 16558,
+  "rejected_by_audit": 0,
+  "actions.identities": 34127,
+  "actions.not_the_expected_row": 0,
+  "actions.read_unknown_row": 0,
+  "actions.reads_an_uncovered_row": 277,
+  "decisions": 16558,
+  "history.identities": 112980,
+  "history.not_the_expected_row": 0,
+  "history.read_unknown_row": 0,
+  "history.reads_an_uncovered_row": 883,
+  "other_bytes_changed": 0,
+  "rows.identities": 651042,
+  "rows.not_the_expected_row": 0,
+  "rows.read_unknown_row": 0,
+  "rows.reads_an_uncovered_row": 4553,
+  "violations": 5713,
+  "examples": {
+   "rows": {
+    "Nobleman of Extermination": 1103,
+    "Blackwing - Elphin the Raven": 922,
+    "Dark Dust Spirit": 873,
+    "My Body as a Shield": 695,
+    "Thunder King Rai-Oh": 477,
+    "Fossil Dyna Pachycephalo": 194,
+    "Elemental HERO Bubbleman": 179,
+    "Snipe Hunter": 110
+   },
+   "actions": {
+    "Nobleman of Extermination": 72,
+    "Blackwing - Elphin the Raven": 54,
+    "Elemental HERO Bubbleman": 35,
+    "My Body as a Shield": 33,
+    "Dark Dust Spirit": 31,
+    "Fossil Dyna Pachycephalo": 24,
+    "Thunder King Rai-Oh": 16,
+    "Snipe Hunter": 12
+   },
+   "history": {
+    "Blackwing - Elphin the Raven": 180,
+    "Dark Dust Spirit": 172,
+    "My Body as a Shield": 165,
+    "Nobleman of Extermination": 158,
+    "Thunder King Rai-Oh": 90,
+    "Snipe Hunter": 50,
+    "Fossil Dyna Pachycephalo": 43,
+    "Elemental HERO Bubbleman": 25
+   }
+  }
+ },
+ "mutants": {
+  "no_map": {
+   "planted_id": null,
+   "actions.not_the_expected_row": 5977,
+   "actions.read_unknown_row": 0,
+   "actions.reads_an_uncovered_row": 5977,
+   "history.not_the_expected_row": 17391,
+   "history.read_unknown_row": 0,
+   "history.reads_an_uncovered_row": 17391,
+   "other_bytes_changed": 0,
+   "rows.not_the_expected_row": 93058,
+   "rows.read_unknown_row": 0,
+   "rows.reads_an_uncovered_row": 93058,
+   "violations": 232852
+  },
+  "skip_rows": {
+   "planted_id": null,
+   "actions.not_the_expected_row": 0,
+   "actions.read_unknown_row": 5792,
+   "actions.reads_an_uncovered_row": 0,
+   "history.not_the_expected_row": 0,
+   "history.read_unknown_row": 16716,
+   "history.reads_an_uncovered_row": 0,
+   "other_bytes_changed": 0,
+   "rows.not_the_expected_row": 93058,
+   "rows.read_unknown_row": 0,
+   "rows.reads_an_uncovered_row": 93058,
+   "violations": 186116
+  },
+  "skip_actions": {
+   "planted_id": null,
+   "actions.not_the_expected_row": 5977,
+   "actions.read_unknown_row": 0,
+   "actions.reads_an_uncovered_row": 5977,
+   "history.not_the_expected_row": 0,
+   "history.read_unknown_row": 16716,
+   "history.reads_an_uncovered_row": 0,
+   "other_bytes_changed": 0,
+   "rows.not_the_expected_row": 0,
+   "rows.read_unknown_row": 90960,
+   "rows.reads_an_uncovered_row": 0,
+   "violations": 11954
+  },
+  "skip_history": {
+   "planted_id": null,
+   "actions.not_the_expected_row": 0,
+   "actions.read_unknown_row": 5792,
+   "actions.reads_an_uncovered_row": 0,
+   "history.not_the_expected_row": 17391,
+   "history.read_unknown_row": 0,
+   "history.reads_an_uncovered_row": 17391,
+   "other_bytes_changed": 0,
+   "rows.not_the_expected_row": 0,
+   "rows.read_unknown_row": 90960,
+   "rows.reads_an_uncovered_row": 0,
+   "violations": 34782
+  },
+  "known_to_unknown": {
+   "planted_id": "Stardust Dragon",
+   "actions.not_the_expected_row": 112,
+   "actions.read_unknown_row": 5904,
+   "actions.reads_an_uncovered_row": 0,
+   "history.not_the_expected_row": 232,
+   "history.read_unknown_row": 16948,
+   "history.reads_an_uncovered_row": 0,
+   "other_bytes_changed": 0,
+   "rows.not_the_expected_row": 21092,
+   "rows.read_unknown_row": 112052,
+   "rows.reads_an_uncovered_row": 0,
+   "violations": 21436
+  },
+  "unknown_keeps_own_row": {
+   "planted_id": "Alien Shocktrooper",
+   "actions.not_the_expected_row": 166,
+   "actions.read_unknown_row": 5626,
+   "actions.reads_an_uncovered_row": 166,
+   "history.not_the_expected_row": 444,
+   "history.read_unknown_row": 16272,
+   "history.reads_an_uncovered_row": 444,
+   "other_bytes_changed": 0,
+   "rows.not_the_expected_row": 2972,
+   "rows.read_unknown_row": 87988,
+   "rows.reads_an_uncovered_row": 2972,
+   "violations": 7164
+  }
+ },
+ "actor": {
+  "decisions": 3096,
+  "dropout.actions.hidden": 2293,
+  "dropout.actions.identities": 7405,
+  "dropout.actions.wrong": 0,
+  "dropout.games": 24,
+  "dropout.games_with_hidden_rows": 17,
+  "dropout.history.hidden": 7313,
+  "dropout.history.identities": 23302,
+  "dropout.history.wrong": 0,
+  "dropout.other_bytes_changed": 0,
+  "dropout.rows.hidden": 36014,
+  "dropout.rows.identities": 109860,
+  "dropout.rows.wrong": 0,
+  "forced.actions.hidden": 1765,
+  "forced.actions.identities": 7405,
+  "forced.actions.wrong": 0,
+  "forced.games": 24,
+  "forced.games_with_hidden_rows": 24,
+  "forced.history.hidden": 5815,
+  "forced.history.identities": 23302,
+  "forced.history.wrong": 0,
+  "forced.other_bytes_changed": 0,
+  "forced.rows.hidden": 26362,
+  "forced.rows.identities": 109860,
+  "forced.rows.wrong": 0,
+  "violations": 0,
+  "power": true,
+  "evaluated": {
+   "decisions": 3977,
+   "with_an_unknown_row": 3948,
+   "moved_when_swapped": 3789,
+   "max_error": {
+    "value": 2.9802322387695312e-06,
+    "logp": 2.1558832494772417e-05,
+    "value_if_unmapped": 0.3428538292646408
+   },
+   "failures": []
+  }
+ },
+ "native": {
+  "net_file_sha256": "9514b3ff6648e5237461758f9f5f1b3942061a53e6ca2bbf813b77e521eb6035",
+  "config": "4042,32,64,2,4,128,1",
+  "records": 18371,
+  "correct": {
+   "failed_gates": [],
+   "greedy_mismatches": 0,
+   "value_error_max": 2.44007e-06,
+   "logit_error_scaled_max": 1.83582e-05
+  },
+  "faults": {
+   "card rows": {
+    "failed_gates": [
+     "logit_error.max",
+     "logit_error_scaled.max",
+     "logit_error_scaled.mean",
+     "logit_error_scaled.p99.9",
+     "row_error.mean",
+     "state_error.mean",
+     "value_error.max",
+     "value_error.mean",
+     "value_error.p99.9"
+    ],
+    "greedy_mismatches": 391,
+    "value_error_max": 0.279964,
+    "logit_error_scaled_max": 1.69175
+   },
+   "offered actions": {
+    "failed_gates": [
+     "logit_error.max",
+     "logit_error_scaled.max",
+     "logit_error_scaled.mean",
+     "logit_error_scaled.p99.9"
+    ],
+    "greedy_mismatches": 188,
+    "value_error_max": 2.44007e-06,
+    "logit_error_scaled_max": 0.560156
+   },
+   "own history": {
+    "failed_gates": [
+     "logit_error.max",
+     "logit_error_scaled.max",
+     "logit_error_scaled.mean",
+     "logit_error_scaled.p99.9",
+     "row_error.mean",
+     "state_error.mean",
+     "value_error.max",
+     "value_error.mean",
+     "value_error.p99.9"
+    ],
+    "greedy_mismatches": 22,
+    "value_error_max": 0.150596,
+    "logit_error_scaled_max": 0.166307
+   }
+  },
+  "load": {
+   "correct": [
+    0,
+    "LOADED"
+   ],
+   "correct_with_the_map_named": [
+    0,
+    "LOADED"
+   ],
+   "caller_names_another_map": [
+    1,
+    "REFUSED: identity map is not the expected one"
+   ],
+   "caller_expects_no_map": [
+    1,
+    "REFUSED: identity map expectation differs from the file's format"
+   ],
+   "map_out_of_range": [
+    1,
+    "REFUSED: identity map entry out of range"
+   ],
+   "map_moves_empty_id": [
+    1,
+    "REFUSED: identity map row does not read itself"
+   ],
+   "map_sends_card_to_empty": [
+    1,
+    "REFUSED: identity map moves the empty id"
+   ],
+   "map_row_does_not_read_itself": [
+    1,
+    "REFUSED: identity map row does not read itself"
+   ],
+   "map_fraction": [
+    1,
+    "REFUSED: identity map entry out of range"
+   ],
+   "map_moves_unknown_row": [
+    1,
+    "REFUSED: identity map row does not read itself"
+   ]
+  },
+  "decisions_with_values_only_the_wider_tables_hold": {
+   "offered": 22,
+   "in_history": 156
+  },
+  "failures": []
+ },
+ "failures": [],
+ "verdict": "PASS"
+}

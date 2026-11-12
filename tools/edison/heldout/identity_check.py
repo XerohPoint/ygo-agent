@@ -5,13 +5,17 @@ Code list v2 adds one unknown row and an id -> row map. This check compares what
 network with a second computation of that map, written here from the deck files, the database
 and the scripts. It does not call decks.build_identity or read identity_v2.json.
 
+  unit       remap_ids, game_identity_maps, NetPolicy.infer and the loaders, on small made-up inputs
   static     the map in identity_v2.json equals the one computed here, for every id
+  training   plays the 21 training lists against each other: no visible card may read the unknown row. This is the
+             one check of the map against what training games show, not against the rule that built it
   collect    plays lists with untrained cards, random and rule-based play only, and records every observation
   inputs     on those observations: after pack and the map, every identity in card rows, offered actions
              and own history is the row computed here, nothing else changed, and no identity reads a
              row that no training list covers. --mutant plants a fault that must be caught
   actor      actor.py itself, on training lists: rollouts with identity dropout and with forced unknown
-             ids equal the plain rollouts read through each game's map
+             ids equal the plain rollouts read through each game's map, and the value and log-probability
+             the actor stored are what the network gives on the stored, mapped batch
   native     edison_net.h against the Python network on the same observations, and its planted faults
   all        everything, the mutants, and the same input check on code list v1, where it must fail:
              v1 has no unknown row, so a Side-only card reads a row nothing trained
@@ -20,6 +24,7 @@ No network plays a list here except in `actor`, which uses training lists only. 
 """
 import argparse
 import collections
+from collections import Counter
 import hashlib
 import json
 import os
@@ -138,6 +143,218 @@ def static(args=None):
     print(json.dumps(report))
     if different.size:
         raise SystemExit("identity_v2.json disagrees with this computation")
+    return report
+
+
+def unit(args=None):
+    """Small made-up inputs with known answers. No game is played."""
+    if not V2:
+        raise SystemExit("the unit checks need code list v2")
+    import copy
+    import tempfile
+    import actor
+    from obs import ContractError, game_identity_maps, pad_batch, remap_ids
+    sha, row_of = deck_registry.load_identity()
+    unknown = len(row_of) - 1
+    rng = np.random.default_rng(89200005)
+    failed = []
+
+    def check(name, ok):
+        print(f"{'pass' if ok else 'FAIL'}: {name}")
+        if not ok:
+            failed.append(name)
+
+    def raises(fn, kind=Exception):
+        try:
+            fn()
+        except kind:
+            return True
+        return False
+    # remap_ids: three observations with three different maps, against a plain loop.
+    maps = np.tile(np.arange(len(row_of)), (3, 1))
+    for b in range(3):
+        maps[b, 1:] = rng.permutation(maps[b, 1:])
+    packed = {"cards": rng.integers(0, 256, (3, 5, 45)).astype(np.uint8), "hist": rng.integers(0, 256, (3, 16, 14)).astype(np.uint8),
+              "actions": rng.integers(0, 256, (7, 12)).astype(np.uint8), "offsets": np.array([0, 2, 3, 7])}
+    for key, column in (("cards", 0), ("hist", 1), ("actions", 1)):
+        ids = rng.integers(0, len(row_of), packed[key].shape[:-1])
+        packed[key][..., column], packed[key][..., column + 1] = ids >> 8, ids & 255
+    before = copy.deepcopy(packed)
+    remap_ids(packed, maps)
+    segment = np.repeat(np.arange(3), np.diff(packed["offsets"]))
+    ok = True
+    for key, column in (("cards", 0), ("hist", 1)):
+        want = np.array([[maps[b, i] for i in row] for b, row in enumerate(ids_of(before[key], column))])
+        ok &= np.array_equal(ids_of(packed[key], column), want) and np.array_equal(without_ids(packed[key], column), without_ids(before[key], column))
+    want = np.array([maps[segment[a], i] for a, i in enumerate(ids_of(before["actions"], 1))])
+    ok &= np.array_equal(ids_of(packed["actions"], 1), want) and np.array_equal(without_ids(packed["actions"], 1), without_ids(before["actions"], 1))
+    check("remap_ids maps each observation through its own table and changes nothing else", bool(ok))
+    bad = maps.copy()
+    bad[1, 0] = 5
+    check("remap_ids refuses a map that moves the empty id", raises(lambda: remap_ids(copy.deepcopy(before), bad), ContractError))
+    # game_identity_maps.
+    plain, hidden = game_identity_maps(row_of, None, 7, 3)
+    check("no spec gives the constant map", np.array_equal(plain, np.tile(row_of, (3, 1))) and hidden == [[], [], []])
+    spec = {"dropout": {"clean": 0.3, "max_rate": 0.9}}
+    a, ha = game_identity_maps(row_of, spec, 1000, 6)
+    b, hb = game_identity_maps(row_of, spec, 1001, 6)
+    check("dropout is a function of the game's seed alone", np.array_equal(a[1:], b[:-1]) and ha[1:] == hb[:-1] and any(ha))
+    check("a hidden row takes every id that reads it, and nothing else moves",
+          all(np.array_equal(m == unknown, np.isin(row_of, h) | (row_of == unknown)) and np.array_equal(m[m != unknown], row_of[m != unknown]) for m, h in zip(a, ha)))
+    none, hn = game_identity_maps(row_of, {"dropout": {"clean": 1.0, "max_rate": 1.0}}, 5, 4)
+    check("a clean probability of 1 hides nothing", hn == [[], [], [], []] and np.array_equal(none, np.tile(row_of, (4, 1))))
+    merged = int(next(i for i in range(1, unknown) if row_of[i] not in (i, unknown)))
+    forced, hf = game_identity_maps(row_of, {"unknown_ids": [[merged], []]}, 5, 2)
+    check("a forced id hides its whole row", hf == [[int(row_of[merged])], []] and forced[0][row_of[merged]] == unknown and forced[0][merged] == unknown
+          and np.array_equal(forced[1], row_of))
+    already = int(next(i for i in range(1, unknown) if row_of[i] == unknown))
+    check("forcing an id that is unknown already changes nothing", game_identity_maps(row_of, {"unknown_ids": [[already]]}, 5, 1)[1] == [[]])
+    for name, bad_spec in (("an id past the code list", {"unknown_ids": [[unknown]]}), ("too few lists", {"unknown_ids": []}),
+                           ("an unknown key", {"hide": 1}), ("a rate above 1", {"dropout": {"clean": 0.5, "max_rate": 1.5}})):
+        check(f"game_identity_maps refuses {name}", raises(lambda s=bad_spec: game_identity_maps(row_of, s, 5, 1), ContractError))
+    # The loaders fail closed.
+    rows_known = np.unique(row_of[(row_of != 0) & (row_of != unknown)])
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        meta = json.loads(deck_registry.IDENTITY.read_text())
+        for name, change in (("another code list's hash", lambda m: m.update(codes_sha256="0" * 64)), ("a moved unknown row", lambda m: m.update(unknown_row=7)),
+                             ("a row that does not read itself", lambda m: m["known"].update({str(int(rows_known[0])): already}))):
+            edited = copy.deepcopy(meta)
+            change(edited)
+            (tmp / "identity.json").write_text(json.dumps(edited))
+            check(f"load_identity refuses {name}", raises(lambda: deck_registry.load_identity(tmp / "identity.json"), ValueError))
+        test_sha, config = write_test_checkpoint(tmp / "net")
+        check("a code list v2 checkpoint loads", actor.load_checkpoint(tmp / "net", test_sha)[3] == test_sha)
+        good = json.loads((tmp / "net.json").read_text())
+        for name, change in (("another identity map", lambda m: m.update(identity_sha256="0" * 64)), ("no unknown row", lambda m: m["config"].update(unknown_row=False)),
+                             ("another code list", lambda m: m.update(codes_sha256="0" * 64)), ("the v1 format", lambda m: m.update(format="edison_net_v1"))):
+            edited = copy.deepcopy(good)
+            change(edited)
+            (tmp / "net.json").write_text(json.dumps(edited))
+            check(f"load_checkpoint refuses {name}", raises(lambda: actor.load_checkpoint(tmp / "net"), ValueError))
+        (tmp / "net.json").write_text(json.dumps(good))
+        check("load_checkpoint refuses a code list v1 checkpoint on v2", raises(lambda: actor.load_checkpoint(V1_CHECKPOINT), ValueError))
+        # load_v1_into_v2 keeps v1's rows and adds only what v1 lacks.
+        import flax
+        v1 = flax.serialization.msgpack_restore(V1_CHECKPOINT.with_suffix(".msgpack").read_bytes())
+        _, moved, _, _ = actor.load_v1_into_v2(V1_CHECKPOINT)
+        old, new = np.asarray(v1["card_id"]), np.asarray(moved["card_id"])
+        rows = np.unique(row_of[(row_of != 0) & (row_of != unknown)])
+        check("the baseline keeps v1's identity rows, with the mean of the known rows as its unknown row",
+              np.array_equal(new[:len(old)], old) and not new[len(old):-1].any() and np.allclose(new[-1], old[rows].mean(axis=0)))
+        same = all(np.array_equal(np.asarray(moved[k]["embedding"])[:len(np.asarray(v1[k]["embedding"]))], np.asarray(v1[k]["embedding"]))
+                   and not np.asarray(moved[k]["embedding"])[len(np.asarray(v1[k]["embedding"])):].any() for k in ("action_msg", "action_number", "action_place"))
+        others = all(np.array_equal(np.asarray(moved[k]["kernel"]), np.asarray(v1[k]["kernel"])) for k in ("action_in", "logit_hidden", "value_hidden"))
+        check("the baseline's wider action tables are v1's rows and zeros, and its other weights are v1's", same and others)
+        # NetPolicy.infer applies the map itself.
+        policy = actor.NetPolicy(tmp / "net", test_sha)
+        raw = {"cards": np.zeros((1, 3, 45), np.uint8), "n_rows": np.array([3]), "actions": np.zeros((2, 12), np.uint8), "offsets": np.array([0, 2]),
+               "hist": np.zeros((1, 16, 14), np.uint8), "decision": np.zeros((1, 12), np.int32), "global": np.zeros((1, 23), np.uint8)}
+        known = int(rows[0])
+        for key, where, column in (("cards", (0, 0), 0), ("cards", (0, 1), 0), ("actions", (0,), 1), ("hist", (0, 0), 1)):
+            cid = known if where == (0, 1) else already
+            raw[key][where + (column,)], raw[key][where + (column + 1,)] = cid >> 8, cid & 255
+        raw["cards"][0, :, 2], raw["hist"][0, 0, 3], raw["actions"][:, 0] = 3, 1, (1, 2)
+        through, mapped = copy.deepcopy(raw), copy.deepcopy(raw)
+        logits, value = policy.infer(through)
+        check("infer rewrites the batch it is given to what the network read",
+              ids_of(through["cards"], 0)[0].tolist() == [unknown, known, 0] and ids_of(through["actions"], 1).tolist() == [unknown, 0]
+              and ids_of(through["hist"], 1)[0, 0] == unknown)
+        remap_ids(mapped, row_of[None])
+        direct_logits, direct_value = policy.apply(policy.params, pad_batch(mapped))
+        unmapped_logits, unmapped_value = policy.apply(policy.params, pad_batch(copy.deepcopy(raw)))
+        check("infer on raw ids equals the network on mapped ids", np.allclose(logits, np.asarray(direct_logits)[:2], atol=1e-6) and np.allclose(value, np.asarray(direct_value)[:1], atol=1e-6))
+        check("and differs from the network on unmapped ids", abs(float(np.asarray(unmapped_value)[0]) - float(value[0])) > 1e-4
+              or np.abs(np.asarray(unmapped_logits)[:2] - logits).max() > 1e-4)
+        hide = np.tile(row_of, (1, 1))
+        hide[0][row_of == known] = unknown
+        hidden_logits, hidden_value = policy.infer(copy.deepcopy(raw), hide)
+        check("a game's map reaches the network", abs(float(hidden_value[0]) - float(value[0])) > 1e-5 or np.abs(hidden_logits - logits).max() > 1e-5)
+    print(json.dumps({"failed": failed}))
+    if failed:
+        raise SystemExit(1)
+    return {"failed": failed}
+
+
+TRAINING = {}
+
+
+def training_init():
+    os.environ.update({"OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1"})
+    sys.path[:0] = [str(ROOT), str(ROOT / "ygoenv")]
+    os.chdir(ROOT / "scripts")
+    import ygoenv
+    from ygoenv.ygopro import init_module
+    from ygoai.edison_policy import Heuristic
+    registry = deck_registry.registry()
+    init_module(str(deck_registry.DB), str(deck_registry.CODES), {k: str(v) for k, v in registry.items()})
+    TRAINING.update(ygoenv=ygoenv, heuristic=Heuristic, names=sorted(registry), metadata=deck_registry.card_metadata(),
+                    row_of=deck_registry.load_identity()[1])
+
+
+def training_cell(job):
+    """Four duels of one ordered pair of training lists: two of uniform random play and two of the heuristic, on both seats."""
+    import random
+    from actor import MAX_OPTIONS, MAX_STEPS
+    from obs import OBS_KEYS
+    a, b, seed = job
+    t = TRAINING
+    row_of, games = t["row_of"], 4
+    unknown = len(row_of) - 1
+    env = t["ygoenv"].make("YGOPro-v1", env_type="gymnasium", num_envs=games, num_threads=1, seed=seed, deck1=t["names"][a], deck2=t["names"][b],
+                           play_mode="self", player=-1, async_reset=False, greedy_reward=False, oppo_info=False, max_options=MAX_OPTIONS,
+                           max_steps=MAX_STEPS, max_episode_steps=MAX_STEPS, timeout=10, verbose=False)
+    randoms = [random.Random((seed + e) ^ 0xED150) for e in range(games)]
+    heuristics = {(e, s): t["heuristic"](t["metadata"], seed + e * 2 + s) for e in (2, 3) for s in (0, 1)}
+    unknown_seen, rows_seen, identities = Counter(), set(), 0
+    obs, info = env.reset()
+    while True:
+        ids, counts, seats = (np.asarray(info[k]) for k in ("env_id", "num_options", "to_play"))
+        for key, column in (("cards_", 0), ("actions_", 1), ("h_actions_", 1)):
+            read = ids_of(obs[key], column)
+            read = read[read > 0]
+            identities += read.size
+            rows_seen.update(np.unique(row_of[read]).tolist())
+            unknown_seen.update(read[row_of[read] == unknown].tolist())
+        actions = np.zeros(len(ids), dtype=np.int64)
+        for r, (e, c, s) in enumerate(zip(ids.tolist(), counts.tolist(), seats.tolist())):
+            actions[r] = randoms[e].randrange(c) if e < 2 else heuristics[e, s].choose(obs["cards_"][r], obs["global_"][r], obs["actions_"][r, :c])[0]
+        obs, _, terminated, truncated, info = env.step(actions, ids)
+        if np.any(truncated):
+            raise RuntimeError("environment truncation")
+        keep = [i for i in range(len(terminated)) if not terminated[i]]
+        if not keep:
+            return dict(unknown_seen), sorted(rows_seen), identities
+        obs = {k: obs[k][keep] for k in OBS_KEYS}
+        info = {k: np.asarray(info[k])[keep] for k in ("env_id", "num_options", "legal_options", "action_overflow", "to_play")}
+
+
+def training(args):
+    """Every ordered pair of different training lists, four duels each. Compares the map with the games, not with its own rule."""
+    if not V2:
+        raise SystemExit("the training check needs code list v2")
+    import multiprocessing
+    jobs = [(a, b, SEED_BASE + 80000 + (a * 21 + b) * 4) for a in range(21) for b in range(21) if a != b]
+    with multiprocessing.get_context("spawn").Pool(args.workers, initializer=training_init) as pool:
+        results = pool.map(training_cell, jobs, chunksize=4)
+    _, row_of = deck_registry.load_identity()
+    names = {cid: meta["name"] for cid, meta in deck_registry.card_metadata().items()}
+    unknown_seen, rows_seen, identities = Counter(), set(), 0
+    for seen, rows, count in results:
+        unknown_seen.update(seen)
+        rows_seen.update(rows)
+        identities += count
+    known_rows = set(np.unique(row_of[(row_of != 0) & (row_of != len(row_of) - 1)]).tolist())
+    report = {"duels": len(jobs) * 4, "seeds": [jobs[0][2], jobs[-1][2] + 3], "identities": identities,
+              "read_the_unknown_row": int(sum(unknown_seen.values())),
+              "unknown_cards_seen": {names[int(cid)]: int(n) for cid, n in Counter(unknown_seen).most_common(20)},
+              "known_rows": len(known_rows), "known_rows_seen": len(known_rows & rows_seen),
+              "known_rows_never_seen": sorted(names[r] for r in known_rows - rows_seen)}
+    print(json.dumps(report))
+    if args.json:
+        args.json.write_text(json.dumps(report, indent=1) + "\n")
+    if report["read_the_unknown_row"]:
+        raise SystemExit("a card in a training-list duel reads the unknown row")
     return report
 
 
@@ -319,6 +536,14 @@ def write_test_checkpoint(stem, zero_identity=False):
     first_new = len(deck_registry.load_codes(deck_registry.CODES_V1)[1]) + 1
     table[first_new:-1] = np.random.default_rng(89200001).normal(0, 0.1, table[first_new:-1].shape)
     params["card_id"] = np.zeros_like(table) if zero_identity else table.astype(np.float32)
+    # The same for the action-table rows v1 lacks, which load_v1_into_v2 leaves at zero.
+    from net import WIDE_ACTION_TABLES
+    noise = np.random.default_rng(89200003)
+    for holder, prefix in ((params, "action"), (params["Encoder_0"], "hist")):
+        for name, (narrow, _) in WIDE_ACTION_TABLES.items():
+            wide = np.array(holder[f"{prefix}_{name}"]["embedding"])
+            wide[narrow:] = noise.normal(0, 0.1, wide[narrow:].shape)
+            holder[f"{prefix}_{name}"]["embedding"] = wide.astype(np.float32)
     raw = flax.serialization.msgpack_serialize(params)
     sha = hashlib.sha256(raw).hexdigest()
     params_path, meta_path = checkpoint_paths(stem)
@@ -348,7 +573,7 @@ def actor(args):
     games = 4
     clean, max_rate = 0.25, 0.8
     spec = {"kind": "net", "checkpoint": str(out / "zero-identity"), "sha256": sha, "greedy": False}
-    known_ids = np.nonzero((table != 0) & (table != unknown))[0][:-1]
+    known_ids = np.nonzero((table != 0) & (table != unknown))[0]
     known_rows = np.unique(table[known_ids])
     rng = np.random.default_rng(89200002)
     jobs, plans = [], []
@@ -419,12 +644,80 @@ def actor(args):
     report = dict(sorted(stats.items()))
     report["violations"] = sum(v for k, v in stats.items() if k.endswith((".wrong", "other_bytes_changed")))
     report["power"] = all(stats[f"{name}.{site}.hidden"] > 0 for name in ("dropout", "forced") for site, _, _ in SITES)
+    report["evaluated"] = evaluated_batch(out, names, known_ids, unknown, args)
     print(json.dumps(report))
     if args.json:
         args.json.write_text(json.dumps(report, indent=1) + "\n")
-    if report["violations"] or not report["power"]:
+    if report["violations"] or not report["power"] or report["evaluated"]["failures"]:
         raise SystemExit("actor identity check failed")
     return report
+
+
+def evaluated_batch(out, names, known_ids, unknown, args):
+    """Was the stored batch the one the network evaluated? A network whose choices depend on identity plays training
+    lists with forced hidden ids. Each stored value and chosen log-probability must be what the network gives on the
+    stored arrays, applied here directly. A network fed unmapped ids while the mapped ones were stored would differ,
+    and the last column shows by how much: the same arrays with every unknown-row id swapped for a known row."""
+    import jax
+    from actor import Pool, load_checkpoint
+    from net import EdisonNet
+    from obs import pad_batch, segment_distribution
+    sha, _ = write_test_checkpoint(out / "transplant")
+    spec = {"kind": "net", "checkpoint": str(out / "transplant"), "sha256": sha, "greedy": False}
+    rng = np.random.default_rng(89200004)
+    games, jobs = 4, []
+    for cell in range(args.cells):
+        seed = args.seed + 5000 + cell * games
+        forced = [sorted(set(rng.choice(known_ids, size=60).tolist())) for _ in range(games)]
+        jobs.append({"seed": seed, "games": games, "deck0": names[(cell * 3 + 1) % 21], "deck1": names[(cell * 3 + 9) % 21],
+                     "policies": [spec, spec], "collect": [True, True], "identity": {"unknown_ids": forced},
+                     "rollout": str(out / f"evaluated-{cell}.npz")})
+    pool = Pool(args.workers, out / "logs")
+    try:
+        results = pool.map(jobs)
+    finally:
+        pool.close()
+    if any(r["status"] != "PASS" for r in results):
+        raise SystemExit(f"evaluated-batch cell void: {[r.get('reason') for r in results]}")
+    config, params, _, _ = load_checkpoint(out / "transplant")
+    model = EdisonNet(config)
+    apply = jax.jit(lambda p, b: model.apply({"params": p}, b))
+    worst = {"value": 0.0, "logp": 0.0, "value_if_unmapped": 0.0}
+    moved = decisions = with_unknown = 0
+    for job in jobs:
+        data = dict(np.load(job["rollout"]))
+        offsets = np.r_[0, np.cumsum(data["sizes"])]
+        for start in range(0, len(data["chosen"]), 64):
+            stop = min(start + 64, len(data["chosen"]))
+            packed = {"cards": data["cards"][start:stop].copy(), "n_rows": data["n_rows"][start:stop],
+                      "actions": data["actions"][offsets[start]:offsets[stop]].copy(), "offsets": offsets[start:stop + 1] - offsets[start],
+                      "hist": data["hist"][start:stop].copy(), "decision": data["decision"][start:stop], "global": data["global"][start:stop]}
+
+            def evaluate(batch):
+                logits, values = apply(params, pad_batch(batch))
+                logp, _ = segment_distribution(np.asarray(logits)[:int(batch["offsets"][-1])].astype(np.float64), batch["offsets"])
+                return np.asarray(values)[:stop - start].astype(np.float64), logp[batch["offsets"][:-1] + data["chosen"][start:stop]]
+            value, logp = evaluate(packed)
+            worst["value"] = max(worst["value"], float(np.abs(value - data["value"][start:stop]).max()))
+            worst["logp"] = max(worst["logp"], float(np.abs(logp - data["logp"][start:stop]).max()))
+            has = np.array([(ids_of(packed["cards"][i], 0) == unknown).any() for i in range(stop - start)])
+            for key, column in (("cards", 0), ("actions", 1), ("hist", 1)):
+                ids = ids_of(packed[key], column)
+                packed[key][..., column] = np.where(ids == unknown, 0, packed[key][..., column])
+                packed[key][..., column + 1] = np.where(ids == unknown, 1, packed[key][..., column + 1])
+            other, _ = evaluate(packed)
+            delta = np.abs(other - data["value"][start:stop])
+            worst["value_if_unmapped"] = max(worst["value_if_unmapped"], float(delta.max()))
+            moved += int((delta[has] > 1e-3).sum())
+            with_unknown += int(has.sum())
+            decisions += stop - start
+    failures = []
+    if worst["value"] > 1e-4 or worst["logp"] > 1e-3:
+        failures.append("the stored value or log-probability is not the network's on the stored batch")
+    if with_unknown == 0 or moved < 0.5 * with_unknown:
+        failures.append("swapping the unknown row out barely changes the value, so this check has no power")
+    return {"decisions": decisions, "with_an_unknown_row": with_unknown, "moved_when_swapped": moved,
+            "max_error": worst, "failures": failures}
 
 
 def gate_failures(report):
@@ -471,13 +764,15 @@ def native(args):
     report = {"net_file_sha256": exported["file_sha256"], "config": text, "records": correct["records"], "correct": row(correct),
               "faults": {site: row(diff(f"net_diff_fault{fault}", f"fault{fault}")) for fault, site in NATIVE_FAULTS.items()}, "load": {}}
 
-    def probe(path, config_text):
-        got = subprocess.run([str(BIN / "net_load_test"), str(path), sha, exported["codes_sha256"], config_text],
+    def probe(path, config_text, *id_row_sha):
+        got = subprocess.run([str(BIN / "net_load_test"), str(path), sha, exported["codes_sha256"], config_text, *id_row_sha],
                              capture_output=True, text=True)
         return [got.returncode, (got.stdout + got.stderr).strip()[-120:]]
 
     # A version 2 file refuses a caller that expects no identity map, and a broken map refuses to load.
     report["load"]["correct"] = probe(out / "transplant.ednet", text)
+    report["load"]["correct_with_the_map_named"] = probe(out / "transplant.ednet", text, exported["id_row_sha256"])
+    report["load"]["caller_names_another_map"] = probe(out / "transplant.ednet", text, "0" * 64)
     report["load"]["caller_expects_no_map"] = probe(out / "transplant.ednet", text[:-2])
     from actor import load_checkpoint
     from net import BIN_POINTS, BIN_WIDTHS
@@ -499,9 +794,18 @@ def native(args):
     if report["correct"]["failed_gates"]:
         failures.append("the correct build fails its gates")
     failures += [f"the fault at {site} passes the gates" for site, r in report["faults"].items() if not r["failed_gates"]]
-    if report["load"]["correct"][0] != 0:
-        failures.append("the correct file does not load")
-    failures += [f"{name} loads" for name, (code, _) in report["load"].items() if name != "correct" and code == 0]
+    loads = ("correct", "correct_with_the_map_named")
+    failures += [f"{name} does not load" for name in loads if report["load"][name][0] != 0]
+    failures += [f"{name} loads" for name, (code, _) in report["load"].items() if name not in loads and code == 0]
+    wide = collections.Counter()
+    from dump_format import RECORD
+    for record in np.memmap(decisions, dtype=RECORD, mode="r"):
+        offered = record["actions"][:record["counts"]]
+        wide["offered"] += bool(np.any((offered[:, 3] > 16) | (offered[:, 9] > 13) | (offered[:, 10] > 31)))
+        wide["in_history"] += bool(np.any((record["hist"][:, 3] > 16) | (record["hist"][:, 9] > 13) | (record["hist"][:, 10] > 31)))
+    report["decisions_with_values_only_the_wider_tables_hold"] = dict(wide)
+    if not wide["offered"] or not wide["in_history"]:
+        failures.append("no decision exercises the wider action tables")
     report["failures"] = failures
     print(json.dumps(report))
     if args.json:
@@ -524,7 +828,10 @@ def run_all(args):
             raise SystemExit(f"{command[0]} on code list {code_list} failed:\n{done.stdout[-2000:]}\n{done.stderr[-3000:]}")
         return done
 
-    summary = {"static": json.loads(call("v2", "static").stdout.strip().splitlines()[-1])}
+    summary = {"unit": json.loads(call("v2", "unit").stdout.strip().splitlines()[-1]),
+               "static": json.loads(call("v2", "static").stdout.strip().splitlines()[-1])}
+    call("v2", "training", "--json", out / "training.json")
+    summary["training"] = json.loads((out / "training.json").read_text())
     for code_list, seed in (("v2", SEED_BASE), ("v1", SEED_BASE + 20000)):
         call(code_list, "collect", "--output", out / code_list, "--seed", seed, "--lists", args.lists, "--games", args.games)
         collected = json.loads((out / code_list / "collect.json").read_text())
@@ -563,6 +870,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="mode", required=True)
     sub.add_parser("static").set_defaults(run=static)
+    sub.add_parser("unit").set_defaults(run=unit)
+    t = sub.add_parser("training")
+    t.add_argument("--workers", type=int, default=12)
+    t.add_argument("--json", type=Path)
+    t.set_defaults(run=training)
     c = sub.add_parser("collect")
     c.add_argument("--output", type=Path, required=True)
     c.add_argument("--seed", type=int, default=SEED_BASE)

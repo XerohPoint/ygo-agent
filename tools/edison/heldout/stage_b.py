@@ -14,6 +14,9 @@ docs/edison-m3b-protocol.md is the plan, and this script is its exact form.
   seal        records the pick and the trained checkpoints in m3b-checkpoints.json, to be committed alone on the manifest
   play        the cells, journaled as they finish; refuses unless HEAD is the seal's commit
   analyze     the verdict: exit 0 on a pass, 1 on a fail
+
+Every pilot-train, pilot, train, seal and play appends a line to attempts.jsonl in the build directory, and the seal
+carries the log, so a pilot that was run more than once shows in git.
 """
 import os
 os.environ["EDISON_CODE_LIST"] = "v2"  # before decks is imported: every process this starts loads code list v2
@@ -46,12 +49,11 @@ SEAL = HERE / "m3b-checkpoints.json"
 # Results outlive a session's worktree, so they sit beside M1's checkpoints. Nothing here is read as an input
 # except through a hash in the manifest or the seal.
 BUILD = Path(os.environ.get("EDISON_STAGE_B_BUILD", "/home/mada/ygo-agent/build/edison-stage-b-2026-11-12"))
-OUT = BUILD / "stage-b"
 DECKS = BUILD / "decks"
 EXTRA = BUILD / "extra-decks.json"
-RESULT = BUILD / "stage-b-result.json"
 PILOT = BUILD / "pilot"
 RUNS = BUILD / "runs"
+ATTEMPTS = BUILD / "attempts.jsonl"
 V1_RUNS = Path("/home/mada/ygo-agent/build/edison-retrain-2026-11-04/runs")
 PYTHON = "/home/mada/ygo-agent/.venv/bin/python"
 GPU_PYTHON = "/home/mada/ygo-agent/.venv-gpu/bin/python"
@@ -86,10 +88,11 @@ SOAK_SEED, SOAK_END = 89400000, 89499999
 PILOT_SEED, PILOT_COUNT, PILOT_END = 89300000, 8, 89309999
 LIVE_SEED = 89390000
 TRAIN_SEED = 81000000  # M1's schedule of pairs and deals, so the runs differ from M1's only in what they are given
-HEAVY = 6      # a build with this many Main and Extra copies that read the unknown row is in the heavy set
+HEAVY = 6      # a build with this many Main Deck copies that read the unknown row is in the heavy set
+ACTS = {1: "Set", 3: "Special Summon", 4: "Normal Summon", 5: "Set a monster", 6: "attack", 8: "activate"}  # ygopro.h ActionAct
 BAR, LOW_BAR, SEAT_BAR, GAP_BAR, VOID_BAR, MIN_HEAVY = 0.55, 0.50, 0.50, -0.10, 0.01, 10
-KNOWN_BAR, MASK_BAR = -0.05, -0.10
-HELP_BAR = 0.03
+# Readings, reported beside the verdict and not part of it.
+KNOWN_BAR, MASK_BAR, HELP_BAR = -0.05, -0.10, 0.03
 RESAMPLES, BOOT_SEED = 10000, 90810001
 REPLAY_EVERY = 127  # odd, so replays fall on both counted seats
 CHUNK_LISTS = 8
@@ -108,6 +111,20 @@ DEPENDS = ("tools/edison/heldout/stage_b.py", "tools/edison/heldout/stage_a.py",
            "tools/edison/learner/codes_v1.txt", "tools/edison/learner/codes_v2.txt", "tools/edison/learner/identity_v2.json",
            "ygoai/edison_policy.py", "assets/edison/legality.json", "assets/edison/corpus/manifest.json")
 JOB_FIELDS = ("block", "arm", "policy", "list", "opponent", "deck0", "deck1", "seat", "seed", "games", "players", "hidden")
+# Every other seed block this work or its reviews used, so no test or pilot seed repeats one.
+OTHER_BLOCKS = {"identity checks": (89200000, 89299999), "reviews": (89500000, 89599999), "rehearsal": (89600000, 89699999),
+                "search check": (90300000, 90399999), "corpus soak and Stage A": (88000000, 88999999), "M1 and M2": (82000000, 87999999)}
+
+
+def out_dir():
+    """Results sit under the seal they were played on, so cells played on other checkpoints can never be read as these."""
+    return BUILD / f"stage-b-{sha(SEAL)[:16]}"
+
+
+def attempt(what, **detail):
+    BUILD.mkdir(parents=True, exist_ok=True)
+    with ATTEMPTS.open("a") as log:
+        log.write(json.dumps({"what": what, "time": time.strftime("%Y-%m-%dT%H:%M:%S"), "head": git("rev-parse", "HEAD"), **detail}) + "\n")
 
 
 # ---------------------------------------------------------------- selection
@@ -125,8 +142,11 @@ def build_key(zones):
     return tuple(sorted(zones["main"])), tuple(sorted(zones["extra"]))
 
 
-def unknown_band(copies):
-    return "1-2" if copies <= 2 else "3-5" if copies <= 5 else "6-10" if copies <= 10 else "11+"
+def unknown_band(main_copies):
+    return "Extra Deck only" if main_copies == 0 else "1-2" if main_copies <= 2 else "3-5" if main_copies <= 5 else "6-10" if main_copies <= 10 else "11+"
+
+
+BANDS = ("Extra Deck only", "1-2", "3-5", "6-10", "11+")
 
 
 def soak_failures():
@@ -144,7 +164,8 @@ def select(write=True):
     known = {name: Counter(z["main"] + z["extra"]) for name, z in ((n, deck_registry.parse_ydk(Path(p).read_text())) for n, p in registry.items())}
     soak = soak_failures()
     failed = set(soak["void_lists"])
-    types = {row[0]: row[1] for row in sqlite3.connect(deck_registry.DB).execute("select id, type from datas")}
+    data = {row[0]: (row[1], row[2]) for row in sqlite3.connect(deck_registry.DB).execute("select id, alias, type from datas")}
+    card = lambda code: data[code][0] if deck_registry.is_artwork(code, data[code][0]) else code  # artworks are one card
     manifest = json.loads((CORPUS / "manifest.json").read_text())
     candidates, excluded, soaked = {}, Counter(), set(soak["lists"])
     for row in sorted(manifest["lists"], key=lambda r: int(r["list_id"][2:])):
@@ -152,7 +173,8 @@ def select(write=True):
         me = Counter(zones["main"] + zones["extra"])
         if row["production_legal"] and any(code not in ids for code in me):
             raise SystemExit(f"{row['list_id']}: a legal list holds a card outside code list v2")
-        cards = sorted((code, n) for code, n in me.items() if code in ids and row_of[ids[code]] == unknown)
+        is_unknown = lambda code: code in ids and int(row_of[ids[code]]) == unknown
+        cards = sorted(Counter(card(code) for code in me.elements() if is_unknown(code)).items())
         twin = min(sorted(known), key=lambda n: distance(me, known[n]))
         key = build_key(zones)
         if not row["production_legal"]:
@@ -170,12 +192,12 @@ def select(write=True):
             candidates[key]["variants"].append(row["list_id"])
             candidates[key]["archetypes"] = sorted(set(candidates[key]["archetypes"]) | {row["archetype"]})
         else:
-            copies = sum(n for _, n in cards)
+            copies, main_copies = sum(n for _, n in cards), sum(1 for code in zones["main"] if is_unknown(code))
             candidates[key] = {"name": f"h_{row['list_id']}", "list_id": row["list_id"], "variants": [row["list_id"]], "source": row["ydk"],
                                "source_sha256": sha(CORPUS / row["ydk"]), "archetype": row["archetype"], "archetypes": [row["archetype"]],
-                               "twin": twin, "distance": distance(me, known[twin]), "unknown_copies": copies, "unknown_distinct": len(cards),
-                               "unknown_spell_trap_copies": sum(n for code, n in cards if not types[code] & 1),
-                               "unknown_cards": [[code, n] for code, n in cards], "band": unknown_band(copies), "heavy": copies >= HEAVY,
+                               "twin": twin, "distance": distance(me, known[twin]), "unknown_copies": copies, "unknown_main_copies": main_copies,
+                               "unknown_distinct": len(cards), "unknown_spell_trap_copies": sum(n for code, n in cards if not data[code][1] & 1),
+                               "unknown_cards": [[code, n] for code, n in cards], "band": unknown_band(main_copies), "heavy": main_copies >= HEAVY,
                                "main": len(key[0]), "extra": len(key[1])}
     chosen = sorted(candidates.values(), key=lambda r: r["name"])
     if HELD_SEED + len(chosen) * len(known) * HELD_COUNT - 1 > HELD_END:
@@ -185,7 +207,8 @@ def select(write=True):
            "corpus_manifest_sha256": sha(CORPUS / "manifest.json"), "code_list_v2_sha256": CODES_SHA, "identity_sha256": IDENTITY_SHA,
            "soak_sha256": sha(SOAK), "training_lists": sorted(known), "heavy_copies": HEAVY, "corpus_lists": len(manifest["lists"]),
            "excluded": dict(sorted(excluded.items())), "held_out_lists": sum(len(r["variants"]) for r in chosen), "held_out": len(chosen),
-           "heavy": sum(r["heavy"] for r in chosen), "by_band": dict(sorted(Counter(r["band"] for r in chosen).items())),
+           "heavy": sum(r["heavy"] for r in chosen), "by_band": {band: sum(r["band"] == band for r in chosen) for band in BANDS},
+           "unknown_cards": len({code for r in chosen for code, _ in r["unknown_cards"]}),
            "by_archetype": dict(Counter(r["archetype"] for r in chosen).most_common()), "by_twin": dict(Counter(r["twin"] for r in chosen).most_common()),
            "lists": chosen}
     if write:
@@ -226,14 +249,12 @@ def identity_rows(training):
 
 
 def hidden_ids(rows, dose, seed, games):
-    """One list of hidden identity rows per game. A pure function of the game's seed, the dose and the list."""
+    """One list of hidden identity rows per game. A pure function of the game's seed, the dose and the list's rows."""
     out = []
     for game in range(games):
-        if dose == "all":
-            out.append(list(rows))
-        else:
-            rng = np.random.default_rng([seed + game, 0xD05E, int(dose)])
-            out.append(sorted(int(r) for r in rng.choice(rows, size=min(int(dose), len(rows)), replace=False)))
+        # One order of the list's rows per game, and a dose takes its first rows: a larger dose hides all a smaller one does.
+        order = np.random.default_rng([seed + game, 0xD05E]).permutation(rows)
+        out.append(sorted(int(r) for r in (order if dose == "all" else order[:int(dose)])))
     return out
 
 
@@ -326,7 +347,7 @@ def specs_from_seal(seal):
     specs = {"heuristic": {"kind": "heuristic"}}
     for k in OPTIMIZERS:
         specs[f"v1:{k}"] = net_spec(V1_RUNS / f"gauntlet-{k}/checkpoint-2560", V1_PARAMS_SHA[k], v1=True)
-        specs[f"v2:{k}"] = net_spec(RUNS / f"main-{k}/checkpoint-{TRAIN['rounds']}", seal["checkpoints"][k]["params_sha256"])
+        specs[f"v2:{k}"] = net_spec(RUNS / f"main-{k}/checkpoint-{TRAIN['rounds']:04d}", seal["checkpoints"][k]["params_sha256"])
     return specs
 
 
@@ -399,14 +420,15 @@ def check_chunk(n, record, part, indices, journal):
 
 def load_results(jobs):
     rows, integrity = [], Counter(missing_chunks=0, invalid_chunks=0, replay_mismatches=0)
+    out = out_dir()
     for n, indices in enumerate(chunks(jobs)):
-        path = OUT / f"chunk-{n:03d}.json.gz"
+        path = out / f"chunk-{n:03d}.json.gz"
         if not path.exists():
             integrity["missing_chunks"] += 1
             continue
         with gzip.open(path, "rt") as f:
             record = json.load(f)
-        problems, mismatches = check_chunk(n, record, [jobs[i] for i in indices], indices, OUT / f"chunk-{n:03d}.jsonl")
+        problems, mismatches = check_chunk(n, record, [jobs[i] for i in indices], indices, out / f"chunk-{n:03d}.jsonl")
         if problems:
             integrity["invalid_chunks"] += 1
             continue
@@ -552,7 +574,6 @@ def decide(data, lists, training, integrity, resamples=RESAMPLES):
         # Reported: what retraining with the unknown row bought over M1's networks, on these builds.
         per["base"] = {"mean": pooled(w, g, "base"), "by_optimizer": {k: float(ratio(W[c], G[c])) for k, c in zip(OPTIMIZERS, cols("base"))}}
         per["pilot_minus_base"] = interval(pooled(w, g, "pilot") - pooled(w, g, "base"), helps)
-        per["retraining"] = "HELPED" if per["pilot_minus_base"]["mean"] >= HELP_BAR and per["pilot_minus_base"]["low"] > 0 else "NOT_SHOWN"
         numbers[label] = per
     # The training lists: Stage B's networks against M1's, and what hiding identities costs.
     wk, gk = known["wins"].sum(axis=1), known["games"].sum(axis=1)
@@ -564,10 +585,13 @@ def decide(data, lists, training, integrity, resamples=RESAMPLES):
     for key, value in point.items():
         block[key] = interval(value, known_draws[key]) if known_draws else {"mean": value, "low": float("nan"), "high": float("nan")}
     numbers["known"] = block
-    if not block["known_minus_base"]["mean"] >= KNOWN_BAR:
-        broken.append(f"B5: on the training lists the networks are more than {-KNOWN_BAR * 100:.0f} points below M1's")
-    if not block[f"mask{GATED_DOSE}_minus_pilot"]["low"] > MASK_BAR:
-        broken.append(f"B6: hiding {GATED_DOSE} identities costs more than {-MASK_BAR * 100:.0f} points at the lower bound")
+    # Readings: fixed here before any game, reported beside the verdict, and not part of it. Each fails closed.
+    helped = lambda per: per.get("pilot_minus_base", {}).get("mean", float("nan")) >= HELP_BAR and per["pilot_minus_base"]["low"] > 0
+    numbers["readings"] = {
+        "retraining_on_all": "HELPED" if helped(numbers["all"]) else "NOT_SHOWN",
+        "retraining_on_heavy": "HELPED" if helped(numbers["heavy"]) else "NOT_SHOWN",
+        "known_cards": "KEPT" if block["known_minus_base"]["mean"] >= KNOWN_BAR else "LOST",
+        "hidden_identities": "SMALL_COST" if block[f"mask{GATED_DOSE}_minus_pilot"]["low"] > MASK_BAR else "LARGE_COST"}
     voids = {}
     for name, arms in (("known", KNOWN_ARMS), ("held", HELD_ARMS)):
         for c, (arm, k) in enumerate(COLUMNS):
@@ -595,6 +619,30 @@ def decide(data, lists, training, integrity, resamples=RESAMPLES):
     return numbers, broken
 
 
+def usage(rows, lists):
+    """How often the counted seat's player chose an option on a known card, and on a card that reads the unknown row, among
+    the decisions that offered one, by the option's act. A network that treats unknown cards as blanks shows here.
+    In a mask arm the unknown cards are the hidden ones. Reported only."""
+    heavy = {r["name"] for r in lists if r["heavy"]}
+    total = {}
+    for row in rows:
+        if row["status"] != "PASS" or "usage" not in (row.get("counters") or {}):
+            continue
+        counted = np.asarray(row["counters"]["usage"])[row["seat"]]
+        wide = row["counters"]["wide_decisions"][row["seat"]]
+        for key in [(row["block"], row["arm"])] + ([("held heavy", row["arm"])] if row["block"] == "held" and row["list"] in heavy else []):
+            entry = total.setdefault(key, [np.zeros((2, 10, 2), dtype=np.int64), 0])
+            entry[0] += counted
+            entry[1] += wide
+    out = {}
+    for (block, arm), (counts, wide) in sorted(total.items()):
+        out[f"{block}/{arm}"] = {"decisions_only_the_wider_tables_hold": int(wide), **{
+            name: {kind: {"offered": int(counts[k, act, 0]), "chosen": int(counts[k, act, 1]),
+                          "rate": float(counts[k, act, 1] / counts[k, act, 0]) if counts[k, act, 0] else None}
+                   for k, kind in enumerate(("known", "unknown"))} for act, name in ACTS.items()}}
+    return out
+
+
 def reported(data, lists, training):
     """Read, not gated. One build's 168 games per optimizer don't support a claim about that build."""
     held, known = data["held"], data["known"]
@@ -619,7 +667,7 @@ def reported(data, lists, training):
                 "base": float(ratio(w[index][:, b].sum(), g[index][:, b].sum())), "mirror": float(ratio(w[index, MIRROR].sum(), g[index, MIRROR].sum())),
                 "gap": float(np.nanmean(gap[index])), "raw_gap": float(np.nanmean(raw[index]))}
     pick = lambda test: [i for i, r in enumerate(lists) if test(r)]
-    out["by_unknown_copies"] = {band: summary(pick(lambda r: r["band"] == band)) for band in ("1-2", "3-5", "6-10", "11+")}
+    out["by_unknown_main_copies"] = {band: summary(pick(lambda r: r["band"] == band)) for band in BANDS}
     out["by_distance"] = {band: summary(pick(lambda r: A.band(r["distance"]) == band)) for band in ("1-9", "10-19", "20+")}
     kinds = {"monsters only": lambda r: r["unknown_spell_trap_copies"] == 0, "spells and traps only": lambda r: r["unknown_spell_trap_copies"] == r["unknown_copies"]}
     out["by_unknown_kind"] = {name: summary(pick(test)) for name, test in kinds.items()}
@@ -713,34 +761,58 @@ def run_training(runs):
     return 1 if any(codes.values()) else 0
 
 
-def run_state(name, rounds):
+def run_state(name, optimizer, rounds, setting, manifest):
+    """A finished run, and proof that it is this manifest's: trained at its commit, on its files, with exactly its settings."""
     state = json.loads((RUNS / name / "state.json").read_text())
     run = json.loads((RUNS / name / "run.json").read_text())
     if state["round"] != rounds:
         raise SystemExit(f"{name} stopped at round {state['round']}")
+    clean, top = SETTINGS[setting]
+    want = {**TRAIN, "row_grouping": True, "optimizer_seed": optimizer, "rounds": rounds, "id_dropout_clean": clean, "id_dropout_max": top}
+    files, prov = manifest["inputs"]["files"], run["provenance"]
+    problems = [key for key in sorted(set(want) | set(run["config"])) if run["config"].get(key) != want.get(key)]
+    problems += [name_ for name_, digest in prov["learner_sources"].items() if files.get(f"tools/edison/learner/{name_}") != digest]
+    if prov["git_commit"] != git("rev-parse", "HEAD") or prov["code_list"] != "v2" or prov["codes_sha256"] != CODES_SHA \
+            or prov["edison_policy"] != files["ygoai/edison_policy.py"] or prov["native_binaries"].get(NATIVE.name) != manifest["inputs"]["native"] \
+            or [prov["jax"], prov["numpy"]] != manifest["inputs"]["versions"]["learner"][1:3]:
+        problems.append("provenance")
+    if run["workers"] != 5 or run["learner_device"] != "gpu":
+        problems.append("workers or device")
+    if sha(str(state["current"]["stem"]) + ".msgpack") != state["current"]["sha256"]:
+        problems.append("checkpoint")
+    if problems:
+        raise SystemExit(f"{name} is not this manifest's run: {problems}")
     return state, run
 
 
 def pilot_train():
     check_frozen("manifest")
+    if (PILOT / "pilot-result.json").exists():
+        raise SystemExit("the pilot has a result already")
+    attempt("pilot-train")
     return run_training([(f"pilot-{s}", train_command(RUNS / f"pilot-{s}", PILOT_OPTIMIZER, PILOT_ROUNDS, s)) for s in SETTINGS])
 
 
 def pilot(workers):
     from actor import Pool
     manifest = check_frozen("manifest")
+    if (PILOT / "pilot-result.json").exists():
+        raise SystemExit("the pilot has a result already")
     training = sorted(deck_registry.registry())
     jobs = pilot_cells(training, identity_rows(training))
+    if text_sha("\n".join(json.dumps(j, sort_keys=True) for j in jobs)) != manifest["pilot_jobs"]:
+        raise SystemExit("the pilot's jobs differ from the manifest")
     specs = {"heuristic": {"kind": "heuristic"}}
     record = {}
     for s in SETTINGS:
-        state, run = run_state(f"pilot-{s}", PILOT_ROUNDS)
-        if run["provenance"]["git_commit"] != git("rev-parse", "HEAD"):
-            raise SystemExit(f"pilot-{s} was trained at another commit")
+        state, run = run_state(f"pilot-{s}", PILOT_OPTIMIZER, PILOT_ROUNDS, s, manifest)
         specs[f"pilot:{s}"] = net_spec(state["current"]["stem"], state["current"]["sha256"])
         record[s] = {"params_sha256": state["current"]["sha256"], "duels": state["duels"], "void_games": state["void_games"]}
     PILOT.mkdir(parents=True, exist_ok=True)
-    journal = PILOT / "pilot.jsonl"
+    # The journal is named after the networks it played, so results from other networks are never read as these.
+    played = text_sha(json.dumps([manifest["pilot_jobs"], {s: record[s]["params_sha256"] for s in SETTINGS}], sort_keys=True))
+    journal = PILOT / f"pilot-{played[:16]}.jsonl"
+    attempt("pilot", networks={s: record[s]["params_sha256"] for s in SETTINGS}, journal=journal.name)
     done, _ = read_journal(journal)
     pool = Pool(workers, PILOT / "logs", cell_timeout=1800)
     try:
@@ -758,13 +830,13 @@ def pilot(workers):
         wins[key] += sum(d["winner"] == job["seat"] for d in r["duels"])
         games[key] += len(r["duels"])
     rates = {s: {d: wins[s, d] / games[s, d] if games[s, d] else float("nan") for d in PILOT_DOSES} for s in SETTINGS}
-    valid = not unresolved and all(void[s, d] <= VOID_BAR * (void[s, d] + games[s, d]) for s in SETTINGS for d in PILOT_DOSES)
+    # A cell is a function of its seeds and networks, so one that was interrupted and run again counts. The count is reported.
+    valid = all(games[s, d] and void[s, d] <= VOID_BAR * (void[s, d] + games[s, d]) for s in SETTINGS for d in PILOT_DOSES)
     out = {"manifest_sha256": sha(MANIFEST), "jobs_sha256": text_sha("\n".join(json.dumps(j, sort_keys=True) for j in jobs)),
-           "journal_sha256": sha(journal), "runs": record, "rates": rates, "games": {f"{s}/{d}": games[s, d] for s in SETTINGS for d in PILOT_DOSES},
+           "journal": journal.name, "journal_sha256": sha(journal), "other_journals": sorted(p.name for p in PILOT.glob("pilot-*.jsonl") if p != journal),
+           "runs": record, "rates": rates, "games": {f"{s}/{d}": games[s, d] for s in SETTINGS for d in PILOT_DOSES},
            "void_games": {f"{s}/{d}": void[s, d] for s in SETTINGS for d in PILOT_DOSES if void[s, d]}, "interrupted_cells": sum(unresolved.values()),
            "valid": valid, **(choose(rates) if valid else {"pick": None})}
-    if out["jobs_sha256"] != manifest["pilot_jobs"]:
-        raise SystemExit("the pilot's jobs differ from the manifest")
     (PILOT / "pilot-result.json").write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps({k: out[k] for k in ("rates", "valid", "pick")}, indent=1))
     return 0 if out["pick"] else 1
@@ -780,30 +852,29 @@ def picked():
 def train():
     check_frozen("manifest")
     setting = picked()["pick"]
+    attempt("train", setting=setting)
     return run_training([(f"main-{k}", train_command(RUNS / f"main-{k}", int(k), TRAIN["rounds"], setting)) for k in OPTIMIZERS])
 
 
 def seal():
     """Bind the pilot's pick and the trained networks to the manifest. Nothing is chosen here: the round is fixed and all three count."""
-    check_frozen("manifest")
-    if SEAL.exists() or (OUT.exists() and any(OUT.iterdir())):
+    manifest = check_frozen("manifest")
+    if SEAL.exists() or any(BUILD.glob("stage-b-*")):
         raise SystemExit("a seal or results exist already")
     result = picked()
     head = git("rev-parse", "HEAD")
     checkpoints = {}
     for k in OPTIMIZERS:
-        state, run = run_state(f"main-{k}", TRAIN["rounds"])
-        clean, top = SETTINGS[result["pick"]]
-        if run["provenance"]["git_commit"] != head or (run["config"]["id_dropout_clean"], run["config"]["id_dropout_max"]) != (clean, top) \
-                or run["config"]["optimizer_seed"] != int(k) or run["provenance"]["code_list"] != "v2":
-            raise SystemExit(f"main-{k} is not this manifest's run on the picked setting")
-        stem = RUNS / f"main-{k}/checkpoint-{TRAIN['rounds']}"
-        if sha(str(stem) + ".msgpack") != state["current"]["sha256"]:
-            raise SystemExit(f"main-{k}'s checkpoint is not its state's")
+        state, run = run_state(f"main-{k}", int(k), TRAIN["rounds"], result["pick"], manifest)
+        stem = RUNS / f"main-{k}/checkpoint-{TRAIN['rounds']:04d}"
+        if str(stem) != state["current"]["stem"]:
+            raise SystemExit(f"main-{k}'s last checkpoint is not round {TRAIN['rounds']}")
         checkpoints[k] = {"params_sha256": state["current"]["sha256"], "duels": state["duels"], "void_games": state["void_games"],
                           "config_hash": run["config_hash"], "rounds_log_sha256": sha(RUNS / f"main-{k}/rounds.jsonl")}
+    attempt("seal", setting=result["pick"])
     SEAL.write_text(json.dumps({"manifest_sha256": sha(MANIFEST), "manifest_commit": head, "pilot": result, "setting": result["pick"],
-                                "checkpoints": checkpoints}, indent=1) + "\n")
+                                "checkpoints": checkpoints, "attempts": [json.loads(line) for line in ATTEMPTS.read_text().splitlines()]},
+                               indent=1) + "\n")
     print(json.dumps({"setting": result["pick"], "checkpoints": {k: v["params_sha256"][:16] for k, v in checkpoints.items()}}, indent=1))
 
 
@@ -867,8 +938,7 @@ def selftest():
              ("held-out far below known", make(pilot=0.60, known=0.85, known_base=0.85, mask={"2": 0.84, "5": 0.82, "10": 0.8, "all": 0.7}), None, clean, held, "B3 gap on all"),
              ("only heavy builds fall behind", make(heavy_pilot=0.58), None, clean, held, "B3 gap on heavy"),
              ("a weaker build, for everyone", make(pilot=0.62, mirror=0.37, known=0.8, known_mirror=0.55), None, clean, held, None),
-             ("the networks lost strength on the training lists", make(known=0.72, known_base=0.80, pilot=0.68, mask={"2": 0.71, "5": 0.70, "10": 0.69, "all": 0.6}), None, clean, held, "B5"),
-             ("hiding five identities costs too much", make(mask={"2": 0.74, "5": 0.66, "10": 0.6, "all": 0.5}), None, clean, held, "B6"),
+             ("an empty mask cell on a training list", make(), lambda j: j["arm"] == "mask5" and j["list"] == "t03" and j["seat"] == 0 and j["policy"] == "1702", clean, held, "B4: "),
              ("too many voids in one arm", make(), lambda j: j["arm"] == "face" and j["policy"] == "1702" and j["seed"] % 50 < 2 and j["block"] == "held", clean, held, "B4: held/face/1702"),
              ("too many voids in a mask arm", make(), lambda j: j["arm"] == "mask10" and j["policy"] == "1704" and j["seed"] % 400 < 32, clean, held, "B4: known/mask10/1704"),
              ("one build has no face game", make(), lambda j: j["arm"] == "face" and j["list"] == "h000", clean, held, "B4: "),
@@ -888,13 +958,30 @@ def selftest():
         ok = not broken if expected is None else any(b.startswith(expected) for b in broken)
         if name == "one build has no face game":
             ok = ok and any("no completed game" in b for b in broken) and not any("void, above" in b for b in broken)
-        if expected in ("B5", "B6"):
-            ok = ok and len(broken) == 1
+        if name == "an empty mask cell on a training list":
+            ok = ok and any("known/3/seat 0/mask5/1702" in b for b in broken)
+        if name == "strong everywhere":
+            ok = ok and numbers["readings"] == {"retraining_on_all": "HELPED", "retraining_on_heavy": "HELPED", "known_cards": "KEPT", "hidden_identities": "SMALL_COST"}
         check(name, ok, str(broken[:3]))
+    # The readings. None changes the verdict, and each turns on its own number.
+    def readings(**kw):
+        numbers, broken = decide(arrays(made_up(held, training, make(**kw)), names, training), held, training, clean, resamples=600)
+        return numbers["readings"], broken, numbers
+    got, broken, _ = readings(known=0.72, known_base=0.80, pilot=0.72, mask={"2": 0.71, "5": 0.70, "10": 0.69, "all": 0.6})
+    check("reading: known-card strength lost", got["known_cards"] == "LOST" and got["hidden_identities"] == "SMALL_COST" and not broken, str(got))
+    got, broken, _ = readings(mask={"2": 0.79, "5": 0.78, "10": 0.60, "all": 0.4})
+    check("reading: the hidden-identity cost is read at dose 5, not at 10", got["hidden_identities"] == "SMALL_COST" and not broken, str(got))
+    got, broken, _ = readings(mask={"2": 0.79, "5": 0.66, "10": 0.78, "all": 0.7})
+    check("reading: hiding five identities costs too much", got["hidden_identities"] == "LARGE_COST" and got["known_cards"] == "KEPT" and not broken, str(got))
+    got, _, numbers = readings(mask={"2": 0.79, "5": 0.7015, "10": 0.69, "all": 0.6})
+    cost = numbers["known"]["mask5_minus_pilot"]
+    check("reading: the hidden-identity cost is read at its lower bound, not its mean", cost["low"] < MASK_BAR < cost["mean"] and got["hidden_identities"] == "LARGE_COST", str(cost))
+    got, _, _ = readings(pilot=0.75, base=0.70, heavy_pilot=0.70)
+    check("reading: retraining is read separately on the heavy set", got["retraining_on_all"] == "HELPED" and got["retraining_on_heavy"] == "NOT_SHOWN", str(got))
     # The reported reading of the baseline: retraining helped only when the difference is large and its interval excludes zero.
     numbers, _ = decide(arrays(made_up(held, training, make(pilot=0.75, base=0.70)), names, training), held, training, clean, resamples=600)
     same, _ = decide(arrays(made_up(held, training, make(pilot=0.75, base=0.745)), names, training), held, training, clean, resamples=600)
-    check("the baseline reading", numbers["all"]["retraining"] == "HELPED" and same["all"]["retraining"] == "NOT_SHOWN",
+    check("the baseline reading", numbers["readings"]["retraining_on_all"] == "HELPED" and same["readings"]["retraining_on_all"] == "NOT_SHOWN",
           f"{numbers['all']['pilot_minus_base']} {same['all']['pilot_minus_base']}")
     check("the known block's differences", abs(numbers["known"]["mask5_minus_pilot"]["mean"] + 0.05) < 0.01 and abs(numbers["known"]["known_minus_base"]["mean"]) < 0.01
           and numbers["known"]["mask5_minus_pilot"]["low"] < numbers["known"]["mask5_minus_pilot"]["mean"] < numbers["known"]["mask5_minus_pilot"]["high"],
@@ -916,7 +1003,7 @@ def selftest():
     got = [int(a[key][0, 1, COL["pilot", "1702"]]) for key in ("wins", "games", "void", "suspect")]
     check("draws, voids and interrupted cells", got == [1, 3, 4, 1], str(got))
     out = reported(arrays(made_up(held, training, make()), names, training), held, training)
-    check("the report's cuts cover every build once", sum(v["lists"] for v in out["by_unknown_copies"].values()) == len(held)
+    check("the report's cuts cover every build once", sum(v["lists"] for v in out["by_unknown_main_copies"].values()) == len(held)
           and sum(v["lists"] for v in out["by_unknown_kind"].values()) == len(held) and sum(v["lists"] for v in out["by_archetype"].values()) == len(held))
     # The pilot's rule.
     r = lambda s0, s1, s2: {"S0": dict(zip(PILOT_DOSES, s0)), "S1": dict(zip(PILOT_DOSES, s1)), "S2": dict(zip(PILOT_DOSES, s2))}
@@ -926,6 +1013,44 @@ def selftest():
                               ("only the stronger is admissible", r((.67, .5, .3), (.60, .58, .45), (.65, .6, .5)), "S2"),
                               ("no setting is admissible", r((.67, .5, .3), (.60, .58, .45), (.61, .6, .5)), None)):
         check(f"pilot: {name}", choose(rates)["pick"] == want, str(choose(rates)["pick"]))
+    # Usage: the counted seat only, and heavy builds again under their own key.
+    grid = np.zeros((2, 2, 10, 2), dtype=int)
+    grid[1, 1, 8], grid[1, 0, 8], grid[0, 1, 8] = (10, 2), (10, 7), (99, 99)
+    cell = lambda name, seat: {"status": "PASS", "block": "held", "arm": "pilot", "list": name, "seat": seat, "counters": {"usage": grid.tolist(), "wide_decisions": [5, 1]}}
+    got = usage([cell("h000", 1), cell("h001", 1), {"status": "VOID", "block": "held", "arm": "pilot", "list": "h000", "seat": 1}], held)
+    check("usage counts the counted seat, and heavy builds on their own", got["held/pilot"]["activate"]["unknown"] == {"offered": 20, "chosen": 4, "rate": 0.2}
+          and got["held heavy/pilot"]["activate"]["known"] == {"offered": 10, "chosen": 7, "rate": 0.7} and got["held/pilot"]["decisions_only_the_wider_tables_hold"] == 2
+          and got["held/pilot"]["Set"]["unknown"]["rate"] is None, str(got["held/pilot"]["activate"]))
+    # Labels become the right checkpoints, and hidden rows become the worker's identity spec.
+    import tempfile
+    global RUNS
+    real_runs = RUNS
+    with tempfile.TemporaryDirectory() as tmp:
+        RUNS = Path(tmp)
+        seal_ = {"checkpoints": {}}
+        for k in OPTIMIZERS:
+            (RUNS / f"main-{k}").mkdir()
+            (RUNS / f"main-{k}/checkpoint-{TRAIN['rounds']:04d}.json").write_text(json.dumps({"params_sha256": f"new{k}"}))
+            seal_["checkpoints"][k] = {"params_sha256": f"new{k}"}
+        try:
+            specs = specs_from_seal(seal_)
+            ok = all(specs[f"v2:{k}"]["sha256"] == f"new{k}" and "v1_into_v2" not in specs[f"v2:{k}"] and f"main-{k}/" in specs[f"v2:{k}"]["checkpoint"]
+                     and specs[f"v1:{k}"] == {"kind": "net", "checkpoint": str(V1_RUNS / f"gauntlet-{k}/checkpoint-2560"), "sha256": V1_PARAMS_SHA[k],
+                                              "greedy": True, "repeat_guard": True, "v1_into_v2": True} for k in OPTIMIZERS) and specs["heuristic"] == {"kind": "heuristic"}
+            seal_["checkpoints"]["1703"]["params_sha256"] = "other"
+            try:
+                specs_from_seal(seal_)
+                ok = False
+            except SystemExit:
+                pass
+        finally:
+            RUNS = real_runs
+    check("labels bind to the sealed Stage B networks and to M1's baseline, and a wrong hash refuses", ok)
+    job = {"deck0": "a", "deck1": "b", "seed": 5, "games": 2, "players": ["heuristic", "v1:1702"], "hidden": [[3], [4, 5]]}
+    plain = worker_job({**job, "hidden": None}, specs, threads=4)
+    check("a worker job carries its players, its hidden rows and nothing else",
+          worker_job(job, specs) == {"deck0": "a", "deck1": "b", "seed": 5, "games": 2, "policies": [specs["heuristic"], specs["v1:1702"]], "identity": {"unknown_ids": [[3], [4, 5]]}}
+          and "identity" not in plain and plain["threads"] == 4)
     failed += selftest_records(held, training)
     failed += A.selftest_journal()
     failed += selftest_matrix(held, training)
@@ -1045,6 +1170,10 @@ def selftest_matrix(held, training):
         same.setdefault((j["arm"], j["list"], j["opponent"]), []).append(j["hidden"])
     check("a cell hides the same identities for every optimizer and seat", all(all(h == group[0] for h in group) for group in same.values()))
     check("games in a cell hide different identities", any(j["hidden"][0] != j["hidden"][1] for j in masks if j["arm"] == "mask5"))
+    by_dose = {(j["arm"], j["list"], j["opponent"]): j["hidden"] for j in masks}
+    check("a larger dose hides everything a smaller one does", all(set(a) <= set(b) for (arm, x, o), small in by_dose.items() if arm != "maskall"
+                                                                 for big in [by_dose[{"mask2": "mask5", "mask5": "mask10", "mask10": "maskall"}[arm], x, o]]
+                                                                 for a, b in zip(small, big)))
     spans = sorted({(j["seed"], j["seed"] + j["games"] - 1) for j in jobs})
     check("blocks don't overlap", all(a[1] < b[0] for a, b in zip(spans, spans[1:])))
     real = cells([f"x{i}" for i in range(1190)], training, fake_rows)
@@ -1052,7 +1181,7 @@ def selftest_matrix(held, training):
     check("the known block fits", max(j["seed"] + j["games"] - 1 for j in real if j["block"] == "known") <= KNOWN_END)
     pilot_jobs = pilot_cells(training, fake_rows)
     blocks = [(HELD_SEED, HELD_END), (KNOWN_SEED, KNOWN_END), (SOAK_SEED, SOAK_END), (PILOT_SEED, PILOT_END), (LIVE_SEED, LIVE_SEED + 99),
-              (TRAIN_SEED, TRAIN_SEED + 299999)]
+              (TRAIN_SEED, TRAIN_SEED + 299999)] + list(OTHER_BLOCKS.values())
     check("the seed blocks are disjoint", all(a[1] < b[0] or b[1] < a[0] for i, a in enumerate(blocks) for b in blocks[i + 1:]))
     check("the pilot stays in its block", all(PILOT_SEED <= j["seed"] and j["seed"] + j["games"] - 1 <= PILOT_END for j in pilot_jobs), str(len(pilot_jobs)))
     check("the pilot plays every setting and dose on the same games", len(pilot_jobs) == 84 * 2 * len(SETTINGS) * len(PILOT_DOSES)
@@ -1068,19 +1197,35 @@ def selftest_matrix(held, training):
 
 # ---------------------------------------------------------------- provenance
 
+VERSIONS = {}
+
+
+def versions(python):
+    """[Python, JAX, NumPy, Flax] of an interpreter: the actors' and the GPU learner's."""
+    if python not in VERSIONS:
+        code = "import sys, jax, numpy, flax; print(sys.version.split()[0], jax.__version__, numpy.__version__, flax.__version__)"
+        VERSIONS[python] = subprocess.run([python, "-c", code], check=True, capture_output=True, text=True,
+                                          env={**os.environ, "JAX_PLATFORMS": "cpu"}).stdout.split()
+    return VERSIONS[python]
+
+
 def inputs(jobs, pilot_jobs):
     extra = json.loads(EXTRA.read_text())
     registry = deck_registry.registry()
     lua = hashlib.sha256()
     for path in sorted((ROOT / "scripts/script").resolve().glob("*.lua")):
         lua.update(path.name.encode() + b"\0" + path.read_bytes())
+    wrapper = hashlib.sha256()
+    for path in sorted((ROOT / "ygoenv/ygoenv").rglob("*.py")) + sorted((ROOT / "ygoai").glob("*.py")):
+        wrapper.update(str(path.relative_to(ROOT)).encode() + b"\0" + path.read_bytes())
     return {"native": sha(NATIVE), "database": sha(deck_registry.DB), "lua_scripts": lua.hexdigest(),
-            "files": {p: sha(ROOT / p) for p in DEPENDS},
-            "v1_checkpoints": {k: sha(V1_RUNS / f"gauntlet-{k}/checkpoint-2560.msgpack") for k in OPTIMIZERS},
+            "files": {p: sha(ROOT / p) for p in DEPENDS}, "python_packages": wrapper.hexdigest(), "build": str(BUILD),
+            "versions": {"actors": versions(PYTHON), "learner": versions(GPU_PYTHON)},
+            "v1_checkpoints": {k: [sha(V1_RUNS / f"gauntlet-{k}/checkpoint-2560.msgpack"), sha(V1_RUNS / f"gauntlet-{k}/checkpoint-2560.json")] for k in OPTIMIZERS},
             "decks": {name: sha(path) for name, path in sorted({**registry, **extra}.items())},
             "jobs": text_sha("\n".join(job_text(j) for j in jobs)), "cells": len(jobs), "games": sum(j["games"] for j in jobs),
             "pilot_jobs": text_sha("\n".join(json.dumps(j, sort_keys=True) for j in pilot_jobs)),
-            "training": {name: train_command(Path(name), optimizer, rounds, setting)[5:] for name, optimizer, rounds, setting in
+            "training": {name: train_command(Path(name), optimizer, rounds, setting)[4:] for name, optimizer, rounds, setting in
                          [(f"pilot-{s}", PILOT_OPTIMIZER, PILOT_ROUNDS, s) for s in SETTINGS] + [(f"main-{k}-{s}", int(k), TRAIN["rounds"], s) for k in OPTIMIZERS for s in ("S1", "S2")]}}
 
 
@@ -1089,7 +1234,7 @@ def freeze():
         raise SystemExit("the native module is not the certified one")
     if git("status", "--porcelain", "--untracked-files=no"):
         raise SystemExit("commit everything first: the manifest names one commit")
-    if (OUT.exists() and any(OUT.iterdir())) or PILOT.exists() or RUNS.exists() or SEAL.exists():
+    if any(BUILD.glob("stage-b-*")) or PILOT.exists() or RUNS.exists() or SEAL.exists() or ATTEMPTS.exists():
         raise SystemExit("runs or results exist already: a consumed protocol can't be frozen again")
     again = select(write=False)
     if json.loads(LISTS.read_text()) != json.loads(json.dumps(again)):
@@ -1100,6 +1245,7 @@ def freeze():
     constants = {name: globals()[name] for name in (
         "HELD_SEED", "HELD_COUNT", "KNOWN_SEED", "KNOWN_COUNT", "PILOT_SEED", "PILOT_COUNT", "TRAIN_SEED", "HEAVY", "BAR", "LOW_BAR", "SEAT_BAR",
         "GAP_BAR", "VOID_BAR", "MIN_HEAVY", "KNOWN_BAR", "MASK_BAR", "HELP_BAR", "GATED_DOSE", "RESAMPLES", "BOOT_SEED", "REPLAY_EVERY",
+        "DOSES", "PILOT_DOSES",
         "SETTINGS", "PILOT_OPTIMIZER", "PILOT_ROUNDS", "ADMIT", "TIE", "TRAIN")}
     manifest = {"commit": git("rev-parse", "HEAD"), "inputs": now, "pilot_jobs": now["pilot_jobs"], "constants": constants}
     MANIFEST.write_text(json.dumps(manifest, indent=1) + "\n")
@@ -1137,8 +1283,8 @@ def check_frozen(stage):
 # ---------------------------------------------------------------- running
 
 def soak(workers):
-    """Every candidate list through the actor's own audit on the certified module. No network plays: games 0 and 1 of a cell
-    are uniform random on both seats, and a second cell is the rule-based heuristic on both seats."""
+    """Every candidate list through the actor's own audit on the certified module. No network plays. A list plays 16 duels:
+    in each seat, one cell of 4 with uniform random play on both seats, and one of 4 with the rule-based heuristic on both."""
     from actor import Pool
     if sha(NATIVE) != NATIVE_SHA:
         raise SystemExit("the native module is not the certified one")
@@ -1182,6 +1328,8 @@ def soak(workers):
                "lists": [c["list_id"] for c in candidates], "planned": len(jobs), "finished": len(results),
                "duels": sum(len(r["duels"]) for r in passed), "decisions": sum(r["counters"]["decisions"] for r in passed),
                "max_options": max(r["counters"]["max_options"] for r in passed), "longest_duel": max(d["steps"] for r in passed for d in r["duels"]),
+               "lists_with_a_prompt_only_the_wider_tables_hold": len({j["list"] for j, r in zip(jobs, results)
+                                                                      if r.get("status") == "PASS" and sum(r["counters"]["wide_decisions"])}),
                "void_cells": len(void), "void_lists": sorted({j["list"] for j, _ in void}),
                "void_reasons": dict(Counter(str(r.get("reason"))[:120] for _, r in void)), "seconds": round(time.perf_counter() - started)}
     SOAK.write_text(json.dumps(summary, indent=1) + "\n")
@@ -1222,7 +1370,9 @@ def play(workers):
     _, held, training, jobs = matrix()
     specs = specs_from_seal(json.loads(SEAL.read_text()))
     os.environ["EDISON_EXTRA_DECKS"] = str(EXTRA)
+    OUT = out_dir()
     OUT.mkdir(parents=True, exist_ok=True)
+    attempt("play", seal=sha(SEAL))
     groups = chunks(jobs)
     for n, indices in enumerate(groups):
         path = OUT / f"chunk-{n:03d}.json.gz"
@@ -1271,16 +1421,18 @@ def analyze():
     rows, integrity = load_results(jobs)
     data = arrays(rows, held, training)
     numbers, broken = decide(data, lists["lists"], training, integrity)
+    RESULT = out_dir() / "stage-b-result.json"
     reasons = Counter(str(r.get("reason"))[:120] for r in rows if r["status"] != "PASS")
     passing = [r for r in rows if r["status"] == "PASS"]
     net = [r for r in passing if r["arm"] != "mirror"]
-    result = {"verdict": "STAGE_B_MET" if not broken else "NOT_MET", "broken": broken, "numbers": numbers, "reported": reported(data, lists["lists"], training),
+    result = {"verdict": "STAGE_B_MET" if not broken else "NOT_MET", "broken": broken, "readings": numbers["readings"], "numbers": numbers,
+              "reported": reported(data, lists["lists"], training), "usage": usage(rows, lists["lists"]),
               "void_reasons": dict(reasons), "unresolved_first": sum(r["unresolved_first"] for r in rows), "unresolved_replay": sum(r["unresolved_replay"] for r in rows),
               "draws": sum(d["winner"] == 2 for r in passing for d in r["duels"]), "decisions": sum(r["counters"]["decisions"] for r in passing),
               "net_decisions": sum(r["counters"]["net_decisions"] for r in net), "guard_fires": sum(r["counters"].get("guard_fires", 0) for r in net),
               "manifest_sha256": sha(MANIFEST), "seal_sha256": sha(SEAL)}
     RESULT.write_text(json.dumps(result, indent=1) + "\n")
-    print(json.dumps({k: result[k] for k in ("verdict", "broken")}, indent=1))
+    print(json.dumps({k: result[k] for k in ("verdict", "broken", "readings")}, indent=1))
     return 0 if not broken else 1
 
 

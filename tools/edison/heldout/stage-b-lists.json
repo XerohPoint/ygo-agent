@@ -3,7 +3,7 @@
  "corpus_manifest_sha256": "1f5d4e8b8aac507112218dcb6542eafc54cd24312271d4643c1168db43d5ab13",
  "code_list_v2_sha256": "071a484d92d6e960a70a57d7d764bdff6f54930d4fa2c57702b02cc7383e848a",
  "identity_sha256": "800fb1dab816fc098a86c4781ac190946ae2a9b2305b935f0560008cf1e15839",
- "soak_sha256": "011a448d417d8b98fd0d50129d5538145e05606e795cb63f3c7457f7c4bfc0f4",
+ "soak_sha256": "24d195c29b788a5c663b96250cc67845b6ac2626c16efac79792f7190e399964",
  "training_lists": [
   "blackwing",
   "frog_monarch",
@@ -37,13 +37,15 @@
  },
  "held_out_lists": 780,
  "held_out": 747,
- "heavy": 233,
+ "heavy": 206,
  "by_band": {
-  "1-2": 348,
-  "11+": 105,
-  "3-5": 166,
-  "6-10": 128
+  "Extra Deck only": 66,
+  "1-2": 319,
+  "3-5": 156,
+  "6-10": 128,
+  "11+": 78
  },
+ "unknown_cards": 356,
  "by_archetype": {
   "blackwing": 88,
   "gladiator_beast": 57,
@@ -180,6 +182,7 @@
    "twin": "g_frog_otk",
    "distance": 40,
    "unknown_copies": 13,
+   "unknown_main_copies": 10,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -208,7 +211,7 @@
      2
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -228,6 +231,7 @@
    "twin": "g_hero_beat",
    "distance": 26,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -268,6 +272,7 @@
    "twin": "g_gigavise",
    "distance": 63,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -300,6 +305,7 @@
    "twin": "g_diva_hero",
    "distance": 69,
    "unknown_copies": 15,
+   "unknown_main_copies": 15,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -348,6 +354,7 @@
    "twin": "g_gladiator_beast",
    "distance": 82,
    "unknown_copies": 35,
+   "unknown_main_copies": 32,
    "unknown_distinct": 16,
    "unknown_spell_trap_copies": 16,
    "unknown_cards": [
@@ -436,6 +443,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 42,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -468,6 +476,7 @@
    "twin": "machina_gadget",
    "distance": 43,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -500,6 +509,7 @@
    "twin": "g_hero_frog",
    "distance": 47,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -508,7 +518,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -528,6 +538,7 @@
    "twin": "g_hero_beat",
    "distance": 26,
    "unknown_copies": 7,
+   "unknown_main_copies": 5,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -552,8 +563,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -572,6 +583,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 27,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -604,6 +616,7 @@
    "twin": "g_diva_hero",
    "distance": 45,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -632,6 +645,7 @@
    "twin": "machina_gadget",
    "distance": 33,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -661,6 +675,7 @@
    "twin": "g_vayu_turbo",
    "distance": 17,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -689,6 +704,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 39,
    "unknown_copies": 10,
+   "unknown_main_copies": 9,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -733,6 +749,7 @@
    "twin": "g_diva_hero",
    "distance": 53,
    "unknown_copies": 8,
+   "unknown_main_copies": 7,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -781,6 +798,7 @@
    "twin": "blackwing",
    "distance": 14,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -813,6 +831,7 @@
    "twin": "blackwing",
    "distance": 20,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -841,6 +860,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 55,
    "unknown_copies": 11,
+   "unknown_main_copies": 10,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -865,7 +885,7 @@
      3
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 41,
    "extra": 15
@@ -885,6 +905,7 @@
    "twin": "machina_gadget",
    "distance": 79,
    "unknown_copies": 27,
+   "unknown_main_copies": 27,
    "unknown_distinct": 10,
    "unknown_spell_trap_copies": 14,
    "unknown_cards": [
@@ -949,6 +970,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 33,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -981,6 +1003,7 @@
    "twin": "g_zombie_teledad",
    "distance": 49,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -1033,6 +1056,7 @@
    "twin": "machina_gadget",
    "distance": 57,
    "unknown_copies": 19,
+   "unknown_main_copies": 18,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 7,
    "unknown_cards": [
@@ -1089,6 +1113,7 @@
    "twin": "g_gladiator_beast",
    "distance": 26,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -1121,6 +1146,7 @@
    "twin": "g_frog_otk",
    "distance": 35,
    "unknown_copies": 11,
+   "unknown_main_copies": 10,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -1145,7 +1171,7 @@
      3
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 41,
    "extra": 15
@@ -1165,6 +1191,7 @@
    "twin": "g_gladiator_beast",
    "distance": 40,
    "unknown_copies": 7,
+   "unknown_main_copies": 7,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -1205,6 +1232,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 65,
    "unknown_copies": 15,
+   "unknown_main_copies": 14,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 9,
    "unknown_cards": [
@@ -1261,6 +1289,7 @@
    "twin": "g_lightsworn",
    "distance": 31,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -1289,6 +1318,7 @@
    "twin": "g_zombie_teledad",
    "distance": 49,
    "unknown_copies": 10,
+   "unknown_main_copies": 8,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -1345,6 +1375,7 @@
    "twin": "g_hero_beat",
    "distance": 27,
    "unknown_copies": 7,
+   "unknown_main_copies": 7,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -1389,6 +1420,7 @@
    "twin": "g_hero_frog",
    "distance": 35,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -1421,6 +1453,7 @@
    "twin": "g_zombie_teledad",
    "distance": 52,
    "unknown_copies": 5,
+   "unknown_main_copies": 4,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -1461,6 +1494,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 15,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -1469,7 +1503,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -1489,6 +1523,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 47,
    "unknown_copies": 10,
+   "unknown_main_copies": 9,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -1537,6 +1572,7 @@
    "twin": "g_gladiator_beast",
    "distance": 30,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -1573,6 +1609,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 69,
    "unknown_copies": 13,
+   "unknown_main_copies": 12,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -1633,6 +1670,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 59,
    "unknown_copies": 14,
+   "unknown_main_copies": 13,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -1681,6 +1719,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -1709,6 +1748,7 @@
    "twin": "g_hero_beat",
    "distance": 21,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -1741,6 +1781,7 @@
    "twin": "g_blackwing",
    "distance": 20,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -1769,6 +1810,7 @@
    "twin": "g_hero_frog",
    "distance": 35,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -1801,6 +1843,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 54,
    "unknown_copies": 12,
+   "unknown_main_copies": 11,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -1849,6 +1892,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -1877,6 +1921,7 @@
    "twin": "g_machina_control",
    "distance": 22,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -1909,6 +1954,7 @@
    "twin": "g_gladiator_beast",
    "distance": 28,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -1925,7 +1971,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -1945,6 +1991,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 23,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -1973,6 +2020,7 @@
    "twin": "g_hero_frog",
    "distance": 33,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -2005,6 +2053,7 @@
    "twin": "g_diva_hero",
    "distance": 43,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -2037,6 +2086,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 37,
    "unknown_copies": 6,
+   "unknown_main_copies": 5,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -2057,8 +2107,8 @@
      3
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -2078,6 +2128,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 41,
    "unknown_copies": 9,
+   "unknown_main_copies": 9,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -2118,6 +2169,7 @@
    "twin": "g_machina_control",
    "distance": 61,
    "unknown_copies": 19,
+   "unknown_main_copies": 19,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 9,
    "unknown_cards": [
@@ -2178,6 +2230,7 @@
    "twin": "g_blackwing",
    "distance": 14,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -2210,6 +2263,7 @@
    "twin": "g_hero_beat",
    "distance": 28,
    "unknown_copies": 10,
+   "unknown_main_copies": 8,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -2262,6 +2316,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 52,
    "unknown_copies": 11,
+   "unknown_main_copies": 10,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -2290,7 +2345,7 @@
      3
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -2310,6 +2365,7 @@
    "twin": "g_diva_hero",
    "distance": 47,
    "unknown_copies": 6,
+   "unknown_main_copies": 4,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -2334,8 +2390,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -2355,6 +2411,7 @@
    "twin": "g_blackwing",
    "distance": 18,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -2383,6 +2440,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -2411,6 +2469,7 @@
    "twin": "g_hero_frog",
    "distance": 27,
    "unknown_copies": 5,
+   "unknown_main_copies": 3,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -2455,6 +2514,7 @@
    "twin": "g_machina_control",
    "distance": 47,
    "unknown_copies": 14,
+   "unknown_main_copies": 13,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -2503,6 +2563,7 @@
    "twin": "g_dragon_turbo",
    "distance": 20,
    "unknown_copies": 3,
+   "unknown_main_copies": 1,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -2519,7 +2580,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -2539,6 +2600,7 @@
    "twin": "g_machina_control",
    "distance": 63,
    "unknown_copies": 16,
+   "unknown_main_copies": 16,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 6,
    "unknown_cards": [
@@ -2587,6 +2649,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 42,
    "unknown_copies": 6,
+   "unknown_main_copies": 4,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -2611,8 +2674,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -2631,6 +2694,7 @@
    "twin": "g_blackwing",
    "distance": 22,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -2659,6 +2723,7 @@
    "twin": "g_gladiator_beast",
    "distance": 26,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -2691,6 +2756,7 @@
    "twin": "g_diva_hero",
    "distance": 49,
    "unknown_copies": 6,
+   "unknown_main_copies": 4,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -2715,8 +2781,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -2735,6 +2801,7 @@
    "twin": "g_diva_hero",
    "distance": 53,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -2783,6 +2850,7 @@
    "twin": "g_gladiator_beast",
    "distance": 30,
    "unknown_copies": 7,
+   "unknown_main_copies": 7,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 7,
    "unknown_cards": [
@@ -2819,6 +2887,7 @@
    "twin": "g_lightsworn",
    "distance": 23,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -2847,6 +2916,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 28,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -2879,6 +2949,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 17,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -2911,6 +2982,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 48,
    "unknown_copies": 7,
+   "unknown_main_copies": 5,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -2939,8 +3011,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 42,
    "extra": 15
   },
@@ -2959,6 +3031,7 @@
    "twin": "g_dragon_turbo",
    "distance": 28,
    "unknown_copies": 4,
+   "unknown_main_copies": 2,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -2979,7 +3052,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -2999,6 +3072,7 @@
    "twin": "g_hero_beat",
    "distance": 38,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -3043,6 +3117,7 @@
    "twin": "g_hero_frog",
    "distance": 49,
    "unknown_copies": 19,
+   "unknown_main_copies": 18,
    "unknown_distinct": 13,
    "unknown_spell_trap_copies": 11,
    "unknown_cards": [
@@ -3119,6 +3194,7 @@
    "twin": "blackwing",
    "distance": 22,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -3147,6 +3223,7 @@
    "twin": "g_blackwing",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -3175,6 +3252,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 67,
    "unknown_copies": 24,
+   "unknown_main_copies": 19,
    "unknown_distinct": 12,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -3247,6 +3325,7 @@
    "twin": "g_lightsworn",
    "distance": 27,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -3279,6 +3358,7 @@
    "twin": "g_dragon_turbo",
    "distance": 26,
    "unknown_copies": 4,
+   "unknown_main_copies": 2,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -3299,7 +3379,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -3319,6 +3399,7 @@
    "twin": "g_frog_otk",
    "distance": 42,
    "unknown_copies": 11,
+   "unknown_main_copies": 11,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -3363,6 +3444,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 24,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -3391,6 +3473,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 28,
    "unknown_copies": 5,
+   "unknown_main_copies": 3,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -3431,6 +3514,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -3439,7 +3523,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -3459,6 +3543,7 @@
    "twin": "g_machina_control",
    "distance": 67,
    "unknown_copies": 12,
+   "unknown_main_copies": 12,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -3511,6 +3596,7 @@
    "twin": "g_diva_frog",
    "distance": 38,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -3543,6 +3629,7 @@
    "twin": "g_diva_hero",
    "distance": 43,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -3571,6 +3658,7 @@
    "twin": "g_machina_control",
    "distance": 26,
    "unknown_copies": 3,
+   "unknown_main_copies": 1,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -3587,7 +3675,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 41,
    "extra": 15
@@ -3607,6 +3695,7 @@
    "twin": "g_machina_control",
    "distance": 27,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -3639,6 +3728,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 60,
    "unknown_copies": 12,
+   "unknown_main_copies": 11,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -3691,6 +3781,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -3719,6 +3810,7 @@
    "twin": "g_zombie_teledad",
    "distance": 48,
    "unknown_copies": 9,
+   "unknown_main_copies": 7,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -3771,6 +3863,7 @@
    "twin": "g_machina_control",
    "distance": 49,
    "unknown_copies": 10,
+   "unknown_main_copies": 9,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -3819,6 +3912,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -3847,6 +3941,7 @@
    "twin": "frog_monarch",
    "distance": 43,
    "unknown_copies": 9,
+   "unknown_main_copies": 9,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -3883,6 +3978,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 26,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -3891,7 +3987,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -3911,6 +4007,7 @@
    "twin": "g_zombie_teledad",
    "distance": 52,
    "unknown_copies": 6,
+   "unknown_main_copies": 4,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -3935,8 +4032,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -3955,6 +4052,7 @@
    "twin": "g_diva_frog",
    "distance": 32,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -3987,6 +4085,7 @@
    "twin": "g_hero_beat",
    "distance": 68,
    "unknown_copies": 22,
+   "unknown_main_copies": 14,
    "unknown_distinct": 16,
    "unknown_spell_trap_copies": 9,
    "unknown_cards": [
@@ -4075,6 +4174,7 @@
    "twin": "g_machina_control",
    "distance": 69,
    "unknown_copies": 12,
+   "unknown_main_copies": 12,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -4127,6 +4227,7 @@
    "twin": "g_machina_control",
    "distance": 61,
    "unknown_copies": 16,
+   "unknown_main_copies": 14,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 9,
    "unknown_cards": [
@@ -4183,6 +4284,7 @@
    "twin": "g_machina_control",
    "distance": 27,
    "unknown_copies": 4,
+   "unknown_main_copies": 2,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -4199,7 +4301,7 @@
      2
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -4219,6 +4321,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 52,
    "unknown_copies": 13,
+   "unknown_main_copies": 11,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -4275,6 +4378,7 @@
    "twin": "g_lightsworn",
    "distance": 27,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -4307,6 +4411,7 @@
    "twin": "g_machina_control",
    "distance": 41,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -4343,6 +4448,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 33,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -4371,6 +4477,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 13,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -4399,6 +4506,7 @@
    "twin": "g_machina_control",
    "distance": 23,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -4431,6 +4539,7 @@
    "twin": "g_machina_control",
    "distance": 49,
    "unknown_copies": 11,
+   "unknown_main_copies": 9,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -4463,7 +4572,7 @@
      3
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -4483,6 +4592,7 @@
    "twin": "g_hero_beat",
    "distance": 22,
    "unknown_copies": 5,
+   "unknown_main_copies": 4,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -4527,6 +4637,7 @@
    "twin": "g_hero_frog",
    "distance": 33,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -4559,6 +4670,7 @@
    "twin": "g_diva_hero",
    "distance": 67,
    "unknown_copies": 15,
+   "unknown_main_copies": 15,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -4616,6 +4728,7 @@
    "twin": "g_vayu_turbo",
    "distance": 13,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -4644,6 +4757,7 @@
    "twin": "g_diva_hero",
    "distance": 54,
    "unknown_copies": 9,
+   "unknown_main_copies": 7,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -4692,6 +4806,7 @@
    "twin": "g_hero_frog",
    "distance": 34,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -4729,6 +4844,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 26,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -4737,7 +4853,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -4757,6 +4873,7 @@
    "twin": "g_zombie_teledad",
    "distance": 48,
    "unknown_copies": 9,
+   "unknown_main_copies": 7,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -4809,6 +4926,7 @@
    "twin": "g_diva_hero",
    "distance": 41,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -4837,6 +4955,7 @@
    "twin": "frog_monarch",
    "distance": 39,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -4873,6 +4992,7 @@
    "twin": "g_hero_frog",
    "distance": 49,
    "unknown_copies": 3,
+   "unknown_main_copies": 1,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -4889,7 +5009,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -4909,6 +5029,7 @@
    "twin": "g_gladiator_beast",
    "distance": 26,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -4949,6 +5070,7 @@
    "twin": "blackwing",
    "distance": 68,
    "unknown_copies": 12,
+   "unknown_main_copies": 11,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -4997,6 +5119,7 @@
    "twin": "g_zombie_teledad",
    "distance": 50,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -5045,6 +5168,7 @@
    "twin": "g_hero_frog",
    "distance": 43,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -5073,6 +5197,7 @@
    "twin": "g_diva_hero",
    "distance": 39,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -5101,6 +5226,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 51,
    "unknown_copies": 12,
+   "unknown_main_copies": 11,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -5149,6 +5275,7 @@
    "twin": "g_diva_hero",
    "distance": 41,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -5182,6 +5309,7 @@
    "twin": "g_hero_beat",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -5210,6 +5338,7 @@
    "twin": "g_hero_frog",
    "distance": 27,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -5238,6 +5367,7 @@
    "twin": "g_hero_frog",
    "distance": 31,
    "unknown_copies": 10,
+   "unknown_main_copies": 9,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 6,
    "unknown_cards": [
@@ -5286,6 +5416,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 55,
    "unknown_copies": 10,
+   "unknown_main_copies": 9,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -5334,6 +5465,7 @@
    "twin": "g_machina_control",
    "distance": 19,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -5342,7 +5474,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -5362,6 +5494,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 45,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -5378,7 +5511,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -5398,6 +5531,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 58,
    "unknown_copies": 8,
+   "unknown_main_copies": 8,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -5438,6 +5572,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -5466,6 +5601,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -5474,7 +5610,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -5494,6 +5630,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 37,
    "unknown_copies": 5,
+   "unknown_main_copies": 4,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -5534,6 +5671,7 @@
    "twin": "g_diva_hero",
    "distance": 57,
    "unknown_copies": 8,
+   "unknown_main_copies": 7,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -5582,6 +5720,7 @@
    "twin": "blackwing",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -5610,6 +5749,7 @@
    "twin": "g_gladiator_beast",
    "distance": 26,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 6,
    "unknown_cards": [
@@ -5642,6 +5782,7 @@
    "twin": "g_frog_otk",
    "distance": 34,
    "unknown_copies": 8,
+   "unknown_main_copies": 8,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -5686,6 +5827,7 @@
    "twin": "g_dragon_turbo",
    "distance": 54,
    "unknown_copies": 5,
+   "unknown_main_copies": 4,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -5726,6 +5868,7 @@
    "twin": "g_dragon_turbo",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -5734,7 +5877,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -5754,6 +5897,7 @@
    "twin": "g_blackwing",
    "distance": 18,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -5782,6 +5926,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -5810,6 +5955,7 @@
    "twin": "g_hero_beat",
    "distance": 18,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -5842,6 +5988,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -5870,6 +6017,7 @@
    "twin": "frog_monarch",
    "distance": 45,
    "unknown_copies": 14,
+   "unknown_main_copies": 14,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 8,
    "unknown_cards": [
@@ -5922,6 +6070,7 @@
    "twin": "frog_monarch",
    "distance": 29,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -5958,6 +6107,7 @@
    "twin": "g_machina_control",
    "distance": 33,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -5991,6 +6141,7 @@
    "twin": "g_gladiator_beast",
    "distance": 32,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -6023,6 +6174,7 @@
    "twin": "g_diva_hero",
    "distance": 47,
    "unknown_copies": 9,
+   "unknown_main_copies": 9,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -6063,6 +6215,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 69,
    "unknown_copies": 14,
+   "unknown_main_copies": 12,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -6115,6 +6268,7 @@
    "twin": "blackwing",
    "distance": 22,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -6143,6 +6297,7 @@
    "twin": "g_diva_hero",
    "distance": 50,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -6191,6 +6346,7 @@
    "twin": "g_blackwing",
    "distance": 14,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -6223,6 +6379,7 @@
    "twin": "g_hero_beat",
    "distance": 22,
    "unknown_copies": 5,
+   "unknown_main_copies": 3,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -6267,6 +6424,7 @@
    "twin": "g_diva_hero",
    "distance": 49,
    "unknown_copies": 7,
+   "unknown_main_copies": 5,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -6295,8 +6453,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -6315,6 +6473,7 @@
    "twin": "g_lightsworn",
    "distance": 29,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -6343,6 +6502,7 @@
    "twin": "g_diva_hero",
    "distance": 47,
    "unknown_copies": 8,
+   "unknown_main_copies": 8,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -6391,6 +6551,7 @@
    "twin": "g_zombie_teledad",
    "distance": 54,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -6439,6 +6600,7 @@
    "twin": "frog_monarch",
    "distance": 49,
    "unknown_copies": 15,
+   "unknown_main_copies": 12,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 6,
    "unknown_cards": [
@@ -6491,6 +6653,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 37,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -6499,7 +6662,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -6519,6 +6682,7 @@
    "twin": "g_hero_beat",
    "distance": 20,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -6551,6 +6715,7 @@
    "twin": "g_diva_frog",
    "distance": 32,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -6583,6 +6748,7 @@
    "twin": "g_hero_beat",
    "distance": 56,
    "unknown_copies": 16,
+   "unknown_main_copies": 9,
    "unknown_distinct": 10,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -6627,7 +6793,7 @@
      2
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -6647,6 +6813,7 @@
    "twin": "g_gladiator_beast",
    "distance": 42,
    "unknown_copies": 9,
+   "unknown_main_copies": 9,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 7,
    "unknown_cards": [
@@ -6695,6 +6862,7 @@
    "twin": "g_hero_frog",
    "distance": 51,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -6727,6 +6895,7 @@
    "twin": "g_diva_hero",
    "distance": 59,
    "unknown_copies": 17,
+   "unknown_main_copies": 17,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 8,
    "unknown_cards": [
@@ -6779,6 +6948,7 @@
    "twin": "machina_gadget",
    "distance": 41,
    "unknown_copies": 8,
+   "unknown_main_copies": 8,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -6819,6 +6989,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 52,
    "unknown_copies": 11,
+   "unknown_main_copies": 10,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -6847,7 +7018,7 @@
      3
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -6867,6 +7038,7 @@
    "twin": "g_zombie_teledad",
    "distance": 52,
    "unknown_copies": 9,
+   "unknown_main_copies": 7,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -6920,6 +7092,7 @@
    "twin": "g_blackwing",
    "distance": 6,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -6948,6 +7121,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 62,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -6980,6 +7154,7 @@
    "twin": "g_zombie_teledad",
    "distance": 48,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -7028,6 +7203,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -7056,6 +7232,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 36,
    "unknown_copies": 9,
+   "unknown_main_copies": 8,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -7100,6 +7277,7 @@
    "twin": "g_lightsworn",
    "distance": 25,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -7132,6 +7310,7 @@
    "twin": "g_gladiator_beast",
    "distance": 34,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 6,
    "unknown_cards": [
@@ -7168,6 +7347,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 42,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -7204,6 +7384,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 27,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -7236,6 +7417,7 @@
    "twin": "g_zombie_teledad",
    "distance": 52,
    "unknown_copies": 11,
+   "unknown_main_copies": 9,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -7264,7 +7446,7 @@
      1
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -7284,6 +7466,7 @@
    "twin": "frog_monarch",
    "distance": 29,
    "unknown_copies": 4,
+   "unknown_main_copies": 2,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -7300,7 +7483,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -7320,6 +7503,7 @@
    "twin": "blackwing",
    "distance": 22,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -7352,6 +7536,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 58,
    "unknown_copies": 13,
+   "unknown_main_copies": 13,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -7404,6 +7589,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 58,
    "unknown_copies": 11,
+   "unknown_main_copies": 9,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -7432,7 +7618,7 @@
      3
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -7452,6 +7638,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 6,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -7460,7 +7647,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -7480,6 +7667,7 @@
    "twin": "g_diva_hero",
    "distance": 73,
    "unknown_copies": 20,
+   "unknown_main_copies": 17,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 6,
    "unknown_cards": [
@@ -7540,6 +7728,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 57,
    "unknown_copies": 7,
+   "unknown_main_copies": 6,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -7584,6 +7773,7 @@
    "twin": "g_zombie_teledad",
    "distance": 47,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -7632,6 +7822,7 @@
    "twin": "g_lightsworn",
    "distance": 31,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -7664,6 +7855,7 @@
    "twin": "g_machina_control",
    "distance": 45,
    "unknown_copies": 13,
+   "unknown_main_copies": 12,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -7712,6 +7904,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 38,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -7740,6 +7933,7 @@
    "twin": "g_machina_control",
    "distance": 46,
    "unknown_copies": 6,
+   "unknown_main_copies": 5,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -7760,8 +7954,8 @@
      3
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 41,
    "extra": 15
   },
@@ -7780,6 +7974,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -7788,7 +7983,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -7808,6 +8003,7 @@
    "twin": "g_hero_beat",
    "distance": 22,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -7848,6 +8044,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 13,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -7880,6 +8077,7 @@
    "twin": "g_zombie_teledad",
    "distance": 50,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -7928,6 +8126,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 52,
    "unknown_copies": 9,
+   "unknown_main_copies": 9,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -7968,6 +8167,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 27,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -8000,6 +8200,7 @@
    "twin": "g_machina_control",
    "distance": 53,
    "unknown_copies": 14,
+   "unknown_main_copies": 13,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -8052,6 +8253,7 @@
    "twin": "frog_monarch",
    "distance": 35,
    "unknown_copies": 9,
+   "unknown_main_copies": 9,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -8096,6 +8298,7 @@
    "twin": "g_dragon_turbo",
    "distance": 12,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8128,6 +8331,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8156,6 +8360,7 @@
    "twin": "g_dragon_turbo",
    "distance": 18,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8172,7 +8377,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -8192,6 +8397,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 43,
    "unknown_copies": 5,
+   "unknown_main_copies": 4,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8228,6 +8434,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 23,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -8256,6 +8463,7 @@
    "twin": "g_zombie_teledad",
    "distance": 54,
    "unknown_copies": 10,
+   "unknown_main_copies": 8,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8308,6 +8516,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8316,7 +8525,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -8336,6 +8545,7 @@
    "twin": "frog_monarch",
    "distance": 45,
    "unknown_copies": 14,
+   "unknown_main_copies": 14,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 8,
    "unknown_cards": [
@@ -8392,6 +8602,7 @@
    "twin": "g_diva_hero",
    "distance": 47,
    "unknown_copies": 7,
+   "unknown_main_copies": 5,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8416,8 +8627,8 @@
      3
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -8436,6 +8647,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 20,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -8464,6 +8676,7 @@
    "twin": "g_hero_frog",
    "distance": 19,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8492,6 +8705,7 @@
    "twin": "frog_monarch",
    "distance": 43,
    "unknown_copies": 9,
+   "unknown_main_copies": 6,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -8536,6 +8750,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 18,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8544,7 +8759,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -8564,6 +8779,7 @@
    "twin": "g_machina_control",
    "distance": 43,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8572,7 +8788,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -8592,6 +8808,7 @@
    "twin": "g_machina_control",
    "distance": 21,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8600,7 +8817,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -8620,6 +8837,7 @@
    "twin": "g_machina_control",
    "distance": 49,
    "unknown_copies": 12,
+   "unknown_main_copies": 10,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -8652,7 +8870,7 @@
      2
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -8672,6 +8890,7 @@
    "twin": "frog_monarch",
    "distance": 45,
    "unknown_copies": 9,
+   "unknown_main_copies": 9,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -8708,6 +8927,7 @@
    "twin": "g_zombie_teledad",
    "distance": 53,
    "unknown_copies": 8,
+   "unknown_main_copies": 7,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -8756,6 +8976,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8784,6 +9005,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 64,
    "unknown_copies": 17,
+   "unknown_main_copies": 17,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 9,
    "unknown_cards": [
@@ -8832,6 +9054,7 @@
    "twin": "frog_monarch",
    "distance": 31,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -8868,6 +9091,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 66,
    "unknown_copies": 16,
+   "unknown_main_copies": 16,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 8,
    "unknown_cards": [
@@ -8920,6 +9144,7 @@
    "twin": "frog_monarch",
    "distance": 43,
    "unknown_copies": 9,
+   "unknown_main_copies": 8,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -8964,6 +9189,7 @@
    "twin": "machina_gadget",
    "distance": 59,
    "unknown_copies": 15,
+   "unknown_main_copies": 12,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -9027,6 +9253,7 @@
    "twin": "g_dragon_turbo",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -9035,7 +9262,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -9055,6 +9282,7 @@
    "twin": "g_diva_hero",
    "distance": 43,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -9087,6 +9315,7 @@
    "twin": "g_diva_hero",
    "distance": 63,
    "unknown_copies": 9,
+   "unknown_main_copies": 9,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -9135,6 +9364,7 @@
    "twin": "frog_monarch",
    "distance": 31,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -9163,6 +9393,7 @@
    "twin": "g_hero_frog",
    "distance": 23,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -9195,6 +9426,7 @@
    "twin": "machina_gadget",
    "distance": 45,
    "unknown_copies": 6,
+   "unknown_main_copies": 5,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -9211,8 +9443,8 @@
      3
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -9231,6 +9463,7 @@
    "twin": "g_machina_control",
    "distance": 52,
    "unknown_copies": 13,
+   "unknown_main_copies": 11,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -9283,6 +9516,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 21,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -9315,6 +9549,7 @@
    "twin": "g_machina_control",
    "distance": 47,
    "unknown_copies": 14,
+   "unknown_main_copies": 13,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -9363,6 +9598,7 @@
    "twin": "g_machina_control",
    "distance": 45,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -9371,7 +9607,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 42,
    "extra": 15
@@ -9391,6 +9627,7 @@
    "twin": "g_gladiator_beast",
    "distance": 36,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -9431,6 +9668,7 @@
    "twin": "g_machina_control",
    "distance": 53,
    "unknown_copies": 11,
+   "unknown_main_copies": 9,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -9459,7 +9697,7 @@
      3
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -9479,6 +9717,7 @@
    "twin": "blackwing",
    "distance": 75,
    "unknown_copies": 27,
+   "unknown_main_copies": 25,
    "unknown_distinct": 16,
    "unknown_spell_trap_copies": 16,
    "unknown_cards": [
@@ -9567,6 +9806,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 34,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -9607,6 +9847,7 @@
    "twin": "g_lightsworn",
    "distance": 43,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -9639,6 +9880,7 @@
    "twin": "blackwing",
    "distance": 16,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -9671,6 +9913,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 27,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -9687,7 +9930,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 41,
    "extra": 15
@@ -9707,6 +9950,7 @@
    "twin": "machina_gadget",
    "distance": 47,
    "unknown_copies": 9,
+   "unknown_main_copies": 9,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 9,
    "unknown_cards": [
@@ -9743,6 +9987,7 @@
    "twin": "g_dragon_turbo",
    "distance": 16,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -9751,7 +9996,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -9771,6 +10016,7 @@
    "twin": "frog_monarch",
    "distance": 57,
    "unknown_copies": 21,
+   "unknown_main_copies": 17,
    "unknown_distinct": 13,
    "unknown_spell_trap_copies": 11,
    "unknown_cards": [
@@ -9847,6 +10093,7 @@
    "twin": "g_diva_hero",
    "distance": 67,
    "unknown_copies": 15,
+   "unknown_main_copies": 15,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -9903,6 +10150,7 @@
    "twin": "g_zombie_teledad",
    "distance": 43,
    "unknown_copies": 5,
+   "unknown_main_copies": 3,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -9947,6 +10195,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -9975,6 +10224,7 @@
    "twin": "frog_monarch",
    "distance": 57,
    "unknown_copies": 11,
+   "unknown_main_copies": 11,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 8,
    "unknown_cards": [
@@ -10023,6 +10273,7 @@
    "twin": "g_hero_beat",
    "distance": 26,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10051,6 +10302,7 @@
    "twin": "g_machina_control",
    "distance": 69,
    "unknown_copies": 19,
+   "unknown_main_copies": 16,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -10111,6 +10363,7 @@
    "twin": "g_hero_beat",
    "distance": 24,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10139,6 +10392,7 @@
    "twin": "g_diva_hero",
    "distance": 45,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -10175,6 +10429,7 @@
    "twin": "g_machina_control",
    "distance": 47,
    "unknown_copies": 10,
+   "unknown_main_copies": 8,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -10223,6 +10478,7 @@
    "twin": "g_diva_hero",
    "distance": 46,
    "unknown_copies": 4,
+   "unknown_main_copies": 2,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -10243,7 +10499,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 41,
    "extra": 15
@@ -10263,6 +10519,7 @@
    "twin": "frog_monarch",
    "distance": 29,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -10295,6 +10552,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10323,6 +10581,7 @@
    "twin": "g_hero_beat",
    "distance": 28,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -10369,6 +10628,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 19,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10377,7 +10637,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -10397,6 +10657,7 @@
    "twin": "frog_monarch",
    "distance": 35,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -10434,6 +10695,7 @@
    "twin": "g_diva_hero",
    "distance": 47,
    "unknown_copies": 7,
+   "unknown_main_copies": 5,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10458,8 +10720,8 @@
      3
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -10478,6 +10740,7 @@
    "twin": "g_gladiator_beast",
    "distance": 48,
    "unknown_copies": 13,
+   "unknown_main_copies": 13,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 12,
    "unknown_cards": [
@@ -10530,6 +10793,7 @@
    "twin": "g_blackwing",
    "distance": 16,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10558,6 +10822,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -10586,6 +10851,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 9,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10614,6 +10880,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10622,7 +10889,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -10642,6 +10909,7 @@
    "twin": "g_diva_frog",
    "distance": 38,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10670,6 +10938,7 @@
    "twin": "g_lightsworn",
    "distance": 29,
    "unknown_copies": 6,
+   "unknown_main_copies": 5,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -10690,8 +10959,8 @@
      1
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -10710,6 +10979,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10718,7 +10988,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -10739,6 +11009,7 @@
    "twin": "g_dragon_turbo",
    "distance": 16,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10771,6 +11042,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10799,6 +11071,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 56,
    "unknown_copies": 12,
+   "unknown_main_copies": 11,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10847,6 +11120,7 @@
    "twin": "g_lightsworn",
    "distance": 57,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -10883,6 +11157,7 @@
    "twin": "frog_monarch",
    "distance": 29,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -10919,6 +11194,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 51,
    "unknown_copies": 11,
+   "unknown_main_copies": 10,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -10951,7 +11227,7 @@
      1
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -10971,6 +11247,7 @@
    "twin": "g_lightsworn",
    "distance": 36,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11008,6 +11285,7 @@
    "twin": "g_zombie_teledad",
    "distance": 49,
    "unknown_copies": 12,
+   "unknown_main_copies": 7,
    "unknown_distinct": 10,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11052,7 +11330,7 @@
      1
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 41,
    "extra": 15
@@ -11072,6 +11350,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 16,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -11100,6 +11379,7 @@
    "twin": "g_zombie_teledad",
    "distance": 47,
    "unknown_copies": 12,
+   "unknown_main_copies": 7,
    "unknown_distinct": 10,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11144,7 +11424,7 @@
      1
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 41,
    "extra": 15
@@ -11164,6 +11444,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 31,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11172,7 +11453,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -11192,6 +11473,7 @@
    "twin": "g_hero_beat",
    "distance": 22,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -11204,7 +11486,7 @@
      2
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -11224,6 +11506,7 @@
    "twin": "g_hero_frog",
    "distance": 43,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11252,6 +11535,7 @@
    "twin": "g_dragon_turbo",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11260,7 +11544,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -11280,6 +11564,7 @@
    "twin": "frog_monarch",
    "distance": 51,
    "unknown_copies": 16,
+   "unknown_main_copies": 16,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 11,
    "unknown_cards": [
@@ -11336,6 +11621,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -11364,6 +11650,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 19,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11372,7 +11659,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -11393,6 +11680,7 @@
    "twin": "g_diva_hero",
    "distance": 41,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11421,6 +11709,7 @@
    "twin": "g_blackwing",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -11449,6 +11738,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11457,7 +11747,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -11477,6 +11767,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 16,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -11509,6 +11800,7 @@
    "twin": "g_diva_hero",
    "distance": 41,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -11541,6 +11833,7 @@
    "twin": "g_zombie_teledad",
    "distance": 48,
    "unknown_copies": 12,
+   "unknown_main_copies": 10,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -11577,7 +11870,7 @@
      1
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -11597,6 +11890,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11605,7 +11899,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -11625,6 +11919,7 @@
    "twin": "g_hero_frog",
    "distance": 25,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11653,6 +11948,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 54,
    "unknown_copies": 9,
+   "unknown_main_copies": 9,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11697,6 +11993,7 @@
    "twin": "g_zombie_teledad",
    "distance": 47,
    "unknown_copies": 11,
+   "unknown_main_copies": 6,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11737,7 +12034,7 @@
      1
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 41,
    "extra": 15
@@ -11757,6 +12054,7 @@
    "twin": "g_hero_beat",
    "distance": 20,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11785,6 +12083,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -11813,6 +12112,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11841,6 +12141,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11869,6 +12170,7 @@
    "twin": "g_diva_hero",
    "distance": 47,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11897,6 +12199,7 @@
    "twin": "g_dragon_turbo",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11905,7 +12208,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -11925,6 +12228,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 28,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11933,7 +12237,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -11953,6 +12257,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 6,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -11981,6 +12286,7 @@
    "twin": "blackwing",
    "distance": 16,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12009,6 +12315,7 @@
    "twin": "g_hero_frog",
    "distance": 23,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -12045,6 +12352,7 @@
    "twin": "g_lightsworn",
    "distance": 33,
    "unknown_copies": 10,
+   "unknown_main_copies": 9,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -12085,6 +12393,7 @@
    "twin": "g_gladiator_beast",
    "distance": 31,
    "unknown_copies": 5,
+   "unknown_main_copies": 3,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -12129,6 +12438,7 @@
    "twin": "g_machina_control",
    "distance": 61,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12165,6 +12475,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12193,6 +12504,7 @@
    "twin": "frog_monarch",
    "distance": 53,
    "unknown_copies": 21,
+   "unknown_main_copies": 16,
    "unknown_distinct": 15,
    "unknown_spell_trap_copies": 9,
    "unknown_cards": [
@@ -12277,6 +12589,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 51,
    "unknown_copies": 8,
+   "unknown_main_copies": 8,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -12325,6 +12638,7 @@
    "twin": "blackwing",
    "distance": 16,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12353,6 +12667,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 17,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12361,7 +12676,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -12381,6 +12696,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12409,6 +12725,7 @@
    "twin": "g_zombie_teledad",
    "distance": 52,
    "unknown_copies": 10,
+   "unknown_main_copies": 8,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -12461,6 +12778,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12489,6 +12807,7 @@
    "twin": "g_diva_hero",
    "distance": 49,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12517,6 +12836,7 @@
    "twin": "g_machina_control",
    "distance": 45,
    "unknown_copies": 14,
+   "unknown_main_copies": 13,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -12565,6 +12885,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12593,6 +12914,7 @@
    "twin": "g_machina_control",
    "distance": 43,
    "unknown_copies": 13,
+   "unknown_main_copies": 12,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -12641,6 +12963,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 28,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12673,6 +12996,7 @@
    "twin": "frog_monarch",
    "distance": 87,
    "unknown_copies": 31,
+   "unknown_main_copies": 26,
    "unknown_distinct": 15,
    "unknown_spell_trap_copies": 21,
    "unknown_cards": [
@@ -12757,6 +13081,7 @@
    "twin": "g_hero_beat",
    "distance": 18,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12785,6 +13110,7 @@
    "twin": "g_frog_otk",
    "distance": 30,
    "unknown_copies": 8,
+   "unknown_main_copies": 8,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -12825,6 +13151,7 @@
    "twin": "frog_monarch",
    "distance": 37,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12857,6 +13184,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -12889,6 +13217,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -12917,6 +13246,7 @@
    "twin": "g_gladiator_beast",
    "distance": 20,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -12953,6 +13283,7 @@
    "twin": "g_hero_frog",
    "distance": 43,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -12986,6 +13317,7 @@
    "twin": "g_frog_monarch",
    "distance": 42,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -13018,6 +13350,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -13046,6 +13379,7 @@
    "twin": "g_diva_frog",
    "distance": 36,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -13074,6 +13408,7 @@
    "twin": "g_lightsworn",
    "distance": 31,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -13102,6 +13437,7 @@
    "twin": "g_blackwing",
    "distance": 16,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -13130,6 +13466,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -13158,6 +13495,7 @@
    "twin": "g_zombie_teledad",
    "distance": 49,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -13206,6 +13544,7 @@
    "twin": "g_dragon_turbo",
    "distance": 28,
    "unknown_copies": 5,
+   "unknown_main_copies": 3,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -13250,6 +13589,7 @@
    "twin": "frog_monarch",
    "distance": 29,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -13278,6 +13618,7 @@
    "twin": "g_diva_hero",
    "distance": 42,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -13318,6 +13659,7 @@
    "twin": "g_lightsworn",
    "distance": 25,
    "unknown_copies": 6,
+   "unknown_main_copies": 5,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -13338,8 +13680,8 @@
      1
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -13358,6 +13700,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 30,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -13390,6 +13733,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -13398,7 +13742,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -13418,6 +13762,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -13446,6 +13791,7 @@
    "twin": "g_lightsworn",
    "distance": 23,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -13474,6 +13820,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -13502,6 +13849,7 @@
    "twin": "frog_monarch",
    "distance": 27,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -13538,6 +13886,7 @@
    "twin": "g_hero_beat",
    "distance": 56,
    "unknown_copies": 13,
+   "unknown_main_copies": 6,
    "unknown_distinct": 10,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -13582,7 +13931,7 @@
      1
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -13602,6 +13951,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -13630,6 +13980,7 @@
    "twin": "g_hero_beat",
    "distance": 52,
    "unknown_copies": 11,
+   "unknown_main_copies": 4,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -13662,8 +14013,8 @@
      2
     ]
    ],
-   "band": "11+",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -13682,6 +14033,7 @@
    "twin": "g_zombie_teledad",
    "distance": 46,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -13730,6 +14082,7 @@
    "twin": "g_machina_control",
    "distance": 51,
    "unknown_copies": 11,
+   "unknown_main_copies": 11,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -13774,6 +14127,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 46,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -13810,6 +14164,7 @@
    "twin": "g_dragon_turbo",
    "distance": 12,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -13842,6 +14197,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 44,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -13878,6 +14234,7 @@
    "twin": "g_zombie_teledad",
    "distance": 48,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -13930,6 +14287,7 @@
    "twin": "g_zombie_teledad",
    "distance": 52,
    "unknown_copies": 10,
+   "unknown_main_copies": 6,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -13986,6 +14344,7 @@
    "twin": "g_hero_frog",
    "distance": 61,
    "unknown_copies": 8,
+   "unknown_main_copies": 8,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -14026,6 +14385,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 16,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14054,6 +14414,7 @@
    "twin": "g_machina_control",
    "distance": 33,
    "unknown_copies": 8,
+   "unknown_main_copies": 7,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -14094,6 +14455,7 @@
    "twin": "frog_monarch",
    "distance": 25,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14122,6 +14484,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14150,6 +14513,7 @@
    "twin": "g_hero_beat",
    "distance": 24,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14178,6 +14542,7 @@
    "twin": "g_frog_monarch",
    "distance": 40,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14210,6 +14575,7 @@
    "twin": "g_gladiator_beast",
    "distance": 34,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 6,
    "unknown_cards": [
@@ -14246,6 +14612,7 @@
    "twin": "g_diva_frog",
    "distance": 38,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14274,6 +14641,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 38,
    "unknown_copies": 7,
+   "unknown_main_copies": 6,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -14314,6 +14682,7 @@
    "twin": "g_machina_control",
    "distance": 49,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14346,6 +14715,7 @@
    "twin": "g_gigavise",
    "distance": 60,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -14382,6 +14752,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -14410,6 +14781,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 6,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14438,6 +14810,7 @@
    "twin": "g_gladiator_beast",
    "distance": 28,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -14466,6 +14839,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14494,6 +14868,7 @@
    "twin": "g_machina_control",
    "distance": 47,
    "unknown_copies": 8,
+   "unknown_main_copies": 7,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -14542,6 +14917,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14570,6 +14946,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 9,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14598,6 +14975,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 53,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -14630,6 +15008,7 @@
    "twin": "g_zombie_teledad",
    "distance": 54,
    "unknown_copies": 10,
+   "unknown_main_copies": 8,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -14682,6 +15061,7 @@
    "twin": "g_gladiator_beast",
    "distance": 32,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -14710,6 +15090,7 @@
    "twin": "g_lightsworn",
    "distance": 23,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14718,7 +15099,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -14738,6 +15119,7 @@
    "twin": "g_gladiator_beast",
    "distance": 31,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -14778,6 +15160,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 19,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14806,6 +15189,7 @@
    "twin": "g_machina_control",
    "distance": 29,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -14838,6 +15222,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 56,
    "unknown_copies": 12,
+   "unknown_main_copies": 12,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -14882,6 +15267,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 20,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -14914,6 +15300,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 52,
    "unknown_copies": 12,
+   "unknown_main_copies": 12,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -14958,6 +15345,7 @@
    "twin": "g_gladiator_beast",
    "distance": 29,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -14998,6 +15386,7 @@
    "twin": "g_frog_monarch",
    "distance": 24,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -15006,7 +15395,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -15026,6 +15415,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 25,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -15058,6 +15448,7 @@
    "twin": "g_hero_frog",
    "distance": 39,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -15090,6 +15481,7 @@
    "twin": "g_machina_control",
    "distance": 59,
    "unknown_copies": 19,
+   "unknown_main_copies": 19,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -15150,6 +15542,7 @@
    "twin": "g_zombie_teledad",
    "distance": 48,
    "unknown_copies": 11,
+   "unknown_main_copies": 6,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -15190,7 +15583,7 @@
      1
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -15210,6 +15603,7 @@
    "twin": "g_diva_hero",
    "distance": 48,
    "unknown_copies": 7,
+   "unknown_main_copies": 5,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -15234,8 +15628,8 @@
      3
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 41,
    "extra": 15
   },
@@ -15254,6 +15648,7 @@
    "twin": "frog_monarch",
    "distance": 31,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -15290,6 +15685,7 @@
    "twin": "machina_gadget",
    "distance": 43,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -15322,6 +15718,7 @@
    "twin": "g_machina_control",
    "distance": 45,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -15350,6 +15747,7 @@
    "twin": "g_hero_frog",
    "distance": 37,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -15382,6 +15780,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 46,
    "unknown_copies": 9,
+   "unknown_main_copies": 8,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -15426,6 +15825,7 @@
    "twin": "g_diva_hero",
    "distance": 47,
    "unknown_copies": 7,
+   "unknown_main_copies": 5,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -15450,8 +15850,8 @@
      3
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -15470,6 +15870,7 @@
    "twin": "g_blackwing",
    "distance": 16,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -15498,6 +15899,7 @@
    "twin": "g_blackwing",
    "distance": 6,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -15526,6 +15928,7 @@
    "twin": "g_machina_control",
    "distance": 9,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -15558,6 +15961,7 @@
    "twin": "g_hero_frog",
    "distance": 19,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -15587,6 +15991,7 @@
    "twin": "g_vayu_turbo",
    "distance": 9,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -15615,6 +16020,7 @@
    "twin": "g_diva_hero",
    "distance": 42,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -15655,6 +16061,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 14,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -15687,6 +16094,7 @@
    "twin": "g_zombie_teledad",
    "distance": 52,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -15735,6 +16143,7 @@
    "twin": "frog_monarch",
    "distance": 23,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -15763,6 +16172,7 @@
    "twin": "g_dragon_turbo",
    "distance": 12,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -15795,6 +16205,7 @@
    "twin": "g_gladiator_beast",
    "distance": 48,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -15835,6 +16246,7 @@
    "twin": "g_blackwing",
    "distance": 14,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -15863,6 +16275,7 @@
    "twin": "frog_monarch",
    "distance": 29,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -15903,6 +16316,7 @@
    "twin": "g_hero_frog",
    "distance": 17,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -15931,6 +16345,7 @@
    "twin": "g_lightsworn",
    "distance": 25,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -15939,7 +16354,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -15959,6 +16374,7 @@
    "twin": "g_vayu_turbo",
    "distance": 9,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -15987,6 +16403,7 @@
    "twin": "machina_gadget",
    "distance": 65,
    "unknown_copies": 26,
+   "unknown_main_copies": 16,
    "unknown_distinct": 16,
    "unknown_spell_trap_copies": 13,
    "unknown_cards": [
@@ -16075,6 +16492,7 @@
    "twin": "g_blackwing",
    "distance": 24,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -16107,6 +16525,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 51,
    "unknown_copies": 13,
+   "unknown_main_copies": 12,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -16155,6 +16574,7 @@
    "twin": "g_lightsworn",
    "distance": 27,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -16187,6 +16607,7 @@
    "twin": "g_zombie_teledad",
    "distance": 60,
    "unknown_copies": 14,
+   "unknown_main_copies": 13,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -16239,6 +16660,7 @@
    "twin": "g_dragon_turbo",
    "distance": 22,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -16271,6 +16693,7 @@
    "twin": "g_blackwing",
    "distance": 18,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -16299,6 +16722,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 40,
    "unknown_copies": 10,
+   "unknown_main_copies": 10,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -16343,6 +16767,7 @@
    "twin": "g_lightsworn",
    "distance": 28,
    "unknown_copies": 6,
+   "unknown_main_copies": 3,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -16371,8 +16796,8 @@
      1
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 41,
    "extra": 15
   },
@@ -16391,6 +16816,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 54,
    "unknown_copies": 11,
+   "unknown_main_copies": 10,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -16419,7 +16845,7 @@
      3
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -16439,6 +16865,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -16467,6 +16894,7 @@
    "twin": "g_gladiator_beast",
    "distance": 38,
    "unknown_copies": 8,
+   "unknown_main_copies": 8,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 7,
    "unknown_cards": [
@@ -16507,6 +16935,7 @@
    "twin": "g_zombie_teledad",
    "distance": 36,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -16543,6 +16972,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 76,
    "unknown_copies": 32,
+   "unknown_main_copies": 29,
    "unknown_distinct": 16,
    "unknown_spell_trap_copies": 11,
    "unknown_cards": [
@@ -16631,6 +17061,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -16659,6 +17090,7 @@
    "twin": "g_hero_frog",
    "distance": 21,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -16687,6 +17119,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 26,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -16719,6 +17152,7 @@
    "twin": "machina_gadget",
    "distance": 59,
    "unknown_copies": 19,
+   "unknown_main_copies": 17,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 7,
    "unknown_cards": [
@@ -16780,6 +17214,7 @@
    "twin": "g_machina_control",
    "distance": 17,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -16788,7 +17223,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -16808,6 +17243,7 @@
    "twin": "frog_monarch",
    "distance": 25,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -16836,6 +17272,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 31,
    "unknown_copies": 7,
+   "unknown_main_copies": 6,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -16880,6 +17317,7 @@
    "twin": "g_zombie_teledad",
    "distance": 39,
    "unknown_copies": 5,
+   "unknown_main_copies": 3,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -16924,6 +17362,7 @@
    "twin": "g_hero_beat",
    "distance": 24,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -16964,6 +17403,7 @@
    "twin": "g_machina_control",
    "distance": 23,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -16972,7 +17412,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -16992,6 +17432,7 @@
    "twin": "g_diva_hero",
    "distance": 73,
    "unknown_copies": 26,
+   "unknown_main_copies": 25,
    "unknown_distinct": 11,
    "unknown_spell_trap_copies": 13,
    "unknown_cards": [
@@ -17060,6 +17501,7 @@
    "twin": "g_machina_control",
    "distance": 65,
    "unknown_copies": 14,
+   "unknown_main_copies": 13,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 9,
    "unknown_cards": [
@@ -17112,6 +17554,7 @@
    "twin": "g_gladiator_beast",
    "distance": 33,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -17144,6 +17587,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 20,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -17172,6 +17616,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 30,
    "unknown_copies": 6,
+   "unknown_main_copies": 5,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -17192,8 +17637,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 42,
    "extra": 15
   },
@@ -17212,6 +17657,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 60,
    "unknown_copies": 12,
+   "unknown_main_copies": 12,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -17260,6 +17706,7 @@
    "twin": "g_hero_beat",
    "distance": 26,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -17296,6 +17743,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 16,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -17324,6 +17772,7 @@
    "twin": "g_machina_control",
    "distance": 45,
    "unknown_copies": 8,
+   "unknown_main_copies": 7,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -17364,6 +17813,7 @@
    "twin": "g_machina_control",
    "distance": 36,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -17396,6 +17846,7 @@
    "twin": "g_blackwing",
    "distance": 16,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -17424,6 +17875,7 @@
    "twin": "g_frog_otk",
    "distance": 43,
    "unknown_copies": 13,
+   "unknown_main_copies": 13,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -17472,6 +17924,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 6,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -17500,6 +17953,7 @@
    "twin": "g_vayu_turbo",
    "distance": 11,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -17532,6 +17986,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 30,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -17568,6 +18023,7 @@
    "twin": "g_blackwing",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -17596,6 +18052,7 @@
    "twin": "g_hero_frog",
    "distance": 11,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -17624,6 +18081,7 @@
    "twin": "g_zombie_teledad",
    "distance": 34,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -17660,6 +18118,7 @@
    "twin": "g_machina_control",
    "distance": 19,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -17696,6 +18155,7 @@
    "twin": "g_machina_control",
    "distance": 25,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -17704,7 +18164,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -17724,6 +18184,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 7,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -17752,6 +18213,7 @@
    "twin": "g_machina_control",
    "distance": 56,
    "unknown_copies": 12,
+   "unknown_main_copies": 12,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -17796,6 +18258,7 @@
    "twin": "g_machina_control",
    "distance": 19,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -17804,7 +18267,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -17824,6 +18287,7 @@
    "twin": "machina_gadget",
    "distance": 36,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -17840,7 +18304,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 41,
    "extra": 15
@@ -17860,6 +18324,7 @@
    "twin": "g_machina_control",
    "distance": 18,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -17868,7 +18333,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 41,
    "extra": 15
@@ -17888,6 +18353,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 10,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -17920,6 +18386,7 @@
    "twin": "g_vayu_turbo",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -17948,6 +18415,7 @@
    "twin": "g_diva_hero",
    "distance": 41,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -17980,6 +18448,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 40,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -18008,6 +18477,7 @@
    "twin": "machina_gadget",
    "distance": 75,
    "unknown_copies": 29,
+   "unknown_main_copies": 28,
    "unknown_distinct": 12,
    "unknown_spell_trap_copies": 15,
    "unknown_cards": [
@@ -18080,6 +18550,7 @@
    "twin": "g_gladiator_beast",
    "distance": 25,
    "unknown_copies": 6,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -18096,8 +18567,8 @@
      3
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 43,
    "extra": 15
   },
@@ -18116,6 +18587,7 @@
    "twin": "g_vayu_turbo",
    "distance": 65,
    "unknown_copies": 8,
+   "unknown_main_copies": 7,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18156,6 +18628,7 @@
    "twin": "g_gladiator_beast",
    "distance": 21,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -18188,6 +18661,7 @@
    "twin": "g_lightsworn",
    "distance": 23,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -18220,6 +18694,7 @@
    "twin": "g_hero_beat",
    "distance": 16,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18252,6 +18727,7 @@
    "twin": "g_diva_hero",
    "distance": 43,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18268,7 +18744,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -18288,6 +18764,7 @@
    "twin": "g_lightsworn",
    "distance": 13,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18296,7 +18773,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -18316,6 +18793,7 @@
    "twin": "g_lightsworn",
    "distance": 45,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18348,6 +18826,7 @@
    "twin": "g_lightsworn",
    "distance": 25,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -18376,6 +18855,7 @@
    "twin": "g_machina_control",
    "distance": 23,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -18412,6 +18892,7 @@
    "twin": "blackwing",
    "distance": 74,
    "unknown_copies": 23,
+   "unknown_main_copies": 19,
    "unknown_distinct": 13,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -18488,6 +18969,7 @@
    "twin": "g_hero_frog",
    "distance": 17,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18496,7 +18978,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -18516,6 +18998,7 @@
    "twin": "frog_monarch",
    "distance": 37,
    "unknown_copies": 5,
+   "unknown_main_copies": 4,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -18556,6 +19039,7 @@
    "twin": "g_gladiator_beast",
    "distance": 22,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -18588,6 +19072,7 @@
    "twin": "g_dragon_turbo",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18596,7 +19081,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -18616,6 +19101,7 @@
    "twin": "g_gladiator_beast",
    "distance": 27,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -18652,6 +19138,7 @@
    "twin": "g_gigavise",
    "distance": 11,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18660,7 +19147,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -18680,6 +19167,7 @@
    "twin": "g_machina_control",
    "distance": 55,
    "unknown_copies": 20,
+   "unknown_main_copies": 17,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -18740,6 +19228,7 @@
    "twin": "g_machina_control",
    "distance": 20,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -18772,6 +19261,7 @@
    "twin": "g_gigavise",
    "distance": 19,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18804,6 +19294,7 @@
    "twin": "g_machina_control",
    "distance": 25,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18816,7 +19307,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -18836,6 +19327,7 @@
    "twin": "g_gladiator_beast",
    "distance": 26,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -18880,6 +19372,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 16,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18908,6 +19401,7 @@
    "twin": "g_dragon_turbo",
    "distance": 10,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18940,6 +19434,7 @@
    "twin": "g_dragon_turbo",
    "distance": 14,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -18972,6 +19467,7 @@
    "twin": "g_gigavise",
    "distance": 19,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -19004,6 +19500,7 @@
    "twin": "g_dragon_turbo",
    "distance": 8,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -19036,6 +19533,7 @@
    "twin": "g_lightsworn",
    "distance": 28,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -19068,6 +19566,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 10,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -19100,6 +19599,7 @@
    "twin": "g_blackwing",
    "distance": 14,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -19132,6 +19632,7 @@
    "twin": "g_lightsworn",
    "distance": 10,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -19164,6 +19665,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 14,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -19196,6 +19698,7 @@
    "twin": "g_gladiator_beast",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -19224,6 +19727,7 @@
    "twin": "g_blackwing",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -19252,6 +19756,7 @@
    "twin": "g_machina_control",
    "distance": 21,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -19264,7 +19769,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -19284,6 +19789,7 @@
    "twin": "g_zombie_teledad",
    "distance": 44,
    "unknown_copies": 11,
+   "unknown_main_copies": 6,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -19324,7 +19830,7 @@
      1
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -19344,6 +19850,7 @@
    "twin": "g_gigavise",
    "distance": 15,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -19352,7 +19859,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -19373,6 +19880,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -19401,6 +19909,7 @@
    "twin": "g_diva_hero",
    "distance": 51,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -19441,6 +19950,7 @@
    "twin": "g_dragon_turbo",
    "distance": 12,
    "unknown_copies": 3,
+   "unknown_main_copies": 1,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -19457,7 +19967,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -19477,6 +19987,7 @@
    "twin": "g_frog_monarch",
    "distance": 36,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -19517,6 +20028,7 @@
    "twin": "g_diva_hero",
    "distance": 65,
    "unknown_copies": 18,
+   "unknown_main_copies": 12,
    "unknown_distinct": 12,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -19589,6 +20101,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -19617,6 +20130,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 42,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -19649,6 +20163,7 @@
    "twin": "g_zombie_teledad",
    "distance": 54,
    "unknown_copies": 12,
+   "unknown_main_copies": 10,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -19681,7 +20196,7 @@
      3
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 42,
    "extra": 15
@@ -19701,6 +20216,7 @@
    "twin": "g_machina_control",
    "distance": 53,
    "unknown_copies": 11,
+   "unknown_main_copies": 10,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -19729,7 +20245,7 @@
      2
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -19749,6 +20265,7 @@
    "twin": "g_zombie_teledad",
    "distance": 41,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -19797,6 +20314,7 @@
    "twin": "g_blackwing",
    "distance": 16,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -19825,6 +20343,7 @@
    "twin": "g_blackwing",
    "distance": 24,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -19853,6 +20372,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 32,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -19889,6 +20409,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -19919,6 +20440,7 @@
    "twin": "g_diva_hero",
    "distance": 51,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -19967,6 +20489,7 @@
    "twin": "g_zombie_teledad",
    "distance": 52,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20015,6 +20538,7 @@
    "twin": "blackwing",
    "distance": 22,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -20043,6 +20567,7 @@
    "twin": "frog_monarch",
    "distance": 41,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -20079,6 +20604,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -20111,6 +20637,7 @@
    "twin": "g_vayu_turbo",
    "distance": 10,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -20143,6 +20670,7 @@
    "twin": "g_dragon_turbo",
    "distance": 10,
    "unknown_copies": 3,
+   "unknown_main_copies": 1,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20159,7 +20687,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -20179,6 +20707,7 @@
    "twin": "g_zombie_teledad",
    "distance": 47,
    "unknown_copies": 11,
+   "unknown_main_copies": 6,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20219,7 +20748,7 @@
      1
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 41,
    "extra": 15
@@ -20239,6 +20768,7 @@
    "twin": "g_zombie_teledad",
    "distance": 44,
    "unknown_copies": 9,
+   "unknown_main_copies": 7,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20291,6 +20821,7 @@
    "twin": "g_hero_beat",
    "distance": 44,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20323,6 +20854,7 @@
    "twin": "g_lightsworn",
    "distance": 29,
    "unknown_copies": 3,
+   "unknown_main_copies": 1,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -20339,7 +20871,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 42,
    "extra": 15
@@ -20359,6 +20891,7 @@
    "twin": "g_gladiator_beast",
    "distance": 28,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -20387,6 +20920,7 @@
    "twin": "machina_gadget",
    "distance": 37,
    "unknown_copies": 6,
+   "unknown_main_copies": 5,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -20403,8 +20937,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -20423,6 +20957,7 @@
    "twin": "g_lightsworn",
    "distance": 24,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -20455,6 +20990,7 @@
    "twin": "g_dragon_turbo",
    "distance": 8,
    "unknown_copies": 3,
+   "unknown_main_copies": 1,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20471,7 +21007,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -20491,6 +21027,7 @@
    "twin": "g_blackwing",
    "distance": 26,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -20519,6 +21056,7 @@
    "twin": "g_frog_otk",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20547,6 +21085,7 @@
    "twin": "g_gigavise",
    "distance": 57,
    "unknown_copies": 8,
+   "unknown_main_copies": 7,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -20587,6 +21126,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 4,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20615,6 +21155,7 @@
    "twin": "g_gladiator_beast",
    "distance": 36,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -20663,6 +21204,7 @@
    "twin": "g_frog_monarch",
    "distance": 34,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20691,6 +21233,7 @@
    "twin": "g_machina_control",
    "distance": 49,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -20728,6 +21271,7 @@
    "twin": "g_gigavise",
    "distance": 15,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20736,7 +21280,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -20756,6 +21300,7 @@
    "twin": "g_dragon_turbo",
    "distance": 10,
    "unknown_copies": 3,
+   "unknown_main_copies": 1,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20772,7 +21317,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -20792,6 +21337,7 @@
    "twin": "g_diva_hero",
    "distance": 37,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20825,6 +21371,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -20853,6 +21400,7 @@
    "twin": "g_gladiator_beast",
    "distance": 16,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -20881,6 +21429,7 @@
    "twin": "g_gigavise",
    "distance": 15,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -20889,7 +21438,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -20909,6 +21458,7 @@
    "twin": "g_gladiator_beast",
    "distance": 44,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -20945,6 +21495,7 @@
    "twin": "g_vayu_turbo",
    "distance": 9,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -20977,6 +21528,7 @@
    "twin": "g_gladiator_beast",
    "distance": 23,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -21013,6 +21565,7 @@
    "twin": "g_dragon_turbo",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21021,7 +21574,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -21041,6 +21594,7 @@
    "twin": "g_dragon_turbo",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21049,7 +21603,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -21069,6 +21623,7 @@
    "twin": "g_blackwing",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -21097,6 +21652,7 @@
    "twin": "g_hero_frog",
    "distance": 21,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -21125,6 +21681,7 @@
    "twin": "g_lightsworn",
    "distance": 25,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -21153,6 +21710,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 28,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21185,6 +21743,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -21217,6 +21776,7 @@
    "twin": "g_gladiator_beast",
    "distance": 10,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -21249,6 +21809,7 @@
    "twin": "g_blackwing",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -21277,6 +21838,7 @@
    "twin": "g_dragon_turbo",
    "distance": 10,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21309,6 +21871,7 @@
    "twin": "g_frog_monarch",
    "distance": 36,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21342,6 +21905,7 @@
    "twin": "g_frog_otk",
    "distance": 6,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21370,6 +21934,7 @@
    "twin": "g_zombie_teledad",
    "distance": 46,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21410,6 +21975,7 @@
    "twin": "g_gladiator_beast",
    "distance": 24,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -21438,6 +22004,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 48,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21466,6 +22033,7 @@
    "twin": "g_diva_frog",
    "distance": 53,
    "unknown_copies": 10,
+   "unknown_main_copies": 10,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21507,6 +22075,7 @@
    "twin": "g_gladiator_beast",
    "distance": 23,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -21535,6 +22104,7 @@
    "twin": "g_gigavise",
    "distance": 15,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21543,7 +22113,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -21563,6 +22133,7 @@
    "twin": "g_blackwing",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -21591,6 +22162,7 @@
    "twin": "g_diva_hero",
    "distance": 49,
    "unknown_copies": 7,
+   "unknown_main_copies": 7,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -21635,6 +22207,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 28,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -21667,6 +22240,7 @@
    "twin": "g_machina_control",
    "distance": 41,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21679,7 +22253,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 42,
    "extra": 15
@@ -21699,6 +22273,7 @@
    "twin": "g_blackwing",
    "distance": 15,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -21727,6 +22302,7 @@
    "twin": "g_gigavise",
    "distance": 13,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21735,7 +22311,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -21755,6 +22331,7 @@
    "twin": "g_vayu_turbo",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21783,6 +22360,7 @@
    "twin": "g_gladiator_beast",
    "distance": 18,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -21811,6 +22389,7 @@
    "twin": "g_blackwing",
    "distance": 20,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -21839,6 +22418,7 @@
    "twin": "g_frog_monarch",
    "distance": 38,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -21875,6 +22455,7 @@
    "twin": "g_gladiator_beast",
    "distance": 8,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -21903,6 +22484,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -21931,6 +22513,7 @@
    "twin": "g_dragon_turbo",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21939,7 +22522,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -21959,6 +22542,7 @@
    "twin": "g_vayu_turbo",
    "distance": 11,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -21987,6 +22571,7 @@
    "twin": "g_dragon_turbo",
    "distance": 8,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -22019,6 +22604,7 @@
    "twin": "g_gigavise",
    "distance": 15,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -22027,7 +22613,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -22047,6 +22633,7 @@
    "twin": "g_diva_frog",
    "distance": 30,
    "unknown_copies": 6,
+   "unknown_main_copies": 5,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -22071,8 +22658,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -22091,6 +22678,7 @@
    "twin": "g_blackwing",
    "distance": 14,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -22119,6 +22707,7 @@
    "twin": "g_gladiator_beast",
    "distance": 28,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -22155,6 +22744,7 @@
    "twin": "g_hero_frog",
    "distance": 37,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -22191,6 +22781,7 @@
    "twin": "g_gigavise",
    "distance": 15,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -22199,7 +22790,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -22219,6 +22810,7 @@
    "twin": "g_gladiator_beast",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -22247,6 +22839,7 @@
    "twin": "g_gladiator_beast",
    "distance": 24,
    "unknown_copies": 4,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -22259,7 +22852,7 @@
      3
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -22279,6 +22872,7 @@
    "twin": "g_gladiator_beast",
    "distance": 13,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -22311,6 +22905,7 @@
    "twin": "g_machina_control",
    "distance": 26,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -22323,7 +22918,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 41,
    "extra": 15
@@ -22343,6 +22938,7 @@
    "twin": "g_diva_hero",
    "distance": 46,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -22379,6 +22975,7 @@
    "twin": "g_machina_control",
    "distance": 57,
    "unknown_copies": 26,
+   "unknown_main_copies": 23,
    "unknown_distinct": 15,
    "unknown_spell_trap_copies": 7,
    "unknown_cards": [
@@ -22463,6 +23060,7 @@
    "twin": "g_zombie_teledad",
    "distance": 46,
    "unknown_copies": 9,
+   "unknown_main_copies": 7,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -22511,6 +23109,7 @@
    "twin": "g_dragon_turbo",
    "distance": 22,
    "unknown_copies": 3,
+   "unknown_main_copies": 1,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -22527,7 +23126,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -22547,6 +23146,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -22555,7 +23155,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -22575,6 +23175,7 @@
    "twin": "g_blackwing",
    "distance": 20,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -22607,6 +23208,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 59,
    "unknown_copies": 10,
+   "unknown_main_copies": 10,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 8,
    "unknown_cards": [
@@ -22651,6 +23253,7 @@
    "twin": "g_blackwing",
    "distance": 18,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -22683,6 +23286,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 58,
    "unknown_copies": 17,
+   "unknown_main_copies": 15,
    "unknown_distinct": 10,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -22747,6 +23351,7 @@
    "twin": "g_zombie_teledad",
    "distance": 42,
    "unknown_copies": 9,
+   "unknown_main_copies": 7,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -22799,6 +23404,7 @@
    "twin": "g_lightsworn",
    "distance": 25,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -22831,6 +23437,7 @@
    "twin": "g_dragon_turbo",
    "distance": 10,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -22863,6 +23470,7 @@
    "twin": "g_lightsworn",
    "distance": 23,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -22891,6 +23499,7 @@
    "twin": "g_blackwing",
    "distance": 6,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -22919,6 +23528,7 @@
    "twin": "g_frog_monarch",
    "distance": 36,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -22951,6 +23561,7 @@
    "twin": "g_machina_control",
    "distance": 41,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -22959,7 +23570,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -22979,6 +23590,7 @@
    "twin": "g_frog_monarch",
    "distance": 38,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23011,6 +23623,7 @@
    "twin": "frog_monarch",
    "distance": 53,
    "unknown_copies": 11,
+   "unknown_main_copies": 11,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 8,
    "unknown_cards": [
@@ -23059,6 +23672,7 @@
    "twin": "g_blackwing",
    "distance": 6,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -23087,6 +23701,7 @@
    "twin": "g_blackwing",
    "distance": 22,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -23115,6 +23730,7 @@
    "twin": "g_diva_hero",
    "distance": 44,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23151,6 +23767,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 37,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23183,6 +23800,7 @@
    "twin": "g_machina_control",
    "distance": 59,
    "unknown_copies": 18,
+   "unknown_main_copies": 16,
    "unknown_distinct": 10,
    "unknown_spell_trap_copies": 7,
    "unknown_cards": [
@@ -23247,6 +23865,7 @@
    "twin": "g_vayu_turbo",
    "distance": 6,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23275,6 +23894,7 @@
    "twin": "g_zombie_teledad",
    "distance": 46,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23323,6 +23943,7 @@
    "twin": "g_diva_frog",
    "distance": 30,
    "unknown_copies": 6,
+   "unknown_main_copies": 4,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -23351,8 +23972,8 @@
      1
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -23371,6 +23992,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -23399,6 +24021,7 @@
    "twin": "g_gladiator_beast",
    "distance": 9,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -23431,6 +24054,7 @@
    "twin": "g_machina_control",
    "distance": 18,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23439,7 +24063,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 41,
    "extra": 15
@@ -23459,6 +24083,7 @@
    "twin": "g_dragon_turbo",
    "distance": 8,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23491,6 +24116,7 @@
    "twin": "g_lightsworn",
    "distance": 15,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -23527,6 +24153,7 @@
    "twin": "g_zombie_teledad",
    "distance": 38,
    "unknown_copies": 5,
+   "unknown_main_copies": 2,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23547,7 +24174,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -23567,6 +24194,7 @@
    "twin": "g_hero_frog",
    "distance": 17,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23595,6 +24223,7 @@
    "twin": "g_vayu_turbo",
    "distance": 65,
    "unknown_copies": 10,
+   "unknown_main_copies": 9,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -23643,6 +24272,7 @@
    "twin": "g_hero_frog",
    "distance": 23,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -23671,6 +24301,7 @@
    "twin": "g_frog_otk",
    "distance": 18,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23699,6 +24330,7 @@
    "twin": "g_gigavise",
    "distance": 15,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23707,7 +24339,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -23727,6 +24359,7 @@
    "twin": "g_gigavise",
    "distance": 15,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23735,7 +24368,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -23755,6 +24388,7 @@
    "twin": "g_gladiator_beast",
    "distance": 21,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -23787,6 +24421,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 53,
    "unknown_copies": 10,
+   "unknown_main_copies": 10,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -23835,6 +24470,7 @@
    "twin": "g_lightsworn",
    "distance": 11,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -23843,7 +24479,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -23863,6 +24499,7 @@
    "twin": "g_lightsworn",
    "distance": 31,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -23891,6 +24528,7 @@
    "twin": "g_blackwing",
    "distance": 8,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -23923,6 +24561,7 @@
    "twin": "g_machina_control",
    "distance": 50,
    "unknown_copies": 12,
+   "unknown_main_copies": 10,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -23955,7 +24594,7 @@
      3
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 41,
    "extra": 15
@@ -23975,6 +24614,7 @@
    "twin": "g_blackwing",
    "distance": 5,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -24003,6 +24643,7 @@
    "twin": "g_gladiator_beast",
    "distance": 5,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -24031,6 +24672,7 @@
    "twin": "g_gladiator_beast",
    "distance": 11,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24039,7 +24681,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 43,
    "extra": 15
@@ -24059,6 +24701,7 @@
    "twin": "g_hero_frog",
    "distance": 26,
    "unknown_copies": 5,
+   "unknown_main_copies": 4,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -24095,6 +24738,7 @@
    "twin": "g_gladiator_beast",
    "distance": 15,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -24127,6 +24771,7 @@
    "twin": "g_lightsworn",
    "distance": 8,
    "unknown_copies": 3,
+   "unknown_main_copies": 1,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24143,7 +24788,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 41,
    "extra": 15
@@ -24163,6 +24808,7 @@
    "twin": "g_blackwing",
    "distance": 20,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -24195,6 +24841,7 @@
    "twin": "g_frog_monarch",
    "distance": 32,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24231,6 +24878,7 @@
    "twin": "g_blackwing",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24259,6 +24907,7 @@
    "twin": "g_zombie_teledad",
    "distance": 42,
    "unknown_copies": 9,
+   "unknown_main_copies": 6,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24311,6 +24960,7 @@
    "twin": "g_zombie_teledad",
    "distance": 45,
    "unknown_copies": 11,
+   "unknown_main_copies": 6,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24351,7 +25001,7 @@
      1
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 41,
    "extra": 15
@@ -24371,6 +25021,7 @@
    "twin": "g_gigavise",
    "distance": 7,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24379,7 +25030,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -24399,6 +25050,7 @@
    "twin": "g_blackwing",
    "distance": 8,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -24427,6 +25079,7 @@
    "twin": "g_machina_control",
    "distance": 59,
    "unknown_copies": 14,
+   "unknown_main_copies": 12,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 7,
    "unknown_cards": [
@@ -24479,6 +25132,7 @@
    "twin": "machina_gadget",
    "distance": 37,
    "unknown_copies": 2,
+   "unknown_main_copies": 0,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24491,7 +25145,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -24511,6 +25165,7 @@
    "twin": "g_diva_hero_beat",
    "distance": 66,
    "unknown_copies": 13,
+   "unknown_main_copies": 12,
    "unknown_distinct": 11,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -24581,6 +25236,7 @@
    "twin": "g_zombie_teledad",
    "distance": 42,
    "unknown_copies": 10,
+   "unknown_main_copies": 6,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24637,6 +25293,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -24665,6 +25322,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 62,
    "unknown_copies": 20,
+   "unknown_main_copies": 19,
    "unknown_distinct": 11,
    "unknown_spell_trap_copies": 5,
    "unknown_cards": [
@@ -24733,6 +25391,7 @@
    "twin": "g_machina_control",
    "distance": 53,
    "unknown_copies": 13,
+   "unknown_main_copies": 12,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -24781,6 +25440,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 41,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24813,6 +25473,7 @@
    "twin": "g_gladiator_beast",
    "distance": 9,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -24841,6 +25502,7 @@
    "twin": "g_diva_hero",
    "distance": 48,
    "unknown_copies": 6,
+   "unknown_main_copies": 4,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24865,8 +25527,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 41,
    "extra": 15
   },
@@ -24886,6 +25548,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -24914,6 +25577,7 @@
    "twin": "g_frog_monarch",
    "distance": 20,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24942,6 +25606,7 @@
    "twin": "g_dragon_turbo",
    "distance": 14,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -24974,6 +25639,7 @@
    "twin": "g_zombie_teledad",
    "distance": 37,
    "unknown_copies": 6,
+   "unknown_main_copies": 4,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25002,8 +25668,8 @@
      1
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 41,
    "extra": 15
   },
@@ -25022,6 +25688,7 @@
    "twin": "g_gigavise",
    "distance": 7,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25054,6 +25721,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 28,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -25086,6 +25754,7 @@
    "twin": "g_lightsworn",
    "distance": 4,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25114,6 +25783,7 @@
    "twin": "g_gigavise",
    "distance": 9,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -25130,7 +25800,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -25150,6 +25820,7 @@
    "twin": "g_frog_otk",
    "distance": 17,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25179,6 +25850,7 @@
    "twin": "g_gigavise",
    "distance": 9,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25187,7 +25859,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -25207,6 +25879,7 @@
    "twin": "g_gladiator_beast",
    "distance": 14,
    "unknown_copies": 3,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25215,7 +25888,7 @@
      3
     ]
    ],
-   "band": "3-5",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 44,
    "extra": 15
@@ -25235,6 +25908,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -25263,6 +25937,7 @@
    "twin": "g_lightsworn",
    "distance": 27,
    "unknown_copies": 6,
+   "unknown_main_copies": 6,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -25303,6 +25978,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 17,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -25331,6 +26007,7 @@
    "twin": "g_frog_otk",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25359,6 +26036,7 @@
    "twin": "g_blackwing",
    "distance": 6,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -25387,6 +26065,7 @@
    "twin": "g_gladiator_beast",
    "distance": 11,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -25415,6 +26094,7 @@
    "twin": "g_blackwing",
    "distance": 4,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -25443,6 +26123,7 @@
    "twin": "g_diva_hero",
    "distance": 51,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25475,6 +26156,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 53,
    "unknown_copies": 5,
+   "unknown_main_copies": 5,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25511,6 +26193,7 @@
    "twin": "g_dragon_turbo",
    "distance": 12,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25543,6 +26226,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -25571,6 +26255,7 @@
    "twin": "g_blackwing",
    "distance": 14,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -25599,6 +26284,7 @@
    "twin": "g_diva_frog",
    "distance": 38,
    "unknown_copies": 3,
+   "unknown_main_copies": 1,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25615,7 +26301,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -25635,6 +26321,7 @@
    "twin": "g_blackwing",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -25663,6 +26350,7 @@
    "twin": "g_gladiator_beast",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -25692,6 +26380,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -25720,6 +26409,7 @@
    "twin": "g_hero_beat",
    "distance": 49,
    "unknown_copies": 17,
+   "unknown_main_copies": 17,
    "unknown_distinct": 9,
    "unknown_spell_trap_copies": 11,
    "unknown_cards": [
@@ -25780,6 +26470,7 @@
    "twin": "g_gigavise",
    "distance": 17,
    "unknown_copies": 5,
+   "unknown_main_copies": 4,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -25824,6 +26515,7 @@
    "twin": "g_dragon_turbo",
    "distance": 32,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -25852,6 +26544,7 @@
    "twin": "g_blackwing",
    "distance": 8,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -25880,6 +26573,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 3,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -25908,6 +26602,7 @@
    "twin": "g_gigavise",
    "distance": 11,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25916,7 +26611,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -25936,6 +26631,7 @@
    "twin": "g_blackwing",
    "distance": 4,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -25964,6 +26660,7 @@
    "twin": "g_dragon_turbo",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -25992,6 +26689,7 @@
    "twin": "g_blackwing",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26020,6 +26718,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26048,6 +26747,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26076,6 +26776,7 @@
    "twin": "machina_gadget",
    "distance": 37,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -26088,7 +26789,7 @@
      2
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -26108,6 +26809,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -26136,6 +26838,7 @@
    "twin": "g_machina_control",
    "distance": 28,
    "unknown_copies": 5,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -26172,6 +26875,7 @@
    "twin": "g_zombie_teledad",
    "distance": 50,
    "unknown_copies": 9,
+   "unknown_main_copies": 7,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -26200,7 +26904,7 @@
      2
     ],
     [
-     83011278,
+     83011277,
      2
     ]
    ],
@@ -26224,6 +26928,7 @@
    "twin": "g_machina_control",
    "distance": 19,
    "unknown_copies": 4,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -26256,6 +26961,7 @@
    "twin": "g_machina_control",
    "distance": 54,
    "unknown_copies": 13,
+   "unknown_main_copies": 11,
    "unknown_distinct": 8,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -26312,6 +27018,7 @@
    "twin": "g_lightsworn",
    "distance": 9,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26344,6 +27051,7 @@
    "twin": "g_gladiator_beast",
    "distance": 20,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -26372,6 +27080,7 @@
    "twin": "g_lightsworn",
    "distance": 26,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26400,6 +27109,7 @@
    "twin": "g_dragon_turbo",
    "distance": 8,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -26432,6 +27142,7 @@
    "twin": "g_vayu_turbo",
    "distance": 7,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -26460,6 +27171,7 @@
    "twin": "g_frog_otk",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -26488,6 +27200,7 @@
    "twin": "g_frog_monarch",
    "distance": 26,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26524,6 +27237,7 @@
    "twin": "g_diva_hero",
    "distance": 37,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26556,6 +27270,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 35,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26572,7 +27287,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -26592,6 +27307,7 @@
    "twin": "g_gladiator_beast",
    "distance": 11,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -26624,6 +27340,7 @@
    "twin": "g_lightsworn",
    "distance": 6,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -26652,6 +27369,7 @@
    "twin": "g_blackwing",
    "distance": 10,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26680,6 +27398,7 @@
    "twin": "g_lightsworn",
    "distance": 8,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -26708,6 +27427,7 @@
    "twin": "g_blackwing",
    "distance": 17,
    "unknown_copies": 5,
+   "unknown_main_copies": 4,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -26748,6 +27468,7 @@
    "twin": "g_blackwing",
    "distance": 12,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26776,6 +27497,7 @@
    "twin": "g_lightsworn",
    "distance": 13,
    "unknown_copies": 2,
+   "unknown_main_copies": 2,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26808,6 +27530,7 @@
    "twin": "g_lightsworn",
    "distance": 35,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26840,6 +27563,7 @@
    "twin": "g_gladiator_beast",
    "distance": 27,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -26868,6 +27592,7 @@
    "twin": "g_blackwing",
    "distance": 7,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26896,6 +27621,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 26,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26912,7 +27638,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 42,
    "extra": 15
@@ -26932,6 +27658,7 @@
    "twin": "g_blackwing",
    "distance": 22,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -26960,6 +27687,7 @@
    "twin": "g_lightsworn",
    "distance": 13,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -26968,7 +27696,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -26988,6 +27716,7 @@
    "twin": "g_vayu_turbo",
    "distance": 11,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -27016,6 +27745,7 @@
    "twin": "g_diva_hero",
    "distance": 55,
    "unknown_copies": 11,
+   "unknown_main_copies": 10,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -27040,7 +27770,7 @@
      1
     ]
    ],
-   "band": "11+",
+   "band": "6-10",
    "heavy": true,
    "main": 40,
    "extra": 15
@@ -27060,6 +27790,7 @@
    "twin": "g_diva_hero",
    "distance": 37,
    "unknown_copies": 1,
+   "unknown_main_copies": 0,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -27068,7 +27799,7 @@
      1
     ]
    ],
-   "band": "1-2",
+   "band": "Extra Deck only",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -27088,6 +27819,7 @@
    "twin": "g_lightsworn",
    "distance": 27,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -27128,6 +27860,7 @@
    "twin": "g_lightsworn",
    "distance": 31,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -27160,6 +27893,7 @@
    "twin": "g_vayu_turbo_ddev08",
    "distance": 28,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 3,
    "unknown_cards": [
@@ -27188,6 +27922,7 @@
    "twin": "blackwing",
    "distance": 72,
    "unknown_copies": 18,
+   "unknown_main_copies": 17,
    "unknown_distinct": 10,
    "unknown_spell_trap_copies": 7,
    "unknown_cards": [
@@ -27252,6 +27987,7 @@
    "twin": "g_gladiator_beast",
    "distance": 18,
    "unknown_copies": 4,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -27264,7 +28000,7 @@
      3
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 42,
    "extra": 15
@@ -27284,6 +28020,7 @@
    "twin": "g_gladiator_beast",
    "distance": 14,
    "unknown_copies": 3,
+   "unknown_main_copies": 2,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -27300,7 +28037,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 44,
    "extra": 15
@@ -27320,6 +28057,7 @@
    "twin": "g_frog_otk",
    "distance": 4,
    "unknown_copies": 1,
+   "unknown_main_copies": 1,
    "unknown_distinct": 1,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -27348,6 +28086,7 @@
    "twin": "g_diva_hero",
    "distance": 57,
    "unknown_copies": 10,
+   "unknown_main_copies": 10,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -27392,6 +28131,7 @@
    "twin": "g_dragon_turbo",
    "distance": 30,
    "unknown_copies": 5,
+   "unknown_main_copies": 3,
    "unknown_distinct": 5,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -27436,6 +28176,7 @@
    "twin": "g_lightsworn_fairy",
    "distance": 52,
    "unknown_copies": 9,
+   "unknown_main_copies": 8,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -27476,6 +28217,7 @@
    "twin": "g_zombie_teledad",
    "distance": 46,
    "unknown_copies": 8,
+   "unknown_main_copies": 6,
    "unknown_distinct": 7,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -27528,6 +28270,7 @@
    "twin": "frog_monarch",
    "distance": 33,
    "unknown_copies": 3,
+   "unknown_main_copies": 3,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
@@ -27560,6 +28303,7 @@
    "twin": "g_quickdraw_plant",
    "distance": 65,
    "unknown_copies": 7,
+   "unknown_main_copies": 5,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -27580,8 +28324,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -27600,6 +28344,7 @@
    "twin": "g_diva_frog",
    "distance": 40,
    "unknown_copies": 4,
+   "unknown_main_copies": 4,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -27636,6 +28381,7 @@
    "twin": "g_gladiator_beast",
    "distance": 46,
    "unknown_copies": 5,
+   "unknown_main_copies": 4,
    "unknown_distinct": 4,
    "unknown_spell_trap_copies": 2,
    "unknown_cards": [
@@ -27676,6 +28422,7 @@
    "twin": "g_hero_beat",
    "distance": 24,
    "unknown_copies": 7,
+   "unknown_main_copies": 5,
    "unknown_distinct": 6,
    "unknown_spell_trap_copies": 4,
    "unknown_cards": [
@@ -27704,8 +28451,8 @@
      2
     ]
    ],
-   "band": "6-10",
-   "heavy": true,
+   "band": "3-5",
+   "heavy": false,
    "main": 40,
    "extra": 15
   },
@@ -27724,6 +28471,7 @@
    "twin": "g_frog_monarch",
    "distance": 36,
    "unknown_copies": 3,
+   "unknown_main_copies": 1,
    "unknown_distinct": 3,
    "unknown_spell_trap_copies": 0,
    "unknown_cards": [
@@ -27740,7 +28488,7 @@
      1
     ]
    ],
-   "band": "3-5",
+   "band": "1-2",
    "heavy": false,
    "main": 40,
    "extra": 15
@@ -27760,6 +28508,7 @@
    "twin": "g_lightsworn",
    "distance": 21,
    "unknown_copies": 2,
+   "unknown_main_copies": 1,
    "unknown_distinct": 2,
    "unknown_spell_trap_copies": 1,
    "unknown_cards": [
