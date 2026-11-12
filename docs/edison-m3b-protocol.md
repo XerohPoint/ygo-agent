@@ -246,7 +246,8 @@ so its code is frozen in its own manifest before its first game. Its seeds are 9
     the value and log-probability the actor stored are what the network gives on the stored batch, to 3e-6 and 2e-5;
     swapping the unknown row out moves the value on 3,789 of the 3,948 decisions that read it.
   - The native pass matches the Python network within the M2 gates on all 18,371 decisions, with no greedy
-    difference. Skipping the map at any one site fails the gates. Eight wrong files or expectations refuse to load.
+    difference. Skipping the map at any one site fails the gates. Ten wrong files or expectations refuse to load,
+    among them a file whose only fault is another card's row under the right parameters and code list.
   - 27 unit checks of the map functions and the loaders pass.
 - **Code list v1 is unchanged.** `test_learner.py` passes all 12 checks with the rollout and parameter hashes recorded
   on November 11.
@@ -277,6 +278,18 @@ differential, one this protocol and its runner. Neither found a defect that the 
 | Mask doses were drawn separately | Design | A larger dose hides all a smaller one does |
 | `seal` named `checkpoint-3` for the trainer's `checkpoint-0003` (found by the rehearsal) | Reachable | Fixed; 2,560 rounds would have matched by luck |
 | Numbers with no committed evidence; 357 unknown cards counted two artworks of one | Wording | The summaries are committed; artworks count once: 356 |
+
+**Sol (gpt-6.1-sol)** then reviewed the interface code and the differential at `9764ca9`, after those fixes. It found no
+defect the planned runs would reach. On its own games it confirmed that a cell hides the same identities and gives the
+same traces and rollouts at 1 and at 4 env threads, that 670 stored decisions reproduce through training minibatches,
+that the native pass matches on 865 fresh observations, and that code list v1's parameters and outputs equal those
+before the change. Its findings:
+
+| Finding | Class | Change |
+| --- | --- | --- |
+| A native caller could load a file with another identity map, since naming the map was optional | Latent | A file with an identity map loads only for a caller that names that map's hash |
+| `identity_check.py inputs`, run alone, exited 0 with violations | Test | It exits 1, and a mutant or the v1 control must be asked for |
+| The differential's v1 control never evaluates a v1 network | Test | No change: `test_learner.py` covers v1, and its rollout and parameter hashes match November 11's |
 
 ## Commands
 

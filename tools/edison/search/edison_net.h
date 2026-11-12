@@ -144,8 +144,9 @@ struct Expect {
   const char *params_sha256;  // hex of the source msgpack. Required.
   const char *codes_sha256;   // hex of the code list. Required.
   Config config;
-  // Hex sha256 of the identity map as the file stores it: n_codes + 2 little-endian float32. Optional.
-  // export_net.py prints it as id_row_sha256. A caller that names one refuses any other map.
+  // Hex sha256 of the identity map as the file stores it: n_codes + 2 little-endian float32, which
+  // export_net.py prints as id_row_sha256. Required with Config::unknown_row, and refused without it:
+  // two files can share parameters and code list and differ only in the map.
   const char *id_row_sha256 = nullptr;
 };
 
@@ -694,10 +695,9 @@ inline bool load(Net &net, const char *path, const Expect &expect, const char **
       if ((i == 0) != (v == 0.0f)) return reject("identity map moves the empty id");
     }
     if (built.id_row[unknown] != float(unknown)) return reject("identity map moves the unknown row");
-    if (expect.id_row_sha256) {
-      detail::sha256(reinterpret_cast<const uint8_t *>(built.id_row), size_t(unknown + 1) * sizeof(float), digest);
-      if (!detail::hex_matches(expect.id_row_sha256, digest)) return reject("identity map is not the expected one");
-    }
+    if (!expect.id_row_sha256) return reject("the caller names no identity map");
+    detail::sha256(reinterpret_cast<const uint8_t *>(built.id_row), size_t(unknown + 1) * sizeof(float), digest);
+    if (!detail::hex_matches(expect.id_row_sha256, digest)) return reject("identity map is not the expected one");
   } else if (expect.id_row_sha256) {
     return reject("an identity map was expected and the file has none");
   }

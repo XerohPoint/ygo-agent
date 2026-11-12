@@ -84,7 +84,7 @@ const char *arg_value(int &i, int argc, char **argv) {
 }  // namespace
 
 int main(int argc, char **argv) {
-  std::string decisions_path, expect_path, reference_path, json_path, net_path, params_sha, codes_sha, dump_path;
+  std::string decisions_path, expect_path, reference_path, json_path, net_path, params_sha, codes_sha, dump_path, id_row_sha;
   ednet::Config config{509, 32, 64, 2, 4, 128};
   long limit = 0;
   for (int i = 1; i < argc; i++) {
@@ -96,6 +96,7 @@ int main(int argc, char **argv) {
     else if (a == "--net") net_path = arg_value(i, argc, argv);
     else if (a == "--params-sha") params_sha = arg_value(i, argc, argv);
     else if (a == "--codes-sha") codes_sha = arg_value(i, argc, argv);
+    else if (a == "--id-row-sha") id_row_sha = arg_value(i, argc, argv);
     else if (a == "--config") config = parse_config(arg_value(i, argc, argv));
     else if (a == "--dump") dump_path = arg_value(i, argc, argv);
     else if (a == "--limit") limit = std::atol(arg_value(i, argc, argv));
@@ -106,6 +107,7 @@ int main(int argc, char **argv) {
   const char *err = nullptr;
   ednet::Net net;
   ednet::Expect want{params_sha.c_str(), codes_sha.c_str(), config};
+  if (!id_row_sha.empty()) want.id_row_sha256 = id_row_sha.c_str();
   if (!ednet::load(net, net_path.c_str(), want, &err)) die(std::string("load refused: ") + err);
   ednet::Scratch scratch;
   if (!ednet::create_scratch(scratch, net.config, &err)) die(err);

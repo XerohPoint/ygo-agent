@@ -520,6 +520,10 @@ def inputs(args):
     print(json.dumps(report))
     if args.json:
         args.json.write_text(json.dumps(report, indent=1) + "\n")
+    if (violations or stats["rejected_by_audit"]) and not args.expect_violations:
+        raise SystemExit("identity inputs have violations")
+    if args.expect_violations and not violations:
+        raise SystemExit("violations were expected and none was found")
     return report
 
 
@@ -753,7 +757,7 @@ def native(args):
         target = out / f"{name}.json"
         run([BIN / binary, "--net", out / "transplant.ednet", "--params-sha", sha, "--codes-sha", exported["codes_sha256"],
              "--decisions", decisions, "--expect", out / "decisions.expect", "--reference", out / "transplant.ref",
-             "--json", target, "--config", text])
+             "--json", target, "--config", text, "--id-row-sha", exported["id_row_sha256"]])
         return json.loads(target.read_text())
 
     def row(report):
@@ -769,15 +773,26 @@ def native(args):
                              capture_output=True, text=True)
         return [got.returncode, (got.stdout + got.stderr).strip()[-120:]]
 
-    # A version 2 file refuses a caller that expects no identity map, and a broken map refuses to load.
-    report["load"]["correct"] = probe(out / "transplant.ednet", text)
-    report["load"]["correct_with_the_map_named"] = probe(out / "transplant.ednet", text, exported["id_row_sha256"])
-    report["load"]["caller_names_another_map"] = probe(out / "transplant.ednet", text, "0" * 64)
-    report["load"]["caller_expects_no_map"] = probe(out / "transplant.ednet", text[:-2])
+    # A version 2 file refuses a caller that expects no identity map or names none, and a broken map refuses to load.
     from actor import load_checkpoint
     from net import BIN_POINTS, BIN_WIDTHS
     _, params, _, _ = load_checkpoint(out / "transplant")
-    row_of = deck_registry.load_identity()[1].astype(np.float32)
+    row_of_file = deck_registry.load_identity()[1].astype(np.float32)
+
+    def arrays_with(id_row):
+        return [("const/bin_points", BIN_POINTS.astype(np.float32)), ("const/bin_widths", BIN_WIDTHS.astype(np.float32)),
+                ("const/id_row", id_row)] + list(export_net.flatten(params))
+    report["load"]["correct"] = probe(out / "transplant.ednet", text, exported["id_row_sha256"])
+    report["load"]["caller_names_no_map"] = probe(out / "transplant.ednet", text)
+    report["load"]["caller_names_another_map"] = probe(out / "transplant.ednet", text, "0" * 64)
+    # The same parameters and code list with one known card sent to the unknown row: only the map's own hash tells them apart.
+    other = row_of_file.copy()
+    other[int(np.nonzero((other != 0) & (other != other[-1]))[0][0])] = other[-1]
+    (out / "other-map.ednet").write_bytes(export_net.serialize(arrays_with(other), config.dict(), sha, exported["codes_sha256"],
+                                                               export_net.FORMAT_VERSION_IDENTITY))
+    report["load"]["another_map_under_the_right_name"] = probe(out / "other-map.ednet", text, exported["id_row_sha256"])
+    report["load"]["caller_expects_no_map"] = probe(out / "transplant.ednet", text[:-2])
+    row_of = row_of_file
     known = int(np.nonzero((row_of != 0) & (row_of != row_of[-1]))[0][0])
     breaks = {"map_out_of_range": (7, len(row_of)), "map_moves_empty_id": (0, 3), "map_sends_card_to_empty": (7, 0),
               "map_row_does_not_read_itself": (known, 1 if row_of[1] != 1 else 3), "map_fraction": (9, 9.5),
@@ -785,16 +800,15 @@ def native(args):
     for name, (index, value) in breaks.items():
         broken = row_of.copy()
         broken[index] = value
-        arrays = [("const/bin_points", BIN_POINTS.astype(np.float32)), ("const/bin_widths", BIN_WIDTHS.astype(np.float32)),
-                  ("const/id_row", broken)] + list(export_net.flatten(params))
-        (out / f"{name}.ednet").write_bytes(export_net.serialize(arrays, config.dict(), sha, exported["codes_sha256"],
+        (out / f"{name}.ednet").write_bytes(export_net.serialize(arrays_with(broken), config.dict(), sha, exported["codes_sha256"],
                                                                  export_net.FORMAT_VERSION_IDENTITY))
-        report["load"][name] = probe(out / f"{name}.ednet", text)
+        # Each names its own map's hash, so only the loader's check of the map itself can refuse it.
+        report["load"][name] = probe(out / f"{name}.ednet", text, hashlib.sha256(broken.astype("<f4").tobytes()).hexdigest())
     failures = []
     if report["correct"]["failed_gates"]:
         failures.append("the correct build fails its gates")
     failures += [f"the fault at {site} passes the gates" for site, r in report["faults"].items() if not r["failed_gates"]]
-    loads = ("correct", "correct_with_the_map_named")
+    loads = ("correct",)
     failures += [f"{name} does not load" for name in loads if report["load"][name][0] != 0]
     failures += [f"{name} loads" for name, (code, _) in report["load"].items() if name not in loads and code == 0]
     wide = collections.Counter()
@@ -837,11 +851,11 @@ def run_all(args):
         collected = json.loads((out / code_list / "collect.json").read_text())
         summary[f"collect_{code_list}"] = {k: collected[k] for k in ("decisions", "lists_available", "native_sha256", "void")}
         summary[f"collect_{code_list}"]["untrained_copies_per_list"] = [row["untrained_copies"] for row in collected["lists"]]
-        call(code_list, "inputs", "--data", out / code_list, "--json", out / f"inputs-{code_list}.json")
+        call(code_list, "inputs", "--data", out / code_list, "--json", out / f"inputs-{code_list}.json", *(["--expect-violations"] if code_list == "v1" else []))
         summary[f"inputs_{code_list}"] = json.loads((out / f"inputs-{code_list}.json").read_text())
     summary["mutants"] = {}
     for mutant in MUTANTS:
-        call("v2", "inputs", "--data", out / "v2", "--mutant", mutant, "--json", out / f"inputs-v2-{mutant}.json")
+        call("v2", "inputs", "--data", out / "v2", "--mutant", mutant, "--json", out / f"inputs-v2-{mutant}.json", "--expect-violations")
         row = json.loads((out / f"inputs-v2-{mutant}.json").read_text())
         summary["mutants"][mutant] = {k: v for k, v in row.items()
                                       if k in ("violations", "other_bytes_changed", "planted_id") or k.endswith(("_row",))}
@@ -885,6 +899,7 @@ def main():
     i = sub.add_parser("inputs")
     i.add_argument("--data", type=Path, required=True)
     i.add_argument("--mutant", choices=MUTANTS)
+    i.add_argument("--expect-violations", action="store_true", help="a mutant or the code list v1 control: exit 1 unless violations are found")
     i.add_argument("--json", type=Path)
     i.set_defaults(run=inputs)
     a = sub.add_parser("actor")
