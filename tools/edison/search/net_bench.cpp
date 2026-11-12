@@ -94,7 +94,7 @@ int main(int argc, char **argv) {
       const Record &r = all[index];
       ednet::RawObs obs{&r.cards[0][0], &r.selection[0][0], &r.actions[0][0], &r.hist[0][0], r.decision, r.global, r.counts, r.legal, r.overflow};
       double t0 = now_us();
-      int rule = ednet::audit(obs, net.config.n_codes);
+      int rule = ednet::audit(obs, net.config.n_codes, net.config.unknown_row != 0);
       double t1 = now_us();
       if (rule != 0) std::abort();
       rule = ednet::normalize_history_turn(obs.hist, obs.global, s.hist);

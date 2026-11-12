@@ -82,7 +82,8 @@ def export(stem, output, expected_sha=None):
         if meta["identity_sha256"] != identity_sha or len(row_of) != config.n_codes + 2:
             raise ValueError("Checkpoint and identity map disagree")
         arrays.append(("const/id_row", row_of.astype(np.float32)))
-        version, extra = FORMAT_VERSION_IDENTITY, {"identity_sha256": identity_sha}
+        version, extra = FORMAT_VERSION_IDENTITY, {"identity_sha256": identity_sha,
+                                                   "id_row_sha256": hashlib.sha256(row_of.astype("<f4").tobytes()).hexdigest()}
     arrays += list(flatten(params))
     Path(output).write_bytes(serialize(arrays, config.dict(), sha, meta["codes_sha256"], version))
     return {"params_sha256": sha, "codes_sha256": meta["codes_sha256"], "config": config.dict(), **extra,

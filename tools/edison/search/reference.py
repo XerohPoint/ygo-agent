@@ -97,7 +97,7 @@ def latency(args):
     import time
     import jax
     from actor import load_checkpoint
-    from obs import pad_batch
+    from obs import pad_batch, remap_ids
     config, params, _, _ = load_checkpoint(args.checkpoint)
     params = jax.tree_util.tree_map(lambda x: jax.numpy.asarray(x), params)
     full, value_only, _ = apply_functions(config)
@@ -106,6 +106,8 @@ def latency(args):
     batches = []
     for index in order:
         _, packed = python_pipeline(records[int(index)], config.n_codes)
+        if ROW_OF is not None:
+            remap_ids(packed, ROW_OF[None])
         batches.append(pad_batch(packed))
     # Compile every shape first, so the timings below hold no compilation.
     for batch in batches:

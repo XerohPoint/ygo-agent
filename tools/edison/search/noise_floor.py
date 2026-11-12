@@ -43,6 +43,8 @@ def main():
     parser.add_argument("--random", type=int, default=2000)
     args = parser.parse_args()
     config, params, _, _ = load_checkpoint(args.checkpoint)
+    if config.unknown_row:
+        raise SystemExit("noise_floor.py applies the network directly and would skip code list v2's identity map")
     params = jax.tree_util.tree_map(lambda x: jnp.asarray(x, dtype=jnp.float64), params)
     model = EdisonNet(config)
     full = jax.jit(lambda p, b: model.apply({"params": p}, b))

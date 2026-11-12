@@ -119,15 +119,25 @@ class NetPolicy:
         from net import EdisonNet
         config, params, self.meta, self.sha = (load_v1_into_v2 if v1_into_v2 else load_checkpoint)(stem, sha)
         self.params = jax.tree_util.tree_map(lambda x: jax.numpy.asarray(x), params)
+        # A network with an unknown row reads every identity through the map. It is applied here, and nowhere
+        # in a caller, so no caller can hand this network an unmapped batch.
+        self.row_of = deck_registry.load_identity()[1] if config.unknown_row else None
         if config not in NetPolicy.shared:
             model = EdisonNet(config)
             NetPolicy.shared[config] = jax.jit(lambda p, b: model.apply({"params": p}, b))
         self.apply = NetPolicy.shared[config]
 
-    def infer(self, packed):
+    def infer(self, packed, maps=None):
+        """Logits and values for a packed batch. With an identity map, packed is rewritten in place to what the
+        network is given: maps holds one id -> row table per observation, and defaults to the constant map."""
         import numpy as np
-        from obs import pad_batch
+        from obs import pad_batch, remap_ids
         batch = packed["cards"].shape[0]
+        if self.row_of is None:
+            if maps is not None:
+                raise ValueError("A code list v1 network has no identity map")
+        else:
+            remap_ids(packed, np.broadcast_to(self.row_of, (batch, len(self.row_of))) if maps is None else maps)
         logits, values = self.apply(self.params, pad_batch(packed))
         n = int(packed["offsets"][-1])
         return np.asarray(logits)[:n].astype(np.float64), np.asarray(values)[:batch].astype(np.float64)
@@ -212,8 +222,7 @@ class Runtime:
 
     def run_cell(self, job):
         np = self.np
-        from obs import (audit, pack, normalize_history_turn, segment_distribution, remap_ids, game_identity_maps,
-                         OBS_KEYS, ContractError)
+        from obs import audit, pack, normalize_history_turn, segment_distribution, game_identity_maps, OBS_KEYS, ContractError
         from ygoai.edison_policy import Heuristic
         seed, games, specs = job["seed"], job["games"], job["policies"]
         if job.get("test_abort"):  # Used by test_learner.py to prove that an abort voids the cell.
@@ -226,6 +235,10 @@ class Runtime:
             id_maps, id_hidden = None, None
         else:
             id_maps, id_hidden = game_identity_maps(self.row_of, job.get("identity"), seed, games)
+            # Reported only. By seat, by whether the option's card is known (0) or reads the unknown row (1), and by
+            # the option's act: decisions that offered such an option, and decisions that chose one.
+            usage = np.zeros((2, 2, 10, 2), dtype=np.int64)
+            wide = [0, 0]  # decisions offering a value only code list v2's wider action tables hold
         env = self.ygoenv.make("YGOPro-v1", env_type="gymnasium", num_envs=games, num_threads=job.get("threads", 1),
                                seed=seed, deck1=job["deck0"], deck2=job["deck1"], play_mode="self", player=-1,
                                async_reset=False, greedy_reward=False, oppo_info=False, max_options=MAX_OPTIONS,
@@ -278,10 +291,9 @@ class Runtime:
                     continue
                 sub = {key: obs_b[key][rows] for key in OBS_KEYS}
                 packed = pack(sub, counts[rows])
-                if id_maps is not None:
-                    remap_ids(packed, id_maps[ids[rows]])
                 t0 = time.perf_counter()
-                logits, values = nets[group_seats[0]].infer(packed)
+                # infer rewrites packed to what the network read, so a stored rollout holds exactly that.
+                logits, values = nets[group_seats[0]].infer(packed, None if id_maps is None else id_maps[ids[rows]])
                 counters["net_seconds"] += time.perf_counter() - t0
                 counters["net_calls"] += 1
                 counters["net_decisions"] += rows.size
@@ -342,6 +354,16 @@ class Runtime:
                 if id_maps is not None:
                     # The network also reads its own history. Code list v1 traces left it out, and stay as they were.
                     trace.update(obs_b["h_actions_"][row].tobytes())
+                    offered = obs_b["actions_"][row, :count]
+                    read = id_maps[eid][(offered[:, 1].astype(np.int32) << 8) + offered[:, 2]]
+                    unknown = (read == len(self.row_of) - 1).astype(np.int64)
+                    seat, pick = int(seats[row]), int(actions[row])
+                    flags = np.zeros((2, 10), dtype=np.int64)
+                    flags[unknown[read > 0], offered[read > 0, 4]] = 1
+                    usage[seat, :, :, 0] += flags
+                    if read[pick] > 0:
+                        usage[seat, unknown[pick], offered[pick, 4], 1] += 1
+                    wide[seat] += bool(np.any((offered[:, 3] > 16) | (offered[:, 9] > 13) | (offered[:, 10] > 31)))
                 trace.update(int(actions[row]).to_bytes(2, "little"))
                 steps[eid] += 1
                 if steps[eid] >= MAX_STEPS:
@@ -370,6 +392,8 @@ class Runtime:
                         ("env_id", "num_options", "legal_options", "action_overflow", "to_play")}
         elapsed = time.perf_counter() - started
         counters["guard_fires"] = sum(guard.fires for guard in guards.values())
+        if id_maps is not None:
+            counters["usage"], counters["wide_decisions"] = usage.tolist(), wide
         report = {"status": "PASS", "duels": [results[i] for i in sorted(results)], "elapsed": elapsed,
                   "counters": counters, "learner_decisions": sum(len(s["chosen"]) for s in stored)}
         if id_hidden is not None and job.get("identity"):
