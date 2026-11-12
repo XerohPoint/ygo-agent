@@ -30,7 +30,9 @@ MAX_STEPS = 10000
 MAX_OPTIONS = 256
 BAD_MARKERS = ("timeout", "Script not found", "Card not found", "Spec not found", "Spec2index", "cannot find id",
                "MSG_RETRY", "Error", "stack traceback", "terminate called")
-CHECKPOINT_FORMAT = "edison_net_v1"
+# A checkpoint's format follows the code list it was trained on. v2 also names the identity map.
+CHECKPOINT_FORMATS = {"v1": "edison_net_v1", "v2": "edison_net_v2"}
+CHECKPOINT_FORMAT = CHECKPOINT_FORMATS[deck_registry.CODE_LIST]
 
 
 def checkpoint_paths(stem):
@@ -53,7 +55,58 @@ def load_checkpoint(stem, expected_sha=None):
     codes_sha, _ = deck_registry.load_codes()
     if meta["codes_sha256"] != codes_sha:
         raise ValueError("Checkpoint was trained on a different code list")
-    return NetConfig(**meta["config"]), flax.serialization.msgpack_restore(raw), meta, sha
+    config = NetConfig(**meta["config"])
+    if deck_registry.CODE_LIST == "v2":
+        if not config.unknown_row or meta.get("identity_sha256") != deck_registry.load_identity()[0]:
+            raise ValueError("Checkpoint was trained on a different identity map")
+    elif config.unknown_row:
+        raise ValueError("A code list v1 checkpoint has no unknown row")
+    return config, flax.serialization.msgpack_restore(raw), meta, sha
+
+
+def load_v1_into_v2(stem, expected_sha=None):
+    """A code list v1 checkpoint given v2's table, with no retraining. For the Stage B baseline only.
+
+    v2's first lines are v1's, so rows 0..509 keep their place. The unknown row is the mean of the
+    v1 rows the identity map still reads. Rows past v1 are zero and the map never reads them.
+    """
+    import flax
+    import numpy as np
+    from net import NetConfig
+    if deck_registry.CODE_LIST != "v2":
+        raise ValueError("load_v1_into_v2 needs code list v2 active")
+    params_path, meta_path = checkpoint_paths(stem)
+    meta = json.loads(meta_path.read_text())
+    raw = params_path.read_bytes()
+    sha = hashlib.sha256(raw).hexdigest()
+    if meta.get("format") != CHECKPOINT_FORMATS["v1"] or sha != meta["params_sha256"] or (expected_sha and sha != expected_sha):
+        raise ValueError("Not the expected code list v1 checkpoint")
+    v1_sha, v1_codes = deck_registry.load_codes(deck_registry.CODES_V1)
+    _, v2_codes = deck_registry.load_codes()
+    if meta["codes_sha256"] != v1_sha or any(v2_codes[i] != code for i, code in v1_codes.items()):
+        raise ValueError("Code list v2 does not start with this checkpoint's list")
+    _, row_of = deck_registry.load_identity()
+    params = flax.serialization.msgpack_restore(raw)
+    old = np.asarray(params["card_id"])
+    if old.shape[0] != len(v1_codes) + 1:
+        raise ValueError("Unexpected v1 identity table")
+    rows = np.unique(row_of[(row_of != 0) & (row_of != len(row_of) - 1)])
+    if rows.max() > len(v1_codes):
+        raise ValueError("The identity map reads a row code list v1 does not have")
+    table = np.zeros((len(row_of), old.shape[1]), dtype=old.dtype)
+    table[:old.shape[0]] = old
+    table[-1] = old[rows].mean(axis=0)
+    params["card_id"] = table
+    # v2's wider action tables. A v1 network never trained the new values, so their rows are zero.
+    from net import WIDE_ACTION_TABLES
+    for holder, prefix in ((params, "action"), (params["Encoder_0"], "hist")):
+        for name, (narrow, wide) in WIDE_ACTION_TABLES.items():
+            old = np.asarray(holder[f"{prefix}_{name}"]["embedding"])
+            if old.shape[0] != narrow:
+                raise ValueError(f"Unexpected v1 table {prefix}_{name}")
+            holder[f"{prefix}_{name}"]["embedding"] = np.concatenate([old, np.zeros((wide - narrow, old.shape[1]), old.dtype)])
+    config = NetConfig(**{**meta["config"], "n_codes": len(v2_codes), "unknown_row": True})
+    return config, params, meta, sha
 
 
 class NetPolicy:
@@ -61,10 +114,10 @@ class NetPolicy:
 
     shared = {}
 
-    def __init__(self, stem, sha):
+    def __init__(self, stem, sha, v1_into_v2=False):
         import jax
         from net import EdisonNet
-        config, params, self.meta, self.sha = load_checkpoint(stem, sha)
+        config, params, self.meta, self.sha = (load_v1_into_v2 if v1_into_v2 else load_checkpoint)(stem, sha)
         self.params = jax.tree_util.tree_map(lambda x: jax.numpy.asarray(x), params)
         if config not in NetPolicy.shared:
             model = EdisonNet(config)
@@ -145,6 +198,8 @@ class Runtime:
         init_module(str(deck_registry.DB), str(deck_registry.CODES), {k: str(v) for k, v in reg.items()})
         self.metadata = deck_registry.card_metadata()
         self.n_codes = len(self.metadata)
+        # Code list v2: the constant id -> row map every network input goes through. v1 has none.
+        self.row_of = deck_registry.load_identity()[1] if deck_registry.CODE_LIST == "v2" else None
         self.nets = {}
 
     def net(self, spec):
@@ -152,18 +207,25 @@ class Runtime:
         if key not in self.nets:
             if len(self.nets) > 40:
                 self.nets.clear()
-            self.nets[key] = NetPolicy(spec["checkpoint"], spec["sha256"])
+            self.nets[key] = NetPolicy(spec["checkpoint"], spec["sha256"], bool(spec.get("v1_into_v2")))
         return self.nets[key]
 
     def run_cell(self, job):
         np = self.np
-        from obs import audit, pack, normalize_history_turn, segment_distribution, OBS_KEYS, ContractError
+        from obs import (audit, pack, normalize_history_turn, segment_distribution, remap_ids, game_identity_maps,
+                         OBS_KEYS, ContractError)
         from ygoai.edison_policy import Heuristic
         seed, games, specs = job["seed"], job["games"], job["policies"]
         if job.get("test_abort"):  # Used by test_learner.py to prove that an abort voids the cell.
             os.abort()
         max_steps = job.get("max_steps", MAX_STEPS)
         collect = job.get("collect", [False, False])
+        if self.row_of is None:
+            if job.get("identity"):
+                raise ContractError("code list v1 has no unknown row to hide an identity behind")
+            id_maps, id_hidden = None, None
+        else:
+            id_maps, id_hidden = game_identity_maps(self.row_of, job.get("identity"), seed, games)
         env = self.ygoenv.make("YGOPro-v1", env_type="gymnasium", num_envs=games, num_threads=job.get("threads", 1),
                                seed=seed, deck1=job["deck0"], deck2=job["deck1"], play_mode="self", player=-1,
                                async_reset=False, greedy_reward=False, oppo_info=False, max_options=MAX_OPTIONS,
@@ -216,6 +278,8 @@ class Runtime:
                     continue
                 sub = {key: obs_b[key][rows] for key in OBS_KEYS}
                 packed = pack(sub, counts[rows])
+                if id_maps is not None:
+                    remap_ids(packed, id_maps[ids[rows]])
                 t0 = time.perf_counter()
                 logits, values = nets[group_seats[0]].infer(packed)
                 counters["net_seconds"] += time.perf_counter() - t0
@@ -275,6 +339,9 @@ class Runtime:
                 trace.update(obs_b["global_"][row].tobytes())
                 trace.update(obs_b["actions_"][row, :count].tobytes())
                 trace.update(obs_b["decision_"][row].tobytes())
+                if id_maps is not None:
+                    # The network also reads its own history. Code list v1 traces left it out, and stay as they were.
+                    trace.update(obs_b["h_actions_"][row].tobytes())
                 trace.update(int(actions[row]).to_bytes(2, "little"))
                 steps[eid] += 1
                 if steps[eid] >= MAX_STEPS:
@@ -305,6 +372,8 @@ class Runtime:
         counters["guard_fires"] = sum(guard.fires for guard in guards.values())
         report = {"status": "PASS", "duels": [results[i] for i in sorted(results)], "elapsed": elapsed,
                   "counters": counters, "learner_decisions": sum(len(s["chosen"]) for s in stored)}
+        if id_hidden is not None and job.get("identity"):
+            report["hidden_rows"] = id_hidden
         if stored:
             width = max(s["cards"].shape[1] for s in stored)
             total = sum(len(s["chosen"]) for s in stored)

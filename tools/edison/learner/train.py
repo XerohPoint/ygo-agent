@@ -28,7 +28,8 @@ FORMAT = "edison_league_run_v1"
 TRAIN_BLOCK = (73000000, 73099999)
 GAUNTLET_BLOCK = (73100000, 73399999)
 DEV_BLOCK = (73500000, 73899999)
-SOURCE_FILES = ("actor.py", "net.py", "obs.py", "train.py", "decks.py", "codes_v1.txt")
+SOURCE_FILES = ("actor.py", "net.py", "obs.py", "train.py", "decks.py", deck_registry.CODES.name) + \
+    (("identity_v2.json",) if deck_registry.CODE_LIST == "v2" else ())
 
 
 @dataclass(frozen=True)
@@ -57,11 +58,22 @@ class TrainConfig:
     layers: int = 2
     heads: int = 4
     critic_hidden: int = 128
+    # Identity dropout, code list v2 only. A game is left alone with probability id_dropout_clean; otherwise
+    # each known card is hidden behind the unknown row for that whole game, at one rate drawn below id_dropout_max.
+    id_dropout_clean: float = 1.0
+    id_dropout_max: float = 0.0
 
     def net_config(self, n_codes):
         from net import NetConfig
         return NetConfig(n_codes=n_codes, id_dim=self.id_dim, channels=self.channels, layers=self.layers,
-                         heads=self.heads, critic_hidden=self.critic_hidden)
+                         heads=self.heads, critic_hidden=self.critic_hidden, unknown_row=deck_registry.CODE_LIST == "v2")
+
+    def identity(self):
+        if self.id_dropout_max <= 0 or self.id_dropout_clean >= 1:
+            return None
+        if deck_registry.CODE_LIST != "v2":
+            raise ValueError("Identity dropout needs code list v2")
+        return {"dropout": {"clean": self.id_dropout_clean, "max_rate": self.id_dropout_max}}
 
     def hash(self):
         return hashlib.sha256(json.dumps(asdict(self), sort_keys=True).encode()).hexdigest()
@@ -132,6 +144,7 @@ def save_checkpoint(stem, params, config, net_config, extra):
     sha = hashlib.sha256(raw).hexdigest()
     params_path.write_bytes(raw)
     meta = {"format": CHECKPOINT_FORMAT, "params_sha256": sha, "codes_sha256": deck_registry.load_codes()[0],
+            **({"identity_sha256": deck_registry.load_identity()[0]} if deck_registry.CODE_LIST == "v2" else {}),
             "config": net_config.dict(), "train_config": asdict(config),
             "privacy": "public observation only: oppo_info=False, no info:deck, no centralized critic", **extra}
     meta_path.write_text(json.dumps(meta, indent=1) + "\n")
@@ -153,7 +166,7 @@ def provenance():
             "native_binaries": {p.name: digest(p) for p in native},
             "edison_policy": digest(ROOT / "ygoai/edison_policy.py"),
             "assets_lock": digest(ROOT / "tests/edison/agent_assets.lock.json"),
-            "codes_sha256": deck_registry.load_codes()[0],
+            "codes_sha256": deck_registry.load_codes()[0], "code_list": deck_registry.CODE_LIST,
             "jax": jax.__version__, "numpy": np.__version__}
 
 
@@ -370,7 +383,7 @@ def parse_args(argv=None):
                        ("snapshot_every", int), ("learning_rate", float), ("minibatch", int), ("epochs", int),
                        ("clip", float), ("entropy", float), ("value_coef", float), ("grad_norm", float),
                        ("kl_stop", float), ("gae_lambda", float), ("row_grouping", lambda v: v == "1"), ("id_dim", int), ("channels", int), ("layers", int),
-                       ("heads", int), ("critic_hidden", int)):
+                       ("heads", int), ("critic_hidden", int), ("id_dropout_clean", float), ("id_dropout_max", float)):
         parser.add_argument("--" + name.replace("_", "-"), type=kind, dest=name, default=None)
     return parser.parse_args(argv)
 
@@ -454,6 +467,7 @@ def main():
                     policies, collect = policy_specs(row, state["current"])
                     jobs.append({"seed": row["seed"], "games": row["games"], "deck0": row["deck0"], "deck1": row["deck1"],
                                  "policies": policies, "collect": collect,
+                                 **({"identity": config.identity()} if config.identity() else {}),
                                  "rollout": str(rollout_dir / f"round-{round_index:04d}-cell-{row['cell']:03d}.npz")})
                 results = pool.map(jobs)
                 collected = time.perf_counter()

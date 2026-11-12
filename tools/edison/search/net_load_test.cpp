@@ -10,7 +10,9 @@ int main(int argc, char **argv) {
     return 2;
   }
   ednet::Config g{};
-  if (std::sscanf(argv[4], "%d,%d,%d,%d,%d,%d", &g.n_codes, &g.id_dim, &g.channels, &g.layers, &g.heads, &g.critic_hidden) != 6) return 2;
+  // A seventh value, 1, expects a version 2 file with an identity map and an unknown row.
+  int got = std::sscanf(argv[4], "%d,%d,%d,%d,%d,%d,%d", &g.n_codes, &g.id_dim, &g.channels, &g.layers, &g.heads, &g.critic_hidden, &g.unknown_row);
+  if (got != 6 && got != 7) return 2;
   ednet::Expect want{argv[2], argv[3], g};
   const char *err = "";
   ednet::Net net;

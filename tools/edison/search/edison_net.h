@@ -82,6 +82,9 @@ enum Fault {
   kFaultPackDropSelected = 13,   // selection_ rows not kept by row_lookup
   kFaultContextInPool = 14,  // state pool includes the context token
   kFaultAuditSkipFinish = 15,    // audit does not check finish and cancel flags
+  kFaultIdentityRows = 16,       // card rows read their own identity row, not the identity map's
+  kFaultIdentityActions = 17,    // offered actions read their own identity row
+  kFaultIdentityHistory = 18,    // own history reads its own identity row
 };
 
 // Observation shapes. These are the env's arrays; only the whitelisted keys appear.
@@ -132,6 +135,9 @@ enum Status : int {
 
 struct Config {
   int n_codes, id_dim, channels, layers, heads, critic_hidden;
+  // Code list v2: the identity table has one more row, n_codes + 1, and every identity is read
+  // through the file's id -> row map. Cards the network does not know by identity read that row.
+  int unknown_row = 0;
 };
 
 struct Expect {
@@ -377,7 +383,9 @@ inline bool hex_matches(const char *hex, const uint8_t bytes[32]) {
 // ---------------------------------------------------------------------------
 // The file written by export_net.py. Little-endian.
 inline constexpr char kMagic[8] = {'E', 'D', 'N', 'E', 'T', '0', '1', '\n'};
-inline constexpr uint32_t kFormatVersion = 1;
+// Version 1 has no identity map. Version 2 adds const/id_row and the unknown row, and goes with
+// Config::unknown_row = 1. The header layout is the same.
+inline constexpr uint32_t kFormatVersion = 1, kFormatVersionIdentity = 2;
 
 struct FileHeader {
   char magic[8];
@@ -424,6 +432,7 @@ struct Net {
   void *mapping = nullptr;
   size_t mapping_bytes = 0;
   const float *bin_points = nullptr, *bin_widths = nullptr, *no_row = nullptr;
+  const float *id_row = nullptr;  // n_codes + 2 whole numbers, checked at load. Null without an unknown row.
   Embed card_id;
   Embed loc, seq, owner, pos, overlay, attr, race, level, counter, negated;
   Embed turn, phase, first, my_turn, hint, stage, h_turns, h_phase;
@@ -481,8 +490,10 @@ inline void describe_params(Net &net, SpecList &s) {
   const char *E = "Encoder_0/";
   s.add("const/bin_points", "", "", 1, kBins, 0, &net.bin_points);
   s.add("const/bin_widths", "", "", 1, kBins, 0, &net.bin_widths);
-  s.add("card_id", "", "", 2, g.n_codes + 1, g.id_dim, &net.card_id.table);
-  net.card_id.n = g.n_codes + 1, net.card_id.dim = g.id_dim;
+  const int id_rows = g.n_codes + 1 + (g.unknown_row ? 1 : 0);
+  if (g.unknown_row) s.add("const/id_row", "", "", 1, id_rows, 0, &net.id_row);
+  s.add("card_id", "", "", 2, id_rows, g.id_dim, &net.card_id.table);
+  net.card_id.n = id_rows, net.card_id.dim = g.id_dim;
   s.add(E, "no_row", "", 1, c, 0, &net.no_row);
 
   s.embed(E, "loc", net.loc, 9, 6);
@@ -513,14 +524,14 @@ inline void describe_params(Net &net, SpecList &s) {
       name[i] = 0;
       return name;
     };
-    s.embed(prefix, nm("msg"), a.msg, 17, 8);
+    s.embed(prefix, nm("msg"), a.msg, g.unknown_row ? 18 : 17, 8);
     s.embed(prefix, nm("act"), a.act, 10, 8);
     s.embed(prefix, nm("finish"), a.finish, 2, 2);
     s.embed(prefix, nm("effect"), a.effect, 256, 16);
     s.embed(prefix, nm("phase"), a.phase, 4, 4);
     s.embed(prefix, nm("position"), a.position, 9, 4);
-    s.embed(prefix, nm("number"), a.number, 14, 4);
-    s.embed(prefix, nm("place"), a.place, 32, 8);
+    s.embed(prefix, nm("number"), a.number, g.unknown_row ? 256 : 14, 4);
+    s.embed(prefix, nm("place"), a.place, g.unknown_row ? 256 : 32, 8);
     s.embed(prefix, nm("attrib"), a.attrib, 10, 4);
   };
   fields(E, "hist_", net.hist_fields);
@@ -567,8 +578,9 @@ inline bool fail(const char **err, const char *why) {
 }
 
 inline bool valid_config(const Config &g) {
-  return g.n_codes > 0 && g.n_codes < 65536 && g.id_dim > 0 && g.channels > 0 && g.layers > 0 &&
-         g.layers <= kMaxLayers && g.layers < 10 && g.heads > 0 && g.channels % g.heads == 0 && g.critic_hidden > 0;
+  return g.n_codes > 0 && g.n_codes < 65534 && g.id_dim > 0 && g.channels > 0 && g.layers > 0 &&
+         g.layers <= kMaxLayers && g.layers < 10 && g.heads > 0 && g.channels % g.heads == 0 && g.critic_hidden > 0 &&
+         (g.unknown_row == 0 || g.unknown_row == 1);
 }
 }  // namespace detail
 
@@ -612,7 +624,10 @@ inline bool load(Net &net, const char *path, const Expect &expect, const char **
   auto *bytes = static_cast<uint8_t *>(map);
   auto *h = static_cast<FileHeader *>(map);
   if (std::memcmp(h->magic, kMagic, 8) != 0) return reject("bad magic");
-  if (h->format_version != kFormatVersion) return reject("unknown format version");
+  if (h->format_version != kFormatVersion && h->format_version != kFormatVersionIdentity)
+    return reject("unknown format version");
+  if ((h->format_version == kFormatVersionIdentity) != (expect.config.unknown_row == 1))
+    return reject("identity map expectation differs from the file's format");
   if (h->max_rows != kMaxRows || h->max_options != kMaxOptions || h->hint_min != kHintMin ||
       h->hint_max != kHintMax || h->bins != kBins)
     return reject("file constants differ from this build");
@@ -665,6 +680,18 @@ inline bool load(Net &net, const char *path, const Expect &expect, const char **
   for (int j = 0; j < specs.count; j++)
     if (*specs.items[j].slot == nullptr) return reject("parameter missing from file");
   if (next_offset != h->payload_bytes) return reject("payload longer than its parameters");
+  if (g.unknown_row) {
+    // The map must be whole numbers inside the table, keep the empty id, send the unknown row to
+    // itself, and read each known card through a row that reads itself.
+    const int unknown = g.n_codes + 1;
+    for (int i = 0; i <= unknown; i++) {
+      const float v = built.id_row[i];
+      if (!(v >= 0.0f && v <= float(unknown)) || v != float(int(v))) return reject("identity map entry out of range");
+      if (built.id_row[int(v)] != v) return reject("identity map row does not read itself");
+      if ((i == 0) != (v == 0.0f)) return reject("identity map moves the empty id");
+    }
+    if (built.id_row[unknown] != float(unknown)) return reject("identity map moves the unknown row");
+  }
   if (mprotect(map, map_bytes, PROT_READ) != 0) return reject("cannot protect weights");
   net = built;
   return true;
@@ -741,7 +768,9 @@ inline bool create_scratch(Scratch &s, const Config &g, const char **err) {
 
 // ---------------------------------------------------------------------------
 // obs.audit for a batch of one. Same checks, same order. Returns kOk or the rule.
-inline int audit(const RawObs &o, int n_codes) {
+// `wide` goes with Config::unknown_row: the env's message 17 and any byte in the number and
+// place columns are in range, as in obs.py on code list v2.
+inline int audit(const RawObs &o, int n_codes, bool wide = false) {
   const uint8_t *cards = o.cards, *selection = o.selection, *actions = o.actions, *glob = o.global, *hist = o.hist;
   const int32_t *d = o.decision;
   const int count = o.num_options;
@@ -762,10 +791,10 @@ inline int audit(const RawObs &o, int n_codes) {
   for (auto &b : card_bounds)
     for (int r = 0; r < kMaxRows; r++)
       if (card(r, b[0]) > b[1]) return kAuditCardColumn + b[0];
-  static constexpr int action_bounds[][2] = {{3, 16}, {4, 9}, {5, 1}, {6, 255}, {7, 3}, {8, 8}, {9, 13}, {10, 31}, {11, 9}};
+  static constexpr int action_bounds[][3] = {{3, 16, 17}, {4, 9, 9}, {5, 1, 1}, {6, 255, 255}, {7, 3, 3}, {8, 8, 8}, {9, 13, 255}, {10, 31, 255}, {11, 9, 9}};
   for (auto &b : action_bounds)
     for (int a = 0; a < count; a++)
-      if (act(a, b[0]) > b[1]) return kAuditActionColumn + b[0];
+      if (act(a, b[0]) > b[wide ? 2 : 1]) return kAuditActionColumn + b[0];
   for (int i = count * kActionCols; i < kMaxOptions * kActionCols; i++)
     if (actions[i] != 0) return kAuditOfferedData;
   for (int a = 0; a < count; a++)
@@ -816,10 +845,10 @@ inline int audit(const RawObs &o, int n_codes) {
   static constexpr int global_bounds[][2] = {{4, 16}, {5, 10}, {6, 1}, {7, 1}};
   for (auto &b : global_bounds)
     if (glob[b[0]] > b[1]) return kAuditGlobalColumn + b[0];
-  static constexpr int hist_bounds[][2] = {{3, 16}, {4, 9}, {5, 1}, {6, 255}, {7, 3}, {8, 8}, {9, 13}, {10, 31}, {11, 9}, {12, 255}, {13, 10}};
+  static constexpr int hist_bounds[][3] = {{3, 16, 17}, {4, 9, 9}, {5, 1, 1}, {6, 255, 255}, {7, 3, 3}, {8, 8, 8}, {9, 13, 255}, {10, 31, 255}, {11, 9, 9}, {12, 255, 255}, {13, 10, 10}};
   for (auto &b : hist_bounds)
     for (int h = 0; h < kHistRows; h++)
-      if (hist[h * kHistCols + b[0]] > b[1]) return kAuditHistColumn + b[0];
+      if (hist[h * kHistCols + b[0]] > b[wide ? 2 : 1]) return kAuditHistColumn + b[0];
   for (int h = 0; h < kHistRows; h++)
     if ((int(hist[h * kHistCols + 1]) << 8) + hist[h * kHistCols + 2] > n_codes) return kAuditHistId;
   return kOk;
@@ -989,6 +1018,18 @@ EDNET_INLINE void put(float *&p, const Embed &e, unsigned index, bool &bad) {
   p += e.dim;
 }
 
+// A card identity. With an identity map, every id reads the row the map names. `skip` is a planted fault.
+EDNET_INLINE void put_identity(float *&p, const Net &net, unsigned id, bool &bad, bool skip = false) {
+  if (net.id_row && !skip) {
+    if (id > unsigned(net.config.n_codes)) {
+      bad = true;
+      id = 0;
+    }
+    id = unsigned(net.id_row[id]);
+  }
+  put(p, net.card_id, id, bad);
+}
+
 // net.thermometer. Bins and the unknown bit.
 EDNET_INLINE void thermometer(float *&p, const Net &net, int high, int low) {
   const float value = float(high) * 256.0f + float(low);
@@ -1108,7 +1149,7 @@ inline int encode(const Net &net, Scratch &s) {
   for (int r = 0; r < n_rows; r++) {
     const uint8_t *row = s.packed_cards + size_t(r) * kPackedCols;
     float *p = s.input;
-    put(p, net.card_id, (unsigned(row[0]) << 8) + row[1], bad);
+    put_identity(p, net, (unsigned(row[0]) << 8) + row[1], bad, kFault == kFaultIdentityRows);
     put(p, net.loc, row[2], bad);
     put(p, net.seq, row[3], bad);
     put(p, net.owner, row[4], bad);
@@ -1135,7 +1176,7 @@ inline int encode(const Net &net, Scratch &s) {
     const uint8_t *a = s.hist + h * kHistCols;
     float *p = s.input;
     put_fields(p, net.hist_fields, a, bad);
-    put(p, net.card_id, (unsigned(a[1]) << 8) + a[2], bad);
+    put_identity(p, net, (unsigned(a[1]) << 8) + a[2], bad, kFault == kFaultIdentityHistory);
     put(p, net.h_turns, a[12], bad);
     put(p, net.h_phase, a[13], bad);
     if (a[3] == 0) continue;
@@ -1217,7 +1258,7 @@ inline int logit_head(const Net &net, Scratch &s) {
     const uint8_t *row = s.packed_actions + size_t(a) * kActionCols;
     float *p = s.input;
     put_fields(p, net.action_fields, row, bad);
-    put(p, net.card_id, (unsigned(row[1]) << 8) + row[2], bad);
+    put_identity(p, net, (unsigned(row[1]) << 8) + row[2], bad, kFault == kFaultIdentityActions);
     int ref = row[0];
     if (ref > s.n_rows) return kEmbedRange;
     const float *pointed;
@@ -1264,7 +1305,7 @@ inline int logit_head(const Net &net, Scratch &s) {
 
 inline int prepare(const Net &net, Scratch &s, const RawObs &o, bool run_audit) {
   if (run_audit) {
-    const int rule = audit(o, net.config.n_codes);
+    const int rule = audit(o, net.config.n_codes, net.config.unknown_row != 0);
     if (rule != kOk) return rule;
   }
   int status = normalize_history_turn(o.hist, o.global, s.hist);

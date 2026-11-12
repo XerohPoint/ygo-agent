@@ -1,0 +1,14 @@
+{
+ "format": "edison_learner_codes_v2",
+ "note": "Line number is the card id. The first lines are code list v1's, so a v1 card keeps its id. Never edit in place.",
+ "codes": 4042,
+ "sha256": "071a484d92d6e960a70a57d7d764bdff6f54930d4fa2c57702b02cc7383e848a",
+ "v1_lines": 509,
+ "v1_sha256": "53fcea4df9298ee7c3e0eb548c533048932eb870f090eb456a2ecac031fcbfab",
+ "pool": 3772,
+ "tokens": 238,
+ "other_closure": 32,
+ "legality_sha256": "541ccf819cd38ec693ec7ac1c4782f3567c993e41acf81a11aa72873fc092cc3",
+ "database_sha256": "4c5de5831fade7601d55092dec594d5aab220b4321bf9dddbc3707a45df4000d",
+ "scripts_sha": "see tests/edison/assets.lock.json for pinned scripts"
+}

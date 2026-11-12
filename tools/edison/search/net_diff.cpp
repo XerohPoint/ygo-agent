@@ -70,8 +70,10 @@ struct Tail {
 
 ednet::Config parse_config(const char *text) {
   ednet::Config g{};
-  if (std::sscanf(text, "%d,%d,%d,%d,%d,%d", &g.n_codes, &g.id_dim, &g.channels, &g.layers, &g.heads, &g.critic_hidden) != 6)
-    die("bad --config");
+  // A seventh value, 1, asks for a version 2 file with an identity map and an unknown row.
+  int got = std::sscanf(text, "%d,%d,%d,%d,%d,%d,%d", &g.n_codes, &g.id_dim, &g.channels, &g.layers, &g.heads, &g.critic_hidden,
+                        &g.unknown_row);
+  if (got != 6 && got != 7) die("bad --config");
   return g;
 }
 
@@ -131,7 +133,7 @@ int main(int argc, char **argv) {
     expect.read(&want_verdict, 4);
     ednet::RawObs obs{&rec.cards[0][0], &rec.selection[0][0], &rec.actions[0][0], &rec.hist[0][0], rec.decision, rec.global, rec.counts, rec.legal, rec.overflow};
 
-    int verdict = ednet::audit(obs, net.config.n_codes);
+    int verdict = ednet::audit(obs, net.config.n_codes, net.config.unknown_row != 0);
     if (verdict == ednet::kOk) verdict = ednet::normalize_history_turn(obs.hist, obs.global, scratch.hist);
     if (want_verdict >= 0 && want_verdict < 1000) verdict_counts[want_verdict]++;
     records++;

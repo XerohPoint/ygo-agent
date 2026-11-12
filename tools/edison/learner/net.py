@@ -27,6 +27,10 @@ class NetConfig:
     layers: int = 2
     heads: int = 4
     critic_hidden: int = 128
+    # Code list v2: one more row after the code list, read by every card the network does not know by identity.
+    # It also widens three action tables to every value the env can emit: message 17, and any byte in the
+    # number and place columns, which declarations use. Values no training list raises keep their initial rows.
+    unknown_row: bool = False
 
     def dict(self):
         return asdict(self)
@@ -74,13 +78,17 @@ class Block(nn.Module):
         return x + nn.Dense(self.channels)(jax.nn.gelu(y))
 
 
-def action_fields(a, prefix):
+WIDE_ACTION_TABLES = {"msg": (17, 18), "number": (14, 256), "place": (32, 256)}  # name: (code list v1, v2)
+
+
+def action_fields(a, prefix, wide=False):
     """Embed the categorical fields shared by offered and historical actions."""
     embed = lambda n, d, x, name: nn.Embed(n, d, name=f"{prefix}_{name}", embedding_init=nn.initializers.normal(0.1))(x.astype(jnp.int32))
+    size = lambda name: WIDE_ACTION_TABLES[name][int(wide)]
     return jnp.concatenate([
-        embed(17, 8, a[..., 3], "msg"), embed(10, 8, a[..., 4], "act"), embed(2, 2, a[..., 5], "finish"),
+        embed(size("msg"), 8, a[..., 3], "msg"), embed(10, 8, a[..., 4], "act"), embed(2, 2, a[..., 5], "finish"),
         embed(256, 16, a[..., 6], "effect"), embed(4, 4, a[..., 7], "phase"), embed(9, 4, a[..., 8], "position"),
-        embed(14, 4, a[..., 9], "number"), embed(32, 8, a[..., 10], "place"), embed(10, 4, a[..., 11], "attrib"),
+        embed(size("number"), 4, a[..., 9], "number"), embed(size("place"), 8, a[..., 10], "place"), embed(10, 4, a[..., 11], "attrib"),
     ], axis=-1)
 
 
@@ -123,7 +131,7 @@ class Encoder(nn.Module):
         # Own recent actions. A pooled view: order is given by the turns-ago field.
         h_ids = (hist[..., 1].astype(jnp.int32) << 8) + hist[..., 2]
         h_valid = (hist[..., 3] != 0)[..., None].astype(jnp.float32)
-        h = jnp.concatenate([action_fields(hist, "hist"), id_table[h_ids],
+        h = jnp.concatenate([action_fields(hist, "hist", cfg.unknown_row), id_table[h_ids],
                              embed(17, 4, hist[..., 12], "h_turns"), embed(11, 4, hist[..., 13], "h_phase")], axis=-1)
         h = jax.nn.gelu(nn.Dense(c)(h)) * h_valid
         h_pool = h.sum(axis=1) / jnp.maximum(h_valid.sum(axis=1), 1.0)
@@ -150,7 +158,7 @@ class EdisonNet(nn.Module):
     def __call__(self, batch, value_only=False):
         cfg = self.config
         c = cfg.channels
-        id_table = self.param("card_id", nn.initializers.normal(0.1), (cfg.n_codes + 1, cfg.id_dim))
+        id_table = self.param("card_id", nn.initializers.normal(0.1), (cfg.n_codes + 1 + int(cfg.unknown_row), cfg.id_dim))
         state, rows = Encoder(cfg)(batch, id_table)
         # The critic starts at zero and the actor uniform, as the NumPy baseline does.
         value = nn.Dense(1, kernel_init=nn.initializers.zeros, name="value_out")(
@@ -163,7 +171,7 @@ class EdisonNet(nn.Module):
         valid = segments < size
         seg = jnp.minimum(segments, size - 1)
         ids = (actions[:, 1].astype(jnp.int32) << 8) + actions[:, 2]
-        fields = action_fields(actions, "action")
+        fields = action_fields(actions, "action", cfg.unknown_row)
         pointed = rows[seg, actions[:, 0].astype(jnp.int32)]
         a = jax.nn.gelu(nn.Dense(c, name="action_in")(jnp.concatenate([fields, id_table[ids], pointed], axis=-1)))
         # Compare options through the mean offered action in the same decision.

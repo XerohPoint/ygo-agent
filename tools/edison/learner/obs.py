@@ -7,6 +7,8 @@ are dropped to make attention cheaper. That drops 60% of rows at the median.
 """
 import numpy as np
 
+from decks import CODE_LIST
+
 OBS_KEYS = ("cards_", "global_", "actions_", "h_actions_", "decision_", "selection_")
 INFO_KEYS = ("env_id", "num_options", "legal_options", "action_overflow", "to_play", "winner", "win_reason")
 MAX_OPTIONS = 256
@@ -16,6 +18,11 @@ MAX_ROWS = 160
 # outside these bounds is a contract failure here rather than a silent NaN later.
 CARD_BOUNDS = {2: 8, 3: 79, 4: 1, 5: 8, 6: 1, 7: 7, 8: 26, 9: 13, 10: 15, 11: 1}
 ACTION_BOUNDS = {3: 16, 4: 9, 5: 1, 6: 255, 7: 3, 8: 8, 9: 13, 10: 31, 11: 9}
+if CODE_LIST == "v2":
+    # The whole pool raises prompts the 21 training lists never do: message 17 (declare a Type), and numbers
+    # up to 65535 in declarations (a page of card names, or Life Points), low byte in column 9 and high byte
+    # in column 10. Code list v2 networks have tables for all of them. See net.NetConfig.unknown_row.
+    ACTION_BOUNDS.update({3: 17, 9: 255, 10: 255})
 HIST_BOUNDS = {**ACTION_BOUNDS, 12: 255, 13: 10}
 GLOBAL_BOUNDS = {4: 16, 5: 10, 6: 1, 7: 1}
 # Standard hint range from docs/edison-decision-context.md, plus 0 for unknown.
@@ -156,6 +163,68 @@ def pack(obs, counts):
     dec[:, 3] = source
     return {"cards": packed, "n_rows": n_rows, "actions": flat.astype(np.uint8), "offsets": offsets,
             "hist": obs["h_actions_"].copy(), "decision": dec, "global": obs["global_"].copy()}
+
+
+def remap_ids(packed, maps):
+    """Rewrite every card identity the network reads, in place: rows, offered actions and own history.
+
+    maps[i] is the id -> row table for observation i. Id 0, a hidden or absent card, must stay 0.
+    This is the only place a visible identity changes between the audited observation and the network.
+    """
+    if np.any(maps[:, 0] != 0):
+        raise ContractError("identity map moves the empty id")
+    batch = packed["cards"].shape[0]
+    rows = np.arange(batch)[:, None]
+    for key, col in (("cards", 0), ("hist", 1)):
+        table = packed[key]
+        new = maps[rows, (table[:, :, col].astype(np.int32) << 8) + table[:, :, col + 1]]
+        table[:, :, col] = new >> 8
+        table[:, :, col + 1] = new & 255
+    actions = packed["actions"]
+    segments = np.repeat(np.arange(batch), np.diff(packed["offsets"]))
+    new = maps[segments, (actions[:, 1].astype(np.int32) << 8) + actions[:, 2]]
+    actions[:, 1] = new >> 8
+    actions[:, 2] = new & 255
+
+
+def game_identity_maps(row_of, spec, seed, games):
+    """One id -> row table per game: the constant map, plus the identities this game hides.
+
+    spec is None, {"dropout": {"clean": p, "max_rate": r}} or {"unknown_ids": [[id, ...] per game]}.
+    Dropout is a pure function of the game's seed: with probability p nothing is hidden, otherwise
+    each known row is hidden with one rate drawn uniformly below r. A hidden row takes every id
+    that reads it, so all artworks of a card go together. Returns (maps, hidden rows per game).
+    """
+    unknown = len(row_of) - 1
+    maps = np.tile(row_of, (games, 1))
+    hidden = [[] for _ in range(games)]
+    if not spec:
+        return maps, hidden
+    known = np.unique(row_of[(row_of != 0) & (row_of != unknown)])
+    if set(spec) == {"dropout"}:
+        clean, max_rate = float(spec["dropout"]["clean"]), float(spec["dropout"]["max_rate"])
+        if not (0.0 <= clean <= 1.0 and 0.0 <= max_rate <= 1.0):
+            raise ContractError("identity dropout out of range")
+        for game in range(games):
+            rng = np.random.default_rng([seed + game, 0x1DD0])
+            first, second = rng.random(2)
+            draws = rng.random(len(known))
+            rate = 0.0 if first < clean else second * max_rate
+            hidden[game] = known[draws < rate].tolist()
+    elif set(spec) == {"unknown_ids"}:
+        if len(spec["unknown_ids"]) != games:
+            raise ContractError("one unknown-id list per game")
+        for game, ids in enumerate(spec["unknown_ids"]):
+            ids = np.asarray(ids, dtype=np.int64)
+            if ids.size and (ids.min() < 1 or ids.max() >= unknown):
+                raise ContractError("unknown id outside the code list")
+            hidden[game] = np.setdiff1d(np.unique(row_of[ids]), [unknown]).tolist() if ids.size else []
+    else:
+        raise ContractError("unknown identity spec")
+    for game in range(games):
+        if hidden[game]:
+            maps[game][np.isin(row_of, hidden[game])] = unknown
+    return maps, hidden
 
 
 def normalize_history_turn(hist, glob):

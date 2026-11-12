@@ -20,8 +20,16 @@ DB = ROOT / "assets/locale/en/cards.cdb"
 SCRIPTS = Path(os.environ.get("EDISON_SCRIPTS", "/home/mada/ygopro-scripts"))
 LEGALITY = ROOT / "assets/edison/legality.json"
 GAUNTLET = ROOT / "assets/edison/gauntlet_candidates"
-CODES = Path(__file__).resolve().parent / "codes_v1.txt"
-CODES_META = Path(__file__).resolve().parent / "codes_v1.json"
+HERE = Path(__file__).resolve().parent
+# Code list v1 is the 21 training lists' closure. v2 is the whole legal pool's, and its first 509 lines are v1's,
+# so a v1 card keeps its id. The active list is a property of the process: a native module holds one list.
+CODE_LIST = os.environ.get("EDISON_CODE_LIST", "v1")
+if CODE_LIST not in ("v1", "v2"):
+    raise ValueError(f"Unknown EDISON_CODE_LIST: {CODE_LIST}")
+CODES_V1, CODES_V2 = HERE / "codes_v1.txt", HERE / "codes_v2.txt"
+CODES = CODES_V1 if CODE_LIST == "v1" else CODES_V2
+CODES_META = CODES.with_suffix(".json")
+IDENTITY = HERE / "identity_v2.json"
 GENERATED = ROOT / "build/edison-learner-2026-11-04/decks"
 
 FIXTURES = {"blackwing": ROOT / "assets/edison/decks/blackwing.ydk",
@@ -99,23 +107,28 @@ def needs_script(card_type):
     return not (card_type & TYPE_NORMAL) or bool(card_type & TYPE_PENDULUM)
 
 
-def build_closure():
-    """Every code a duel between registry decks can ask the native module for.
-
-    Starts from every Main, Extra and Side card. Adds all database tokens, because
-    scripts often compute token ids rather than spell them, and then adds alias bases
-    and numeric references in scripts until nothing changes.
-    """
-    decks = registry()
-    db = sqlite3.connect(DB)
-    rows = {r[0]: (r[1], r[2]) for r in db.execute("select id,alias,type from datas")}
-    named = {r[0] for r in db.execute("select id from texts")}
+def deck_seeds():
+    """Every Main, Extra and Side card of the registry's lists, with the lists that hold it."""
     seeds = {}
-    for name, path in decks.items():
+    for name, path in registry().items():
         # Include removed Gottoms only through the filtered copy: it never reaches a duel.
         for zone in parse_ydk(Path(path).read_text()).values():
             for code in zone:
                 seeds.setdefault(code, set()).add(f"deck:{name}")
+    return seeds
+
+
+def build_closure(seeds=None):
+    """Every code a duel between the seed cards can ask the native module for.
+
+    Starts from every Main, Extra and Side card of the registry, or from the given seeds.
+    Adds all database tokens, because scripts often compute token ids rather than spell
+    them, and then adds alias bases and numeric references in scripts until nothing changes.
+    """
+    db = sqlite3.connect(DB)
+    rows = {r[0]: (r[1], r[2]) for r in db.execute("select id,alias,type from datas")}
+    named = {r[0] for r in db.execute("select id from texts")}
+    seeds = deck_seeds() if seeds is None else seeds
     tokens = [c for c, (_, kind) in rows.items() if kind & TYPE_TOKEN]
     reasons = {code: set(why) for code, why in seeds.items()}
     for code in tokens:
@@ -146,11 +159,11 @@ def write_codelist():
     closure, rows = build_closure()
     decks = registry()
     lines = [f"{code} {1 if needs_script(rows[code][1]) else 0}" for code in closure]
-    CODES.write_text("\n".join(lines) + "\n")
+    CODES_V1.write_text("\n".join(lines) + "\n")
     meta = {"format": "edison_learner_codes_v1",
             "note": "Line number is the card id. Never edit in place: a new pool gets a new list "
                     "and checkpoints fail closed on a hash mismatch.",
-            "codes": len(lines), "sha256": digest(CODES),
+            "codes": len(lines), "sha256": digest(CODES_V1),
             "from_decks": sum(any(w.startswith("deck:") for w in why) for why in closure.values()),
             "tokens": sum("database token" in why for why in closure.values()),
             "other_closure": sum(not any(w.startswith("deck:") or w == "database token" for w in why)
@@ -158,8 +171,117 @@ def write_codelist():
             "scripts_sha": "see tests/edison/assets.lock.json for pinned scripts",
             "decks": {name: {"path": str(Path(path).relative_to(ROOT)), "sha256": digest(path)}
                       for name, path in decks.items()}}
-    CODES_META.write_text(json.dumps(meta, indent=1) + "\n")
+    CODES_V1.with_suffix(".json").write_text(json.dumps(meta, indent=1) + "\n")
     return meta
+
+
+def write_codelist_v2():
+    """The whole legal pool with v1's closure rule. v1's lines come first, unchanged, then the rest by code."""
+    v1_lines = CODES_V1.read_text().splitlines()
+    v1_codes = [int(line.split()[0]) for line in v1_lines]
+    seeds = {code: {"pool"} for code in pool_ids()}
+    for code in v1_codes:
+        seeds.setdefault(code, set()).add("code list v1")
+    closure, rows = build_closure(seeds)
+    rest = [code for code in closure if code not in set(v1_codes)]
+    lines = v1_lines + [f"{code} {1 if needs_script(rows[code][1]) else 0}" for code in rest]
+    CODES_V2.write_text("\n".join(lines) + "\n")
+    meta = {"format": "edison_learner_codes_v2",
+            "note": "Line number is the card id. The first lines are code list v1's, so a v1 card keeps its id. "
+                    "Never edit in place.",
+            "codes": len(lines), "sha256": digest(CODES_V2), "v1_lines": len(v1_lines), "v1_sha256": digest(CODES_V1),
+            "pool": sum("pool" in why for why in closure.values()),
+            "tokens": sum("database token" in why for why in closure.values()),
+            "other_closure": sum(not ({"pool", "database token"} & set(why)) for why in closure.values()),
+            "legality_sha256": digest(LEGALITY), "database_sha256": digest(DB),
+            "scripts_sha": "see tests/edison/assets.lock.json for pinned scripts"}
+    CODES_V2.with_suffix(".json").write_text(json.dumps(meta, indent=1) + "\n")
+    return meta
+
+
+def build_identity():
+    """Which code list v2 ids the network may know by identity, and the row each one reads.
+
+    A card is known if a training list plays it, or an artwork of it, in its Main or Extra Deck.
+    A token is known if a known card's script names it, or if it has the same name as such a token:
+    scripts compute the ids of a token's other artworks, such as the second to fourth Sheep Token.
+    Every other id reads the one unknown row: Side-only cards, closure cards, other tokens and the
+    rest of the pool. All artworks of a known card read one row, the lowest id among those a
+    training list plays, and all tokens of one name read the row of the one a script names.
+    """
+    _, codes = load_codes(CODES_V2)
+    ids = {code: cid for cid, code in codes.items()}
+    db = sqlite3.connect(DB)
+    rows = {r[0]: (r[1], r[2]) for r in db.execute("select id,alias,type from datas")}
+    base = lambda code: rows[code][0] if is_artwork(code, rows[code][0]) else code
+    played = {}
+    for name, path in registry().items():
+        zones = parse_ydk(Path(path).read_text())
+        for code in zones["main"] + zones["extra"]:
+            played.setdefault(code, set()).add(name)
+    canonical = {}
+    for code in sorted(played, key=lambda c: ids[c]):
+        canonical.setdefault(base(code), code)
+    row_of = {}
+    for code in codes.values():
+        if base(code) in canonical:
+            row_of[code] = canonical[base(code)]
+    tokens = {}
+    for code in sorted(row_of):
+        script = SCRIPTS / f"c{base(code)}.lua"
+        if script.exists():
+            for number in set(re.findall(r"\b(\d{5,9})\b", script.read_text(errors="replace"))):
+                number = int(number)
+                if number in ids and number not in row_of and rows[number][1] & TYPE_TOKEN:
+                    tokens.setdefault(number, set()).add(code)
+    for code in tokens:
+        row_of[code] = code
+    names = {r[0]: r[1] for r in db.execute("select id, name from texts")}
+    named = {}
+    for code in sorted(tokens, key=lambda c: ids[c]):
+        named.setdefault(names[code], code)
+    for code in codes.values():
+        if code not in row_of and rows[code][1] & TYPE_TOKEN and names[code] in named:
+            row_of[code] = named[names[code]]
+            tokens[code] = {named[names[code]]}
+    return codes, ids, row_of, played, tokens
+
+
+def write_identity():
+    codes, ids, row_of, played, tokens = build_identity()
+    known = {str(ids[code]): ids[target] for code, target in sorted(row_of.items(), key=lambda kv: ids[kv[0]])}
+    meta = {"format": "edison_identity_v2",
+            "note": "id -> row for every id the network may know. Every other id, and the unknown row itself, "
+                    "reads unknown_row. Never edit in place: checkpoints fail closed on a hash mismatch.",
+            "codes_sha256": digest(CODES_V2), "n_codes": len(codes), "unknown_row": len(codes) + 1,
+            "known": known,
+            "counts": {"known_ids": len(known), "rows": len(set(known.values())),
+                       "played_main_extra": len(played), "merged": sum(int(k) != v for k, v in known.items()),
+                       "tokens": len(tokens)},
+            "tokens": {str(ids[code]): sorted(ids[c] for c in why) for code, why in sorted(tokens.items())},
+            "training_lists": {name: digest(path) for name, path in sorted(registry().items())}}
+    IDENTITY.write_text(json.dumps(meta, indent=1) + "\n")
+    return meta
+
+
+def load_identity(path=IDENTITY):
+    """Return (sha256, row_of): row_of[id] for ids 0..n_codes+1, with 0 for no card. Refuses a map for another list."""
+    import numpy as np
+    meta = json.loads(Path(path).read_text())
+    codes_sha, codes = load_codes(CODES_V2)
+    if meta.get("format") != "edison_identity_v2" or meta["codes_sha256"] != codes_sha or meta["n_codes"] != len(codes):
+        raise ValueError("Identity map does not belong to code list v2")
+    unknown = meta["unknown_row"]
+    if unknown != len(codes) + 1:
+        raise ValueError("Identity map has a different unknown row")
+    row_of = np.full(len(codes) + 2, unknown, dtype=np.int32)
+    row_of[0] = 0
+    for cid, row in meta["known"].items():
+        cid = int(cid)
+        if not (1 <= cid <= len(codes) and 1 <= row <= len(codes)) or meta["known"].get(str(row)) != row:
+            raise ValueError(f"Bad identity entry {cid} -> {row}")
+        row_of[cid] = row
+    return digest(path), row_of
 
 
 def load_codes(path=CODES):
@@ -190,4 +312,7 @@ def card_metadata(path=CODES):
 
 
 if __name__ == "__main__":
-    print(json.dumps({k: v for k, v in write_codelist().items() if k != "decks"}, indent=1))
+    import sys
+    what = sys.argv[1] if len(sys.argv) > 1 else "v1"
+    writer = {"v1": write_codelist, "v2": write_codelist_v2, "identity": write_identity}[what]
+    print(json.dumps({k: v for k, v in writer().items() if k not in ("decks", "known", "training_lists")}, indent=1))

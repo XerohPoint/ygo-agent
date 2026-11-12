@@ -20,7 +20,7 @@ sys.path.insert(0, str(HERE.parent / "learner"))
 from obs import HINT_MAX, HINT_MIN, MAX_OPTIONS, MAX_ROWS  # noqa: E402
 
 MAGIC = b"EDNET01\n"
-FORMAT_VERSION = 1
+FORMAT_VERSION, FORMAT_VERSION_IDENTITY = 1, 2  # 2 adds const/id_row and the unknown row
 NAME_BYTES = 72
 HEADER = struct.Struct("<8s2I6I6IQ32s32s32s32s")
 ENTRY = struct.Struct(f"<{NAME_BYTES}s4I2Q")
@@ -35,7 +35,7 @@ def flatten(tree, prefix=""):
             yield f"{prefix}{key}", tree[key]
 
 
-def serialize(arrays, config, params_sha256, codes_sha256):
+def serialize(arrays, config, params_sha256, codes_sha256, version=FORMAT_VERSION):
     """arrays: [(name, float32 array)]. Returns the file's bytes."""
     table, chunks, offset = [], [], 0
     for name, array in arrays:
@@ -55,7 +55,7 @@ def serialize(arrays, config, params_sha256, codes_sha256):
     header_bytes += -header_bytes % 64
 
     def pack_header(header_sha):
-        return HEADER.pack(MAGIC, FORMAT_VERSION, header_bytes,
+        return HEADER.pack(MAGIC, version, header_bytes,
                            config["n_codes"], config["id_dim"], config["channels"], config["layers"], config["heads"],
                            config["critic_hidden"], MAX_ROWS, MAX_OPTIONS, HINT_MIN, HINT_MAX, 32, len(table), len(payload),
                            bytes.fromhex(params_sha256), bytes.fromhex(codes_sha256), hashlib.sha256(payload).digest(),
@@ -74,9 +74,18 @@ def export(stem, output, expected_sha=None):
     from net import BIN_POINTS, BIN_WIDTHS
     config, params, meta, sha = load_checkpoint(stem, expected_sha)
     arrays = [("const/bin_points", BIN_POINTS.astype(np.float32)), ("const/bin_widths", BIN_WIDTHS.astype(np.float32))]
+    version, extra = FORMAT_VERSION, {}
+    if config.unknown_row:
+        # The identity map travels in the file, so the native pass needs no second input.
+        import decks as deck_registry
+        identity_sha, row_of = deck_registry.load_identity()
+        if meta["identity_sha256"] != identity_sha or len(row_of) != config.n_codes + 2:
+            raise ValueError("Checkpoint and identity map disagree")
+        arrays.append(("const/id_row", row_of.astype(np.float32)))
+        version, extra = FORMAT_VERSION_IDENTITY, {"identity_sha256": identity_sha}
     arrays += list(flatten(params))
-    Path(output).write_bytes(serialize(arrays, config.dict(), sha, meta["codes_sha256"]))
-    return {"params_sha256": sha, "codes_sha256": meta["codes_sha256"], "config": config.dict(),
+    Path(output).write_bytes(serialize(arrays, config.dict(), sha, meta["codes_sha256"], version))
+    return {"params_sha256": sha, "codes_sha256": meta["codes_sha256"], "config": config.dict(), **extra,
             "file_sha256": hashlib.sha256(Path(output).read_bytes()).hexdigest()}
 
 

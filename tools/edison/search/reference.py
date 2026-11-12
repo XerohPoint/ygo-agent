@@ -15,9 +15,13 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "learner"))
 sys.path.insert(0, str(HERE))
+import decks as deck_registry  # noqa: E402
 from dump_format import RECORD, python_pipeline, write_expect  # noqa: E402
 
-N_CODES = 509
+N_CODES = len(deck_registry.load_codes()[1])
+# Code list v2: the network reads identities through this map, after pack. The expect file holds pack's
+# output before the map, which is what the native pack must reproduce; the native pass maps at lookup.
+ROW_OF = deck_registry.load_identity()[1] if deck_registry.CODE_LIST == "v2" else None
 
 
 def expect(args):
@@ -49,7 +53,7 @@ def apply_functions(config):
 def net(args):
     import jax
     from actor import load_checkpoint
-    from obs import pad_batch, segment_distribution
+    from obs import pad_batch, remap_ids, segment_distribution
     config, params, meta, sha = load_checkpoint(args.checkpoint)
     params = jax.tree_util.tree_map(lambda x: jax.numpy.asarray(x), params)
     full, value_only, capture = apply_functions(config)
@@ -62,6 +66,8 @@ def net(args):
             verdict, packed = python_pipeline(record, config.n_codes)
             if verdict:
                 raise ValueError(f"Record {index} fails the Python pipeline with rule {verdict}")
+            if ROW_OF is not None:
+                remap_ids(packed, ROW_OF[None])
             batch = pad_batch(packed)
             logits, value = full(params, batch)
             n = int(packed["offsets"][-1])

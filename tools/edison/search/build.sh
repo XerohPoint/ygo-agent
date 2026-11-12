@@ -12,7 +12,7 @@ g++ "${FLAGS[@]}" "$HERE/net_bench.cpp" -o "$OUT/net_bench"
 g++ "${FLAGS[@]}" "-I$HERE/../forward_model" "$HERE/net_arena_test.cpp" -o "$OUT/net_arena_test"
 g++ "${FLAGS[@]}" "$HERE/net_load_test.cpp" -o "$OUT/net_load_test"
 if [ "${1:-}" = "faults" ]; then
-  for fault in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do
+  for fault in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18; do
     g++ "${FLAGS[@]}" "-DEDNET_FAULT=$fault" "$HERE/net_diff.cpp" -o "$OUT/net_diff_fault$fault" &
     if [ $((fault % 4)) = 0 ]; then wait; fi
   done
