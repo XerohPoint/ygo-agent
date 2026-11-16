@@ -20,6 +20,12 @@ The goal is three tools for the Edison format (the March 2010 list), in this ord
 
 ## Where things stand
 
+**Update, November 16, 2026.** M3 Stage B is done and met, so M3's exit is met; the report is
+[edison-heldout.md](edison-heldout.md#stage-b-lists-with-cards-no-training-list-plays). Retraining for unknown cards
+was not shown to help. Local `edison` holds the Stage B commits and is ahead of `origin/edison`; nothing was pushed.
+Still open: the Stage B search check, which needs `edison_search` to load code list v2 and a rebuild on r5, with its
+own freeze. The rest of this section is as written on November 12.
+
 - **Branch:** `edison` at `e21b7cd`. It was pushed to `origin/edison` (the owner's fork on GitHub) on November 11. The
   working tree is clean apart from the untracked `.claude/`. `main` is the upstream project; do not build on it.
 - **Nothing is running.** No experiment or review is waiting to be resumed.
@@ -27,7 +33,8 @@ The goal is three tools for the Edison format (the March 2010 list), in this ord
   - M0 (evidence) and M1 (a network that beats the heuristic) are done.
   - M2 (search beats the same network without search) is met: 80.3% on fresh seeds.
   - M3 Stage A (held-out builds of known cards) is met: 80.6% piloting 488 builds that no network trained on.
-  - M3 Stage B (lists with cards that no training list plays) has not started. M4 to M6 have not started.
+  - M3 Stage B (lists with cards that no training list plays) had not started on November 12. It was met on
+    November 16: 75.6% piloting 747 builds, against 75.4% for M1's networks without retraining. M4 to M6 have not started.
 - **The certified build:**
   - The engine is ygopro-core `f9692965` with two patches, early trigger and hardening revision **r5**.
   - Production module `d1f1f701...`, rules binary `edison_rules` `29ca41fd...`, and conformance binary `8a3a107b...`.
@@ -43,9 +50,11 @@ lists from one site's events. They are not human or tournament strength. Keep sa
 
 ## Next task: M3 Stage B
 
+**Done on November 16, 2026**, apart from the search check. This section is kept as the brief it was.
+
 Stage B asks whether the networks can play cards they never trained on. The outline is in
-[the Stage A protocol](edison-m3-protocol.md#stage-b-outline), and [the Stage A report](edison-heldout.md#next-stage-b)
-lists what it needs. In order:
+[the Stage A protocol](edison-m3-protocol.md#stage-b-outline), and [the Stage A report](edison-heldout.md)
+listed what it needs. In order:
 
 1. **Rebuild the search binary on r5.** Run `tools/edison/forward_model/build.sh edison_search`. The script refuses any core
    other than the certified r5 library. The binary that M2 and Stage A used (`167be8aa...`) was built on r2 and stays the
@@ -251,7 +260,8 @@ The owner reads reports and may read them on another device without the files op
 | --- | --- |
 | [edison-roadmap.md](edison-roadmap.md) | Goal, milestones, decisions, standing rules |
 | [opus-5.5-handoff-2026-11-04.md](opus-5.5-handoff-2026-11-04.md) | Simulator invariants and observation contracts |
-| [edison-m3-protocol.md](edison-m3-protocol.md), [edison-heldout.md](edison-heldout.md) | Stage A protocol and result, Stage B outline |
+| [edison-m3-protocol.md](edison-m3-protocol.md), [edison-heldout.md](edison-heldout.md) | Stage A protocol, and the results of both stages |
+| [edison-m3b-protocol.md](edison-m3b-protocol.md) | Stage B protocol, as frozen |
 | [edison-learner.md](edison-learner.md) | The M1 network, trainer, league and GPU setup |
 | [edison-search.md](edison-search.md), [edison-m2-protocol.md](edison-m2-protocol.md) | Search, PIMC and the M2 test |
 | [edison-forward-model.md](edison-forward-model.md), [edison-native-net.md](edison-native-net.md) | State copies for search and the native forward pass |

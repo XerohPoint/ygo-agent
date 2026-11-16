@@ -162,10 +162,14 @@ measure generalization. Exit: the policy performs on held-out decks, not only kn
 known cards, met by [predeclared rule](edison-heldout.md), November 10, 2026:** 80.6% piloting 488 placed builds no
 network trained on, with the edge over the heuristic within a point of the edge on each build's nearest training list.
 Sol recounted it with separate code and reran 84 cell runs and 48 search games with no differences.
-Stage B, cards no training list plays, needs code list v2, an unknown-identity row and retraining, and is not started.
+**Stage B, lists with cards no training list plays, met by [predeclared rule](edison-heldout.md#stage-b-lists-with-cards-no-training-list-plays),
+November 16, 2026:** 75.6% piloting 747 placed builds that hold unknown cards, and 73.3% on the 206 with 6 or more
+unknown Main Deck copies, with the edge over the heuristic within 3 points of the edge on each build's nearest training
+list. A Sonnet subagent recounted it with separate code. **Both stages are met, so M3's exit is met.** Retraining with
+an unknown-card row and identity dropout was not shown to help: M1's networks, loaded without retraining, score 75.4%
+on the same games. The Stage B search check has not run; the search must first load code list v2 and be rebuilt on r5.
 The corpus crash that blocked Stage B's Dark Panther lists is [fixed](edison-dark-panther.md) in core hardening r3, along with
 a Dark Panther repeat. A stale reason effect that Gold Sarcophagus reached in legal games is [fixed](edison-gold-sarcophagus.md) in r5.
-Stage B also needs a search binary rebuilt on r5.
 
 ### M4 — Deck builder
 

@@ -1,0 +1,160 @@
+--- held pilot rows=94122 side=counted (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered   5392965 chosen    987149 rate 0.18304 | unknown offered   784871 chosen    76280 rate 0.09719
+  Change position  known offered   2748895 chosen    331539 rate 0.12061 | unknown offered   448269 chosen    56286 rate 0.12556
+  Special Summon   known offered    646097 chosen    368029 rate 0.56962 | unknown offered    34880 chosen    13291 rate 0.38105
+  Normal Summon    known offered   2403269 chosen   1056287 rate 0.43952 | unknown offered   627991 chosen   172575 rate 0.27480
+  Set monster      known offered   2387486 chosen    345635 rate 0.14477 | unknown offered   624768 chosen    54940 rate 0.08794
+  Attack           known offered    972640 chosen    780774 rate 0.80274 | unknown offered   180531 chosen    91954 rate 0.50935
+  Direct attack    known offered   1025154 chosen    962192 rate 0.93858 | unknown offered   178224 chosen   133465 rate 0.74886
+  Activate         known offered   6138956 chosen   2762337 rate 0.44997 | unknown offered   514397 chosen   247014 rate 0.48020
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- held pilot rows=94122 side=other (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered   3694233 chosen   1661938 rate 0.44987 | unknown offered        0 chosen        0 rate 0.00000
+  Change position  known offered   1902648 chosen    131798 rate 0.06927 | unknown offered    26803 chosen     1875 rate 0.06995
+  Special Summon   known offered    385961 chosen    286766 rate 0.74299 | unknown offered        0 chosen        0 rate 0.00000
+  Normal Summon    known offered   1674702 chosen   1592554 rate 0.95095 | unknown offered       53 chosen       48 rate 0.90566
+  Set monster      known offered   1669129 chosen     18635 rate 0.01116 | unknown offered        0 chosen        0 rate 0.00000
+  Attack           known offered   1204509 chosen    592514 rate 0.49191 | unknown offered     5580 chosen     2074 rate 0.37168
+  Direct attack    known offered    677173 chosen    646263 rate 0.95435 | unknown offered     7102 chosen     4707 rate 0.66277
+  Activate         known offered  27813488 chosen   1294286 rate 0.04653 | unknown offered    11465 chosen     3168 rate 0.27632
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- held base rows=94122 side=counted (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered   5939558 chosen    909647 rate 0.15315 | unknown offered   790311 chosen    94911 rate 0.12009
+  Change position  known offered   2817643 chosen    296507 rate 0.10523 | unknown offered   352642 chosen    52882 rate 0.14996
+  Special Summon   known offered    773965 chosen    352273 rate 0.45515 | unknown offered    37930 chosen    10365 rate 0.27327
+  Normal Summon    known offered   2301583 chosen   1136105 rate 0.49362 | unknown offered   633148 chosen   196655 rate 0.31060
+  Set monster      known offered   2287587 chosen    314956 rate 0.13768 | unknown offered   631085 chosen    20672 rate 0.03276
+  Attack           known offered   1026139 chosen    895615 rate 0.87280 | unknown offered   181838 chosen    93054 rate 0.51174
+  Direct attack    known offered    929669 chosen    892825 rate 0.96037 | unknown offered   178704 chosen   132766 rate 0.74294
+  Activate         known offered   6094159 chosen   2759398 rate 0.45279 | unknown offered   573409 chosen   233084 rate 0.40649
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- held base rows=94122 side=other (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered   3711334 chosen   1656531 rate 0.44634 | unknown offered        0 chosen        0 rate 0.00000
+  Change position  known offered   1970627 chosen    136113 rate 0.06907 | unknown offered    22737 chosen     1685 rate 0.07411
+  Special Summon   known offered    393060 chosen    293092 rate 0.74567 | unknown offered        0 chosen        0 rate 0.00000
+  Normal Summon    known offered   1684540 chosen   1601717 rate 0.95083 | unknown offered       26 chosen       22 rate 0.84615
+  Set monster      known offered   1678526 chosen     18690 rate 0.01113 | unknown offered        0 chosen        0 rate 0.00000
+  Attack           known offered   1213502 chosen    598385 rate 0.49311 | unknown offered     4997 chosen     1727 rate 0.34561
+  Direct attack    known offered    716889 chosen    686362 rate 0.95742 | unknown offered     6692 chosen     4239 rate 0.63344
+  Activate         known offered  27636252 chosen   1314974 rate 0.04758 | unknown offered    10173 chosen     2760 rate 0.27131
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- held face rows=94122 side=counted (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered   6014735 chosen   1038827 rate 0.17271 | unknown offered        0 chosen        0 rate 0.00000
+  Change position  known offered   3252305 chosen    399442 rate 0.12282 | unknown offered    27216 chosen     3972 rate 0.14594
+  Special Summon   known offered    835448 chosen    417241 rate 0.49942 | unknown offered        0 chosen        0 rate 0.00000
+  Normal Summon    known offered   2768161 chosen   1235448 rate 0.44631 | unknown offered      137 chosen       47 rate 0.34307
+  Set monster      known offered   2743947 chosen    424478 rate 0.15470 | unknown offered        0 chosen        0 rate 0.00000
+  Attack           known offered   1055783 chosen    863039 rate 0.81744 | unknown offered     3705 chosen     1255 rate 0.33873
+  Direct attack    known offered   1186881 chosen   1134280 rate 0.95568 | unknown offered     9859 chosen     5882 rate 0.59661
+  Activate         known offered   6895827 chosen   3295315 rate 0.47787 | unknown offered     3626 chosen     1985 rate 0.54744
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- held face rows=94122 side=other (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered   3576178 chosen   1535197 rate 0.42928 | unknown offered   354855 chosen   158196 rate 0.44580
+  Change position  known offered   1770545 chosen    115170 rate 0.06505 | unknown offered   291336 chosen    17603 rate 0.06042
+  Special Summon   known offered    351418 chosen    277435 rate 0.78947 | unknown offered    20309 chosen     8892 rate 0.43784
+  Normal Summon    known offered   1543359 chosen   1373588 rate 0.89000 | unknown offered   358178 chosen   240300 rate 0.67090
+  Set monster      known offered   1538747 chosen     15564 rate 0.01011 | unknown offered   356817 chosen     2728 rate 0.00765
+  Attack           known offered   1149590 chosen    607519 rate 0.52847 | unknown offered   205830 chosen    71215 rate 0.34599
+  Direct attack    known offered    572905 chosen    548433 rate 0.95728 | unknown offered    94210 chosen    71232 rate 0.75610
+  Activate         known offered  27109038 chosen   1198603 rate 0.04421 | unknown offered  4181416 chosen    45825 rate 0.01096
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- held mirror rows=31374 side=counted (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered   1022911 chosen    488838 rate 0.47789 | unknown offered   115446 chosen    50831 rate 0.44030
+  Change position  known offered    678966 chosen     27074 rate 0.03988 | unknown offered   115211 chosen     4540 rate 0.03941
+  Special Summon   known offered    118161 chosen     93595 rate 0.79210 | unknown offered     6944 chosen     2933 rate 0.42238
+  Normal Summon    known offered    517632 chosen    458784 rate 0.88631 | unknown offered   122035 chosen    79654 rate 0.65271
+  Set monster      known offered    515660 chosen      6969 rate 0.01351 | unknown offered   121543 chosen     1303 rate 0.01072
+  Attack           known offered    345037 chosen    209061 rate 0.60591 | unknown offered    64576 chosen    27071 rate 0.41921
+  Direct attack    known offered    276647 chosen    264442 rate 0.95588 | unknown offered    48109 chosen    35339 rate 0.73456
+  Activate         known offered   7719901 chosen    382842 rate 0.04959 | unknown offered  1229337 chosen    13954 rate 0.01135
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- held mirror rows=31374 side=other (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered   1080848 chosen    533973 rate 0.49403 | unknown offered        0 chosen        0 rate 0.00000
+  Change position  known offered    734368 chosen     30782 rate 0.04192 | unknown offered     7861 chosen      545 rate 0.06933
+  Special Summon   known offered    130094 chosen     96707 rate 0.74336 | unknown offered        0 chosen        0 rate 0.00000
+  Normal Summon    known offered    565765 chosen    537507 rate 0.95005 | unknown offered       13 chosen       10 rate 0.76923
+  Set monster      known offered    563528 chosen      8228 rate 0.01460 | unknown offered        0 chosen        0 rate 0.00000
+  Attack           known offered    375263 chosen    217240 rate 0.57890 | unknown offered      642 chosen      272 rate 0.42368
+  Direct attack    known offered    309123 chosen    297586 rate 0.96268 | unknown offered     3726 chosen     2176 rate 0.58400
+  Activate         known offered   8332467 chosen    423771 rate 0.05086 | unknown offered     1770 chosen      902 rate 0.50960
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- known pilot rows=2646 side=counted (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered   1361542 chosen    234238 rate 0.17204 | unknown offered        0 chosen        0 rate 0.00000
+  Change position  known offered    733003 chosen     89270 rate 0.12179 | unknown offered        0 chosen        0 rate 0.00000
+  Special Summon   known offered    187697 chosen     94324 rate 0.50253 | unknown offered        0 chosen        0 rate 0.00000
+  Normal Summon    known offered    625097 chosen    280466 rate 0.44868 | unknown offered        0 chosen        0 rate 0.00000
+  Set monster      known offered    619295 chosen     95562 rate 0.15431 | unknown offered        0 chosen        0 rate 0.00000
+  Attack           known offered    240299 chosen    197856 rate 0.82337 | unknown offered        0 chosen        0 rate 0.00000
+  Direct attack    known offered    265419 chosen    253570 rate 0.95536 | unknown offered        0 chosen        0 rate 0.00000
+  Activate         known offered   1565718 chosen    744267 rate 0.47535 | unknown offered        0 chosen        0 rate 0.00000
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- known pilot rows=2646 side=other (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered    848100 chosen    375600 rate 0.44287 | unknown offered        0 chosen        0 rate 0.00000
+  Change position  known offered    436201 chosen     29688 rate 0.06806 | unknown offered        0 chosen        0 rate 0.00000
+  Special Summon   known offered     90156 chosen     67003 rate 0.74319 | unknown offered        0 chosen        0 rate 0.00000
+  Normal Summon    known offered    384219 chosen    364885 rate 0.94968 | unknown offered        0 chosen        0 rate 0.00000
+  Set monster      known offered    382925 chosen      4378 rate 0.01143 | unknown offered        0 chosen        0 rate 0.00000
+  Attack           known offered    289142 chosen    149381 rate 0.51664 | unknown offered        0 chosen        0 rate 0.00000
+  Direct attack    known offered    148049 chosen    141562 rate 0.95618 | unknown offered        0 chosen        0 rate 0.00000
+  Activate         known offered   6519284 chosen    298611 rate 0.04580 | unknown offered        0 chosen        0 rate 0.00000
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- known base rows=2646 side=counted (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered   1470371 chosen    214084 rate 0.14560 | unknown offered        0 chosen        0 rate 0.00000
+  Change position  known offered    749315 chosen     84613 rate 0.11292 | unknown offered        0 chosen        0 rate 0.00000
+  Special Summon   known offered    220524 chosen     89481 rate 0.40577 | unknown offered        0 chosen        0 rate 0.00000
+  Normal Summon    known offered    613631 chosen    294322 rate 0.47964 | unknown offered        0 chosen        0 rate 0.00000
+  Set monster      known offered    608806 chosen     91315 rate 0.14999 | unknown offered        0 chosen        0 rate 0.00000
+  Attack           known offered    249280 chosen    219216 rate 0.87940 | unknown offered        0 chosen        0 rate 0.00000
+  Direct attack    known offered    243282 chosen    237217 rate 0.97507 | unknown offered        0 chosen        0 rate 0.00000
+  Activate         known offered   1559826 chosen    760475 rate 0.48754 | unknown offered        0 chosen        0 rate 0.00000
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- known base rows=2646 side=other (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered    851687 chosen    375982 rate 0.44146 | unknown offered        0 chosen        0 rate 0.00000
+  Change position  known offered    455931 chosen     31569 rate 0.06924 | unknown offered        0 chosen        0 rate 0.00000
+  Special Summon   known offered     92101 chosen     68838 rate 0.74742 | unknown offered        0 chosen        0 rate 0.00000
+  Normal Summon    known offered    386666 chosen    366852 rate 0.94876 | unknown offered        0 chosen        0 rate 0.00000
+  Set monster      known offered    385333 chosen      4359 rate 0.01131 | unknown offered        0 chosen        0 rate 0.00000
+  Attack           known offered    296969 chosen    153366 rate 0.51644 | unknown offered        0 chosen        0 rate 0.00000
+  Direct attack    known offered    151282 chosen    144728 rate 0.95668 | unknown offered        0 chosen        0 rate 0.00000
+  Activate         known offered   6457101 chosen    302471 rate 0.04684 | unknown offered        0 chosen        0 rate 0.00000
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- known face rows=2646 side=counted (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered   1361456 chosen    233475 rate 0.17149 | unknown offered        0 chosen        0 rate 0.00000
+  Change position  known offered    729478 chosen     89242 rate 0.12234 | unknown offered        0 chosen        0 rate 0.00000
+  Special Summon   known offered    187353 chosen     94136 rate 0.50245 | unknown offered        0 chosen        0 rate 0.00000
+  Normal Summon    known offered    623473 chosen    279735 rate 0.44867 | unknown offered        0 chosen        0 rate 0.00000
+  Set monster      known offered    617840 chosen     95247 rate 0.15416 | unknown offered        0 chosen        0 rate 0.00000
+  Attack           known offered    238829 chosen    196672 rate 0.82348 | unknown offered        0 chosen        0 rate 0.00000
+  Direct attack    known offered    265572 chosen    253945 rate 0.95622 | unknown offered        0 chosen        0 rate 0.00000
+  Activate         known offered   1567234 chosen    742628 rate 0.47385 | unknown offered        0 chosen        0 rate 0.00000
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- known face rows=2646 side=other (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered    848550 chosen    376321 rate 0.44349 | unknown offered        0 chosen        0 rate 0.00000
+  Change position  known offered    430049 chosen     29475 rate 0.06854 | unknown offered        0 chosen        0 rate 0.00000
+  Special Summon   known offered     89926 chosen     66986 rate 0.74490 | unknown offered        0 chosen        0 rate 0.00000
+  Normal Summon    known offered    382399 chosen    363264 rate 0.94996 | unknown offered        0 chosen        0 rate 0.00000
+  Set monster      known offered    381074 chosen      4273 rate 0.01121 | unknown offered        0 chosen        0 rate 0.00000
+  Attack           known offered    287154 chosen    148245 rate 0.51626 | unknown offered        0 chosen        0 rate 0.00000
+  Direct attack    known offered    146497 chosen    140145 rate 0.95664 | unknown offered        0 chosen        0 rate 0.00000
+  Activate         known offered   6450440 chosen    297243 rate 0.04608 | unknown offered        0 chosen        0 rate 0.00000
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- known mirror rows=882 side=counted (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered    244286 chosen    119824 rate 0.49051 | unknown offered        0 chosen        0 rate 0.00000
+  Change position  known offered    165075 chosen      6621 rate 0.04011 | unknown offered        0 chosen        0 rate 0.00000
+  Special Summon   known offered     29814 chosen     22251 rate 0.74633 | unknown offered        0 chosen        0 rate 0.00000
+  Normal Summon    known offered    127860 chosen    121586 rate 0.95093 | unknown offered        0 chosen        0 rate 0.00000
+  Set monster      known offered    127375 chosen      1791 rate 0.01406 | unknown offered        0 chosen        0 rate 0.00000
+  Attack           known offered     84957 chosen     51018 rate 0.60052 | unknown offered        0 chosen        0 rate 0.00000
+  Direct attack    known offered     69629 chosen     67248 rate 0.96580 | unknown offered        0 chosen        0 rate 0.00000
+  Activate         known offered   1879354 chosen     94877 rate 0.05048 | unknown offered        0 chosen        0 rate 0.00000
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000
+--- known mirror rows=882 side=other (seat==row seat: network/X-sided; for mirror it is X)
+  Set              known offered    244396 chosen    119745 rate 0.48996 | unknown offered        0 chosen        0 rate 0.00000
+  Change position  known offered    164741 chosen      6467 rate 0.03926 | unknown offered        0 chosen        0 rate 0.00000
+  Special Summon   known offered     29787 chosen     22174 rate 0.74442 | unknown offered        0 chosen        0 rate 0.00000
+  Normal Summon    known offered    127695 chosen    121320 rate 0.95008 | unknown offered        0 chosen        0 rate 0.00000
+  Set monster      known offered    127216 chosen      1816 rate 0.01427 | unknown offered        0 chosen        0 rate 0.00000
+  Attack           known offered     84695 chosen     50700 rate 0.59862 | unknown offered        0 chosen        0 rate 0.00000
+  Direct attack    known offered     69703 chosen     67368 rate 0.96650 | unknown offered        0 chosen        0 rate 0.00000
+  Activate         known offered   1892277 chosen     95019 rate 0.05021 | unknown offered        0 chosen        0 rate 0.00000
+  Cancel           known offered         0 chosen         0 rate 0.00000 | unknown offered        0 chosen        0 rate 0.00000

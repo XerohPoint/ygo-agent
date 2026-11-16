@@ -1,0 +1,89 @@
+pilot ALL mean                           mine 0.755982  official 0.755982  absdiff 0.00e+00
+pilot ALL 1702 rate                      mine 0.758948  official 0.758948  absdiff 0.00e+00
+pilot ALL 1702 2.5th                     mine 0.751689  official 0.751490  absdiff 1.99e-04
+pilot ALL 1703 rate                      mine 0.759419  official 0.759419  absdiff 0.00e+00
+pilot ALL 1703 2.5th                     mine 0.751602  official 0.751617  absdiff 1.55e-05
+pilot ALL 1704 rate                      mine 0.749578  official 0.749578  absdiff 0.00e+00
+pilot ALL 1704 2.5th                     mine 0.742175  official 0.741944  absdiff 2.31e-04
+pilot ALL seat0                          mine 0.777618  official 0.777618  absdiff 0.00e+00
+pilot ALL seat1                          mine 0.734345  official 0.734345  absdiff 0.00e+00
+pilot H mean                             mine 0.733308  official 0.733308  absdiff 0.00e+00
+pilot H 1702 rate                        mine 0.735726  official 0.735726  absdiff 0.00e+00
+pilot H 1702 2.5th                       mine 0.720874  official 0.720845  absdiff 2.89e-05
+pilot H 1703 rate                        mine 0.739107  official 0.739107  absdiff 0.00e+00
+pilot H 1703 2.5th                       mine 0.722722  official 0.722550  absdiff 1.73e-04
+pilot H 1704 rate                        mine 0.725092  official 0.725092  absdiff 0.00e+00
+pilot H 1704 2.5th                       mine 0.708478  official 0.708131  absdiff 3.47e-04
+pilot H seat0                            mine 0.758957  official 0.758957  absdiff 0.00e+00
+pilot H seat1                            mine 0.707659  official 0.707659  absdiff 0.00e+00
+face ALL mean                            mine 0.767161  official 0.767161  absdiff 0.00e+00
+face ALL 1702 rate                       mine 0.766407  official 0.766407  absdiff 0.00e+00
+face ALL 1702 2.5th                      mine 0.756167  official 0.756016  absdiff 1.51e-04
+face ALL 1703 rate                       mine 0.768813  official 0.768813  absdiff 0.00e+00
+face ALL 1703 2.5th                      mine 0.758908  official 0.758947  absdiff 3.90e-05
+face ALL 1704 rate                       mine 0.766263  official 0.766263  absdiff 0.00e+00
+face ALL 1704 2.5th                      mine 0.756614  official 0.756598  absdiff 1.59e-05
+face ALL seat0                           mine 0.790012  official 0.790012  absdiff 0.00e+00
+face ALL seat1                           mine 0.744311  official 0.744311  absdiff 0.00e+00
+face H mean                              mine 0.774089  official 0.774089  absdiff 0.00e+00
+face H 1702 rate                         mine 0.774070  official 0.774070  absdiff 0.00e+00
+face H 1702 2.5th                        mine 0.758033  official 0.758004  absdiff 2.89e-05
+face H 1703 rate                         mine 0.775196  official 0.775196  absdiff 0.00e+00
+face H 1703 2.5th                        mine 0.759679  official 0.759564  absdiff 1.15e-04
+face H 1704 rate                         mine 0.773000  official 0.773000  absdiff 0.00e+00
+face H 1704 2.5th                        mine 0.757628  official 0.757426  absdiff 2.02e-04
+face H seat0                             mine 0.798659  official 0.798659  absdiff 0.00e+00
+face H seat1                             mine 0.749518  official 0.749518  absdiff 0.00e+00
+gap ALL point                            mine 0.002720  official 0.002720  absdiff 0.00e+00
+gap ALL 2.5th                            mine -0.008254  official -0.008389  absdiff 1.35e-04
+gap ALL 97.5th                           mine 0.014015  official 0.013668  absdiff 3.47e-04
+gap-no-mirror ALL point                  mine -0.020559  official -0.020559  absdiff 0.00e+00
+pilot-base ALL mean                      mine 0.001936  official 0.001936  absdiff 3.71e-17
+pilot-base ALL 2.5th                     mine -0.000829  official -0.000754  absdiff 7.44e-05
+pilot-base ALL 97.5th                    mine 0.004643  official 0.004601  absdiff 4.24e-05
+gap H point                              mine -0.028888  official -0.028888  absdiff 0.00e+00
+gap H 2.5th                              mine -0.048975  official -0.049001  absdiff 2.51e-05
+gap H 97.5th                             mine -0.009232  official -0.009075  absdiff 1.57e-04
+gap-no-mirror H point                    mine -0.049042  official -0.049042  absdiff 0.00e+00
+pilot-base H mean                        mine 0.013128  official 0.013128  absdiff 1.11e-16
+pilot-base H 2.5th                       mine 0.007445  official 0.007474  absdiff 2.89e-05
+pilot-base H 97.5th                      mine 0.018560  official 0.018609  absdiff 4.84e-05
+known pilot                              mine 0.772357  official 0.772357  absdiff 0.00e+00
+known base                               mine 0.788419  official 0.788419  absdiff 0.00e+00
+known pilot-base                         mine -0.016062  official -0.016062  absdiff 0.00e+00
+mask2-pilot mean                         mine -0.004098  official -0.004098  absdiff 8.07e-17
+mask2-pilot 2.5th                        mine -0.006236  official -0.006224  absdiff 1.18e-05
+mask2-pilot 97.5th                       mine -0.001949  official -0.001937  absdiff 1.18e-05
+mask5-pilot mean                         mine -0.012637  official -0.012637  absdiff 1.34e-16
+mask5-pilot 2.5th                        mine -0.015306  official -0.015306  absdiff 3.12e-17
+mask5-pilot 97.5th                       mine -0.009991  official -0.010015  absdiff 2.36e-05
+mask10-pilot mean                        mine -0.026172  official -0.026172  absdiff 1.01e-16
+mask10-pilot 2.5th                       mine -0.029325  official -0.029278  absdiff 4.69e-05
+mask10-pilot 97.5th                      mine -0.023124  official -0.023101  absdiff 2.36e-05
+maskall-pilot mean                       mine -0.092486  official -0.092486  absdiff 0.00e+00
+maskall-pilot 2.5th                      mine -0.096868  official -0.096868  absdiff 4.16e-17
+maskall-pilot 97.5th                     mine -0.088034  official -0.088152  absdiff 1.18e-04
+usage held/pilot activate known rate     mine 0.449969  official 0.449969  absdiff 0.00e+00
+usage held/pilot activate unknown rate   mine 0.480201  official 0.480201  absdiff 0.00e+00
+usage held/pilot Normal Summon known rate mine 0.439521  official 0.439521  absdiff 0.00e+00
+usage held/pilot Normal Summon unknown rate mine 0.274805  official 0.274805  absdiff 0.00e+00
+usage held/pilot attack known rate       mine 0.802737  official 0.802737  absdiff 0.00e+00
+usage held/pilot attack unknown rate     mine 0.509353  official 0.509353  absdiff 0.00e+00
+usage held/base activate known rate      mine 0.452794  official 0.452794  absdiff 0.00e+00
+usage held/base activate unknown rate    mine 0.406488  official 0.406488  absdiff 0.00e+00
+usage held/base Normal Summon known rate mine 0.493619  official 0.493619  absdiff 0.00e+00
+usage held/base Normal Summon unknown rate mine 0.310599  official 0.310599  absdiff 0.00e+00
+usage held/base attack known rate        mine 0.872801  official 0.872801  absdiff 0.00e+00
+usage held/base attack unknown rate      mine 0.511741  official 0.511741  absdiff 0.00e+00
+usage held/face activate known rate      mine 0.477871  official 0.477871  absdiff 0.00e+00
+usage held/face activate unknown rate    mine 0.547435  official 0.547435  absdiff 0.00e+00
+usage held/face Normal Summon known rate mine 0.446306  official 0.446306  absdiff 0.00e+00
+usage held/face Normal Summon unknown rate mine 0.343066  official 0.343066  absdiff 0.00e+00
+usage held/face attack known rate        mine 0.817440  official 0.817440  absdiff 0.00e+00
+usage held/face attack unknown rate      mine 0.338731  official 0.338731  absdiff 0.00e+00
+usage held/mirror activate known rate    mine 0.049592  official 0.049592  absdiff 0.00e+00
+usage held/mirror activate unknown rate  mine 0.011351  official 0.011351  absdiff 0.00e+00
+usage held/mirror Normal Summon known rate mine 0.886313  official 0.886313  absdiff 0.00e+00
+usage held/mirror Normal Summon unknown rate mine 0.652714  official 0.652714  absdiff 0.00e+00
+usage held/mirror attack known rate      mine 0.605909  official 0.605909  absdiff 0.00e+00
+usage held/mirror attack unknown rate    mine 0.419211  official 0.419211  absdiff 0.00e+00

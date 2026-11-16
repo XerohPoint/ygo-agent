@@ -569,6 +569,33 @@ $P $L/pilot_report.py --large-round 320 --output <fresh>/pilot-summary.json
 
 `pilot_eval.py` refuses to run if the protocol hash changed, and every output directory must be fresh.
 
+## Code list v2 and identity dropout
+
+Added for [M3 Stage B](edison-m3b-protocol.md), November 12, 2026. Everything above describes code list v1, which is
+still the default and trains and plays as before (`test_learner.py` gives the same rollout and parameter hashes).
+
+- **Selecting it.** `EDISON_CODE_LIST=v2` in the environment of the learner and every actor. The list is
+  `codes_v2.txt`, 4,042 ids whose first 509 lines are v1's. Checkpoints are format `edison_net_v2` and name the
+  identity map's hash; `actor.py` refuses a checkpoint of the other format.
+- **The identity map**, `identity_v2.json`. Ids that a training list plays read their own row, artworks of a card
+  share one, and every other id reads one unknown row. `NetPolicy.infer` applies it, so no caller can skip it.
+  `python decks.py identity` rebuilds it.
+- **Wider action tables** for prompts only the wider pool raises (a declared card name, declared Life Points).
+- **Identity dropout**, `--id-dropout-clean` and `--id-dropout-max` on `train.py`. Per game, from the game's seed:
+  with probability `clean` nothing is hidden, otherwise each known row is hidden with a rate drawn uniformly up to
+  `max`, for the whole game and both seats. Stage B trained with 0.25 and 1.0.
+- **Loading a v1 checkpoint into v2**: `load_v1_into_v2` in `actor.py`. The unknown row is the mean of the known
+  rows and new action rows are zero.
+- **The native forward pass** (`tools/edison/search/edison_net.h`) reads the map from the exported file and requires
+  the caller to name its hash. `edison_search` does not load v2 files yet.
+- **Checks.** `tools/edison/heldout/identity_check.py all` compares what a network reads with the map built a second
+  way, on the v1 build as a control and on six planted defects. Its summary is in
+  `tests/edison/reports/m3-stage-b-2026-11-12/identity/summary.json`.
+
+Stage B's result: the v2 networks trained this way score 75.6% on held-out builds with unknown cards, against 75.4%
+for the M1 networks loaded with no retraining, and 1.6 points lower on the training lists. See
+[the report](edison-heldout.md#stage-b-lists-with-cards-no-training-list-plays).
+
 ## Files
 
 Code in `tools/edison/learner/`: `net.py`, `obs.py`, `actor.py`, `train.py`, `evaluate.py`, `decks.py`, `codes_v1.txt`,

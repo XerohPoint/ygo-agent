@@ -1,0 +1,56 @@
+heavy H size 206 twin counts [('g_blackwing', 78), ('g_machina_control', 68), ('g_gladiator_beast', 59)]
+chunks 115 rows 333144 games 1875888
+status Counter({'PASS': 333144})
+winner values Counter({0: 977732, 1: 898151, 2: 5})
+win_reason Counter({1: 1865589, -1: 10294, 0: 5})
+duels!=games 0 unresolved 0 reason set 0
+replays total 2624 replay mismatches (status,seed,winner,trace) 0 replay with no cell 0
+cell ids unique & contiguous True
+rows violating (network/X at index==seat) deck-player convention 0
+player labels Counter({('pilot', 'v2:1702'): 32256, ('pilot', 'v2:1703'): 32256, ('pilot', 'v2:1704'): 32256, ('face', 'v2:1702'): 32256, ('face', 'v2:1703'): 32256, ('face', 'v2:1704'): 32256, ('mirror', 'heuristic'): 32256, ('base', 'v1:1702'): 32256, ('base', 'v1:1703'): 32256, ('base', 'v1:1704'): 32256, ('mask5', 'v2:1702'): 882, ('mask5', 'v2:1703'): 882, ('mask5', 'v2:1704'): 882})
+rows whose seeds differ from protocol formula (sorted-name order) 0
+duplicate cell keys 0
+missing (build,arm,optimizer,opp,seat) cells 0
+draws by arm {('held', 'pilot', '1702'): 1, ('held', 'pilot', '1703'): 2, ('held', 'pilot', '1704'): 1, ('held', 'base', '1702'): 1}
+games per (block,arm,policy) min/max per cell {('known', 'pilot', '1702'): (32, 32), ('known', 'pilot', '1703'): (32, 32), ('known', 'pilot', '1704'): (32, 32)}
+mirror X==O: duels identical in both seat rows for all 21 lists; pooled counted-side wins/games 672 1344 (winner==seat counted, draws none)
+mirror known: mean over pairs i<j of rate(i vs j)+rate(j vs i) = 1.0002976190476192 (complement convention would also give 1; winner!=seat would give 0.999702380952381 )
+known pilot 1702 network win rate (winner==seat): 0.7708333333333334  complement 1-rate-draws: 0.22916666666666663
+pilot known X==O (network piloting list against the same list), counted rate 1702/1703/1704 [0.7782738095238095, 0.7983630952380952, 0.7894345238095238]
+mirror known seat-0 (index0) win rate:  0.51828231292517
+held pilot games with win_reason -1: 2464 of 376488
+held face games with win_reason -1: 1816 of 376488
+held base games with win_reason -1: 2569 of 376488
+held mirror games with win_reason -1: 129 of 125496
+=== B1/B2 pilot ALL builds 747
+ mean 0.7559815983510761 opt rates [0.7589484923822273, 0.7594186268885064, 0.749577675782495] opt 2.5th [0.7516892968700198, 0.751601644673934, 0.7421748501944285] seat0/seat1 [0.7776184101485306, 0.7343447865536219] mean-of-opts 2.5th 0.7489028866789911
+ PASS
+=== B1/B2 face ALL builds 747
+ mean 0.7671612375427636 opt rates [0.7664068974309938, 0.7688133486326257, 0.7662634665646714] opt 2.5th [0.7561671288327916, 0.758908451265379, 0.7566137566137567] seat0/seat1 [0.7900118994496504, 0.7443105756358769] mean-of-opts 2.5th 0.7575379560570324
+ PASS
+=== B1/B2 pilot H builds 206
+ mean 0.733308290953922 opt rates [0.7357258437355525, 0.7391065649560795, 0.7250924641701341] opt 2.5th [0.720873786407767, 0.7227223474341191, 0.7084778085991679] seat0/seat1 [0.7589574664817383, 0.7076591154261057] mean-of-opts 2.5th 0.7180418304053013
+ PASS
+=== B1/B2 face H builds 206
+ mean 0.7740888426568038 opt rates [0.7740695792880259, 0.7751964863615349, 0.7730004623208506] opt 2.5th [0.7580328247803976, 0.7596791204345816, 0.7576275716597317] seat0/seat1 [0.798659269533056, 0.7495184157805517] mean-of-opts 2.5th 0.7590441516412391
+ PASS
+=== B3 gap ALL with mirror point 0.002719542189923728 2.5th -0.008253500111557342 97.5th 0.014015469948577365
+=== B3 gap ALL WITHOUT mirror point -0.02055908820467053 2.5th -0.033024849065574464 97.5th -0.0077501972174411895
+=== B3 gap H with mirror point -0.028887829403606083 2.5th -0.04897542957312374 97.5th -0.009231818991755287
+=== B3 gap H WITHOUT mirror point -0.04904212898751733 2.5th -0.06978435260633377 97.5th -0.02836973508052088
+=== retraining ALL pilot 0.7559815983510761 base 0.7540452816557234 diff 0.001936316695352806 per-opt [-0.015737553388155856, 0.02721999107541273, -0.005673487601198457] 2.5th -0.0008287116720851658 97.5th 0.0046429766685790776
+=== retraining H pilot 0.733308290953922 base 0.7201803051317613 diff 0.01312798582216057 per-opt [-0.007021497919556197, 0.046058714748035134, 0.00034674063800277377] 2.5th 0.007445292032670673 97.5th 0.01856025581753737
+=== known block pilot 0.7723568594104308 base 0.7884188397581254 diff -0.016061980347694682 per-opt pilot [0.7708333333333334, 0.7758645124716553, 0.7703727324263039] base [0.8120393990929705, 0.7647746598639455, 0.7884424603174603]
+===  mask2 -pilot known: point -0.004098167044595616 2.5th -0.006235827664399093 97.5th -0.0019486961451247165  mask rate 0.7682586923658352
+===  mask5 -pilot known: point -0.0126369992441421 2.5th -0.015306122448979588 97.5th -0.009991496598639456  mask rate 0.7597198601662888
+===  mask10 -pilot known: point -0.02617157974300831 2.5th -0.029324924414210127 97.5th -0.02312423233182162  mask rate 0.7461852796674225
+===  maskall -pilot known: point -0.09248630007558578 2.5th -0.09686820908919125 97.5th -0.0880338246409675  mask rate 0.679870559334845
+VERDICT (B1,B2,B3 only; B4 handled separately): STAGE_B_MET
+retraining ALL NOT_SHOWN H NOT_SHOWN
+known cards KEPT
+hidden SMALL_COST
+B4: void games 0; void/interrupted-as-loss means equal the plain means (no void, no interrupted rows)
+ALT (win_reason -1 games count as non-wins) pilot ALL 0.7538965385350928
+ALT (win_reason -1 games count as non-wins) pilot H 0.7291666666666666
+ALT (win_reason -1 games count as non-wins) face ALL 0.7655622489959839
+ALT (win_reason -1 games count as non-wins) face H 0.7739828941285252
