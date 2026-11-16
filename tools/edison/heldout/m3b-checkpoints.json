@@ -1,0 +1,132 @@
+{
+ "manifest_sha256": "df055d9f0649b321a42b408b5d6594de500b06de8c65431dd351c391be6ee430",
+ "manifest_commit": "fd40c56b55b9e6dfbad40f0e971df87cab16f1ec",
+ "pilot": {
+  "manifest_sha256": "df055d9f0649b321a42b408b5d6594de500b06de8c65431dd351c391be6ee430",
+  "jobs_sha256": "ef63e33baaab8eb514e8cdd63000e9d4dca36ac1fdab94b68a833b5e0f6c81cf",
+  "journal": "pilot-3b57236e64d2416e.jsonl",
+  "journal_sha256": "096be4f58dbedaf27738839e3597573f2f9337c9285fd0f3a4377a98551ff48e",
+  "other_journals": [],
+  "runs": {
+   "S0": {
+    "params_sha256": "0e516706a0f258d1d0dc6c40f0f2e19601a0b715e525c27c0ee6f5e30a4531d3",
+    "duels": 61440,
+    "void_games": 0
+   },
+   "S1": {
+    "params_sha256": "51ce11d311434156ac2e44a1500d49a999f96a3e7257028b4edf04cec70b8237",
+    "duels": 61440,
+    "void_games": 0
+   },
+   "S2": {
+    "params_sha256": "3292e448abba255dbe48b988d16fe1d74384c3355d21e557a37c98ca84f99bb4",
+    "duels": 61440,
+    "void_games": 0
+   }
+  },
+  "rates": {
+   "S0": {
+    "0": 0.6733630952380952,
+    "5": 0.6547619047619048,
+    "all": 0.5096726190476191
+   },
+   "S1": {
+    "0": 0.6145833333333334,
+    "5": 0.5848214285714286,
+    "all": 0.43452380952380953
+   },
+   "S2": {
+    "0": 0.6800595238095238,
+    "5": 0.6785714285714286,
+    "all": 0.6153273809523809
+   }
+  },
+  "games": {
+   "S0/0": 1344,
+   "S0/5": 1344,
+   "S0/all": 1344,
+   "S1/0": 1344,
+   "S1/5": 1344,
+   "S1/all": 1344,
+   "S2/0": 1344,
+   "S2/5": 1344,
+   "S2/all": 1344
+  },
+  "void_games": {},
+  "interrupted_cells": 0,
+  "valid": true,
+  "pick": "S2",
+  "admissible": [
+   "S2"
+  ],
+  "hidden_score": {
+   "S0": 0.5822172619047619,
+   "S1": 0.5096726190476191,
+   "S2": 0.6469494047619048
+  },
+  "dropout_helps_when_hidden": {
+   "S1": -0.0725446428571428,
+   "S2": 0.0647321428571429
+  }
+ },
+ "setting": "S2",
+ "checkpoints": {
+  "1702": {
+   "params_sha256": "ad468ea230191daa28b0a17d09bfc12517a89830fedb4cf688292944cf5ccf73",
+   "duels": 245736,
+   "void_games": 24,
+   "config_hash": "751cb1397445cc3dd8a5907f9cf12f882262f5785dbbfef9ffacf5da9f8b785a",
+   "rounds_log_sha256": "c91e035a386d9eab5762ce3675116705d5ae311d17278212040a449a0b517bea"
+  },
+  "1703": {
+   "params_sha256": "39d46dabc8f1bd70d9c4e8c86ba2cde8807b8462916fef6efc67c0d2c49fffec",
+   "duels": 245744,
+   "void_games": 16,
+   "config_hash": "7db2792219a86391830425f857017327a36f8c98f781d29cfa422a957dc264e4",
+   "rounds_log_sha256": "f8da07054cf46ad6f6878f8a63390c5a733e7bbfaccb73422afb3fc93ece8eb8"
+  },
+  "1704": {
+   "params_sha256": "bcf8db956c24596522e45dfd4df71884b7d5e43cb5a8ee2076dc0bb70b935d56",
+   "duels": 245760,
+   "void_games": 0,
+   "config_hash": "ebb808aa48710515e2396be472430fa6758a4c4cc9eb8811c275fcceb745a98a",
+   "rounds_log_sha256": "5b7f2eefe1f7c6bc3e0c6ad3ce2d899abc2a82f1efc9dde7eb4acd4e746177fa"
+  }
+ },
+ "attempts": [
+  {
+   "what": "pilot-train",
+   "time": "2026-11-12T16:36:03",
+   "head": "fd40c56b55b9e6dfbad40f0e971df87cab16f1ec"
+  },
+  {
+   "what": "pilot",
+   "time": "2026-11-12T18:19:46",
+   "head": "fd40c56b55b9e6dfbad40f0e971df87cab16f1ec",
+   "networks": {
+    "S0": "0e516706a0f258d1d0dc6c40f0f2e19601a0b715e525c27c0ee6f5e30a4531d3",
+    "S1": "51ce11d311434156ac2e44a1500d49a999f96a3e7257028b4edf04cec70b8237",
+    "S2": "3292e448abba255dbe48b988d16fe1d74384c3355d21e557a37c98ca84f99bb4"
+   },
+   "journal": "pilot-3b57236e64d2416e.jsonl"
+  },
+  {
+   "what": "train",
+   "time": "2026-11-12T18:24:05",
+   "head": "fd40c56b55b9e6dfbad40f0e971df87cab16f1ec",
+   "setting": "S2"
+  },
+  {
+   "what": "train",
+   "time": "2026-11-16T01:58:46",
+   "head": "fd40c56b55b9e6dfbad40f0e971df87cab16f1ec",
+   "setting": "S2"
+  },
+  {
+   "what": "seal",
+   "time": "2026-11-16T04:33:01",
+   "head": "fd40c56b55b9e6dfbad40f0e971df87cab16f1ec",
+   "setting": "S2"
+  }
+ ]
+}
