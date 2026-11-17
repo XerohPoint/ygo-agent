@@ -48,7 +48,8 @@ The binary is rebuilt on the certified r5 core. M2 and Stage A used a binary bui
 
 ## Checks before freezing
 
-On development seeds 89700000 to 89799999. No game used a seed from 90300000 onward.
+On development seeds 89700000 to 89799999. No game used a seed from 90300000 onward. The parity, values and smoke
+checks were run again on the committed code, at commit f1555e1, with the same results; those runs are the ones `freeze` accepts.
 
 | Check | Result |
 | --- | --- |
@@ -56,7 +57,7 @@ On development seeds 89700000 to 89799999. No game used a seed from 90300000 onw
 | `parity`: the network through the search binary against the certified module under JAX, on 12 held-out builds (8 with the most unknown Main Deck copies, 4 that play Mind Crush) and 9 training lists | 60 games, 9,359 decisions: every observation byte, winner and length equal. 8 games met a prompt only the wider tables hold (18 decisions) |
 | `parity`'s control: the same comparison with the JAX side reading each id's own row instead of the identity map | 46 of 48 held-out games differ, so the comparison sees a skipped map |
 | Code list v1 with the rebuilt binary: `test_search.py`'s production and determinism stages | 42 games, 6,444 decisions equal; 16 search games equal on 1 and 12 workers |
-| `values`: each sealed network's native logits and values against JAX on 18,371 recorded v2 decisions of lists with untrained cards, under the identity differential's gates | No gate fails and no greedy choice differs; the largest value error is 5e-6. A build with the identity lookup of card rows removed fails nine gates on every network |
+| `values`: each sealed network's native logits and values against JAX on 18,371 recorded v2 decisions of lists with untrained cards, under the identity differential's gates | No gate fails and no greedy choice differs; the largest value error is 1.0e-5, against a gate of 2e-5. A build with the identity lookup of card rows removed fails nine gates on every network |
 | `smoke`: 24 search games and 24 plain games at the frozen setting on those 12 builds, on 2 and on 15 workers | The same games on both. No void game, voided world, network error or option mismatch. The search fell back on 56 of 1,521 searched decisions |
 
 The smoke test's scores are on 12 builds chosen for their unknown cards and are not a result.
