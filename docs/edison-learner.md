@@ -587,7 +587,7 @@ still the default and trains and plays as before (`test_learner.py` gives the sa
 - **Loading a v1 checkpoint into v2**: `load_v1_into_v2` in `actor.py`. The unknown row is the mean of the known
   rows and new action rows are zero.
 - **The native forward pass** (`tools/edison/search/edison_net.h`) reads the map from the exported file and requires
-  the caller to name its hash. `edison_search` does not load v2 files yet.
+  the caller to name its hash. `edison_search` loads v2 files with `--code-list v2 --id-row-sha`.
 - **Checks.** `tools/edison/heldout/identity_check.py all` compares what a network reads with the map built a second
   way, on the v1 build as a control and on six planted defects. Its summary is in
   `tests/edison/reports/m3-stage-b-2026-11-12/identity/summary.json`.

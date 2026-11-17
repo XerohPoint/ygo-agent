@@ -380,12 +380,47 @@ It reran no game, and it did not recount guard fires, the breakdowns by archetyp
 The reviews before the freeze (two Claude Opus reviewers and Sol) are tabled in
 [the protocol](edison-m3b-protocol.md#checks-before-freezing).
 
+### Stage B search check, reported only
+
+Run on November 16, 2026, after the verdict, as [the protocol](edison-m3b-protocol.md#search-check) set out. Its
+design, the change that lets the search load code list v2, the checks before it and the review are in
+[edison-m3b-search.md](edison-m3b-search.md), frozen in
+[`m3b-search-manifest.json`](../tools/edison/heldout/m3b-search-manifest.json) at commit ea2fbfa before any game on its
+seeds. Binary `1ab4aac9` (build id `d67bbcfcf8079dd0`), built on the certified r5 core.
+
+M2's search at its frozen setting (64 rollouts, depth 48, 4 candidates, margin 1.0) pilots 60 drawn held-out builds,
+each against 4 drawn training lists, on one seed from 90300000 in both seats. The opponent is the same retrained
+network without search. Each search game is compared with the plain game on the same seed, decks and network. Ranges
+resample held-out builds.
+
+| | Comparisons | Builds | Search | Plain | Gain | 95% range |
+| --- | ---: | ---: | --- | --- | --- | --- |
+| All | 480 | 60 | 81.9% | 51.4% | +30.5 points | 25.8-35.3 |
+| Search in seat 0 | 240 | 60 | 87.1% | 55.0% | +32.1 | 25.0-38.8 |
+| Search in seat 1 | 240 | 60 | 76.7% | 47.7% | +29.0 | 22.7-35.4 |
+| H, 6 or more unknown Main Deck copies | 112 | 14 | 75.9% | 50.0% | +25.9 | 14.3-37.5 |
+| The other builds | 368 | 46 | 83.7% | 51.8% | +31.9 | 27.2-36.8 |
+
+All 480 comparisons counted, with no missing or void game. One plain game was a draw and scores a half. For
+comparison, the gain was +28.5 points (24.0-33.1) on Stage A's builds and +30.3 (27.8-32.6) on the training lists in
+M2's final test. The gain on H is lower than on the other builds, but H holds only 14 of the drawn builds and the two
+ranges overlap.
+
+Search departed from the network's choice on 15.9% of 31,206 searched decisions, and fell back to it on 8.1%, against
+6.1% in Stage A. No sampled world was voided in 1.80 million rollouts and the native network refused no observation.
+It took 58 s of CPU per game.
+
+This check keeps M2's limits: the search is told the opposing list, hidden cards are dealt uniformly rather than from a
+belief, and every opponent is one of the same three networks. The table's scores were recomputed from the game
+files with a separate script by the session that ran the check. No independent reviewer recounted it.
+
 ### What Stage B shows
 
 On placed lists that hold cards no training list plays, the networks still beat the heuristic about three games in
 four as pilot (75.6%), and their edge over it is within a point of the edge on each build's nearest training list. On
 the builds with the most unknown cards the pilot rate is lower (73.3%) and the edge is 2.9 points short of the twin's,
-inside the 10 points allowed. With Stage A, this meets M3's exit.
+inside the 10 points allowed. M2's search gains about as much on these builds as on the training lists. With Stage A,
+this meets M3's exit.
 
 It does not show:
 
@@ -397,15 +432,15 @@ It does not show:
 - coverage of the format, since the builds are placed lists from one site's events;
 - anything about a single build, card or matchup;
 - strength with siding or in matches;
-- anything about search on these lists. The [search check](edison-m3b-protocol.md#search-check) has not run: the
-  search cannot yet load code list v2, and its change is frozen separately first.
+- that search copes with unknown cards against anything but the same network. The
+  [search check](#stage-b-search-check-reported-only) gains 30.5 points over the bare network on these builds, with
+  the opposing list given.
 
 Stage A's 80.6% and the baseline's 75.4% here come from nearly the same M1 networks on different builds, and are
 not a measured drop.
 
 ## Next
 
-- The Stage B search check, reported only, once the search loads code list v2 on the r5 binary.
 - Whether M4 builds on the retrained networks or on M1's is open. The retrained ones accept every legal card, are
   steadier across runs and are slightly better on the heaviest builds; M1's are slightly better on the training
   lists. Nothing here separates them by much.

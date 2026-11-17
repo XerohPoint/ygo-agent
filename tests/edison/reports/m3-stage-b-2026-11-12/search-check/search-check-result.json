@@ -1,0 +1,89 @@
+{
+ "pairs": 240,
+ "comparisons_planned": 480,
+ "missing": {},
+ "void": {},
+ "void_reasons": {},
+ "all": {
+  "comparisons": 480,
+  "builds": 60,
+  "search": 0.81875,
+  "plain": 0.5135416666666667,
+  "difference": 0.30520833333333336,
+  "low": 0.25833333333333336,
+  "high": 0.353125
+ },
+ "by_seat": {
+  "0": {
+   "comparisons": 240,
+   "builds": 60,
+   "search": 0.8708333333333333,
+   "plain": 0.55,
+   "difference": 0.32083333333333336,
+   "low": 0.25,
+   "high": 0.3875
+  },
+  "1": {
+   "comparisons": 240,
+   "builds": 60,
+   "search": 0.7666666666666667,
+   "plain": 0.47708333333333336,
+   "difference": 0.28958333333333336,
+   "low": 0.22708333333333333,
+   "high": 0.3541666666666667
+  }
+ },
+ "heavy": {
+  "comparisons": 112,
+  "builds": 14,
+  "search": 0.7589285714285714,
+  "plain": 0.5,
+  "difference": 0.25892857142857145,
+  "low": 0.14285714285714285,
+  "high": 0.375
+ },
+ "not_heavy": {
+  "comparisons": 368,
+  "builds": 46,
+  "search": 0.8369565217391305,
+  "plain": 0.5176630434782609,
+  "difference": 0.31929347826086957,
+  "low": 0.2717391304347826,
+  "high": 0.36820652173913043
+ },
+ "search_games": {
+  "games": 480,
+  "pairs": 480,
+  "void": 0,
+  "draws": 0,
+  "search_score": 81.88,
+  "low": 78.18,
+  "high": 85.06,
+  "searched": 31206,
+  "departed": 4959,
+  "fell_back": 2530,
+  "deals_ok": 769910,
+  "deals_refused": 20240,
+  "rollouts": 1798818,
+  "worlds_void": 0,
+  "truncated": 0,
+  "net_errors": 0,
+  "net_calls": 71390233,
+  "option_mismatch": 0,
+  "step_overruns": 0,
+  "rollout_guard_fires": 1327728,
+  "departed_share": 0.1589,
+  "cpu_per_game": 57.5,
+  "cpu_per_search_ms": 883.4
+ },
+ "note": "Reported only. The interval resamples held-out builds. The search is told the opposing list and deals hidden cards uniformly, as in M2.",
+ "manifest_sha256": "87ce4715be8d381a0a03626fc2fc8831aa760aefa02ac06533305dbab10cb05a",
+ "seal_sha256": "91b27ba9e1d934bcd4c06450677567a8b0e7ebf736f997d1204be6fc1b626c56",
+ "binary": {
+  "sha256": "1ab4aac929da2269ef05ae5de4527296bdf9ef2a8f5ab9c11bb4b7bd3434127e",
+  "id": "d67bbcfcf8079dd0",
+  "core_pin": "5334b050d0594d1dafe66cdcddde1cfe 4fd0ffdc51f4418f05b75108a44a6d3069d36d92c6f159ce82e0bc0bb1e581c2"
+ },
+ "heavy_builds_drawn": 14,
+ "attempts": 1
+}

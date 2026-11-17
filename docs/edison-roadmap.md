@@ -167,7 +167,8 @@ November 16, 2026:** 75.6% piloting 747 placed builds that hold unknown cards, a
 unknown Main Deck copies, with the edge over the heuristic within 3 points of the edge on each build's nearest training
 list. A Sonnet subagent recounted it with separate code. **Both stages are met, so M3's exit is met.** Retraining with
 an unknown-card row and identity dropout was not shown to help: M1's networks, loaded without retraining, score 75.4%
-on the same games. The Stage B search check has not run; the search must first load code list v2 and be rebuilt on r5.
+on the same games. The Stage B search check, reported only, ran on a binary rebuilt on r5 that loads code list v2:
+M2's search gains 30.5 points (25.8 to 35.3) over the bare network on 60 drawn builds.
 The corpus crash that blocked Stage B's Dark Panther lists is [fixed](edison-dark-panther.md) in core hardening r3, along with
 a Dark Panther repeat. A stale reason effect that Gold Sarcophagus reached in legal games is [fixed](edison-gold-sarcophagus.md) in r5.
 

@@ -1,0 +1,125 @@
+{
+ "decisions_sha256": "8e984933409045ee0e90e69f7475fd55a5fd451736bcc745f5ee68d705eff514",
+ "nets": {
+  "1702": {
+   "correct": {
+    "failed_gates": [],
+    "records": 18371,
+    "greedy_mismatches": 0,
+    "value_error_max": 2.57045e-06,
+    "logit_error_scaled_max": 5.53131e-05
+   },
+   "fault_in_card_rows": {
+    "failed_gates": [
+     "logit_error.max",
+     "logit_error_scaled.max",
+     "logit_error_scaled.mean",
+     "logit_error_scaled.p99.9",
+     "row_error.mean",
+     "state_error.mean",
+     "value_error.max",
+     "value_error.mean",
+     "value_error.p99.9"
+    ],
+    "records": 18371,
+    "greedy_mismatches": 989,
+    "value_error_max": 0.470009,
+    "logit_error_scaled_max": 10.4419
+   }
+  },
+  "1703": {
+   "correct": {
+    "failed_gates": [],
+    "records": 18371,
+    "greedy_mismatches": 0,
+    "value_error_max": 1.01328e-05,
+    "logit_error_scaled_max": 6.67136e-05
+   },
+   "fault_in_card_rows": {
+    "failed_gates": [
+     "logit_error.max",
+     "logit_error_scaled.max",
+     "logit_error_scaled.mean",
+     "logit_error_scaled.p99.9",
+     "row_error.mean",
+     "state_error.mean",
+     "value_error.max",
+     "value_error.mean",
+     "value_error.p99.9"
+    ],
+    "records": 18371,
+    "greedy_mismatches": 739,
+    "value_error_max": 1.04488,
+    "logit_error_scaled_max": 11.6644
+   }
+  },
+  "1704": {
+   "correct": {
+    "failed_gates": [],
+    "records": 18371,
+    "greedy_mismatches": 0,
+    "value_error_max": 4.94719e-06,
+    "logit_error_scaled_max": 7.27177e-05
+   },
+   "fault_in_card_rows": {
+    "failed_gates": [
+     "logit_error.max",
+     "logit_error_scaled.max",
+     "logit_error_scaled.mean",
+     "logit_error_scaled.p99.9",
+     "row_error.mean",
+     "state_error.mean",
+     "value_error.max",
+     "value_error.mean",
+     "value_error.p99.9"
+    ],
+    "records": 18371,
+    "greedy_mismatches": 773,
+    "value_error_max": 0.572266,
+    "logit_error_scaled_max": 12.9414
+   }
+  }
+ },
+ "net_diff_sha256": "ed923c2d74ddbd2e0413bcc9ebca644e13c94c71c3cffe660a97472b7e6e7a43",
+ "ran_on": {
+  "binary": {
+   "sha256": "1ab4aac929da2269ef05ae5de4527296bdf9ef2a8f5ab9c11bb4b7bd3434127e",
+   "id": "d67bbcfcf8079dd0",
+   "core_pin": "5334b050d0594d1dafe66cdcddde1cfe 4fd0ffdc51f4418f05b75108a44a6d3069d36d92c6f159ce82e0bc0bb1e581c2"
+  },
+  "nets": {
+   "1702": "8214e3c92c2c6d0fdf53a0a02cadac16c16afb98c7008b4eb5c98694398d5487",
+   "1703": "4c0d053d4bc3f8cf08e7a00855065d91d33f98e594bc701c46289661c5ebf70d",
+   "1704": "41751e85c03182de7b189cd713e409231788eb2a2ac45ec3206090be0cb68af2"
+  },
+  "files": {
+   "tools/edison/heldout/stage_b_search.py": "884af2624b75f814650eaf846f37e1b43530d7f920501cabfcf4cb1de64ad3f0",
+   "tools/edison/heldout/stage_b.py": "a53fd70d389501d23c4c3b4f2adb8c2424a8134474a8759dbf8a6213d5b9fd9e",
+   "tools/edison/heldout/stage_a.py": "ee88e15f2cd2ba1523445d3672d1aaa13f3f6dfda2c9910beab73bd0dd63762f",
+   "tools/edison/heldout/stage-b-lists.json": "8c4d5f3bddcb8eb3986aa6592733f3e6940d2cc9bc3b167c20d53cb6fcfc9c9d",
+   "tools/edison/heldout/m3b-manifest.json": "df055d9f0649b321a42b408b5d6594de500b06de8c65431dd351c391be6ee430",
+   "tools/edison/heldout/m3b-checkpoints.json": "91b27ba9e1d934bcd4c06450677567a8b0e7ebf736f997d1204be6fc1b626c56",
+   "tools/edison/search/search_common.py": "42415b23ef8e42fbacfb0c7f836e98cee8219c7edfc83f6877eb6ba8442a80e8",
+   "tools/edison/search/search_study.py": "7ee4e125a955fa180ec3675d38278ef0fb19c4dbe5e2c338113e7e2345542842",
+   "tools/edison/search/export_net.py": "885449c55d989b3a0d7027302e028390300cadec53fa700f7f8ab61ba5d548c8",
+   "tools/edison/search/edison_search.cpp": "63b137e1bf7ce5f4a3c9e66c9876f7c490a676528f334d38d0f6a83baa7d5250",
+   "tools/edison/search/pimc.h": "740140b0a1040c1063ee1185ff059d42b515f38b6971f0bdde5edb7ef1d2a2e5",
+   "tools/edison/search/edison_net.h": "91eb7b1afb3638163877fc862d1ecd1595db091f751e14d80a201db7df677650",
+   "tools/edison/forward_model/fm_world.h": "a2adc40f8bca1b0934e67fea6d889f9e5de73ed254de79bbbb401fc438014900",
+   "tools/edison/forward_model/fm_world.cpp": "87b2a0eb3730afc669270707e506ab435a801c1619c8a07e825f0e8a64cb3223",
+   "tools/edison/forward_model/fm_env.h": "b75352c25f81ee1dea586b97796a1637af7f1feea18b1c62f8874955cbd37c91",
+   "tools/edison/forward_model/fm_deal.h": "579b7d00be0a338a357f92f4222b2ee3a99073ec012da21682d400373520bf02",
+   "tools/edison/forward_model/fm_hidden.h": "996533f40726f5a19b2d31388bda4a91986ad3cb6414ce94597d61080643821c",
+   "tools/edison/forward_model/arena.h": "b22838323485529b842ae55a0607ac86ec44d5a4794adb6c297c89de0f08e2c8",
+   "tools/edison/forward_model/build.sh": "899cf4b3bd176d66264e36177e4f63d45c7c9785f20d128a089fff484ddf8f37",
+   "ygoenv/ygoenv/ygopro/ygopro.h": "d1c58e4644412fcac940388df04d29d5712813a885c49c10d2f028f484bb49b4",
+   "tools/edison/learner/actor.py": "d21d3b2ea15be97095b555d90164b5c78f7dfab0c4e8b961b84228e922d8da8d",
+   "tools/edison/learner/decks.py": "6c5ea7b89b2a218a6f1c31e5b80e5074a18410a9d16ffc3f2cfbb247087322c8",
+   "tools/edison/learner/obs.py": "ea388cfcfef723ef2028d6df47c5354f2c60b606cac69ed6e25c6477593c2842",
+   "tools/edison/learner/net.py": "ff91cbed34fbb5f6b68d2e4223b5ab60271a0cb1f4bc9925684c18993e8d9657",
+   "tools/edison/learner/codes_v2.txt": "071a484d92d6e960a70a57d7d764bdff6f54930d4fa2c57702b02cc7383e848a",
+   "tools/edison/learner/identity_v2.json": "800fb1dab816fc098a86c4781ac190946ae2a9b2305b935f0560008cf1e15839"
+  }
+ },
+ "verdict": "PASS"
+}
