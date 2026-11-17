@@ -840,7 +840,7 @@ inline void pin_stdio() {
 
 // The 21 registry lists and the learner's code list, exactly as tools/edison/learner/actor.py
 // initialises production. collect_corpus.py writes registry.txt from decks.registry().
-inline void init_assets(const std::string &root, const std::string &registry_path = "") {
+inline void init_assets(const std::string &root, const std::string &registry_path = "", const std::string &codes_path = "") {
   pin_stdio();
   std::string registry = registry_path.empty() ? root + "/build/forward_model/corpus/registry.txt" : registry_path;
   std::ifstream in(registry);
@@ -849,7 +849,10 @@ inline void init_assets(const std::string &root, const std::string &registry_pat
   std::string name, path;
   while (in >> name >> path) decks[name] = path;
   if (decks.size() != 21) throw std::runtime_error("registry does not hold 21 lists");
-  ygopro::init_module(root + "/assets/locale/en/cards.cdb", root + "/tools/edison/learner/codes_v1.txt", decks);
+  // A card's id in an observation is its line in this list, so it must be the list the network was trained on.
+  std::string codes = root + "/" + (codes_path.empty() ? "tools/edison/learner/codes_v1.txt" : codes_path);
+  if (!std::ifstream(codes)) throw std::runtime_error("cannot open " + codes);
+  ygopro::init_module(root + "/assets/locale/en/cards.cdb", codes, decks);
   set_message_handler(on_core_message);
 }
 

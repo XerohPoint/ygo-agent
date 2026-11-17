@@ -47,6 +47,7 @@ namespace fm {
 struct ForwardModelConfig {
   std::string root;           // the checkout: assets, code list, build/forward_model/corpus/registry.txt
   std::string registry;       // optional other "name path" list of decks
+  std::string codes;          // optional code list, relative to root. Empty is tools/edison/learner/codes_v1.txt
   int step_cpu_limit_ms = 2000;  // CPU time one core call may use before its world voids
 };
 // Once per process. The working directory must hold ./script.

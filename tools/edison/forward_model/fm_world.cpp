@@ -168,7 +168,7 @@ void init_forward_model(const ForwardModelConfig &config) {
   g_initialised = true;
   g_config = config;
   g_watch_limit_ticks = std::max(2, config.step_cpu_limit_ms / kWatchIntervalMs);
-  init_assets(config.root, config.registry);
+  init_assets(config.root, config.registry, config.codes);
   install_signals();
 }
 

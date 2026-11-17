@@ -2,6 +2,7 @@
 // Includes only the search API and the network, so it cannot name the core or a hidden card.
 //
 //   edison_search play --root R --registry F --net NAME=PATH=PARAMS_SHA --codes-sha S --jobs F --out D --workers N
+//   Code list v2, for every command: --code-list v2 --id-row-sha S. The default is v1, as M2 and M3 Stage A ran.
 //   edison_search rank --root R --registry F --net NAME=PATH=PARAMS_SHA --codes-sha S --deck0 A --deck1 B --seed N --moves 0,1,0
 //                      [--budget N --depth N --search-seed N --max-candidates N --assume-opponent DECK]
 //
@@ -71,11 +72,27 @@ void load_registry(const std::string &path) {
   while (in >> name >> file) g_registry[name] = file;
 }
 
-void load_net(const std::string &spec, const std::string &codes_sha) {
+// The code list decides the file the env reads ids from and the shape the net file must have.
+struct CodeList {
+  const char *file;
+  int n_codes, unknown_row;
+};
+
+CodeList code_list_of(const std::string &name) {
+  if (name == "v1") return {"tools/edison/learner/codes_v1.txt", 509, 0};
+  if (name == "v2") return {"tools/edison/learner/codes_v2.txt", 4042, 1};
+  die("--code-list wants v1 or v2");
+}
+
+void load_net(const std::string &spec, const std::string &codes_sha, const CodeList &list, const std::string &id_row_sha) {
   size_t a = spec.find('='), b = spec.rfind('=');
   if (a == std::string::npos || b == a) die("--net wants NAME=PATH=PARAMS_SHA");
   std::string name = spec.substr(0, a), path = spec.substr(a + 1, b - a - 1), params = spec.substr(b + 1);
-  ednet::Expect expect{params.c_str(), codes_sha.c_str(), {509, 32, 64, 2, 4, 128}};
+  ednet::Config shape{list.n_codes, 32, 64, 2, 4, 128};
+  shape.unknown_row = list.unknown_row;
+  ednet::Expect expect{params.c_str(), codes_sha.c_str(), shape};
+  // A v2 file is refused unless the caller names its identity map, and a v1 file has none to name.
+  if (list.unknown_row) expect.id_row_sha256 = id_row_sha.c_str();
   auto holder = std::make_unique<NamedNet>();
   const char *err = nullptr;
   if (!ednet::load(holder->net, path.c_str(), expect, &err)) die("net " + name + ": " + err);
@@ -574,12 +591,15 @@ int main(int argc, char **argv) {
     else args[key.substr(2)] = argv[i + 1];
   }
   try {
+    const CodeList list = code_list_of(args.count("code-list") ? args["code-list"] : "v1");
+    if (list.unknown_row != static_cast<int>(args.count("id-row-sha"))) die("--id-row-sha goes with --code-list v2 and only with it");
     fm::ForwardModelConfig config;
     config.root = args.at("root");
     config.registry = args.at("registry");
+    config.codes = list.file;
     fm::init_forward_model(config);
     load_registry(args.at("registry"));
-    for (const auto &spec : nets) load_net(spec, args.at("codes-sha"));
+    for (const auto &spec : nets) load_net(spec, args.at("codes-sha"), list, list.unknown_row ? args["id-row-sha"] : "");
 #ifdef SEARCH_TEST_HOOKS
     if (command == "play" && args.count("mutant")) pimc::g_mutant = args["mutant"];
 #endif

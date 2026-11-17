@@ -19,6 +19,22 @@ OUT = ROOT / "build/edison-search"
 BIN = ROOT / "build/forward_model/edison_search"
 TEST_BIN = ROOT / "build/forward_model/edison_search_test"
 REGISTRY = OUT / "registry.txt"
+NET_DIR = OUT / "nets"
+CODES_FILE = ROOT / "tools/edison/learner/codes_v1.txt"
+CODE_ARGS = []  # what selects the code list in the binary. Empty is v1, as M2 and M3 Stage A ran
+
+
+def use_code_list_v2(params_sha, net_dir, id_row_sha):
+    """Point this module at code list v2 networks: {name: params sha}, where their exported files are, and the identity map they carry.
+    The caller's process must have EDISON_CODE_LIST=v2, so the Python side reads the same list the binary is told to."""
+    global CODES_SHA, PARAMS_SHA, NET_DIR, CODES_FILE, CODE_ARGS
+    if deck_registry.CODE_LIST != "v2":
+        raise SystemExit("use_code_list_v2 needs EDISON_CODE_LIST=v2 before decks is imported")
+    CODES_FILE = Path(deck_registry.CODES)
+    CODES_SHA = file_sha(CODES_FILE)
+    if CODES_SHA != deck_registry.load_codes()[0]:
+        raise SystemExit("the code list file is not the one decks loads")
+    PARAMS_SHA, NET_DIR, CODE_ARGS = dict(params_sha), Path(net_dir), ["--code-list", "v2", "--id-row-sha", id_row_sha]
 SCRIPTS = ROOT / "scripts"
 FORBIDDEN = [(70000000, 70999999), (79000000, 79999999), (83000000, 83999999)]
 
@@ -33,7 +49,7 @@ def write_registry():
 def net_args(names=None):
     args = []
     for name in names or PARAMS_SHA:
-        args += ["--net", f"{name}={OUT / 'nets' / ('gauntlet-' + name[1:] + '.ednet')}={PARAMS_SHA[name]}"]
+        args += ["--net", f"{name}={NET_DIR / ('gauntlet-' + name[1:] + '.ednet')}={PARAMS_SHA[name]}"]
     return args
 
 
@@ -56,8 +72,13 @@ def inputs(binary, cwd, extra=()):
     for line in sorted(REGISTRY.read_text().splitlines()):
         name, path = line.split(" ", 1)
         lists.update(name.encode() + b"\0" + Path(path).read_bytes())
-    return {"binary": file_sha(binary), "scripts": scripts.hexdigest(), "database": file_sha(ROOT / "assets/locale/en/cards.cdb"), "lists": lists.hexdigest(), "codes": file_sha(ROOT / "tools/edison/learner/codes_v1.txt"),
-            "nets": {name: file_sha(OUT / "nets" / f"gauntlet-{name[1:]}.ednet") for name in PARAMS_SHA}, "extra": list(extra)}
+    built = {"binary": file_sha(binary), "scripts": scripts.hexdigest(), "database": file_sha(ROOT / "assets/locale/en/cards.cdb"), "lists": lists.hexdigest(), "codes": file_sha(CODES_FILE),
+             "nets": {name: file_sha(NET_DIR / f"gauntlet-{name[1:]}.ednet") for name in PARAMS_SHA}, "extra": list(extra)}
+    if built["codes"] != CODES_SHA:
+        raise SystemExit(f"{CODES_FILE} is not the code list the nets are checked against")
+    if CODE_ARGS:
+        built["code_list"] = CODE_ARGS
+    return built
 
 
 def attempt_identity(built, lines):
@@ -91,7 +112,7 @@ def play(lines, out_dir, workers, binary=BIN, cwd=SCRIPTS, timeout=3600, nets=No
     identity = attempt_identity(built, lines)
     with attempts.open("a") as log:
         log.write(json.dumps({"event": "start", "inputs": identity}) + "\n")
-    done = subprocess.run([str(binary), "play", "--root", str(ROOT), "--registry", str(REGISTRY), *net_args(nets), "--codes-sha", CODES_SHA, "--jobs", str(jobs),
+    done = subprocess.run([str(binary), "play", "--root", str(ROOT), "--registry", str(REGISTRY), *net_args(nets), "--codes-sha", CODES_SHA, *CODE_ARGS, "--jobs", str(jobs),
                            "--out", str(out_dir), "--workers", str(workers), "--timeout", str(timeout)] + list(extra), cwd=cwd, stdout=subprocess.PIPE, text=True)
     try:
         counts = json.loads(done.stdout)
@@ -109,7 +130,7 @@ def load(out_dir):
 
 
 def rank(deck0, deck1, seed, moves, net="n1702", binary=BIN, cwd=SCRIPTS, **options):
-    command = [str(binary), "rank", "--root", str(ROOT), "--registry", str(REGISTRY), *net_args([net]), "--codes-sha", CODES_SHA, "--deck0", deck0, "--deck1", deck1,
+    command = [str(binary), "rank", "--root", str(ROOT), "--registry", str(REGISTRY), *net_args([net]), "--codes-sha", CODES_SHA, *CODE_ARGS, "--deck0", deck0, "--deck1", deck1,
                "--seed", str(seed), "--moves", ",".join(map(str, moves)) or ","]
     for key, value in options.items():
         command += ["--" + key.replace("_", "-"), str(value)]
